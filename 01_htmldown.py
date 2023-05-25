@@ -17,7 +17,10 @@ def extract_links(text):
     links = re.findall(pattern, text)
     return links
 
-text = '6.69 lcA:/ 复制打开抖音，看看【铁铁的作品】主打一个真实！# 原相机 # 辣妹穿搭  https://v.douyin.com/UhUSHTt/'
+text = input("请输入字符串: ")
+print("输入的字符串是:", text)
+
+# text = '6.69 lcA:/ 复制打开抖音，看看【铁铁的作品】主打一个真实！# 原相机 # 辣妹穿搭  https://v.douyin.com/UhUSHTt/'
 
 video_url = extract_links(text)[0]
 
