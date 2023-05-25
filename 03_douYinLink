@@ -2,6 +2,7 @@ import requests
 from urllib.parse import quote
 import re
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 def extract_links(text):
     pattern = r"(https?://\S+)"
@@ -31,6 +32,19 @@ if source_tag:
     src = source_tag.get("src")
     src = src.replace("amp;", "")
     print("提取的链接：", src)
+
+    # Download the content from the extracted URL
+    response = requests.get(src)
+    content = response.content
+
+    # Generate the file name based on the current date and time
+    now = datetime.now()
+    file_name = now.strftime("%Y%m%d-%H%M%S") + ".mp4"
+
+    # Save the content to a file with the generated file name
+    with open(file_name, "wb") as file:
+        file.write(content)
+        print("下载完成！保存为", file_name)
 else:
     print("未找到source标签")
 
