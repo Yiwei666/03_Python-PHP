@@ -1,8 +1,12 @@
 <?php
 session_start();
 
+// 设置保存标题和网址的文件名
 $filename = "siteCollectUrl.txt";
+// 设置网站页面标题
 $title = "siteCollect";
+// 将siteCollect.php 替换为新的 php 脚本文件名
+$logout_script = "siteCollect.php?logout=true";
 
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -165,7 +169,7 @@ if (isset($_GET['logout'])) {
   <!--下面的main，footer是有关logout的style-->
   <main>
     <p>You have successfully logged in.</p>
-    <p><a href="siteCollect.php?logout=true">Logout</a></p>
+    <p><a href="<?php echo $logout_script; ?>">Logout</a></p>
   </main>
   <footer>
     <p>&copy; <?php echo date("Y"); ?> Your Company Name</p>
