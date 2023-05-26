@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$filename = "siteCollectUrl.txt";
+
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header('Location: login.php');
@@ -86,7 +88,7 @@ if (isset($_GET['logout'])) {
       
       if(!empty($siteCollect) && !empty($siteUrl)) {
         // 读取现有网站信息
-        $file = file('siteCollectUrl.txt');
+        $file = file($filename);
 
         // 检查是否存在相同的网址
         foreach($file as $line) {
@@ -106,7 +108,7 @@ if (isset($_GET['logout'])) {
         }
 
         // 如果网址不存在，则写入文件
-        $fp = fopen('siteCollectUrl.txt', 'a');
+        $fp = fopen($filename, 'a');
         fwrite($fp, "$siteCollect,$siteUrl\n");
         fclose($fp);
 
@@ -145,7 +147,7 @@ if (isset($_GET['logout'])) {
       <tbody>
         <?php
         // 读取文件并输出网站链接
-        $file = file('siteCollectUrl.txt');
+        $file = file($filename);
         for($i=0; $i<count($file); $i+=5) {
           echo '<tr>';
           for($j=$i; $j<$i+5 && $j<count($file); $j++) {
