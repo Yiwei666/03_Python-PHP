@@ -2,6 +2,7 @@
 session_start();
 
 $filename = "siteCollectUrl.txt";
+$title = "siteCollect";
 
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -22,7 +23,7 @@ if (isset($_GET['logout'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="http://101.200.215.127/00_logo/firewall.png">
-  <title>siteCollect</title>
+  <title><?php echo $title; ?></title>
   <style>
     .container {
       width: 88%;
