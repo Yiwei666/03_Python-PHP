@@ -88,7 +88,8 @@ if (isset($_GET['logout'])) {
   <?php
     if(isset($_POST['siteCollect']) && isset($_POST['siteUrl'])) {
       // 读取表单数据
-      $siteCollect = $_POST['siteCollect'];
+      // $siteCollect = $_POST['siteCollect'];
+      $siteCollect = str_replace(',', '，', $_POST['siteCollect']);
       $siteUrl = $_POST['siteUrl'];
       
       if(!empty($siteCollect) && !empty($siteUrl)) {
