@@ -1,0 +1,97 @@
+使用Cloudflare CDN 反向代理加速V2ray的访问,https://www.hicairo.com/post/28.html
+Cloudflare Workers: 反向代理 | 重定向,https://www.j000e.com/cloudflare/cfworkers_reverse_proxy.html
+使用CloudFlare的Workers反向代理网站的三种源码,https://www.wangfuchao.com/396/
+用 Cloudflare Workers 免费反代任意网站，可做谷歌镜像,https://blog.wangtwothree.com/code/47.html
+利用Cloudflare Workers搭建反向代理,https://dzyx.uk/2020/05/02/19/
+使用 Cloudflare Workers 解决 OpenAI 和 ChatGPT 的 API 无法访问的问题,https://github.com/noobnooc/noobnooc/discussions/9
+Project V 官方网站,https://www.v2ray.com/
+给节点套上CF的warp，彻底解决access denied error code 1020问题,https://mailberry.com.cn/2023/02/cf-solve-it-completely-error-code-1020-by-warp/
+V2ray使用Cloudflare中转流量，拯救被墙的IP,https://www.hicairo.com/post/24.html
+自建wireguard服务器教程,https://tr3.freeair888.club/%E8%87%AA%E5%BB%BAwireguard%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B/
+WireGuard VPN 服务器一键安装脚本,https://github.com/hwdsl2/wireguard-install/blob/master/README-zh.md
+OpenVPN 服务器一键安装脚本,https://github.com/hwdsl2/openvpn-install/blob/master/README-zh.md
+自建WireGuard VPN服务器教程,https://github.com/Alvin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAWireGuard-VPN%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B
+Udp2raw-tunnel,https://github.com/wangyu-/udp2raw/blob/unified/doc/README.zh-cn.md
+ChatGPT-Telegram-Workers,https://github.com/TBXark/ChatGPT-Telegram-Workers
+【WGCF】连接CF WARP为服务器添加IPv4/IPv6网络,https://github.com/fscarmen/warp
+xray安装之小小白白话文,https://xtls.github.io/document/
+Xray-TLS+Web搭建/管理脚本,https://github.com/kirin10000/Xray-script
+WireGuard一键安装教程以及脚本,https://qiangwaikan.com/wireguard/
+WireGuard installer,https://github.com/angristan/wireguard-install
+WireGuard 服务器一键安装脚本,https://github.com/chinashiyu/wireguard
+Wireguard VPN配置文件分发工具,https://github.com/GongT/wireguard-config-distribute
+Xray教程,https://itlanyan.com/xray-tutorial/#bnp_i_2
+udp2raw+kcptun 加速tcp流量 Step by Step 教程,https://github.com/wangyu-/udp2raw/blob/unified/doc/kcptun_step_by_step.md
+udp2raw+finalspeed 加速tcp流量 Step by Step 教程,https://github.com/wangyu-/udp2raw/blob/unified/doc/finalspeed_step_by_step.md
+v2ray使用cloudflare中转流量，拯救被墙ip,https://v2xtls.org/v2ray%e4%bd%bf%e7%94%a8cloudflare%e4%b8%ad%e8%bd%ac%e6%b5%81%e9%87%8f%ef%bc%8c%e6%8b%af%e6%95%91%e8%a2%ab%e5%a2%99ip/
+V2Ray之TLS+WebSocket+Nginx+CDN配置方法,https://github.com/bannedbook/fanqiang/blob/master/v2ss/V2Ray%E4%B9%8BTLS+WebSocket+Nginx+CDN%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95.md#%E9%85%8D%E7%BD%AE-v2ray
+V2Ray+WebSocket+TLS+Nginx配置与使用教程,https://ssrvps.org/archives/9376
+Vmess协议,https://toutyrater.github.io/basic/vmess.html
+V2Ray翻墙完全教程(WS+TLS+Web)【请更新V2Ray客户端至4.23.2以上】 ,https://pincong.rocks/article/id-15493__sort_key-add_time__sort-DESC
+v2ray+nginx反向代理示例文件,https://github.com/v2fly/v2ray-core/issues/1873
+v2ray如何实现负载均衡,https://toutyrater.github.io/app/balance.html
+v2ray进阶篇：负载均衡实现多线程下载带宽叠加，油管8K视频秒开,https://www.hicairo.com/post/41.html
+V2Ray高级技巧：流量伪装,https://itlanyan.com/v2ray-traffic-mask/
+科学上网,https://github.com/haoel/haoel.github.io#94-cloudflare-warp-%E5%8E%9F%E7%94%9F-ip
+WebSocket + TLS + Web,https://guide.v2fly.org/advanced/wss_and_web.html#%E9%85%8D%E7%BD%AE
+Trojan基本原理,https://p4gefau1t.github.io/trojan-go/basic/trojan/
+3分钟学会安卓手机使用V2rayNG上国外网站的方法,https://jichangclub.com/v2rayng.html
+v2rayNG,https://github.com/2dust/v2rayNG/releases
+v2ray内置的域名文件geosite,https://toutyrater.github.io/routing/sitedata.html
+v2ray的命令行参数,https://www.v2ray.com/chapter_00/command.html
+官方博客：v2ray客户端路由策略,https://toutyrater.github.io/basic/routing/
+v2ray路由功能,https://www.v2ray.com/chapter_02/03_routing.html
+v2fly：下载最新版本v2ray,https://www.v2fly.org/guide/install.html
+新 V2Ray 白话文指南,https://guide.v2fly.org/app/parent.html#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE-v2ray-4-21-0
+v2ray官方WebSocket+TLS+Web配置方案,https://toutyrater.github.io/advanced/wss_and_web.html
+v2ray官方路由规则设定方法,https://toutyrater.github.io/routing/configurate_rules.html
+SSL/TLS协议运行机制的概述,https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html
+在firfox浏览器上安装插件Bing Chat for All Browsers,https://addons.mozilla.org/en-US/firefox/addon/bing-chat-for-all-browsers/
+chrome设置socks5代理插件SwitchyOmega,https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=zh-CN
+Bing Chat for All Browsers 扩展,https://chrome.google.com/webstore/detail/bing-chat-for-all-browser/jofbglonpbndadajbafmmaklbfbkggpo
+Amazon – AWS免费一年云主机 以及使用中的一些坑,https://www.yunloc.com/719.html
+AWS注册教程（最后有小贴士）,https://aws.tcloudpower.com/?id=12
+VPS优惠,https://www.yunloc.com/vps
+自建在线云浏览器,https://blog.tanglu.me/web-browser/
+Github Copilot 的使用方法和快捷键,https://tutorials.tinkink.net/zh-hans/vscode/copilot-usage-and-shortcut.html
+在线web代理 tanglu.me,https://web.tanglu.me
+hyperbeam,https://hyperbeam.com/app/
+Hyperbeam 一款国外免费的在线云浏览器 访问网站不受限制！,https://www.i3zh.com/20715.html
+免费的ChatGPT镜像网站列表,https://github.com/LiLittleCat/awesome-free-chatgpt
+ChatGPT 在线体验网站收集列表,https://github.com/weekend-project-space/chatgpt-sites
+ChatGPT网址导航-分享免费好用AI网站！,https://github.com/LangLangShanDeNanKe/chatgpt
+openai notionai chatgpt 免费chatgpt资源整理 MidJourney关键词 prompt chatgpt代理配置 ,https://github.com/wangschang/chatgpt-resource
+收集国内免费ChatGPT镜像,https://github.com/GentleLemon/ChatGPT-Anything
+steamship的GPT-4使用教程,https://github.com/wangschang/chatgpt-resource/blob/main/steamship/steamship.md
+cursor的官方github网址,https://github.com/getcursor/cursor
+通过Cursor工具使用GPT-4的方法,https://cloud.tencent.com/developer/article/2242959?areaSource=100001.8&traceId=xt5_19w5KCJjM9qhc_6A2
+AI研习社-ChatGPT国内平替网站 (持续更新),https://zl49so8lbq.feishu.cn/wiki/wikcnMEVynrv6f4RAAJzoZUFpHe
+中文chatgpt文档汇总,https://gitlab.com/awesomeai/awesome-chatgpt-zh
+超详细Hexo+Github Page搭建技术博客教程（含SEO优化）,https://mp.weixin.qq.com/s/fTAmZfjpuFc9hdeqgrwmkw
+chatGPT超神之路,https://bwiny5w2svt.feishu.cn/wiki/wikcnsNHNHLtix8JkPcXfz4VNnh
+Node.js入门教程,https://github.com/liuxing/node-abc
+The 60 best love songs of all time,https://www.timeout.com/music/60-best-love-songs
+中文独立博客列表 ,https://github.com/timqian/chinese-independent-blogs#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%94%B6%E9%9B%86%E8%BF%99%E5%BC%A0%E5%88%97%E8%A1%A8
+中文博客琅琊榜-只收录精品独立博客,https://github.com/qianguyihao/blog-list
+学生优惠和教育优惠,https://github.com/ivmm/Student-resources
+chatGPT私有化部署 ,https://github.com/mic1on/chatGPT-web
+如何搭建一个高效的代理池,https://github.com/Python3WebSpider/ProxyPool
+Cloudflare提供的帮助您识别与您正在访问的网站之间的连接信息,https://chat.openai.com/cdn-cgi/trace
+最简单快捷部署属于自己的ChatGPT Telegram机器人的方法,https://github.com/TBXark/ChatGPT-Telegram-Workers/blob/master/doc/DEPLOY.md
+ChatGPT Telegram Bot,https://github.com/karfly/chatgpt_telegram_bot
+ChatGPT UI 是一个非官方的 ChatGPT Web 客户端,https://wongsaang.github.io/chatgpt-ui/zh/
+Windows10/11 设置 Socks 代理的方法,https://blog.51cto.com/u_15080016/4320045
+苯苯博客,https://blognas.hwb0307.com/linux/docker/4201
+V2Ray进阶指南：WSS组合配置(WebSocket + TLS + Nginx + CDN) ,https://cyfeng.science/2020/03/22/advanced-v2ray-with-wss/
+trojan教程,https://itlanyan.com/trojan-tutorial/
+Trojan-Go文档,https://p4gefau1t.github.io/trojan-go/
+翻墙-科学上网、翻墙工具、翻墙教程项目库,https://github.com/bannedbook/fanqiang
+自建hysteria服务器教程,https://github.com/Alvin9999/new-pac/wiki/%E8%87%AA%E5%BB%BAhysteria%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%95%99%E7%A8%8B
+Azure 免费帐户（学生包方式） 申请教程 获得 $100 额度,https://help.azfa.me/2022/12/01/Az100/
+Test ping time (latency) for different cloud providers like AWS  Azure GCP Digital Ocean from your web browser,https://cloudpingtest.com/
+azure 学生包激活,https://zbttl-github-io.vercel.app/github-xue-sheng-bao-he-azure-yang-mao/
+使用Azure学生订阅创建免费的Linux和Windows服务器,https://blog.qzink.me/archives/4.html
+关于微软Azure学生白嫖指南,https://isedu.top/index.php/archives/52/
+2022年5月虚拟号Google Voice注册成功记录,https://zhuanlan.zhihu.com/p/516941923
+使用 CloudFlare+SimpleLogin 搭建私人匿名邮箱,https://cccc.pw/archives/simplelogin
+指纹浏览器推荐,https://zhuanlan.zhihu.com/p/611762468
