@@ -8,7 +8,7 @@ $title = "siteCollect";
 // 将siteCollect.php 替换为新的 php 脚本文件名
 $logout_script = "siteCollect.php?logout=true";
 // 设置网站图标的 URL
-$icon_url = "http://101.200.215.127/00_logo/firewall.png";
+$icon_url = "http://101.200.300.400/00_logo/firewall.png";
 
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
