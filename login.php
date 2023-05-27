@@ -2,9 +2,14 @@
 ob_start(); // 开始输出缓冲
 session_start();
 
+// 设置用户名
 $username = 'example';
+// 设置密码
 $password = 'password123';
+// 登陆成功后跳转的文件名
 $redirect = 'lsfile.php';
+// 登陆脚本文件名，推荐使用默认的 login.php
+$filename = 'login.php';
 
 // 如果用户已经登录，重定向到受保护的页面
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
@@ -94,7 +99,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <?php if (isset($error)) { ?>
         <p class="error-message"><?php echo $error; ?></p>
     <?php } ?>
-    <form method="post" action="login.php">
+    <form method="post" action="<?php echo $filename; ?>">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username">
 
