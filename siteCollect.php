@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// 设置保存标题和网址的文件名
+// 设置保存标题和网址的文件名，推荐txt文件名为php脚本文件名的扩展
 $filename = "siteCollectUrl.txt";
 // 设置网站页面标题
 $title = "siteCollect";
