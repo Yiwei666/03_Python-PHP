@@ -1,106 +1,112 @@
 <?php
-ob_start(); // start output buffering
+ob_start(); // 开始输出缓冲
 session_start();
 
-// If the user is already logged in, redirect to the protected page
+$username = 'example';
+$password = 'password123';
+$redirect = 'lsfile.php';
+
+// 如果用户已经登录，重定向到受保护的页面
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-  header('Location: lsfile.php');
-  exit;
+    header("Location: $redirect");
+    exit;
 }
 
-// Check if the user submitted the login form
+// 检查用户是否提交了登录表单
 if (isset($_POST['username']) && isset($_POST['password'])) {
-  // Verify the username and password (replace with your own verification code)
-  if ($_POST['username'] === 'example' && $_POST['password'] === 'password123') {
-    // Authentication successful, set session variables
-    $_SESSION['loggedin'] = true;
-    $_SESSION['username'] = $_POST['username'];
+    // 验证用户名和密码（请使用自己的验证代码替换）
+    if ($_POST['username'] === $username && $_POST['password'] === $password) {
+        // 认证成功，设置会话变量
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $_POST['username'];
 
-    // Redirect to the protected page
-    header('Location: lsfile.php');
-    exit;
-  } else {
-    // Authentication failed, display error message
-    $error = 'Incorrect username or password';
-  }
+        // 重定向到受保护的页面
+        header("Location: $redirect");
+        exit;
+    } else {
+        // 认证失败，显示错误消息
+        $error = 'Incorrect username or password';
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Login</title>
-  <style>
-    body {
-      background-color: #f2f2f2;
-    }
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
 
-    #login-form {
-      max-width: 400px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
+        #login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
 
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 3px;
-      border: 1px solid #ccc;
-      margin-bottom: 20px;
-    }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
 
-    button {
-      background-color: #4CAF50;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
 
-    button:hover {
-      background-color: #45a049;
-    }
+        button:hover {
+            background-color: #45a049;
+        }
 
-    .error-message {
-      color: #f00;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-  </style>
+        .error-message {
+            color: #f00;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div id="login-form">
+<div id="login-form">
     <h1>Login</h1>
     <?php if (isset($error)) { ?>
-      <p class="error-message"><?php echo $error; ?></p>
+        <p class="error-message"><?php echo $error; ?></p>
     <?php } ?>
     <form method="post" action="login.php">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
 
-      <button type="submit">Log in</button>
+        <button type="submit">Log in</button>
     </form>
-  </div>
+</div>
 </body>
 </html>
+
 <?php
-ob_end_flush(); // flush output buffer
+ob_end_flush(); // 刷新输出缓冲
 ?>
