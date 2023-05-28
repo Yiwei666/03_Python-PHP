@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+$filename = "questiondata.txt";
+$scriptname = "question.php";
+
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header('Location: login.php');
@@ -56,20 +59,20 @@ if (isset($_GET['logout'])) {
   </style>
   <script>
     function toggleVisibility() {
-      window.location.href = "http://101.200.215.126/question.php";
+      window.location.href = "http://101.200.215.126/<?php echo $scriptname; ?>";
     }
   </script>
 </head>
 <body>
 <h3>Write to Question File</h3>
-<form action="question.php" method="post">
+<form action="<?php echo $scriptname; ?>" method="post">
   <p><label for="questiondata">Enter Question Data:</label></p>
   <textarea rows="16" cols="100" id="questiondata" name="questiondata"></textarea><br><br>
   <input type="submit" value="Submit Question">
 </form>
 
   <br><br>
-<form action="question.php" method="get">
+<form action="<?php echo $scriptname; ?>" method="get">
   <input type="submit" value="Display Latest Content" name="display_content">
 </form>
 <div class="unshow-container">
@@ -80,15 +83,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   date_default_timezone_set("Asia/Shanghai");
   $data = $_POST['questiondata'];
   $data = "[" . date("Y-m-d H:i:s") . "]\n" . $data . "\n\n";
-  $file = fopen("questiondata.txt", "r");
-  $content = fread($file, filesize("questiondata.txt"));
+  $file = fopen($filename, "r");
+  $content = fread($file, filesize($filename));
   fclose($file);
-  $file = fopen("questiondata.txt", "w");
+  $file = fopen($filename, "w");
   fwrite($file, $data . $content);
   fclose($file);
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['display_content'])) {
-  $file = fopen("questiondata.txt", "r");
-  $content = fread($file, filesize("questiondata.txt"));
+  $file = fopen($filename, "r");
+  $content = fread($file, filesize($filename));
   fclose($file);
   echo "<br><br><textarea rows='24' cols='100' readonly>" . $content . "</textarea>";
 }
@@ -96,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!--下面的main，footer是有关logout的style-->
 <main>
   <p>You have successfully logged in.</p>
-  <p><a href="question.php?logout=true">Logout</a></p>
+  <p><a href="<?php echo $scriptname; ?>?logout=true">Logout</a></p>
 </main>
 <footer>
   <p>Copyright &copy; 2023 Your Company Name</p>
