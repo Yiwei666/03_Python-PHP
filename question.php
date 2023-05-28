@@ -1,9 +1,24 @@
 <?php
 session_start();
 
+// 保存内容的文件名
 $filename = "questiondata.txt";
+// php文件名
 $scriptname = "question.php";
-
+// logo的url
+$logo_url = "http://101.200.215.126/00_logo/question.png";
+// php文件名的url
+$question_url = "http://101.200.215.126/question.php";
+// title和h3的内容
+$write_text = "Write to Question File";
+// 输入框上面的文字
+$enter_text = "Enter Question Data";
+// 提交按钮的文字
+$submit_text = "Submit Question";
+// 显示按钮的文字
+$display_text = "Display Latest Content";
+// 末尾公司名字
+$company_name = "Your Company Name";
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header('Location: login.php');
@@ -21,8 +36,8 @@ if (isset($_GET['logout'])) {
 <html>
 <head>
   <meta charset="utf-8">
-  <link rel="shortcut icon" href="http://101.200.215.126/00_logo/question.png">
-  <title>Write to Question File</title>
+  <link rel="shortcut icon" href="<?php echo $logo_url; ?>">
+  <title><?php echo $write_text; ?></title>
   <style>
     
     h3 {
@@ -59,21 +74,21 @@ if (isset($_GET['logout'])) {
   </style>
   <script>
     function toggleVisibility() {
-      window.location.href = "http://101.200.215.126/<?php echo $scriptname; ?>";
+      window.location.href = "<?php echo $question_url; ?>";
     }
   </script>
 </head>
 <body>
-<h3>Write to Question File</h3>
+<h3><?php echo $write_text; ?></h3>
 <form action="<?php echo $scriptname; ?>" method="post">
-  <p><label for="questiondata">Enter Question Data:</label></p>
+  <p><label for="questiondata"><?php echo $enter_text; ?>:</label></p>
   <textarea rows="16" cols="100" id="questiondata" name="questiondata"></textarea><br><br>
-  <input type="submit" value="Submit Question">
+  <input type="submit" value="<?php echo $submit_text; ?>">
 </form>
 
   <br><br>
 <form action="<?php echo $scriptname; ?>" method="get">
-  <input type="submit" value="Display Latest Content" name="display_content">
+  <input type="submit" value="<?php echo $display_text; ?>" name="display_content">
 </form>
 <div class="unshow-container">
   <input type="button" value="Unshow" onclick="toggleVisibility()">
@@ -102,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p><a href="<?php echo $scriptname; ?>?logout=true">Logout</a></p>
 </main>
 <footer>
-  <p>Copyright &copy; 2023 Your Company Name</p>
+  <p>Copyright &copy; 2023 <?php echo $company_name; ?></p>
 </footer>
 </body>
 </html>
