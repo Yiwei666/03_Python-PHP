@@ -18,6 +18,7 @@ if (isset($_GET['logout'])) {
 <html>
 <head>
   <meta charset="UTF-8">
+  <link rel="shortcut icon" href="http://101.200.215.127/00_logo/siteName.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>chatGPT-3.5</title>
   <style>
