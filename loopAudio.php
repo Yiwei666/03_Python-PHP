@@ -19,6 +19,16 @@
             var audio = new Audio(audioUrl);
             audio.loop = true;
             audio.play();
+
+            // 定时检查音频是否已经播放完毕
+            setInterval(function() {
+                if (audio.ended) {
+                    // 等待 1.5 秒后再次播放音频
+                    setTimeout(function() {
+                        audio.play();
+                    }, 1500);
+                }
+            }, 100);
         }
 
         // 如果音频链接不为空，则播放音频
