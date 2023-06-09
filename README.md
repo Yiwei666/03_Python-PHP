@@ -1,4 +1,10 @@
 # Python-PHP
+```
+infoo.php, 	paragraph.php, question.php, washbrain.php 总体上使用的是同一个模板， paragraph.php 显示方式略有不同
+
+
+```
+
 
 
 ### 02_parser.py
