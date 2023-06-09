@@ -3,7 +3,7 @@
 infoo.php, paragraph.php, question.php, washbrain.php 总体上使用的是同一个模板， paragraph.php 显示方式略有不同
 lsfileTime.php, siteCollect.php, siteName.php 显示网站链接，架构完全不同
 login.php, logout.php 登入、登出脚本，还有基于哈希函数的版本
-hhashConvert.php 将字符串转换为哈希值
+hashConvert.php 将字符串转换为哈希值
 uname.php        生成html和markdown格式的链接
 mysqldict.php    基于mysql数据库的在线词典
 pdfcat.php       在线查看pdf文件
@@ -12,6 +12,7 @@ kkmusic.php      每天更新可可英语的听歌学英语音频
 google.php       搜索指定网站关键词脚本 
 mgugesrch.php    辅助生成google.php网站指定代码
 s1_clock.php     倒计时跳转到指定网站
+loopAudio.php    循环播放指定链接音频
 
 ```
 
