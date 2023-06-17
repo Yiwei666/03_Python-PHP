@@ -10,8 +10,9 @@
         .video-container {
             display: flex;
             justify-content: center;
-            width: 100%; /* 将视频容器的宽度设置为100% */
+            width: 50%; /* 将视频容器的宽度设置为100% */
             flex-wrap: wrap; /* 允许视频容器换行 */
+            margin: auto; /* 将视频容器水平居中 */
         }
         .video-row {
             display: flex;
@@ -22,7 +23,7 @@
             margin-bottom: 0; /* 修改为0，取消行之间的距离 */
         }
         .video-row .video {
-            flex-basis: calc(100% / <?php echo $videosPerRow; ?> - var(--video-column-gap) * 2); /* 设置每个视频的宽度为容器宽度除以每行的视频数量，并考虑水平间距 */
+            flex-basis: calc(50% / <?php echo $videosPerRow; ?> - var(--video-column-gap) * 2); /* 设置每个视频的宽度为容器宽度除以每行的视频数量，并考虑水平间距 */
             margin: 0 var(--video-column-gap); /* 使用CSS变量设置每个视频之间的水平距离 */
         }
     </style>
