@@ -45,20 +45,25 @@
 
         echo '<div class="video-container">'; // 添加一个新的容器
 
+        $videoIndex = 0;
+
         for ($i = 0; $i < $rows; $i++) {
             echo '<div class="video-row">';
             for ($j = 0; $j < $videosPerRow; $j++) {
-                $index = $i * $videosPerRow + $j;
-                if ($index < $totalVideos) {
-                    $video = $videos[$index];
-                    $videoName = basename($video);
-                    $videoUrl = $domain . '/01_yiGongZi/' . $videoName;
-                    echo '<div class="video">';
-                    echo '<video controls width="320" height="240">';
-                    echo '<source src="' . $videoUrl . '" type="video/mp4">';
-                    echo '</video>';
-                    echo '<p>' . $videoName . '</p>'; // 添加视频文件名
-                    echo '</div>';
+                $video = $videos[$videoIndex];
+                $videoName = basename($video);
+                $videoUrl = $domain . '/01_yiGongZi/' . $videoName;
+                echo '<div class="video">';
+                echo '<video controls width="400" height="300" onended="playNextVideo(this)">'; // 添加onended事件
+                echo '<source src="' . $videoUrl . '" type="video/mp4">';
+                echo '</video>';
+                echo '<p>' . $videoName . '</p>'; // 添加视频文件名
+                echo '</div>';
+
+                $videoIndex++;
+
+                if ($videoIndex >= $totalVideos) {
+                    break;
                 }
             }
             echo '</div>';
@@ -69,5 +74,30 @@
         echo '没有找到任何视频文件。';
     }
     ?>
+
+    <script>
+        function playNextVideo(currentVideo) {
+            var videoContainer = currentVideo.parentElement.parentElement;
+            var videosInContainer = videoContainer.querySelectorAll('.video');
+            var currentIndex = Array.from(videosInContainer).indexOf(currentVideo.parentElement);
+
+            if (currentIndex < videosInContainer.length - 1) {
+                var nextVideo = videosInContainer[currentIndex + 1].querySelector('video');
+                if (nextVideo) {
+                    nextVideo.play();
+                    return;
+                }
+            }
+
+            var nextRow = videoContainer.nextElementSibling;
+            if (nextRow) {
+                var videosInNextRow = nextRow.querySelectorAll('.video');
+                var firstVideo = videosInNextRow[0].querySelector('video');
+                if (firstVideo) {
+                    firstVideo.play();
+                }
+            }
+        }
+    </script>
 </body>
 </html>
