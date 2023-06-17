@@ -1,6 +1,18 @@
 <?php
 session_start();
 
+// logo图片地址
+$logo_url = "http://101.200.215.127/00_logo/list.png";
+
+// 服务器根目录，通常位域名或者ip地址
+$root_url = "http://101.200.215.127/";
+
+// php文件名
+$scriptname = "lsfileTime.php";
+
+// 末尾公司名字
+$company_name = "Your Company Name";
+
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   header('Location: login.php');
@@ -19,7 +31,7 @@ if (isset($_GET['logout'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="http://101.200.215.127/00_logo/list.png">
+    <link rel="shortcut icon" href="<?php echo $logo_url; ?>">
     <title>List of Files</title>
     <style>
       body {
@@ -92,7 +104,7 @@ if (isset($_GET['logout'])) {
       if ($count % 6 == 0) {
         echo "<tr>";
       }
-      echo "<td><a target='_blank' rel='noopener' href='http://101.200.215.127/" . $file . "'>" . $file . "</a></td>";
+      echo "<td><a target='_blank' rel='noopener' href='" . $root_url . $file . "'>" . $file . "</a></td>";
       $count++;
       if ($count % 6 == 0) {
         echo "</tr>";
@@ -113,10 +125,10 @@ if (isset($_GET['logout'])) {
 <!--下面的main，footer是有关logout的style-->
 <main>
   <p>You have successfully logged in.</p>
-  <p><a href="lsfile.php?logout=true">Logout</a></p>
+  <p><a href="<?php echo $scriptname; ?>?logout=true">Logout</a></p>
 </main>
 <footer>
-  <p>Copyright &copy; 2023 Your Company Name</p>
+  <p>Copyright &copy; 2023 <?php echo $company_name; ?></p>
 </footer>
 </body>
 </html>
