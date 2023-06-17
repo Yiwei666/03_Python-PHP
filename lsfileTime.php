@@ -2,10 +2,10 @@
 session_start();
 
 // logo图片地址
-$logo_url = "http://101.200.215.127/00_logo/list.png";
+$logo_url = "http://102.200.215.126/00_logo/list.png";
 
 // 服务器根目录，通常位域名或者ip地址
-$root_url = "http://101.200.215.127/";
+$root_url = "http://102.200.215.126/";
 
 // php文件名
 $scriptname = "lsfileTime.php";
