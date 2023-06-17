@@ -14,6 +14,9 @@ mgugesrch.php                 # 辅助生成google.php网站指定代码
 s1_clock.php                  # 倒计时跳转到指定网站
 loopAudio.php                 # 循环播放指定链接音频
 
+11_wordsmart.php
+12_EssentialWord.php
+13_PlanetEarth.php
 ```
 
 
