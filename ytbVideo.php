@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>MP4 视频播放器</title>
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/video.png">
     <style>
         :root {
             --video-row-gap: 5px; /* 设置每一行视频之间的距离 */
