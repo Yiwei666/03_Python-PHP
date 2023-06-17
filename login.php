@@ -5,7 +5,7 @@ session_start();
 // 设置用户名
 $username = 'example';
 // 设置密码
-$password = 'password123';
+$password = 'password';
 // 登陆成功后跳转的文件名
 $redirect = 'lsfile.php';
 // 登陆脚本文件名，推荐使用默认的 login.php
