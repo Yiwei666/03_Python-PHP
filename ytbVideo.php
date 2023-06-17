@@ -4,7 +4,7 @@
     <title>MP4 视频播放器</title>
     <style>
         :root {
-            --video-row-gap: 10px; /* 设置每一行视频之间的距离 */
+            --video-row-gap: 5px; /* 设置每一行视频之间的距离 */
             --video-column-gap: 10px; /* 设置每个视频之间的水平距离 */
         }
         .video-container {
@@ -26,6 +26,9 @@
             flex-basis: calc(50% / <?php echo $videosPerRow; ?> - var(--video-column-gap) * 2); /* 设置每个视频的宽度为容器宽度除以每行的视频数量，并考虑水平间距 */
             margin: 0 var(--video-column-gap); /* 使用CSS变量设置每个视频之间的水平距离 */
         }
+        .video p {
+            text-align: center; /* 让视频文件名在其所在的视频容器中水平居中显示 */
+        }
     </style>
 </head>
 <body>
@@ -34,7 +37,7 @@
     $videoPath = '/home/01_html/01_yiGongZi/';
     $videos = glob($videoPath . '*.mp4');
     $totalVideos = count($videos);
-    $videosPerRow = 3; // 可以根据需要更改每行显示的视频数量
+    $videosPerRow = 2; // 可以根据需要更改每行显示的视频数量
 
     if ($totalVideos > 0) {
         $rows = ceil($totalVideos / $videosPerRow);
@@ -53,6 +56,7 @@
                     echo '<video controls width="320" height="240">';
                     echo '<source src="' . $videoUrl . '" type="video/mp4">';
                     echo '</video>';
+                    echo '<p>' . $videoName . '</p>'; // 添加视频文件名
                     echo '</div>';
                 }
             }
