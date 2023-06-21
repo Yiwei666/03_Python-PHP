@@ -25,7 +25,7 @@
         <div class="audio-player">
             <?php
             // 定义文件路径变量
-            $filePath = '/home/experiment/finalmusic.txt';
+            $filePath = '/home/01_html/04_kekemusic/finalmusic.txt';
             // 读取文件内容，每个链接占据一行
             $links = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
