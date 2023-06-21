@@ -1,4 +1,8 @@
 
+
+
+01keke.py 和 musicdown.py 搭配使用的crontab定时任务脚本
+
 ```
 0 21 * * * rm  /home/experiment/musicUrl.txt
 0 21 * * * rm  /home/experiment/finalmusic.txt
