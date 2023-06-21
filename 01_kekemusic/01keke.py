@@ -10,9 +10,9 @@ from bs4 import BeautifulSoup
 import chardet
 
 
-url_01 = '/home/01_html/01_kekemusic/latest.html'
+url_01 = '/home/01_html/04_kekemusic/latest.html'
 
-url_02 = '/home/01_html/01_kekemusic/musicUrl.txt'       # 存储所有子页面链接
+url_02 = '/home/01_html/04_kekemusic/musicUrl.txt'       # 存储所有子页面链接
 
 
 # 读取HTML文件并检测编码
