@@ -6,11 +6,11 @@ from datetime import datetime
 import os
 
 # 从文件中读取字符串
-with open("douyin_url.txt", "r") as file:
+with open("/home/01_html/05_douyinDownload/douyin_url.txt", "r") as file:
     text = file.read().strip()
 
 # 创建日志文件
-log_file = open("douyin_log.txt", "w")
+log_file = open("/home/01_html/05_douyinDownload/douyin_log.txt", "w")
 
 # 将print语句输出到日志文件
 def log_print(*args, **kwargs):
