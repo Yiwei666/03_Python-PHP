@@ -11,9 +11,9 @@ import time
 from bs4 import BeautifulSoup
 import chardet
 
-url_01 = '/home/experiment/musicUrl.txt'        # 保存有所有子页面链接
-url_02 = '/home/experiment/music.html'          # 下载的子页面html文件，覆盖保存
-url_03 = '/home/experiment/finalmusic.txt'      # 音频链接
+url_01 = '/home/01_html/04_kekemusic/musicUrl.txt'        # 保存有所有子页面链接
+url_02 = '/home/01_html/04_kekemusic/music.html'          # 下载的子页面html文件，覆盖保存
+url_03 = '/home/01_html/04_kekemusic/finalmusic.txt'      # 音频链接
 
 with open( url_01 , 'r') as f:   # musicUrl.txt 为保存所有音频链接的文本
     links = f.readlines()
