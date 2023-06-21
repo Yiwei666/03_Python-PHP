@@ -17,3 +17,4 @@ centos系统查看python安装路径命令
 which python
 ```
 
+注意kekemusic.php脚本可以不用与python脚本放在同一个目录下
