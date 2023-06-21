@@ -5,18 +5,19 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import os
 
+text = input("请输入字符串: ")
+print("输入的字符串是:", text)
+
 def extract_links(text):
     pattern = r"(https?://\S+)"
     links = re.findall(pattern, text)
     return links
 
-text = input("请输入字符串: ")
-print("输入的字符串是:", text)
-
 video_url = extract_links(text)[0]
 encoded_url = quote(video_url, safe="")
 url1 = "https://dlpanda.com/zh-CN/?url="
 url = url1 + encoded_url + "&token=G7eRpMaa"
+
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
