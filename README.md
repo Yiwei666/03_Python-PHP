@@ -34,6 +34,8 @@ html文本解析
 - **03_douYinLink**
 ```
 输入一个抖音短视频分享链接，获取该视频无水印下载链接和视频，视频用日期命名
+03_douYinLink 是基于 01_htmldown.py 和 02_parser.py 整合而来的
+
 ```
 
 
