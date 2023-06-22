@@ -6,6 +6,10 @@ run_python_script.php
 print_log_file.php
 ```
 
+视频下载脚本可以位于其他目录，推荐与txt文件位于同一目录，便于管理
+```
+01_douyinDown.py
+```
 
 ### 注意在相应路径下创建这两个文件
 
