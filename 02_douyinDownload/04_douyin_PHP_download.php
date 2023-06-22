@@ -17,12 +17,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Douyin Downloader</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #inputForm {
+            text-align: center;
+        }
+        #inputText {
+            width: 400px;
+            height: 200px;
+        }
+        #saveButton {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <form id="inputForm" method="POST">
-        <textarea id="inputText" rows="5" cols="50" placeholder="请输入字符串"></textarea>
+        <textarea id="inputText" name="input" rows="5" cols="50" placeholder="请输入字符串"></textarea>
         <br>
-        <input type="submit" value="保存并执行">
+        <input id="saveButton" type="submit" value="保存并执行">
     </form>
 
     <div id="output"></div>
