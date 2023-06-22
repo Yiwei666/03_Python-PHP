@@ -62,6 +62,15 @@ $videoUrl = $domain . '/02_douyVideo/' . $videoName;
 - **ytbVideo.php**
 ```
 720P youtube视频播放脚本
+
+以下是代码的简要总结：
+
+    该网页使用PHP代码来获取指定目录下的所有MP4视频文件。
+    它使用CSS样式来布局和美化视频播放器。
+    PHP代码将视频文件分配到每一行中，每行显示指定数量的视频。
+    每个视频都包含一个视频播放器和视频文件名。
+    JavaScript代码为视频播放器添加了一个事件处理函数，当一个视频播放结束时，它会自动播放下一个视频。
+    如果一行的所有视频都播放完毕，它会继续播放下一行的第一个视频。
 ```
 视频下载脚本链接：https://github.com/Yiwei666/05_C_programing/blob/main/video/download_youtube_vps.py
 
