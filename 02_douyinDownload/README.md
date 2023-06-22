@@ -1,22 +1,22 @@
-### 文件位置
+### 主要脚本和文件位置
 下面三个php脚本需要位于同一目录
 ```
-04_douyin_PHP_download.php
-run_python_script.php
-print_log_file.php
+04_douyin_PHP_download.php       // 在web上提示用户输入抖音视频分享链接，提取url，覆盖写入到txt文件
+run_python_script.php            // 执行python脚本，下载视频
+print_log_file.php               // 打印日志内容到web页面
 ```
 
 视频下载脚本可以位于其他目录，推荐与txt文件位于同一目录，便于管理
 ```
-01_douyinDown.py
+01_douyinDown.py                 // 读取txt文件的url，下载抖音视频，将日志内容覆盖写入日志文件
 ```
 
 ### 注意在相应路径下创建这两个文件
 
 ```
-/home/01_html/05_douyinDownload/douyin_url.txt
+/home/01_html/05_douyinDownload/douyin_url.txt          // 保存抖音url
 
-/home/01_html/05_douyinDownload/douyin_log.txt
+/home/01_html/05_douyinDownload/douyin_log.txt          // 保存python脚本的日志信息
 ```
 
 - **01_douyinDown.py** 脚本将会从douyin_url.txt读取下载链接，然后将脚本中的print信息写入到douyin_log.txt，将mp4视频下载到指定目录。txt文件中的url和日志都是覆盖写入。
