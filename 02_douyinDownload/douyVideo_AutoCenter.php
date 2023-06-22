@@ -54,7 +54,7 @@
                 $videoName = basename($video);
                 $videoUrl = $domain . '/02_douyVideo/' . $videoName;
                 echo '<div class="video">';
-                echo '<video controls width="400" height="300" onended="playNextVideo(this)">'; // 添加onended事件
+                echo '<video controls width="300" height="400" onended="playNextVideo(this)">'; // 添加onended事件
                 echo '<source src="' . $videoUrl . '" type="video/mp4">';
                 echo '</video>';
                 echo '<p>' . $videoName . '</p>'; // 添加视频文件名
