@@ -15,7 +15,7 @@ print_log_file.php
 /home/01_html/05_douyinDownload/douyin_log.txt
 ```
 
-- **01_douyinDown.py** 脚本将会从douyin_url.txt读取下载链接，将py脚本中的print信息写入到douyin_log.txt，将mp4视频下载到指定目录。txt文件中的url和日志都是覆盖写入。
+- **01_douyinDown.py** 脚本将会从douyin_url.txt读取下载链接，然后将脚本中的print信息写入到douyin_log.txt，将mp4视频下载到指定目录。txt文件中的url和日志都是覆盖写入。
 
 
 
