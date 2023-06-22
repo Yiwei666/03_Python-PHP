@@ -26,9 +26,6 @@ def download_video(url, save_path, video_name):
     except Exception as e:
         print("下载失败:", str(e))
 
-# 提供保存视频的路径
-save_path = '/home/01_html/06_youtubeDownload/01_name+url'
-
 # 读取txt文件
 txt_file_path = '/home/01_html/06_youtubeDownload/01_name+url.txt'
 
@@ -38,6 +35,9 @@ with open(txt_file_path, 'r') as file:
     video_url = lines[0].strip()
     # 获取视频名称
     video_name = lines[1].strip()
+
+# 提供保存视频的路径
+save_path = '/home/01_html/01_yiGongZi'
 
 # 调用下载函数并传递URL、保存路径和视频名
 download_video(video_url, save_path, video_name)
