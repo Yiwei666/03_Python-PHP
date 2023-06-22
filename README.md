@@ -31,15 +31,52 @@ loopAudio.php                 # 循环播放指定链接音频
 html文本解析
 ```
 
+
 - **03_douYinLink**
 ```
 运行在本地的脚本，输入一个抖音短视频分享链接，获取该视频无水印下载链接和视频，视频用日期命名，下载视频到同级目录下
 03_douYinLink 是基于 01_htmldown.py 和 02_parser.py 整合而来的
-
 ```
+
+
 - **03_douyinVideo_vps.py**
 ```
 运行在vps上的抖音视频下载脚本，下载视频到指定目录
+```
+
+
+
+- **douyVideo.php**
+```
+浏览器中加载播放vps指定目录下的mp4视频
+
+更改视频路径以及每行显示的视频数量时，需要更改如下代码
+
+$videosPerRow = 3; // 可以根据需要更改每行显示的视频数量
+$videoPath = '/home/01_html/02_douyVideo/';
+$videoUrl = $domain . '/02_douyVideo/' . $videoName;
+
+```
+
+
+- **ytbVideo.php**
+```
+720P youtube视频播放脚本
+```
+
+- **ytbVideo-HQ.php**
+```
+1080P HQ youtube视频播放脚本
+```
+
+- ****
+```
+
+```
+
+- ****
+```
+
 ```
 
 - **siteCollect.php**
