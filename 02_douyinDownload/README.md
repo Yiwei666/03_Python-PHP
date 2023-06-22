@@ -15,6 +15,10 @@ print_log_file.php
 /home/01_html/05_douyinDownload/douyin_log.txt
 ```
 
+- **01_douyinDown.py** 脚本将会从douyin_url.txt读取下载链接，将py脚本中的print信息写入到douyin_log.txt，将mp4视频下载到指定目录
+
+
+
 ### 权限设置
 
 - 浏览器运行php脚本，该php脚本在vps上实现对txt文件的读取和写入，对php脚本的调用，python脚本的调用  
