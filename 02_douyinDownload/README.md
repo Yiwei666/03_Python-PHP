@@ -1,5 +1,5 @@
 ### 文件位置
-下面三个脚本需要位于同一目录
+下面三个php脚本需要位于同一目录
 ```
 04_douyin_PHP_download.php
 run_python_script.php
