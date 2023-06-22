@@ -63,21 +63,16 @@ $videoUrl = $domain . '/02_douyVideo/' . $videoName;
 ```
 720P youtube视频播放脚本
 ```
+视频下载脚本链接：https://github.com/Yiwei666/05_C_programing/blob/main/video/download_youtube_vps.py
+
 
 - **ytbVideo-HQ.php**
 ```
 1080P HQ youtube视频播放脚本
 ```
+通过第三方网站解析获得高清视频链接：https://youtube4kdownloader.com/   
+curl  -o  name.mp4    https://s20.youtube4kdownloader.com/download7/hd5/zhwr5y5fm8/v0/av/c2/cdb18/cd18   
 
-- ****
-```
-
-```
-
-- ****
-```
-
-```
 
 - **siteCollect.php**
 ```
