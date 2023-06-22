@@ -27,6 +27,9 @@
                 // 对文件名数组进行排序
                 sort($files);
 
+                // 插入空行
+                echo "<br>";
+
                 // 打印排序后的文件名
                 foreach ($files as $file) {
                     echo trim($file) . "<br>";
