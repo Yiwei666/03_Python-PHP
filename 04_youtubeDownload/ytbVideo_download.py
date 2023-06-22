@@ -26,16 +26,18 @@ def download_video(url, save_path, video_name):
     except Exception as e:
         print("下载失败:", str(e))
 
-# 提供要下载的YouTube视频的URL
-
-# video_url = "https://www.youtube.com/watch?v=bu7nU9Mhpyo"
-video_url = input("请输入YouTube视频的URL：")
-
 # 提供保存视频的路径
-save_path = '/home/01_html/01_yiGongZi'
+save_path = '/home/01_html/06_youtubeDownload/01_name+url'
 
-# 视频命名
-video_name = "01.mp4"
+# 读取txt文件
+txt_file_path = '/home/01_html/06_youtubeDownload/01_name+url.txt'
+
+with open(txt_file_path, 'r') as file:
+    lines = file.readlines()
+    # 获取视频URL
+    video_url = lines[0].strip()
+    # 获取视频名称
+    video_name = lines[1].strip()
 
 # 调用下载函数并传递URL、保存路径和视频名
 download_video(video_url, save_path, video_name)
