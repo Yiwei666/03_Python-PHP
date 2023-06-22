@@ -51,6 +51,7 @@ print_log_file.php               // 打印日志内容到web页面
 sudo chmod 775 /home/01_html/02_douyVideo
 sudo chown www-data:www-data /home/01_html/02_douyVideo
 ```
+**注意：至少满足drwxrwxr-x  2 nginx nginx**
 
 上述命令将为所有者和组提供读、写和执行权限，并为其他用户提供读和执行权限。将 www-data 替换为您的 Web 服务器使用的实际用户和组。
 
@@ -72,6 +73,8 @@ sudo chown www-data:www-data /path/to/your/script.php
 
 请将 /path/to/your/script.php 替换为实际的 PHP 脚本路径。
 
+**注意：使用默认组用户和读写执行权限-rw-r--r--  1 root  root似乎也没问题**
+
 - Python 脚本：确保 Python 脚本文件具有可执行权限，并且所有者设置为 Web 服务器使用的用户。您可以运行以下命令设置权限和所有者：
 
 ```
@@ -81,6 +84,8 @@ sudo chown www-data:www-data /path/to/your/script.py
 
 请将 /path/to/your/script.py 替换为实际的 Python 脚本路径。
 
+**注意：至少满足-rwxr-xr-x 1 nginx nginx**
+
 - TXT 文件：确保您希望 Python 脚本读写的 TXT 文件具有适当的权限，以便 Web 服务器用户可以访问和修改它们。通常情况下，为了保护文件，不建议将其所有者更改为 Web 服务器用户。相反，您可以确保 TXT 文件具有适当的权限，以允许 Web 服务器用户读写文件。
 
 ```
@@ -88,6 +93,8 @@ sudo chmod 664 /path/to/your/file.txt
 ```
 
 请将 /path/to/your/file.txt 替换为实际的 TXT 文件路径。
+
+**注意：至少满足-rw-rw-rw- 1 nginx nginx**
 
 请注意，确保文件和目录的权限设置能够平衡安全性和可访问性，以防止潜在的安全风险。根据您的实际需求和环境，请适当地调整权限设置。
 
