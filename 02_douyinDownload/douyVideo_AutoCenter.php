@@ -74,7 +74,6 @@
         echo '没有找到任何视频文件。';
     }
     ?>
-
     <script>
         function playNextVideo(currentVideo) {
             var videoContainer = currentVideo.parentElement.parentElement;
@@ -85,6 +84,7 @@
                 var nextVideo = videosInContainer[currentIndex + 1].querySelector('video');
                 if (nextVideo) {
                     nextVideo.play();
+                    scrollToElement(nextVideo.parentElement);
                     return;
                 }
             }
@@ -95,9 +95,18 @@
                 var firstVideo = videosInNextRow[0].querySelector('video');
                 if (firstVideo) {
                     firstVideo.play();
+                    scrollToElement(firstVideo.parentElement.parentElement);
                 }
             }
         }
+
+        function scrollToElement(element) {
+            element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     </script>
+    
 </body>
 </html>
