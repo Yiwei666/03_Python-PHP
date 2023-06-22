@@ -23,7 +23,7 @@ print_log_file.php
 
 - 浏览器运行php脚本，该php脚本在vps上实现对txt文件的读取和写入，对php脚本的调用，python脚本的调用，然后python脚本执行对txt文件的读取和写入，以及下载视频文件到其他文件夹中  
 - 涉及到的所有txt文件需要更改组和读写权限，尤其是python进行读写的txt文件
-- 涉及到的所有脚本和文件夹要添加执行权限，包括视频写入的文件夹和python脚本
+- 涉及到的所有脚本和文件夹要添加执行权限，包括视频写入的文件夹，python脚本,php脚本等
 
 
 ### 示例
@@ -44,3 +44,36 @@ sudo chown www-data:www-data /home/01_html/02_douyVideo
 通过为目录设置适当的权限和所有者，您将允许 Web 服务器用户（如 www-data）能够在该目录下下载和写入 MP4 视频文件。
 
 请注意，如前所述，确保您的权限设置适当平衡安全性和可访问性，以防止潜在的安全风险。
+
+
+您需要确保以下文件具有适当的权限和所有者：
+
+- PHP 脚本：确保 PHP 脚本文件具有可执行权限，并且所有者设置为 Web 服务器使用的用户（如 www-data）。您可以运行以下命令设置权限和所有者：
+
+```
+sudo chmod +x /path/to/your/script.php
+sudo chown www-data:www-data /path/to/your/script.php
+```
+
+请将 /path/to/your/script.php 替换为实际的 PHP 脚本路径。
+
+- Python 脚本：确保 Python 脚本文件具有可执行权限，并且所有者设置为 Web 服务器使用的用户。您可以运行以下命令设置权限和所有者：
+
+```
+sudo chmod +x /path/to/your/script.py
+sudo chown www-data:www-data /path/to/your/script.py
+```
+
+请将 /path/to/your/script.py 替换为实际的 Python 脚本路径。
+
+- TXT 文件：确保您希望 Python 脚本读写的 TXT 文件具有适当的权限，以便 Web 服务器用户可以访问和修改它们。通常情况下，为了保护文件，不建议将其所有者更改为 Web 服务器用户。相反，您可以确保 TXT 文件具有适当的权限，以允许 Web 服务器用户读写文件。
+
+```
+sudo chmod 664 /path/to/your/file.txt
+```
+
+请将 /path/to/your/file.txt 替换为实际的 TXT 文件路径。
+
+请注意，确保文件和目录的权限设置能够平衡安全性和可访问性，以防止潜在的安全风险。根据您的实际需求和环境，请适当地调整权限设置。
+
+在更改文件和目录的权限和所有者之后，重新尝试通过 Web 浏览器访问 PHP 脚本并调用 Python 脚本，以查看是否解决了问题。
