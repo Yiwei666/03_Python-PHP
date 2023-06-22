@@ -50,11 +50,12 @@ html文本解析
 ```
 浏览器中加载播放vps指定目录下的mp4视频
 
-更改视频路径以及每行显示的视频数量时，需要更改如下代码
+更改视频路径，每行显示的视频数量，视频尺寸大小时，需要更改如下代码
 
 $videosPerRow = 3; // 可以根据需要更改每行显示的视频数量
 $videoPath = '/home/01_html/02_douyVideo/';
 $videoUrl = $domain . '/02_douyVideo/' . $videoName;
+echo '<video controls width="300" height="400" onended="playNextVideo(this)">'; // 添加onended事件
 
 ```
 
