@@ -30,6 +30,27 @@
         .video p {
             text-align: center; /* 让视频文件名在其所在的视频容器中水平居中显示 */
         }
+
+
+        .top-button,
+        .bottom-button {
+            position: fixed;
+            padding: 10px;
+            background-color: #ccc;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .top-button {
+            top: 20px;
+            right: 20px;
+        }
+
+        .bottom-button {
+            bottom: 20px;
+            right: 20px;
+        }
+        
     </style>
 </head>
 <body>
@@ -107,6 +128,24 @@
             });
         }
     </script>
-    
+
+    <a href="#top" class="top-button">返回顶部</a>
+    <a href="#bottom" class="bottom-button">返回底部</a>
+
+    <script>
+        var topButton = document.querySelector('.top-button');
+        topButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        var bottomButton = document.querySelector('.bottom-button');
+        bottomButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            var windowHeight = window.innerHeight;
+            var documentHeight = document.documentElement.scrollHeight;
+            window.scrollTo({ top: documentHeight - windowHeight, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>
