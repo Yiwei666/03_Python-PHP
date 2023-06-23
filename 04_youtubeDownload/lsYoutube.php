@@ -34,6 +34,25 @@
             width: 20%;
         }
 
+        .top-button,
+        .bottom-button {
+            position: fixed;
+            padding: 10px;
+            background-color: #ccc;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .top-button {
+            top: 20px;
+            right: 20px;
+        }
+
+        .bottom-button {
+            bottom: 20px;
+            right: 20px;
+        }
+
     </style>
 </head>
 <body>
@@ -81,9 +100,6 @@
                 // 对文件名数组进行排序
                 sort($files);
 
-                // 插入空行
-                echo "<br>";
-
                 // 打印排序后的文件信息
                 echo "<table>";
                 echo "<tr><th class='filename'>文件名</th><th class='date'>日期</th><th class='size'>大小</th></tr>";
@@ -101,5 +117,24 @@
         }
         ?>
     </pre>
+
+    <a href="#top" class="top-button">返回顶部</a>
+    <a href="#bottom" class="bottom-button">返回底部</a>
+
+    <script>
+        var topButton = document.querySelector('.top-button');
+        topButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        var bottomButton = document.querySelector('.bottom-button');
+        bottomButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            var windowHeight = window.innerHeight;
+            var documentHeight = document.documentElement.scrollHeight;
+            window.scrollTo({ top: documentHeight - windowHeight, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>
