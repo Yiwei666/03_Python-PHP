@@ -39,6 +39,8 @@
 <body>
     <pre>
         <?php
+        date_default_timezone_set('Asia/Shanghai');
+
         $directory = '/home/01_html/01_yiGongZi';
 
         // 检查目录是否存在
@@ -52,7 +54,7 @@
                     if ($file != "." && $file != "..") {
                         // 获取文件的创建日期和大小
                         $filePath = $directory . '/' . $file;
-                        $creationDate = date("Y-m-d H:i:s", filectime($filePath));
+                        $creationDate = date("Y-m-d H:i:s", filemtime($filePath));
                         $fileSize = filesize($filePath);
 
                         // 转换文件大小的单位
