@@ -2,11 +2,38 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/fileList.png">
     <title>文件列表</title>
     <style>
         pre {
-            font-family: monospace;
+            font-family: Calibri, Arial, sans-serif;
         }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 60%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 5px;
+        }
+
+        th.filename {
+            width: 50%;
+        }
+
+        th.date, th.size {
+            width: 30%;
+        }
+
+        th.size {
+            width: 20%;
+        }
+
     </style>
 </head>
 <body>
@@ -20,7 +47,6 @@
             if ($handle = opendir($directory)) {
                 // 读取目录中的文件和子目录到数组中
                 $files = [];
-                $maxFileNameLength = 0;
                 while (($file = readdir($handle)) !== false) {
                     // 排除当前目录（.）和上级目录（..）
                     if ($file != "." && $file != "..") {
@@ -39,12 +65,12 @@
                             $sizeUnit = 'KB';
                         }
 
-                        // 将文件名、创建日期和文件大小拼接为一行
-                        $line = sprintf("%-{$maxFileNameLength}s  %s  %6s %s", $file, $creationDate, $fileSize, $sizeUnit);
-                        $files[] = $line;
-
-                        // 更新最大文件名长度
-                        $maxFileNameLength = max($maxFileNameLength, strlen($file));
+                        $files[] = [
+                            'filename' => $file,
+                            'date' => $creationDate,
+                            'size' => $fileSize,
+                            'unit' => $sizeUnit
+                        ];
                     }
                 }
                 // 关闭目录句柄
@@ -57,9 +83,16 @@
                 echo "<br>";
 
                 // 打印排序后的文件信息
-                foreach ($files as $line) {
-                    echo trim($line) . "<br>";
+                echo "<table>";
+                echo "<tr><th class='filename'>文件名</th><th class='date'>日期</th><th class='size'>大小</th></tr>";
+                foreach ($files as $file) {
+                    echo "<tr>";
+                    echo "<td>" . $file['filename'] . "</td>";
+                    echo "<td>" . $file['date'] . "</td>";
+                    echo "<td>" . $file['size'] . " " . $file['unit'] . "</td>";
+                    echo "</tr>";
                 }
+                echo "</table>";
             }
         } else {
             echo "指定的目录不存在！";
