@@ -32,7 +32,33 @@ cd sougouspider                              # 进入项目文件夹中的sougou
 scrapy genspider sgspider weixin.sogou.com   # sgspider为spider名称，后是网站域名
 ```
 
+创建项目后，目录树如下
+```
+C:.
+└─sougouspider
+    │  scrapy.cfg
+    │
+    └─sougouspider
+        │  items.py
+        │  middlewares.py
+        │  pipelines.py
+        │  settings.py
+        │  __init__.py
+        │
+        ├─spiders
+        │  │  sgspider.py
+        │  │  __init__.py
+        │  │
+        │  └─__pycache__
+        │          __init__.cpython-38.pyc
+        │
+        └─__pycache__
+                settings.cpython-38.pyc
+                __init__.cpython-38.pyc
+```
+
 3. 修改Item
+
 
 5. 修改settings.py
 
