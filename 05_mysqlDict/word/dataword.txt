@@ -1,0 +1,3040 @@
+ID|word|meaning
+0|abandon|放纵：constraint,放纵：unrestrainedly,放弃：withdraw,停止做某事：put an end to
+1|abase|降低(地位、职位、威望或尊严)：lower
+2|abash|使尴尬,使羞愧：self-confidence,embarrass
+3|abate|减轻(程度或者强度)：reduce,degree,intensity,减少(数量),降低(价值)：reduce,amount,value
+4|abbreviate|v.缩写,缩短：briefer
+5|abdicate|v.正式放弃(权力、责任)：throne
+6|aberrant|adj.异常的,非常规的：deviating
+7|abet|v.帮助,怂恿：assist or support,v.鼓励：encourage
+8|abeyance|n.终止,搁置：inactivity
+9|abhor|vt.深恶痛绝,极度厌恶：extreme repugnance
+10|abiding|永久的：enduring
+11|abject|adj.无精打采的：spiritless,adj.(地位、身份)悲惨、凄凉的：low state,adj.卑微的,讨好的：humble
+12|abjure|v.发誓放弃：rejecting,abandoning,v.抵制避免：resist
+13|abnegate|否认：deny,renounce,投降,放弃,交出(权力等)：surrender,relinquish
+14|abominate|憎恶：abhor
+15|aboveboard|无欺诈的,光明正大的：free from,deceit or duplicity
+16|abrade|磨损,精神上的折磨：wear away, by friction
+17|abridge|缩短,缩小：shorten,在不改变本意的条件下删减词语,缩写：shorten
+18|abrogate|官方的正式废除：annul,无视(某事的)存在：nonexistent
+19|abscond|偷偷离开：depart secretly
+20|absolute|专制的：unconstrained, 无限的unqualified, 完美的,纯净不惨杂的：free from imperfection, mixture, 不容置疑的,确凿的：unquestionable
+21|absolve|使无罪,解除责任：free from, guilt, exculpate
+22|abstain|自我克制,主动戒绝：refrain, by one’s own choice
+23|abstemious|(吃喝等)有节制的,节俭的：restraint, food or alcohol, sparing
+24|abstract|做总结,概括：abstract, summarize, 使分心：away, attention
+25|abstruse|难以理解的：recondite
+26|absurd|不合理的：unreasonable
+27|abundant|大量的： great plenty
+28|abuse|辱骂,抨击：condemn or vilify, 不正当的或不合理使用的：wrong or improper use, 过分过量使用的：use excessively
+29|abut|邻接,毗邻：adjacent
+30|abysmal|极低的,极可怜的：immeasurably low, (程度)很深的,极端的：immeasurably great
+31|accede|赞成：approval, consent, 就任,就职：come into an office
+32|accelerate|加速：faster, 使提前发生：earlier, 变大,变多：greater
+33|accessible|可以达到的：within easy reach, 可以理解的：understood, 能够获得的：get
+34|accessory|辅助的,附属的：secondary, supplementary, subordinate, 帮凶：one, wrongdoing
+35|accidental|意外发生的,偶然的：unexpectedly, 附带的,不重要的：not being a vital part
+36|acclimate|使适应：to change (something) so as to make it suitable
+37|accolade|同意,赞赏：approval, 赞扬：praise
+38|accommodate|提供所需(例如服务、借贷、寄宿)：provide, 改变以适应新情况、新场景：make, suitable,使和谐：free of conflicts
+39|accost|以挑衅的形式搭讪：challenging or aggressive way
+40|accrete|逐渐增长：grow, gradually
+41|accumulate|逐渐增长：increase gradually
+42|acerbic|(心情、心境或者语调)尖酸的：wit, cause hurt feelings
+43|acme|顶点,极点：highest, 最佳典范：most perfect type
+44|acquiesce|勉强同意,默许：accept, tacitly or passively
+45|acrid|辛辣的,刺鼻的：harsh, taste, odor, 刻薄的：wit, cause hurt feelings
+46|acrimonious|刻薄的,充满仇恨的：deep-seated resentment
+47|acumen|不同寻常的洞察力和鉴别力：exceptional discernment and judgment
+48|acute|敏锐的：keen discernment, 严重的,急性的：immediate attention, (程度、影响)极强的：extreme
+49|adamant|固执的,不可动摇的：unshakable, unyielding, inflexible
+50|adapt|修改,使(适应)：modify
+51|addict|沉溺,上瘾：surrender, obsessively, 对某事上瘾的人：habitual liking
+52|adhere|依附,粘着：stick, 服从,遵守：according to the commands, 坚定地支持：steadfast support
+53|adjourn|延期,休会：suspend,
+54|adjunct|附属物,非必需部分：not essentially a part
+55|ad-lib|即兴的：without previous thought or preparation
+56|admonish|建议：give advice, 责备：reprove gently
+57|adore|喜爱,因···感到愉悦：pleasure, 宠爱：tenderness
+58|adulate|极度谄媚：praise too much
+59|adulterate|掺杂,加入低等成分：impure, addition
+60|adumbrate|部分地或有保留地揭露：disclose, 预示着：give a slight indication
+61|adventitious|外来的,后天的,非内在的：not inherent or innate
+62|adversary|敌手,对手：resists, enemy
+63|advert|引起注意,提到：refer
+64|advocate|支持,提倡：support
+65|affable|和蔼的,温和的：ease, friendliness
+66|affinity|喜欢,倾向：attraction
+67|affluent|富裕的：sufficient
+68|aggrandize|增加、提高(力量、财富、地位、声誉)等：enhance
+69|aggravate|加重,恶化：worse, serious, severe
+70|aggregate|集合体：units or parts, associated, 集合,聚焦：collect or gather
+71|aggressive|好斗的：attack, 强有力的,强烈的：forcefulness
+72|aggrieve|使苦恼,使悲痛：pain, trouble, distress
+73|agitate|煽动,激起：arouse, 使不安：trouble the mind, disturb
+74|agog|极度感兴趣的：urgent desire or interest
+75|agonize|(使)非常痛苦：deep sadness
+76|airtight|无瑕疵的：no, flaw, 密封的,不透气的：impermeable to air
+77|alacrity|反应迅速,乐意,欣然
+78|alibi|不在场的证明,托辞,借口：excuse
+79|alienate|疏远,离间：make unfriendly, 转移,变卖(财产或权利)：convey or transfer
+80|align|使排成一行：line, 调准,校准：adjust
+81|allay|减轻：subdue, reduce, intensity or severity
+82|allegiance|忠诚：devotion or loyalty
+83|alleviate|缓和,减轻：relieve, lessen
+84|allude|间接提到：indirectly
+85|allure|吸引：attract or delight, 诱惑做(某事)lead, pleasure or advantage
+86|ally|盟友,支持者：association, 加入联盟：enter
+87|aloft|在空中：in flight
+88|aloof|孤高的,不合群的：distant
+89|altruism|利他主义：unselfish
+90|amalgamate|合并,混合：combine, unified, unite
+91|ambiguous|有多种理解方式的,不确定的：more than one, doubt, uncertain
+92|amble|漫步,闲逛：walk slowly, leisurely, stroll
+93|ambrosial|(食物)特别美味的,香的：extremely pleasing
+94|ameliorate|改善,改进：become better, improve
+95|amenable|顺从的,服从的：yield, submit
+96|amenity|(环境、设备等的)舒适,人性化：comfort, 融洽,和谐：pleasant, agreeable
+97|amiable|好脾气,友好易相处的：friendly
+98|amicable|友善的：friendly, amiable
+99|amity|友好关系,亲善和睦：friendship, friendly
+100|amorphous|无固定形状的：definite, shapeless, 不可归类的：unclassifiable
+101|analgesic|镇痛剂：medication, reduce, eliminates pain
+102|anarchist|反抗权威的人：rebels against any authority
+103|anathema|诅咒：curse
+104|ancillary|次要的：secondary importance,辅助的,补充的：auxiliary, supplementary
+105|anecdote|短小有趣的故事：short narrative, interesting, amusing
+106|anemic|缺乏力量、活力、精神的：lacking force
+107|anesthetic|止痛剂：relieves pain, 无感觉的,麻木的：lacking awareness or sensitivity
+108|animate|活的：有活力的：life, 使有活力,支持：high-spirited energy, 使行动,驱使：action, 使活灵活现,使栩栩如生：lifelike movement
+109|animus|敌意：spiteful, malevolent, enmity
+110|annoy|不断烦扰：disturb, repeated
+111|annul|宣告无效,取消：legally invalid, 抵消：balance, ineffective
+112|anomalous|不普通的,不平常的：out, ordinary, 反常的,不正常的：departing
+113|anonymous|匿名的：not named, identified, 无特色的：lacking individuality
+114|antagonize|与...敌对,反对：opposition, counteract, 激怒：incur, provoke, hostility
+115|antediluvian|非常古老的,过时的：extremely old, antiquated, 保守的人：old-fashioned
+116|anterior|前面的：before
+117|antic|滑稽可笑的：clownish
+118|apathy|冷漠,缺乏情感：lack, feeling, emotion, 缺乏兴趣,不关心：lack, interest, concern
+119|aphorism|格言,警句：short witty
+120|apocalyptic|预言的,启示的：prophetic, 重要的,转折点的：major turning
+121|apocryphal|假的：doubtful authenticity, spurious
+122|apoplectic|极度愤怒的：extremely angry, furious
+123|apostasy|放弃宗教信仰：renunciation, faith, 变节,背叛：abandonment, previous loyalty
+124|appall|使惊恐：consternation
+125|appeal|申请：application, 起诉：charge, crime, accuse
+126|appealing|吸引人的：attractive, inviting
+127|applause|鼓掌,认可：approval
+128|apposite|相关的,合适的：pertinent, appropriate
+129|appreciable|可感知的,明显的：perceptible
+130|apprehension|忧虑,恐惧：suspicion, fear, 逮捕：arrestment, 理解：understand
+131|apprise|通知,告知：inform
+132|approbation|同意：approval
+133|appropriate|私自挪用：take possession, without permission, 适当的：suitable, fitting
+134|apropos|相关的：relevant, 关于,有关：having to do with
+135|apt|恰当的,合适的：suitable, appropriate, 有倾向的,可能的：tendency, likely, 聪明的：intelligent, responsive
+136|archaic|过时的,久远的：no, current, antiquated
+137|archetype|典范,榜样：ideal, 先驱,鼻祖：earlier, 原型：copies
+138|ardor|狂热：strong enthusiasm, devotion, zeal
+139|arduous|难以做到的,费劲的：difficult
+140|argot|隐语,黑话,行话：specialized, particular
+141|arrest|使不活跃：inactive, 停止：stopping, standstill, 逮捕：keep, 吸引(某人)注意力：hold, attention
+142|arresting|吸引人的：attracting, striking
+143|arrhythmic|不规律的：lacking, regularity
+144|arrogance|傲慢,自大：overbearing pride
+145|articulate|清晰地表达：clearly, distinctly, 表达清晰的：able, express, clearly
+146|ascendant|有影响力的,主宰的：dominant, influence, superior, 上升的：upward, rising
+147|ascetic|苦行的,克己的,禁欲的：self-denial, 禁欲者：person, self-discipline
+148|aseptic|消毒的,无菌的：preventing infection, 缺乏活力的：lacking vitality, 冷漠的：lacking emotion
+149|askew|不成直线的(地),歪的(地)：awry
+150|aspect|外表,容貌：appearance
+151|asperity|(举止、性情)粗暴：roughness, (环境)艰苦：rigor, severity
+152|aspersion|诽谤,中伤：harm, reputation
+153|aspirant|有抱负者,有野心者：aspires, 想成为···的：seeking
+154|assent|同意：agree
+155|assert|断言,肯定地说出：declare, forcefully, aggressively
+156|assertive|自信的：bold, assertion, self-assured
+157|assess|评估(重要性、尺寸、价值等)：determine, 征收费用(如罚款)：charge, penalty
+158|assiduous|勤勉的,专心仔细的：careful
+159|assuage|缓和,减轻：lessen, intensity, 平息,抚慰：pacify, calm, 使满足：satisfying
+160|astounding|令人吃惊的,出乎意料的：astonishment, amazement
+161|astute|机敏的,有洞察力的：shrewdness, perspicacity
+162|asunder|分离成多部分或多片地：separate parts, pieces, 分离地：apart
+163|asylum|收容所,保护所：refuge, protection
+164|asymmetrical|不平衡的,不对称的：no balance, symmetry
+165|atone|赎罪,弥补：amends
+166|atrocious|极坏的,极其残忍的：extremely wicked, 让人极为不满的：extremely unsatisfactory
+167|attenuate|降低(数量、力量、价值)：lessen
+168|audacious|大胆的,(但往往)愚勇的：fearlessly, recklessly, 蔑视(法律、礼节)的,无礼的：contemptuous of law, 乐于冒险的：take risks, 大胆创新的：verve
+169|augur|预言家：predicts, 出现好兆头：signs of, successful outcome, 预言：tell, beforehand
+170|authentic|真实的,非仿造的：exactly, 准确的,相符的：original
+171|authority|(某领域的)权威人士：a high level of knowledge, 管辖权,控制：lawful control, 影响力：power to direct, (管束他人的)权力：right, control others, 根据,理由：warrant
+172|autocracy|独裁政府：government, unlimited power
+173|autonomy|政治上的独立：self-governing, 自我主导的自由,(尤其是)精神独立：independence
+174|avarice|贪财,贪婪：insatiable
+175|aver|声称为真：state, forcefully, (态度强硬而明确地)声明：state clearly
+176|aversion|非常讨厌,极厌恶：dislike, 令人厌恶的事物：someone that is hated
+177|avid|急切渴望的：enthusiasm, 贪婪(钱财)的：eager, for material possessions
+178|awash|被淹没的：by water, (如洪水般)泛滥的：filled, covered, overrun
+179|awe|敬畏：dread, veneration, wonder
+180|awkward|缺乏灵活性和技巧的：lacking dexterity, (处理问题)缺乏手段和智谋的：a lack of skill and tact, 臃肿笨拙的,不优雅的：lacking ease, 令人尴尬的：embarrassment, (因过大或过重设计问题)难以操作的：difficult to use
+181|awning|雨篷,遮阳篷：shelter
+182|awry|弯曲的,扭曲的：turned, twisted, 走样的(地),出差错的(地)：off, course
+183|axiomatic|公理的：axiom, 不言自明的：self-evident
+184|babble|发出含糊无意义的嘟囔声,胡乱说：utter, meaningless, 闲聊：rambling conversation
+185|backhanded|间接的,含沙射影的,虚情假意的：indirect
+186|badger|不断纠缠或骚扰：harass, persistently
+187|badinage|打趣,善意的玩笑：banter
+188|bait|逗弄,激怒：persecute, exasperate, 引诱：lead away, 诱饵：something, luring
+189|bale|痛苦,悲哀：sorrow
+190|baleful|有害的：harmful, 凶兆的,凶恶的：evil, 致命的：causing death
+191|balk|阻碍：check, obstacle, 不愿接受,拒绝：unwillingness
+192|balky|不服管束的,倔强的：refusing
+193|ballad|(由简单诗节和叠句组成的)民歌：poem
+194|balloon|迅速增加：increase
+195|balm|香油,止痛膏,安慰物：sweet-smelling oil, soothe, 香气：pleasant smell
+196|banal|非原创的,陈腐的：trite
+197|bane|祸根：ruin, 有害物质：kill or injure a living thing
+198|banish|驱逐出境：leave, country, 赶出：force out
+199|banter|幽默、打趣的(地)谈话：humored
+200|barb|尖锐而严厉的批评：critical
+201|barbarous|野蛮的,凶残的：mercilessly, 未开化的：uncivilized
+202|barefaced|公然的,厚颜无耻的：brazen
+203|bargain|协议：agreement, 讨价还价：negotiate
+204|baroque|装饰华丽的,过分雕琢的,复杂的：extravagance, complexity, flamboyance, (程度上)过分的：beyond, limit
+205|barrage|弹幕：curtain, 有压倒之势的、集中倾泻的(如言语)：overwhelming, outpouring, (同时)袭来：attack with, overwhelming outpouring
+206|barren|不育的：incapable, producing, 不产生结果的,无效的：no results, 贫瘠的：deficient, 极度匮乏的：lacking
+207|barricade|障碍物：obstruction, rampart, 用障碍物阻止通过：prevent access
+208|barter|以物换物：trade, without
+209|batch|一批次的量：unit, 一小群人：small number of persons
+210|bathetic|平凡的,陈腐的：commonplaceness
+211|bawdy|下流的,猥亵的：indecent
+212|bedeck|装饰,点缀：make more attractive
+213|belabor|(当众)严厉批评：criticize, 就···作过度的说明,喋喋不休：explain, excessively
+214|beleaguer|包围,围攻：to surround, 使困扰,使烦恼,使消沉：trouble
+215|belie|错误的描述,误述：picture falsely, 证明···为假：false, wrong, 掩饰：shut off from view, 与···相对立,与···相矛盾：counter
+216|bellwether|领导者,带头人：lead
+217|beneficent|仁慈的,好慈善的：charity, (对个人或社会)有益的：contributing
+218|benign|好心的,仁慈的：kindness, gentleness, 无害的：not causing
+219|berate|(长时间)严厉指责：scold, vehemently, at length
+220|beseech|(急切地)恳求：beg
+221|besmirch|弄脏,弄污：make dirty, 诽谤,玷污：detract from the honor
+222|bifurcate|(使)分成两支：two branches
+223|bigot|固执己见者,有偏见的人：obstinately devoted
+224|bland|味道平淡的,不刺激的：soothing, 无趣的：dull, 温和的,和蔼的：not harsh
+225|blandishment|甜言蜜语,讨某人好话：coax, cajole
+226|blasé|(过度放纵之后)厌倦享乐的,腻厌的：apathetic
+227|blast|爆炸：explosion, 一阵猛烈的强风：gust, 巨响：loud, sound, 炸裂,爆破：cause to break open,斥责,抨击：criticize harshly
+228|blatant|大声喧哗的：noisy, (让人生厌地)惹人注目的：noticeable
+229|blazon|使知名：make known openly, 修饰,装扮：make more attractive
+230|blemish|缺点,污点：imperfection, 损害,玷污：reduce
+231|blight|(使)枯萎：affect, 损害：impair
+232|bliss|极度快乐：ecstasy, 极乐世界：place of perfect happiness
+233|blithe|愉快高兴的：happy lighthearted, 无忧无虑的,漫不经心的：freedom from worries
+234|blueprint|蓝图,详细计划：architects’ plans, 事先计划：work out, in advance
+235|blunder|过失：error, mistake, 在···方面犯了很愚蠢且通常很严重的错误,糟蹋：make a stupid, error, 蹒跚：unsteadily
+236|blunt|使变钝：less sharp, 减弱(力度等)：weaken in strength or feeling, 直率的：direct, brief
+237|blur|(使)变得朦胧,(使)变得不清楚：vague, 使不易理解：unclear to the understanding
+238|blurt|突然说出,冲动地说：abruptly
+239|bluster|狂妄自大地大声说：loudly arrogant, 大声吹嘘,恐吓：loudly, 喧闹的状态：noisy
+240|boggle|(因为怀疑、恐惧)犹豫：hesitate, 笨拙地做：unskillful way
+241|boisterous|喧嚷的,吵闹的：noisily
+242|bolster|支撑(物)：provide support,鼓励、使有精力：boost
+243|bombast|夸大的言辞：pompous
+244|bonhomie|温和,和蔼：geniality
+245|boo|嘘(以表示不满或嘲笑)：contempt, scorn, disapproval
+246|boon|恩惠,福利：benefit, 喜欢集体活动的：enjoy the company of others
+247|boor|粗鲁的人,不敏感的人：rude
+248|bootless|无用的：useless
+249|bound|界限：beyond which a person or thing cannot go, 给···设置界限：set limits, 投入的,坚定的：fully committed
+250|boycott|联合抵制,拒绝参与：concerted refusal
+251|bracing|令人振奋的,给人带来活力的：giving strength
+252|brake|刹车：less rapid
+253|brash|愚勇的,鲁莽的：foolishly adventurous, 缺乏判断力的,不明智的：poor judgment
+254|brassy|厚脸皮的,不知羞耻的：rude boldness, 华而不实地炫耀：showy
+255|bravado|假装勇敢：pretense, 虚张声势：swaggering
+256|bravura|优秀演技(的)：brilliant
+257|brazen|蛮横大胆的,厚颜无耻的：contemptuous boldness, 大胆自信地去面对或从事：bold self-assurance
+258|breach|(对伦理、法律准则的)破坏：breaking, moral or legal code, 违背：fail to keep
+259|brevity|简短,简洁：shortness, 精炼：few words
+260|bribe|贿赂,收买：give, money
+261|bridle|限制
+262|brisk|充满生机的,有活力的：activity, (言辞或方式)尖刻辛辣的,刻薄的：keen or sharp
+263|bristle|怒不可遏,咆哮：anger, 供应充足,充满：copiously
+264|brittle|易碎的,脆弱的,易坏的：broken, 不热心的,不真心的：lacking in friendliness
+265|broach|开启,启封：open, 提出讨论：present
+266|bromide|陈词滥调：hackneyed
+267|brook|忍受,容许：tolerate, 小溪流：creek
+268|browbeat|恐吓：intimidate
+269|bruit|(未经证实地)散播(消息)：make, the subject of common talk
+270|buck|阻止,反对：refuse assent, 转移,交接：shift possession
+271|budge|(使)改变立场或态度：alter a position, 停止抵抗,屈服：cease resistance
+272|bulge|凸起：protuberant, 比赛中的优势地位：more favorable condition, 暴涨,突增,在数目或数量上突然而且是临时性的增加：sudden, usually temporary increase, 充满：copiously supplied
+273|bully|欺凌弱小者：intimidating manner, 最好的,最棒的：best
+274|bumptious|专横傲慢的,自以为是的：superiority
+275|bungle|办遭,失败：work clumsily
+276|buoy|使充满勇气和力量,使振作：courage or strength
+277|buoyant|有浮力的：floating, 心情好的：good mood or disposition
+278|burgeon|迅速成长扩大,蓬勃发展：grow, rapidly, flourish
+279|burlesque|夸张滑稽地模仿以嘲弄他人的文学艺术作品,恶搞：make fun of
+280|burnish|擦亮,磨光：make smooth or glossy
+281|buttress|扶墙：supporting, wall building, 为···提供支撑的证据或者信息：provide evidence or information for
+282|byzantine|错综复杂的：complicated, secretive, interrelated
+283|cache|囤货,藏货：supply, 隐藏：hiding
+284|cachet|同意：approval, 声望：prestige
+285|cacophony|刺耳的声音：inharmonious sound
+286|cadge|乞讨,乞求：beg
+287|cajole|哄骗：wheedle
+288|calcify|使僵化：inflexible, unchangeable
+289|calibrate|调整,使标准化：standardize, (根据标准)精确测量：measure precisely
+290|calligraphy|(优美的)书法：elegant handwriting
+291|callous| 无同情心的,冷漠的：unfeeling
+292|callow|不老练的,不成熟的：lacking, experience
+293|calumniate|诽谤,造谣,中伤：false statements
+294|camaraderie|友情：friendly
+295|cameo|栩栩如生的描绘,简洁生动的描述或刻画：brief, vivid portrayal, 客串：brief but dramatic appearance
+296|camouflage|伪装,伪装手段：deceive, hide
+297|canard|谣传,误传：misleading 
+298|candor|坦率,直率,诚挚：honest, sincere
+299|canon| 准则,标准：standard, criterion, 真经,正典：authentic
+300|canvass|仔细检查,详尽讨论：examine carefully or discuss thoroughly, 游说,去(一个地区)的各处或找到(个人)来拉选票或订单：solicits votes or orders
+301|capitulate|投降,默许：give all resistance
+302|caprice|一时冲动的决定：impulsive change, 反复无常,善变：change, impulsively
+303|captivate| 吸引：attract
+304|careworn|忧心忡忡的,焦虑的：grief, anxiety
+305|cardinal|主要的,非常重要的：foremost importance, paramount
+306|caricature|用讽刺歪曲等手法的夸张,漫画,讽刺画：exaggeration, 嘲笑性模仿或夸张：copy, exaggerate
+307|carnal|肉体的,物质的：physical, 世俗的：worldly
+308|carouse|畅饮,狂欢作乐：drink, freely
+309|carp|对小事吹毛求疵,挑剔,表现不满：peevish criticism, objections, express dissatisfaction, tiresomely
+310|carve|雕刻：three-dimensional representation, (通过长期不懈努力)开创,开拓：produce or bring about
+311|cast|演员,演员阵容：a set of characters, 选派(演员)：assign, actor, 提出：give off, 抛弃：get rid of
+312|castigate|强烈(公开)指责：criticize, 惩罚：penalty
+313|catalyze|成为···的导火索,导致：be the cause of
+314|catastrophe|大灾难：tragedy, 彻底的失败：utter failure
+315|categorical|没有例外的,无条件限制的,绝对的：without, qualification, absolute
+316|catholic|普遍的,包容的：not limited or specialized
+317|caustic|腐蚀性的：destroying, eating away, 挖苦讽刺的,刻薄的：incisive sarcasm
+318|caveat|警告,告诫：warning of a specific limitation
+319|cavil|挑剔,吹毛求疵：quibble
+320|cavort|欢快地蹦跳或行走,雀跃：sprightly
+321|cede|(根据条约)放弃,割让：surrender possession of
+322|cement|粘合,粘合剂：uniting, binding
+323|censor|审查并删除不良的东西：examine, delete
+324|censorious|挑剔指责的：critical
+325|censure|公开表示反对,谴责：public, formal disapproval
+326|census|人口普查：survey, population
+327|cessation|终止,暂停：stopping of a process
+328|chaff|开玩笑：make jokes
+329|chagrin|沮丧,懊恼：mind
+330|chameleon|变色龙,善变的人：changes or adopts opinions
+331|champion|支持：support
+332|chaos|混乱：disorder, confusion
+333|charade|装模作样：intended to deceive, 动作字谜：represented in pantomime
+334|charlatan|骗子,装懂的人：fraudulent
+335|chary|非常谨慎的：cautious
+336|chase|镂雕(金属)以装饰：decorate, 驱赶：force out
+337|chasm|分歧,(意见、利益或忠诚上)明显差异：pronounced difference
+338|chauvinistic|盲目爱国的：excessive favoritism
+339|check|使突然停止,阻止：arrest, abruptly, 同意,一致：agreement
+340|cherubic|天使般可爱的：rosy
+341|chicanery|诡计多端的,欺骗：deception
+342|chide|责备：scold mildly
+343|choleric|易怒的,暴躁的：angered, 生气的：anger, irate
+344|chord|与···和谐一致,符合：accord, agree
+345|chromatic|彩色的：colors
+346|chronic|经常发生的,复发的：frequent recurrence,习惯性的,不可能改变的：not likely, change
+347|churl|粗野的人：rude, boorish, 吝啬鬼：mean, stingy
+348|cipher|无影响或无价值的人：no importance, influence, 计算(价值)：determine, mathematical operations, 密码：conceal
+349|circuitous|迂回的,不直接的：not, forthright, direct, 冗长的：more, necessary
+350|circumlocution|绕圈子说话：unnecessarily, indirect, evasion, 冗长：too many
+351|circumscribe|限制：limit, 包围,围绕：surround
+352|circumspect|谨慎的,小心的：careful
+353|circumvent|躲避,不遵从：avoid, comply
+354|civility|彬彬有礼：courteous, politeness
+355|claim|要求(权利)：ask for, right, 断言：state as a fact, 剥夺生命：deprive, life, 权利：right
+356|clandestine|隐藏的,秘密的：secret, illicit, improper
+357|clarion|清楚响亮的：loud, clear
+358|clarity|清晰,清楚：clear, lucidity, 清澈透明：easily seen through
+359|clasp|紧握：holding
+360|clement|宽容的,善良的：tolerant, kind, 气候温和的：neither, high, low
+361|cliché|陈词滥调(的)：hackneyed
+362|clog|阻碍物：something, movement, progress difficult, 阻碍：difficulty, 堵塞：prevent, through
+363|clot|密集的一群：a number of things, a unit, 堵塞：prevent, through, filling with something, 凝结：jelly
+364|cloudburst|突然的一场暴雨：sudden copious rainfall
+365|clout|权力,影响力：influence
+366|cloying|甜得发腻的,感情用事的：sweet, sentimental
+367|clumsy|笨拙的：lacking, nimbleness, lack, skill, 不文雅的：lacking, grace, inability, graceful, 不精致的：roughly
+368|coagulate|(使)凝结,(使)变稠：coherent, clot
+369|coalesce|合并,融合：whole, fuse
+370|coax|哄骗：pleading, flattery, cajole
+371|coda|终曲：concluding passage
+372|coerce|(以武力)强制：force, threat
+373|coeval|同时代的,同龄的：equal age
+374|cogent|令人信服的：convincing, 相关的：pertinent
+375|cognizant|知道的,意识到的：aware
+376|collapse|突然倒塌或收缩：fall, shrink, 完全耗尽体力：depletion, energy, strength, 失败：unsuccessful
+377|collude|串通,共谋(做坏事)：together secretly, fraudulent, deceitful, conspire
+378|colossal|巨大的：size, degree, immense
+379|coltish|不守纪律的：not subjected, discipline, 爱开玩笑的：joking, teasing
+380|coma|昏迷,深度无知觉：profound unconsciousness, 迟钝,冷漠：sluggishness
+381|combustible|可燃的：igniting, 容易激动的：easily excited
+382|comely|漂亮的,吸引人的：pleasing, wholesome, attractive
+383|comity|友好,社会和谐：friendly, harmony
+384|commencement|开始：beginning, 毕业典礼：conferring
+385|commend|赞扬：approbation, praise, 委托保管：entrust, 推荐：recommend
+386|commensurate|同样大小的：equal, 相称的,相当的：proportionate
+387|commingle|充分混合：blend
+388|commitment|致力,投入：obligated, impelled, 确信：belief, 承诺,表态：revealing one’s view
+389|committed|忠诚的,忠实的：loyal
+390|commodious|宽敞舒适的：spacious
+391|commonsensical|符合常识的,有依据的：common sense, sound
+392|commotion|骚乱：disturbance
+393|compendium|摘要：summary, abstract, 目录,各种各样的列表或集合：list, collection
+394|complacency|自满,无忧患意识：self-satisfaction, unawareness of trouble
+395|complaisance|愿意顺从,讨好,彬彬有礼：comply, affability
+396|compliant|顺从的：submissive
+397|compliment|称赞,恭维：praise, 敬意,免费赠送的礼物：respectful
+398|comply|遵从：conform, submit
+399|compose|使镇定：calm, 组成,构成：form, constitute
+400|compound|混合物：something composed,混合的：consisting,混合：together,扩大,增多：greater,和解：agree
+401|compress|压缩(体积)：reduce size, volume
+402|compromise|妥协：concessions,使危险：danger
+403|compunction|焦虑,内疚,良心不安：anxiety, guilt
+404|concatenate|连结,混合：bring together
+405|concave|凹的：curved
+406|conceal|隐藏,隐瞒：prevent disclosure
+407|concede|承认：grant,停止抵抗：cease resistance
+408|concentrate|集中：focus,浓缩：less dilute,聚集：together
+409|concerted|共同完成的：accomplished together
+410|conciliate|平息,抚慰：lessen the anger,调解：compatible, reconcile
+411|concise|简洁的：brevity
+412|concord|一致,和睦：harmony, agreement
+413|concur|同意：agreement,同一时间发生、存在：same time,团结合作：joint
+414|condescending|摆出高人一等的姿态的：patronizingly superior
+415|condign|应得的,恰当的：deserved
+416|condole|表达同情：sympathetic
+417|condone|宽恕,忽视：forgive
+418|conducive|有益的,有促进作用的：promote
+419|confident|有信心的,自信的：assurance, self-reliance
+420|confine|禁闭,监禁：imprison,限制：limits
+421|confluence|汇合,混合：together same
+422|confront|直接对抗,直面：face to face
+423|confound|使困惑：uncertainty,无法区分,混淆：fail to differentiate,证明为假,证伪：false
+424|congeal|凝固,固化：solid state
+425|congenial|和善的,友好的：agreement,令人愉悦的：giving pleasure
+426|congruent|和谐一致的：in agreement,全等的：coinciding
+427|conjecture|揣测的结果：conclusion by surmise,猜测,估计(大小、数量等)：decide without actual measurement,(没有依据地)认为：form an opinion
+428|connive|暗中合作,共谋：cooperate secretly,纵容：假装忽视或并未采取措施阻止错误：pretend ignorance ought to oppose
+429|connoisseur|鉴赏家(尤指艺术领域)：with discrimination, appreciation,专家：high level of knowledge
+430|conscientious|仔细的,一丝不苟的：involving great care,有良心的,正直的：governed by conscience
+431|consensus|一致同意：general agreement
+432|consequence|结果：produced by cause,重要性,价值：importance
+433|conservative|守旧的,不愿改变的：oppose change,不招摇的,低调的：not showy,谨慎小心的：close attentiveness
+434|conservatory|温室：greenhouse,艺术学院：school arts
+435|conserve|保存,避免浪费：keep avoid wasteful
+436|considerable|(数量上)可观(而值得注意)的：large,值得考虑的,重要的：significant
+437|console|安慰,慰藉：alleviate, comfort
+438|consolidate|使联合,统一：join together,加固,使安全：make firm
+439|consonant|和谐一致的：in agreement
+440|conspicuous|显而易见的,吸引人的：obvious
+442|constitute|指派,任命：appoint,构成：make up
+443|constrain|限制：restriction,使人屈服于(压力、感情)等：give in to pressure
+444|constringe|使紧缩：draw together
+445|construct|建造,建立：form,创造,相出：create imagination
+446|consummate|专业的,有造诣的：extremely skilled,无纰漏的,完美的：perfect,最高档次的,最大规模的：highest degree
+447|contagious|传染的：communicate,(情绪等)唤起共鸣的：exciting a similar feeling
+448|contaminate|污染,感染：stain
+449|content|使满足：appease,主题：major subject of interest,内容,内涵：idea that is conveyed
+450|contentious|引起争论的：argumentative,好争论的,好战的：tendency quarrels
+451|contiguous|接壤的,相邻的：sharing an edge
+452|contort|扭曲：twist
+453|contract|契约,合同：binding agreement,收缩：reduce size,感染疾病：become affected
+454|contravene|违反,反对：violate, oppose
+455|contrite|(因为有罪孽或过错而感到)后悔悲痛的：showing remorse
+456|contumacious|不服从的,倔强的：disobedient
+457|conundrum|无法解决的问题,迷：insoluble, dilemma
+458|convalesce|渐渐康复,渐愈：recover gradually
+459|convenience|便利,方便：fitness suitability
+460|convention|常规,习俗：agreement, acceptance,公约,协议：agreement,大会,集会：coming together
+461|converge|汇集,交汇于一点：move toward one
+462|conversant|熟悉的：familiar
+463|convert|被改变宗教信仰的人：converted,使改变信仰：bring over from brief,改变,转化：alter
+464|convex|凸起的：curves outward
+465|convey|运输：transport,传递,交流：communicate
+466|conviction|深信,确信：being convinced,证明有罪：proved guilty
+467|convoke|召集开会：bring together
+468|convoluted|复杂的,费解的：complicated
+469|convulsion|痉挛(强烈的、无法控制的肌肉收缩)：involuntary contraction,骚乱：disturbance
+470|coop|监禁,困于…之中：confine
+471|copious|丰富的,大量的：abundant
+472|coquette|调情的女子：flirt,调情,不认真对待：playfully
+473|cordon|警戒线：line preventing,围成一道防线：form cordon
+474|cornucopia|大量：overflowing
+475|coronation|加冕,加冕礼：crowning
+476|corporeal|肉体的：not spiritual,有形的,实体的：not immaterial
+477|corroborate|用证据或权威证实：support with evidence,为…提供证据,支持：provide evidence
+478|corrosive|腐蚀性的：destroy slowly,讽刺性的：sarcastic,
+479|corrugated|褶皱的：folds
+480|cosmopolitan|有世界性眼光的,包容的：worldwide
+481|cosset|宠爱：pamper
+482|countenance|容忍：put up with,赞成,推崇：favorable opinion,沉着,冷静：evenness
+483|counterfeit|仿制的,假冒的：imitation,仿制：fraudulent replica,伪装成：false appearance
+484|countermand|取消,撤销：revoke
+485|court|追求,献殷勤：seek affections
+486|covert|隐蔽的,秘密的：not shown,隐秘庇护所：avoid others
+487|covetous|贪婪的,渴求财富的：inordinate desire
+488|cow|恐吓,威胁：frighten
+489|cowardice|懦弱,不坚定：lack courage
+490|cower|畏缩：cringe
+491|cozen|诱骗：mislead
+492|cramped|狭小的,狭窄的：small
+493|crass|粗俗的,愚钝的：unrefined
+494|crave|热望：intense desire
+495|craven|非常懦弱的,因胆小而遭人鄙视的：lacking courage
+496|crease|折痕：folding
+497|credence|坚信：firm brief
+498|credulous|轻信的,易受骗的：gullible
+499|creek|小溪,小河：smaller
+500|creep|缓慢地行进：slowly,匍匐前进：body close to the ground
+501|crescendo|(声音)渐强：gradual increase,(渐强之后到达的)顶峰：peak
+502|crest|顶部,浪尖,山顶
+503|crestfallen|垂头丧气的,沮丧的：depressed
+504|cronyism|任人唯亲的,对好朋友的偏袒：favoritism friends
+505|crook|使弯曲：away from a straight line
+506|croon|低声歌唱或说话：murmuring
+507|crouch|蹲伏：lower stance
+508|crucial|非常重要的,决定性的：extremely significant
+509|crumple|弄皱：bend,(因外力挤压而)垮塌：fall down
+510|crutch|支撑,支柱：supports
+511|crux|中点,关键点：critical point
+512|cryptic|秘密的：secret,含义模糊的：ambiguous meaning,超出理解能力的：beyond one’s powers to know
+513|culpable|该受谴责的,有罪的：deserving blame
+514|cultivate|提升,加强：improve,种植,培养：promote growth
+515|cumbersome|笨重的,难处理的：difficult to handle
+516|cunning|狡猾的：artful deceptiveness,(手工)灵巧的：skillful,欺诈,欺骗：practice of misleading
+517|curmudgeon|脾气坏的、爱抱怨的人：irritable and complaining
+518|cursory|匆忙的,不注意细节的：excessive or careless speed
+519|curt|言词简略的,直接(以至显得粗鲁)的：direct, brief, and potentially rude,言简意赅的：convey much information
+520|curtail|缩短,削减：less in extent or duration
+521|cynic|愤世嫉俗者：selfishness
+522|dabble|涉猎,对…浅尝辄止：superficially
+523|daft|神经错乱的：abnormal, sick state of mind,不明智的：lack of good sense or judgment
+524|dais|主席台,嘉宾席：raised platform
+525|dally|虚度时光：doing nothing,玩乐：amusement,慢吞吞,磨磨蹭蹭：slowly
+526|damper|抑制因素：restrains, depresses
+527|dandy|纨绔子弟,爱打扮的人：appearance,最佳的,最好的：very best kind
+528|dank|阴湿的：wet
+529|dapper|衣冠整洁的：strikingly neat and trim
+530|dappled|有斑点的,花的：marked with small spots, mottled, spotted,色彩斑斓的：two or more colors
+531|daredevil|大胆鲁莽的(人)：foolishly,不考虑后果的：a lack of concern for the consequence
+532|dart|突然移动,猛冲,狂奔：suddenly,公开侮辱：intended to hurt another’s feelings
+533|daunt|使胆怯,吓到：to lessen the courage
+534|dawdle|闲荡,虚度光阴：spend time idly,拖拖拉拉：slowly
+535|deadpan|无趣的,无生气的,不活泼的：impassively 
+536|dearth|供应不足：inadequate
+537|debacle|溃败：complete failure
+538|debark|(使)下船(飞机、车等),卸(客、货)：unload, from a ship or an airplane
+539|debase|贬低,贬损：lower standing
+540|debilitate|使衰弱：impair strength
+541|debris|废墟：discarded, useless material
+542|debunk|揭穿…的真面目：true nature,证明…为假：false
+543|debut|初次登台,出道：first appearance
+544|decadence|衰落,颓废：deterioration, decline
+545|decant|轻轻倒出：pour off without disturbing
+546|decipher|破译：interpret,对…有清晰的想法,理解,解读：clear idea
+547|decode|解码：change into ordinary language,对…有清晰的想法,理解,解读：clear idea
+548|decorum|礼仪,得体：appropriateness, propriety
+549|decrepit|虚弱的,衰老的,破旧的：weakened
+550|default|不履行义务,玩忽职守：nonperformance
+551|defer|推迟,延期：postpone,遵从：respect
+552|deference|尊崇,顺从：yield to
+553|deficiency|缺乏,不足：inadequate
+554|defile|(山间)小道：a narrow passage,亵渎：treat with great disrespect,使腐坏,污损：make unfit for use
+555|deft|灵巧的,熟练的：skill
+556|defuse|抚慰,减轻：make less tense
+557|defy|反抗,违抗：go against
+558|dehydrate|去除水分,使干燥：remove water,使失去活力：deprive of vitality
+559|deify|把…当作神来崇拜：offer honor or respect to,过分喜爱：love or admire,尊敬,尊崇：high status or value to
+560|deject|使沮丧：lower the spirits, dishearten
+561|deleterious|有害的：harmful
+562|deliberate|深思熟虑的：careful
+563|delicacy|(外貌、结构等)精致,极度兴奋,发狂：fineness
+564|delirium|精神错乱,极度兴奋,发狂：mental disturbance confused
+565|delusion|错觉,妄想：false
+566|deluge|大暴雨：drenching rain,大量：great flow
+567|delve|探究,钻研：detailed search for information
+568|demagogue|蛊惑民心的政客：leader false claims
+569|demanding|难以取悦的,难满足的：satisfied,费时间花心思的：requiring careful attention
+570|demolition|破坏,毁坏：destroying
+571|demonstrate|(通过证据)证明,表明：make clear using examples,使明白易懂：make plain or understandable,表现,表露：make known
+572|demoralize|使士气低落：dishearten,贬低,使堕落：lower in character
+573|demotic|通俗的,大众化的：common
+574|demur|表示异议,反对：opposition, objection,犹豫：doubt acceptability qualm
+575|denigrate|诋毁,污蔑：scornfully
+576|denouement|(小说的)结局：final resolution
+577|denounce|公开指责：public or formal disapproval,宣称…道德上错误、可耻：morally wrong
+578|dent|凹陷,凹痕：depression,(数量,程度上)削弱：make smaller
+579|denude|脱去,使赤裸：bare
+580|deplete|耗尽,使衰竭：make complete use
+581|deplore|哀悼：sorrow
+582|deploy|(有目的地)展开,调度,部署：spread out
+583|deportation|放逐：removal from a country
+584|depose|宣誓作证：testify,废黜,罢免：remove from a throne,摆放：arrange
+585|deposit|自然积累,沉积,矿藏：accumulation,存钱：put in account
+586|depravity|道德败坏：immoral, harmful or offensive
+587|deprecate|不喜欢：unfavorable opinion,贬低,轻视：express scornfully,降低…的重要性,使低调：play down
+588|depreciate|贬低…的价值：lower value,轻视：lower estimation, esteem
+589|depressed|不开心的,情绪不高的,消沉的：unhappiness,生活境况悲催的：healthful environment
+590|deprivation|匮乏：privation
+591|deracinate|根除：pull out 
+592|derelict|玩忽职守的,不认真的：lacking duty, carelessly,被社会遗弃的人：social misfit
+593|deride|嘲弄,嘲笑：contemptuous mirth
+594|derivative|非原创的：originality
+595|descend|下降：downward,世代相传：pass by inheritance
+596|descendant|后代：deriving directly from
+597|desecrate|亵渎,玷污：treat shamefully
+598|desiccate|使(食物)脱水以保存,使干燥：drying,使缺乏活力：deprive vitality
+599|designate|任命：to pick for a specific position or duty,命名：give a name to
+600|despicable|令人鄙视的：loathing and disgust,不荣耀的,不得体的：not honor
+601|despise|极其不喜欢的：dislike strongly
+602|despotic|专制的,暴虐的：tyrannical
+603|desultory|无计划的,无目的的：lacking plan,令人失望的：disappointing
+604|detach|使分离：separate
+605|detain|拘留,扣留：hold, keep
+606|deter|吓住,威慑：prevent, discourage
+607|deterioration|恶化,堕落：sinking
+608|detour|偏离正常标准：away from standard,改变方向或者路线,绕道：change direction
+609|detract|贬低,降低价值：diminish,使分心：draw attention
+610|detritus|废品,碎屑,遗骸：product disintegration, destruction, debris
+611|devoted|投入的,忠诚的：loyalty, devotion,示爱的,恩爱的：love
+612|devout|(对于宗教)虔诚的：devoted to religion,忠诚的：allegiance
+613|dexterous|动作灵活的：ready, skilled,头脑灵活的：mentally adroit, skillful
+614|diabolic|恶魔一般的：devil
+615|diaphanous|模糊的,非实在的：vague insubstantial,(质地精致得)几乎透明的：transparent, translucent
+616|diatribe|长篇抨击性演讲：long scolding,挖苦,讽刺的指责：ironic, satirical
+617|didactic|喜欢说教的：teach
+618|diehard|顽固的,保守的／顽固的人,保守的人：determined, devoted/opposes change, refuses new ideas
+619|diffident|不自信的：lack self-confidence,内向的：reserved
+620|diffuse|啰嗦的：verbose,不集中的,扩散的：not concentrated,扩展,散开：extend, scatter
+621|digress|脱离主题：turn aside main subject
+622|dilapidate|(使)荒废：ruin
+623|dilate|(使)膨胀,扩大：enlarge, expand, wide,详细表达：more fully greater detail
+624|dilatory|拖延的,磨蹭的：cause delay procrastination
+625|dilettante|业余爱好者(对艺术或知识领域涉猎浅薄者)／缺乏专业技术的：superficial interest/lacking expert skill
+626|diligent|勤勉的,辛勤的：steady, earnest, energetic
+627|dilute|稀释／经稀释的：concentrated/low strength, concentration,削弱：diminish strength, flavor, brilliance
+628|diminish|(使)变小,(使)减少：smaller, less,轻视,贬低：lessen, belittle
+629|din|喧闹声,嘈杂声：loud noise,重复,使人厌烦地反复灌输：again
+630|dingy|昏暗的,肮脏的：darkened, dirty
+631|diocesan| 主教管辖区的：diocese
+632|diplomatic|使用策略的,机智的：tact
+633|dire|不吉利的,不详的：calamity,可怕的,恐怖的：fear,迫切的：immediate, urgent,悲惨的：lacking cheer
+634|dirge|挽歌：solemn, mournful music
+635|disabuse|打消错误念头,纠正：free from error, fallacy, misconception
+636|disaffected|不满的,叛逆的：discontented
+637|disarm|解除武装：reduce armed forces,使息怒,平息,抚慰：lessen,使无害：harmless
+638|disarray|混乱,无秩序：lack order,使混乱：undo order, arrangement
+639|disavow|拒绝承认,否认：disclaim
+640|discern|识别,辨别差异：perceive, detect
+641|discharge|解雇：dismiss,释放：free,不承担责任：freeing obligation, responsibility
+642|disciple|信徒,追随者：follower
+643|discombobulate|使不安,使混乱：upset, confuse
+644|discomfit|使尴尬：embarrassment,阻碍：prevent
+645|discommode|打扰,使不便：trouble
+646|discompose|使不安：disturb composure, perturb,使混乱：undo order, arrangement
+647|disconcert|使不安：disturb
+648|discord|意见不一致,不和谐：lack agreement, harmony
+649|discredit|羞耻,使丧失名誉：damage reputation, disgrace,怀疑,不相信：not true, real
+650|discrepancy|(在事实和宣称之间的)差异或矛盾：divergence, disagreement
+651|discrete|离散的,不连续的：separate
+652|discretion|谨慎：discreet, circumspection,自制,节制：checking
+653|discretionary|自主决定的：one’s own discretion
+654|discriminate|区分：perceive distinguishing, recognize,歧视：difference
+655|discursive|(谈话内容)杂乱的：without order
+656|disdain|轻视,鄙视：scorn
+657|disengage|分开,使脱离：set free, entanglement
+658|disgorge|呕吐出：discharge, vomit,被迫放弃：give up
+659|disgruntle|使发怒,使不满意：discontented,使疏远,使不友好unfriendly
+660|disguise|伪装(防止被认出)：prevent recognition,隐藏,掩饰：secret shut off
+661|disinclination|不喜欢,厌恶,不情愿：lack willingness, desire 
+662|disinfect|消毒,使无菌：free from infection
+663|disjointed|机能失调的：out orderly function,不连贯的：not connected
+664|disinter|(从墓地里)掘出：take out 
+665|disinterested|公正的,无偏见的：free from selfish, unbiased,没有兴趣的：lack interest, concern
+666|disjunctive|分离的：breaks disunity
+667|dismantle|分解,分拆：pieces, destroy integrity
+668|dismay|使失去勇气：lose courage,使不安,使焦虑：trouble, uneasy
+669|disparage|贬低,轻蔑地说：lower, disrespectful
+670|disparate|迥然不同的：distinct, different dissimilar
+671|dispassionate|客观公正的,不易被情绪或偏见影响的：unaffected
+672|dispatch|迅速：promptness,发送,派遣：one place to another,使死亡：deprive life,获胜,胜过…：victory
+673|dispose|使倾向于：tendency incline,处理掉(与of连用,dispose of)：get rid of, throw out,有序地布置：orderly
+674|disregard|漠视,不关注：no attention,缺乏兴趣,缺乏关心：interest concern
+675|dissect|仔细分析：examine, analyze minute,切成片(尤其是为了解剖研究)：cut apart separate
+676|dissemble|用假象隐藏真相,掩饰：false
+677|disseminate|散播,传播：spread, promulgate
+678|dissension|意见不合：difference, disagreement
+679|dissent|持异议,不同意：differ,反对正统：departure accepted,不和谐：lack harmony
+680|dissipate|驱散：drive away, disperse,浪费：wastefully, squander,放纵：indulge, intemperate
+681|dissolute|放荡的,无节制的：restraint, indulging
+682|dissolve|溶解融化：solution,解散：break into parts, disintegrate,驱散,(使)消失：cease visible,废除,撤销：end
+683|dissonance|(音调)不和谐,刺身,不一致,分歧：disagreeable
+684|dissuade|劝阻,反对：deter persuasion, exhortation
+685|distain|贬损,伤害(某人的)名誉：lose honor, respect, reputation,弄脏：dirty
+686|distal|远离中心的,(神经)末梢的：situated away
+687|distend|(使)膨胀：expand
+688|distill|对…用蒸馏法提高纯度：increase, purify,(使)渗出,(使)滴下：fall drops
+689|distort|扭曲,歪曲：twist
+690|distract|转移(注意力),使分心：draw, direct different,使焦虑,使不安：trouble, uneasy,疯狂的：insane, mad
+691|distraught|精神狂乱的,极疯狂的：agitated, insane
+692|diurnal|白天发生或行动的：daytime,每天的：every day,期刊：publication at regular intervals
+693|diverge|改变方向：change,(使)分叉,散开：different directions central,分歧：different, differ,离题：depart from
+694|diversity|多样性：variety, multiformity,分歧,不同点：different
+695|divert|使转向：turn, deflect,使消遣：agreeably,使分心：draw something else
+696|divestiture|剥夺：taking away
+697|divulge|泄露(秘密)：known confidence, secret
+698|dodder|蹒跚,颤巍巍地行进：progress unsteadily
+699|dodge|躲避：avoid
+700|doff|脱下：take off, remove
+701|dogged|坚持的,坚决的：continuing, slackening, yielding],固执的,任性的：sticking to
+702|dogma|教条,信条：doctrine stated authoritatively
+703|doldrums|低迷,中断：inactivity,情绪不佳：low spirits
+704|dolorous|忧伤的：misery, grief
+705|dolt|笨蛋：stupid
+706|domicile|住所,住宅：residence,为…提供住处：provide domicile
+707|dominant|处于支配地位的：controlling others,(基因)显性的：genetic dominance
+708|don|穿上：put on
+709|donor|捐赠人,给体：donates
+710|doodle|(无目的)地乱涂乱画：aimlessly,漫无目的地打发时光：aimless activity
+711|dormant|静止的,不活跃的：inactivity,(动物)冬眠的：suspended
+712|dour|闷闷不乐的,死气沉沉的：gloomy,严厉的：harsh
+713|douse|熄灭：put out,弄湿：wet
+714|downplay|轻描淡写：,不予重视：minimize significance
+715|downpour|倾盆大雨：heavy rain
+716|doyen|有经验的人,资深人士：knowledge experience,(加入时间较长的)高级会员：senior member
+717|doze|小憩：lightly
+718|draconian|极其残酷的,十分严厉的：harsh
+719|drawl|慢吞吞地说：speak slowly
+720|dreary|单调乏味的：nothing cheer,令人不悦的：causing unhappiness
+721|drench|使湿透,浸透：wet thoroughly
+722|drivel|胡言乱语：meaningless,胡言乱语,说傻话：talk stupidity
+723|drizzle|(下)细小、轻柔、似雾的雨,毛毛雨：misty rain
+724|droll|古怪有趣的,离奇可笑的：amusingly odd
+725|drone|低沉单调地说,嗡嗡地叫：talk monotonous,(昆虫振翅般)单调嗡嗡的声音：monotonous sound,混日子：doing nothing
+726|drudgery|苦工,单调、卑贱或无趣的工作：tedious work
+727|dubious|充满不定性的,值得怀疑的：uncertainty, questionable,(对事实等)持怀疑态度的：not feeling sure,迟疑不决的,不愿行动的：slow to begin because of doubts
+728|ductile|可塑的,有延展性的：malleable,易受影响的：easily led
+729|dulcet|悦耳的,令人愉悦的：melodious
+730|dullard|笨蛋：stupid
+731|dupe|复制品,复制：exactly like something else,易受骗的人：easily deceived,欺骗：deceive
+732|duplicity|欺骗,口是心非：deceptiveness
+733|dwindle|逐渐减少：gradually less
+734|dyspeptic|脾气坏的：bad-tempered,消化不良的：dyspepsia
+735|earnest|严肃认真的：serious
+736|earshot|听力所及的范围：range hear
+737|earsplitting|震耳欲聋的：distressingly loud
+738|eavesdrop|偷听：listen secretly
+739|ebullient|热情奔放的：zestfully
+740|eccentric|行为出格的,不循规蹈矩的：deviating conventional
+741|éclat|辉煌成就：success
+742|eclipse|下降,衰退：lower state,使声望下降,使黯然失色：diminish importance,(在数量、品质上)超越：be greater
+743|ecstasy|无法自控的情绪：beyond self-control,狂喜：intense joy
+744|ecumenical|全球基督教会的：whole churches,世界范围的,普遍性的：worldwide
+745|edible|可食用的：eaten
+746|edifice|大厦,大建筑物：massive structure,基础,基本结构：basic form
+747|efface|擦掉,抹去,使不明显：make indistinct
+748|effervesce|冒泡：bubble,兴奋,热情洋溢：high spirits
+749|effete|衰弱的,衰落的：depleted,缺乏信念的,懦弱的：lacking strength of will
+750|effluvium|难闻的气味：offensive smell,没有的副产品,废品：by-product waste
+751|effrontery|厚颜无耻,放肆大胆：disregard, courtesy
+752|effulgent|光辉灿烂的：resplendent
+753|effusive|感情泛滥的／溢于言表的,感情表达不节制的／过度的,过分多情的：unrestrained in emotional expression 
+754|egalitarian|平等主义的：promoting equal rights
+755|egoistic|利己的,以自我为中心的：centered in oneself
+756|elaborate|详细的,复杂的：complexity,详细阐述：in detail
+757|elastic|有弹性的：resuming shape,能(迅速从伤痛中)恢复的：recovering from depression
+758|elate|使开心,使自豪：fill with joy
+760|elegy|哀歌(诗),挽歌(诗)：expressing sorrow
+761|elephantine|巨大的：enormous size,笨拙的：clumsy
+762|elevate|(在道德、智力、文化水平上)提升：improve,使兴奋：raise spirits
+763|elicit|激起,唤起：bring out
+764|elliptical|含糊不清的：obscurity,椭圆的：ellipse
+765|elucidate|阐明：make lucid
+766|emaciate|使消瘦,使衰弱：become thin,削弱：feeble
+767|emancipate|解放,解除束缚：free
+768|embargo|贸易禁止令：prohibition on commerce
+769|embark|上船：go abroad,开始从事：start
+770|embarrass|使尴尬：experience distress,阻挠,制造障碍：create difficulty
+771|embed|嵌入：enclose
+772|embezzle|盗用：appropriate
+773|embolden|鼓励,使大胆：instill courage
+774|emboss|以浮雕效果妆点,装饰：ornament with raised work
+775|embrace|乐于接受：willingly, eagerly,保围：surround
+776|embroider|(时常伴有夸张和想象内容地)详细说明：give elaborate account
+777|emigrate|移民,移居海外：leave 
+778|eminent|杰出：above others
+779|emollient|起缓和作用的：less intense
+780|emulate|效仿并努力超越：excel through imitation
+781|enact|制定或颁布(法律)：establish
+782|enamel|涂亮漆,使具有光滑或亮泽的表面：give a glossy surface,用亮丽的表面装饰：adorn
+783|encomium|赞颂之词：praise
+784|encompass|组成,包含：include,包围：envelop
+785|encumber|阻碍,妨碍：impede,给…增添负担：place burden
+786|endemic|地方性的：to a particular region
+787|endorse|公开支持,推崇：express approval
+788|enervate|使衰弱：weaken,使麻木：deprive of emotional vitality
+789|enfranchise|给予…权力(例如选举权)：endow rights,解放：set free
+790|engender|引起,使发展：cause,产生,出现：come into existence
+791|engross|使全神贯注：occupy exclusively
+792|enigma|难以理解或解释的事物,谜：hard to understand
+793|enlighten|使知道,启发：inform, instruct,(在道德或精神上)进行教育：provide moral understanding
+794|enmity|敌意：mutual hatred
+795|ennoble|使尊贵：noble
+796|ennui|倦怠,缺乏兴趣：listlessness, lack of interest
+797|ensemble|合唱,合奏曲：two or move vocalists
+798|ensconce|安置：settle securely,隐藏：hiding
+799|ensue|紧随其后：afterward
+800|entangle|使卷入,使纠缠：twist confused mass,使变复杂或困难：complex or difficult
+801|enthusiasm|热情,兴趣：desire or interest
+802|entice|诱使：tempt, lure
+803|entrance|进入权,进入许可：means of entering or participation,使入迷：wonder, enchantment
+804|entrap|诱骗：lure
+805|entreat|恳求：plead persuade, ask urgently
+806|enunciate|清晰地说：articulate,公开宣布,宣称：openly or publicity
+807|ephemeral|短暂的：very short time
+808|epic|宏大的,超凡脱俗的：surpassing the usual
+809|epicure|美食家：discriminating tastes
+810|epigram|机智的短诗,警句：short witty
+811|epilogue|文学作品的结局：concluding section literary,戏剧的收场白：final scene of a paly
+812|epithet|外号,绰号：descriptive name
+813|epitomize|摘要,概括：short statement, main points,代表,体现,是…的典型范例：represent a typical example of
+814|equable|(脾气、性情)温和的：serene
+815|equity|不偏不倚,公平：lack of favoritism
+816|equivalent|等价的,相等的：equal
+817|equivocate|(带有欺骗目的地)模棱两可地说,说谎话：equivocal
+818|erode|侵蚀,慢慢减少：consume gradually
+819|errant|居无定所的：from place to place,误入歧途的,犯错误的：straying proper course or standards
+820|erratic|善变的：not constant,异常的,不同寻常的：different from the ordinary
+821|erudite|博学的：learned
+822|escalate|(使)(战争等)升级,扩大：increase
+823|eschew|刻意避开,戒绝：avoid
+824|esoteric|深奥难懂的：difficult to understand,少数人知道的：not known by the general
+825|espouse|支持,拥护：support,与…结婚：marriage, marry
+826|esteem|尊重：respect, prize
+827|estimable|值得尊敬的：admirable
+828|estrange|使疏远,离间,使感情失和：enmity, indifference, friendliness
+829|etch|蚀刻,留下深刻印象,铭记：produce a vivid impression
+830|eternal|永恒的：infinite duration, everlasting, perpetual
+831|ethereal|轻巧精致的：lightness, highly refined, delicate,天国的：heaven,非物质的,精神(上)的：spiritual, not composed of matter
+832|ethics|道德规范：governing conduct
+833|eulogize|称赞,颂扬：speak in high praise of
+834|euphemism|婉言,委婉的说法：inoffensive expression
+835|euphonious|悦耳的：pleasing
+836|euphoria|感觉极其愉快：overwhelming usually pleasurable
+837|evacuate|撤空：empty or remove,撤退：remove
+838|evanescent|逐渐消失的,短暂的：vanish
+839|evasive|难以发现,捕捉,分离的,含糊其辞的：equivocal
+840|everlasting|永恒的,持久的：forever
+841|evict|赶出,逐出：expel
+842|evince|表明：make known
+843|evoke|唤起,引发：call up
+844|exacerbate|使加剧,使恶化：severe
+845|exacting|严格的,苛求的：rigorous,费时间心思的：requiring time, effort, attention
+846|exalt|提升,提拔：raise,赞扬：praise
+847|exasperate|激怒：excite
+848|excavate|挖掘,挖空：dig out
+849|exceptional|例外的,特别的,非凡的：uncommon, extraordinary
+850|excoriate|严厉批评：criticize harshly publicly
+851|excrete|排泄：discharge
+852|excruciate|折磨,使痛苦：pain
+853|exculpate|声明无罪,开脱,使无罪：clear fault guilt
+854|excursive|离题的,散漫的：passing
+855|execrate|谴责：morally wrong or evil,痛恨：dislike strongly
+856|exemplary|榜样的,值得效仿的：being a pattern, imitated,作为警告的：warning
+857|exempt|使免除：release liability
+858|exhaust|耗尽：consume entirely, complete use of,筋疲力尽：wear out
+859|exhilarate|使高兴,使兴奋：cheerful, excited
+860|exhort|敦促,力劝：urge strong
+861|exigent|紧急的：immediate
+862|exodus|大批离去：departure
+863|exonerate|免除责备：free from blame
+864|exorbitant|过度的：exceeding the customary or appropriate limits
+865|exotic|外来的,不同寻常的：unusual
+866|expansive|广阔的：great expanse,健谈的,外向的：open, talkative, effusive
+867|expedite|加快进程：speed up the progress
+868|expedition|动作迅速：speed
+869|expiate|赎罪,纠正：extinguish the guilt
+870|expire|断气,死亡：die,到期：come to an end
+871|explicit|表达清晰的：fully revealed or expressed,成熟的,完全形成的：fully developed
+872|exploit|英雄行为：notable act,最大程度地利用：employ
+873|exponent|倡导者,支持者：advocates,实践者,典型代表：full realization
+874|expurgate|净化(书等),删去(不当处)：remove
+875|exquisite|成都强烈的：extreme,精致精巧的：refined taste
+876|extant|现存的：not destroyed, extinct
+877|extemporize|即兴表现：without prior preparation
+878|extenuate|减轻罪过：lessen the seriousness
+879|extinct|灭绝的：no longer existing
+880|extinguish|熄灭：put out,终止：bring to a complete end
+881|extol|赞美,吹捧：praise
+882|extort|勒索：force, intimidation
+883|extract|用力拔出：take out
+884|extraction|血统：origin, ancestry
+885|extraneous|无关的：no relevance,非主要因素的：not essential
+886|extravagant|挥霍的：spending money freely,过度的,不必要的：beyond normal acceptable limit
+887|extricate|使解脱,救出：free entanglement
+888|exuberant|非常高兴的,热情洋溢的：joyously, unrestrained,大量的,充分的：abundance
+889|exude|分泌,流出：flow forth
+890|exult|感到欢喜：rejoice
+891|fable|寓言故事：story teach a basic truth,神话,传说：story of supernatural happenings,谎言,虚构：statement in order to deceive
+892|fabricate|捏造：make up,搭建,组建,打造：bring into being by combining
+893|facetious|喜欢开玩笑的,轻浮的：joking
+894|facile|表面的,浅尝辄止的：lack of depth,容易的,唾手可得的：easily accomplished
+895|facilitate|使变容易,促进：make easy
+896|faction|派系：a party that is often contentious
+897|fallacious|谬误的,不合逻辑的：containing fallacy,欺骗性的：tending to deceive
+898|fallow|休耕的：untilled,闲置的：not being in a state of use
+899|fail-safe|保险措施：to preclude loss or injury,万无一失的：no chance of failure
+900|falsehood|谎言：untrue, made in order to deceive
+901|falter|蹒跚：walk unsteadily,犹豫踌躇：unsteady in purpose or action
+902|fanatic|狂热者：unreasoning enthusiasm,狂热的,盲信的：intense uncritical devotion
+903|fantasy|幻想：imaginative fiction,产生幻想：form a mental picture
+904|farce|(带有嘲讽元素的)滑稽戏：broadly satirical comedy,闹剧：ridiculous
+905|fascinate|强烈吸引,使入迷：hold an intense interest
+906|fast|绝食,斋戒：abstaining from food,快速的：quick,忠诚的：firm in one’s allegiance,稳固的,难以拆卸的：firmly positioned
+907|fastidious|挑剔的,极仔细的,追求完美的：meticulous attention to detail
+908|fateful|意义重大的：momentous,带来灾难的,毁灭性的：bringing death
+909|fathom|测量(深度)：measure the depth,彻底理解,弄懂：come to understand
+910|fatigue|疲惫：weariness or exhaustion,(让人厌倦的)苦差事：causes weariness
+911|fatuous|愚笨的,昏庸的：foolish
+912|faultfinder|吹毛求疵的人：petty criticism
+913|favorable|赞许的：expressing approval,有利的：promote
+914|fawn|阿谀奉承：seek favor by flattery
+915|faze|打扰,使尴尬：disturb the composure
+916|feckless|无成果的,没有价值的：having no worth,粗心不负责任的：careless
+917|fecund|多产,肥沃的：fruitful
+918|feeble|衰弱的：lacking in strength
+919|feign|制造假象,装出…的样子：give a false appearance
+920|fender|缓存装置：cushioning device
+921|feral|野生的：not domesticated,动物性的：nature of a lower animal
+922|fertilize|使肥沃,使多产：make fertile
+923|fervid|酷热的：high temperature,热情的：great passion
+924|fervor|热情,狂热：great warmth
+925|fester|感染,溃烂,腐烂：corrupt
+926|fetid|恶臭的：offensive smell
+927|fetter|枷锁,限制：limits one’s freedom,束缚：restrain from motion
+928|fiasco|大失败：complete failure
+929|fickle|易变的：likely to change,不忠诚的：not true in one’s allegiance
+930|fictitious|虚构的：not real
+931|fidelity|忠诚：being faithful
+932|figurative|比喻的：denoting another
+933|figurine|小雕塑：small statue
+934|filibuster|拖延议事：for the purpose of delaying legislative action
+935|filter|过滤：pass through a filter,去除杂质：remove impurities
+936|finale|终场,结局：closing part
+937|finesse|娴熟技巧：skill,精心策划：plan out with subtle skill,(巧妙地)躲避：keep away from
+938|finicky|过分讲究的,挑剔的：extremely meticulous
+939|flaccid|不结实的,松弛的：lacking firmness
+940|flag|旗帜,象征：symbol,变得衰弱：become feeble
+941|flamboyant|艳丽夺目的,炫耀的,充满装饰的：strikingly elaborate
+942|flatter|拍马屁,奉承,讨好：praise excessively,自我感觉良好：think highly of,使显得更漂亮：show advantageously
+943|flaw|瑕疵,缺点：imperfection,降低,破坏,使不完美：reduce perfection
+944|fledgling|新生：starting out in a field
+945|fleet|舰队,车队：group of a vehicles,迅速的：with great speed,快速涌过：pass swiftly
+946|flexible|灵活的,可变的：readily changed,易受影响的：susceptible to influence
+947|flinch|畏缩,退缩：draw back
+948|flippancy|轻率,无礼：unbecoming levity
+949|flirt|调情：behave amorously,无规则地快速运动：make irregular movements
+950|flit|快速或突然地经过：pass quickly
+951|flock|人群,兽群：creatures massed together,聚集,集体行动：travel in a flock
+952|florid|辞藻华丽的,花哨的：fancy expressions,装饰华丽的：elaborately decorated
+953|flounder|笨拙地行动,挣扎：act clumsily
+954|flourish|茂盛,繁荣：achieve success,装饰：ornamentation
+955|flout|嘲弄性不理会,蔑视：treat with disregard
+956|fluctuate|波动,无规则地变动：shift back and forth
+957|fluent|表达流利的：able to express well,不费力的：minimal difficulty
+958|fluky|侥幸的：happening by good luck,偶然的：by chance
+959|flush|(肤色)健康红润的：healthy reddish,富有的：money in abundance,大量的：abundance,冲洗：pour liquid
+960|fluster|使慌乱：put into agitated confusion
+961|foible|小缺点：minor flaw
+962|foil|挫败：prevent from being successful
+963|foment|助长,煽动：promote the growth
+964|foolproof|十分简单以至于不会失败的：leave no opportunity for error, misuse or failure
+965|footloose|无拘无束的,自由的：having no attachments
+966|forbearance|克制,忍耐：tolerance and restraint,友好仁慈的态度：kind, gentle or compassionate treatment
+967|forebear|祖先：an ancestor
+968|forestall|预先阻止：prevent beforehand
+969|foreword|前言：preface
+971|formidable|令人害怕的：causing fear,艰难的：requiring effort
+972|forthright|直率的,说话率真的：free in expressing opinions,直接的,不绕弯子的：free from ambiguity or evasiveness：going straight to the point
+973|fortify|加固,鼓励：give physical strength,做好心理准备：prepare mentally
+974|foster|促进,鼓励,培养：help the growth,养育：bring to maturity
+975|founder|建立者：one establishes,完败：fail utterly,沉没：become submerged
+976|fracas|争吵,吵闹：physical dispute, noisy fight
+977|fracture|破裂：breaking,打碎,破坏：separate into pieces
+978|fragile|易碎的：broken,易受伤的,脆弱的：easily injured
+979|frail|虚弱的：weak,(意志)薄弱的：weak,(希望)渺茫的：slight
+980|fraudulent|欺诈的：fraud
+981|fraught|充满的：full,令人忧虑的：emotional distress
+982|frenzy|疯狂,狂怒：mental agitation
+983|frequent|时常拜访：often,时常发生的,重复再现的：short intervals
+984|fretful|易怒的,烦躁的：vexed
+985|friable|易碎的：easily crumbled
+986|friction|摩擦：rubbing,冲突,不和：clashing,
+987|frigid|严寒的：cold,冷漠的：lacking warmth
+988|fringe|边缘：border,与…接壤,位于…的边缘：be adjacent
+989|frivolous|轻浮的：unbecoming levity,不重要的：little importance
+990|frothy|用轻薄材料制作的：light,(内容等)快乐轻佻、不严肃的：gaily frivolous
+991|frowsy|邋遢的：slovenly,味道难闻的：unpleasant smell
+992|frugal|节约的：economy
+993|frustrate|挫败,阻挠：prevent,使沮丧：lessen the courage
+994|full-bodied|重要的：importance,味道浓烈的：richness flavor
+995|fulminate|大声斥责：thunderous denunciation
+996|fumble|笨拙地做：awkward attempts,(无意识的)失误：departure from truth
+997|furor|喧闹,狂怒,激动,狂热：intense excitement
+998|furtive|鬼鬼祟祟的,秘密的：stealth
+999|fury|暴怒：rage
+1000|fussy|谨慎的：involving great care,过分雕琢的：excessively decorated,挑剔的：hard to please
+1001|fusty|过时的：old-fashioned,腐臭的：stale odors
+1002|futile|无效的,无用的：ineffective,不严肃的：lacking in seriousness
+1003|gadfly|刺激物：provocative stimulus,令人反感的人：annoys
+1004|gaffe|(社交上)失礼,失态：social blunder,明显的错误,错误判断：blatant mistake
+1005|gainsay|否认：declare false,反对：oppose
+1006|gall|(使)焦躁,激怒：irritate,深深的敌意：ill will,大胆,无耻：boldness
+1007|gallant|英勇的：brave, chivalrous,高贵的,慷慨的：dignified and generous
+1008|galvanize|(好似用电击)刺激：stimulate excite
+1009|gamble|赌博,孤注一掷：bet,(使)受到威胁,冒险：in danger
+1010|gambol|欢跳,雀跃：playfully
+1011|gangly|身材瘦长的：tall
+1012|garble|曲解,篡改,混淆(以至使无法理解)：distort misleading,筛选,除杂：remove
+1013|gargantuan|巨大的：tremendous,
+1014|garish|过于鲜艳的,过于张扬的：strident color
+1015|garment|衣服：clothing
+1016|garrulous|啰嗦的,话多得令人厌烦的：tiresomely, talkative
+1017|gash|深长的伤口或切口：deep cut,砍伤,切开：make gash
+1018|gasification|气化：gas,
+1019|gauche|笨拙的,缺乏社交经验的：lacking grace
+1020|gaudy|俗丽的：excessively showy
+1021|gauge|测量标准：measurement standard,判定：determine
+1022|gear|调整(以配合)：adjust
+1023|genial|和蔼亲切的：easygoing,友好的,热心的：kindly feeling,温暖的：neither too high nor too low
+1024|genteel|有教养的,不粗俗的：free from vulgarity
+1025|germane|有关的,适当的：relevant
+1026|gibe|嘲弄：taunting words
+1027|giddy|轻率不严肃的：lacking in seriousness,喜悦的：elated
+1028|gild|(带欺骗性地)修改,润色：deceptively attractive
+1029|gist|要点：main point
+1030|gladiator|角斗士：engaged fight death,参与打斗或辩论的人：engaging in controversy
+1031|glaze|给…上釉,妆点：coat glaze,使平滑：glossy surface
+1032|glib|流利圆滑的(常含有不真诚或欺诈的成分),油腔滑调的：fluency insincere deceitful,缺乏深度的,肤浅的：lacking depth
+1033|glisten|闪光：shine sparkling
+1034|glitch|小故障：minor malfunction
+1035|gloat|幸灾乐祸,自鸣得意：self-satisfaction
+1036|gloomy|黯淡无光的：without light,忧郁的：low spirits
+1037|gloss|简短解释：brief explanation, obscure,(欺骗性的)光鲜外表：attractive appearance,敷衍潦草做事(甚至忽略)：too lightly,开脱(罪名)：less bad
+1038|glossy|平滑的,有光泽的：smooth surface
+1039|glut|使过量,使充满：beyond capacity
+1040|glutinous|胶状的粘的：glue
+1041|glutton|贪吃者：immoderate food
+1042|goad|刺激,驱使,激发：incite rouse
+1043|gobble|狼吞虎咽：eat greedily
+1044|goggle|凝视：look
+1045|goldbrick|逃避工作和责任：shirk responsibilities
+1046|gorge|峡谷：canyon,狼吞虎咽：eat greedily
+1047|gossamer|虚无缥缈的东西：insubstantial,轻薄的,薄弱的：light
+1048|gourmand|嗜食者,大胃王：excessively fond of eating
+1049|gourmet|美食家：connoisseur food
+1050|grandeur|宏伟,壮丽：grand
+1051|grandiloquent|(语言等)浮夸的：extravagantly, bombastic
+1052|grandiose|自命不凡的,浮夸的：grandeur,宏大的：greatness
+1053|grandstand|为了给人留下印象而表演,哗众取宠：impress
+1054|grate|刮擦(以发出刺耳的声音)：rasping,骚扰,惹恼：irritate
+1055|gratify|使满足：desired please
+1056|gratuitous|无根据的,无理由的：unwarranted,无报酬的,免费的：without return,多余的：not needed
+1057|green|无经验的：deficient experience
+1058|gregarious|爱社交的：enjoy the company,群居的：group with others
+1059|grieve|(使)感到悲伤：deep sadness
+1060|grimace|因痛苦而面部扭曲,(作)怪相,(作)鬼脸：contortion pain, disgust or disapproval
+1061|grin|咧嘴笑,咧嘴笑着表示：express an emotion
+1062|gripe|抱怨：dissatisfaction,(通过连续让人讨厌的举动)激怒,惹怒：disturb
+1063|grisly|令人反感的,令人恐惧的：repugnance
+1064|groove|享受,极其满意,过得快活：take pleasure in
+1065|grotesque|难看的：unpleasant
+1066|grovel|卑躬屈膝：draw back, fearful submission
+1067|grueling|费时间花心思的：requiring 
+1068|guile|狡猾,狡诈：misleading
+1069|guilt|自责,悔恨：wrongdoing
+1071|gullible|易受骗的,易被利用的：cheated
+1072|gush|(使)大量涌出：great volume,(使)情感强烈外溢：exaggerated display
+1073|gust|情感爆发：sudden intense expression
+1074|guzzle|狂饮：drink greedily
+1075|hack|雇佣文人：writer commercial,乱砍,开辟：irregular blows,成功完成：skillfully or efficiently,忍受：put up with
+1076|hackneyed|陈腐的,缺乏创新的：lacking freshness originality
+1077|halcyon|宁静的,平静的：free from,繁荣的,丰富的：affluent
+1078|hale|强壮的,健壮的：free from infirmity or illness,拖,拉：cause to follow
+1079|half-baked|不明智的：lack of good sense or judgment
+1080|hallmark|典型的特征：conspicuous feature
+1081|hallow|尊敬,把…视为神圣：respect
+1082|hallucination|错觉：false idea
+1083|ham-handed|笨手笨脚的：lacking dexterity
+1084|hammer|屡次重申：repeated
+1085|hamper|阻碍：restrict the movement, impede
+1086|hamstring|使无效,使无力：ineffective
+1087|hangdog|伤心的,沮丧的：sad, dejected
+1088|hanker|向往,渴望：desire, yearn
+1089|haphazard|无秩序的,无目标的：lack of plan, order or direction
+1090|harangue|(发表)长篇大论：long pompous
+1091|harass|烦扰：irritate persistently,耗尽…的体力：use up
+1092|harbinger|预言者：presages
+1093|harbor|提供住处,隐匿：provide habitat,心怀,牢记：keep in one’s mind
+1094|hard-bitten|顽强的,经受得住困境、压力的：able to withstand
+1095|hardy|顽强的：able to withstand,愿意冒风险的：willing to take risks
+1096|harmonious|和谐一致的：agreeably related
+1097|harness|利用：utilize
+1098|harrow|折磨,使苦恼：distress torment
+1099|harry|不断烦扰,骚扰：distress, harass
+1100|harsh|粗糙的,不具有美感的：coarse rough disagreeable sense,严厉的：exacting
+1101|hasten|促进：speed-up, accelerate
+1102|hasty|轻率的：superficial excessive or careless speed
+1103|haunt|常去拜访：frequent,不断地想起,萦绕心头：obsess
+1104|hauteur|傲慢,自大：arrogance
+1105|haven|安全的地方：place of safety
+1106|havoc|大混乱：out of order,大范围破坏：nonexistent unsound or useless
+1107|headlong|鲁莽的：without deliberation
+1108|hearken|倾听,关注：attention
+1109|hearten|给予鼓励,鼓舞：give strength courage, encourage
+1110|heartrending|令人心碎的：sorrow distress
+1111|hedonism|享乐主义：doctrine pleasure
+1112|hegemony|霸权,统治权：preponderant authority
+1113|heinous|可憎的,十恶不赦的：hatefully
+1114|hew|遵守：confirm, hold to something firmly,支持：steadfast support
+1115|herald|告知,宣布：make known,预示,预兆：indication of beforehand
+1116|heresy|异教,和普遍观点相悖的说话：controversial or unorthodox opinion
+1117|heretical|异教的,异端邪说的：departure standards
+1118|hermetic|深奥的：abstruseness
+1119|hesitance|犹豫,不情愿：hesitant, reluctant
+1120|heterodox|非正统的,异端的：unorthodox opinions
+1121|hidebound|死板的,极度保守的：tending to favor
+1122|hideous|非常丑陋的：ugly
+1123|hie|匆匆忙忙：hasten
+1124|hike|(使)上涨：rise up to a higher place or position
+1125|hilarious|非常好笑的：extremely funny
+1126|histrionic|戏剧的,演员的：relating to actors
+1127|hive|忙碌之地：activity,储备,积累：store up
+1128|hoard|贮藏,秘藏：keep hidden
+1129|hoary|极老的：extremely old
+1130|hoax|欺骗：cause to believe untrue
+1131|hodgepodge|大杂烩：mixture dissimilar
+1132|homage|尊敬,敬意：respect
+1133|homely|其貌不扬的,朴素简单的：not attractive
+1134|homily|冗长乏味的道德演讲或训诫：admonition
+1135|homogenize|使统一化：make agree single established standard
+1136|hone|磨快：sharpen
+1137|hoodwink|欺骗：deceptive
+1138|hortative|鼓励的：exhortation
+1139|hovel|茅屋：small wretched dirty
+1140|hubris|狂妄自大：exaggerated pride, self-confidence
+1141|humble|谦逊的：meekness, modesty,顺从的,谦卑的：humility or unseemly submissiveness
+1142|humility|谦卑,谦逊：absence of any feeling s better
+1143|humor|幽默,令人发笑的事物：comical or amusing,迎合,迁就：comply with
+1144|hurricane|飓风：a violent rotating storm,飓风般的事物,引起动荡的事物：resembling a hurricane
+1145|husband|节俭,勤俭持家：use economically
+1146|husk|(果类或谷物的)外壳：outer covering,剥去：remove
+1147|husky|(尤指声音)沙哑的,粗糙的：rough,高大威猛的：muscular
+1148|hybrid|杂交品种,混合品种：mixed origin,杂交的：parents of different races
+1149|hymn|赞歌,赞美诗：song of praise,赞美：proclaim the glory
+1150|hyperbole|夸张：exaggeration used for emphasis
+1151|hypnotic|催眠的：cause sleep
+1152|hypocritical|虚伪的：not being what one appears to be
+1153|iconoclast|特立独行的人：not conform accepted standards
+1154|idolatrize|(通常盲目)崇拜：admires intensely
+1155|idyll|无忧无虑的生活：carefree episode
+1156|ignite|点燃：set fire to,激起,唤起(感情)：arouse the passions
+1157|ignominy|耻辱：lost the esteem
+1158|illiteracy|文盲：unable to read and write
+1159|illuminati|智者：enlightened,精英：best of a class
+1160|illuminate|照明：make shining,阐明：make plain,启迪,启发：spiritual understanding
+1161|illusory|幻觉的,虚幻的：illusion
+1162|imbibe|喝水,摄取水分：take in liquid
+1163|imbroglio|困境,复杂的局面：complicated situation,纷争：angry expression of differing opinions
+1164|imitation|仿制品：like something else
+1165|immaculate|干净的,纯净的：free from dirt,完美的,没有任何错误的：without fault
+1166|immanent|内在的：innermost
+1167|immaterial|非实体的：not composed of matter,无关的,不重要的：no relevance
+1168|immature|未完全发展的,未发育成熟的：lacking complete growth,(思维、举止)不够成熟的：lacking maturity
+1169|immemorial|古老的：from the distant past
+1170|immune|不易被感染的,有免疫力的：having resistance to infection,不受影响的：not affected by influence,不受约束的,免除的：not subject to an obligation
+1171|immure|监禁,禁闭,使闭门不出：confine
+1172|immutable|不可变的：not capable of changing
+1173|impassive|冷漠的,无感情的：no sign of feeling
+1174|impeccable|无罪的：free from sin,无暇的,无可挑剔的：free from fault
+1175|impecunious|贫穷的：no money
+1176|impede|妨碍,阻碍：slow the progress of 
+1177|impending|即将发生的：soon to take place
+1178|impenetrable|不可渗透的,不可穿透的：impossible to get through,难以理解的：incapable of being comprehended
+1179|impenitent|不悔悟的：not regretful
+1180|imperative|命令：must be obeyed,命令的,强制性的：forcing one’s compliance,迫切的：needing immediate attention,必要的：impossible to do without
+1181|imperial|帝国的,帝王的：empire,巨大的,令人惊叹的：impressive in size
+1182|imperious|爱发号施令的：ordering people,傲慢的,专横呃：arrogantly domineering,迫切的：compelling
+1183|impertinent|无关紧要的：not having relevance,粗鲁无礼的,大胆的：insolent rudeness,不守礼节的,不为他人着想的：lack of manners
+1184|imperturbable|沉着冷静的,淡定的：extreme calm
+1185|impervious|不可渗透的,不可穿透的：not allowing entrance,不能被破坏的：not capable of being damaged,不为所动的：not capable of being affected
+1186|impetuous|冲动的,性急的,轻率的：impulsive vehemence,剧烈的,猛烈的：violence of movement
+1187|impious|不敬神的：lacking reverence
+1188|implacable|固执的：sticking to an opinion,无法平息的：not capable of being appeased
+1189|implement|工具：device,执行,实施：carry out
+1190|implode|(使)剧烈收缩,(使)坍塌,(使)内爆：collapse inward
+1191|imposing|恳求,迫切请求：urgent manner
+1192|importune|宏伟壮丽的：impressive
+1193|impostor|冒充者：assumes false identity
+1194|impotent|无生育能力的：unable to produce fruit,无力的,无能的：lacking in power
+1195|imprecise|不精确的：not precise
+1196|impromptu|即席的表演：done extemporaneously,即席的,即兴的：without previous preparation
+1197|improvise|即兴而作：perform with little or no preparation
+1198|imprudent|不明智的：lacking good judgment
+1199|impudent|放肆大胆的,无礼的：boldness or disregard
+1200|impugn|责难,攻击,抨击：attack as false
+1201|impuissance|无权,虚弱：lack of power
+1202|inadvertent|偶然发生的：by chance,疏忽的,不留意的：unintentional lack of care
+1203|inalienable|不可剥夺的,不能让与的：cannot be transferred
+1204|inane|空洞的：lacking significance
+1205|inanimate|无生命的：not living
+1206|inaugurate|使就职：induct into an office,开始：begin
+1207|incandescent|明亮灿烂的：bright,热情饱满的,感情强烈的：zeal
+1209|incarnate|化身的,人性化的：bodily nature and form,使(思想、理论)具体,体现：constitute an embodiment
+1210|incendiary|煽动者：person who stirs up,煽动性的：tending to inflame
+1211|incense|芳香：pleasant smell,激怒：extremely angry
+1212|inception|开端,开始：beginning
+1213|incessant|无间断的：without interruption
+1214|inch|少量,很短的距离：small degree,(使)慢慢移动：move slowly
+1215|inchoate|新生的,才开始的：early stage,未完全成型的：imperfectly formed
+1216|incinerate|将…烧成灰烬：burn to ashes
+1217|incipient|起初的,初现的：beginning to come into being
+1218|incite|煽动,激起：provoke
+1219|inclement|(天气等)恶劣的：lacking mildness,无情的,残酷的：unmerciful
+1220|incogitant|考虑不周到的,不体谅的：inconsiderate
+1221|incongruent|不全等的,不一致的：not conforming
+1222|inconsequential|不合逻辑的：not following good reasoning,不重要的：no significance
+1223|incontrovertible|无可争议的：not open to question
+1224|incorrigible|不可救药的,积习难改的：incapable of being corrected,无法管制的：impossible to control
+1225|incriminate|归罪于：accuse of a crime
+1227|inculpate|归罪于：incriminate
+1228|incursion|入侵：hostile entrance
+1229|indelible|(印记等)无法擦除的：impossible to remove,无法忘怀的：not easily forgotten
+1230|indemnity|(损害、伤害等的)保险赔偿：compensation
+1231|indict|起诉,控告：accuse
+1232|indifferent|公平的：impartiality,(质量、档次等)中规中矩的,一般的：average,不感兴趣的,冷漠的：lack of interest
+1233|indigenous|土产的,本地的：originating,与生俱来的,先天的：innermost nature
+1234|indigent|贫穷的：lacking money
+1235|indispensable|必不可少的,不可或缺的：impossible to do without
+1236|indoctrinate|教育,灌输思想：instruct
+1237|indolent|懒惰的：averse to activity
+1238|inducement|动机,刺激源：motive,劝说,游说：pleading with someone to accept
+1239|indulgent|(对己)放纵的,(对他人)纵容的：given to indulgence
+1240|indurate|铁石心肠的,冷酷无情的：a lack of sympathy,使变硬：physically firm,使习惯于(如艰苦或尴尬之境况)：withstand physical hardship
+1241|industrious|勤勉的：diligent
+1242|ineffable|难以表达的：incapable expressed
+1243|ineluctable|无法逃避的,必然的：not to be avoided
+1244|inept|愚笨的,荒谬的：lack of judgment,不恰当的,不合时宜的：not appropriate,不称职的,无能力的：incompetent
+1245|inert|(人)懒惰缺乏活力的,(物品)惰性的：sluggish, deficient
+1246|inevitable|不可避免的,必然的：incapable avoided
+1247|inexorable|无法劝阻的,不为所动的：not persuaded
+1248|infamous|臭名昭著的：bad reputation
+1249|infatuate|使迷恋：inspire unreasoning love
+1250|inferno|大火：fire,地狱：resembles hell
+1251|infiltrate|秘密潜入：enter surreptitiously
+1252|infinite|无尽的,无限的：no boundaries
+1253|infirm|虚弱的：weak in body,不果断的,优柔寡断的：lacking firmness of will
+1254|inflame|点燃,燃烧：set on fire,使加剧：more violent
+1255|infelicitous|不愉快的,不幸的：unfortunate,不恰当的,不合时宜的：not appropriate
+1256|influx|涌入：coming in
+1257|infuse|激怒：make furious
+1258|infuriate|灌输,使…充满：fill,鼓舞：inspire
+1259|ingenious|聪明的,有创造才能的：resourceful, cleverness
+1260|ingenuity|独创性,创新性：inventive
+1261|ingenuous|天真纯朴的：lacking cunning,坦白的：straightforward
+1262|ingest|摄入,咽下：take into body
+1263|ingrained|本质的,根深蒂固的：firmly established
+1264|ingratiating|讨人喜欢的：winning favor,逢迎的,意在奉承的：gain favor
+1265|inherent|内在的,本质的：essential
+1266|inimical|带有敌意的：hostility,危及某人利益的,不利的：opposed to interests
+1267|inimitable|无法效仿的,独特的：not imitated
+1268|iniquity|邪恶,不公正：immorality, injustice
+1269|initiate|创造,发动促进：cause beginning,刚入门的新手：person initiation
+1270|inkling|轻微暗示,小提示：slight indication,略知：vague notion
+1271|innocuous|无害的：no injury,乏味的,不会引起敌意的：not arouse
+1272|innovative|创新性的：introducing innovations
+1273|inquisitive|过分好奇的：inordinately curious
+1274|insensible|无知觉的：lost consciousness,漠不关心的：not responsive,粗俗的,没品味的：lacking in refinement
+1275|insensitive|缺乏机智圆滑的,缺乏社交技巧的：lacking tact,不敏感的,麻木的：not responsive
+1276|insentient|无感觉的,无知觉的：lacking perception,一知半解的,略懂的：not having a deep understanding
+1277|insight|深刻的理解：apprehending nature
+1278|insipid|(食品)清淡无味的：lacking favor,平淡的,无聊的：lacking interest
+1279|insolent|粗野的,无礼的：rude
+1280|insouciant|无忧虑的,不在乎的：free from concern
+1281|instate|任命：establish rank
+1282|instigate|煽动,激起：urge forward, stir up
+1283|instill|慢慢滴入：enter,灌输：impart
+1284|institute|创立,制定：establish,机构：organization
+1285|insubordinate|不服从权威的：not submissive
+1286|insular|(观念、想法等)孤立狭隘的：narrow provincial viewpoint
+1287|insulate|使绝缘,使隔离：detached situation
+1288|insurgent|叛乱分子：opposes authority
+1289|intangible|无法感知的,无形的：capable perceived
+1290|integral|构成整体所必需的：essential,完整的：not lacking any part
+1291|integrity|正直：adherence moral,完整性：being whole
+1292|intelligible|可理解的：being understood
+1293|intemperate|无节制的,极端的,不温和的：not temperate
+1294|intensify|加强,激化：make intense
+1295|inter|埋葬：place in grave
+1296|intercessor|调停者：mediates
+1297|interdict|禁止：forbid,阻止：stop, seize or interrupt
+1298|interim|中间过渡时期,间隔：time between event,暂时的：for the time being
+1299|interlock|连锁,连结：joined closely
+1300|interminable|无尽头的：no end
+1301|intermittent|间歇的,断断续续的：not continuous,不定期的：lacking regularity
+1302|interregnum|过渡期：break
+1303|interrogate|质问,审问：question formally
+1304|intimate|有紧密联系的,亲密无间的：close association,不为人知的：not known,密友：person who has a strong liking,迂回地交流,间接地沟通：communicate indirectly
+1305|intimidate|威吓：frighten
+1306|intoxicant|使人陶醉的东西(尤指酒精饮料)：intoxicates
+1307|intransigent|不妥协的,固执的：refusal to compromise
+1308|intrepid|无谓的：resolute fearlessness
+1309|intrigue|阴谋：a secret plan,激起…的兴趣：arouse curiosity
+1310|intrinsic|固有的,内在的：essential
+1311|intuitive|直觉的：by intuition
+1312|inundate|淹没：cover with flood
+1313|inure|使习惯接受不好的东西：accustom,使坚强：withstand physical hardship
+1314|invective|侮辱性的：characterized by insult
+1315|inveigh|激烈抗议,表示强烈不满：protest vehemently
+1316|inveigle|诱骗：win over by coaxing
+1317|inventory|存货清单：list all goods,(包含要点的)简介：short statement
+1318|inveterate|积习的：firmly established 
+1319|invidious|惹人反感的：cause discontent,羡慕嫉妒恨的：resentment of another’s possessions
+1320|invigorate|使精神,使强壮,鼓舞激励：impart vigor
+1321|invincible|不可战胜的,不可超越的：incapable conquered
+1322|invoke|实施：put into effect,产生,造成：be the cause
+1323|irascible|易怒的：easily provoked anger
+1324|irate|极其愤怒的：extremely angry
+1325|iridescent|五颜六色的：lustrous colors
+1326|irk|令人烦恼的事物：source of irritation,使烦恼,使厌倦：irritating
+1327|ironclad|非常坚固的,坚不可摧的：unbreakable
+1328|irradicable|不能根除的：impossible destroy
+1329|irreducible|(数)不可约分的：incapable factored
+1330|irrigate|灌溉：supply water,冲洗：flush
+1331|irritate|刺激,惹恼：provoke anger
+1332|issue|(有争议的)话题,议题：matter that is in dispute,发布(期刊)等：produce and release,(使)流出：flow out
+1333|jabber|快而不清楚地说：talk rapidly, indistinctly
+1334|jaded|疲惫的：depleted in strength,厌倦的,没兴趣没热情的：patience exhausted
+1335|jape|嘲弄：mockingly
+1336|jargon|行业术语：specialized or technical language
+1337|jarring|刺耳的：discordant,震惊的：strong emotional reaction
+1338|jaundice|(因嫉妒或厌世而产生的)偏见：bias
+1339|jaunty|轻快呃,活泼的：sprightly
+1340|jejune|无趣乏味的：not interesting,幼稚的：annoying qualities children
+1341|jettison|丢弃,投弃：cast
+1342|jeopardy|危险： risk, danger
+1343|jest|轻浮的态度,戏谑：frivolous
+1344|jibe|意见一致：agree
+1345|jingoist|极端爱国激进分子(通常表现为好战的对外政策)：extreme nationalism belligerent
+1346|jitters|紧张,不安：panic, nervousness
+1347|jocular|搞笑的,欢乐的：joking, playful
+1348|jocund|欢快的,高兴的：sprightly lighthearted
+1349|jog|慢跑：movement exercise,唤起：rouse
+1350|jolt|突然移动：move sudden,惊吓：unpleasant surprise
+1351|jot|简要记录：write briefly
+1352|jovial|愉快的：good-mannered, jollity, conviviality
+1353|jubilant|喜悦的：joyful
+1354|judicious|明智的,慎重的：judgment prudent
+1355|juggernaut|无法阻挡的力量的,摧毁一切的强大力量：overwhelming force
+1356|ken|视野范围：vision,知道,了解(人或物)：know
+1357|kidnap|绑架勒索：detain unlawful force
+1358|kindle|点燃：set fire, ignite
+1359|kindred|类似的,具有相似或相近的起源、本性或性质的：similar origin
+1360|knack|诀窍,聪明的做法：clever
+1361|knead|揉捏,塑造：shape by folding
+1362|knit|编织(纱线)：interlacing yarn with needles,连接,联系：join closely
+1363|knotty|多结的,复杂的,困难的：full of difficulties complications
+1364|kudos|名望,名声：fame,夸奖,赞扬：acclaim or praise
+1365|labile|易变的,不稳定的：unstable
+1366|laborious|勤奋的：industrious,费力的：long, hard work
+1367|labyrinthine|迷宫似的,复杂曲折的：extremely complex structure
+1368|lacerate|使非常痛苦：cause pain
+1369|lackluster|黯淡无光泽的：lacking brightness
+1370|laconic|简洁(以至于显得粗鲁或难以理解的)：minimum of words, concise
+1371|lachrymose|催人泪下的,悲伤的：mournful
+1372|lambaste|严厉斥责：scold sharply
+1373|lament|悼词：composition grief,抱怨：resentment,为…哀悼,表达痛苦或遗憾：express sorrow
+1374|lamentable|值得惋惜的,悲哀的：deplorable
+1375|lampoon|讽刺：harsh satire
+1376|languid|没精打采的,虚弱的：lacking energy
+1377|languish|变得衰弱：become feeble
+1378|languor|懒惰：inertness,衰弱：weakness, weariness
+1379|lank|细长瘦弱的：long lean,不僵硬的,柔软松弛的：limp, not stiff
+1380|lapse|小过失：slight error,结束,终止：end
+1381|largesse|捐赠物：without expectation of a return,慷慨：liberality
+1382|lash|击打：hard strike,猛击,撞击：strike with force,捆扎：bind
+1383|lassitude|乏力,没精打采：diminished energy
+1384|latent|潜在的,不活跃的：potential, not evident
+1385|latitude|(行动或言论)自由：freedom
+1386|laudatory|表示赞扬的：praise
+1387|lavish|奢侈的,大量的,无节制的：extravagance and profusion,挥霍,浪费：give readily carelessly
+1388|leaven|在…中加入轻松、活泼或变更的因素：mingle permeate
+1389|leer|一瞥,斜眼看：sidelong
+1390|leery|怀疑的,不信任的：suspicious
+1391|legacy|遗产：handed down ancestor
+1392|legend|传奇,传说：popular myth,图例：explanatory list map
+1393|legion|大量的人,(尤指)军团：large body of men,大量的：numerous
+1394|lenient|宽大仁慈的：merciful
+1395|lethal|非常有害的,致命的：extremely harmful
+1396|lethargic|没精打采的,行动迟缓的：sluggish
+1397|levelheaded|明智的：sensible
+1398|levity|轻浮：frivolity
+1399|liability|责任：liable,障碍,不利条件：creates difficulty
+1400|liberal|思想前卫的：not bound,慷慨的,大方的：generosity
+1401|libertine|放荡不羁者：without moral restraint
+1402|licentious|放荡的,性欲强的：lacking restraints
+1403|liken|显示相似,把…比作：show as similar
+1404|limber|可塑的,柔软的：flexible
+1405|limp|柔软的,松散的：lacking firm,软弱的,没有精神的：lacking strength,跛行,艰难地行走：haltingly or unsteadily
+1406|limpid|透明清澈的：transparent clearness,镇定的,淡定的：free from agitation
+1407|linger|磨蹭,闲荡：proceed slowly
+1408|lissome|柔软的：easily bent,敏捷的,轻盈的：move with ease
+1409|list|(使)倾斜：at an angle
+1410|lithe|敏捷的,轻盈的：grace,柔软的：easily bent
+1411|loath|不情愿的,讨厌的：reluctant
+1412|loathe|厌恶：dislike
+1413|lofty|崇高的：elevated,高的：rising,自大的：superiority
+1414|loll|懒洋洋地行动：lazy,偷懒,打发时间：doing nothing
+1415|lopsided|歪的,倾斜的：leaning,不平衡的,不协调的：lacking in balance
+1416|loquacious|话多的：excessive talk
+1417|loutish|粗鲁的：awkward, stupid and boorish
+1418|lubricate|使润滑：reduce friction
+1419|lucid|有光亮的：suffused with light,神志清楚的：full use of one’s mind,表达清晰的,简单易懂的：easily understood
+1421|lugubrious|(故作夸张的)悲哀的：mournful
+1422|lull|相对平静时期,间隙：momentary halt,使镇静,使安心：free from distress
+1423|lullaby|催眠曲：song lull sleep,使镇静,使安心：free from distress
+1424|lumber|木材：tree logs,笨拙地行动：clumsiness,使负担(从而拖累)：burden
+1425|luminary|杰出人物：eminence
+1426|lurch|蹒跚：swaying
+1427|lurk|潜伏：lie in wait
+1428|lush|茂盛呃：vigorously,多产的：producing abundantly,(声音、味道)优美的,令人愉悦的：appealing
+1429|lustrous|有光泽的：shiny
+1430|luxurious|豪华的：wealth and comfort,奢侈的：excessive gratification
+1431|lyric|(可以哼唱的)小曲：musical composition,如诗歌般流畅优美的：suggestive of poetry or music
+1432|macabre|恐怖的：horror of death
+1433|macerate|浸泡(以软化)：soaking or steeping
+1434|maculate|使有斑点,弄脏,玷污,损坏：spot
+1435|maelstrom|漩涡：violent whirlpool,混乱、动荡的局势：turbulent
+1436|magnificent|壮丽的：strikingly impressive
+1437|maladroit|笨拙的：lack of nimbleness
+1438|malaise|不舒服：bodily discomfort
+1439|malcontent|不满分子：opposition,不满的：dissatisfied
+1440|malicious|恶意的：deliberately harmful
+1441|malign|恶意的：cause suffering,诽谤：utter injuriously
+1442|malinger|装病以逃避工作：pretend illness
+1443|malleable|可塑的：capable of being shaped,易控制的：capable of being controlled
+1445|mandatory|强制的：forcing compliance
+1446|mangle|损毁,使伤残：injury,弄砸：ruin
+1447|mangy|卑劣的：contemptible
+1448|mania|热衷,狂热：intense enthusiasm
+1449|manifest|显然的,明显易懂：understanding,显现,显露：make evident
+1450|manipulate|巧妙操作：skillful,巧妙处理,暗中操控：deviously
+1451|mannered|不自然的,做作的：artificial
+1452|manumit|解放(奴隶)：release from slavery
+1453|manuscript|手稿：written by hand
+1454|mar|污点,坏点：spoils the appearance,破坏,削弱：impair
+1455|marsh|沼泽,湿地：wet
+1456|martinet|纪律严明之人：strict
+1457|marvel|令人惊奇的事物：surprise, admiration or wonder,(因为壮观、美丽等而)表示惊讶：feel amazement
+1458|masquerade|捣碎：pulpy mass
+1459|mash|面具,伪装：display insincere,伪装,掩饰：disguise
+1460|mastery|技艺超群,精通：great skill
+1461|matriculate|入学,录取：admit or be admitted
+1462|maudlin|过于感伤的：tearfully sentimental
+1463|maven|专家：experienced
+1464|maverick|特立独行之人：does not conform,标新立异的,不合常规的：deviating
+1465|mawkish|过度伤感的：sentimental
+1466|meager|贫乏的：deficient
+1467|mean|卑贱的：ignoble,吝啬的：sharing little,打算,怀有目的：purpose or goal,意味着：convey, show or indicate
+1468|meander|闲逛,漫步：aimlessly and idly
+1469|measly|少得可怜的,微不足道的：small
+1470|measured|深思熟虑的,审慎的：calculated
+1471|meddle|干涉,管闲事：intrude
+1472|mediate|调解,调停：bring about an agreement
+1473|mediocre|平庸的,质量中等偏下的：moderate
+1474|medley|大杂烩,混合物：mixture
+1475|meek|谦恭的：humility,顺从的：submissive
+1476|meet|合适的：very proper
+1477|mellifluous|(曲调)优美的：smooth and sweet
+1478|melodramatic|感情夸张的,伤感的：exaggeratedly emotional
+1479|menace|威胁,使处于危险：intention to harm
+1480|mendacious|撒谎的,虚假的：lies
+1482|mercenary|(外国军队的)雇佣军：soldier hired,唯利是图的,贪婪的：monetary or material gain
+1483|mercurial|(情绪)善变的：changeableness of mood
+1484|merited|应得的,理所应当的：what is called for
+1485|mesh|诱捕：catch
+1486|mesmeric|催命的,催眠术的：mesmerism,令人着迷的,难以抗拒的：attracting
+1487|metamorphose|(使)变形：change
+1488|metaphysical|哲学上的,理论上的：idea,非尘世的：beyond universe
+1489|meteoric|流星般迅速而短暂的：brevity
+1490|methodical|井然有序的,有条理的：systematic order
+1491|meticulous|极为谨慎的：extreme or excessive care
+1492|mettle|勇气：strength of spirit,毅力,耐力：stamina
+1493|miff|使恼怒：annoyed
+1494|migratory|迁移的：moving from one region to another
+1495|milk|榨取(财富、信息等)：coerce profit
+1496|mime|模仿：model
+1498|minatory|带来威胁的,有凶兆的：a sign of evil
+1499|mince|切碎：small pieces,小步走：short steps
+1500|mingle|mingle：social,混合,结合：mix
+1501|minimize|将…减到最少：reduce to smallest,刻意低估：underestimate,表示鄙夷：scornfully low opinion
+1502|mint|巨额：abundant amount,无损坏的：unmarred
+1503|miniscule|极小的：very small
+1504|minute|仔细的,谨小慎微的：careful scrutiny,小的,不重要的：of small importance
+1505|minutia|次要的细节,小事：minor detail
+1506|mirage|海市蜃楼,幻想：illusory
+1507|mire|困境：difficult situation,使陷入困境,拖后腿：hold back
+1508|mirth|欢乐,欢笑：gladness laughter
+1509|misanthropic|反人类：deep distrust of human
+1510|misbehaving|调皮的,行为不端的：childish misbehavior
+1511|mischievous|调皮的,淘气的：naughty teasing,有害的：causing harm
+1512|misconstrue|误解,曲解：mistake
+1513|miscreant|恶棍,罪犯：behaves criminally
+1514|misdemeanor|轻罪：crime less serious
+1515|miserly|吝啬的：penuriousness
+1516|misfortune|不幸：bad fortune
+1517|misgiving|担忧,忧虑：doubt
+1518|mishap|不幸之事：unfortunate
+1519|misrepresent|误传,篡改：give misleading representation
+1520|mite|微小的东西,很少的钱：small object
+1521|mitigate|减轻痛苦,使缓和：less severe
+1522|mobile|可移动的：capable moving,可变的：changeable
+1523|mockery|鄙视,嘲弄：ridicule,以嘲笑为目的的模仿：derisive imitation
+1524|moderate|使缓和：lessen intensify,适度的,中庸的：within limits
+1525|modicum|少量：small portion
+1526|mollify|平息,抚慰,缓和：calm
+1527|mollycoddle|宠爱,溺爱：excessive indulgence
+1528|molt|脱(羽、皮等)：shed feathers
+1529|momentous|极重要的：utmost importance
+1530|momentum|动力,冲力,势头：impetus
+1531|mongrel|杂种的,混血儿的：mixed origin
+1532|monochromatic|单色的：one color,单调无味的：lacking variety
+1533|monologue|独白：by one actor
+1534|monotonous|(声音)单调的：unvarying tone,清一色的,无聊的：tediously unvarying
+1536|moratorium|延期,暂缓施行：suspension
+1537|morbid|疾病的,疾病所致的：by disease,(思想性格)变态的：unwholesome thoughts
+1538|mordant|尖酸刻薄的：biting caustic
+1539|moribund|即将结束的,垂死的：approaching death,即将过时：obsolete
+1540|morose|忧郁的：sullen, gloomy
+1541|mosaic|综合物,马赛克般的东西：collection
+1542|mosque|清真寺：worship Muslim
+1543|moth-eaten|过时的：passed its time
+1544|motile|能动的：movement
+1545|motivate|刺激,激发：provide incentive
+1546|motley|混杂的,富于变化的：variety
+1547|mottle|标记上杂色斑点：mark spots
+1548|motto|座右铭：guiding principle
+1549|mournful|悲伤的：expressing sorrow
+1550|movement|运动：moving
+1551|muddy|不干净的：not clean,浑浊的,不清晰的：lacking clarity,使难以理解：make unclear
+1552|muffle|使消声：deaden the sound
+1553|mulish|固执的：obstinate
+1554|mumble|说话含糊：utter confused
+1555|mundane|尘世的,世俗化的：relating to world,平凡的：commonplaces
+1556|munificent|慷慨的：liberal in giving
+1557|murky|黯淡的,昏暗的：without light,模糊的,晦涩的：lacking clarity
+1558|murmur|小声的话语：low sound,低声抱怨,发牢骚：grumble
+1559|mutate|(使)改变,(使)变异：undergo mutation
+1560|mute|不说话的,缄默的：refraining from speech,使颜色,音调等柔和：soften,减弱声音：muffle the sound
+1561|mutter|低声抱怨：murmur complainingly
+1562|myopic|缺乏远见的,缺乏辨别能力的：lack of foresight
+1563|myriad|无限的,大量的：indefinite number
+1564|nadir|最低点：lowest point
+1566|narcissism|自恋：admiration of oneself
+1567|nascent|新生的：recently come into existence
+1568|natty|整洁的,时髦的：tidy
+1569|nauseate|(使)厌恶,(使)作呕：cause disgust
+1570|nautical|航海的：on water
+1571|naysay|拒绝,否认：oppose, deny
+1572|nebulous|模糊的：indistinct
+1573|needy|贫穷的：impoverished
+1574|nefarious|极坏的,邪恶的：wicked
+1575|negation|否定：opposite
+1576|negligent|疏忽大意的：failing care
+1577|negotiate|商量,谈判：by mutual agreement,谋划：plan out
+1578|neophyte|初学者,新手：beginner
+1579|nerve|(坚强的)意志,勇气：power of endurance,给予勇气,鼓励：give courage
+1580|nettle|惹怒：arouse anger
+1581|neutralize|中和：acid undergo neutralization,破坏,使无效：make inoperative or ineffective
+1582|nicety|连结：connection,核心,最重要的地带：greatest importance
+1583|nexus|小口咬：small bites
+1584|nibble|准确,精准：careful details,细微之处：fine point
+1585|nil|不存在,零：nothing
+1586|nip|少量：small amount,小口吃喝：in small amounts
+1587|nitpick|吹毛求疵：criticize
+1588|nocturnal|夜间的：in the night,夜间活动的：active at night
+1589|noisome|有害的,有毒的：harmful,恶臭的：offensive smell,非常令人厌恶的：objectionable
+1590|nomad|游牧的,居无定所的人：no fixed residence
+1591|nominal|不重要的：unimportant,名义上的：something in name
+1592|nonchalant|冷漠：indifference
+1593|nondescript|平凡的,不吸引人的：lacking distinctive, interesting
+1594|nonentity|不重要的人：little consequence,虚构的东西：created no objective reality
+1595|nonplus|使迷惑,使困窘：perplex
+1596|nonsense|无意义的话,废话：no meaning
+1597|notch|刻痕：cut,通过努力获得：obtain
+1598|novel|新奇的：new
+1599|noxious|有害的,有毒的：harmful, injurious to health,产生强烈厌恶的：causing intense displeasure
+1600|nuance|细微的差异：subtle distinction
+1601|nudge|用肘推以引起注意：push elbow,说服某人做某事：persuade
+1602|nugatory|无关紧要的：consequence, inconsequential
+1603|nurture|提供营养：nourishment,培育,培养：provide with understanding
+1604|oath|誓言：formal promise
+1605|obdurate|固执的：resistant influences,冷酷无情的：lack of sympathy
+1606|obedient|服从的,顺从的：submissive authority
+1607|obeisance|敬礼,尊重：respect, submission
+1608|obfuscate|使困惑,使模糊：confused, opaque
+1609|obligatory|强制性的：compulsory,(见得多以至于)无聊的：dull
+1610|obliging|乐于助人的：do favors
+1611|oblique|斜的：inclined or twisted
+1612|obliterate|除去：remove
+1613|oblivious|不知道的,不知情的：lacking awareness, not informed
+1614|obloquy|谩骂,诽谤：abusively language,恶名,耻辱：lost the esteem
+1615|obscure|含义模糊的：not clearly, veiled, uncertain meaning,平凡的,不知名的：famous,使模糊：indistinct
+1616|obsequious|谄媚的,奴性的：fawning attentiveness
+1617|obsess|迷住的,使困扰：haunt
+1618|obstinate|固执的：in spite of persuasion,难以减轻或治愈的：mot easily subdued
+1619|obstreperous|难驾驭的,任性的：unruly,吵闹的：loud and insistent cries
+1620|obstruct|妨碍,给…制造困难：impede, create difficulty,阻挡：prevent passage
+1621|obtuse|愚钝的：absorb ideas readily
+1622|obviate|排除,使不必要：unnecessary
+1623|occult|难以理解的：not easily apprehended, mysterious,使隐藏或神秘：keep secret 
+1624|odium|憎恶,讨厌：strong dislike
+1625|offbeat|不平常的：different from generally found
+1626|offhand|即兴的,没有准备的：without preparation
+1627|officious|多管闲事的：thrusting oneself
+1628|offish|冷淡的：aloof
+1629|off-key|不寻常的,不合适的：out of accord with
+1630|ominous|凶兆的：omen, evil
+1631|omniscient|无所不知的：complete knowledge
+1632|onerous|费时间花心思的：requiring much time, effort
+1633|opaque|不透光的：impenetrable by light, neither transparent translucent,晦涩的：obscure
+1634|opine|表达观点,想,认为：express opinions
+1635|opportune|合适的,恰当的：convenient
+1636|opprobrious|辱骂的：reproach,臭名昭著的,令人鄙视的：infamous
+1637|oration|(颇有野心、自高自大的)演说：high-flown or pompous manner
+1638|orient|使确定方向,使熟悉或适应：determine position, make familiar
+1639|original|创新的：creative, inventive,最初的,最早的：before
+1640|orthodox|传统的：established form, custom, or rules
+1641|oscillate|振动,摇晃：swing,犹豫,变化：vary
+1642|ossify|(使)硬化,(使)僵化：hardened, conventional, opposed to change
+1643|ostentatious|卖弄炫耀的：conspicuous, pretentious
+1644|ostracize|驱逐：exclude
+1645|oust|免职：remove from,驱逐：drive out
+1646|outgoing|友好的,外向的：extroverted
+1647|outlandish|古怪的,奇异的：out of the ordinary, bizarre
+1648|outmaneuver|以谋略取胜：overcome
+1649|outset|开端,开始：beginning
+1650|outwit|瞒骗,以智取胜：surpass cunning
+1651|overbearing|专横傲慢的：arrogant,压倒一切的,(在力量或重要性上)势不可挡的,支配的,显著的：overwhelming in power
+1652|overlap|(与…)部分重叠：same area
+1653|overt|明显的,公开的：open
+1654|overture|前言：introductory, preclude,序曲：introduction opera
+1655|oxymoron|矛盾修饰法：combination contradictory
+1656|pacify|使平静,安慰：ease the anger
+1657|padding|夸张,废话：go beyond the facts
+1658|paean|欢乐颂：joyous song praise
+1659|painstaking|煞费苦心的：diligent care
+1660|palatable|感到愉悦满足的：pleasure or contentment
+1661|palatial|宫殿般奢华的：ornateness
+1662|pall|失去兴趣：interest attraction
+1663|palliate|平息,减轻：less severe intense
+1664|pallid|无生气的,缺乏活力的：lacking radiance vitality,苍白无血色的：pale
+1665|palmy|繁荣的：prosperity
+1666|palpable|摸得到的：capable touched,明显的,易觉察的：obvious
+1667|palter|欺骗,讨价还价：insincerely deceitfully
+1668|paltry|无价值的,微不足道的：importance,让人厌恶的,让人鄙视的：loathing and disgust
+1669|pan|严厉批评：harsh criticism
+1670|panache|炫耀：flamboyance
+1671|pandemic|大范围流行的：widespread
+1672|pandemonium|喧嚣,骚动：noise
+1673|panegyric|赞颂之词,颂文：eulogistic
+1674|panoramic|全景的：complete view
+1675|parable|寓言：teach a basic truth
+1676|paradigm|典范,模范：pattern
+1677|paradise|天堂,极乐世界：perfection and happiness,快乐,狂喜：pleasurable emotion
+1678|paradox|表面矛盾实际可能正确的话,悖论：opposed to commonsense
+1679|paragon|优秀模范：example,把…比作,显示相似：compare
+1680|paramount|最重要的：chief importance
+1681|paranoid|多疑的,对他人极端恐惧和怀疑的：extreme fear of distrust
+1682|paraphrase|转述,意译,改写,in different words
+1683|parch|炽,烤,烤干：dry
+1685|pariah|被排斥或鄙视的人：despised or rejected
+1686|parity|相称,同等,平等：being equal
+1687|parody|(以嘲笑原作作者的)模仿作品：imitated for ridicule,模仿(以嘲弄)：copy to make fun
+1688|paroxysm|(感情、动作的)突发：outburst,(政治、社会领域呃)大动荡：disturbance
+1689|parrot|(机械地)模仿,复制：imitate without understanding
+1691|parsimonious|过度节俭的,吝啬的：stinginess
+1692|partial|偏袒的,偏爱的：biased,部分的,不完整的：lacking
+1693|particularize|详述：give details
+1694|partisan|跟随者,信徒：follows,(狂热。坚定的)拥护者,支持者：excessively devoted,偏袒的：one side
+1695|pastiche|(带嘲讽的)模仿：imitates with satirical intent,大杂烩：hodgepodge
+1696|partition|分割,划分：dividing
+1697|patent|显而易见的,明显的：readily visible
+1698|pathological|不正常的,病态的：markedly abnormal
+1699|patina|外表：superficial,(由内而外散发的)氛围,气场：appearance or aura
+1700|patrician|贵族,名门望族：high birth,贵族的,地位高的：high birth
+1701|patriot|爱国者：loves country
+1702|patronize|赞助：provide aid,以高人一等的态度对待：treat haughtily
+1703|paucity|少量,缺乏：dearth
+1704|paunchy|大腹便便的,大肚子的：potbelly
+1705|peck|大量：considerable amount,(不情愿地)小口咬：in small bites
+1706|pedagogue|教育者,老师：give formal instruction 
+1707|pedant|书呆子,墨守成规之人：formal rules
+1708|predestine|预先注定：in advance
+1709|pedestrian|行人：traveling on foot,平庸无奇的,令人厌倦的：causing weariness
+1710|peep|一瞥：brief look,轻声：slight sound
+1711|peer|同等地位的人,同辈：equal,好奇地凝视：look
+1712|peeve|打扰,惹恼：disturb
+1713|pejorative|轻蔑的,贬低的：disparaging
+1714|pellucid|透明的：admitting light,清晰明确的,易懂的：clear
+1715|pen|监狱：confinement,关押,监禁：close
+1716|penalty|(对罪行的)处罚：punishment
+1717|penchant|嗜好,迷恋：strong inclination
+1718|penitent|悔过的：regretful
+1719|pensive|沉思的,(尤指)哀思的：thinking
+1720|penury|贫穷：dearth,吝啬,节俭：frugality
+1722|perceptible|可察觉的：being perceived
+1723|peremptory|不容反抗的：not allowing contradiction,爱发号施令的：ordering people,傲慢的：feeling of superiority
+1724|perfervid|非常热情的：exaggerated emotion
+1725|perfidy|不忠,背信弃义：disloyalty
+1726|perforate|打孔,穿透：make a hole
+1727|perfunctory|例行公事的,敷衍的：superficially,不感兴趣的：lacking in interest
+1730|peripatetic|巡游的,四处游历的：place to place
+1731|peripheral|外围的：boundary or periphery,辅助性的：supply
+1732|perish|死亡,消亡：cease to exist
+1733|permanent|永恒的：continuing or enduring, forever
+1734|permeable|可渗透的：penetrated
+1735|pernicious|有害的：injurious
+1736|peroration|(演讲的)结束语：concluding part,(正式的)演讲,致辞：formal discourse
+1737|perpetual|永恒的,不断的：continuing forever
+1738|persecute|迫害,折磨：cause suffering
+1739|persevere|坚持不懈,不屈不挠：persist
+1740|persiflage|打趣：teasing
+1741|persistence|坚持,持续：lasting existence
+1742|personable|风度翩翩的,吸引人的：attractive
+1743|perspicacious|极敏锐的,有洞察力的：penetrating mental discernment
+1744|perspicuity|清晰明了的：clearness and lucidity
+1745|pertain|有关联的：have a relation
+1746|pertinacious|顽固的,固执地坚持的：sticking
+1747|pertinent|相关的,恰当的：relevance
+1748|perturb|使扰乱,使烦躁不安：trouble the mind
+1749|peruse|细读：examine with great care
+1750|pervade|弥漫,充满：throughout
+1751|pessimistic|悲观的：take the gloomiest possible view
+1752|petition|请愿,正式的申请,申请书：supplication or request,(尤指正式地)请求：,make a request
+1753|petrify|使僵化,使失去活力：become stiff
+1754|petty|细微的,不重要的：small importance
+1755|phenomenal|不寻常的,非凡的：out of the ordinary
+1756|philanthropic|博爱的,为他人着想的：welfare of others
+1757|philistine|市侩(注重物质而鄙视智慧或艺术的人)：guided by materialism
+1758|phlegmatic|冷静的,无感情的,淡漠的：calm, sluggish temperament
+1759|piddling|微不足道的：trifling or trivial
+1760|piebald|杂色的：different colors,混合的,杂糅而成的：different sorts
+1761|pigment|颜料：color,给…上颜色：color
+1762|pilfer|偷窃：steal
+1763|pillar|柱子：support,(物质、精神等方面的)支柱：support
+1764|pillory|当众嘲弄：public contempt
+1765|pilot|领航员,飞行员：steer a ship,初步性的,试验性的：tentative model,带领通过：lead
+1766|pine|渴望,奢望：yearn,因渴望而憔悴：lose vigor
+1767|pinnacle|顶峰：highest point
+1768|pinpoint|非常精确的：extreme precision,精确定位或确认：identify with precision
+1769|piquant|辛辣开胃的：pungent taste,令人振奋的：provocative
+1770|pique|使愤怒：arouse anger,激起,刺激：excite or arouse
+1771|pirate|盗版,盗用：without actual right,海岛：robber seas
+1772|pithy|精练的,简洁的：brief
+1773|pitiless|没有同情心的：devoid of pity
+1774|pittance|少量津贴：small portion
+1775|placate|(通过让步以)平息抚慰：lessen the anger
+1776|placebo|安慰性的事物：used to appease or reassure 
+1777|plagiarize|剽窃,抄袭：steal ideas
+1778|plangent|轰鸣的：loud sound,凄凉的,哀伤的：plaintive
+1779|plastic|可塑的：modified,虚假的,做作的：lacking in natural
+1780|plateau|高原：raised above,稳定时期,平台期：stable level
+1781|platitude|陈词滥调：banal statement,缺乏原创性：lack of originality
+1782|plausible|看似有理的：superficially reasonable
+1783|pleat|打褶：fold
+1784|plentitude|大量：ample amount
+1785|plethora|过量,过剩：excess
+1786|pliable|易弯曲的,柔软的：supple,易受影响的,温顺的：easily influenced
+1787|pliant|易弯曲的：easily bent,顺从的：yielding
+1788|plight|困境：unfortunate
+1789|plod|沉重缓慢地走：walk heavily
+1790|pluck|敢于面对困难的勇气：courage,弹奏(弦乐)：strings pulling releasing
+1791|plumb|测深度：measure the depth,垂直的：vertical,仔细深入地检查,探索,探究：examine deeply
+1792|plummet|突然下降：decline suddenly
+1793|plump|丰满的：well-around,鼎力支持,赞不绝口：give full support
+1794|plunge|突然下降：descend suddenly,插入,刺入：penetrate
+1795|polarize|使分开对立,使两极分化：break into opposing
+1796|polemic|争执：argument
+1797|polished|有教养的：high degree of refinement,擦亮的：shiny
+1798|politic|精明能干的：shrewdness,合时宜的,明智的：suitable
+1799|pompous|浮夸的：ornate,傲慢的：self-importance
+1800|ponderable|有价值的,值得考虑的：considerable
+1801|ponderous|沉重的：great weight,沉闷无聊的：unpleasantly dull
+1802|pontificate|傲慢地说或做：speak pompous
+1803|pore|仔细浏览,仔细研究：read or study attentively
+1804|porous|多孔可渗透的：admitting liquid
+1805|portentous|预兆性的,凶兆的：sign of evil,勾起兴趣的,令人遐想的：eliciting amazement
+1806|poseur|故作姿态的,不真诚的人：affected insincere
+1807|posit|假定,断定：affirm
+1808|postulate|前提条件：starting point,假定为真：assume true
+1809|posture|姿势,姿态：way of holding the body,故作姿态,装模作样：pretended attitude
+1810|potable|饮品,尤指有酒精饮料：beverage,适于饮用的：suitable for drinking
+1811|potentate|有权势的人：has the power
+1812|potentiate|激活,加强：more active
+1813|pout|(尤指撅嘴或板着脸)表示不悦：show displeasure
+1814|practitioner|职业人士：profession
+1815|prairie|大草原：treeless grassland
+1816|prate|闲聊,空谈：talk idly
+1817|preach|传道,布道：sermon
+1818|precarious|危险的,不稳定的：lacking security, stability,可疑的,不明确的：uncertain
+1819|precedent|先例,前例：earlier occurrence,先前的：prior
+1820|precipice|悬崖峭壁：steep
+1821|precipitate|匆忙的：careless speed,促使,导致：cause to happen
+1822|precipitation|沉积物,尤指降水：deposit, rain, snow,仓促：disorderly speed
+1823|precipitous|非常陡峭的：steep,匆忙的：careless speed
+1824|preclude|预先阻止：make impossible in advance,排斥：exclude
+1825|precursor|先驱者,先导：precedes
+1826|predecessor|前任,先辈：previously occupied
+1827|predilection|爱好,偏袒：disposition favor
+1828|preeminent|优秀的,重要的：paramount
+1829|preempt|预先占有：seize, before others,替换：replace
+1830|preen|整理(羽毛)：smooth feathers,打扮修饰：dress oneself elaborate,自满：take pride
+1831|preface|序言：preliminary statement
+1832|pregnant|重要的,意味深长的：full of meaning,怀孕的：containing offspring
+1833|premeditate|预先考虑：consider beforehand
+1834|preoccupation|非常关系,全神贯注：extreme concern
+1835|preponderant|占优势的,更重要的：superior importance
+1836|prepossessing|给人好感的,有魅力的：impress favorably
+1837|preposterous|荒谬的,不符合常理的：contrary common sense
+1838|presage|征兆：sign or warning,预示,预言：predict
+1839|prescience|预知,先见：knowledge before
+1840|prescription|规定,传统的规矩：rule
+1841|preservative|防腐剂：protect against decay
+1842|prestige|声望,威望：respect
+1843|presumptuous|放肆的,冒昧的：overstepping bounds,傲慢的：feeling of superiority
+1844|pretense|虚假,伪装：pretending deceive,自大,优越感：exaggerated sense of one’s importance
+1845|preternatural|超乎寻常：surpassing usual
+1846|prevail|盛行,战胜：greater in strength
+1847|prevalent|流行的,普遍的：commonly accepted
+1848|prevaricate|支吾其词,撒谎：evade truth
+1849|primordial|原始的,最初的：happening first
+1850|primp|精心打扮：adorn finicky
+1851|principal|主要的,重要的：highest importance, rank
+1852|pristine|纯净的,质朴的,未被文明腐蚀的：pure, free from dirt or decay
+1853|privation|缺乏,穷困：lack
+1854|probe|深入调查：penetrating investigation
+1855|probity|正直：moral standards
+1856|proclivity|癖性,爱好：inclination
+1857|procrastinate|(因为懒散)拖延：put off laziness
+1858|procure|获得,取得：get possession
+1859|prod|促使…行动：persuade
+1860|prodigal|挥霍的：spendthrift,败家子：spends freely
+1861|prodigious|巨大的：great in size,惊人的,了不起的：astonishment
+1862|profane|亵渎：treat abuse, irreverence, contempt,滥用：bad or improper use
+1863|proffer|献出,提供：offer
+1864|proficient|熟练的,精通的：advanced competence
+1865|profligate|挥金如土的,挥霍的：wasteful,败家子：spends money freely,堕落的人：below the normal moral standard
+1866|profundity|深奥,深刻：abstruse
+1867|profusion|丰富,大量：abundance,挥霍,浪费：wasteful
+1868|prohibitive|禁止的,阻止的：prohibit, restrain,(价格高得)抑制购买的：purchase
+1869|proliferate|快速繁殖,激增：grow or multiply by rapidly offspring
+1870|prolix|啰嗦的,冗长的：excessive length
+1871|prologue|序言：preface
+1872|prolong|延长,拖延：lengthen
+1873|proofread|正式宣布：make known
+1874|promulgate|校对：find errors and mark corrections
+1875|propagate|繁殖：increase,传播,宣传：spread out
+1876|propensity|倾向,癖好：inclination
+1877|prophetic|预言的,预示的：foretelling
+1878|propitiate|抚慰,劝解：appease
+1879|propitious|吉祥的：favorably happy outcome
+1880|proponent|建议者,支持者：support
+1881|propriety|礼节：conformity socially acceptable,适当,得体：suitable or fitting
+1882|prosaic|单调的,常见的：normal course of events
+1883|proscribe|禁止,排斥：forbid
+1884|prosecution|实行,执行：doing
+1885|proselytize|(使)改变信仰：change religious faith
+1886|prospect|探查,勘探：go into discovery,期待,期望的事物：looking forward to
+1887|prosperous|成功的,繁盛的：vigorous growth, well-being
+1888|prostrate|平躺(的),使平躺：lying flat,衰弱的,使衰竭：weakness
+1889|protean|善变的,多才多艺的：diversity, variety, versatile
+1890|protocol|正确的礼仪规范：correct conduct
+1891|protract|延长,拖长：lengthen, prolong
+1892|protrude|突出：project
+1893|protuberant|隆起的,凸出的：thrusting out
+1894|provident|节俭的：frugal, economical,有远见的：awareness for the future
+1895|providential|天意的,幸运(的)：divine intervention
+1896|provincial|狭隘(的)：limited perspective
+1897|provisional|临时的：temporary
+1898|provisory|有附带条件的,临时的：conditional
+1899|provoke|激怒：incite anger,驱使,激起：stir feeling
+1900|prowess|英勇,勇敢：superior, courage
+1901|prowl|潜行于,巡游以猎取食物,徘徊：roam through search of prey
+1902|prude|过分正经的人：一个过分关心自己是否得体、谦逊、或正确的人：greatly concerned seemly behavior and morally
+1903|prudish|明智的：wisdom, judiciousness, wise,小心谨慎的,审慎的：circumspection
+1904|prudent|过分守礼的：prudery
+1905|prune|梅干：plum dried,修剪,修正
+1906|pry|刺探,打听：inquire closely, curiously,
+1907|pseudonym|假名,笔名：fictitious
+1908|psychology|心理学：science mental process and behavior,心理战术：subtle tactical action influence
+1909|pucker|撇(嘴),(使)收缩：contracted
+1910|puckish|淘气的,顽皮的：mischievous, impish
+1911|puerile|幼稚的,不成熟的：immature
+1912|puissance|权力：power
+1913|pulchritude|美丽：beauty
+1914|pulverize|将…研磨成粉,将…彻底摧毁：complete end
+1915|pun|双关语：humorous 
+1916|punctilious|注意细节的,一丝不苟的：attentive details
+1917|pundit|权威人士,专家：opinions authoritative
+1918|pungent|辛辣的,讽刺的：use of wit cause hurt feelings
+1919|puny|微小的,弱小的：inferior size, weak
+1920|purity|纯净,纯洁,纯在：clean, morally pure
+1921|purlieu|常去的地方：socializing,临近的地区：adjoining region
+1922|purloin|偷窃：steal
+1923|purvey|(大量)供给,供应：supply
+1924|pusillanimous|懦弱的,胆小得令人鄙视的：timidity
+1925|quack|骗子医生,江湖郎中：pretender
+1926|quaff|大口地喝：drink heartily
+1927|quail|胆怯,畏缩：fear, cower
+1928|qualify|限定：reduce general,使有资格,使有能力：make competent
+1929|quandary|困惑,窘境：perplexity, doubt
+1930|quarantine|隔离：isolation
+1931|quarry|采石场：stone is obtained,目标,猎物：pursuit
+1932|quash|镇压,阻止：put a stop to
+1933|quaver|发颤音：quivering voice
+1934|quell|压制：suppress,使平静,使安静：pacify
+1935|quench|熄灭：put out,使满足：put a complete end to
+1936|querulous|抱怨的,爱发牢骚的：complaining
+1937|quibble|吹毛求疵：criticize, cavil,牵强之词：微不足道的差别或不切中要点的异议,小反对：minor objection
+1938|quiescent|平静的,静止的：quiet, inactive
+1939|quixotic|不切实际的,空想的：more by ideals than by reality
+1940|quota|配额,限额：proportional
+1941|quotidian|每日的,平凡的：commonplace
+1942|rabble|混乱的人群,暴民,下层群众：disorganized crowd of people
+1943|rabid|狂热的,不冷静的：fanatical
+1944|racy|活泼生动的：vigorous
+1945|raffish|低俗的：crudeness
+1946|raffle|垃圾,废物：discarded, useless
+1947|rage|暴怒：violent anger
+1948|ragged|衣衫褴褛的：threadbare clothes,凹凸不平的,不光滑的：not smooth
+1949|rail|猛骂,猛烈抨击：revile or scold
+1950|rakish|放荡的,行为不检的：lowered moral character
+1951|ramble|漫步,漫游：move aimlessly,漫谈,长篇大论(并经常离题)地说或写：without a topic
+1952|rambunctious|喧闹的,骚乱的：noisy
+1953|ramshackle|摇摇欲坠的：ready to collapse
+1954|rancor|敌意,深仇：ill will
+1955|random|随机的,随意的：lacking pattern
+1956|rankle|激怒：cause anger
+1957|rant|(尤指长时间的)训斥,责骂：angry scolding,怒吼：noisy, angry or violent manner
+1958|rapacious|食量大的,贪食的：huge appetite,过度贪婪的：covetous
+1959|rapport|和睦,友好：friendly relationship
+1961|rapscallion|流氓,恶棍：evil
+1962|rapt|狂喜的,狂热的：pleasurable emotion,全神贯注的：deeply absorbed
+1963|rash|使稀薄：make rare
+1964|rarefy|草率的,仓促的：lack caution
+1965|raspy|声音刺耳的：harsh,容易生气的：easily irritated
+1966|ratify|(官方地)认可,批准：official acceptance
+1967|ratiocination|推理：thought processes 
+1968|ration|定额供应量,配给量：amount allotted,按比例分配：share or portion
+1969|rational|合乎逻辑的：logical,理性的：based on reasoning
+1970|rave|狂热赞扬：exaggerated display of affection,(发疯般的)怒吼：talk as if in delirium
+1971|ravel|解开,松开：separate strands,阐明：clarity by separating,使纠缠,使复杂化：tangle
+1972|ravish|使陶醉,使沉迷：overcome with emotion
+1973|raze|摧毁,粉碎：destroy completely
+1974|react|做出反应：in response
+1975|reactionary|反对改革的,极保守的：opposition to progress
+1977|reap|收割,收获：receive
+1978|reassure|使安心,打消疑虑：restore to confidence
+1979|rebuff|严词拒绝：reject
+1980|recalcitrant|顽抗的,不顺从的：resistance defiance
+1981|recant|撤回,放弃,改变：withdraw a statement
+1982|recessive|(基因等)隐性的,由隐性基因控制的：does not produce a characteristic effect when present with a dominant allele,内向的,内敛的：not comfortable around people
+1983|recidivate|回到原先的习惯,尤指重新犯罪：return to criminal habits
+1984|reciprocate|往复运动：forward and backward,报答,回报：return
+1985|reckless|不考虑后果的,大胆鲁莽的：careless
+1986|recluse|隐士：lives away,隐居的,不爱社交的：withdrawal from society
+1987|recoil|退却,畏缩：shrink back
+1988|reconcile|使和解,协调：harmony
+1989|recondite|深奥的,难解的：difficult to comprehend
+1990|reconnoiter|侦察,勘查：make a preliminary inspection
+1991|reconstitute|重建,(尤其是通过加水)使复原：restore by adding water
+1992|reconvene|重新集合,重新召集：gather or summon again
+1993|rectitude|正直：moral integrity
+1994|recumbent|躺着的：lying down
+1995|recuperate|恢复(健康或力量),康复：recover health
+1996|redolent|芳香的：fragrance
+1997|redoubtable|杰出的,值得尊敬的：worthy of respect,可怕的：arousing fear
+1998|redundant|多余的,冗余的：exceeding necessary
+1999|reel|感到眩晕：from being twirled around,蹒跚地走路：swaying from side to side
+2000|referee|仲裁者,裁判员：impartially resolves a dispute,(就纠纷或争论)给出意见：give an opinion
+2001|refine|提纯,精炼：free from impurities,改善,改进：improve or perfect
+2002|reflect|反射：change direction,反映,显露：make manifest,思考：think seriously
+2003|refractory|倔强的,不顺从的：resisting control
+2004|refulgent|辉煌的,灿烂的：shinning radiantly
+2005|refute|否认：declare not to be true,证明为假,证伪：prove wrong
+2006|regenerate|使重获新生,使焕然一新：bring back to life,(使)洗心革面：better in character
+2007|regimen|(政治上的)统治：lawful control
+2008|regress|后退：back,退化,恶化：worse
+2009|rehabilitate|使复原,使康复：restore to healthy condition,(使)洗心革面：better in character
+2010|rehearsal|排练,彩排：practicing in preparation
+2011|reign|统治权：right to command,占统治地位或盛行：be predominant
+2012|rein|抑制,限制：keeping within certain boundaries,抑制,控制：keep from exceeding
+2013|reiterate|重申：state again
+2014|rejoice|欣喜,喜悦：feel joy
+2015|relapse|故态复萌,再犯：fall back
+2016|release|排放：give off,释放,使获得自由：set free,解雇：let go from office
+2017|relentless|残酷的,无情的：no abatement or severity,固执的,不肯妥协的：yielding in one’s purpose
+2018|relevant|有关系的,重要的：having connection
+2019|religion|宗教,信仰：beliefs,(对于宗教信仰的)忠诚,虔诚：loyalty to God
+2020|relinquish|放弃(职位,权力等)：give up,移交,交出：give control or possession
+2021|relish|喜好,偏好：appreciation or liking,(愿望达成时的)高兴,满足感：when wishes are met,享受,喜欢：take pleasure
+2022|reluctant|不情愿的,反感的：showing unwillingness
+2023|remiss|疏忽的,不留心的：carelessness
+2024|remodel|改造,改变结构：alter the structure 
+2025|remonstrance|抗议,抱怨：expression of protect, complaint
+2026|remorse|懊悔,悔恨：bitter regret
+2027|remunerate|支付报酬,补偿：pay 
+2028|rend|撕裂,猛拉：tear or split apart
+2029|renegade|背教者,叛徒：rejects allegiance
+2030|renounce|(正式地)放弃：give up,宣布与…决裂：refuse to follow
+2031|renovate|修复,维修：restore,使重获新生,使焕然一新：bring back to life
+2032|repartee|机智的回答：witty response,打趣,善意的玩笑：good-natured teasing
+2033|repatriate|遣返：return to country
+2034|repeal|撤销,废除(法律等)：rescind or annul,宣布与…决裂：refuse to recognize
+2035|repel|抵制：fight against,使厌恶：cause aversion
+2036|repertoire|(技术、设备或原料等的)详单：complete list
+2037|repine|抱怨、表达不满：express discontent,渴望：long for
+2038|replete|彻底吃饱了的：appetite completely satisfied,充满…的,富于…的：possessing great numbers
+2039|repose|(劳作后的)休息：state of resting,平静,宁静：freedom from storm,休息：take a rest,放置,交给他人：safekeeping or another
+2040|reprehend|谴责,责难,批评：express unfavorable opinion
+2041|repress|镇压：put down by force,阻止(正常的表达、活动或发展等)：prevent expression
+2042|reprieve|对...暂缓处刑,免罪：postpone or cancel punishment,维持...的运行：prevent from being closed
+2043|reproach|令人羞愧的事物,耻辱：causes shame,批评,责备：express criticism
+2044|reprobate|堕落者,道德败坏的人：unprincipled person,堕落的,放荡的：morally corrupt,谴责,痛斥：condemn strongly,拒绝,不提供：unwilling to grant
+2045|reproof|批评,反对：criticism
+2046|reprove|温和地责备,警告：scold gently,不欣赏,不喜欢：unfavorable opinion
+2047|repudiate|否认：declare not to be true,拒绝接受：unwillingness to accept
+2048|repugnant|令人厌恶的：arousing aversion,不和谐的,不协调的：not harmony
+2049|repulse|使厌恶,排斥：reject with denial
+2050|repute|(尤指好的)名声,名誉：good reputation
+2051|requite|酬谢,报答：make repayment,报仇：punish in kind
+2052|requisite|必需品：something necessary,必不可少的,必备的：necessary
+2053|rescind|废除,取消：make void
+2054|reserved|内向的,缄默的：restrained
+2055|residue|剩余物：remains
+2056|resign|辞职,放弃(职位)：give up office
+2057|resilience|弹力：resume original shape,恢复能力：ability to recover quickly
+2058|resolute|坚定的：firm determination
+2059|resonant|(声音)洪亮的,共鸣的：strong in tone
+2060|resourceful|有创造力的,机智的：act imaginatively
+2061|respite|间歇,休息：rest
+2062|respire|呼吸：inhale, exhale air
+2063|resplendent|华丽辉煌的：brilliantly
+2064|responsive|反应的,敏感的：quick to respond
+2065|restive|急躁的,忧虑的：impatience, uneasiness,难以管束的：resisting control
+2066|restless|不平静的：lack of quite
+2067|restrain|限制,控制：limit, restrict 
+2068|resurgence|复兴：restoration
+2069|resuscitate|使复活,使苏醒：restore consciousness
+2070|retainer|家仆：service
+2071|retaliate|报复,反击：pay back
+2072|retard|减速,延迟：cause slowly
+2073|retinue|随行人员：group of retainers
+2074|reticent|沉默不语的：inclined to be silent,不愿意的：slow to begin
+2075|retort|(尤指机智的)回应,回答：quick, witty reply
+2076|retouch|润饰,改进：improve
+2077|retract|收回,否认：take back
+2078|retrench|削减开支：curtail expenses
+2079|retribution|报酬,报应：reward or punishment
+2080|retrograde|倒退的：moving backward,退步,退化：decline
+2081|retrospective|回顾的：looking back
+2082|revelry|狂乐,喧闹的作乐：noisy partying
+2083|revenge|报复,复仇：retaliating,为...复仇：retaliating in kind
+2084|revere|(尤指对神的)尊崇,尊敬：respect
+2085|revise|更改,修正：improve
+2086|revive|恢复意识：return to consciousness,再获新生：active again
+2087|revoke|撤回,宣告无效：annul
+2088|revolt|使厌恶,使反感：fill with disgust,反叛：renounce allegiance
+2089|ribald|(举止、言语)下流粗鄙的：vulgar
+2090|rickety|不稳的：lacking stability
+2091|rider|骑马的人：rides,(议案的)附加条款：appended
+2092|ridicule|嘲笑：make fun
+2093|rife|丰富的,普遍的：great numbers
+2094|rift|分裂,不和：break friendly,使开裂：break
+2095|rile|刺激,惹怒：make agitated
+2096|ripen|使成熟,变成熟：make ripe
+2097|riot|喧闹,暴乱：public violence
+2098|rite|惯例,仪式：prescribed form
+2099|rive|撕开：tear apart
+2100|riveting|吸引人的,极迷人的：absorbing engrossing
+2101|rivulet|小河,小溪：small stream
+2102|robust|精力充沛的,强壮的,健康的：full of strength
+2103|roil|搅浑,使混乱：stir up,激怒：displease
+2104|roisterer|喝酒喧闹的人：engages in merrymaking
+2105|rookie|新兵,新生,菜鸟：recruit
+2106|roster|值勤表,花名册：list of personnel
+2107|rostrum|讲坛,演讲坛：stage speaking
+2108|rouse|激起,煽动：stir up,唤醒：stop sleeping
+2109|royalty|皇家身份：regal character,版税,专利权税：payment
+2110|rubicund|红润的,健康的：healthy rosiness
+2111|rudimentary|初始的,未发展的：earliest development,最根本的,基础的：first principles
+2112|rue|后悔,遗憾：feeling of regret
+2113|ruffle|皱褶,褶裥花边：strip edge,使粗糙：destroy smoothness,扰乱,打扰：disturb
+2114|ruminate|沉思：go over in the mind
+2115|rumple|使皱,弄皱：form creases,打乱,使不整齐：undo the proper order
+2116|run|(不间断的)连续演出：course of performances
+2117|runic|神秘的：mysterious
+2118|rupture|打破,打碎,破裂：part
+2119|ruse|诡计：subterfuge
+2120|rustic|乡下人,头脑简单的人：awkward or simple person,乡村的：open areas with few buildings,粗俗的：lacking polish
+2121|rustle|快速地行动：move or act with speed
+2122|sabotage|妨害,破坏：hinder a cause,从事破坏活动,阻止：practice sabotage
+2123|saccharine|像糖一样的,有甜味的：sugar,做作的,矫情的：appealing to the emotions
+2124|sacrilege|亵渎圣物：profanation sacred
+2125|saddle|使某人担负：load
+2126|safeguard|保护措施：prevent accident,保护：make safe
+2127|sage|智者：wisdom
+2128|salient|显著的,最突出的：conspicuously
+2129|salubrious|有益健康的：promoting health
+2130|salutary|有益健康的：promoting health,有利的,利好的：promoting well-being
+2131|salutation|致敬,打招呼(表示欢迎和礼貌)：greeting,赞扬：praise
+2132|salvage|(从灾难中)抢救：save from loss
+2133|salve|减轻：缓解：assuage
+2134|sanctify|使神圣,将...敬为神：make holy
+2135|sanctimonious|假装虔诚的：hypocritically pious
+2136|sanction|批准,同意,许可：make valid,制裁：coercive measure
+2137|sanctuary|避难所：protection
+2138|sand|磨光：make smooth
+2139|sanguine|乐观的,确信的：free from doubt,面色红润的：healthy reddish
+2140|sanitary|健康的,清洁的：health
+2141|sap|削弱：weaken energy vitality,健康,活力：active strength
+2142|sapient|聪明的,有洞察力的：deep understanding, intelligent
+2143|sarcasm|讽刺,轻蔑：ironic
+2144|sartorial|裁缝匠的,裁缝的：clothes
+2145|sate|使饱足,充分满足：satisfy fully
+2146|satiate|(使)饱足(的),过分满足(的)：satisfy fully
+2147|satire|讽刺诗,讽刺文学：literary ridicule
+2148|satirize|讽刺：ridicule
+2149|saturate|使饱和,浸透：wet thoroughly
+2150|saturnine|忧郁的,阴沉的：lacking in cheer,讽刺的：sardonic
+2151|saunter|闲逛,漫步：by foot
+2152|savant|博学之士,学者：learning
+2153|savory|口感好的,味道好的：appetizing taste, smell,令人愉悦的,pleasure or contentment
+2154|savvy|老练,机智：knowledge actually doing,明确了解：clear idea of,有见识的,精明能干的：practical cleverness or judgment
+2155|scads|许多,大量：large number
+2156|scant|不足的,缺乏的：scarcely
+2157|scathing|尖酸刻薄的：cause hurt feelings
+2158|schism|不一致：lack of agreement
+2159|scintillate|闪耀：sparks
+2160|scion|子孙：descendant
+2161|scission|切断,分离,分裂：division 
+2162|scoff|嘲笑：derision, mock,狼吞虎咽：eat greedily
+2163|scorch|炙烤,烘干：burn, make dry
+2164|scorn|轻蔑,鄙视,不屑：reject contemptible
+2165|scotch|停止：put an end to
+2166|scour|用力擦洗：wash vigorously,搜查：to find or discover
+2167|scowl|皱眉(表现出不高兴)：expression displeasure
+2168|scrappy|好斗的,好吵架的：aggressive 
+2169|scrap|废料,废物：discarded or useless,抛弃：get rid of,终止,放弃原计划：put an end to
+2170|scrawl|乱涂,潦草地写：write carelessly
+2171|scribble|潦草地书写,乱写：meaningless
+2172|scrupulous|正直的：principled,一丝不苟的：great care and effort
+2173|scrutable|可以理解的：understood comprehensible
+2174|scrutinize|仔细检查：observe great care
+2175|scuff|(使)磨损：roughened by wear,脚步拖沓：move heavily
+2176|scurrilous|说粗话的：vulgar
+2177|scurvy|下流的,让人鄙视的：contemptible
+2178|seamy|肮脏的,堕落的：sordid, base
+2179|secluded|僻静的,隐蔽的：hidden
+2180|secrete|隐藏：conceal,分泌：generate
+2181|sedate|淡定的,安静的：free from agitation
+2182|sedentary|固定不动的：not migratory
+2183|seduce|劝说(使不忠,使不服从),诱...误入歧途：persuade
+2184|sedulous|勤奋认真的：careful perseverance
+2185|seemly|得体的,遵守礼节的：following the established traditions
+2186|segment|分割,部分：separate
+2187|self-abasement|自卑,自谦：humiliation
+2188|self-absorbed|自恋的,自私的：absorbed in one's own
+2189|seminal|有发展性的：contributing later development,创新的：creative
+2190|sensation|感觉,知觉：sense,轰动事件：intense interest
+2191|sensitive|敏感的：susceptible
+2192|sentinel|哨兵,看守：watches over
+2193|sepulchral|阴沉的,丧葬的：lacking in cheer
+2194|septic|腐败的,感染的：putrefaction
+2195|sequela|结果：secondary result
+2196|sequester|使隔离,分离：segregate,使隐退：seclusion
+2197|sere|干枯的,凋萎的：dried, withered
+2198|serendipity|意外发现珍奇(或称心)事物的本领：by accident
+2199|serene|安静的：free from uproar,稳重的,镇静的：unaffected, calm
+2200|sermon|布道,说教：public speech moral
+2201|serpentine|弯曲的：winding
+2202|serrate|锯齿状的：notched
+2203|serried|密集的：little space
+2204|servile|低下的,卑屈的：submissive, abject
+2205|severe|严厉的,要求严格的：exacting standards,难以承受的,艰难的：difficult to endure
+2206|shackle|束缚：restrictions,限制,阻碍：create difficulty
+2207|shadow|偷偷尾随：secretly trail,遮蔽,(使)变暗：gloomy
+2208|shallow|浅显的,浅薄的：lack of depth of understanding
+2209|sham|欺瞒：deceitfulness,掩饰,假装：present a false appearance,虚假的：fake
+2210|shiftless|胸无大志的,懒惰的：lacking ambition
+2211|shipshape|井然有序的：order
+2212|shirk|逃避,规避：keep away from
+2213|shoal|浅的：little depth
+2214|shopworn|陈旧的：worn-out
+2215|shred|少量：small amount
+2216|shrewd|精明的,机敏的：cleverness or judgment,刺骨的,强烈的：discomfort
+2217|shrink|(在数量或价值方面)降低,减小：reduced,(使)本能性地退却(如因遇到使人惊恐的事物),(使)退缩：draw back,表示出不情愿,犹豫：hesitate
+2218|shroud|隐蔽物,可起隐蔽、保护或屏护作用的物体：conceals, protects, screens,将...从视线中隔离,遮蔽：shut off from sight
+2219|shrug|轻视,忽略：dismiss,脱下(衣物等)：rid
+2220|shun|避开,避免：keep away 
+2221|sidestep|(通过逃避而)不遵守：avoid having to comply with
+2222|signal|(在重要性、成就方面)非同寻常的：standing above,给出信号：direct or notify
+2223|simpleton|(缺乏常识的)笨蛋：lacking in common sense
+2224|simulate|假装,模仿：take on the appearance,模拟：create a representation
+2225|sin|罪恶的事：highly reprehensible
+2226|sincere|真诚的,不做作的：without pretense
+2227|sinecure|美差：requires little or no work
+2228|sinew|活力,力量：vigorous strength
+2229|singe|轻微烧焦：burn superficially
+2230|sinuous|蜿蜒的,迂回的：irregular curves
+2231|sip|(尤指小口地)喝：swallow in liquid form
+2232|skeleton|骨架,框架：structural framework
+2233|skeptic|怀疑者：doubts, questions or disagrees
+2234|skimp|缺乏的,不足的：less plentiful,节省花费,吝啬：give insufficient funds
+2235|skirmish|小冲突,争论：minor
+2236|skirt|界限,边界：marks the outer limit,绕行,避开：go around
+2237|slack|松弛的：not tightly fastened,疏忽的,大意的：failing to give proper care
+2238|slake|使满足：satisfy
+2239|slant|(看待问题、思考的)角度,看法：way of looking,倾斜的：slanting direction,歪曲(事实等)：create a wrong impression
+2240|slate|列入名单,计划,安排：put on a list
+2241|slew|大量,许多：large amount
+2242|slight|不重要的：deficient in weight,轻微的：small in degree,轻蔑,看不起：treat with disdain,忽略,疏忽：fail to give proper attention
+2243|sling|投掷：send through the air
+2244|slippery|光滑的：slide,隐秘的：acting in secret,意义不明确的：not precise in meaning
+2245|slipshod|粗心的,随意的：indifference to exactness, precision, and accuracy
+2246|sloppy|邋遢的,不整洁的：lacking neatness,混乱的：lacking in order
+2247|sloth|怠惰,懒惰：disinclination to action
+2248|slouch|懒人：lazy person,缓慢行走：move slowly
+2249|slovenly|邋遢的,不整洁的：lacking neatness
+2250|sluggard|懒人：lazy person
+2251|sluggish|缓慢的,迟缓的：slow in movement,迟钝的,反应慢的：slow to respond
+2252|slumber|睡着：sleep
+2253|slur|耻辱：mark of guilt,含糊地发音：indistinctly,疏忽,忽略：without due, consideration
+2254|sly|狡猾的：clever or cunning,隐秘的,偷偷的：acting in secret
+2255|smarmy|虚情假意的,过分恭维的：hypocritically
+2256|smart|反应敏捷的,聪颖的：sharp quick thought,整洁的：strikingly neat,感到疼痛,感到痛苦：suffer acutely
+2257|smattering|浅薄的知识：superficial knowledge,少量：small amount
+2258|smirk|(自鸣得意地)笑：offensively self-satisfied
+2259|smother|使窒息：killed by lack of air,抑制(表达,说出),压制：refrain
+2260|smug|自大的,自鸣得意的：opinion of oneself,整洁的,有序的：good order
+2261|smuggling|走私,私运：importation or exportation contrary to the law
+2262|snare|无法逃脱的困境：catches and holds,捕捉：capture by
+2263|snarl|纠缠,纠结：twist,咆哮,怒吼：to anger
+2264|sneer|(轻蔑地)嘲笑：scornful
+2265|snobbish|谄上傲下的,自大的：offensive air of superiority
+2266|snub|轻视,不理睬：contempt or neglect
+2267|soak|使...湿透：make thoroughly wet
+2268|sober|严肃的：serious-looking,节制的：restraint,有理有据的：sound reasoning
+2269|sodden|湿透的：penetrated by water,使...湿透：wet thoroughly
+2270|solace|安慰：comfort in sorrow,安慰,安抚：console
+2271|solder|连接,联合：unite
+2272|solemnity|庄严,严肃：solemn
+2273|solicitous|为他人操心的,体谅他人的：happiness of others,迫切的,渴望的：urgent desire
+2274|solid|固态的,坚固的：not easily yield to pressure,有理有据的：sound reasoning,坚定的,不迟疑的：not showing weakness
+2275|soliloquy|(尤指自言自语的)独白：without addressing a listener
+2276|solitude|孤独,避世：being alone
+2277|solvent|有偿付能力的：able to pay debts,溶剂：another substance is dissolved
+2278|somatic|肉体的：of the body
+2279|somber|昏暗的,无光的：shaded,悲伤的,不愉快的：lacking in cheer
+2280|somnolence|瞌睡,嗜睡：needing sleep
+2281|sonnet|十四行诗：14-line verse form
+2282|soothe|带来慰藉,安慰：bring comfort,使镇静,使安心：free from distress,弱化,缓解：less severe
+2283|sop|安慰物：placate or soothe,贿赂,回扣：improperly influence a person's conduct,浸湿,湿透：wet thoroughly
+2284|sophism|假推理,诡辩：deceptive argumentation
+2285|sophisticated|精明的,老于世故的：worldly knowledge or refinement,复杂的：complex
+2286|soporific|催眠的药剂,安眠药：induces sleep,催眠的：cause sleep,慵懒的,困倦的：sleepiness or lethargy
+2287|sordid|肮脏的,不干净的：not clean,卑鄙的：baseness
+2288|sound|牢固的,不可动摇的：withstand stress without structural damage,健康的,强壮的：free from injury,(逻辑)上严谨的：valid reasoning
+2289|sparse|稀疏的,稀少的：less plentiful
+2290|spartan|简朴的,节约的：simplicity
+2291|spat|(小的)争吵：quarrel
+2292|spate|突发的洪水：sudden flood,大量：large number
+2293|specific|特有的,独特的：exact sort,明确的：clearly expressed
+2294|specious|似是而非的,欺骗性的：false look of truth
+2295|speck|小点,少量：small amount 
+2296|spectator|观众,目击者,旁观者：watches
+2298|speculate|推测,揣测：take to be true,投机倒买：from market fluctuations
+2299|spendthrift|挥霍家,败家子：spends improvidently,挥霍的,不节俭的：spending money freely
+2300|spent|精疲力竭的：drained of energy
+2301|spindly|细长纤弱的：frail or flimsy
+2302|spiny|多刺的：spines,棘手的,麻烦的：requiring exceptional skill
+2303|spleen|怒气,怨恨：anger or ill will
+2304|splice|接合,叠接：unite
+2305|spontaneous|自发的,不经思索的：without apparent thought
+2306|spoof|轻松幽默的模仿,小恶搞：exaggerates for comic effect,诱骗,诱使相信：believe what is true
+2307|sporadic|偶尔的,零星发生的：not often occurring
+2308|sprawl|杂乱无序地发展,蔓生,蔓延：irregularly
+2309|sprightly|活泼的,充满活力的：full of vitality
+2310|spur|刺激物：arouses action,支撑物：holds up,刺激,激励：incite
+2311|spurious|假的,伪造的：lacking authenticity
+2312|spurn|摒弃,拒绝：reject with disdain
+2313|squabble|口角,小争吵：quarrel
+2314|squalid|污秽的,肮脏的：dirty,道德败坏的：repulsive
+2315|squall|(通常伴随雨或雪的)风暴,暴风雪,暴风雨：violent windstorm,尖叫：scream
+2316|squander|使分散：apart,浪费：spend wastefully
+2317|squat|又矮又胖的：broad in build, short in stature
+2318|squint|斜视,睥睨：glances sideways
+2319|squelch|压制,镇压(运动)：stop by force,击溃,使无言以对：put down or silence
+2320|stabilize|使稳定,变得稳定：make or become stable
+2321|stalwart|无所畏惧的：no fear,(体魄等)强健的：strength vigor,坚定的：firm, resolute
+2322|stamina|耐力：moral strength,
+2323|stammer|口吃,结巴：speak with pauses
+2324|startle|使吓一跳,使大吃一惊：frighten or surprise
+2325|static|静态的,停滞的：lack of movement,无改变的：little change
+2326|stature|高度,身高：height,才干,水平：quality, status
+2327|steadfast|坚定的,忠诚的：firm in belief
+2328|stealth|秘密行动：proceeding furtively,秘密的：not to attract attention
+2329|steep|浸泡：make wet,陡峭的：approaching perpendicular,过分的,过高的：beyond limit
+2330|stench|臭气,恶臭：foul odor
+2331|stentorian|声音洪亮的：loud
+2332|sterile|贫瘠的：not productive,无菌的：free from bacteria
+2333|stickler|坚持细节的人,一丝不苟的人：insist on exactness
+2334|stiff|僵硬的,无法弯曲的：lacking suppleness,(在社交场合)缺乏优雅的,不自在的：lacking social grace,过分的,过高的：beyond limit,艰苦的,费力的：requiring effort
+2335|stifle|抑制(声音、呼吸等),阻止,扼杀：hold back
+2336|stigma|耻辱,污名：mark of shame
+2337|stint|吝惜,节省：be frugal
+2338|stingy|小气的,吝啬的：unwilling,极少量的：less plentiful
+2339|stipple|(雕刻时)点刻,用点标记：mark with small spots
+2340|stipulate|规定,特定要求：specify agreement
+2341|stitch|突然剧痛：sharp unpleasant sensation
+2342|stock|库存,储备：inventory,普通的,常备的：commonly used
+2343|stockade|栅栏,围栏：enclosure,监狱：confinement
+2344|stodgy|平庸的,乏味的：dull,非常守旧的：old-fashioned
+2345|stoke|添加燃料：supply fuel,增大,促进：make greater
+2346|stoic|隐忍的,冷静的：unaffected by pleasure or pain
+2347|stolid|无动于衷的,感情麻木的：little emotion
+2348|stomach|容忍：bear
+2349|stonewall|拒绝(合作),阻挠：uncooperative, obstructive
+2350|stouthearted|勇敢的：stout, spirit
+2351|stratagem|谋略,策略：deceiving
+2352|strait|海峡：channel joining water,痛苦：suffering
+2353|strand|绳,线之一股：single filament,遗弃,使置之困境：leave in a unfavorable place
+2354|stratify|将...分成各种等级：divide into classes
+2355|stray|漫无目的：lacking purpose,离群,迷途,偏离：move away, deviate
+2356|strength|力量：ability to exert effort,(抵抗攻击、压力的)强度：ability to withstand force 
+2357|striate|加条纹：mark with striations
+2358|stricture|责难,批评：criticism
+2359|stride|迈大步走：long steps
+2360|strident|刺耳的：harsh sound
+2361|strike|攻击：force or violence,铸造(奖牌)：form by stamping,击打：deliver a blow,袭击,攻击：violent action,撞击：forceful contact
+2362|stringent|紧绷的：tight,严格的：marked by rigor
+2363|strip|脱衣,剥去：remove clothing
+2364|strut|趾高气昂地走：walk pompous,支柱,压杆strengthen a framework
+2365|studio|工作室,画室,摄影室：working place of a painter
+2366|stultify|使无效,抑制：render futile
+2367|stupor|迟钝,麻痹,无知觉：suspended sense
+2368|stunt|阻碍(成长)：hinder growth
+2369|sturdy|强健的,结实的：strengthen
+2370|stygian|极阴暗的：extremely dark
+2371|stymie|阻碍：present an obstacle
+2372|subdue|使顺从,征服：conquer
+2373|subject|臣民,受支配的人：under authority,取决于(其他因素)的：under the influence
+2374|subjugate|征服,镇压：bring under control,剥夺...的自由：make subservient
+2375|sublime|崇高的,庄严的：high moral,(因为杰出、尊贵、美丽等而)令人惊叹的：inspire awe
+2376|subliminal|下意识的,潜在意识的：below perception
+2377|submerge|使淹没：under water
+2378|submissive|服从的,顺从的,恭顺的：submitting
+2379|subordinate|下级的,次要的：lower rank,征服：under one's control
+2380|subservient|奉承的,屈从的：obsequiously
+2381|subside|下陷,下沉,减弱：tend downward
+2382|subsidiary|次要的：secondary importance,起辅助作用的：aid, support 
+2383|subsidy|补助金,津贴：monetary support
+2384|substantial|物质的：having substance,有重大意义的：considerable in importance
+2385|substantiate|证实：support with proof,使实体化：give material 
+2386|substantive|本质的,关键的：relating to the essence
+2387|subterfuge|诡计：deception to conceal
+2388|subtle|微妙的,难以感知的：difficult perceive,巧妙的,间接或带有欺骗性的：clever deceptive means
+2389|subvert|颠覆：overturn
+2390|succinct|简明的,简洁的：clear, precise
+2391|succor|救援,援助：aid
+2392|suffocate|使窒息：deprive of oxygen
+2393|suffuse|(色彩等)弥漫,染遍,充满：spread through
+2394|sulk|生气,愠怒：resentment
+2395|sullen|闷闷不乐的：lacking in cheer
+2396|summary|摘要：abstract,就地的,立即的：on the spot
+2397|summit|顶点：highest point
+2398|summon|召集,召唤：call together,传唤(出庭、出席)：command to appear in court
+2399|sumptuous|豪华的,奢侈的：extremely luxurious
+2400|sunder|分裂,分离：break apart
+2401|supercilious|高傲的,傲慢的：haughty
+2402|superficial|表面的,肤浅的：lacking depth
+2403|superfluous|多余的,过剩的：exceeding sufficient
+2404|superimpose|添(声)加(色)(使形象、某因素或性质更加清楚)：add distinct
+2405|supine|懒散的,倦怠的,消极的,漠不关心的：lethargy, indifference
+2406|supple|易弯曲的,柔软的：bent, pliant
+2407|supplant|排挤,篡夺...的位置：usurp the place of
+2408|supplement|增补,补充：complete for a deficiency
+2409|supplicate|恳求,乞求：make a request earnest or urgent
+2410|supposition|猜想,推测：little or no evidence
+2411|suppress|抑制(表情)：inhibit the expression,用暴力终止,镇压：put a stop to, force
+2412|surcharge|过高收费：charge much
+2413|surfeit|(使)过量,(使)饮食过度：supply excess
+2414|surrender|交出,放弃,投降：give over to,使沉溺于：give(oneself)over
+2415|surreptitious|偷偷摸摸的,保密的：escape being observed
+2417|suspend|暂停,中止：bring to a formal close,悬挂：hang
+2418|suture|缝合：joining
+2419|svelte|(女人)体态苗条的,优雅的：slim
+2420|swagger|大摇大摆地走,趾高气昂地走：arrogant, pompous,自夸,吹嘘：boast
+2421|swear|咒骂：curse,宣誓：oath
+2422|sweltering|酷热的：hot
+2423|swerve|突然改变方向：turn aside abruptly
+2424|swill|痛饮,大口地吃：drink greedily, eat greedily
+2425|swindle|欺骗,骗取：cheat
+2426|sybarite|沉溺于奢侈逸乐者,酒色之徒：devoted luxury
+2427|sycophant|马屁精：flatter
+2428|syllabus|提纲,摘要,课文、演讲或研究课题的概要或提纲：summary
+2429|syllogism|由一般到个别的推理,演绎：reasoning, deduction
+2430|symbiosis|共生关系：living together
+2431|symmetry|对称：balanced proportions
+2432|synchronous|同时期的,同步的：identical period phase
+2433|synergic|合作的：cooperating
+2434|synonymous|同义的：same similar meaning
+2435|synopsis|摘要,概要：outline, abstract, summary
+2436|synthesis|合成,综合：combination
+2437|tacit|暗示的：implied, not actually expressed
+2438|taciturn|沉默寡言的,话少的：disinclined to talk
+2439|tackle|着手处理：start work
+2440|tact|机敏,精明,不冒犯：keen sense, maintain good relations
+2441|tactile|有触觉的,能触知的：touch tangible
+2442|tactless|不机智的,笨拙的：inconsiderate, indiscreet
+2443|talisman|护身符：bring good luck, keep away evil
+2444|taint|使(品质)污损：morally bad
+2445|tamper|恶意篡改,损害：mischievously,玩弄：rashly or foolishly
+2446|tangent|离题(的),不相关(的)：irrelevant
+2447|tangible|可感知的：capable perceived,确凿的,真实的：real or concrete
+2448|tangy|刺激的：powerfully stimulating
+2449|tantalize|激起,挑逗,引诱：excite
+2450|tantamount|等价的,与...相等的：equivalent
+2451|tantrum|勃然大怒,发脾气：bad temper
+2452|taper|(使)逐渐变细：become narrower, thinner,逐渐减少,减弱：diminish gradually
+2453|tardy|缓慢的,迟缓的：slowly,延后的,迟的：delayed
+2454|tarnish|玷污：morally bad
+2455|tasty|美味的,令人愉悦的：pleasure or contentment
+2456|tatty|破旧的,褴褛的：shabby
+2457|taunt|嘲弄性质疑,挑衅：challenge, jeer at
+2458|taut|紧绷的：not loose,整洁的：proper order, trim shape
+2459|tawdry|俗丽的,花哨而庸俗的：gaudy
+2460|taxing|繁重的,费力的：requiring much time, effort
+2461|tedious|冗长乏味的：tiresome, dullness, boring
+2462|teeter|蹒跚,不稳定地行走：unsteadily,犹豫不决：uncertainty
+2463|telling|禁酒：abstinence alcoholic
+2464|temerity|有效的,显著的：effective
+2465|temporize|鲁莽,冒失：foolhardy, recklessness,行动躲躲闪闪以争取时间、躲避争论等：act evasively
+2466|temperate|(言行举止)有分寸的：avoiding extremes,有节制的：restraint
+2467|tempestuous|突然的,剧烈的：sudden or violent
+2468|tenable|有据可依的,无懈可击的：capable defended, reasonable
+2469|tenacious|顽固的,不屈不挠的：persistent,粘着的：adhere to
+2470|tendentious|有偏见的：biased
+2471|tender|正式提出：offer,考虑周到的,关心同情的：sympathy consideration
+2472|tenuous|没有实际内容的,空洞的：little substance
+2473|tepid|不太热心的：little or no interest
+2474|terminology|专业术语：special terms or expressions
+2475|terminus|终点,终点站：end
+2476|terror|极度恐惧：intense fear
+2477|terse|简洁的,简明的：brief
+2478|testimony|证词,声明：authentication
+2479|testy|易怒的,暴躁的：easily annoyed, irritable
+2480|tether|(用绳、铁链)拴系、束缚：fasten, restrain,能力或忍耐力的极限：limit
+2481|theatrical|做作的,夸张的,矫揉造作的：exaggerated unnatural
+2482|therapeutic|治疗的,有疗效的：treatment disease
+2483|thorny|多刺的：full of thorns,棘手的：difficulties
+2484|threadbare|陈腐的：hackneyed,贫穷的：lacking possessions,破烂的：worn or torn
+2485|throng|大量聚集：crowd in great numbers
+2486|thwart|阻挠：oppose
+2487|ticklish|易怒的：easily offended,棘手的,对技巧要求高的：exceptional skill or caution
+2488|tiff|小争吵：petty quarrel
+2489|tightfisted|吝啬的：stingy
+2490|timeworn|陈腐的：hackneyed
+2491|timid|胆小的,不自信的lacking courage, self-confidence
+2492|timorous|胆小的：fearful
+2493|tinge|给...着上少量的色彩：color, tint
+2494|tinker|乱修,乱调整：thoughtlessly
+2495|tint|涂浅色,微染：slight coloration to
+2496|tirade|长篇抨击性演讲：angry censorious or denunciatory
+2497|toady|马屁精,拍马屁：flatters, gaining favors
+2498|tonic|滋补的,有益健康的：stimulating vigor, beneficial
+2499|topsy-turvy|混乱的：lacking in order
+2500|torpid|麻木的,没有知觉的：sensation,迟钝的,行动迟缓的：slow
+2501|torpor|缺乏兴趣：lack of interest,(肉体或精神上的)迟钝,懒散：inertness
+2502|torrential|急流的：rapidstreams
+2503|torrid|酷热的：intensely hot,热情的,情感深厚的：great depth of feeling
+2504|tortuous|转弯抹角的：indirect
+2505|tout|极力赞扬：praise
+2506|toy|草率或不认真地对待：handle thoughtlessly
+2507|tractable|易驾驭的,温顺的：giving in
+2508|tranquility|宁静,淡定：freedom from storm
+2509|transcend|超越,超过极限：beyond the limits
+2510|transfigure|使改变外观：alter appearance, transform
+2511|transgress|违背,犯错：fail to keep, commit an offense
+2512|transient| 短暂的,瞬时的：transitory
+2513|transitory|短暂的：lasting only a short time 
+2514|translucent|透明的：permitting passage light, transparent
+2515|transparent|透明的：capable of transmitting light,没有歧义的,清晰易懂的：not subject to misinterpretation
+2516|travail|辛苦劳动：arduous
+2517|traverse|横穿：pass across
+2518|travesty|拙劣的,嘲弄性模仿：exaggerated imitation
+2519|treacherous|背叛的：betrayal
+2520|trenchant|锐利的：sharp,(言辞)一针见血的：articulate
+2521|trepidation|恐惧,战栗：apprehension
+2522|trespass|非法入侵,违反,冒犯：enter unlawfully offense
+2523|tribute|称颂,颂词：declaration gratitude
+2524|trickle|一滴一滴地流,缓缓地流：fall in drops
+2525|trite|陈腐的,陈词滥调的：hackneyed
+2526|trivial|琐碎的,无足轻重的：little importance
+2527|truant|逃避责任(的),逃避责任者：shirking responsibility, shirks duty
+2528|truce|休战,休战协定：suspension fighting 
+2529|truculent|尖酸刻薄的：harsh insulting,好战的,好斗的：eagerness to fight
+2530|trudge|吃力而笨拙地走：heavily or clumsily
+2531|trumpet|大声说出或宣告：make known
+2532|truncate|截短,缩短(时间、篇幅等)：shorten
+2533|truss|系紧,扎紧：into a tight mass
+2534|tumult|骚乱,暴动：disorderly, disturbance
+2535|turbid|混浊的：deficient in clarity
+2536|turbulent|动荡的：disturbance,湍急的,汹涌的：turmoil
+2537|turgid|浮夸的,过分装饰的：embellished
+2538|turmoil|骚动,混乱：agitation, commotion
+2539|turncoat|叛徒：switches, traitor
+2542|typo|打字错误：error
+2543|tyro|新手,业余爱好者：beginner, novice
+2544|ubiquitous|无所不在的,普通的：everywhere, often observed
+2545|unassailable|无可争辩的,无法否认的,不可亵渎的：not to be violated
+2546|uncanny|离奇的,奇异的：extraordinary or abnormal
+2547|uncouth|粗俗的,没有品位的：lacking in refinement
+2548|unctuous|油嘴滑舌的,谄媚的：flattering,夸张的,做作的：affected, exaggerated
+2549|underdog|受害者,输家： loser/victim
+2550|undergird|加强,巩固...的底部：strengthen
+2551|undermine|削弱,破坏：weaken, injure, impair
+2552|underscore|强调：to emphasize
+2553|understate|保守陈述：restraint
+2554|understudy|替补演员：take another's duties
+2555|unexceptionable|无懈可击的：beyond reproach
+2556|unflappable|镇定的,从容不迫的：not easily upset
+2557|ungainly|笨拙的,不雅的：inability in a graceful manner
+2558|unimpeachable|无可置疑的：unquestionable
+2559|unkempt|凌乱的,无序的：lacking in order
+2560|unlettered|未受教育的,文盲的：deficient in the knowledge, illiterate
+2561|unpretentious|低调的,谦逊的：modest,坦诚的,自然的：free from deceive
+2562|unproductive|徒然的,无效的：not productive
+2563|unrequited|无报答的,无报酬的：not reciprocated
+2564|unruly|难驾驭的,不守规矩的：difficult to discipline
+2565|untenable|防守不住的,站不住脚的：defended
+2566|untold|数不清的,无数的：numerous
+2567|untoward|倒霉的,不吉利的：not favorable, unpropitious,难以驯服的,难以驾驭的：resisting control or discipline
+2568|unwitting|不知道的,未觉察的：unware,偶然的,并非有意的：by chance, not intended
+2569|unwonted|不习惯的,不寻常的：not habitual, ordinary, unusual
+2570|upbraid|(严厉地)谴责,责骂：reproach severely
+2571|uphold|支持,赞成：support
+2572|urbane|彬彬有礼的,文雅的：polite
+2573|usurp|篡夺,篡位：seize power without legal authority
+2574|utter|出(声),说(话)：articulate,完全的,绝对的：entire
+2575|vaccinate|预防接种疫苗：produce immunity
+2576|vacillate|犹豫不决：hesitate,摇动,摇摆：oscillate
+2577|vacuous|茫然的,愚蠢的：lack of intelligence
+2578|vagary|不可预测的思想或行为：erratic, unpredictable
+2579|vague|表达不清的：not clearly expressed,轮廓不清晰的：lacking definite shape
+2580|valediction|告别：bidding farewell,告别词：address farewell
+2581|valiant|勇敢的,英勇的：bravery
+2582|valid|逻辑上正确的：correct
+2583|vanquish|打败,征服：defeat
+2584|vapid|无趣的,乏味的：lacking interest
+2585|vaporize|使(液体)蒸发：convert by heat,彻底消灭：destroy
+2586|variance|不一致,不和谐：lack harmony
+2587|variegated|杂色的,斑驳的：different colors
+2588|varnish|上清漆,使有光泽：smooth glossy,粉饰(令人不悦的东西)：conceal unpleasant
+2589|vault|跳起,跳跃：propel oneself upward,一跃而至：leaping suddenly
+2590|vaunt|吹嘘：boastfully
+2591|veer|(使)转向,(使)改变航线：change direction
+2592|vehement|(情感)强烈的,热情的：great depth of feeling
+2593|venal|贪污受贿的：open to corrupt
+2594|vendor|小贩,商贩：sells
+2595|veneer|薄木板,用以贴在家具外面的饰面板：thin surface layer, wood,粉饰(不好的东西)：conceal defect
+2596|venerate|尊敬：regard with respect
+2597|venial|可宽恕的：easily excused
+2598|venom|毒液：poisonous matter,恶意,恶毒的用心：desire to cause pain
+2599|veracious|诚实的,说实话的：telling the truth,精确的,准确的：precise
+2600|verbatim|逐字地,一字不差地：exact words
+2601|verbose|冗长的,啰嗦的：more than necessary
+2602|verdant|(因长满植物而)翠绿的,郁郁葱葱的：green with vegetation
+2603|verify|校验,证实：determine accuracy
+2604|verisimilar|貌似真实的：appearing to be true
+2605|veritable|真正的,确实的：not false
+2606|vernacular|方言：nonstandard language,非正式的,口头的：suitable for speech
+2607|versatile|多才多艺的,全能的：different things,易改变的：fluctuating readily
+2608|verse|使精通,使熟悉：familiarize,诗歌：rhythm lyrical effect
+2609|vertigo|眩晕：dizzy
+2610|verve|活力,热情：vitality
+2611|vessel|管：tube body fluid,船,舰艇：watercraft
+2612|vestige|微小的痕迹,小痕迹：smallest trace
+2613|vestigial|退化的,发育不全的：simple structure
+2614|veteran|老兵,有丰富经验的人：knowledge through long experience,经验丰富的,资深的：knowledge, experience
+2615|veto|否决,禁止：forbid, prohibit
+2616|vex|使烦恼,使恼怒：bring agitation
+2617|viable|可行的：being done
+2618|vicarious|代理的,取代的：substitute for another
+2619|vicious|凶恶的,恶毒的：desire to inflict,猛烈的：violence or ferocity
+2620|vicissitude|自然变化,变迁兴衰：natural change 
+2621|victimize|使受骗：subject to deception
+2622|vigilant|警醒的,警惕的：alertly watchful
+2623|vignette|简介,短文：vivid representation
+2624|vigorous|精力旺盛的：active strength,强健的：withstand hardship
+2625|vilify|诽谤,辱骂：utter slanderous statements
+2626|vim|活力,精力：energy
+2627|vindicate|为...平反,为...辩护,使无罪：free from blame,证明,证实：give evidence
+2628|vindictive|复仇的,有寻仇倾向的：seek revenge
+2629|virtuoso|艺术鉴赏家,专家：masterly skill,经验丰富的,技艺精湛的：exceptional knowledge
+2630|virtuous|品德高尚的,正直的：showing moral excellence
+2631|virulent|有毒的：poisonous,凶残的：destructive course
+2632|viscid|有粘性的：glutinous
+2633|viscous|粘稠的,粘的：viscid
+2634|visionary|空想的,不切实际的：guided by ideals,幻觉的：in the imagination,有远见的：foresight
+2635|vitality|活力,生命力：vigor
+2636|vitiate|削弱,损害：reduce the value,(在道德、审美上)降低,堕落：debase in moral
+2637|vitriolic|(言辞)刻薄的：scathing 
+2638|vituperate|谩骂,责骂：abuse or censure
+2639|vivacious|活泼的,快活的：lively
+2640|vociferous|喧哗的,大叫大嚷的：vehement outcry
+2641|volatile|多变的：rapid change
+2642|volition|意志,自愿选择的行为：making one's own choices
+2643|voluble|健谈的,多话的：ready speech
+2644|voluminous|卷数多的,大量的,庞大的：great number
+2645|voluptuous|奢侈逸乐的,沉湎酒色的：enjoyments luxury
+2646|voracious|有很大食量的,贪吃的：huge appetite,贪婪的,如饥似渴的：insatiable
+2647|votary|崇拜者,信徒：fervently devoted
+2648|vouch|担保,声称为真：give a guarantee
+2649|vulgar|粗俗的,无教养的：crude,口头的,非正式的：suitable for speech
+2650|vulnerable|易受攻击的,脆弱的：open to attack
+2651|waddle|摇摇摆摆地走：tilt the body from side to side
+2652|waffle|胡扯：talk foolishly
+2653|waft|飘荡,漂浮：float
+2654|wag|诙谐幽默的人：humorous,摆动：move to and fro or up and down
+2655|wan|苍白的,病态的：poor health 
+2656|wanderlust|旅游癖：impulse to travel
+2657|wane|减少,衰退,降低：decrease
+2658|want|短缺：lacking,渴望：desire
+2659|warmonger|好战者：urges war
+2660|warp|使偏向：turn,扭曲,变形：twist,曲解：alter the meaning 
+2661|warrant|向...保证质量：assume responsibility for the satisfactory quality,批准,认可：give official acceptance
+2662|wary|小心的,机警的,谨慎的：caution
+2663|wastrel|肆意挥霍的人,败家子：expends self-indulgently
+2664|watershed|重要关头,分水岭：turning point
+2665|wax|月亮渐满：increase in phase of the moon,用蜡涂、处理或上光：coat,增大,增强：increase 
+2666|waylay|埋伏,伏击：attack
+2667|welter|混乱,动乱：disorder
+2668|wheedle|(用花言巧语)诱惑,哄骗：persuade by flattery
+2669|whet|磨快：sharpen
+2670|whiff|微风：slight gust,细微的信号,轻微痕迹：imperceptible sign
+2671|whimsical|反复无常的：sudden illogical changes
+2672|wholesome|有益身心健康的：promoting health 
+2673|wicked|邪恶的：morally bad
+2674|wince|畏缩：shrink back from pain
+2675|windbag|健谈的人：talkative
+2676|windy|冗长的：verbosity
+2677|winsome|迷人的,漂亮的：pleasing and engaging 
+2678|wit|机智,智慧：ability to understand,智者,有智慧的人：intelligence
+2679|withdraw|撤退：take back
+2680|wither|枯萎,凋谢：become sapless
+2681|withhold|抑制,扣压,不给予：refrain from giving 
+2682|wizen|(使)凋谢,(使)枯萎：become wrinkled,凋谢的,枯萎的：dried up
+2683|wobble|摇晃,颤抖：move or proceed unsteadily,犹豫不决：show uncertainty
+2684|worldly|世间的,世俗的：rather than spiritual,老练的：experienced
+2685|worship|崇拜,敬仰：respect,崇拜,膜拜：offer honor or respect
+2686|wrangle|纷争,争端：differing opinions,争吵：quarrel
+2687|wretched|极差的：poor in quality,沮丧的：dejected
+2688|wry|扭曲的：twisted, bent,坚持错误的：stubborn to wrong
+2689|xenophobe|仇视(或畏惧)外国人(或外国事物)者：fearful of what is foreign
+2690|yoke|连接：become joined
+2691|yokel|乡下人,天真纯朴的人：inhabitant of a rural area
+2692|zeal|热心,热诚：enthusiastic devotion
+2693|zealot|狂热者：a fanatical partisan
+2694|zenith|最高点,巅峰：culminating
+2695|zesty|刺激的,开胃的：piquant
+2696|abreast|并排地：in line,熟知的：knowledge of recent developments
+2697|absent|未出现的,缺乏的：not present,不专心的,走神的：lost in thought
+2698|acclaim|称赞：public acknowledgment or admiration,赞扬,赞颂：approval
+2699|accomplish|实现,完成：completion
+2700|accord|一致：consistency,相符合,相一致：in harmony,授予,给予：to grant or give
+2701|acknowledge|承认：admit
+2702|acquire|获取,获得：get as one's own
+2703|acquisitive|贪婪的：desirous
+2704|adjudicate|裁决,判定：settle
+2705|adversity|厄运,逆境：difficulty
+2706|affectation|虚伪,做作：not natural, not genuinely felt
+2707|affirm|声称...为真,肯定...属实：valid or confirmed
+2708|affix|粘合：attach physically
+2709|affliction|痛苦,悲伤,折磨：great suffering
+2710|agape|急切盼望的：eagerly awaiting 
+2711|agility|(身手)敏捷：quickness, ease and grace
+2712|agreeable|令人愉悦的：pleasing to the mind or senses,随和的：easygoing and pleasing manner,相一致：in harmony
+2713|alloy|合金,混合物：combing of two or more different things,掺杂,降低...的纯度：debase by the addition
+2714|ambivalent|(尤指感情、态度)矛盾的：opposing feelings
+2715|anachronistic|时代错误：chronologically misplaced
+2716|analogous|相似的,可比较的：in common
+2717|annex|裙楼,副楼：auxiliary building,添加,合并：join,吞并,夺取(土地等)：incorporate
+2718|annotate|给...作注解：commentary or explanatory notes
+2719|antedate|比...早,早于：earlier date
+2720|antipathy|厌恶,反感：aversion, dislike,令人反感的事物：objection of aversion
+2721|antiquated|古老的,过时的：out of style
+2722|antithetical|完全对立的,相反的：direct and unequivocal opposition
+2723|apparition|鬼魂,幽灵：ghostly figure
+2724|applicable|可用的,可行的：put to use,相关的,有光的：having to do with,合适的,恰当的：meeting the requirements
+2725|apprehensive|知晓的,理解的：impressed on the mind,恐惧的,害怕的：anxious, fearful
+2726|arable|适合耕作的：growing of crops
+2727|arbitrary|专横的,独断专行的：force one's will on others,独裁的,拥有无限权力的：without interference by others,缺乏计划的,随意的：lacking a definite plan
+2728|arcane|(语言)晦涩的,隐晦的：veiled, uncertain,深奥的,难以理解的：difficult to understand
+2729|argument|争吵,争论：expression of differing opinions,(逻辑上的)论证：from a premise to a conclusion,观点,论点：idea, opinion
+2730|arid|干燥的：little or no precipitation,无趣的,无聊的：lack of interest
+2731|array|排列,阵列：arrangement,排列,摆放：arrange or display,装饰,装修：dress or decorate
+2732|assail|抨击,严厉批评：criticize harshly,攻击,猛攻：violent action against
+2733|asymmetry|不对称,不均衡：lack of balance
+2734|atrophy|萎缩,衰退：waste away
+2735|attest|证实,为...作证：give evidence
+2736|attune|使协调,使和谐：into harmony
+2737|august|威严的,严重的：formal and serious or reserved manner,盛大的,令人印象深刻的：large and impressive
+2738|auspicious|好兆头的：toward a happy outcome
+2739|austere|朴素的,朴实无华的：simple,严肃的,令人生畏的：stern and cold
+2740|automatic|(机器等)自动的：independent of external influence,自发的,情不自禁的：spontaneously or unconsciously 
+2741|avowal|承认,公开宣称：declaration
+2742|backfire|产生相反的结果,事与愿违：reverse
+2743|backslide|(情况等)倒退,故态复萌：revert to a worse condition
+2744|baffle|挫败,阻挠：frustrate or check,使疑惑：mental uncertainty
+2745|baffling|令人疑惑的,难以理解的：hard to comprehend
+2746|bash|猛击：forceful blow,攻击,用力击打：strike violently,抨击,严厉批评：criticize harshly
+2747|bask|休息,悠然自得：lie or relax
+2748|beholden|欠他人人情的：owing gratitude
+2749|behoove|对...有利：necessary, proper, advantageous
+2750|beige|缺乏特征的：lacking distinction
+2751|belligerence|好斗,好战：aggressive or truculent
+2752|belligerent|好斗的,好战的：assertiveness, hostility, combativeness
+2753|beset|使苦恼,骚扰：cause persistent suffering,攻击,袭击：set upon
+2754|bewitching|迷人的,令人着迷的：attract
+2755|blackmail|敲诈,勒索：extortion of money
+2756|bluff|直率的,(说话)直截了当的：direct, brief, potentially rude,欺骗：deceive
+2757|bogus|伪造的,假冒的：being such in appearance only,虚伪的,做作的：lacking,  spontaneous quality
+2758|bore|令人讨厌的人或事物：causes boredom,使厌倦,使厌烦：make weary
+2759|brandish|(带有威胁性地)挥舞：shake menacingly
+2760|brim|边缘,边界：outer margin,充满：full often to overflowing,加满,倒满：as much as can be
+2761|bumble|含糊不清地说,杂乱无章地说：rapidly, inarticulately,笨拙地行动：clumsily
+2762|bustle|忙乱,喧嚣：noisy, energetic,(快速地)行走,奔忙：move briskly
+2763|calamity|大灾难：disastrous event
+2764|calculated|经过计算(成败得失)的,经过深思熟虑的：reckoning or estimating 
+2765|canny|精明的,聪明的：careful and shrewed
+2766|canonize|过分宠爱,过分崇拜：admire too much,使崇高,使神圣：high status or value
+2767|captious|吹毛求疵的,爱挑毛病的：stress faults and raise objections
+2768|careen|蹒跚而行。不稳定行走：to lurch or swerve,狂奔,快速运动：rush
+2769|carefree|无忧无虑的：no worries or troubles
+2770|cascade|(尤指小的)瀑布：small fall
+2771|cellular|多孔的：porous
+2772|ceremonious|讲究礼节的,庄重的：careful attention to set forms
+2773|certitude|确定无疑：certain
+2774|channel|水渠：passageway for water,海峡：between two land masses,将...导入,投入：move to a central point 
+2775|chaperone|同行,护送：go along with 
+2776|charisma|魅力,吸引力：charm
+2777|cherished|受喜爱的,珍爱的：granted special treatment
+2778|chivalrous|有骑士风度的,(尤指对女性)彬彬有礼的：gracious courtesy and high-minded consideration
+2779|chorale|赞美诗：hymn or psalm,合唱班,合唱团：group of singers
+2780|clamor|喧闹,喧哗,噪声：loud, inharmonious
+2781|clan|(有共同爱好的)团体,帮派：united by a common interest
+2782|cleave|紧贴,坚持：adhere,分隔,割裂,劈开：divide
+2783|cling|粘结,粘合：physical sticking,紧贴,坚持：adhere
+2784|coarse|粗糙的,表面不平整的：not smooth,(声音)刺耳的,粗声粗气的：rough in tone,粗俗的：lacking refinement,(质量)低劣的：inferior quality
+2785|cohesive|有粘性的,有凝聚力的：cohesion or coherence
+2786|collaborate|合作：work jointly
+2787|commiserate|表示怜悯,同情：sympathy
+2788|compatible|一致的,能共存的：in harmony
+2789|compelling|极具说服力的：persuade,迫切的,紧迫的：immediate attention
+2790|complacent|自满的,自鸣得意的：excessive or unjustified satisfaction,无所谓的,不关心的：lack of interest or concern
+2791|complementary|互补的：supplying each other's
+2792|complicate|使复杂化：complex or difficult
+2793|comprehend|理解,了解：grasp,包括,包含：contain or hold within
+2794|concrete|实体的,实在的：matter,事实性的,明确的：in fact
+2795|condemn|谴责(...为不道德的、邪恶的)：declare to be reprehensible, wrong, or evil
+2796|conditional|有条件的,受制约的：dependent
+2797|conflagration|大火：large destructive fire,武装冲突：armed violent struggle
+2798|conflate|混合：turn into a single mass
+2799|conform|使协调：bring into harmony,调整(以适应)：change to make it suitable,遵照,遵从：obedient, compliant
+2800|conjure|请求,恳求：entreat earnestly,在脑海中浮现,想起：form a mental picture
+2801|consent|同意：approval 
+2802|consign|转交,转移(给他人)：control of another
+2803|consternation|惊愕,恐慌,恐惧：paralyzing dismay
+2804|constrict|压缩,压紧：binding or squeezing 
+2805|contemplate|沉思,仔细考虑：consider
+2806|contempt|蔑视,鄙视：unworthy of one's concern or respect
+2807|contend|竞争,争夺：strive or vie in contest,声明,声称：state as a fact
+2808|contradict|否认,反驳,与...相矛盾：contrary
+2809|contrived|不自然的,刻意的：lacking spontaneous quality
+2810|convene|召开,召集：bring together in assembly,聚集,集合：come together
+2811|correlate|使...相关联：mutual or reciprocal relation
+2812|counterpart|(地位、功能)对等的人或物：same function or characteristics
+2813|counterproductive|反效果的,阻碍预期目标的：not producing desired goal 
+2814|courteous|礼貌的,谦恭有礼的：polished manners
+2815|coy|故作羞涩的：flirtatiously shy or modest,不愿与人交往的,内向的：tending to avoid people
+2816|credible|可信,值得信赖的：worthy of being accepted
+2817|credit|信任,信赖：mental conviction of the truth,表扬,赞扬：acknowledgment or admiration
+2818|crow|感到高兴：joy or triumph,自鸣得意：pride in one's own possessions
+2819|damn|(在道德上)谴责：morally wrong or evil,非常地,极其地：great degree
+2820|dampen|(特指稍稍地)弄湿：wet,抑制,压抑(感情、精力等),泼冷水：diminish the feeling, activity or vigor 
+2821|dashing|爱好冒险的,大胆的：take risks
+2822|dated|过时的：passed its time of use
+2823|deadlock|僵局：a state of inaction or neutralization,使陷入僵局,使停顿：to a deadlock
+2824|debonair|无忧无虑,不在乎的：freedom from worries or troubles,风度翩翩的：polished and worldly manners
+2825|decadent|堕落的,腐败的：lowered moral character,放纵的人：devoted to luxury and sensual pleasures,道德上堕落的人：moral decay
+2826|decry|强烈反对,否定：strong disapproval
+2827|deflect|使偏斜,使转向：turn aside from a straight course
+2828|defray|支付：undertake the payment 
+2829|deign|(不情愿地)屈尊,俯就：condescend reluctantly
+2830|delegate|代理人,代表：representative for another,移交(权力,任务等)：possession or safekeeping of another
+2831|delineate|勾勒,用线条描绘：by drawn or painted lines,描写,描绘：describe,portray
+2832|demote|降职,降级：a lower grade
+2833|dependable|可靠的,值得信赖的：depended on
+2834|deplorable|可鄙的,可耻的：condemnation or reproach,悲惨的,可悲的：cause great distress
+2835|desperate|绝望的：no hope
+2836|dichotomy|一分为二,分割：division into two
+2837|dictate|指令,命令：command,(仗着地位,权力)下令：request
+2838|dike|堤坝,水坝：control or confine water,水沟,水渠：long narrow channel
+2839|discreet|(言行)谨慎的：good judgment and restraint,不易察觉的：not readily seen or noticed
+2840|disenchant|使清醒：free from illusion
+2841|dishearten|使沮丧,使失去信心：lose spirit or morale
+2842|disprove|反驳,证明为假：prove to be false 
+2843|distinctive|完全不同的：not of the same kind,特征性的,典型的：serving to identify
+2844|doctrinaire|教条主义的,照本宣科的：strongly held opinions
+2845|domineer|专制统治：overbearing control
+2846|drab|单调的,无聊的：dullness and monotony
+2847|dramatic|显著的,惹人注意的：striking
+2848|dread|恐惧：fear
+2849|duplicate|复制品：exactly alike,复制：make a copy,重复,反复：do over or again
+2850|dynamic|有力量的,有活力的：productive activity
+2851|eclectic|混合的,多元化的：from various sources
+2852|efficacious|有效的：produce a desired effect
+2853|elude|躲闪,躲避：avoid adroitly,使无法理解,使困惑：escape the perception
+2854|enamored|迷恋的,热爱的：intense or excessive love
+2855|endeavor|努力,奋斗：conscientious or concerted effort,努力做,拼搏：devote serious and sustained effort
+2856|enthrall|(像用魔咒般)吸引：hold the attention 
+2857|equilibrium|均势,平衡：opposing forces are equal,(感情上的)平静：evenness of emotions
+2858|erroneous|错误的,不正确的：containing error 
+2859|escort|护卫队,护送者：accompanying another,同行,护送：go along with 
+2860|ethos|道德准则：code of good conduct
+2861|exorcise|除去：ger rid of
+2862|explicate|解释,说明：detailed explanation
+2863|exterminate|根除,消灭：killing off
+2864|extrapolate|(通过逻辑)判断：form an opinion through reasoning 
+2865|fabulous|传说中的：fable,幻想中的,不真实的：in the imagination,令人惊讶的,令人称奇的：causing wonder,极好的：extremely pleasing 
+2866|fad|(短暂的)流行,时尚：popular for a short time
+2867|fallible|可能出错的：erroneous
+2868|fanciful|幻想中的：不真实的：in the imagination,不切实际的,荒谬的：without regard for reason
+2869|favoritism|偏爱,偏袒：special favor
+2870|featureless|缺乏特征的：lacking distinguishing characteristics
+2871|feisty|好斗的,好争论的：aggressiveness
+2872|felony|重罪：grave crimes
+2873|ferocious|极端的,剧烈的：unrelenting intensify,激烈的,爆发性的：bursts of destructive force,凶猛的,残暴的：unfriendly or aggressive
+2874|fervent|充满感情的,热情洋溢的：great intensity of feeling 
+2875|figment|虚构的事物,幻觉：made up
+2876|fitful|无规律的,缺乏周期的：erratic or intermittent 
+2877|fleeting|稍纵即逝的,短暂的：for short time 
+2878|forage|寻找：search
+2879|forebode|预示,预兆：show signs
+2880|foreground|强调,重视：indicate the importance
+2881|forfeit|罚金：punishment
+2882|forsake|彻底放弃,抛弃：renounce
+2883|frosty|寒冷的：low temperature,无强烈情感的,冷淡的：lacking in friendliness or warmth 
+2884|gawky|(举止)笨拙的：inability to move in a graceful manner
+2885|germinate|发芽：begin to grow,出现：come into being 
+2886|glacial|极冷的：extremely cold,冷漠的,无感情的：devoid of warmth
+2887|glide|轻松地行动,轻松地通过：smoothly, continuously, effortlessly
+2888|glower|怒目而视：stare with anger
+2889|graft|移植,移接：implant surgically
+2890|grit|(面对困难时所表现出来的)毅力：endure pain or hardship
+2891|groggy|虚弱的,(走路)不稳的：weak and unsteady,无法思考的,头脑不清的：not able to think or move
+2892|grudge|怨恨,仇恨：ill will
+2893|grumble|(尤指低声地)抱怨,埋怨：complain
+2894|halfhearted|不感兴趣的,不热情的：lacking heart
+2895|heckle|起哄,使难堪：harass
+2896|hierarchical|分等级的,等级制的：classified
+2897|hobble|跛行,蹒跚而行：haltingly or with difficulty,阻碍,妨碍：hamper the action
+2898|humdrum|千篇一律,单调：lack of variety,无聊的,乏味的：lacking excitement
+2899|humiliate|羞辱,使丧失尊严：to a lower position
+2900|hypothetical|假设,前提条件：starting point,假定的：assumption speculation
+2901|idiosyncrasy|独特而奇怪的习惯：odd or peculiar habit
+2902|idle|闲置的,未使用的：not turned to use,懒散的：lazy,懒散度日,无所事事：without working
+2903|ill-bred|没有教养的,没有礼貌的：impolite
+2904|illustrious|著名的,杰出的：distinguished
+2905|imperishable|不能被摧毁的：impossible to destroy,不朽的,永恒的：occurring forever
+2906|implicit|不言而喻的,心照不宣的：understood though unexpressed,无疑问的,无保留的：without doubt
+2907|impunity|免责,免受处罚：freedom from punishment
+2908|incentive|刺激,诱因：incites
+2909|incumbent|义不容辞的,必须的：obligation duty
+2910|indecorous|不合礼节的,不得体的：conflicting with accepted standards
+2911|infraction|违背,违反：failure to uphold the requirements
+2912|justify|证明...的合理性,为...辩解：prove to be just, right
+2913|lag|最终的,最后的：following all others,缓慢行走：slowness,萎靡,失去活力：lose bodily strength 
+2914|lance|长矛,标枪：long straight handle and sharp head or blade,刺穿,刺破：penetrate
+2915|lax|松弛的,不紧的,不严格的：not tense, firm, or rigid,懈怠的,漫不经心的：failing to give proper care
+2916|license|许可,认可：approval,自由：move freely,放荡：disregard for standards,准许,授权使用：permit or authorize
+2917|lionize|追捧,把...捧为名人：celebrity
+2918|ludicrous|荒唐的,可笑的：derisive laughter
+2919|luminous|发光的,有光泽的：emitting or reflecting light,杰出的：standing above
+2920|lurid|恐怖的：令人反感的：causing revulsion,面色苍白的,病态的：pale in appearance
+2921|machination|轨迹：scheming or crafty action
+2922|madcap|热爱冒险的人：seeks our very dangerous or foolhardy adventures,大胆的,鲁莽的：foolishly adventurous or bold
+2923|magnitude|重要,重大：greatness in significance,巨大：greatness in size
+2924|malevolent|恶意的,恶毒的：vicious ill will, spite,hatred
+2925|malignant|恶毒的,邪恶的：desire to cause someone pain
+2926|maneuver|巧妙地操纵：guide with adroitness and design 
+2927|marginal|边缘的：near a border,不重要的：not of central importance
+2928|meditate|思索,沉思：focus
+2929|menial|仆人,奴仆：servant,卑贱的,低下的：spirit of humility or unseemly submissiveness
+2930|meretricious|艳俗的,俗气的：vulgar manner
+2931|milieu|环境,氛围：physical or social setting
+2932|military|军事的,军用的：soldiers, arms, or war
+2933|misapprehension|错误的理解、判断：failure to understand,wrong judgment
+2934|monarch|君主,帝王：rules,巨头,大亨：person of rank, power, or influence
+2935|monopolize|垄断,主宰：complete control
+2936|nirvana|彻底放松的状态：disregardful or unconscious,天堂,极乐世界：utter perfection and happiness
+2937|nostalgia|思乡之情：homesick,怀旧,怀念：sentimental yearning for return
+2938|notoriety|(尤指因为丑闻而出名的)名人：widely known something bad,坏名声：ill fame
+2939|nourish|养育,培养：provide with food,培养,促进：help with growth
+2940|novice|新手,初学者：new
+2941|nullification|(尤指法律条文等正式的)废除,废弃：doing away
+2942|numb|失去感觉的：devoid of sensation,麻木的,无感情的：devoid of emotion
+2943|oaf|愚蠢的人：stupid person
+2944|observant|警惕的,警觉的：paying close attention,严格遵守(规章、制度或原则)的：observing
+2945|obsolete|过时的,被淘汰的：no longer useful
+2946|onset|攻击,进攻：attack, assault,起始,开始：begins
+2947|ordeal|严峻的考验：severe trial
+2948|ostensible|表面上的,佯装的：appearing to be true
+2949|outgrowth|结果,后果：traceable to a cause
+2950|outmoded|过时的,废弃的：no longer usable
+2951|override|不顾：set aside
+2952|overshadow|使变黯淡：make dark, dim,(在重要性上)超越,超过：exceed in importance
+2953|overwhelm|淹没：cover,(感情上、精神上)使无所适从,使难以忍受：subject to mental stress
+2954|overwrought|十分激动的,非常不安的：agitation,(装饰、文风等)过分华丽的：excessively decorated
+2955|palaver|对话,交流：exchange of views,闲聊：profusely or idly
+2956|palpitation|(有节奏的)舒张收缩：expanding and contracting 
+2957|panacea|万能药,万灵药：remedy for all ills
+2958|peculiarity|特征,特点：distinguishing characteristic
+2959|pedagogical|教学的,教师的：teacher or education
+2960|peel|剥去...的皮：strip off,脱去(衣服等)：take off clothes
+2961|perceptive|敏锐的：sense slight differences,洞察力强的：deep understanding
+2962|perilous|危险的：potential loss or injury
+2963|perquisite|额外的好处：given in addition
+2964|petulant|易怒的,爱发脾气的：easily irritated
+2965|pioneer|扩荒者,先驱者：first to settle,最初的,最早的：coming before,开创,创造：open up 
+2966|pious|(信仰上)虔诚的：devotion to divine worship,忠诚的：firm in one's allegiance
+2967|pitfall|陷阱：capture and hold animals,(不易察觉的)危害：hidden danger
+2968|pivotal|最关键的,最为重要的：greatest possible importance
+2969|placid|宁静的,风平浪静的：free from storms,冷静的,淡定的：free from agitation
+2970|playful|爱开玩笑的,好打闹的：joking or teasing
+2971|plebeian|平民的,社会下层：low social or economic rank
+2972|plodder|行走缓慢的人：moves slowly 
+2973|plush|(味道等)浓郁的：abundance quality,奢华的,豪华的：notably luxurious
+2974|poach|水煮：cook in a liquid
+2975|pointer|(仪表上的)指针：scale indicator,忠告,建议：suggestion or hint
+2976|pragmatic|实用主义的,务实的：practical approach
+2977|prerequisite|先决条件,前提：necessary to an end
+2978|prerogative|特权,权力：right, power, privilege
+2979|proclaim|宣告,使...公之于众：declare publicly
+2980|project|方案,计划：specific plan,凸出：extend outward,预测,预计：based on present data or trends
+2981|proprietary|所有权：ownership,私营的：privately owned
+2982|prototype|原型：original model
+2983|rampant|(植物)生长茂盛的：growing thickly,猖獗的,不受限制的：occurring without restraint
+2984|ravenous|食量大的,贪食的,贪婪的：huge appetite
+2985|redeem|实践,履行(诺言等)：required,改过自新：make better
+2986|refreshing|令人身心振奋的,提神的：renewing effect
+2987|remnant|残余,剩余物：left over
+2988|renege|放弃,摒弃：formally reject
+2989|replenish|补充：fill again
+2990|replicate|复制,复刻：make an exact likeness,重复,反复：do again
+2991|residual|剩余的,残存的：residue
+2992|restitution|补偿,赔偿：for some injury
+2993|resurrect|使重生,使复苏：bring back to life
+2994|retentive|记性好的：retain knowledge or information
+2995|retrieve|寻回,找回：get back again
+2996|reverberate|回荡,回响：continue or be repeated sound waves
+2997|rhetorical|语言上的,文字上的：words or language,言辞华丽(却往往无内涵)的：fancy but meaningless
+2998|rigmarole|混乱而无意义的话：confused or meaningless talk
+2999|ruthless|没有怜悯心的,残忍的：no pity
+3000|sacrosanct|极为神圣的,不可侵犯的：most sacred
+3001|scourge|祸害：source of harm
+3002|screen|掩护物,屏障：shelters, protects, or hides,保护,使...免受攻击：drive attack away,掩护,遮蔽：shut off from view
+3003|scrimp|节俭：avoid waste
+3004|scruple|(良心上的)不安：uneasy feeling about the rightness
+3005|secede|脱离,拖出(组织、团体、联盟等)：withdraw from an organization
+3006|sectarianism|宗派主义,顽固：adherence prejudices
+3007|secular|世俗的,尘世的：worldly or temporal
+3008|sequel|结果：result
+3009|shift|改变...的位置：change position,改变,变化：pass from,交换：in return
+3010|shifty|(显得)狡诈的,(显得)欺诈的：deceitful character
+3011|simile|明喻：comparing two unlike things
+3012|skittish|容易受到惊吓的,胆小的：easily frightened,容易激动的：easily excited,善变的,多变的：likely to change
+3013|sparing|节俭的,节约的：careful restraint,不足的,缺乏的：less plentiful
+3014|splinter|尖细条,刺：sharp, slender piece,将...切成细条：break into sharp, slender pieces
+3015|splutter|急切而不清楚地说：hastily and incoherently
+3016|squeamish|恶心的,晕船的：nausea
+3017|stasis|平衡,停滞：balance
+3018|staunch|忠诚的,坚定的：steadfast in loyalty
+3019|stereotype|成见,老套的理念：conventional, formulaic, and oversimplified opinion
+3020|stigmatize|使蒙上污名：disgraceful or ignominious
+3021|substitute|取代者,替代品：takes the place of another,取代,替代：take the place of 
+3022|succumb|屈服：yield to superior strength,死亡：death
+3023|supersede|取代,替代：displace
+3024|surly|脾气不好的：churlish in mood
+3025|surmise|(根据不足的)推测,揣测：based on scantly evidence
+3026|surmount|战胜,获得胜利：achieve a victory 
+3027|surpass|超越,强于：become better,突破(界限、纪录等)：beyond the limit 
+3028|surrogate|替代品：takes the place 
+3029|surveillance|监视,监控：close observation
+3030|tame|被驯化的：reduced from a state of native wildness,无聊的,乏味的：lacking spirit,控制,抑制：keep from exceeding
+3031|tangle|困惑,不解：perplexity,纠缠,使....纠结：in a snare
+3032|teeming|大量的：great numbers
+3033|temporal|世俗的,尘世的：earthly life
+3034|tentative|暂时性的,尝试的：not fully developed
+3035|thick-skinned|冷漠无情的,不顾他人感受的：unaffected
+3036|thrill|强烈的兴奋感,快感：pleasurably intense stimulate,使兴奋,使激动：excitement
+3037|timely|及时的,无拖延的：without delay,恰到好处的,合乎时宜的：appropriate
+3038|trifle|不重要的事：little importance or value,不正经地对待,玩弄：without serious intent
+3039|trifling|细微的,不重要的：lacking in significance
+3040|tycoon|大亨,巨头：person of rank, power, influence
+3041|tyrant|暴君：oppressively or brutally
+3042|umbrage|不悦,生气：feeling of being offended or resentful 
+3043|unanimous|一致同意的：consent of all
+3044|unavailing|徒劳的,无果的：producing no results
+3045|unremitting|连续不断的：without any interruptions
+3046|versed|熟知的：having information,精通的：exceptional knowledge
+3047|vile|丑陋的：unpleasant to look at,(道德上)可鄙的,卑鄙的：morally despicable
+3048|vocation|职业：employed
+3049|vouchsafe|允诺,给予：grant in a gracious or condescending manner
+3050|voyeur|窥淫狂：observing unsuspecting individuals
+3051|wanting|未出现的,缺少的：not present,未达到要求的：not being up to standards
+3052|wayward|刚愎自用的,不服管束的：following one's own inclinations
+3053|weather|安全度过(危机等),经受住：come through 
+3054|willful|固执的,倔强的：self-willed,故意的：deliberately
+3055|willy-nilly|不论是否愿意地：desired or not,无秩序的,随意的：without order
+3056|wilt|(花、植物等)萎焉：limp or flaccid,精神萎靡,憔悴：fatigue or exhaustion
+3057|wily|狡诈的,狡猾的：deceptive means
+3058|wiretap|偷听,窃听：get information
+3059|wistful|(带着忧伤而)渴望的,怀念的：yearning or desire with melancholy 
+3060|wrest|拧,扭动：wringing or twisting movements,辛苦地获得：gain with difficulty
+3061|wrongheaded|固执己见的,坚持(错误观点)的：stubborn in adherence
