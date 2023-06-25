@@ -9,6 +9,23 @@ conda activate base
 scrapy startproject sougouspider
 ```
 
+创建项目后，目录树如下
+```
+C:.
+└─sougouspider
+    │  scrapy.cfg
+    │
+    └─sougouspider
+        │  items.py
+        │  middlewares.py
+        │  pipelines.py
+        │  settings.py
+        │  __init__.py
+        │
+        └─spiders
+                __init__.py
+```
+
 2. 进入子目录，创建sgspider爬虫
 ```
 cd sougouspider                              # 进入项目文件夹中的sougouspider子文件夹
