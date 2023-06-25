@@ -59,8 +59,29 @@ C:.
 
 3. 修改Item
 
+scrapy默认创建的items.py内容如下：
 
-5. 修改settings.py
+```
+# Define here the models for your scraped items
+#
+# See documentation in:
+# https://docs.scrapy.org/en/latest/topics/items.html
+
+import scrapy
+
+
+class SougouspiderItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    pass
+
+```
+
+修改后的见项目文件夹
+
+4. 修改settings.py
+
+
 
 
 6. 修改默认生成的spider文件
