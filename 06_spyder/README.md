@@ -4,7 +4,7 @@
 conda activate base
 ```
 
-1. 创建sougouspider项目
+**1. 创建sougouspider项目**
 ```
 scrapy startproject sougouspider
 ```
@@ -26,7 +26,7 @@ C:.
                 __init__.py
 ```
 
-2. 进入子目录，创建sgspider爬虫
+**2. 进入子目录，创建sgspider爬虫**
 ```
 cd sougouspider                              # 进入项目文件夹中的sougouspider子文件夹
 scrapy genspider sgspider weixin.sogou.com   # sgspider为spider名称，后是网站域名
@@ -57,7 +57,7 @@ C:.
                 __init__.cpython-38.pyc
 ```
 
-3. 修改Item
+**3. 修改Item**
 
 scrapy默认创建的items.py内容如下：
 
@@ -79,7 +79,7 @@ class SougouspiderItem(scrapy.Item):
 
 修改后的见项目文件夹
 
-4. 修改settings.py
+**4. 修改settings.py**
 
 scrapy默认创建的settings.py内容如下：
 
@@ -176,7 +176,7 @@ ROBOTSTXT_OBEY = True
 ```
 修改后的见项目文件夹
 
-5. 修改默认生成的sgspider.py文件
+**5. 修改默认生成的sgspider.py文件**
 
 默认生成的sgspider.py内容如下：
 ```
@@ -200,12 +200,12 @@ from IP.free_ip import get_random_proxy
 from IP.get_cookies import get_new_cookies,get_new_headers
 ```
 
-6. 运行scrapy框架
+**6. 运行scrapy框架**
 ```
 scrapy crawl sgspider -o XXX.json  # XXX.json是爬虫生成的json文件名，sgspider是上面步骤2中创建的爬虫名字，可以在sougouspider项目中的任意一级目录下运行该命令
 ```
 
-7. XXX.json后处理
+**7. XXX.json后处理**
 
 使用同级目录下的conver_json.py脚本处理后可以复制粘贴到markdown文件中查看
 
