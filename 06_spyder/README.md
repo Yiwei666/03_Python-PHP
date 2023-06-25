@@ -1,4 +1,6 @@
-**Note: 推荐在anaconda prompt和anaconda powershell prompt窗口中执行如下命令，或者在cmd窗口的base环境中运行，cmd窗口中激活base环境命令如下:**
+**Note: 推荐在anaconda prompt和anaconda powershell prompt窗口中执行如下命令，或者在cmd窗口的base环境中运行，cmd窗口中激活base环境命令如下:**    
+**提前安装docker，配置好代理池，在 http://localhost:5555/random 获取代理IP**
+**提前pip安装scrapy，fake-useragent包**
 
 ```
 conda activate base
