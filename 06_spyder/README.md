@@ -176,8 +176,25 @@ ROBOTSTXT_OBEY = True
 ```
 修改后的见项目文件夹
 
-5. 修改默认生成的spider文件
-注意下面两个模块的导入
+5. 修改默认生成的sgspider.py文件
+
+默认生成的sgspider.py内容如下：
+```
+import scrapy
+
+
+class SgspiderSpider(scrapy.Spider):
+    name = 'sgspider'
+    allowed_domains = ['weixin.sogou.com']
+    start_urls = ['http://weixin.sogou.com/']
+
+    def parse(self, response):
+        pass
+
+```
+
+修改后的见项目文件夹，注意下面两个模块的导入
+
 ```
 from IP.free_ip import get_random_proxy
 from IP.get_cookies import get_new_cookies,get_new_headers
