@@ -9,7 +9,7 @@ conda activate base
 scrapy startproject sougouspider
 ```
 
-2. 进入子目录，创建spyder
+2. 进入子目录，创建sgspider爬虫
 ```
 cd sougouspider                              # 进入项目文件夹中的sougouspider子文件夹
 scrapy genspider sgspider weixin.sogou.com   # sgspider为spider名称，后是网站域名
