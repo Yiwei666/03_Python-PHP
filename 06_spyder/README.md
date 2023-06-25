@@ -205,6 +205,11 @@ from IP.get_cookies import get_new_cookies,get_new_headers
 scrapy crawl sgspider -o XXX.json  # XXX.json是爬虫生成的json文件名，sgspider是上面步骤2中创建的爬虫名字，可以在sougouspider项目中的任意一级目录下运行该命令
 ```
 
+7. XXX.json后处理
+
+使用同级目录下的conver_json.py脚本处理后可以复制粘贴到markdown文件中查看
+
+
 **参考资料**   
 
 [【学习笔记】爬虫框架Scrapy入门](http://t.csdn.cn/TY3ex)
