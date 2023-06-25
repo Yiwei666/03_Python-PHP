@@ -210,6 +210,11 @@ scrapy crawl sgspider -o XXX.json  # XXX.json是爬虫生成的json文件名，s
 使用同级目录下的conver_json.py脚本处理后可以复制粘贴到markdown文件中查看
 
 
-**参考资料**   
+**参考资料和链接**   
 
 [【学习笔记】爬虫框架Scrapy入门](http://t.csdn.cn/TY3ex)
+
+[fake-useragent 1.1.3 ](https://pypi.org/project/fake-useragent/)
+
+[An Efficient ProxyPool with Getter, Tester and Server ](https://github.com/Python3WebSpider/ProxyPool)
+
