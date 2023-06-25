@@ -1,3 +1,9 @@
+**Note: 推荐在anaconda prompt和anaconda powershell prompt窗口中执行如下命令，或者在cmd窗口的base环境中运行，cmd窗口中激活base环境命令如下:**
+
+```
+conda activate base
+```
+
 1. 创建sougouspider项目
 ```
 scrapy startproject sougouspider
