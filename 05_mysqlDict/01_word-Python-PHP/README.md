@@ -19,4 +19,6 @@ chmod 775 /home/01_html/15_pythonword/09N_单词数据库.json                 #
 ### 注意事项
 ```
 php脚本和python脚本中需要修改相应文件路径
+
+09N_背单词.py 代码运行速度太慢，性能需要优化
 ```
