@@ -15,3 +15,8 @@ drwxrwxr-x
 chown nginx:nginx /home/01_html/15_pythonword/09N_单词数据库.json
 chmod 775 /home/01_html/15_pythonword/09N_单词数据库.json
 ```
+
+### 注意事项
+```
+php脚本和python脚本中需要修改相应文件路径
+```
