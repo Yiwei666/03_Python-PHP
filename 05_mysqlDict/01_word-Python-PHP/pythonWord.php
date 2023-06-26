@@ -24,7 +24,10 @@
         }
 
         .form-container {
-            text-align: center;
+            position: fixed;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
         }
     </style>
 </head>
