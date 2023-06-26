@@ -6,14 +6,14 @@
 
 - **/home/01_html/15_pythonword目录权限设置**
 ```
-drwxrwxr-x 
+drwxrwxr-x             # chmod 775
 ```
 
 
 - **09N_单词数据库.json文件权限设置**
 ```
 chown nginx:nginx /home/01_html/15_pythonword/09N_单词数据库.json
-chmod 775 /home/01_html/15_pythonword/09N_单词数据库.json
+chmod 775 /home/01_html/15_pythonword/09N_单词数据库.json                 # 666权限已足够，对应-rw-rw-rw- 1 nginx nginx
 ```
 
 ### 注意事项
