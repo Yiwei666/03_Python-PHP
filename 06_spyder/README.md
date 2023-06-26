@@ -185,7 +185,8 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 ```
-修改后的见项目文件夹
+修改上述爬虫文件，修改完成后的见项目文件夹，注意替换sgspider.py中要爬取的关键词
+
 
 **5. 修改默认生成的sgspider.py文件**
 
