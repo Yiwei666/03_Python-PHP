@@ -1,7 +1,12 @@
 ### 注意事项
 ```
 01_ablesci_crontab.py 没有修改完
+
+59 7 * * * /home/00_software/01_Anaconda/bin/python /home/01_html/01_ablesci_spyder.py
+
 ```
+
+
 
 
 ### 设置定时任务
