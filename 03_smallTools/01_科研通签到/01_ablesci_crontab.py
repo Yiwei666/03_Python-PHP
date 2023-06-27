@@ -2,6 +2,7 @@ import datetime
 import time
 
 target_time = datetime.datetime.now().replace(hour=7, minute=0, second=0) + datetime.timedelta(minutes=60)
+print("target_time:",target_time)
 end_time = datetime.datetime.now().replace(hour=8, minute=0, second=0)
 
 while datetime.datetime.now() < end_time:
@@ -13,5 +14,5 @@ while datetime.datetime.now() < end_time:
         subprocess.call(command, shell=True)
         break
 
-    time.sleep(50)
+    time.sleep(60)
 
