@@ -17,6 +17,7 @@ video_url = extract_links(text)[0]
 encoded_url = quote(video_url, safe="")
 url1 = "https://dlpanda.com/zh-CN/?url="
 url = url1 + encoded_url + "&token=G7eRpMaa"
+print("包含有视频下载链接的页面网址：",url)
 
 
 headers = {
