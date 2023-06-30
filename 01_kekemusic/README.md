@@ -1,4 +1,21 @@
 
+### 项目文件结构
+```
+    ├── kkmusic.php
+    ├── 04_kekemusic
+    │   ├── 01keke.py
+    │   ├── finalmusic.txt
+    │   ├── latest.html
+    │   ├── musicdown.py
+    │   ├── music.html
+    │   └── musicUrl.txt
+
+musicUrl.txt
+music.html
+latest.html
+finalmusic.txt
+上述四个文件都是python脚本运行产生的临时文件
+```
 
 
 01keke.py 和 musicdown.py 搭配使用的crontab定时任务脚本
