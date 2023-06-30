@@ -10,6 +10,18 @@
 
 **主要脚本和文件位置**
 
+项目文件结构
+```
+├── douyVideo_AutoCenter_Pad.php
+├── 04_douyin_PHP_download.php
+├── run_python_script.php
+├── print_log_file.php
+└── 05_douyinDownload
+    ├── 01_douyinDown.py
+    ├── douyin_log.txt
+    └── douyin_url.txt
+```
+
 下面三个php脚本需要位于同一目录
 ```
 04_douyin_PHP_download.php       // 在web上提示用户输入抖音视频分享链接，提取url，覆盖写入到txt文件
@@ -23,7 +35,7 @@ print_log_file.php               // 打印日志内容到web页面
 01_douyinDown(beta).py           // 基于新的抖音视频下载api
 ```
 
-**注意在相应路径下创建这两个文件**
+**注意在相应路径下创建这两个文件并进行权限设置**
 
 ```
 /home/01_html/05_douyinDownload/douyin_url.txt          // 保存抖音url
