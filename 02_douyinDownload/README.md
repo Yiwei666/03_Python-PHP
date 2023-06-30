@@ -22,6 +22,19 @@
     └── douyin_url.txt
 ```
 
+
+
+针对如下php脚本，更改视频路径、每行显示的视频数量、视频尺寸大小时，需要更改如下代码
+```
+douyVideo.php/douyVideo_AutoCenter_Pad.php/douyVideo_AutoCenter.php
+
+$videosPerRow = 3; // 可以根据需要更改每行显示的视频数量
+$videoPath = '/home/01_html/02_douyVideo/';
+$videoUrl = $domain . '/02_douyVideo/' . $videoName;
+echo '<video controls width="300" height="400" onended="playNextVideo(this)">'; // 添加onended事件
+```
+
+
 下面三个php脚本需要位于同一目录
 ```
 04_douyin_PHP_download.php       // 在web上提示用户输入抖音视频分享链接，提取url，覆盖写入到txt文件
