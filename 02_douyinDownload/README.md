@@ -16,13 +16,13 @@
 ├── 04_douyin_PHP_download.php
 ├── run_python_script.php
 ├── print_log_file.php
-├── 05_douyinDownload
+├── 05_douyinDownload                      # drwxr-xr-x  2 nginx nginx
 │    ├── 01_douyinDown.py
 │    ├── douyin_log.txt
 │    └── douyin_url.txt
 ├── douyVideo_AutoCenter_Pad.php
 ├── lsDouyin.php
-├── 02_douyVideo                         # 保存视频的文件夹
+├── 02_douyVideo                           # drwxrwxr-x  3 nginx nginx      保存视频的文件夹
 │   ├── 20220618-001533.mp4
 │   ├── 20230617-234813.mp4
 │   ├── 20230618-000354.mp4
