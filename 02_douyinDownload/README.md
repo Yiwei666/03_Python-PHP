@@ -13,6 +13,7 @@
 项目文件结构
 ```
 ├── douyVideo_AutoCenter_Pad.php
+├── lsDouyin.php
 ├── 04_douyin_PHP_download.php
 ├── run_python_script.php
 ├── print_log_file.php
