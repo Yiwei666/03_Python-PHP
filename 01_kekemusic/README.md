@@ -30,6 +30,11 @@ finalmusic.txt
 
 ```
 
+cron的日志目录
+```
+/var/log/cron
+``
+
 centos系统查看python安装路径命令
 ```
 which python
