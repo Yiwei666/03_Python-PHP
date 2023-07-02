@@ -111,6 +111,36 @@
                     echo "</tr>";
                 }
                 echo "</table>";
+
+                // 计算文件大小总和
+                $totalSize = 0;
+                foreach ($files as $file) {
+                    if ($file['unit'] === 'MB') {
+                        $totalSize += $file['size'] * 1024; // Convert MB to KB
+                    } elseif ($file['unit'] === 'B') {
+                        $totalSize += $file['size'] / 1024; // Convert B to KB
+                    } else {
+                        $totalSize += $file['size']; // Keep size in KB or already in KB
+                    }
+                }
+
+                // 转换文件大小的单位
+                $totalUnit = 'KB';
+                if ($totalSize >= 1024) {
+                    $totalSize /= 1024;
+                    $totalUnit = 'MB';
+                    if ($totalSize >= 1024) {
+                        $totalSize /= 1024;
+                        $totalUnit = 'GB';
+                    }
+                }
+
+                // 打印文件总数和所有文件大小总和
+                echo "<br>";
+                echo "<div style='text-align: center;'>";
+                echo "文件总数: " . count($files) . "，";
+                echo "所有文件大小总和: " . round($totalSize, 2) . " " . $totalUnit;
+                echo "</div>";
             }
         } else {
             echo "指定的目录不存在！";
