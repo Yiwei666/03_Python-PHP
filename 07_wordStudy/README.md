@@ -18,7 +18,7 @@
 ```
 导入了自然语言处理模块，需要语料库，对环境要求高，本地运行
 支持单词朗诵
-wordToSentence 函数支持近义词查找和造句
+def wordToSentence(wordInput) 函数支持近义词查找和造句
 
 ```
 
