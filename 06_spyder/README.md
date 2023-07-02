@@ -3,6 +3,51 @@
 利用搜狗微信接口，爬取某一关键词的微信公众号文章临时链接
 ```
 
+### 项目结构
+```
+├─sougouspider
+│  │  scrapy.cfg
+│  │
+│  ├─IP
+│  │  │  free_ip.py                                    // 获取代理ip
+│  │  │  get_cookies.py                                // 生成headers和cookies
+│  │  │  __init__.py
+│  │  │
+│  │  └─__pycache__
+│  │          free_ip.cpython-38.pyc
+│  │          get_cookies.cpython-38.pyc
+│  │          __init__.cpython-38.pyc
+│  │
+│  └─sougouspider
+│      │  items.py
+│      │  middlewares.py
+│      │  pipelines.py
+│      │  settings.py
+│      │  __init__.py
+│      │
+│      ├─spiders
+│      │  │  1.json                                    // 爬虫运行后生成的数据文件
+│      │  │  sgspider.py                               // 主要爬虫脚本
+│      │  │  __init__.py
+│      │  │
+│      │  └─__pycache__
+│      │          sgspider.cpython-38.pyc
+│      │          __init__.cpython-38.pyc
+│      │
+│      └─__pycache__
+│              items.cpython-38.pyc
+│              pipelines.cpython-38.pyc
+│              settings.cpython-38.pyc
+│              __init__.cpython-38.pyc
+│
+│
+└─转换
+        1.json
+        1.txt
+        conver_json.py
+```
+
+
 ### 一. 注意事项
 ```
 Note: 推荐在anaconda prompt和anaconda powershell prompt窗口中执行如下所有安装命令，或者在cmd窗口的base环境中运行，cmd窗口中激活base环境命令如下:
