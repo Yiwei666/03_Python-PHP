@@ -12,17 +12,23 @@
 
 项目文件结构
 ```
-├── douyVideo_AutoCenter_Pad.php
-├── lsDouyin.php
+
 ├── 04_douyin_PHP_download.php
 ├── run_python_script.php
 ├── print_log_file.php
-└── 05_douyinDownload
-    ├── 01_douyinDown.py
-    ├── douyin_log.txt
-    └── douyin_url.txt
-```
+├── 05_douyinDownload
+│    ├── 01_douyinDown.py
+│    ├── douyin_log.txt
+│    └── douyin_url.txt
+├── douyVideo_AutoCenter_Pad.php
+├── lsDouyin.php
+├── 02_douyVideo                         # 保存视频的文件夹
+│   ├── 20220618-001533.mp4
+│   ├── 20230617-234813.mp4
+│   ├── 20230618-000354.mp4
+│   ......
 
+```
 
 
 针对如下php脚本，更改视频路径、每行显示的视频数量、视频尺寸大小时，需要更改如下代码
