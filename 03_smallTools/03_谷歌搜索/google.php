@@ -75,6 +75,12 @@ if (isset($_GET['logout'])) {
 			echo "<script>window.location.replace('$searchUrl');</script>";
 			exit;
 		}
+		if(isset($_GET['query_weixinSogouzhihu'])) {
+		    $query_weixinSogouzhihu = $_GET['query_weixinSogouzhihu'];
+		    $weixinSogouzhihu_Url = 'https://www.google.com/search?q=site%3Aweixin.sogou.com+OR+site%3Azhihu.com+' . $query_weixinSogouzhihu;
+		    echo "<script>window.location.replace('$weixinSogouzhihu_Url');</script>";
+		    exit;
+		}
 		if(isset($_GET['v2ex_query'])) {
 			$v2ex_query = $_GET['v2ex_query'];
 			$v2exSearchUrl = 'https://www.google.com/search?q=site%3Av2ex.com+' . $v2ex_query;
@@ -111,6 +117,12 @@ if (isset($_GET['logout'])) {
 			echo "<script>window.location.replace('$githubSearchUrl');</script>";
 			exit;
 		}
+		if(isset($_GET['query_DouyinYoutubeTiktokBilibili'])) {
+		    $query_DouyinYoutubeTiktokBilibili = $_GET['query_DouyinYoutubeTiktokBilibili'];
+		    $DouyinYoutubeTiktokBilibili_Url = 'https://www.google.com/search?q=site%3Adouyin.com+OR+site%3Ayoutube.com+OR+site%3Atiktok.com+OR+site%3Abilibili.com+' . $query_DouyinYoutubeTiktokBilibili;
+		    echo "<script>window.location.replace('$DouyinYoutubeTiktokBilibili_Url');</script>";
+		    exit;
+		}
 		if(isset($_GET['query_ACSRSCsciencedirect'])) {
 		    $query_ACSRSCsciencedirect = $_GET['query_ACSRSCsciencedirect'];
 		    $ACSRSCsciencedirect_Url = 'https://www.google.com/search?q=site%3Aacs.org+OR+site%3Arsc.org+OR+site%3Asciencedirect.com+' . $query_ACSRSCsciencedirect;
@@ -141,6 +153,11 @@ if (isset($_GET['logout'])) {
 		<input type="text" name="query" id="query" placeholder="在 Reddit、Quora 和 V2EX 中搜索">
 		<input type="submit" value="搜索">
 	</form>
+	<form method="GET">
+	    <label for="query_weixinSogouzhihu">在 weixinSogou、zhihu 中搜索:</label>
+	    <input type="text" name="query_weixinSogouzhihu" id="query_weixinSogouzhihu" placeholder=" weixinSogou、zhihu 搜索">
+	    <input type="submit" value="搜索">
+	</form>
 	<form method="GET" target="_blank">
 		<label for="v2ex_query">在 V2EX 中搜索:</label>
 		<input type="text" name="v2ex_query" id="v2ex_query" placeholder="搜索 V2EX">
@@ -170,6 +187,11 @@ if (isset($_GET['logout'])) {
 		<label for="github_query">在 github 中搜索:</label>
 		<input type="text" name="github_query" id="github_query" placeholder="搜索 github">
 		<input type="submit" value="搜索">
+	</form>
+	<form method="GET">
+	    <label for="query_DouyinYoutubeTiktokBilibili">在 Douyin、Youtube、Tiktok、Bilibili 中搜索:</label>
+	    <input type="text" name="query_DouyinYoutubeTiktokBilibili" id="query_DouyinYoutubeTiktokBilibili" placeholder=" Douyin、Youtube、Tiktok、Bilibili 搜索">
+	    <input type="submit" value="搜索">
 	</form>
 	<form method="GET" target="_blank">
 	    <label for="query_ACSRSCsciencedirect">搜索:</label>
