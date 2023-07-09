@@ -1,6 +1,6 @@
 ### 项目功能
 ```
-浏览器中运行php和python代码，输出单词到web页面
+浏览器中运行php和python代码，输出单词到web页面。该版本的python后端代码没有经过优化，优化后的见 07_wordStudy仓库
 ```
 
 
