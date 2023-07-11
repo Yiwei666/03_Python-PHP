@@ -23,7 +23,7 @@ if (isset($_GET['logout'])) {
     <style>
         .container {
             width: 40%;
-            margin: 0 auto; /* 添加此样式以使容器水平居中 */
+            margin: 60px auto 0; /* 设置容器顶部间距为 60px，其余间距自动 */
         }
         .website {
             clear: left;
