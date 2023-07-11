@@ -19,7 +19,7 @@ https://www.v2ex.com/mission/daily/redeem?once=70042    # 合成签到链接
 
 ### 安装配置
 
-设定cron定时任务
+设定cron定时任务，注意v2ex要求签到间隔为24小时
 ```
 3 8 * * * /home/00_software/01_Anaconda/bin/python /home/01_html/09_v2ex_spyder.py
 
