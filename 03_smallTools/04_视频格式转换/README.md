@@ -1,3 +1,30 @@
+### 项目结构
+```
+服务器A
+├── 02_flv
+│   ├── 10_1_hale-herbicide.mp4
+│   ├── 11_1_imbroglio-incubate.mp4
+│    ....
+│   ├── convert_videos.sh              # 将非标准mp4格式转换为标准mp4格式
+│   ├── nohup.out
+│   ├── obtain_mp4URL.sh               # 获取同级目录下所有mp4的文件名，构造下载链接
+│   └── output.txt                     # 获取的下载链接txt文件
+
+
+服务器B
+├── 01_yubeiduan
+│   ├── 9_3_graft-gregarious.mp4
+│   ├── 9_4_gratuitous-gullible_standard.mp4
+│    ....
+│   ├── download_mp4_log.sh             # 基于output.txt文本中的下载链接下载视频的脚本
+│   ├── download_mp4.sh                 # 基于output.txt文本中的下载链接下载视频的脚本
+│   ├── failed_links.txt                # 视频下载过程的报错链接
+│   └── output.txt
+
+
+```
+
+
 ### 1. ubuntu中FFmpeg安装
 ---
 
