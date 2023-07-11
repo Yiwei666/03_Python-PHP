@@ -24,6 +24,10 @@ if (isset($_GET['logout'])) {
         .container {
             width: 40%;
             margin: 60px auto 0; /* 设置容器顶部间距为 60px，其余间距自动 */
+            border-left: 0.1px solid #ccc; /* 添加左侧细线 */
+            border-right: 0.1px solid #ccc; /* 添加右侧细线 */
+            padding-left: 30px; /* 添加内边距 */
+            background-color: #f2f2f2; /* 将容器内的背景色设置为浅灰色 */
         }
         .website {
             clear: left;
@@ -43,17 +47,33 @@ if (isset($_GET['logout'])) {
     $websites = array(
         "a.com" => array(
             "url" => "https://a.com",
-            "description" => "Website A - Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            "description" => "do1-2，centos系统，已安装php，运行多个脚本，包括可可英语，抖音，youtube视频下载和观看，托福视频，base64编码和解码等"
         ),
         "b.com" => array(
-            "url" => "https://b.com",
-            "description" => "Website B - Sed ut perspiciatis unde omnis iste natus error sit voluptatem."
+            "url" => "b.com",
+            "description" => "az1，ubuntu系统，已经安装ffmpeg转换工具，抖音视频下载api的docker应用，已经安装了php"
         ),
         "c.com" => array(
-            "url" => "https://c.com",
-            "description" => "Website C - At vero eos et accusamus et iusto odio dignissimos ducimus."
+            "url" => "c.com",
+            "description" => "az2，ubuntu系统，已经安装ffmpeg转换工具，抖音视频下载api的docker应用"
         ),
         "d.com" => array(
+            "url" => "https://d.com",
+            "description" => "Website D - Et harum quidem rerum facilis est et expedita distinctio."
+        ),
+        "e.com" => array(
+            "url" => "https://d.com",
+            "description" => "Website D - Et harum quidem rerum facilis est et expedita distinctio."
+        ),
+        "f.com" => array(
+            "url" => "https://d.com",
+            "description" => "Website D - Et harum quidem rerum facilis est et expedita distinctio."
+        ),
+        "g.com" => array(
+            "url" => "https://d.com",
+            "description" => "Website D - Et harum quidem rerum facilis est et expedita distinctio."
+        ),
+        "h.com" => array(
             "url" => "https://d.com",
             "description" => "Website D - Et harum quidem rerum facilis est et expedita distinctio."
         )
