@@ -4,6 +4,15 @@
 https://github.com/Evil0ctal/Douyin_TikTok_Download_API
 
 
+### 项目结构
+```
+├─01_douyin_docker_api
+│      config.ini                       # api配置文件，需要修改
+│      docker-compose.yml               # docker配置文件，无需修改
+
+```
+
+
 
 ### 💽部署(方式二 Docker)
 
@@ -41,4 +50,9 @@ docker rm -f douyin_tiktok_download_api
 ```yaml
 docker-compose pull && docker-compose down && docker-compose up -d
 ```
+
+
+
+
+
 
