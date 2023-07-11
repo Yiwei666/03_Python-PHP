@@ -7,7 +7,7 @@ https://github.com/Evil0ctal/Douyin_TikTok_Download_API
 ### 项目结构
 ```
 ├─01_douyin_docker_api
-│      config.ini                       # api配置文件，需要修改，将domain.com改为自己的域名
+│      config.ini                       # api配置文件，需要修改，将domain.com改为自己的域名，在api.domian.com中获取api
 │      docker-compose.yml               # docker配置文件，无需修改
 
 ```
