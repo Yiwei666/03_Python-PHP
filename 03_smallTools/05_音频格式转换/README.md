@@ -24,3 +24,7 @@ centes系统中，当前目录下有多个子文件夹，每个子文件夹中�
 - audio_conversion.sh
 
 能否用bash写个脚本，用ffmpeg将同级目录下的.m4a和.flac音频文件转换为.mp3文件，文件名不变
+
+- delete_audio_files.sh
+
+能否用bash写个脚本，将同级目录下的.m4a和.flac音频文件全部删除
