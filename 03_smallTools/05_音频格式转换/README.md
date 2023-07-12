@@ -20,3 +20,7 @@ centes系统中，当前目录下有多个子文件夹，每个子文件夹中�
 - download_audio.sh
 
 有一个audio_files.txt文件，里面有多个音频链接，音频格式包括.flac和.m4a，能否写个bash脚本将这些音频下载到同级目录下，注意使用 curl
+
+- audio_conversion.sh
+
+能否用bash写个脚本，用ffmpeg将同级目录下的.m4a和.flac音频文件转换为.mp3文件，文件名不变
