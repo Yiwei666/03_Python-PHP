@@ -24,8 +24,16 @@ web下载youtube视频到vps，web观看下载后的视频
 
 ```
 
+### 注意事项
 
+运行如下脚本提示输入youtube视频链接和mp4文件名，分两行输入，如下所示    
+05_youtube_PHP_download.php   
 
+```
+https://youtu.be/G7KNmW9a75Y
+MileyCyrus-Flowers.mp4
+
+```
 
 * 相关文件的权限和环境配置参考 03_Python-PHP/02_douyinDownload/README.md
 
