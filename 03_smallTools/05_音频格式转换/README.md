@@ -30,3 +30,7 @@ centes系统中，当前目录下有多个子文件夹，每个子文件夹中�
 - delete_audio_files.sh
 
 能否用bash写个脚本，将同级目录下的.m4a和.flac音频文件全部删除
+
+- mp3_URL_extract.sh
+
+写个bash脚本，将同级目录下所有mp3格式音频的文件名，写入到txt文件中，注意每一个文件名前要添加 “domain.com/music/周杰伦/01_补充/” 构造下载链接
