@@ -5,18 +5,40 @@ def convert_jpg_to_png():
     current_dir = os.getcwd()
     image_files = [file for file in os.listdir(current_dir) if file.endswith('.jpg')]
 
-    for file in image_files:
-        # 获取文件名和扩展名
-        file_name, ext = os.path.splitext(file)
+    if not image_files:
+        print('没有找到任何jpg文件。')
+        return
 
-        # 打开jpg图片
-        image = Image.open(file)
+    print('可用的JPG文件:')
+    for i, file in enumerate(image_files, start=1):
+        print(f'{i}. {file}')
 
-        # 将jpg图片转换为png图片
-        new_file = file_name + '.png'
-        image.save(new_file, 'PNG')
+    file_number = input('请选择要转换的JPG文件的编号: ')
 
-        print(f'转换成功: {new_file}')
+    try:
+        file_number = int(file_number)
+        if file_number < 1 or file_number > len(image_files):
+            raise ValueError
+    except ValueError:
+        print('选择的文件编号无效。')
+        return
+
+    selected_file = image_files[file_number - 1]
+    file_name, ext = os.path.splitext(selected_file)
+    jpg_file = os.path.join(current_dir, selected_file)
+    png_file = os.path.join(current_dir, file_name + '.png')
+
+    image = Image.open(jpg_file)
+
+    jpg_size = os.path.getsize(jpg_file) / 1024  # JPG file size in KB
+
+    image.save(png_file, 'PNG')
+
+    png_size = os.path.getsize(png_file) / 1024  # PNG file size in KB
+
+    print(f'转换成功: {selected_file}')
+    print(f'转换前文件大小: {jpg_size:.2f} KB')
+    print(f'转换后文件大小: {png_size:.2f} KB')
 
     print('所有jpg图片已转换为png图片。')
 
