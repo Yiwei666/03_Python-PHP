@@ -4,7 +4,7 @@
 file_extension=".mp3"
 
 # 设置要添加的前缀
-prefix="domain.com/music/周杰伦/01_补充/"
+prefix="https://domain.com/music/周杰伦/01_补充/"
 
 # 创建一个空的txt文件
 output_file="mp3_files.txt"
