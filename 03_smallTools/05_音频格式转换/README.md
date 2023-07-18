@@ -31,28 +31,43 @@ centes系统中，当前目录下有多个子文件夹，每个子文件夹中�
 
 能否用bash写个脚本，将同级目录下的.m4a和.flac音频文件全部删除
 
+
 - mp3_URL_extract.sh
 
 写个bash脚本，将同级目录下所有mp3格式音频的文件名，写入到txt文件中，注意每一个文件名前要添加 “https://domain.com/music/周杰伦/01_补充/” 构造下载链接
 
 ```
+mp3_URL_extract.sh    # 基于mp3文件名生成链接，使用时需要修改 "https://domain.com/music/周杰伦/01_补充/" 这一部分
+
 mp3_files.txt         # 运行上述脚本，同级目录下会产生该txt文件
 
 ```
+
 
 - mp3_download.sh
 
 有一个mp3_files.txt文件，里面有多个音频链接，音频格式为mp3，能否写个bash脚本将这些音频下载到同级目录下，注意使用 curl下载，将下载失败的链接保存到error_log文件中
 
+```
+mp3_files.txt         # 存储mp3音频链接的txt文件
+
+mp3_download.sh       # 下载mp3_files.txt文件中的mp3音频，使用时不需要修改
+
+```
+
+
 - rename_files_all.sh
 
 写个bash脚本，将同级目录下所有文件名中的 空格，中英文括号，"(", ")", "（","）", 都用下划线"_"替代，并进行重命名。在上述代码的基础上，继续添加功能，将"《","》","[","]","：","!" 替换为下划线。
+
 
 - generate_mp3_paths.sh
 
 当前目录 /home/01_html/12_music/ 下有多个子文件夹（子文件夹中可能还有子孙文件夹），每个子/子孙文件夹中有多个mp3音频，能否写个bash脚本，将所有mp3格式音频的  路径+文件名   写入到txt文件中，注意写入的时候，将路径中的 "/home/01_html/"  部分替换为 “https://domain.com/"  构造访问链接。
 
 ```
-mp3_paths.txt        # 运行上述脚本，同级目录下会产生该txt文件
+generate_mp3_paths.sh      # 产生同级目录下所有目录中mp3文件名的链接，注意使用时修改脚本，将根目录换成域名
+
+mp3_paths.txt              # 运行上述脚本，同级目录下会产生该txt文件
 
 ```
