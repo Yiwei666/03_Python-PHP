@@ -1,7 +1,7 @@
 <?php
 
 // 生成音频链接的路径，一般为domain或ip+文件夹
-$baseUrl = 'https://mctea.one/12_music/周杰伦/01_补充/';
+$baseUrl = 'https://domain.com/12_music/周杰伦/01_补充/';
 
 // vps中音频文件所在的文件夹
 $directory = '/home/01_html/12_music/周杰伦/01_补充/';
