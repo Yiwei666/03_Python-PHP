@@ -20,6 +20,14 @@ for file in *; do
     new_name=$(echo "$new_name" | sed 's/（/_/g')
     new_name=$(echo "$new_name" | sed 's/）/_/g')
 
+    # 替换其他字符为下划线
+    new_name=$(echo "$new_name" | sed 's/《/_/g')
+    new_name=$(echo "$new_name" | sed 's/》/_/g')
+    new_name=$(echo "$new_name" | sed 's/\[/_/g')
+    new_name=$(echo "$new_name" | sed 's/\]/_/g')
+    new_name=$(echo "$new_name" | sed 's/：/_/g')
+    new_name=$(echo "$new_name" | sed 's/!/_/g')
+
     # 重命名文件
     mv "$file" "$new_name"
     echo "重命名文件: $file 为 $new_name"
