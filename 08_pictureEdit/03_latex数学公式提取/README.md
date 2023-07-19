@@ -13,7 +13,7 @@
 
 1. To run the model you need Python 3.7+
 
-2. If you don't have PyTorch installed. Follow their instructions [here](https://pytorch.org/get-started/locally/).
+2. If you don't have PyTorch installed. Follow their instructions [here](https://pytorch.org/get-started/locally/). Recommend using ubuntu system
 
 3. Install the package `pix2tex`: 
 
