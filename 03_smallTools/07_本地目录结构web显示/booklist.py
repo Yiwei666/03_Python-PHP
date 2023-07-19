@@ -5,6 +5,13 @@ Created on Wed Jul 19 14:15:48 2023
 @author: sun78
 """
 
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul 19 14:15:48 2023
+
+@author: sun78
+"""
+
 import os
 import http.server
 import socketserver
@@ -23,13 +30,15 @@ def generate_directory_structure(root_dir):
             tree_structure += generate_directory_structure(full_path)
         else:
             file_url = f"file:///{quote(full_path)}"
-            tree_structure += f"<li><a href='{file_url}' target='_blank'>{entry}</a></li>"
+            tree_structure += f"<li><a href='{file_url}' target='_blank' style='text-decoration: none;'>{entry}</a></li>"
     tree_structure += "</ul>"
     return tree_structure
 
 if __name__ == "__main__":
     # 指定要展示的目录路径
-    target_directory = r"D:\onedrive\3图书\01_编程书\03_Python"
+    # target_directory = r"D:\onedrive\3图书\01_编程书\03_Python"
+    
+    target_directory = r"D:\onedrive\3图书"
 
     # 生成目录结构
     directory_structure = generate_directory_structure(target_directory)
@@ -40,11 +49,24 @@ if __name__ == "__main__":
     <html>
     <head>
         <title>File Directory Viewer</title>
+        <style>
+            /* Centered container with 80% width */
+            .container {{
+                width: 50%;
+                margin: 0 auto;
+            }}
+            /* Remove underlines from links */
+            a {{
+                text-decoration: none;
+            }}
+        </style>
     </head>
     <body>
-        <h1>File Directory Viewer</h1>
-        <p>Directory: {target_directory}</p>
-        {directory_structure}
+        <div class="container"> <!-- Wrap content in the container -->
+            <h1>File Directory Viewer</h1>
+            <p>Directory: {target_directory}</p>
+            {directory_structure}
+        </div>
     </body>
     </html>
     """
@@ -55,8 +77,7 @@ if __name__ == "__main__":
 
     # 启动简单的Web服务器
     PORT = 2000
-    # Handler = http.server.SimpleHTTPRequestHandler
-    
+
     class UTF8Handler(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, directory=os.getcwd(), **kwargs)
@@ -79,8 +100,4 @@ if __name__ == "__main__":
             httpd.serve_forever()
         except KeyboardInterrupt:
             pass
-
-
-    
-
 
