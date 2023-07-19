@@ -9,6 +9,8 @@ import os
 import http.server
 import socketserver
 from urllib.parse import quote
+import time
+import threading
 
 def generate_directory_structure(root_dir):
     # 获取指定目录下的所有文件和文件夹
@@ -27,9 +29,54 @@ def generate_directory_structure(root_dir):
     tree_structure += "</ul>"
     return tree_structure
 
+def update_index_file():
+    while True:
+        directory_structure = generate_directory_structure(target_directory)
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>文件目录查看器</title>
+            <style>
+                /* 页面背景颜色 */
+                body {{
+                    background-color: #333; /* 深灰色背景 */
+                    color: white; /* 白色字体颜色 */
+                    margin: 0; /* 移除默认边距 */
+                    padding: 0; /* 移除默认内边距 */
+                }}
+                /* 居中容器，宽度为50% */
+                .container {{
+                    width: 50%;
+                    margin: 0 auto;
+                    background-color: #333; /* 深灰色背景 */
+                    padding: 20px; /* 添加一些内边距，美观些 */
+                }}
+                /* 移除链接下划线 */
+                a {{
+                    text-decoration: none;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container"> <!-- 将内容包裹在容器中 -->
+                <h1>文件目录查看器</h1>
+                <p>目录：{target_directory}</p>
+                {directory_structure}
+            </div>
+        </body>
+        </html>
+        """
+
+        with open("index.html", "w", encoding="utf-8") as index_file:
+            index_file.write(html_content)
+
+        print("index.html 已更新。")
+        time.sleep(180)  # 每3分钟更新一次 (180 秒)
+
 if __name__ == "__main__":
     # 指定要展示的目录路径
-    target_directory = r"D:\onedrive\3图书\01_编程书\03_Python"
+    target_directory = r"D:\onedrive\3图书\01_编程书"
 
     # 生成目录结构
     directory_structure = generate_directory_structure(target_directory)
@@ -39,32 +86,32 @@ if __name__ == "__main__":
     <!DOCTYPE html>
     <html>
     <head>
-        <title>File Directory Viewer</title>
+        <title>文件目录查看器</title>
         <style>
-            /* Page background color */
+            /* 页面背景颜色 */
             body {{
-                background-color: #333; /* Dark gray background */
-                color: white; /* White font color */
-                margin: 0; /* Remove default margin */
-                padding: 0; /* Remove default padding */
+                background-color: #333; /* 深灰色背景 */
+                color: white; /* 白色字体颜色 */
+                margin: 0; /* 移除默认边距 */
+                padding: 0; /* 移除默认内边距 */
             }}
-            /* Centered container with 50% width */
+            /* 居中容器，宽度为50% */
             .container {{
                 width: 50%;
                 margin: 0 auto;
-                background-color: #333; /* Dark gray background */
-                padding: 20px; /* Add some padding for better appearance */
+                background-color: #333; /* 深灰色背景 */
+                padding: 20px; /* 添加一些内边距，美观些 */
             }}
-            /* Remove underlines from links */
+            /* 移除链接下划线 */
             a {{
                 text-decoration: none;
             }}
         </style>
     </head>
     <body>
-        <div class="container"> <!-- Wrap content in the container -->
-            <h1>File Directory Viewer</h1>
-            <p>Directory: {target_directory}</p>
+        <div class="container"> <!-- 将内容包裹在容器中 -->
+            <h1>文件目录查看器</h1>
+            <p>目录：{target_directory}</p>
             {directory_structure}
         </div>
     </body>
@@ -95,8 +142,16 @@ if __name__ == "__main__":
     
     Handler = UTF8Handler
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print(f"Serving at http://localhost:{PORT}")
+        print(f"正在监听 http://localhost:{PORT}")
+        
+        # 启动一个线程来定期更新index.html
+        update_thread = threading.Thread(target=update_index_file)
+        update_thread.daemon = True
+        update_thread.start()
+
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             pass
+
+
