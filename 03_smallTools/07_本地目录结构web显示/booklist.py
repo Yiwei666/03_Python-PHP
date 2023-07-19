@@ -5,13 +5,6 @@ Created on Wed Jul 19 14:15:48 2023
 @author: sun78
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Jul 19 14:15:48 2023
-
-@author: sun78
-"""
-
 import os
 import http.server
 import socketserver
@@ -30,15 +23,13 @@ def generate_directory_structure(root_dir):
             tree_structure += generate_directory_structure(full_path)
         else:
             file_url = f"file:///{quote(full_path)}"
-            tree_structure += f"<li><a href='{file_url}' target='_blank' style='text-decoration: none;'>{entry}</a></li>"
+            tree_structure += f"<li><a href='{file_url}' target='_blank' style='text-decoration: none; color: white;'>{entry}</a></li>"
     tree_structure += "</ul>"
     return tree_structure
 
 if __name__ == "__main__":
     # 指定要展示的目录路径
-    # target_directory = r"D:\onedrive\3图书\01_编程书\03_Python"
-    
-    target_directory = r"D:\onedrive\3图书"
+    target_directory = r"D:\onedrive\3图书\01_编程书\03_Python"
 
     # 生成目录结构
     directory_structure = generate_directory_structure(target_directory)
@@ -50,10 +41,19 @@ if __name__ == "__main__":
     <head>
         <title>File Directory Viewer</title>
         <style>
-            /* Centered container with 80% width */
+            /* Page background color */
+            body {{
+                background-color: #333; /* Dark gray background */
+                color: white; /* White font color */
+                margin: 0; /* Remove default margin */
+                padding: 0; /* Remove default padding */
+            }}
+            /* Centered container with 50% width */
             .container {{
                 width: 50%;
                 margin: 0 auto;
+                background-color: #333; /* Dark gray background */
+                padding: 20px; /* Add some padding for better appearance */
             }}
             /* Remove underlines from links */
             a {{
@@ -100,4 +100,3 @@ if __name__ == "__main__":
             httpd.serve_forever()
         except KeyboardInterrupt:
             pass
-
