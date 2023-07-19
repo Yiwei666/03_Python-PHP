@@ -8,6 +8,7 @@ Created on Wed Jul 19 14:15:48 2023
 import os
 import http.server
 import socketserver
+from urllib.parse import quote
 
 def generate_directory_structure(root_dir):
     # 获取指定目录下的所有文件和文件夹
@@ -21,16 +22,14 @@ def generate_directory_structure(root_dir):
             tree_structure += f"<li>{entry}/</li>"
             tree_structure += generate_directory_structure(full_path)
         else:
-            tree_structure += f"<li>{entry}</li>"
+            file_url = f"file:///{quote(full_path)}"
+            tree_structure += f"<li><a href='{file_url}' target='_blank'>{entry}</a></li>"
     tree_structure += "</ul>"
     return tree_structure
 
 if __name__ == "__main__":
-    
-    # 将target_directory变量更新为指定目录的路径
-    # target_directory = r"D:\onedrive\3图书\01_编程书\03_Python"
-    
-    target_directory = r"D:\onedrive\3图书\01_编程书"
+    # 指定要展示的目录路径
+    target_directory = r"D:\onedrive\3图书\01_编程书\03_Python"
 
     # 生成目录结构
     directory_structure = generate_directory_structure(target_directory)
@@ -74,11 +73,14 @@ if __name__ == "__main__":
                     f.close()
     
     Handler = UTF8Handler
-    
-    
     with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print(f"Serving at http://127.0.0.1:{PORT}")
+        print(f"Serving at http://localhost:{PORT}")
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             pass
+
+
+    
+
+
