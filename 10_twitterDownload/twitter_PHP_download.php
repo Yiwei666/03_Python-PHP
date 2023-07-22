@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+// If the user is not logged in, redirect to the login page
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+  header('Location: login.php');
+  exit;
+}
+
+// If the user clicked the logout link, log them out and redirect to the login page
+if (isset($_GET['logout'])) {
+  session_destroy(); // destroy all session data
+  header('Location: login.php');
+  exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +41,7 @@
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <label for="videoLink">请输入MP4视频下载链接：</label>
             <textarea name="videoLink" id="videoLink" rows="10" cols="55" required></textarea>
-            <button type="submit">提交</button>
+            <button type="submit" id="submitBtn">提交</button>
         </form>
     </div>
 
@@ -71,6 +89,20 @@
         }
     }
     ?>
+
+    <!-- Add the refresh button using JavaScript to trigger the reload without the query parameter -->
+    <div class="container">
+        <button onclick="refreshPage()" style="display: block; margin: 0 auto;">刷新页面</button>
+    </div>
+
+    <script>
+        function refreshPage() {
+            // Use JavaScript to remove the query parameter and trigger the reload
+            var currentURL = window.location.href;
+            var newURL = currentURL.replace(/\?refresh=true/g, '');
+            window.location.href = newURL;
+        }
+    </script>
 
     <div class="website-link">
         <a href="https://twitterxz.com/" target="_blank">点击访问网站</a>
