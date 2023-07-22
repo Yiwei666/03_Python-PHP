@@ -1,10 +1,14 @@
 ### 项目功能
+---
 ```
 web下载youtube视频到vps，web观看下载后的视频
 
 ```
 
+
 ### 项目结构
+---
+
 ```
 
 ├── 05_youtube_PHP_download.php                      # -rw-r--r--  1 root  root
@@ -24,7 +28,9 @@ web下载youtube视频到vps，web观看下载后的视频
 
 ```
 
+
 ### 注意事项
+---
 
 运行如下脚本提示输入youtube视频链接和mp4文件名，分两行输入，如下所示    
 05_youtube_PHP_download.php   
@@ -36,4 +42,18 @@ MileyCyrus-Flowers.mp4
 ```
 
 * 相关文件的权限和环境配置参考 03_Python-PHP/02_douyinDownload/README.md
+
+
+
+### 视频在线下载
+---
+- youtube 高清视频下载
+https://github.com/Yiwei666/03_Python-PHP/wiki/01_1080P%E9%AB%98%E6%B8%85Youtube%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80
+
+
+
+- twitter
+
+https://savetwitter.net/zh-cn
+
 
