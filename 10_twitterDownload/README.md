@@ -5,31 +5,43 @@
 ---
 
 ```
-
-
-
-├── lsTwitter.php
-├── twitterVideo_page.php
-├── 05_twitter_video
+├── twitter_PHP_download.php               # -rw-r--r-- 1 root     root            # 下载视频
+├── 05_twitter_video                       # drwxr-xr-x 2 www-data www-data        # 存储视频文件夹，注意权限设置
 │   ├── 1651760241992945664(720p).mp4
 │   ├── 1675841668707131392(1258p).mp4
 │   ├── 1680136486853935105(720p).mp4
 │   ......
-
-
-├── 05_youtube_PHP_download.php                      # -rw-r--r--  1 root  root
-├── print_log_youtube.php                            # -rw-r--r--  1 root  root
-├── run_python_youtube.php                           # -rw-r--r--  1 root  root
-├── 06_youtubeDownload                               # drwxr-xr-x  2 root  root
-│   ├── 01_name+url.txt                              # -rw-rw-r-- 1 nginx nginx
-│   ├── 02_ytbVideo_log.txt                          # -rw-rw-r-- 1 nginx nginx
-│   └── downPHP_youtube.py                           # -rwxr-xr-x 1 nginx nginx
-├── lsYoutube.php                                    # -rw-r--r--  1 root  root
-├── ytbVideo_autoCenter.php / ytbVideo.php           # -rw-r--r--  1 root  root
-├── 01_yiGongZi                                      # drwxrwxr-x  3 nginx nginx  保存视频的文件夹
-│   ├── aespa-Black Mamba.mp4
-│   ├── aespa-Dreams Come True.mp4
-│   ├── aespa-Girls.mp4
-│   ......                                           # 下载的多个视频，省略
+├── lsTwitter.php                          # 查看文件目录       
+├── twitterVideo_page.php                  # -rw-r--r-- 1 root     root           
 
 ```
+
+### 注意事项
+---
+1. 运行上述 twitter_PHP_download.php 脚本需要安装 cURL模块
+
+- 对于ubuntu系统
+```
+sudo apt-get update
+sudo apt-get install php-curl
+```
+
+- 对于centos系统
+
+```
+sudo yum install php-curl
+```
+
+- 重启相关进程
+
+``
+sudo service nginx restart
+sudo service php-fpm restart
+
+``
+
+2. 运行上述 twitter_PHP_download.php 脚本，提示输入mp4视频下载链接
+
+推特视频链接可基于如下在线解析网站解析，然后粘贴链接到输入框，提交即可
+
+https://twitterxz.com/
