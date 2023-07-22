@@ -37,11 +37,11 @@ sudo yum install php-curl
 
 - 重启相关进程
 
-``
+```
 sudo service nginx restart
 sudo service php-fpm restart
 
-``
+```
 
 2. 运行上述 twitter_PHP_download.php 脚本，提示输入mp4视频下载链接
 
