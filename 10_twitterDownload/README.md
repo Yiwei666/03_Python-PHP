@@ -48,3 +48,32 @@ sudo service php-fpm restart
 推特视频链接可基于如下在线解析网站解析，然后粘贴链接到输入框，提交即可
 
 https://twitterxz.com/
+
+
+### php上传视频
+
+
+```
+/etc/php/7.4/fpm/php.ini
+```
+
+
+```
+client_max_body_size 20M;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
