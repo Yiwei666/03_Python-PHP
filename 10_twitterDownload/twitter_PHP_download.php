@@ -12,6 +12,10 @@
             display: block;
             margin: 10px auto;
         }
+        .website-link {
+            margin-top: 50px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -22,6 +26,7 @@
             <button type="submit">提交</button>
         </form>
     </div>
+
     <?php
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (isset($_POST["videoLink"])) {
@@ -66,5 +71,9 @@
         }
     }
     ?>
+
+    <div class="website-link">
+        <a href="https://twitterxz.com/" target="_blank">点击访问网站</a>
+    </div>
 </body>
 </html>
