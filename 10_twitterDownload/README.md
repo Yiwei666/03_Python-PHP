@@ -52,8 +52,20 @@ sudo service php-fpm restart
 - https://twittervideodownloader.com/
 
 
-### php上传视频
+### 环境部署
+---
 
+1. 存储视频的文件夹需要有读写权限，改变文件或目录的所有者
+
+```
+sudo chmod 775 /home/01_html/05_twitter_video
+sudo chown www-data:www-data /home/01_html/05_twitter_video
+```
+
+
+
+### php上传视频
+---
 
 ```
 /etc/php/7.4/fpm/php.ini
