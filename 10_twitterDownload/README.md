@@ -88,7 +88,7 @@ sudo chown www-data:www-data /home/01_html/05_twitter_video
 
 
 
-### php上传视频配置文件设置
+### php 配置文件设置
 
 ---
 
