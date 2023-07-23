@@ -129,7 +129,7 @@ ubuntu系统中php配置文件路径
 
 ```
 sudo service nginx restart
-sudo service php-fpm restart
+sudo service php7.4-fpm restart  # 将 "7.4" 替换为你安装的 PHP 版本号
 ```
 
 **4. 验证更改：**
