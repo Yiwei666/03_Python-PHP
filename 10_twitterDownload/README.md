@@ -163,7 +163,7 @@ server {
 
 配置文件通常位于
 ```
-etc/nginx/nginx.conf
+/etc/nginx/nginx.conf
 ```
 
 这里的 client_max_body_size 设置了上传文件和 POST 请求体的最大大小，单位是 MB。
