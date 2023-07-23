@@ -1,11 +1,15 @@
 ### 项目功能
 ---
 
-- 提交mp4链接，下载mp4视频到云服务器指定目录
+- 提交MP4链接，下载mp4视频到云服务器指定目录
 - 基于php脚本，在线观看云服务器指定目录mp4视频
+- 上传本地MP4视频到云服务器指定目录
+
 
 ### 文件结构
 ---
+
+1. 基于mp4视频链接下载视频到指定目录
 
 ```
 ├── twitter_PHP_download.php               # -rw-r--r-- 1 root     root            # 下载视频
@@ -17,19 +21,19 @@
 ├── lsTwitter.php                          # 查看文件目录       
 ├── twitterVideo_page.php                  # -rw-r--r-- 1 root     root
 
+```
 
 
+2. 从本地上传mp4文件到云服务器指定目录
 
-
-# 从本地上传mp4文件到云服务器指定目录
-
+```
 ├── 06_multiple_Video_Upload.php           # -rw-r--r-- 1 root     root             使用JavaScript和jQuery实现了一个简单的MP4视频上传功能，并在上传过程中显示上传进度条
 ├── 06_upload.php                          # -rw-r--r-- 1 root     root             服务器端处理脚本，用于接收上传的MP4视频文件并处理它们
 ├── MuChaManor                             # drwxr-xr-x 3 www-data www-data         存储mp4的目标文件夹  
 │   ├── VID_20220810_181049.mp4
 │   ├── VID_20220811_190114.mp4
 │   .......
-├── upload_MP4_video.php                   # MP4视频上传脚本，简易版本，独立使用
+├── upload_MP4_video.php                   # MP4视频上传脚本，简易版本，独立使用，对多个size较大的视频，如 50MB，支持不好
 
 
 注意：
