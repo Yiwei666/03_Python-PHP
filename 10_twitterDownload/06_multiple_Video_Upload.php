@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Upload_MP4_VIEDEOS</title>
+    <title>Upload_MP4_VIDEOS</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
@@ -37,6 +37,8 @@
             transform: translate(-50%, -50%);
             color: #333;
             font-size: 14px;
+            display: inline-block; /* Display the text in the same line */
+            width: 300px; /* Set the width to 400 pixels */
         }
 
         /* Add margin to the upload button */
@@ -52,13 +54,13 @@
     </style>
 </head>
 <body>
-    <h3>Upload MP4 VIEDEOS</h3>
+    <h3>Upload MP4 VIDEOS</h3>
     <input type="file" name="videos[]" id="videos" multiple accept=".mp4"><br><br>
     <button onclick="uploadVideos()">上传</button>
 
     <div id="progressContainer" style="margin-top: 10px;">
         <div id="progressBar"></div>
-        <div id="progressText">0%</div>
+        <span id="progressText">0%</span> <!-- Wrap the text in a <span> element -->
     </div>
 
     <script>
@@ -90,7 +92,7 @@
                         if (evt.lengthComputable) {
                             var percentComplete = (evt.loaded / evt.total) * 100;
                             progressBar.style.width = percentComplete.toFixed(2) + '%';
-                            
+
                             // Determine the appropriate unit for upload speed
                             var uploadSpeed = (evt.loaded / 1024) / (evt.timeStamp / 1000);
                             var unit = 'KB/s';
@@ -98,9 +100,12 @@
                                 uploadSpeed /= 1024;
                                 unit = 'MB/s';
                             }
-                            
-                            progressText.textContent = percentComplete.toFixed(2) + '%';
-                            progressText.textContent += ' (' + uploadSpeed.toFixed(2) + ' ' + unit + ')';
+
+                            // Calculate uploaded data and total data in MB
+                            var uploadedData = (evt.loaded / (1024 * 1024)).toFixed(1);
+                            var totalData = (evt.total / (1024 * 1024)).toFixed(1);
+
+                            progressText.textContent = percentComplete.toFixed(2) + '% (' + uploadedData + ' MB/' + totalData + ' MB) ' + uploadSpeed.toFixed(2) + ' ' + unit;
                         }
                     }, false);
                     return xhr;
@@ -114,4 +119,3 @@
     </script>
 </body>
 </html>
-
