@@ -145,9 +145,48 @@ client_max_body_size 20M;
 ```
 
 
+5. 413 Request Entity Too Large nginx/1.18.0 (Ubuntu)报错
 
+当出现 "413 Request Entity Too Large" 错误时，这意味着 Nginx 服务器拒绝了太大的请求实体，其中包括上传的文件和其他 POST 数据。这是由于 Nginx 服务器的默认请求大小限制导致的。
 
+- 在 HTTPS 配置块中添加或修改以下配置项：
 
+在 HTTPS 配置块中找到 server 块，然后添加或修改以下配置项，将上传大小限制设置为更大的值，比如 20MB：
+
+```
+server {
+    # 其他配置项...
+    client_max_body_size 20M;
+    # 其他HTTPS配置...
+}
+```
+
+配置文件通常位于
+```
+etc/nginx/nginx.conf
+```
+
+这里的 client_max_body_size 设置了上传文件和 POST 请求体的最大大小，单位是 MB。
+
+- 检查 Nginx 配置是否正确：
+
+运行以下命令检查 Nginx 配置是否正确：
+
+```
+sudo nginx -t
+```
+
+如果输出显示配置正确，则继续下一步。如果有错误，请检查配置文件并修正。
+
+- 重启 Nginx：
+
+使配置更改生效，重启 Nginx 服务：
+
+```
+sudo service nginx restart
+```
+
+现在，Nginx 已经配置为接受更大的请求实体，包括上传的文件和其他 POST 数据，在 HTTPS 下也能够正常处理较大的文件上传。
 
 
 
