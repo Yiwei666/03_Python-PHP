@@ -105,7 +105,10 @@ if (isset($_GET['logout'])) {
     </script>
 
     <div class="website-link">
-        <a href="https://twitterxz.com/" target="_blank">点击访问网站</a>
+        <a href="https://twitterxz.com/" target="_blank">点击访问网站1</a>
+        <br>
+        <br>
+        <a href="https://twittervideodownloader.com/" target="_blank">点击访问网站2</a>
     </div>
 </body>
 </html>
