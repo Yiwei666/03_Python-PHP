@@ -16,7 +16,26 @@
 │   ......
 ├── lsTwitter.php                          # 查看文件目录       
 ├── twitterVideo_page.php                  # -rw-r--r-- 1 root     root
-├── upload_MP4_video.php                   # MP4视频上传脚本
+
+
+
+
+
+# 从本地上传mp4文件到云服务器指定目录
+
+├── 06_multiple_Video_Upload.php           # -rw-r--r-- 1 root     root             使用JavaScript和jQuery实现了一个简单的MP4视频上传功能，并在上传过程中显示上传进度条
+├── 06_upload.php                          # -rw-r--r-- 1 root     root             服务器端处理脚本，用于接收上传的MP4视频文件并处理它们
+├── MuChaManor                             # drwxr-xr-x 3 www-data www-data         存储mp4的目标文件夹  
+│   ├── VID_20220810_181049.mp4
+│   ├── VID_20220811_190114.mp4
+│   .......
+├── upload_MP4_video.php                   # MP4视频上传脚本，简易版本，独立使用
+
+
+注意：
+1. 06_multiple_Video_Upload.php 需要指定 06_upload.php 脚本名称
+2. 06_upload.php 中需要指定云服务器中存储视频的目录
+3. upload_MP4_video.php 是一个独立使用的视频上传脚本，支持多个视频同时上传
 
 ```
 
