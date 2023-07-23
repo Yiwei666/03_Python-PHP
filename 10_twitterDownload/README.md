@@ -47,7 +47,9 @@ sudo service php-fpm restart
 
 推特视频链接可基于如下在线解析网站解析，然后粘贴链接到输入框，提交即可
 
-https://twitterxz.com/
+- https://twitterxz.com/
+
+- https://twittervideodownloader.com/
 
 
 ### php上传视频
