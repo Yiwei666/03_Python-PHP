@@ -88,12 +88,52 @@ sudo chown www-data:www-data /home/01_html/05_twitter_video
 
 
 
-### php上传视频
+### php上传视频配置文件设置
+
 ---
+
+主要影响文件上传的两个设置是upload_max_filesize和post_max_size。以下是具体的修改方法：
+
+**1. 检查当前PHP配置：**
+
+在进行任何更改之前，请通过创建一个包含以下内容的PHP文件并在服务器上运行它来检查当前PHP配置：
+
+```
+<?php
+phpinfo();
+?>
+```
+
+查找upload_max_filesize和post_max_size的值。这些值将决定可以上传的文件的最大大小以及包含上传文件的整个POST请求的最大大小。
+
+**2. 增加文件上传限制：**
+
+如果upload_max_filesize和post_max_size的当前值低于你的MP4视频大小，你需要将它们增加。编辑服务器的PHP配置文件（通常命名为php.ini），并为以下设置指定适当的值：
+
+```
+upload_max_filesize = 100M
+post_max_size = 100M
+```
+
+ubuntu系统中php配置文件路径
 
 ```
 /etc/php/7.4/fpm/php.ini
 ```
+
+上述的"100M"仅为示例，你可以将其设置为所需的允许上传文件的最大大小。记得选择一个足够大的值，以适应你最大的MP4视频文件大小。
+
+**3. 重启Web服务器：**
+
+在更改php.ini文件后，需要重启Web服务器以应用新的配置设置。
+
+**4. 验证更改：**
+
+再次运行处理视频上传的PHP脚本，并检查视频是否能够被正确上传并具有有效的大小。
+
+通过以上修改，上传的视频应该不再出现大小为0的问题，脚本也会按预期工作，允许你上传MP4视频到指定目录。
+
+
 
 
 ```
