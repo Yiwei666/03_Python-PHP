@@ -87,6 +87,7 @@ ffmpeg -i input.flv -c:v libx264 -c:a aac output.mp4
 
 请注意，上述命令使用了默认的视频编码器（libx264）和音频编码器（aac）。如果你希望使用其他编码器，可以根据需要进行修改。另外，FFmpeg还提供了许多参数和选项，可以进行更高级的转码设置，例如调整视频质量、分辨率、比特率等。如果需要进一步自定义转码设置，可以参考FFmpeg的文档或使用ffmpeg -h命令查看更多选项和使用示例。
 
+
 ### 3. 非标准MP4转标准MP4
 ---
 
@@ -104,11 +105,13 @@ ffmpeg -i input.mp4 -c:v copy -c:a copy output.mp4
 
 3. 这里的命令中使用了-c:v copy和-c:a copy选项，它们指示FFmpeg直接拷贝视频和音频流，而不进行重新编码。这样可以快速地将视频转换为标准MP4格式，而不会改变原始视频和音频的编码方式和质量。
 
+
 ### 4. FLV批量转换bash脚本
 ---
 
 Bash脚本来将当前目录下的所有FLV格式视频文件转换为MP4格式：
 
+- **convert_videos.sh**
 ```
 #!/bin/bash
 
@@ -148,6 +151,7 @@ ps -ef | grep convert_videos.sh           # 命令用于列出正在运行的进
 
 Bash脚本来将当前目录下的所有非标准MP4格式视频文件转换为标准MP4格式：
 
+- **convert_MP4.sh**
 ```
 #!/bin/bash
 
@@ -167,6 +171,7 @@ done
 ---
 运行一个bash脚本来构建MP4视频文件的下载链接并将其保存到一个文本文件中，您可以尝试以下脚本：
 
+- **obtain_mp4URL.sh**
 ```
 #!/bin/bash
 
@@ -196,10 +201,12 @@ echo "链接构建完成并保存到 $output_file"
 ```
 脚本将在当前目录下生成名为output.txt的文本文件，并将下载链接追加到该文件中。请确保将脚本和视频文件放在同一目录下，并运行该脚本以生成链接文件。
 
+
 ### 7. MP4视频批量下载
 ---
 以下是基于output.txt中的下载链接使用curl命令下载视频的示例脚本：
 
+- **download_mp4.sh**
 ```
 #!/bin/bash
 
@@ -234,6 +241,8 @@ echo "视频下载完成"
 
 
 更新版本
+
+- **download_mp4_log.sh**
 ```
 #!/bin/bash
 
