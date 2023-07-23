@@ -16,8 +16,8 @@
 │   ├── 9_3_graft-gregarious.mp4
 │   ├── 9_4_gratuitous-gullible_standard.mp4
 │    ....
-│   ├── download_mp4_log.sh             # 基于output.txt文本中的下载链接下载视频的脚本
-│   ├── download_mp4.sh                 # 基于output.txt文本中的下载链接下载视频的脚本
+│   ├── download_mp4_log.sh             # 基于output.txt文本中的下载链接下载视频的脚本，会保存下载失败的日志信息
+│   ├── download_mp4.sh                 # 基于output.txt文本中的下载链接下载视频的脚本，不会保存下载日志信息
 │   ├── failed_links.txt                # 视频下载过程的报错链接
 │   └── output.txt
 
