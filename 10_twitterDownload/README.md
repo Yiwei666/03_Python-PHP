@@ -86,7 +86,45 @@ sudo chmod 775 /home/01_html/05_twitter_video
 sudo chown www-data:www-data /home/01_html/05_twitter_video
 ```
 
+2. 环境变量配置
 
+- twitter_PHP_download.php 中需要结合实际情况自定义下载视频的目录
+
+```
+ $filePath = '/home/01_html/05_twitter_video/' . $fileName;
+```
+
+- 06_multiple_Video_Upload.php 需要指定同级目录下服务器端处理视频上传的php脚本
+
+```
+url: '06_upload.php',
+```
+
+- 06_upload.php 需要自定义文件上传目录
+
+```
+ $uploadDir = '/home/01_html/MuChaManor/';
+```
+
+- lsTwitter.php 自定义需要查看的目录
+
+```
+$directory = '/home/01_html/05_twitter_video';
+```
+
+- twitterVideo_page.php 自定义域名以及播放视频的目录
+
+```
+$domain = 'https://domain.com';
+$videoPath = '/home/01_html/05_twitter_video/';
+$videoUrl = $domain . '/05_twitter_video/' . $videoName;
+```
+
+- upload_MP4_video.php 自定义上传视频的目录
+
+```
+$uploadDir = '/home/01_html/05_twitter_video/';
+```
 
 ### php 配置文件设置
 
@@ -140,11 +178,6 @@ sudo service php7.4-fpm restart  # 将 "7.4" 替换为你安装的 PHP 版本号
 
 
 
-```
-client_max_body_size 20M;
-```
-
-
 5. 413 Request Entity Too Large nginx/1.18.0 (Ubuntu)报错
 
 当出现 "413 Request Entity Too Large" 错误时，这意味着 Nginx 服务器拒绝了太大的请求实体，其中包括上传的文件和其他 POST 数据。这是由于 Nginx 服务器的默认请求大小限制导致的。
@@ -159,6 +192,11 @@ server {
     client_max_body_size 20M;
     # 其他HTTPS配置...
 }
+```
+
+相关代码
+```
+client_max_body_size 20M;
 ```
 
 配置文件通常位于
