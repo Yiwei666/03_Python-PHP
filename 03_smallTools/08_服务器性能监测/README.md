@@ -5,7 +5,11 @@
 
 ### 项目结构
 ---
+```
+├── 07_VPS_monitor.php
+├── 07_server_data.php
 
+```
 
 
 ### 部署环境
@@ -23,3 +27,4 @@ fetch('07_server_data.php')
 ---
 
 - 实时监测云服务器的网速
+- 脚本能够兼容ubuntu和centos系统
