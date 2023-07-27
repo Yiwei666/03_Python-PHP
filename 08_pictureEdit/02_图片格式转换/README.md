@@ -7,6 +7,8 @@
 
 - imageCompression.py
 
+jpg和png图片压缩
+
 项目地址：https://github.com/liangxiaobo/imageCompression/tree/master
 
 命令执行
