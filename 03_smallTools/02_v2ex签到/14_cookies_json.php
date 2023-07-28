@@ -5,7 +5,7 @@
     <style>
         /* 定义容器样式 */
         .container {
-            width: 50%;
+            width: 60%;
             margin: 0 auto;
             text-align: center;
         }
@@ -26,6 +26,20 @@
         /* 转换后输出样式，左对齐 */
         pre {
             text-align: left;
+        }
+
+        /* 输出框样式 */
+        .output-box {
+            width: 100%;
+            min-height: 400px; /* 设置最小高度，避免内容过少时输出框太小 */
+            max-height: 600px; /* 设置最大高度，限制输出框的增长 */
+            background-color: black;
+            color: white;
+            font-size: 16px;
+            overflow-x: auto;
+            white-space: pre; /* 显示空白字符，保留换行符，不自动换行 */
+            margin: 10px auto; /* 居中显示 */
+            padding: 10px; /* 添加内边距，美化样式 */
         }
     </style>
 </head>
@@ -64,15 +78,24 @@
 
             // Convert the $cookies array into a Python-style dictionary string
             $pythonCookieString = "cookies = {\n";
+            $keys = array_keys($cookies); // Get the keys of the $cookies array
+            $lastKey = end($keys); // Get the last key of the $cookies array
             foreach ($cookies as $name => $value) {
-                $pythonCookieString .= "    '{$name}': '{$value}',\n";
+                // Append the key-value pair without a comma if it is the last pair
+                if ($name === $lastKey) {
+                    $pythonCookieString .= "    '{$name}': '{$value}'\n";
+                } else {
+                    $pythonCookieString .= "    '{$name}': '{$value}',\n";
+                }
             }
             $pythonCookieString .= "}";
             ?>
 
             <h2>转换后的Cookie：</h2>
-            <!-- 转换后的输出信息左对齐 -->
-            <pre><?php echo htmlspecialchars($pythonCookieString); ?></pre>
+            <!-- 用输出框展示转换后的Cookie信息 -->
+            <div class="output-box">
+                <pre><?php echo htmlspecialchars($pythonCookieString); ?></pre>
+            </div>
         <?php } ?>
     </div>
 </body>
