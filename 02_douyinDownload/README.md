@@ -22,7 +22,7 @@
 ├── run_python_script.php
 ├── print_log_file.php
 ├── 05_douyinDownload                      # drwxr-xr-x  2 nginx nginx
-│    ├── 01_douyinDown.py
+│    ├── 01_douyinDown.py / 01_douyinDown_api.py
 │    ├── douyin_log.txt
 │    └── douyin_url.txt
 ├── douyVideo_AutoCenter_Pad.php
@@ -57,7 +57,7 @@ print_log_file.php               // 打印日志内容到web页面
 视频下载脚本可以位于其他目录，推荐与txt文件位于同一目录，便于管理
 ```
 01_douyinDown.py                 // 读取txt文件的url，下载抖音视频，将日志内容覆盖写入日志文件
-01_douyinDown(beta).py           // 基于新的抖音视频下载api
+01_douyinDown_api.py             // 基于新的抖音视频下载api
 ```
 
 **注意在相应路径下创建这两个文件并进行权限设置**
