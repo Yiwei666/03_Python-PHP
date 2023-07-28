@@ -1,10 +1,25 @@
 ### 项目功能
+---
+
 ```
 v2ex自动签到
 
 ```
 
+### 项目结构
+---
+
+- 08_v2ex_spyder.py
+
+爬虫脚本
+
+- 
+
+
+
 ### 注意事项
+---
+
 1. 登陆账号获取cookies，headers等信息。
 ```
 https://www.v2ex.com/mission/daily                      # 首次request获取once值
@@ -33,6 +48,11 @@ cookies = {
     'V2EX_TAB': '8'
 }
 ```
+注意：
+
+- cookie信息可能会在一个月后失效，届时需要重新设置
+
+- 推荐在chrome浏览器中登录v2ex获取cookie信息，firefox浏览器获取的cookies运行报错
 
 ### 安装配置
 
