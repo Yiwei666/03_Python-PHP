@@ -17,6 +17,23 @@ https://www.v2ex.com/mission/daily/redeem?once=70042    # 合成签到链接
 /var/log/cron
 ```
 
+3. 爬虫cookie设置
+
+cookie信息满足以下8项即可
+
+```
+cookies = {
+    'V2EX_LANG': '1',
+    '_ga': '2',
+    'A2': '3',
+    'PB3_SESSION': '4',
+    '_gid': '5',
+    '__gads': '6',
+    '__gpi': '7',
+    'V2EX_TAB': '8'
+}
+```
+
 ### 安装配置
 
 设定cron定时任务，注意v2ex要求签到间隔为24小时
