@@ -11,9 +11,11 @@ v2ex自动签到
 
 - 08_v2ex_spyder.py
 
-爬虫脚本
+爬虫脚本，用于v2ex自动签到，需要手动设置cookie和header信息
 
-- 
+- 14_cookies_json.php
+
+将chrome等浏览器获取的cookie字符串转化成字典格式
 
 
 
