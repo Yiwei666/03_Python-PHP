@@ -21,7 +21,7 @@
 
 代码将会显示具有.html、.php和.js扩展名的文件列表。
 
-- 聚合在线音频播放器
+- 13_MixPlayers.php (聚合在线音频播放器) 
 
 ```
 ├── 13_MixPlayers_codeGenerate.php        # 输入路径生成相应代码，添加到13_MixPlayers.php文件中
