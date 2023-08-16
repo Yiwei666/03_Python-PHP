@@ -154,4 +154,11 @@ sudo chmod 664 /path/to/your/file.txt
 
 将这段代码添加到 <style> 标签内，然后保存并刷新页面，即可将页面的背景色设置为黑色。
 
+### 4. 其他部署方式
+---
+
+- node.js实现
+
+参考：https://github.com/Yiwei666/02_javascript_cf-worker/tree/main/01_douyin
+
 
