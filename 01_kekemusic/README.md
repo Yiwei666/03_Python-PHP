@@ -45,9 +45,9 @@ done < input.txt
 
 确保您在运行脚本之前做好了以下几点：
 
-替换 <database_name>、<username>、<password> 和 <table_name> 为您的数据库信息和表名。
+1. 替换 <database_name>、<username>、<password> 和 <table_name> 为您的数据库信息和表名。
 
-将脚本中的 input.txt 替换为包含数据的实际文本文件的路径。
+2. 将脚本中的 input.txt 替换为包含数据的实际文本文件的路径。
 
 运行脚本时，它将逐行读取文本文件的内容，并将每行的数据插入到指定的表中。请注意，此示例假设数据库表已经存在且具有与脚本中的列名相对应的字段。
 
