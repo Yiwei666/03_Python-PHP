@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
-$dbhost = '101.200.200.100';  // mysql服务器主机地址
+$dbhost = '101.200.200.100';  // mysql服务器主机地址，当php脚本和mysql数据库位于同一云服务器中，此处可写为localhost
 $dbuser = 'xiaomin';            // mysql用户名
 $dbpass = 'xm123456';          // mysql用户名密码
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass);
