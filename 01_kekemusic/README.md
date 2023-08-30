@@ -4,11 +4,11 @@
     ├── kkmusic.php
     ├── 04_kekemusic
     │   ├── 01keke.py
-    │   ├── finalmusic.txt
-    │   ├── latest.html
     │   ├── musicdown.py
-    │   ├── music.html
-    │   └── musicUrl.txt
+    │   ├── finalmusic.txt       # 临时
+    │   ├── latest.html          # 临时
+    │   ├── music.html           # 临时
+    │   └── musicUrl.txt         # 临时
 
 musicUrl.txt
 music.html
