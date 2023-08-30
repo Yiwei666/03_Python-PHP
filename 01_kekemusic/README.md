@@ -15,7 +15,9 @@
 musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是python脚本运行产生的临时文件
 ```
 
-- kkDateUrl.sh
+### 数据库创建和写入
+
+- **kkDateUrl.sh**
 
 可以将给定的文本内容写入到 MariaDB 数据库中。请注意，运行此脚本需要您已经设置好了与 MariaDB 的连接，并具有相应的权限。在脚本中，您需要替换 <database_name>, <username>, <password> 和 <table_name> 为适当的值。
 
@@ -49,6 +51,58 @@ done < input.txt
 
 运行脚本时，它将逐行读取文本文件的内容，并将每行的数据插入到指定的表中。请注意，此示例假设数据库表已经存在且具有与脚本中的列名相对应的字段。
 
+- **数据库创建**
+
+当您想要创建一个数据库以及其中的表结构时，您可以使用 MySQL 的命令行界面或图形化工具（如 phpMyAdmin）来执行这些操作。以下是在 MySQL 命令行中创建数据库和表结构的步骤示例：
+
+1. 登录到 MySQL 命令行：
+
+打开终端并输入以下命令，然后输入您的 MySQL 密码：
+
+```
+mysql -u your_username -p
+```
+
+2. 创建数据库：
+
+在 MySQL 命令行中，输入以下命令来创建您的数据库：
+
+```
+CREATE DATABASE your_database_name;
+```
+
+替换 your_database_name 为您希望的数据库名称。
+
+3. 选择数据库：
+
+创建数据库后，您需要选择它以便执行后续操作。在 MySQL 命令行中，输入以下命令：
+
+```
+USE your_database_name;
+```
+
+4. 创建表结构：
+
+输入以下命令来创建表结构，以匹配您的文本数据：
+
+```
+CREATE TABLE your_table_name (
+    datetime DATETIME,
+    url VARCHAR(255)
+);
+```
+
+这将创建一个名为 your_table_name 的表，其中包含两列：datetime 和 url。根据您的需求，您可以调整列的名称和数据类型。
+
+5. 退出 MySQL 命令行：
+
+在完成上述步骤后，您可以输入以下命令退出 MySQL 命令行：
+
+```
+exit;
+```
+
+以上就是在 MySQL 中创建数据库和表结构的基本步骤。在您运行脚本之前，请确保已经执行了这些步骤，以便脚本可以正确地插入数据到已创建的表中。同时，务必谨慎操作，以免意外删除或更改数据库中的数据。
 
 
 ### 定时任务
