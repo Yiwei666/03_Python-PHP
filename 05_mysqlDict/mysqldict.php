@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 // 连接到 MySQL 服务器
-$servername = "101.200.200.100";   // ip 或 domian
+$servername = "101.200.200.100";   // ip 或 domian，当php脚本和mysql数据库位于同一云服务器中，此处可写为localhost
 $username = "xiaomin";             // mysql 用户名
 $password = "xiaomin123";          // mysql 密码
 $dbname = "dict_03_GRE";           // 数据库名称
