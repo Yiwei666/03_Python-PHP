@@ -8,7 +8,11 @@
     │   ├── finalmusic.txt       # 临时
     │   ├── latest.html          # 临时
     │   ├── music.html           # 临时
-    │   └── musicUrl.txt         # 临时
+    │   ├── musicUrl.txt         # 临时
+    │   └── kkDateUrl.sh         # bash脚本，将finalmusic.txt中的数据写入到mysql数据库中
+
+
+
 
 musicUrl.txt
 music.html
