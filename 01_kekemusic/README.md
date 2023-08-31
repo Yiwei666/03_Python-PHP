@@ -1,5 +1,5 @@
 
-### 项目文件结构
+### 1. 项目文件结构
 ```
     ├── kkmusic.php
     ├── 04_kekemusic
@@ -15,7 +15,7 @@
 musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是python脚本运行产生的临时文件
 ```
 
-### 数据库创建和写入
+### 2. 数据库创建和写入
 
 - **kkDateUrl.sh**
 
@@ -48,6 +48,39 @@ done < input.txt
 2. 将脚本中的 input.txt 替换为包含数据的实际文本文件的路径。
 
 运行脚本时，它将逐行读取文本文件的内容，并将每行的数据插入到指定的表中。请注意，此示例假设数据库表已经存在且具有与脚本中的列名相对应的字段。
+
+
+- ****
+
+mysql数据写入脚本，能否避免重复的url的写入
+
+```
+#!/bin/bash
+
+# Database connection details
+DB_HOST="localhost"
+DB_NAME="<database_name>"
+DB_USER="<username>"
+DB_PASS="<password>"
+TABLE_NAME="<table_name>"
+
+# Read and process the text file
+while IFS=',' read -r datetime url; do
+  # Check if the URL already exists in the table
+  existing_url=$(mysql -N -s -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "SELECT url FROM $TABLE_NAME WHERE url='$url'")
+
+  # If the URL doesn't exist, insert the data into the table
+  if [ -z "$existing_url" ]; then
+    query="INSERT INTO $TABLE_NAME (datetime, url) VALUES ('$datetime', '$url');"
+    mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "$query"
+    echo "Inserted: $datetime, $url"
+  else
+    echo "Skipped (URL already exists): $datetime, $url"
+  fi
+done < input.txt
+
+```
+
 
 - **mysql数据库创建**
 
@@ -103,7 +136,7 @@ exit;
 以上就是在 MySQL 中创建数据库和表结构的基本步骤。在您运行脚本之前，请确保已经执行了这些步骤，以便脚本可以正确地插入数据到已创建的表中。同时，务必谨慎操作，以免意外删除或更改数据库中的数据。
 
 
-### 定时任务
+### 3. 定时任务
 
 01keke.py 和 musicdown.py 搭配使用的crontab定时任务脚本
 
