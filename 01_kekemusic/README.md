@@ -156,6 +156,8 @@ for page_number in {399..380}; do
 
     total_url="http://www.kekenet.com/song/tingge/List_${page_number}.shtml"
 
+    echo "Current total_url: $total_url"  # Print the total_url
+
     # Download the webpage
     curl -o "/home/experiment/01_pastKeke/latest.html" "$total_url"
 
