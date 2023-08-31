@@ -88,6 +88,56 @@ done < input.txt
 
 请确保将 <database_name>, username, password, <table_name> 替换为实际的数据库和表名，并根据实际情况修改脚本。
 
+- **myscript.sh**
+
+要求bash脚本满足
+
+```
+能否编写一个bash脚本，首先依次执行如下两个命令进行文件删除，
+rm  /home/experiment/01_pastKeke/musicUrl.txt
+rm  /home/experiment/01_pastKeke/finalmusic.txt
+
+然后执行如下命令进行网页下载，注意 total_url 需要在开头进行赋值，例如 http://www.kekenet.com/song/tingge/List_422.shtml
+curl -o /home/experiment/01_pastKeke/latest.html   total_url 
+
+然后执行
+/home/anaconda/anaconda3_installation/bin/python  /home/experiment/01_pastKeke/01keke.py
+
+上述python脚本运行结束后，再执行 
+/home/anaconda/anaconda3_installation/bin/python  /home/experiment/01_pastKeke/musicdown.py
+
+最后执行
+/usr/bin/bash insert_unique_urls.sh 
+```
+
+脚本示例
+
+```
+#!/bin/bash
+
+# Remove the specified files
+rm /home/experiment/01_pastKeke/musicUrl.txt
+rm /home/experiment/01_pastKeke/finalmusic.txt
+
+# Set the URL
+total_url="http://www.kekenet.com/song/tingge/List_422.shtml"
+
+# Download the webpage
+curl -o /home/experiment/01_pastKeke/latest.html $total_url
+
+# Run the first Python script
+/home/anaconda/anaconda3_installation/bin/python /home/experiment/01_pastKeke/01keke.py
+
+# Run the second Python script
+/home/anaconda/anaconda3_installation/bin/python /home/experiment/01_pastKeke/musicdown.py
+
+# Execute the final command
+/usr/bin/bash insert_unique_urls.sh
+
+```
+
+
+
 
 ### 3. mysql数据库创建
 
