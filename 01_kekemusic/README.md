@@ -50,7 +50,7 @@ done < input.txt
 运行脚本时，它将逐行读取文本文件的内容，并将每行的数据插入到指定的表中。请注意，此示例假设数据库表已经存在且具有与脚本中的列名相对应的字段。
 
 
-- ****
+- **insert_unique_urls.sh**
 
 mysql数据写入脚本，能否避免重复的url的写入
 
@@ -80,6 +80,10 @@ while IFS=',' read -r datetime url; do
 done < input.txt
 
 ```
+
+我们首先执行了一个 SELECT 查询来检查是否存在相同的 URL。如果查询结果为空（即该 URL 在表中不存在），那么我们才会执行插入操作，并在控制台上显示已插入的数据。如果 URL 已经存在，那么我们将显示一条消息表明数据被跳过。
+
+请确保将 <database_name>, username, password, <table_name> 替换为实际的数据库和表名，并根据实际情况修改脚本。
 
 
 - **mysql数据库创建**
