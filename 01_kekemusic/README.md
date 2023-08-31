@@ -1,5 +1,7 @@
 
 ### 1. 项目文件结构
+---
+
 ```
     ├── kkmusic.php
     ├── 04_kekemusic
@@ -19,6 +21,7 @@ musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是py
 ```
 
 ### 2. mysql数据写入脚本
+---
 
 - **kkDateUrl.sh**
 
@@ -140,6 +143,7 @@ curl -o /home/experiment/01_pastKeke/latest.html $total_url
 
 
 ### 3. mysql数据库创建
+---
 
 当您想要创建一个数据库以及其中的表结构时，您可以使用 MySQL 的命令行界面或图形化工具（如 phpMyAdmin）来执行这些操作。以下是在 MySQL 命令行中创建数据库和表结构的步骤示例：
 
@@ -208,6 +212,7 @@ SELECT datetime,url FROM kkmusicTABLE;
 ```
 
 ### 4. 定时任务
+---
 
 01keke.py 和 musicdown.py 搭配使用的crontab定时任务脚本
 
