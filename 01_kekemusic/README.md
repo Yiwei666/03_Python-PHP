@@ -110,7 +110,7 @@ curl -o /home/experiment/01_pastKeke/latest.html   total_url
 /usr/bin/bash insert_unique_urls.sh 
 ```
 
-脚本示例
+脚本示例，使用时注意修改路径，total_url等参数
 
 ```
 #!/bin/bash
