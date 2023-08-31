@@ -11,7 +11,7 @@
     │   └── musicUrl.txt         # 临时文件
     │   ├── kkDateUrl.sh               # bash脚本，将finalmusic.txt中的数据写入到mysql数据库中
     │   ├── insert_unique_urls.sh      # bash脚本，将finalmusic.txt中的数据写入到mysql数据库中，能否避免重复的url写入
-
+    │   ├── myscript.sh                # 链接获取，解析，写入mysql数据库命令集成
 
 
 
