@@ -222,6 +222,7 @@ SELECT datetime,url FROM kkmusicTABLE;
 0 21 * * * curl -o /home/01_html/04_kekemusic/latest.html  https://www.kekenet.com/song/tingge/
 2 21 * * * /home/00_software/01_Anaconda/bin/python  /home/01_html/04_kekemusic/01keke.py
 4 21 * * * /home/00_software/01_Anaconda/bin/python  /home/01_html/04_kekemusic/musicdown.py
+0 8 * * * /usr/bin/bash /home/experiment/insert_unique_urls.sh
 
 ```
 
