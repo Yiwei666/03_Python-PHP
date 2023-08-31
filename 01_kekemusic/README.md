@@ -3,7 +3,8 @@
 ---
 
 ```
-    ├── kkmusic.php
+    ├── kkmusic.php              # 音频链接来源于finalmusic.txt文本
+    ├── kkmusicSQL.php           # 音频链接查询源于mysql
     ├── 04_kekemusic
     │   ├── 01keke.py
     │   ├── musicdown.py
