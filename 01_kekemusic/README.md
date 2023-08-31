@@ -19,7 +19,7 @@ musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是py
 
 - **kkDateUrl.sh**
 
-可以将给定的文本内容写入到 MariaDB 数据库中。请注意，运行此脚本需要您已经设置好了与 MariaDB 的连接，并具有相应的权限。在脚本中，您需要替换 <database_name>, <username>, <password> 和 <table_name> 为适当的值。
+可以将给定的文本内容写入到 MariaDB 数据库中。请注意，运行此脚本需要您已经设置好了与 MariaDB 的连接，并具有相应的权限。在脚本中，您需要替换 <database_name>, username, password 和 <table_name> 为适当的值。
 
 ```
 #!/bin/bash
@@ -43,7 +43,7 @@ done < input.txt
 
 确保您在运行脚本之前做好了以下几点：
 
-1. 替换 <database_name>、<username>、<password> 和 <table_name> 为您的数据库信息和表名。
+1. 替换 <database_name>、username、password 和 <table_name> 为您的数据库信息和表名。
 
 2. 将脚本中的 input.txt 替换为包含数据的实际文本文件的路径。
 
