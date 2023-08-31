@@ -15,7 +15,7 @@
 musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是python脚本运行产生的临时文件
 ```
 
-### 2. 数据库创建和写入
+### 2. mysql数据写入脚本
 
 - **kkDateUrl.sh**
 
@@ -86,7 +86,7 @@ done < input.txt
 请确保将 <database_name>, username, password, <table_name> 替换为实际的数据库和表名，并根据实际情况修改脚本。
 
 
-- **mysql数据库创建**
+### mysql数据库创建
 
 当您想要创建一个数据库以及其中的表结构时，您可以使用 MySQL 的命令行界面或图形化工具（如 phpMyAdmin）来执行这些操作。以下是在 MySQL 命令行中创建数据库和表结构的步骤示例：
 
@@ -139,6 +139,20 @@ exit;
 
 以上就是在 MySQL 中创建数据库和表结构的基本步骤。在您运行脚本之前，请确保已经执行了这些步骤，以便脚本可以正确地插入数据到已创建的表中。同时，务必谨慎操作，以免意外删除或更改数据库中的数据。
 
+6. 数据库访问
+
+使用kkmusicdb数据库中的kkmusicTABLE表，查看表的组成，以及datetime和url列
+
+```
+mysql -u root -p
+
+SHOW DATABASES;
+USE kkmusicdb;
+SHOW TABLES;
+DESCRIBE kkmusicTABLE;
+SELECT datetime,url FROM kkmusicTABLE;
+
+```
 
 ### 3. 定时任务
 
