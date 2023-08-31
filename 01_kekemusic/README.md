@@ -86,7 +86,7 @@ done < input.txt
 请确保将 <database_name>, username, password, <table_name> 替换为实际的数据库和表名，并根据实际情况修改脚本。
 
 
-### mysql数据库创建
+### 3. mysql数据库创建
 
 当您想要创建一个数据库以及其中的表结构时，您可以使用 MySQL 的命令行界面或图形化工具（如 phpMyAdmin）来执行这些操作。以下是在 MySQL 命令行中创建数据库和表结构的步骤示例：
 
@@ -154,7 +154,7 @@ SELECT datetime,url FROM kkmusicTABLE;
 
 ```
 
-### 3. 定时任务
+### 4. 定时任务
 
 01keke.py 和 musicdown.py 搭配使用的crontab定时任务脚本
 
