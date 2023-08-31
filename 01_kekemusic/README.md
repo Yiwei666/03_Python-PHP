@@ -5,11 +5,14 @@
     ├── 04_kekemusic
     │   ├── 01keke.py
     │   ├── musicdown.py
-    │   ├── finalmusic.txt       # 临时
-    │   ├── latest.html          # 临时
-    │   ├── music.html           # 临时
-    │   ├── musicUrl.txt         # 临时
-    │   └── kkDateUrl.sh         # bash脚本，将finalmusic.txt中的数据写入到mysql数据库中
+    │   ├── finalmusic.txt       # 临时文件
+    │   ├── latest.html          # 临时文件
+    │   ├── music.html           # 临时文件
+    │   └── musicUrl.txt         # 临时文件
+    │   ├── kkDateUrl.sh               # bash脚本，将finalmusic.txt中的数据写入到mysql数据库中
+    │   ├── insert_unique_urls.sh      # bash脚本，将finalmusic.txt中的数据写入到mysql数据库中，能否避免重复的url写入
+
+
 
 
 musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是python脚本运行产生的临时文件
