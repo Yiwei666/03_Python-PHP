@@ -32,9 +32,7 @@ DB_PASS="<password>"
 TABLE_NAME="<table_name>"
 
 # Read and process the text file
-while IFS= read -r line; do
-  datetime=$(echo "$line" | cut -d ' ' -f 1,2)
-  url=$(echo "$line" | cut -d ',' -f 2)
+while IFS=',' read -r datetime url; do
   query="INSERT INTO $TABLE_NAME (datetime, url) VALUES ('$datetime', '$url');"
 
   # Execute the SQL query
