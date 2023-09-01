@@ -60,7 +60,7 @@ done < input.txt
 
 - **insert_unique_urls.sh**
 
-mysql数据写入脚本，能否避免重复的url的写入
+mysql数据写入脚本，能避免重复的url的写入
 
 ```
 #!/bin/bash
