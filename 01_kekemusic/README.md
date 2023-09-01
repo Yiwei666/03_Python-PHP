@@ -186,7 +186,7 @@ done
 
 打开终端并输入以下命令，然后输入您的 MySQL 密码：
 
-```
+```sh
 mysql -u your_username -p
 ```
 
@@ -194,7 +194,7 @@ mysql -u your_username -p
 
 在 MySQL 命令行中，输入以下命令来创建您的数据库：
 
-```
+```sql
 CREATE DATABASE your_database_name;
 ```
 
@@ -204,7 +204,7 @@ CREATE DATABASE your_database_name;
 
 创建数据库后，您需要选择它以便执行后续操作。在 MySQL 命令行中，输入以下命令：
 
-```
+```sql
 USE your_database_name;
 ```
 
@@ -212,7 +212,7 @@ USE your_database_name;
 
 输入以下命令来创建表结构，以匹配您的文本数据：
 
-```
+```sql
 CREATE TABLE your_table_name (
     datetime DATETIME,
     url VARCHAR(255)
@@ -225,7 +225,7 @@ CREATE TABLE your_table_name (
 
 在完成上述步骤后，您可以输入以下命令退出 MySQL 命令行：
 
-```
+```sql
 exit;
 ```
 
@@ -233,11 +233,9 @@ exit;
 
 6. 数据库访问
 
-使用kkmusicdb数据库中的kkmusicTABLE表，查看表的组成，以及datetime和url列
+使用kkmusicdb数据库中的kkmusicTABLE表，查看表的组成，以及datetime和url列。首先需要登录数据库`mysql -u root -p`，提示输入mysql的root密码
 
-```
-mysql -u root -p
-
+```sql
 SHOW DATABASES;
 USE kkmusicdb;
 SHOW TABLES;
@@ -251,7 +249,7 @@ SELECT datetime,url FROM kkmusicTABLE;
 
 01keke.py 和 musicdown.py 搭配使用的crontab定时任务脚本
 
-```
+```bash
 0 21 * * * rm  /home/01_html/04_kekemusic/musicUrl.txt
 0 21 * * * rm  /home/01_html/04_kekemusic/finalmusic.txt
 0 21 * * * curl -o /home/01_html/04_kekemusic/latest.html  https://www.kekenet.com/song/tingge/
