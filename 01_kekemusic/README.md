@@ -29,7 +29,7 @@ musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是py
 
 可以将给定的文本内容写入到 MariaDB 数据库中。请注意，运行此脚本需要您已经设置好了与 MariaDB 的连接，并具有相应的权限。在脚本中，您需要替换 <database_name>, username, password 和 <table_name> 为适当的值。
 
-```
+```bash
 #!/bin/bash
 
 # Database connection details
@@ -62,7 +62,7 @@ done < input.txt
 
 mysql数据写入脚本，能避免重复的url的写入
 
-```
+```bash
 #!/bin/bash
 
 # Database connection details
@@ -117,7 +117,7 @@ curl -o /home/experiment/01_pastKeke/latest.html   total_url
 
 脚本示例，使用时注意修改路径，total_url等参数
 
-```
+```bash
 #!/bin/bash
 
 # Remove the specified files
@@ -145,7 +145,7 @@ curl -o /home/experiment/01_pastKeke/latest.html $total_url
 
 循环操作（下载，解析，删除）指定页码范围的html，注意修改 for page_number in {399..380}; do 页码范围
 
-```
+```bash
 #!/bin/bash
 
 # Loop through the desired page range
