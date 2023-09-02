@@ -93,6 +93,9 @@ done < input.txt
 
 请确保将 <database_name>, username, password, <table_name> 替换为实际的数据库和表名，并根据实际情况修改脚本。
 
+**注意：如果使用crontab定时执行上述任务脚本，请使用相应绝对路径，例如 `done < /home/experiment/finalmusic.txt`**
+
+
 - **myscript.sh**
 
 要求bash脚本满足
@@ -243,6 +246,18 @@ DESCRIBE kkmusicTABLE;
 SELECT datetime,url FROM kkmusicTABLE;
 
 ```
+7. 查看指定日期范围内的表格
+
+可以使用MySQL的SELECT语句来查找表中datetime字段大于指定日期（2023-08-08）的行。以下是一个示例查询：
+
+```sql
+SELECT *
+FROM kkmusicTABLE
+WHERE datetime > '2023-08-08';
+```
+
+
+
 
 ### 4. 定时任务
 ---
