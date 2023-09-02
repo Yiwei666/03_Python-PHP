@@ -256,8 +256,14 @@ FROM kkmusicTABLE
 WHERE datetime > '2023-08-08';
 ```
 
+要按照datetime字段的递增顺序从表中检索数据并将其打印到屏幕上，你可以使用ORDER BY子句来指定排序方式。
+在这种情况下，你可以使用ORDER BY datetime来按照datetime字段的升序（递增）顺序对结果进行排序。以下是一个示例查询：
 
-
+```sql
+SELECT *
+FROM kkmusicTABLE
+ORDER BY datetime ASC;
+```
 
 ### 4. 定时任务
 ---
