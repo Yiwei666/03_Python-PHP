@@ -7,7 +7,11 @@
 ### 2. 项目文件结构
 
 ```
-
+└─各类键百分比
+        01_transparent.py
+        Mg-O.png
+        Mg-Si.png
+        P-O.png
 ```
 
 
