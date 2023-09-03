@@ -30,23 +30,28 @@ def make_transparent(image_path, output_path):
 
     print("转换完成！")
 
+if __name__ == "__main__":
 
-# 获取当前文件夹下的所有文件名
-files = [f for f in os.listdir('.') if os.path.isfile(f)]
+    # 获取当前文件夹下的所有文件名
+    files = [f for f in os.listdir('.') if os.path.isfile(f)]
 
-# 打印文件名（不包括子文件夹）
-for file in files:
-    print(file)
+    # 打印文件名（不包括子文件夹）
+    for file in files:
+        print(file)
 
-# 获取用户输入的图像名称
-image_name = input("请输入图像名称（包括扩展名）：")
+    # 获取用户输入的图像名称
+    input_string = input("请输入图像名称（包括扩展名），支持同时输入多个图像文件，用英文逗号隔开：")
 
-# 检查图像文件是否存在
-if os.path.isfile(image_name):
-    # 输出图像路径
-    output_image = os.path.splitext(image_name)[0] + "_transparent.png"
+    split_list = input_string.split(',')
 
-    # 转换图像为透明
-    make_transparent(image_name, output_image)
-else:
-    print("图像文件不存在！")
+    for image_name in split_list:
+
+        # 检查图像文件是否存在
+        if os.path.isfile(image_name):
+            # 输出图像路径
+            output_image = os.path.splitext(image_name)[0] + "_transparent.png"
+
+            # 转换图像为透明
+            make_transparent(image_name, output_image)
+        else:
+            print("图像文件不存在！")
