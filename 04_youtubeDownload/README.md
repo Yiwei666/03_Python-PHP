@@ -59,6 +59,11 @@ MileyCyrus-Flowers.mp4
 
 网站1：https://savetwitter.net/zh-cn
 
-网站2：https://twitterxz.com/
+- https://twitterxz.com/
 
+- https://twittervideodownloader.com/
+
+- https://twitter.iiilab.com/
+
+- https://twittervid.com/
 
