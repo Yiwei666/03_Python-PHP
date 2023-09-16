@@ -108,7 +108,13 @@ if (isset($_GET['logout'])) {
         <a href="https://twitterxz.com/" target="_blank">点击访问网站1</a>
         <br>
         <br>
-        <a href="https://twittervideodownloader.com/" target="_blank">点击访问网站2</a>
+        <a href="https://twittervideodownloader.com/" target="_blank">网站2(videodownloader)</a>
+        <br>
+        <br>
+        <a href="https://twitter.iiilab.com/" target="_blank">点击访问网站3(iiilab)</a>
+        <br>
+        <br>
+        <a href="https://twittervid.com/" target="_blank">网站4(twittervid)</a>
     </div>
 </body>
 </html>
