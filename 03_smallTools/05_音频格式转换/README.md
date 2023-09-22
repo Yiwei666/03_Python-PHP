@@ -73,3 +73,12 @@ generate_mp3_paths.sh      # 产生同级目录下所有目录中mp3文件名的
 mp3_paths.txt              # 运行上述脚本，同级目录下会产生该txt文件
 
 ```
+
+
+- url_build.sh
+
+以markdown链接格式打印当前目录下mp3的音频url和文件名，使用时注意音频链接构造过程中域名和文件夹的修改
+
+
+
+
