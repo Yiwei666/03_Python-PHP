@@ -8,6 +8,19 @@
 ├── audioUrl.txt           # 储存音频链接的文件
 ├── insert_unique_urls.sh  # 将audioUrl.txt中的链接写入到mysql数据库中的脚本            
 └── music.html             # 临时文件，含有音频链接
+
+
+├── 01keke.py
+├── audioUrl.txt
+├── homePageUrl.txt
+├── insert_unique_urls.sh
+├── latest.html
+├── musicdown.py
+├── music.html
+├── myscript_loop.sh
+└── myscript.sh
+
+
 ```
 
 
