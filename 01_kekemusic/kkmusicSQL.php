@@ -1,7 +1,7 @@
 <?php
 $logoUrl = "http://domain.com/00_logo/kekemusic.png";
 
-$servername = "your_servername"; // 修改为您的数据库服务器名
+$servername = "your_servername"; // 修改为您的数据库服务器名，一般为localhost
 $username = "your_username";     // 修改为您的数据库用户名
 $password = "your_password";     // 修改为您的数据库密码
 $dbname = "kkmusicdb";           // 修改为您的数据库名
