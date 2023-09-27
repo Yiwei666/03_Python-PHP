@@ -14,3 +14,15 @@ CREATE TABLE voaspecialTABLE (
     url VARCHAR(255)
 );
 ```
+
+
+
+- 数据库访问
+
+```mysql
+SHOW DATABASES;
+USE kkmusicdb;
+SHOW TABLES;
+DESCRIBE voaspecialTABLE;
+SELECT datetime,url FROM voaspecialTABLE;
+```
