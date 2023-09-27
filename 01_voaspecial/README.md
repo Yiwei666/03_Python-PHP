@@ -1,4 +1,14 @@
+# 项目结构
 
+```
+├── 01keke.py              # 解析 mainpage 的python脚本，链接写入到homePageUrl.txt文件中
+├── latest.html            # 临时文件
+├── homePageUrl.txt        # 储存mainpage中的所有url
+├── musicdown.py           # 提取music.html中的url，储存到audioUrl.txt文件中
+├── audioUrl.txt           # 储存音频链接的文件
+├── insert_unique_urls.sh  # 将audioUrl.txt中的链接写入到mysql数据库中的脚本            
+└── music.html             # 临时文件，含有音频链接
+```
 
 
 
