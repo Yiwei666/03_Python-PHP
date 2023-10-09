@@ -133,3 +133,11 @@ SHOW TABLES;
 DESCRIBE voaspecialTABLE;
 SELECT datetime,url FROM voaspecialTABLE;
 ```
+
+- 按照 datetime 升序对结果进行排列
+
+```mysql
+SELECT *
+FROM voaspecialTABLE
+ORDER BY datetime ASC;
+```
