@@ -8,9 +8,9 @@
 # 文件结构
 
 ```
-ytbAudio_dwn.py              # 使用视频默认文件名命名          
+ytbAudio_dwn.py              # 下载youtube视频中的的音频，使用视频默认文件名命名，使用本地代理          
 
-ytbAudio_dwn_name.py         # 升级版本，替换掉名字中的非法字符，避免下载失败
+ytbAudio_dwn_name.py         # 下载youtube视频中的的音频，升级版本，替换掉名字中的非法字符，避免下载失败
 
 dateNameWrite.py             # 将同级目录下的所有mp3音频文件名和创建日期写入到 mp3_list.txt 文件中，作为存档
 
