@@ -60,7 +60,7 @@ done < "$input_file"
 
 - **total_control.sh**
 
-以下是针对 page = 2 （对应网址：https://www.scientificamerican.com/podcasts/?page=2），页面中所有视频下载的bash脚本
+以下是针对 page = 2 （对应网址：`https://www.scientificamerican.com/podcasts/?page=2`），页面中所有视频下载的bash脚本
 
 ```
 #!/bin/bash
