@@ -1,6 +1,6 @@
 # 项目功能
 
-使用python和bash脚本下载 scientific American podcasts 音频
+使用python和bash脚本下载 scientific American podcasts 音频，官网是 https://www.scientificamerican.com/podcasts/?page=70
 
 # 项目结构
 
