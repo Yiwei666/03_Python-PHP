@@ -88,7 +88,7 @@ echo "文件数量: $file_count"
 
 - **page_range_control.sh**
 
-下载 41~70 页码范围内的音频
+下载 41~70 页码范围内的音频。注意：`total_control.sh`只能下载单页，为了提高下载效率，`page_range_control.sh`支持多页下载
 
 ```bash
 #!/bin/bash
