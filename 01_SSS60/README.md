@@ -62,7 +62,7 @@ done < "$input_file"
 
 以下是针对 page = 2 （对应网址：`https://www.scientificamerican.com/podcasts/?page=2`），页面中所有视频下载的bash脚本
 
-```
+```bash
 #!/bin/bash
 
 # 删除文件
@@ -90,7 +90,7 @@ echo "文件数量: $file_count"
 
 下载 41~70 页码范围内的音频
 
-```
+```bash
 #!/bin/bash
 
 # 要处理的页面范围 已处理 31-40
