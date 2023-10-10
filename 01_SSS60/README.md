@@ -31,3 +31,92 @@ total_control.sh 脚本内容：
 
 # 环境配置
 
+- **download_audio.sh**
+
+上述 audio_url.txt 文件中的每一行中使用英文逗号分隔成两个元素，第一个元素是文件名，第二个元素是网址。该bash脚本读取每一行中的的网址，然后访问该网址会重定向到一个mp3音频链接，下载该mp3音频，并且使用第一个元素文件名进行mp3音频的命名。
+
+```bash
+#!/bin/bash
+
+input_file="audio_url.txt"
+output_path="/home/01_html/04_sss60/01_audio"
+
+# 读取每一行
+while IFS=, read -r filename url; do
+    # 移除文件名和网址中的空格
+    filename=$(echo "$filename" | tr -d ' ')
+    url=$(echo "$url" | tr -d ' ')
+
+    # 使用curl获取重定向后的mp3链接
+    redirected_url=$(curl -s -L -o /dev/null -w '%{url_effective}' "$url")
+
+    # 使用wget下载mp3音频，并以文件名命名，输出到指定路径
+    wget -O "$output_path/$filename.mp3" "$redirected_url"
+
+    echo "Downloaded $filename.mp3 from $redirected_url to $output_path"
+done < "$input_file"
+
+```
+
+- **total_control.sh**
+
+以下是针对 page = 2 （对应网址：https://www.scientificamerican.com/podcasts/?page=2），页面中所有视频下载的bash脚本
+
+```
+#!/bin/bash
+
+# 删除文件
+rm -rf sss.html audio_url.txt
+
+# 下载网页
+curl -o sss.html https://www.scientificamerican.com/podcasts/?page=2
+
+# 运行 Python 脚本
+python parse_html.py
+
+# 运行下载音频的 Bash 脚本
+bash download_audio.sh
+
+# 将 audio_url.txt 内容追加到 total_audio_url.txt
+cat audio_url.txt >> total_audio_url.txt
+
+# 统计目录下的文件数量
+file_count=$(ls -l /home/01_html/04_sss60/01_audio | grep "^-" | wc -l)
+echo "文件数量: $file_count"
+
+```
+
+- **page_range_control.sh**
+
+下载 41~70 页码范围内的音频
+
+```
+#!/bin/bash
+
+# 要处理的页面范围 已处理 31-40
+start_page=41
+end_page=70
+
+for ((page=start_page; page<=end_page; page++)); do
+    # 删除文件
+    rm -rf sss.html audio_url.txt
+
+    # 下载网页
+    curl -o sss.html "https://www.scientificamerican.com/podcasts/?page=$page"
+
+    # 运行 Python 脚本
+    python parse_html.py
+
+    # 运行下载音频的 Bash 脚本
+    bash download_audio.sh
+
+    # 将 audio_url.txt 内容追加到 total_audio_url.txt
+    cat audio_url.txt >> total_audio_url.txt
+
+    # 统计目录下的文件数量
+    file_count=$(ls -l /home/01_html/04_sss60/01_audio | grep "^-" | wc -l)
+    echo "处理页面 $page，文件数量: $file_count"
+done
+```
+
+
