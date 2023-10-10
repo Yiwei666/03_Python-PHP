@@ -13,7 +13,7 @@
 ├── download_audio.sh           # 下载audio_url.txt中重定向后的音频文件
 ├── total_control.sh            # 控制单页的音频链接下载
 ├── page_range_control.sh       # 控制指定页码范围内的音频链接下载
-├── 01_audio                    # 存储音频的文件夹
+├── /01_audio/                    # 存储音频的文件夹
 └── sync_audio.sh               # 同步音频到其他云服务器
 
 
