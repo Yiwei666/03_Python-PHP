@@ -27,3 +27,7 @@ total_control.sh 脚本内容：
 6. 再执行 ls -l   /home/01_html/04_sss60/01_audio   | grep "^-" | wc -l
 
 ```
+
+
+# 环境配置
+
