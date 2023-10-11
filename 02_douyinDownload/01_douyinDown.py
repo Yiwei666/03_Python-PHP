@@ -42,7 +42,7 @@ source_tag = soup.find("source")
 
 if source_tag:
     src = source_tag.get("src")
-    src = src.replace("amp;", "")
+    src = "https:"+ src.replace("amp;", "")
     log_print("提取的链接：", src)
 
     # Download the content from the extracted URL
