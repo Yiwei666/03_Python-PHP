@@ -81,6 +81,26 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload
 
 1. 在 /home/01_html/05_douyinAsynDload/2.txt 中每一行可能有一个https链接，在/home/01_html/05_douyinAsynDload/4_success.txt  中每一行可能也有一个https链接，二者也有可能都是空的，现在需要筛选出 在2.txt中有的链接，同时在4_success.txt中没有的链接，并且从筛选出来的链接数组中随机抽取一个链接 赋值为 encoded_url。
 
+```python
+# 从文件中读取2.txt中的链接
+with open("/home/01_html/05_douyinAsynDload/2.txt", "r") as file:
+    links_2 = [line.strip() for line in file.readlines()]
+
+# 从文件中读取4_success.txt中的链接
+with open("/home/01_html/05_douyinAsynDload/4_success.txt", "r") as file:
+    links_4_success = [line.strip() for line in file.readlines()]
+
+# 找到2.txt中有但4_success.txt中没有的链接
+filtered_links = list(set(links_2) - set(links_4_success))
+
+# 随机选择一个链接作为encoded_url
+if filtered_links:
+    encoded_url = random.choice(filtered_links)
+    
+    url1 = "https://dlpanda.com/zh-CN/?url="
+    url = url1 + encoded_url + "&token=G7eRpMaa"
+```
+
 2. 继续修改上述代码，将下载成功的 encoded_url 追加到 /home/01_html/05_douyinAsynDload/4_success.txt中，下载失败的 encoded_url 追加到 3_failure.txt 中。
 
 
