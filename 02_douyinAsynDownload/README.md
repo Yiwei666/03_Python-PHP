@@ -8,6 +8,9 @@
 
 - **架构**
 
+<p align="center">
+  <img src="image/structure.png" alt="Image Description" width="700">
+</p>
 
 - **项目文件组成**
 
