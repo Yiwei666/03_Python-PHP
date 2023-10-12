@@ -56,17 +56,19 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload
 
 ```
 */2 * * * * /home/00_software/01_Anaconda/bin/python /home/01_html/05_douyinAsynDload/02_douyinDown.py
+
 0 5 * * * /home/00_software/01_Anaconda/bin/python /home/01_html/05_douyinAsynDload/04_2_subtract_4.py
+
 10 5 * * * /usr/bin/bash /home/01_html/05_douyinAsynDload/03_add_3_to_2.sh
 ```
 
 说明：
 
-使用crontab写个定时任务，每隔2分钟执行一次 /home/01_html/05_douyinAsynDload/02_douyinDown.py，python路径为 /home/00_software/01_Anaconda/bin/python
+1. 使用crontab写个定时任务，每隔2分钟执行一次 /home/01_html/05_douyinAsynDload/02_douyinDown.py，python路径为 /home/00_software/01_Anaconda/bin/python
 
-使用crontab写个定时任务，每天5点的时候执行 /home/01_html/05_douyinAsynDload/04_2_subtract_4.py，python路径为 /home/00_software/01_Anaconda/bin/python
+2. 使用crontab写个定时任务，每天5点的时候执行 /home/01_html/05_douyinAsynDload/04_2_subtract_4.py，python路径为 /home/00_software/01_Anaconda/bin/python
 
-使用crontab写个定时任务，每天5点10分的时候执行 /home/01_html/05_douyinAsynDload/03_add_3_to_2.sh，bash路径为 /usr/bin/bash
+3. 使用crontab写个定时任务，每天5点10分的时候执行 /home/01_html/05_douyinAsynDload/03_add_3_to_2.sh，bash路径为 /usr/bin/bash
 
 
 - **01_url_get.php**
