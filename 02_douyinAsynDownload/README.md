@@ -52,7 +52,7 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload
 
 # 环境配置
 
-- **定时任务**
+- **crontab定时任务**
 
 ```
 */2 * * * * /home/00_software/01_Anaconda/bin/python /home/01_html/05_douyinAsynDload/02_douyinDown.py
