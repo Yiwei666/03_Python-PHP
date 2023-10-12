@@ -88,6 +88,27 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload
 
 说明：写一个bash脚本，将3_failure.txt中的内容追加到2.txt文件中，追加后清空3_failure.txt中的内容。
 
+```bash
+#!/bin/bash
+
+# 定义文件名变量
+failure_file="/home/01_html/05_douyinAsynDload/3_failure.txt"
+success_file="/home/01_html/05_douyinAsynDload/2.txt"
+
+# 检查文件是否存在
+if [ -e "$failure_file" ] && [ -e "$success_file" ]; then
+    # 追加内容到4_success.txt
+    cat "$failure_file" >> "$success_file"
+
+    # 清空3_failure.txt
+    > "$failure_file"
+
+    echo "内容已成功追加到$success_file并清空了$failure_file"
+else
+    echo "文件不存在，请检查文件路径或创建文件"
+fi
+```
+
 - **04_2_subtract_4.py**
 
 说明：2.txt文件和4_success.txt中 每一行都有可能有一个https链接，现在需要写一个python脚本，删除2.txt文件中已经存在于4_success.txt中的链接，保留剩余的链接到原2.txt文件中。
