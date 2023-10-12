@@ -76,6 +76,55 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload
 能否写一个php脚本，在web页面访问该php脚本的时候显示一个输入框，提示输入保存字符串，用户输入字符串并点击输入保存按钮后，程序会提取该字符串中的 https链接，并将该链接以追加的方式写入到 2.txt文件中。
 下面是一个字符串例子，字符串通常是如下格式 “......”，只需要提取“https://v.douyin.com/abcdef/” 部分链接即可。
 
+```php
+<body>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // 获取用户输入的字符串
+        $userInput = $_POST["input"];
+
+        // 正则表达式匹配 https 链接
+        preg_match_all('/https:\/\/[^ ]+/', $userInput, $matches);
+
+        // 获取匹配到的链接
+        $links = $matches[0];
+
+        // 定义文件路径
+        $filePath = '/home/01_html/05_douyinAsynDload/2.txt';
+
+        // 将链接追加到文件
+        if (!empty($links)) {
+            $file = fopen($filePath, "a");
+            foreach ($links as $link) {
+                fwrite($file, $link . PHP_EOL);
+            }
+            fclose($file);
+            echo "<div id='output'>链接已成功保存到 $filePath 文件中！</div>";
+        } else {
+            echo "<div id='output'>未找到有效的链接，请重新输入。</div>";
+        }
+    }
+    ?>
+
+    <form id="inputForm" method="POST">
+        <textarea id="inputText" name="input" rows="5" cols="50" placeholder="请输入字符串"></textarea>
+        <br>
+        <input id="saveButton" type="submit" value="保存并执行">
+        <br>
+        <br>
+        <br>
+        <button id="visitButton" onclick="visitUrl()">刷新</button>
+    </form>
+
+    <script>
+        function visitUrl() {
+            window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";
+        }
+    </script>
+</body>
+```
+
+**注意：部署的时候注意修改跳转链接**
 
 - **02_douyinDown.py**
 
