@@ -119,4 +119,14 @@ for ((page=start_page; page<=end_page; page++)); do
 done
 ```
 
+# Englishpod 下载
+
+Internet Archive 网址：https://archive.org/details/englishpod_all/englishpod_0003pb.mp3
+
+音频下载链接：https://archive.org/compress/englishpod_all/formats=VBR%20MP3&file=/englishpod_all.zip
+
+共计5.2G，1197个MP3文件
+
+
+
 
