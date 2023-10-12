@@ -77,4 +77,24 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload
 下面是一个字符串例子，字符串通常是如下格式 “......”，只需要提取“https://v.douyin.com/abcdef/” 部分链接即可。
 
 
+- **02_douyinDown.py**
+
+1. 在 /home/01_html/05_douyinAsynDload/2.txt 中每一行可能有一个https链接，在/home/01_html/05_douyinAsynDload/4_success.txt  中每一行可能也有一个https链接，二者也有可能都是空的，现在需要筛选出 在2.txt中有的链接，同时在4_success.txt中没有的链接，并且从筛选出来的链接数组中随机抽取一个链接 赋值为 encoded_url。
+
+2. 继续修改上述代码，将下载成功的 encoded_url 追加到 /home/01_html/05_douyinAsynDload/4_success.txt中，下载失败的 encoded_url 追加到 3_failure.txt 中。
+
+
+- **03_add_3_to_2.sh**
+
+写一个bash脚本，将3_failure.txt中的内容追加到2.txt文件中，追加后清空3_failure.txt中的内容。
+
+- **04_2_subtract_4.py**
+
+2.txt文件和4_success.txt中 每一行都有可能有一个https链接，现在需要写一个python脚本，删除2.txt文件中已经存在于4_success.txt中的链接，保留剩余的链接到原2.txt文件中。
+
+
+
+
+
+
 
