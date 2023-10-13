@@ -107,3 +107,18 @@ curl  -o  name.mp4    https://s20.youtube4kdownloader.com/download7/hd5/zhwr5y5f
 7. 显示一个成功登录的消息和一个注销链接。
 8. 显示一个版权信息 
 ```
+
+注意：对应的txt文件，如 `questiondata.txt`的权限和所属用户和组需要进行设置，否则php在web端无法对txt文件进行写入
+
+```
+-rw-rw-rw-  1 www-data www-data       # questiondata.txt，对应ubuntu系统
+-rw-rw-rw-  1 nginx nginx             # questiondata.txt，对应centos系统
+```
+
+权限设置命令
+
+```
+chmod 666 questiondata.txt
+chown www-data:www-data questiondata.txt
+```
+
