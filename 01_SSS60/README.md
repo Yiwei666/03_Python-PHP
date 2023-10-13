@@ -128,5 +128,24 @@ Internet Archive 网址：https://archive.org/details/englishpod_all/englishpod_
 共计5.2G，1197个MP3文件
 
 
+# 英语听力资源
+
+- Englishpod：https://archive.org/details/englishpod_all
+- BBC world service: https://www.bbc.co.uk/sounds
+    - radio 1 : https://www.bbc.co.uk/sounds/play/live:bbc_radio_one
+    - radio 2 : https://www.bbc.co.uk/sounds/play/live:bbc_radio_two
+    - 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
