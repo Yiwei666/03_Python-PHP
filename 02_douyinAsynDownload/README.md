@@ -12,6 +12,8 @@
   <img src="image/structure.png" alt="Image Description" width="700">
 </p>
 
+注意：当txt2中的链接x第一次下载失败后，链接x会储存到txt3中，但是如果第二次x下载成功后，x会被追加到txt4中，这个时候，链接x会同时存在于txt2，txt3，和txt4中，当5点的时候删除txt2中已经存在于txt4中的链接
+
 - **项目文件组成**
 
 ```
