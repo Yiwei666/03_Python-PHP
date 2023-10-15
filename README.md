@@ -137,3 +137,19 @@ chown www-data:www-data questiondata.txt
     }
 </style>
 ```
+
+3. 能否修改上述代码，将 `输入字典数据的文本区域`  中的 中文设置为 微软雅黑字体，英文和数字设置为 Arial字体
+
+```
+<!-- 在 head 部分添加以下样式 -->
+<style>
+    #questiondata {
+      font-family: 'Microsoft YaHei', Arial, sans-serif; /* 使用微软雅黑字体作为中文首选字体，英文和数字使用Arial字体 */
+    }
+</style>
+```
+
+
+
+
+
