@@ -108,7 +108,7 @@ curl  -o  name.mp4    https://s20.youtube4kdownloader.com/download7/hd5/zhwr5y5f
 8. 显示一个版权信息 
 ```
 
-- 需要进行web读写的脚本权限和用户组设置
+1. 需要进行web读写的脚本权限和用户组设置
 
 注意：对应的txt文件，如 `questiondata.txt`的权限和所属用户和组需要进行设置，否则php在web端无法对txt文件进行写入
 
@@ -124,7 +124,7 @@ chmod 666 questiondata.txt
 chown www-data:www-data questiondata.txt
 ```
 
-- 将`在只读文本区域中显示内容` 中的中文设置为微软雅黑字体，英文和数字设置为 Arial字体
+2. 将`在只读文本区域中显示内容` 中的中文设置为微软雅黑字体，英文和数字设置为 Arial字体
 
 ```
 <!-- 在 head 部分添加以下样式 -->
