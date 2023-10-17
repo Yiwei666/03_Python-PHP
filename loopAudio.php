@@ -14,7 +14,29 @@
             transform: translate(-50%, -15%);
             text-align: center;
         }
+
+        form {
+            margin-bottom: 20px; /* 调整行间距的值，可以根据需要修改 */
+        }
+
+        #progressBar {
+            width: 100%;
+            height: 20px;
+            margin-top: 10px;
+            background-color: #ddd;
+        }
+
+        #progress {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+        }
+
+        #timeDisplay {
+            margin-top: 10px;
+        }
     </style>
+
 </head>
 <body>
 <div id="container">
@@ -24,28 +46,62 @@
         <input type="submit" value="播放">
     </form>
 
-    <script>
-        // PHP 变量传递到 JavaScript
-        var audioUrl = "<?php echo isset($_POST['audio_url']) ? $_POST['audio_url'] : ''; ?>";
+    <button id="toggleBtn" onclick="togglePlayPause()">暂停/播放</button>
 
-        // 播放音频
+    <div id="progressBar">
+        <div id="progress"></div>
+    </div>
+
+    <div id="timeDisplay">0:00 / 0:00</div>
+
+    <script>
+        var audioUrl = "<?php echo isset($_POST['audio_url']) ? $_POST['audio_url'] : ''; ?>";
+        var audio = new Audio(audioUrl);
+
         function playAudio() {
-            var audio = new Audio(audioUrl);
             audio.loop = true;
             audio.play();
 
-            // 定时检查音频是否已经播放完毕
             setInterval(function() {
                 if (audio.ended) {
-                    // 等待 1.5 秒后再次播放音频
                     setTimeout(function() {
                         audio.play();
                     }, 1500);
+                } else {
+                    updateProgressBar();
+                    updateTimeDisplay();
                 }
             }, 100);
         }
 
-        // 如果音频链接不为空，则播放音频
+        function togglePlayPause() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+
+        function updateProgressBar() {
+            var progress = (audio.currentTime / audio.duration) * 100;
+            document.getElementById("progress").style.width = progress + "%";
+        }
+
+        function updateTimeDisplay() {
+            var currentTime = formatTime(audio.currentTime);
+            var duration = formatTime(audio.duration);
+            document.getElementById("timeDisplay").innerText = currentTime + " / " + duration;
+        }
+
+        function formatTime(time) {
+            var minutes = Math.floor(time / 60);
+            var seconds = Math.floor(time % 60);
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            return minutes + ":" + seconds;
+        }
+
+        audio.addEventListener('timeupdate', updateProgressBar);
+
         if (audioUrl !== "") {
             playAudio();
         }
