@@ -5,9 +5,9 @@ header('Content-Type: text/html; charset=utf-8');
 date_default_timezone_set('Asia/Shanghai');
 
 // 连接到 MySQL 服务器
-$servername = "101.200.215.127";
-$username = "remosyw";
-$password = "syw@523,,,";
+$servername = "101.200.215.126";
+$username = "xiaomin";                 
+$password = "xiaomin123";
 $dbname = "dict_03_GRE";
 $port = 3306; // MySQL 服务器端口号，默认为 3306
 
