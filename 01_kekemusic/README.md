@@ -293,3 +293,20 @@ which python
 注意kekemusic.php脚本可以不用与python脚本放在同一个目录下
 
 **注意：由于本项目没有涉及到浏览器php脚本对后端文本的读写和python脚本调用，因此不需要设置权限。python脚本的调用和对txt文件的读写依赖于crontab定时任务，因此不需要设置执行和读写权限。**
+
+
+### 5. mysql数据迁移
+---
+
+```
+sudo mysqldump -p kkmusicdb > backup.sql           # 导出源服务器数据
+
+CREATE DATABASE kkmusicdb;                         # 在新服务器创建kkmusicdb数据库
+
+sudo mysql -u root -p kkmusicdb < backup.sql       # 在新服务器中导入数据
+```
+
+
+
+
+
