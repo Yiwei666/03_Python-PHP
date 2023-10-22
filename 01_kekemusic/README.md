@@ -306,7 +306,7 @@ CREATE DATABASE kkmusicdb;                         # 在新服务器创建kkmusi
 sudo mysql -u root -p kkmusicdb < backup.sql       # 在新服务器中导入数据
 ```
 
-
+- 参考资料：https://github.com/Yiwei666/12_blog/blob/main/005/005.md
 
 
 
