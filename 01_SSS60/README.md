@@ -62,7 +62,7 @@ done < "$input_file"
 
 脚本会在下载前检查指定路径下是否已存在相同文件名的 mp3 文件，如果存在，则会输出提示信息并跳过下载。
 
-```
+```bash
 #!/bin/bash
 
 input_file="audio_url.txt"
