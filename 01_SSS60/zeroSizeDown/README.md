@@ -18,15 +18,16 @@
 
 
 .
-├── 02_zeroSizeList_Audio
-├── download_audio_zeroSizeList.sh
-├── zeroNameUrl_extract.py
-├── pre_downloadUrl.txt
-├── cut_pastAudio.py
-├── cut_paste.txt
+├── /01_audio/ 
+├── /02_zeroSizeList_Audio/
 ├── total_audio_url.txt
+├── zeroSize_audioName_find.py        # 获取目录中为空的音频文件名
 ├── zero-size.txt
-└── zeroSize_audioName_find.py
+├── zeroNameUrl_extract.py            # 基于待下载文件名获取待下载音频链接
+├── pre_downloadUrl.txt
+├── download_audio_zeroSizeList.sh    # 下载pre_downloadUrl.txt中的音频到/02_zeroSizeList_Audio/目录中
+├── cut_pastAudio.py
+└── cut_paste.txt
 
 ```
 
@@ -55,6 +56,58 @@ with open('zero-size.txt', 'w') as output_file:
 print("文件名已写入 zero-size.txt 文件。")
 ```
 
+- **zeroNameUrl_extract.py**
 
+已知 A文件有多行，每一行中依次有文件名和链接，通过英文“,”分隔。现在有B文件，每一行是一个文件名，现在需要将A文件中文件名存在于B文件中的行，包括文件名和链接重新写入到C文件中，仍然使用英文“,”分隔二者，使用python完成，对于文件名采用变量赋值
 
+```python
+# 打开A文件以读取内容，包含所有文件名和链接
+with open('total_audio_url.txt', 'r') as a_file:
+    a_lines = a_file.readlines()
+
+# 打开B文件以读取内容，仅空文件名
+with open('zero-size.txt', 'r') as b_file:
+    b_lines = b_file.read().splitlines()
+
+# 打开C文件以写入内容
+with open('pre_downloadUrl.txt', 'w') as c_file:
+    for line in a_lines:
+        parts = line.strip().split(',')
+        if len(parts) == 2:
+            filename, link = parts
+            if filename+".mp3" in b_lines:
+                c_file.write(f"{filename},{link}\n")
+
+print("匹配的行已写入到 pre_downloadUrl.txt 文件中。")
+```
+
+- **cut_pastAudio.py**
+
+查找X目录下的0 KB的MP3文件，然后在Y目录中查找同名的非零MP3文件，将其剪切到X目录，并将剪切成功的文件名写入`cut_paste.txt`文件中。
+
+```python
+import os
+import shutil
+
+# X目录和Y目录的路径
+x_directory = '/home/01_html/04_sss60/01_audio'
+y_directory = '/home/01_html/04_sss60/02_zeroSizeList_Audio'
+
+# 列出X目录中大小为0的MP3文件
+zero_size_mp3_files = [f for f in os.listdir(x_directory) if f.endswith('.mp3') and os.path.getsize(os.path.join(x_directory, f)) == 0]
+
+# 创建cut_paste.txt文件以写入剪切成功的文件名
+with open('cut_paste.txt', 'w') as cut_paste_file:
+    # 遍历X目录中的0 KB MP3文件
+    for zero_size_mp3_file in zero_size_mp3_files:
+        # 构造同名文件在Y目录中的路径
+        y_mp3_file = os.path.join(y_directory, zero_size_mp3_file)
+
+        # 如果在Y目录中找到同名非零MP3文件，则剪切到X目录
+        if os.path.exists(y_mp3_file) and os.path.getsize(y_mp3_file) > 0:
+            shutil.move(y_mp3_file, os.path.join(x_directory, zero_size_mp3_file))
+            cut_paste_file.write(zero_size_mp3_file + '\n')
+
+print("剪切成功的MP3文件名已写入 cut_paste.txt 文件。")
+```
 
