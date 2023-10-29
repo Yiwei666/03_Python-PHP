@@ -1,6 +1,8 @@
 # 项目功能
 
-使用python和bash脚本下载 scientific American podcasts 音频，官网是 https://www.scientificamerican.com/podcasts/?page=70
+- 使用python和bash脚本下载 scientific American podcasts 音频，官网是 https://www.scientificamerican.com/podcasts/?page=70
+
+- `zeroSizeDown`是一个独立的目录，主要针对未下载成功的大小为 0 KB的mp3文件的重新下载
 
 # 项目结构
 
