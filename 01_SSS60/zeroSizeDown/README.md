@@ -17,7 +17,25 @@
 └── sync_audio.sh               # 同步音频到其他云服务器
 
 
+.
 
+├── 02_zeroSizeList_Audio
+
+├── check_mp3.sh
+
+
+├── download_audio_zeroSizeList.sh
+
+├── zeroNameUrl_extract.py
+├── pre_downloadUrl.txt
+├── cut_pastAudio.py
+├── cut_paste.txt
+
+├── total_audio_url.txt
+
+├── zero-size.txt
+
+└── zeroSize_audioName_find.py
 
 
 
