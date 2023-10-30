@@ -4,6 +4,8 @@
 
 # 文件结构
 
+- **一级文件目录**
+
 ```
 .
 ├── sss.html                    # 临时文件，内含多个音频文件，大概有300页
@@ -15,8 +17,11 @@
 ├── page_range_control.sh       # 控制指定页码范围内的音频链接下载
 ├── /01_audio/                    # 存储音频的文件夹
 └── sync_audio.sh               # 同步音频到其他云服务器
+```
 
+- **二级文件目录**
 
+```
 .
 ├── /01_audio/ 
 ├── /02_zeroSizeList_Audio/
@@ -28,7 +33,6 @@
 ├── download_audio_zeroSizeList.sh    # 下载pre_downloadUrl.txt中的音频到/02_zeroSizeList_Audio/目录中
 ├── cut_pastAudio.py                  # 将/02_zeroSizeList_Audio/目录下非空的mp3文件剪切到/01_audio/目录下同名的非空音频文件中
 └── cut_paste.txt
-
 ```
 
 - **计算流程**
