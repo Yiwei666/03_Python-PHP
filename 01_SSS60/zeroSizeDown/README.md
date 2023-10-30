@@ -26,14 +26,23 @@
 ├── zeroNameUrl_extract.py            # 基于待下载文件名获取待下载音频链接
 ├── pre_downloadUrl.txt
 ├── download_audio_zeroSizeList.sh    # 下载pre_downloadUrl.txt中的音频到/02_zeroSizeList_Audio/目录中
-├── cut_pastAudio.py
+├── cut_pastAudio.py                  # 将/02_zeroSizeList_Audio/目录下非空的mp3文件剪切到/01_audio/目录下同名的非空音频文件中
 └── cut_paste.txt
 
 ```
 
+1. 使用`zeroSize_audioName_find.py`脚本将`/01_audio/ `目录下大小为 0 KB的mp3文件名写入到 `zero-size.txt` 文本中
+2. 使用`zeroNameUrl_extract.py`脚本，比对 `zero-size.txt` 文本和 `total_audio_url.txt` 文本，将大小为 0 KB 的mp3文件名以及对应下载链接写入到`pre_downloadUrl.txt`文本中
+3. 
+
+
+
+
+
+
 - **zeroSize_audioName_find.py**
 
-当您需要将指定目录下大小为0 KB的MP3文件名写入到一个名为`zero-size.txt`的文件中时，您可以使用Python来完成这个任务。以下是一个Python脚本示例，它可以做到这一点：
+当您需要将指定目录下大小为 0 KB的MP3文件名写入到一个名为`zero-size.txt`的文件中时，您可以使用Python来完成这个任务。以下是一个Python脚本示例，它可以做到这一点：
 
 ```python
 import os
