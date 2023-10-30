@@ -31,14 +31,16 @@
 
 ```
 
+- **计算流程**
+
 1. 使用`zeroSize_audioName_find.py`脚本将`/01_audio/ `目录下大小为 0 KB的mp3文件名写入到 `zero-size.txt` 文本中
 2. 使用`zeroNameUrl_extract.py`脚本，比对 `zero-size.txt` 文本和 `total_audio_url.txt` 文本，将大小为 0 KB 的mp3文件名以及对应下载链接写入到`pre_downloadUrl.txt`文本中
-3. 
+3. 使用`download_audio_zeroSizeList.sh`脚本基于`pre_downloadUrl.txt`文本中的音频链接下载音频文件
+4. 使用`cut_pastAudio.py`脚本将`/02_zeroSizeList_Audio/`目录下非空的mp3文件剪切到`/01_audio/`目录下同名的非空音频文件中，将成功剪切的文件名写入到`cut_paste.txt`文本中
 
 
 
-
-
+# 环境配置
 
 - **zeroSize_audioName_find.py**
 
