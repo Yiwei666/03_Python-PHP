@@ -54,3 +54,13 @@ with open('homeUrl.txt', 'w', encoding='utf-8') as output_file:
 print('URLs已写入到homeUrl.txt文件中')
 
 ```
+
+3. 下载子页面，获取每个子页面中的音频链接
+
+```
+curl -o subPage.html https://www.bbc.co.uk/learningenglish/english/features/6-minute-english_2023/ep-231026
+```
+
+
+
+
