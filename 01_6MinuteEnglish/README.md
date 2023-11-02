@@ -3,6 +3,15 @@
 
 # 文件结构
 
+```
+.
+├── audioUrl.txt
+├── bbc6min.html
+├── homeUrl.txt
+├── parser_bbc6Min_html.py
+├── parser_subPage_html.py
+└── subPage.html
+```
 
 # 环境配置
 
