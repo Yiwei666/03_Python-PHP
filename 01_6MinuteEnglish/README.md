@@ -8,7 +8,7 @@
 
 1. 下载主页面
 
-```
+```bash
 curl -o bbc6min.html https://www.bbc.co.uk/learningenglish/english/features/6-minute-english
 ```
 
