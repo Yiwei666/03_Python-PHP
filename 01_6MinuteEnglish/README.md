@@ -8,14 +8,14 @@
 ├── /01_audio/                # 存储音频文件夹 
 ├── bbc6min.html              # 主页面，包含所有子页面链接
 ├── parser_bbc6Min_html.py    # 解析bbc6min.html主页面，将所有子页面链接写入到homeUrl.txt文件中
-├── homeUrl.txt
-├── subPage.html
-├── parser_subPage_html.py
-├── loopDownUrl.sh
-├── audioUrl.txt
-├── seperate_nameURL.sh
-├── nameURL_audio.txt
-└── download_mp3.sh
+├── homeUrl.txt               # 存储所有子页面链接
+├── subPage.html              # 单个子页面
+├── parser_subPage_html.py    # 解析单子页面，获取音频链接
+├── loopDownUrl.sh            # 对所有子页面进行循环，将所有音频链接写入到 audioUrl.txt 文件
+├── audioUrl.txt              # 存储所有音频链接
+├── seperate_nameURL.sh       # 获取每个音频链接文件名和对应链接
+├── nameURL_audio.txt         # 文件名及相应链接
+└── download_mp3.sh           # 基于nameURL_audio.txt文件下载音频
 ```
 
 
