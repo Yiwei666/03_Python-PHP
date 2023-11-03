@@ -1,5 +1,8 @@
 # 项目功能
 
+- 下载 BBC Learning English - 6 Minute English 中的音频
+
+- 链接： https://www.bbc.co.uk/learningenglish/english/features/6-minute-english
 
 # 文件结构
 
