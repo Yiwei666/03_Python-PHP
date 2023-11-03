@@ -5,13 +5,19 @@
 
 ```
 .
-├── audioUrl.txt
-├── bbc6min.html
+├── /01_audio/                # 存储音频文件夹 
+├── bbc6min.html              # 主页面，包含所有子页面链接
+├── parser_bbc6Min_html.py    # 解析bbc6min.html主页面，将所有子页面链接写入到homeUrl.txt文件中
 ├── homeUrl.txt
-├── parser_bbc6Min_html.py
+├── subPage.html
 ├── parser_subPage_html.py
-└── subPage.html
+├── loopDownUrl.sh
+├── audioUrl.txt
+├── seperate_nameURL.sh
+├── nameURL_audio.txt
+└── download_mp3.sh
 ```
+
 
 # 环境配置
 
