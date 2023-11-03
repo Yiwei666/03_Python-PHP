@@ -147,9 +147,80 @@ done < homeUrl.txt
 
 ```
 
+5. 获取英文文件名及相应链接
 
+有一个audioUrl.txt文件，里面每一行是一个mp3音频下载链接，针对每一个链接，写个bash脚本进行如下操作，
+提取每个链接中的文件名，然后将文件名和链接依次写入到nameURL_audio.txt文件中，二者使用英文逗号分隔
+注意音频文件名通常为链接中最后一个"/"后的部分，但是要去除".mp3"后缀，例如针对如下链接，`https://downloads.bbc.co.uk/learningenglish/features/6min/230427_6min_english_women_in_politics_download.mp3`
+音频文件名为 "230427_6min_english_women_in_politics_download"
 
+**seperate_nameURL.sh**
 
+```bash
+#!/bin/bash
+
+# 检查audioUrl.txt文件是否存在
+if [ ! -f "audioUrl.txt" ]; then
+    echo "audioUrl.txt文件不存在"
+    exit 1
+fi
+
+# 清空或创建nameURL_audio.txt文件
+> nameURL_audio.txt
+
+# 逐行读取audioUrl.txt文件中的链接
+while IFS= read -r url
+do
+    # 提取音频文件名
+    file_name=$(basename "$url" | sed 's/\.mp3$//')
+
+    # 将文件名和链接写入nameURL_audio.txt文件，用逗号分隔
+    echo "$file_name,$url" >> nameURL_audio.txt
+done < audioUrl.txt
+
+```
+
+6. 创建保存音频的文件夹，循环下载所有音频
+
+创建文件夹
+```
+mkdir 01_audio
+```
+
+下载音频脚本
+
+**download_mp3.sh**
+
+```bash
+#!/bin/bash
+
+input_file="nameURL_audio.txt"
+output_path="/home/01_html/06_bbc6MinuteEnglish/01_audio"
+
+# 读取每一行
+while IFS=, read -r filename url; do
+    # 移除文件名和网址中的空格
+    filename=$(echo "$filename" | tr -d ' ')
+    url=$(echo "$url" | tr -d ' ')
+
+    # 检查文件是否已存在
+    if [ -e "$output_path/$filename.mp3" ]; then
+        echo "File $filename.mp3 already exists in $output_path. Skipping..."
+    else
+        # 使用curl获取重定向后的mp3链接
+        redirected_url=$(curl -s -L -o /dev/null -w '%{url_effective}' "$url")
+
+        # 使用wget下载mp3音频，并以文件名命名，输出到指定路径
+        wget -O "$output_path/$filename.mp3" "$redirected_url"
+
+        echo "Downloaded $filename.mp3 from $redirected_url to $output_path"
+    fi
+
+    # 添加5秒的延迟
+    sleep 5
+done < "$input_file"
+
+```
 
 
 
