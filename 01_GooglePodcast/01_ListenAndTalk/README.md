@@ -10,10 +10,10 @@
 ```
 .
 ├── /01_audio/              # 存放音频的文件夹
-├── homepage.html
-├── nameURL_extract.py
-├── nameURL.txt
-└── download_mp3.sh
+├── homepage.html           # 下载的podcast首页
+├── nameURL_extract.py      # 提取homepage.html首页中的音频链接
+├── nameURL.txt             # 提取到的文件名和链接储存到nameURL.txt文件中
+└── download_mp3.sh         # 基于nameURL.txt文件中的链接下载音频
 ```
 
 
