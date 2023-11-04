@@ -19,7 +19,7 @@
 
 # 环境配置
 
-1.下载相应podcast主页面为 homepage.html
+1. 下载相应podcast主页面为 homepage.html
 
 ```bash
 curl -o homepage.html  https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3VuZG9uLmZtL3BvZGNhc3RzLzA5MWVhMzM3LTkwZTItNDAzZC04YzcwLTg2OGFlZTRiMDAyMy54bWw?sa=X&ved=0CAIQ9sEGahgKEwjIjuDN6qmCAxUAAAAAHQAAAAAQjgk
