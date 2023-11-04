@@ -19,7 +19,7 @@
 
 # 环境配置
 
-### 1. 下载相应podcast主页面为 homepage.html
+1. 下载相应podcast主页面为 homepage.html
 
 ```bash
 curl -o homepage.html  https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3VuZG9uLmZtL3BvZGNhc3RzLzA5MWVhMzM3LTkwZTItNDAzZC04YzcwLTg2OGFlZTRiMDAyMy54bWw?sa=X&ved=0CAIQ9sEGahgKEwjIjuDN6qmCAxUAAAAAHQAAAAAQjgk
@@ -31,7 +31,7 @@ curl -o homepage.html  https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3Vu
 grep 'listitem' homepage.html
 ```
 
-### 2. 提取homepage.html文件中的文件名和音频链接，文件名中仅包含中文汉字、英文字母以及阿拉伯数字
+2. 提取homepage.html文件中的文件名和音频链接，文件名中仅包含中文汉字、英文字母以及阿拉伯数字
 
 - 使用python解析homepage.html文件，首先定位所有`role="listitem"`的a标签，然后在每一个a标签中定位`class="LTUrYb"`的div 标签，提取该div标签中的文本作为标题；
 - 然后在a标签中定位`jsname="fvi9Ef"`的div 标签，提取该div标签中的`jsdata`属性值，截取该属性值中两个“;”之间的内容作为链接；
@@ -73,7 +73,7 @@ with open('nameURL.txt', 'w', encoding='utf-8') as output_file:
 print('Extraction and writing to nameURL.txt completed.')
 ```
 
-### 3. 基于nameURL.txt中的文件名和链接下载音频
+3. 基于nameURL.txt中的文件名和链接下载音频
 
 避免重复下载，默认下载间隔为5秒钟
 
