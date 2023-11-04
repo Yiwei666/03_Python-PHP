@@ -83,7 +83,7 @@ print('Extraction and writing to nameURL.txt completed.')
 
 3. 基于nameURL.txt中的文件名和链接下载音频
 
-避免重复下载，默认下载间隔为5秒钟
+避免重复下载，默认下载间隔为5秒钟，注意创建和修改保存音频文件的路径
 
 download_mp3.sh
 
