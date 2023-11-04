@@ -73,7 +73,7 @@ with open('nameURL.txt', 'w', encoding='utf-8') as output_file:
 print('Extraction and writing to nameURL.txt completed.')
 ```
 
-
+3. 基于nameURL.txt中的文件名和链接下载音频
 
 
 
