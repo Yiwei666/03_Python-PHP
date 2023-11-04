@@ -1,6 +1,6 @@
 # 项目功能
 
-- 下载空中英语教室出品的 listen and talk 博客中的音频
+- 下载Google Podcast中空中英语教室出品的 listen and talk 博客中的音频
 
 - 官网：https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3VuZG9uLmZtL3BvZGNhc3RzLzA5MWVhMzM3LTkwZTItNDAzZC04YzcwLTg2OGFlZTRiMDAyMy54bWw?sa=X&ved=0CAIQ9sEGahcKEwjgyM7j_qmCAxUAAAAAHQAAAAAQEQ
 
