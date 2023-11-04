@@ -117,6 +117,22 @@ while IFS=, read -r filename url; do
 done < "$input_file"
 ```
 
+4. 同步到境内云服务器并设置在线播放脚本
+
+
+83_syn_azure2-1_to_HW.sh
+
+```bash
+#!/bin/bash
+
+# 定义源目录和目标服务器信息
+source_dir="/home/01_html/08_EngLearnCuriousMind/"
+target_server="root@125.46.87.48"
+target_dir="/home/01_html/36_EngLearnCuriousMind/"
+
+# 执行rsync命令
+rsync -avz "$source_dir" "$target_server:$target_dir"
+```
 
 
 # 参考资料
