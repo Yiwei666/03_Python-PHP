@@ -21,6 +21,8 @@
 
 代码将会显示具有.html、.php和.js扩展名的文件列表。
 
+`lsfile_darkTheme.php`在`lsfile_js.php`基础上新增深色主题功能。
+
 - 13_MixPlayers.php (聚合在线音频播放器) 
 
 ```
