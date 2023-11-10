@@ -147,6 +147,14 @@ if (isset($_GET['logout'])) {
 			echo "<script>window.location.replace('$cp2kSearchUrl');</script>";
 			exit;
 		}
+		if(isset($_GET['query_今日头条'])) {
+		    $query_今日头条 = $_GET['query_今日头条'];
+		    $今日头条_Url = 'https://www.google.com/search?q=site%3Atoutiao.com+' . $query_今日头条;
+		    echo "<script>window.location.replace('$今日头条_Url');</script>";
+		    exit;
+		}
+
+
 	?>
 	<form method="GET" target="_blank">
 		<label for="query">搜索:</label>
@@ -213,5 +221,12 @@ if (isset($_GET['logout'])) {
 		<input type="text" name="cp2k_query" id="cp2k_query" placeholder="搜索 cp2k">
 		<input type="submit" value="搜索">
 	</form>
+	<form method="GET">
+	    <label for="query_今日头条">在 今日头条 中搜索:</label>
+	    <input type="text" name="query_今日头条" id="query_今日头条" placeholder=" 今日头条 搜索">
+	    <input type="submit" value="搜索">
+	</form>
+
+
 </body>
 </html>
