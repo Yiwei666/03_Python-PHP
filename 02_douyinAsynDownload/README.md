@@ -17,17 +17,18 @@
 - **项目文件组成**
 
 ```
-.
-├── 01_url_get.php                   # web页面上提醒输入链接，写入到2.txt中
-├── 02_douyinDown.py                 # 筛选2.txt中存在，4_success.txt中不存在的链接进行下载，定时每2分钟下载一次
-├── 03_add_3_to_2.sh                 # 凌晨5.10分将3_failure.txt中的链接追加到2.txt中，并清空3_failure.txt
-├── 04_2_subtract_4.py               # 凌晨5点，筛选2.txt中的链接，保存不存在于4_success.txt中的链接
-├── 2.txt                            # 保存所有待下载的链接
-├── 3_failure.txt                    # 保存下载失败的链接，定期追加到2.txt中，然后清空
-└── 4_success.txt                    # 存储所有下载成功的链接，保证不重复下载
+├── 05_douyinAsynDload                   # 文件夹，存储该项目所有核心脚本
+    ├── 01_url_get.php                   # web页面上提醒输入链接，写入到2.txt中
+    ├── 02_douyinDown.py                 # 筛选2.txt中存在，4_success.txt中不存在的链接进行下载，定时每2分钟下载一次
+    ├── 03_add_3_to_2.sh                 # 凌晨5.10分将3_failure.txt中的链接追加到2.txt中，并清空3_failure.txt
+    ├── 04_2_subtract_4.py               # 凌晨5点，筛选2.txt中的链接，保存不存在于4_success.txt中的链接
+    ├── 2.txt                            # 保存所有待下载的链接
+    ├── 3_failure.txt                    # 保存下载失败的链接，定期追加到2.txt中，然后清空
+    └── 4_success.txt                    # 存储所有下载成功的链接，保证不重复下载
+
 
 .
-├── 02_douyVideo                     # 存储视频的文件夹
+├── 02_douyVideo                         # 存储视频的文件夹
 │   ├── 20231012-031208.mp4
 │   ├── 20231012-031409.mp4
 │   ├── 20231012-031608.mp4
@@ -47,8 +48,8 @@
 -rw-rw-rw- 1 root  root     0 Oct 12 05:10 3_failure.txt
 -rw-rw-rw- 1 root  root  4867 Oct 12 03:20 4_success.txt
 
-drwxrwxr-x  2 nginx nginx    65536 Oct 12 03:20 02_douyVideo
-drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload
+drwxrwxr-x  2 nginx nginx    65536 Oct 12 03:20 02_douyVideo             # 存储视频的文件夹
+drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存储核心脚本的文件夹
 ```
 
 
