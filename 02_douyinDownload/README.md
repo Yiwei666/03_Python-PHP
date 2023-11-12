@@ -13,7 +13,8 @@
 
 # 1. 主要脚本和文件位置
 
-项目文件结构
+- 项目文件结构
+
 ```
 
 ├── 04_douyin_PHP_download.php
@@ -34,31 +35,34 @@
 ```
 
 
-针对如下php脚本，更改视频路径、每行显示的视频数量、视频尺寸大小时，需要更改如下代码
+- 针对如下php脚本，更改视频路径、每行显示的视频数量、视频尺寸大小时，需要更改如下代码
+
+`douyVideo.php/douyVideo_AutoCenter_Pad.php/douyVideo_AutoCenter.php` 等
+
+```php
+$videosPerRow = 3;                                      // 可以根据需要更改每行显示的视频数量
+$videoPath = '/home/01_html/02_douyVideo/';             // 存储视频目录
+$videoUrl = $domain . '/02_douyVideo/' . $videoName;    // 构造视频访问链接
+echo '<video controls width="300" height="400" onended="playNextVideo(this)">'; // 添加onended事件，视频的长和宽
 ```
-douyVideo.php/douyVideo_AutoCenter_Pad.php/douyVideo_AutoCenter.php
-
-$videosPerRow = 3; // 可以根据需要更改每行显示的视频数量
-$videoPath = '/home/01_html/02_douyVideo/';
-$videoUrl = $domain . '/02_douyVideo/' . $videoName;
-echo '<video controls width="300" height="400" onended="playNextVideo(this)">'; // 添加onended事件
-```
 
 
-下面三个php脚本需要位于同一目录
+- 下面三个php脚本需要位于同一目录
+
 ```
 04_douyin_PHP_download.php       // 在web上提示用户输入抖音视频分享链接，提取url，覆盖写入到txt文件
 run_python_script.php            // 执行python脚本，下载视频
 print_log_file.php               // 打印日志内容到web页面
 ```
 
-视频下载脚本可以位于其他目录，推荐与txt文件位于同一目录，便于管理
+- 如下视频下载脚本可以位于其他目录，推荐与txt文件位于同一目录，便于管理
+
 ```
 01_douyinDown.py                 // 读取txt文件的url，下载抖音视频，将日志内容覆盖写入日志文件
-01_douyinDown_api.py             // 基于新的抖音视频下载api
+01_douyinDown_api.py             // 与上述脚本功能类似，基于自己部署的抖音视频下载api
 ```
 
-**注意在相应路径下创建这两个文件并进行权限设置**
+- **注意在相应路径下创建这两个文件并进行权限设置**
 
 ```
 /home/01_html/05_douyinDownload/douyin_url.txt          // 保存抖音url
@@ -99,8 +103,6 @@ drwxr-xr-x  2 nginx nginx      199 Oct 10 21:58 05_douyinDownload               
 -rw-r--r--  1 root  root      5603 Jul  2 15:57 lsDouyin.php
 
 ```
-
-
 
 
 **示例**
@@ -161,6 +163,8 @@ sudo chmod 664 /path/to/your/file.txt
 请注意，确保文件和目录的权限设置能够平衡安全性和可访问性，以防止潜在的安全风险。根据您的实际需求和环境，请适当地调整权限设置。
 
 在更改文件和目录的权限和所有者之后，重新尝试通过 Web 浏览器访问 PHP 脚本并调用 Python 脚本，以查看是否解决了问题。
+
+
 
 # 3. 页面显示设置
 
