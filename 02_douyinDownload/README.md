@@ -1,4 +1,4 @@
-### 项目功能
+# 项目功能
 ---
 
 在web端获取抖音分享url，下载视频到vps指定目录，打印执行过程日志信息，在web页面显示视频
@@ -12,7 +12,7 @@
 ```
 
 
-### 1. 主要脚本和文件位置
+# 1. 主要脚本和文件位置
 ---
 
 项目文件结构
@@ -72,12 +72,38 @@ print_log_file.php               // 打印日志内容到web页面
 
 
 
-### 2. 权限设置
+# 2. 权限设置
 ---
 
 - 浏览器运行php脚本，该php脚本在vps上实现对txt文件的读取和写入，对php脚本的调用，python脚本的调用，然后python脚本执行对txt文件的读取和写入，以及下载视频文件到其他文件夹中  
 - 涉及到的所有txt文件需要更改组和读写权限，尤其是python进行读写的txt文件
 - 涉及到的所有脚本和文件夹要添加执行权限，包括视频写入的文件夹，python脚本,php脚本等
+
+```
+# 1. 文件夹
+drwxrwxr-x  2 nginx nginx   102400 Nov 11 17:24 02_douyVideo                            # 文件夹
+
+drwxr-xr-x  2 nginx nginx      199 Oct 10 21:58 05_douyinDownload                       # 文件夹
+            -rw-r--r-- 1 root  root  1932 Oct 10 21:58 01_douyinDown.py
+            -rw-rw-rw- 1 root  root   697 Oct 15 00:03 douyin_log.txt
+            -rw-rw-rw- 1 nginx nginx  149 Oct 15 00:03 douyin_url.txt
+
+# 2. 核心脚本
+-rw-r--r--  1 nginx nginx     2255 Jun 23 17:06 04_douyin_PHP_download.php
+-rw-r--r--  1 root  root       152 Jun 21 23:02 print_log_file.php
+-rw-r--r--  1 root  root       222 Jun 21 23:02 run_python_script.php
+
+# 3. 辅助脚本
+-rw-r--r--  1 root  root      7458 Jul  9 01:16 douyinVideo_page.php
+-rw-r--r--  1 root  root      6863 Jul  4 21:59 douyVideo_AutoCenter_Pad_Loop.php
+-rw-r--r--  1 root  root      5361 Jul  1 01:31 douyVideo_AutoCenter_Pad.php
+-rw-r--r--  1 root  root      4205 Jul  2 01:07 douyVideo_AutoCenter.php
+-rw-r--r--  1 root  root      3989 Jul  2 01:04 douyVideo.php
+-rw-r--r--  1 root  root      5603 Jul  2 15:57 lsDouyin.php
+
+```
+
+
 
 
 **示例**
@@ -139,7 +165,7 @@ sudo chmod 664 /path/to/your/file.txt
 
 在更改文件和目录的权限和所有者之后，重新尝试通过 Web 浏览器访问 PHP 脚本并调用 Python 脚本，以查看是否解决了问题。
 
-### 3. 页面显示设置
+# 3. 页面显示设置
 ---
 
 要将页面的背景色修改为黑色，可以在 <style> 标签中添加以下 CSS 规则：
@@ -154,7 +180,7 @@ sudo chmod 664 /path/to/your/file.txt
 
 将这段代码添加到 <style> 标签内，然后保存并刷新页面，即可将页面的背景色设置为黑色。
 
-### 4. 其他部署方式
+# 4. 其他部署方式
 ---
 
 - node.js实现
