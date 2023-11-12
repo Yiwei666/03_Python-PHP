@@ -62,6 +62,45 @@ print_log_file.php               // 打印日志内容到web页面
 01_douyinDown_api.py             // 与上述脚本功能类似，基于自己部署的抖音视频下载api
 ```
 
+上述两个脚本的主要区别
+
+```python
+# Script 1
+url1 = "https://dlpanda.com/zh-CN/?url="
+url = url1 + encoded_url + "&token=G7eRpMaa"
+
+# Script 2
+url1 = "https://api.douyin.wtf/api?url="
+url = url1 + encoded_url + "&minimal=true"
+
+# -----------------------------------
+
+# Script 1
+source_tag = soup.find("source")
+src = source_tag.get("src")
+src = "https:" + src.replace("amp;", "")
+
+# Script 2
+data = json.loads(content)
+nwm_video_url = data.get("nwm_video_url")
+
+# -----------------------------------
+
+# Script 1
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+    "Referer": "https://dlpanda.com/",
+}
+
+# Script 2
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+    "Referer": "https://douyin.wtf/",
+}
+
+```
+
+
 - **注意在相应路径下创建这两个文件并进行权限设置**
 
 ```
