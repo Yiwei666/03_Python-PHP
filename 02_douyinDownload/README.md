@@ -82,12 +82,11 @@ print_log_file.php               // 打印日志内容到web页面
 
 ```
 # 1. 文件夹
-drwxrwxr-x  2 nginx nginx   102400 Nov 11 17:24 02_douyVideo                            # 文件夹
-
-drwxr-xr-x  2 nginx nginx      199 Oct 10 21:58 05_douyinDownload                       # 文件夹
-            -rw-r--r-- 1 root  root  1932 Oct 10 21:58 01_douyinDown.py
-            -rw-rw-rw- 1 root  root   697 Oct 15 00:03 douyin_log.txt
-            -rw-rw-rw- 1 nginx nginx  149 Oct 15 00:03 douyin_url.txt
+├── drwxrwxr-x  2 nginx nginx   102400 Nov 11 17:24 02_douyVideo                            # 文件夹
+├── drwxr-xr-x  2 nginx nginx      199 Oct 10 21:58 05_douyinDownload                       # 文件夹
+│   ├── -rw-r--r-- 1 root  root  1932 Oct 10 21:58 01_douyinDown.py
+│   ├── -rw-rw-rw- 1 root  root   697 Oct 15 00:03 douyin_log.txt
+│   ├── -rw-rw-rw- 1 nginx nginx  149 Oct 15 00:03 douyin_url.txt
 
 # 2. 核心脚本
 -rw-r--r--  1 nginx nginx     2255 Jun 23 17:06 04_douyin_PHP_download.php
