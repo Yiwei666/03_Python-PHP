@@ -3,6 +3,14 @@
 
 # 文件结构
 
+```
+01_worldMap.php          # 基于经纬度在世界地图中进行标注
+02_ipToCity_ipapi.php    # 基于 https://ipapi.co/{$ip}/city/ 获取城市等信息
+02_ipToCity.php          # 基于 https://ipinfo.io/{$ip}/json 获取相关信息
+
+```
+
+
 
 
 # 环境配置
