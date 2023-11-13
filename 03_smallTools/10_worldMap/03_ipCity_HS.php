@@ -21,12 +21,13 @@
         // Get IP address from the request
         $ip = $_SERVER['HTTP_CF_CONNECTING_IP'];
 
-        // Get location information based on IP address
-        $locationResponse = file_get_contents("https://ipinfo.io/{$ip}/json");
-        $locationData = json_decode($locationResponse);
+        // Get latitude and longitude from ipapi.co
+        $lat = file_get_contents("https://ipapi.co/{$ip}/latitude/");
+        $lon = file_get_contents("https://ipapi.co/{$ip}/longitude/");
 
-        // Get latitude and longitude separately
-        list($lat, $lon) = explode(',', $locationData->loc);
+        // Get location information based on IP address from ipapi.co
+        $country = file_get_contents("https://ipapi.co/{$ip}/country_name/");
+        $city = file_get_contents("https://ipapi.co/{$ip}/city/");
 
         // Get current time in Beijing time
         $beijingOffset = 8; // UTC+8
@@ -38,8 +39,9 @@
 
     <div class="info">
         <p>Your IP address is: <?php echo $ip; ?></p>
-        <p>Your location is: <?php echo $locationData->country; ?>, <?php echo $locationData->city; ?></p>
+        <p>Your location is: <?php echo $country; ?>, <?php echo $city; ?></p>
         <p>The current time is: <?php echo $date->format('Y/m/d H:i:s'); ?></p>
+        <p>City information: { lat: <?php echo $lat; ?>, lon: <?php echo $lon; ?>, name: '<?php echo $city; ?>, <?php echo $country; ?>' }</p>
     </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -47,7 +49,7 @@
         var cityInformation = {
             lat: <?php echo $lat; ?>,
             lon: <?php echo $lon; ?>,
-            name: '<?php echo $locationData->city; ?>, <?php echo $locationData->country; ?>'
+            name: '<?php echo $city; ?>, <?php echo $country; ?>'
         };
 
         var map = L.map('map').setView([cityInformation.lat, cityInformation.lon], 10);
