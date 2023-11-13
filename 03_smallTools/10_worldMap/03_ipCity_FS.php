@@ -24,10 +24,10 @@
 
         .info {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            bottom: 10px;              /*bottom*/
+            left: 10px;             /*right*/
             z-index: 1000;
-            background: white;
+            background: rgba(255, 255, 255, 0.3); /* 0.3 is the alpha (transparency) value, 0 is 100 % transparency */
             padding: 10px;
             border-radius: 5px;
         }
