@@ -7,7 +7,7 @@
 
 # 环境配置
 
-02_ipToCity.php 输出示例，基于
+02_ipToCity.php 输出示例，基于`https://ipinfo.io/{$ip}/json` 获取相关信息，Deadline信息 似乎不对，经纬度和城市信息基本是对的
 
 ```
 Hello world
