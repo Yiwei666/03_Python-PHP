@@ -28,6 +28,11 @@ lon的值通过 https://ipapi.co/${ip}/longitude/ 获取
 name 中的 国家 通过 https://ipapi.co/${ip}/country_name/ 获取，城市通过 https://ipapi.co/${ip}/city/ 获取
 ```
 
+- **03_ipCity_FS.php**
+
+地图全屏显示，然后页面显示的其他文字信息（location，time, ip, city information 等）显示在地图上，位于屏幕的左上角即可
+
+
 
 - **02_ipToCity.php 输出示例**
 
