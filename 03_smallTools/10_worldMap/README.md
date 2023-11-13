@@ -16,6 +16,19 @@
 
 # 环境配置
 
+- **02_ipToCity_ipapi.php**
+
+在 `https://github.com/Yiwei666/02_javascript_cf-worker/blob/main/01_countdown.js` 代码基础上修改得到的
+
+```
+在页面最后一行显示经纬度以及国家和城市信息，City information 使用如下字典格式，
+City information: { lat: 38.7135, lon: -78.1594, name: 'Washington, US' }
+lat的值通过 https://ipapi.co/${ip}/latitude/ 获取
+lon的值通过 https://ipapi.co/${ip}/longitude/ 获取
+name 中的 国家 通过 https://ipapi.co/${ip}/country_name/ 获取，城市通过 https://ipapi.co/${ip}/city/ 获取
+```
+
+
 02_ipToCity.php 输出示例，基于`https://ipinfo.io/{$ip}/json` 获取相关信息，Deadline信息 似乎不对，经纬度和城市信息基本是对的
 
 ```
