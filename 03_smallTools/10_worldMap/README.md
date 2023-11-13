@@ -7,8 +7,9 @@
 ```
 01_worldMap.php          # 基于经纬度在世界地图中进行标注
 02_ipToCity_ipapi.php    # 基于 https://ipapi.co/{$ip}/city/ 获取城市等信息
-02_ipToCity.php          # 基于 https://ipinfo.io/{$ip}/json 获取相关信息
-
+02_ipToCity.php          # 基于 https://ipinfo.io/{$ip}/json 获取相关信息，基于ip获取的位置信息似乎不太精确
+03_ipCity_HS.php         # 上半屏显示地图及标注，下半屏显示文字信息
+03_ipCity_FS.php         # 全屏显示地图及标注
 ```
 
 
