@@ -66,6 +66,31 @@ li:nth-child(odd) {
 }
 ```
 
+类选择器：
+
+```css
+.highlight {
+    background-color: yellow; /* 选择所有类名为 "highlight" 的元素，并设置背景颜色为黄色 */
+}
+
+button.button-style {
+    font-size: 16px; /* 选择所有类名为 "button" 且同时具有 "button-style" 的 <button> 元素，并设置字体大小 */
+}
+```
+
+ID选择器：
+```css
+#header {
+    background-color: #333; /* 选择id为 "header" 的元素，并设置背景颜色为灰黑色 */
+}
+
+#footer p {
+    color: white; /* 选择id为 "footer" 的元素内所有 <p> 元素，并设置文字颜色为白色 */
+}
+这些示例演示了如何使用类选择器和ID选择器。类选择器以 . 开头，ID选择器以 # 开头。您可以根据实际需要将这些选择器应用到不同的元素上。希望这能够更清楚地说明这两种选择器的
+```
+
+
 # 环境配置
 
 - example1: https://www.v2ex.com/p/688RNvc1
