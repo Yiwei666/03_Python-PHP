@@ -93,6 +93,63 @@ ID选择器：
 
 # 环境配置
 
+- 自定义的css样式
+
+```css
+#Top, #my-recent-topics{
+    border:none;
+    background-color: #333; /* Set background color to gray-black */
+}
+
+/*搜索框*/
+#search-container {
+    background-color: #333; /* 灰黑色的颜色代码 */
+    border: none;
+}
+
+.inner, .cell, .node, .count_livid, .balance_area {
+    background-color: #333 !important; /* 灰黑色的颜色代码 */
+}
+
+#Wrapper {
+background-image: none !important; /* Remove the background image */
+background-color: #333; /* Set background color to gray-black */
+background-size: cover;
+}
+
+.box {
+border: 0 none !important;
+background: #333; /* Set background color to gray-black */
+}
+
+
+.cell.item {
+    border: none; /* 设置边框为无 */
+}
+
+.cell, .item_node {
+    border-collapse: collapse; /* 将表格边框合并为一条线 */
+    border: none; /* 设置表格边框为无 */
+}
+
+
+
+.item_hot_topic_title a {
+    color: grey !important; /* 强制覆盖其他样式，将字体颜色设置为黑色 */
+    text-shadow: none !important; /* 强制覆盖其他样式，移除文本阴影 */
+}
+
+/* 如果需要进一步设置链接的悬停颜色，可以使用如下代码 */
+.item_hot_topic_title a:hover {
+    color: #333 !important; /* 强制覆盖其他样式，将鼠标悬停时的颜色设置为 #333 */
+}
+
+#Bottom {
+  background-color: #333;
+}
+```
+
+
 - example1: https://www.v2ex.com/p/688RNvc1
 
 ```css
