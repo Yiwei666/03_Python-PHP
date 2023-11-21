@@ -91,8 +91,10 @@ print('Extraction and writing to nameURL.txt completed.')
 
 避免重复下载，默认下载间隔为5秒钟，注意创建和修改保存音频文件的路径
 
-```
-mkdir 01_audio
+```bash
+mkdir 01_audio                   # 创建文件夹
+
+chmod +x download_mp3.sh         # 添加执行权限
 ```
 
 
