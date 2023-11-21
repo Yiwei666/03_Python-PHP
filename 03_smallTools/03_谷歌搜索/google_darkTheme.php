@@ -19,7 +19,7 @@ if (isset($_GET['logout'])) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="shortcut icon" href="https://mctea.one/00_logo/homepage.png">
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/google.png">
     <title>谷歌搜索</title>
     <style>
         body {
@@ -163,6 +163,54 @@ if (isset($_GET['logout'])) {
             echo "<script>window.location.replace('$今日头条_Url');</script>";
             exit;
         }
+        if(isset($_GET['query_ACS'])) {
+            $query_ACS = $_GET['query_ACS'];
+            $ACS_Url = 'https://www.google.com/search?q=site%3Aacs.org+' . $query_ACS;
+            echo "<script>window.location.replace('$ACS_Url');</script>";
+            exit;
+        }
+        if(isset($_GET['query_RSC'])) {
+            $query_RSC = $_GET['query_RSC'];
+            $RSC_Url = 'https://www.google.com/search?q=site%3Arsc.org+' . $query_RSC;
+            echo "<script>window.location.replace('$RSC_Url');</script>";
+            exit;
+        }
+        if(isset($_GET['query_ScienceDirect'])) {
+            $query_ScienceDirect = $_GET['query_ScienceDirect'];
+            $ScienceDirect_Url = 'https://www.google.com/search?q=site%3Asciencedirect.com+' . $query_ScienceDirect;
+            echo "<script>window.location.replace('$ScienceDirect_Url');</script>";
+            exit;
+        }
+        if(isset($_GET['query_AIPScitation'])) {
+            $query_AIPScitation = $_GET['query_AIPScitation'];
+            $AIPScitation_Url = 'https://www.google.com/search?q=site%3Aaip.org+OR+site%3Ascitation.org+' . $query_AIPScitation;
+            echo "<script>window.location.replace('$AIPScitation_Url');</script>";
+            exit;
+        }
+        if(isset($_GET['query_Springer'])) {
+            $query_Springer = $_GET['query_Springer'];
+            $Springer_Url = 'https://www.google.com/search?q=site%3Aspringer.com+' . $query_Springer;
+            echo "<script>window.location.replace('$Springer_Url');</script>";
+            exit;
+        }
+        if(isset($_GET['query_Wiley'])) {
+            $query_Wiley = $_GET['query_Wiley'];
+            $Wiley_Url = 'https://www.google.com/search?q=site%3Awiley.com+' . $query_Wiley;
+            echo "<script>window.location.replace('$Wiley_Url');</script>";
+            exit;
+        }
+        if(isset($_GET['query_Cell'])) {
+            $query_Cell = $_GET['query_Cell'];
+            $Cell_Url = 'https://www.google.com/search?q=site%3Acell.com+' . $query_Cell;
+            echo "<script>window.location.replace('$Cell_Url');</script>";
+            exit;
+        }
+        if(isset($_GET['query_TaylorFrancis'])) {
+            $query_TaylorFrancis = $_GET['query_TaylorFrancis'];
+            $TaylorFrancis_Url = 'https://www.google.com/search?q=site%3Atandfonline.com+' . $query_TaylorFrancis;
+            echo "<script>window.location.replace('$TaylorFrancis_Url');</script>";
+            exit;
+        }
     ?>
 
     <form method="GET" target="_blank">
@@ -235,6 +283,45 @@ if (isset($_GET['logout'])) {
         <input type="text" name="query_今日头条" id="query_今日头条" placeholder=" 今日头条 搜索">
         <input type="submit" value="搜索">
     </form>
-
+    <form method="GET">
+        <label for="query_ACS">在 ACS 中搜索:</label>
+        <input type="text" name="query_ACS" id="query_ACS" placeholder=" ACS 搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_RSC">在 RSC 中搜索:</label>
+        <input type="text" name="query_RSC" id="query_RSC" placeholder=" RSC 搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_ScienceDirect">在 ScienceDirect 中搜索:</label>
+        <input type="text" name="query_ScienceDirect" id="query_ScienceDirect" placeholder=" ScienceDirect 搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_AIPScitation">在 AIP、Scitation 中搜索:</label>
+        <input type="text" name="query_AIPScitation" id="query_AIPScitation" placeholder=" AIP、Scitation 搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_Springer">在 Springer 中搜索:</label>
+        <input type="text" name="query_Springer" id="query_Springer" placeholder=" Springer 搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_Wiley">在 Wiley 中搜索:</label>
+        <input type="text" name="query_Wiley" id="query_Wiley" placeholder=" Wiley 搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_Cell">在 Cell 中搜索:</label>
+        <input type="text" name="query_Cell" id="query_Cell" placeholder=" Cell 搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_TaylorFrancis">在 TaylorFrancis 中搜索:</label>
+        <input type="text" name="query_TaylorFrancis" id="query_TaylorFrancis" placeholder=" TaylorFrancis 搜索">
+        <input type="submit" value="搜索">
+    </form>
 </body>
 </html>
