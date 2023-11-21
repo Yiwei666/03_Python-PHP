@@ -13,14 +13,14 @@
 ---
 
 ```
-mysqlTest.php         # 用于测试能否连接到mysql数据库
-mysqldict.php         # 脚本连接到mysql数据库，打印数据库中的单词数据，包含托福，雅思，GRE等数据
+mysqlTest.php                # 用于测试能否连接到mysql数据库
+mysqldict.php                # 脚本连接到mysql数据库，打印数据库中的单词数据，包含托福，雅思，GRE等数据
 mysqldict_random.php         # 按照一定规律，部分显示mysql表中数据
+mysqldict_random_darkTheme.php     # mysqldict_random.php 深色主题版本
 
-01_word-Python-PHP    # 是一个独立但相关的项目
+01_word-Python-PHP           # 是一个独立但相关的项目
 
-
-word                  # 所有单词的txt文件，mysql数据库中的单词来源
+word                         # 所有单词的txt文件，mysql数据库中的单词来源
 
 ```
 
