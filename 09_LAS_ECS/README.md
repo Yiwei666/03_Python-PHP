@@ -1,10 +1,10 @@
-### 项目功能
----
+# 项目功能
+
 - 用于音视频、文档、日志等处理的小脚本
 
 
-### 项目结构
----
+# 项目结构
+
 - uname.php
 
 输入网站名和网址，生成 markdown 和 html 格式的链接
@@ -37,8 +37,22 @@
 
 生成指定位数的序列号，序列号包含大小写英文字符和数字的组合
 
-### 部署环境
----
+
+- question_darkTheme.php
+
+`question.php` 深色主题版本。若想要将显示框文本左对齐，只需将`text-align: left`值修改为left即可
+
+```css
+textarea[readonly] {
+  display: block;
+  margin: 0 auto;
+  text-align: left; /* Left-align text in readonly textarea */
+}
+```
+
+
+# 部署环境
+
 
 
 
