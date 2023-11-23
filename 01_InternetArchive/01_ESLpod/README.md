@@ -28,7 +28,14 @@ ipodcast_meta.sqlite	                14-Dec-2019 11:38	4.3M
 ipodcast_meta.xml	                    10-Sep-2022 14:36	1.1K
 ```
 
-上面一级目录下的每个子文件夹是一个主题的音频，需要从子文件夹中获取音频真正的下载链接，主页中显示的下载链接需要重定向，每个主题中音频下载链接的前缀往往都不同
+1. 上面一级目录下的每个子文件夹是一个主题的音频，需要从子文件夹中获取音频真正的下载链接
+2. 主页中显示的下载链接需要重定向，每个主题中音频下载链接的前缀往往都不同
+```
+https://archive.org/details/ipodcast/a-day-in-the-life-of-lucy/dill10.mp3                         # 主页音频下载链接，基于该链接下载的文件大小一样，且都无法播放
+
+https://ia902808.us.archive.org/35/items/ipodcast/a-day-in-the-life-of-lucy/dill10.mp3            # a-day-in-the-life-of-lucy/ 子目录中的音频链接，该链接可用于音频下载
+https://ia802808.us.archive.org/35/items/ipodcast/cultural-english/ce001.mp3                      # cultural-english/	子目录中的音频链接，该链接可用于音频下载
+```
 
 
 
