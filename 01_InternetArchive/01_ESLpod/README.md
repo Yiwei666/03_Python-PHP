@@ -52,7 +52,22 @@ https://ia802808.us.archive.org/35/items/ipodcast/cultural-english/ce001.mp3    
 
 - downloadArchive_mp3.sh
 
-通过分析音频链接的组成，构造下载链接，循环下载
+脚本功能：通过分析音频链接的组成，构造下载链接，循环下载
+
+以下4个参数在下载之前是需要进行赋值的
+
+```bash
+# 设置起始编号和结尾编号
+start_number=201
+end_number=400
+
+# 设置音频链接的固定部分和文件后缀，参考以下链接组成进行赋值
+# https://ia802808.us.archive.org/35/items/ipodcast/cultural-english/ce603.mp3
+
+base_url="https://ia802808.us.archive.org/35/items/ipodcast/cultural-english/"
+file_prefix="ce"          # 文件名
+```
+
 
 ```bash
 #!/bin/bash
