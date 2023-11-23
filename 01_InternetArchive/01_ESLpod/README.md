@@ -131,9 +131,16 @@ echo "Download complete!"
 2. 设置权限并下载
 
 ```bash
-chmod +x downloadArchive_mp3.sh
-bash downloadArchive_mp3.sh
+chmod +x downloadArchive_mp3.sh             # 添加执行权限
+
+bash downloadArchive_mp3.sh                 # 下载脚本
 ```
+
+
+
+
+
+
 
 
 
