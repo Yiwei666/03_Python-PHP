@@ -133,7 +133,7 @@ echo "Download complete!"
 ```bash
 chmod +x downloadArchive_mp3.sh             # 添加执行权限
 
-bash downloadArchive_mp3.sh                 # 下载脚本
+bash downloadArchive_mp3.sh                 # 运行音频下载脚本
 ```
 
 
