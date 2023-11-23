@@ -54,7 +54,7 @@ https://ia802808.us.archive.org/35/items/ipodcast/cultural-english/ce001.mp3    
 
 脚本功能：通过分析音频链接的组成，构造下载链接，循环下载
 
-以下4个参数在下载之前是需要进行赋值的
+1. 以下4个参数在下载之前是需要进行赋值的
 
 ```bash
 # 设置起始编号和结尾编号
@@ -68,6 +68,7 @@ base_url="https://ia802808.us.archive.org/35/items/ipodcast/cultural-english/"
 file_prefix="ce"          # 文件名
 ```
 
+完整脚本
 
 ```bash
 #!/bin/bash
@@ -127,7 +128,12 @@ done
 echo "Download complete!"
 ```
 
+2. 设置权限并下载
 
+```bash
+chmod +x downloadArchive_mp3.sh
+bash downloadArchive_mp3.sh
+```
 
 
 
