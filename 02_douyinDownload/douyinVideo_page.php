@@ -75,6 +75,8 @@ if (isset($_GET['logout'])) {
             transform: translateY(-50%);
             padding: 10px;
             background-color: #f5f5f5;
+            overflow-y: auto;
+            max-height: 80vh; /* 设置最大高度，以防止侧边栏过长 */
         }
         
         .sidebar a {
