@@ -16,8 +16,4 @@
 └── nohup.out
 ```
 
-第596音频文件已下载，第597未下载
 
-```
-596  Reeling-and-dealing--how-to-engage-the-Taliban,https://sphinx.acast.com/p/open/s/d556eb54-6160-4c85-95f4-47d9f5216c49/a/theeconomistallaudio/e/19dfc086-4604-4fad-a7f6-a3f9dbaf972e/media.mp3?tk=eyJ0ayI6ImRlZmF1bHQiLCJhZHMiOnRydWUsInNwb25zIjp0cnVlLCJzdGF0dXMiOiJwdWJsaWMifQ==&sig=XLQK9OWWu50DRkdwKEzLCZZ59JXL5Vux9trkAFAp_R0
-```
