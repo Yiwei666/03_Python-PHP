@@ -4,7 +4,7 @@
 
 Internet Archive网址： https://archive.org/details/ipodcast
 
-本项目通过do1-1进行下载，已完成前三部分，包括dill， dilj以及ce的下载，受限于内存容量，部分同步至AECS，待同步部分包括 ce500.mp3-ce603.mp3。
+本项目通过do1-1进行下载，已完成前三部分，包括dill， dilj以及ce的下载，受限于内存容量，部分同步至AECS，待同步部分包括 ce500.mp3-ce603.mp3。cc1-1下载了ESLpod中除do1-1已下载之外的其余所有音频，但未同步至任何云服务器。
 
 # 文件结构
 
