@@ -85,6 +85,12 @@ if (isset($_GET['logout'])) {
             echo "<script>window.location.replace('$searchUrl');</script>";
             exit;
         }
+        if(isset($_GET['query_keinsciSobereva'])) {
+            $query_keinsciSobereva = $_GET['query_keinsciSobereva'];
+            $keinsciSobereva_Url = 'https://www.google.com/search?q=site%3Akeinsci.com+OR+site%3Asobereva.com+' . $query_keinsciSobereva;
+            echo "<script>window.location.replace('$keinsciSobereva_Url');</script>";
+            exit;
+        }
         if(isset($_GET['query_weixinSogouzhihu'])) {
             $query_weixinSogouzhihu = $_GET['query_weixinSogouzhihu'];
             $weixinSogouzhihu_Url = 'https://www.google.com/search?q=site%3Aweixin.sogou.com+OR+site%3Azhihu.com+' . $query_weixinSogouzhihu;
@@ -216,6 +222,11 @@ if (isset($_GET['logout'])) {
     <form method="GET" target="_blank">
         <label for="query">搜索:</label>
         <input type="text" name="query" id="query" placeholder="在 Reddit、Quora 和 V2EX 中搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_keinsciSobereva">在 keinsci、Sobereva 中搜索:</label>
+        <input type="text" name="query_keinsciSobereva" id="query_keinsciSobereva" placeholder=" keinsci、Sobereva 搜索">
         <input type="submit" value="搜索">
     </form>
     <form method="GET">
