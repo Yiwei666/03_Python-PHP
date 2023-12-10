@@ -82,7 +82,7 @@ curl -o /home/01_html/30_VOAspecial/latest.html $total_url
 （2）华为云服务器需要添加sudo权限 `sudo /usr/bin/bash /home/01_html/30_VOAspecial/insert_unique_urls.sh`
 
 
-```
+```sh
 #!/bin/bash
 
 # Remove the specified files
