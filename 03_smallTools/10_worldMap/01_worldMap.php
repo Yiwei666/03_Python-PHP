@@ -38,15 +38,17 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         var locations = [
-            { lat: 40.8584, lon: -74.1638, name: 'Clifton, US, do3-1' },
+            { lat: 40.7421, lon: -74.0138, name: 'North Bergen, US, do3-1' },
             { lat: 37.7749, lon: -122.4194, name: 'Santa Clara, US, do3-2' },
-            { lat: 1.3521, lon: 103.8198, name: 'Singapore, do1-1' },
-            { lat: 40.7934, lon: -74.0247, name: 'North Bergen, US, do1-2' },
+            { lat: 1.3036, lon: 103.8554, name: 'Singapore, do1-1' },
+            { lat: 40.7930, lon: -74.0247, name: 'North Bergen, US, do1-2' },
             { lat: 39.0438, lon: -77.4874, name: 'Ashburn, US, aws1-2' },
+            { lat: 45.8499, lon: -119.6322, name: 'Boardman, US, aws1-3' },
             { lat: 37.7594, lon: -77.1068, name: 'Tappahannock, US, az1-1' },
             { lat: 33.4484, lon: -112.0740, name: 'Phoenix, US, az1-2' },
             { lat: 35.6895, lon: 139.6917, name: 'Tokyo, Japan, az5-1' },
             { lat: 52.3676, lon: 4.9041, name: 'Amsterdam, Netherlands, az6-1' },
+            { lat: 34.0544, lon: -118.2441, name: 'Los Angeles, US, cc1-1' },
             { lat: 39.9906, lon: 116.2887, name: 'Haidian, CN' }
         ];
 
