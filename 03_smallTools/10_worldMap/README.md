@@ -17,6 +17,13 @@
 
 # 环境配置
 
+- **01_worldMap.php**
+
+<p align="center">
+  <img src="image/map3.png" alt="Image Description" width="700">
+</p>
+
+
 - **02_ipToCity_ipapi.php**
 
 在 `https://github.com/Yiwei666/02_javascript_cf-worker/blob/main/01_countdown.js` 代码基础上修改得到的
@@ -33,6 +40,16 @@ name 中的 国家 通过 https://ipapi.co/${ip}/country_name/ 获取，城市�
 
 地图全屏显示，然后页面显示的其他文字信息（location，time, ip, city information 等）显示在地图上，位于屏幕的左上角即可
 
+<p align="center">
+  <img src="image/map2.png" alt="Image Description" width="700">
+</p>
+
+
+- **03_ipCity_HS.php**
+
+<p align="center">
+  <img src="image/map1.png" alt="Image Description" width="700">
+</p>
 
 
 - **02_ipToCity.php 输出示例**
