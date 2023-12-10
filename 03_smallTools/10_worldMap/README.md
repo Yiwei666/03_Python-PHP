@@ -36,6 +36,31 @@ lon的值通过 https://ipapi.co/${ip}/longitude/ 获取
 name 中的 国家 通过 https://ipapi.co/${ip}/country_name/ 获取，城市通过 https://ipapi.co/${ip}/city/ 获取
 ```
 
+显示结果示例
+
+```
+Hello world
+
+Your IP address is: xxxxxxxx
+
+Your location is: United States, Los Angeles
+
+The current time is: 2023-12-10 17:38:33
+
+Deadline 11:30 has passed
+
+Deadline 17:30 has passed
+
+Deadline 22:0 - 4h 21m 27s left
+
+Days until May 23rd, 2025: 529
+
+Remaining time until May 23rd, 2025: 12710 hours (45757287 seconds)
+
+City information: { lat: 34.0544, lon: -118.2441, name: 'Los Angeles, United States' }
+```
+
+
 - **03_ipCity_HS.php**
 
 地图上半屏显示，然后页面显示的其他文字信息（location，time, ip, city information 等）显示在地图上，位于屏幕的右下角即可
