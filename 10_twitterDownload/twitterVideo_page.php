@@ -75,6 +75,8 @@ if (isset($_GET['logout'])) {
             transform: translateY(-50%);
             padding: 10px;
             background-color: #f5f5f5;
+            overflow-y: auto;
+            max-height: 80vh; /* 设置最大高度，以防止侧边栏过长 */
         }
         
         .sidebar a {
@@ -97,7 +99,7 @@ if (isset($_GET['logout'])) {
     $videos = glob($videoPath . '*.mp4');
     $totalVideos = count($videos);
     $videosPerRow = 2;
-    $videosPerPage = 200;
+    $videosPerPage = 20;
     $totalPages = ceil($totalVideos / $videosPerPage);
     $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
     $startIndex = ($page - 1) * $videosPerPage;
