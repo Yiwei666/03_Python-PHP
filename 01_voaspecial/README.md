@@ -51,7 +51,7 @@ done < /home/01_html/30_VOAspecial/audioUrl.txt
 
 - **myscript.sh**
 
-爬取指定页码的音频链接audioUrl.txt，并写入到mysql数据库中，
+1. 爬取指定页码的音频链接audioUrl.txt，并写入到mysql数据库中，
 
 ```bash
 #!/bin/bash
@@ -75,6 +75,36 @@ curl -o /home/01_html/30_VOAspecial/latest.html $total_url
 # Execute the final command
 /usr/bin/bash /home/01_html/30_VOAspecial/insert_unique_urls.sh
 ```
+
+
+2. 在实际部署中，部分参数做了小的修改，如下所示，主要包括：
+（1）设置最新的歌曲下载页面网址 `total_url="https://www.kekenet.com/broadcast/voaspecial/"`
+（2）华为云服务器需要添加sudo权限 `sudo /usr/bin/bash /home/01_html/30_VOAspecial/insert_unique_urls.sh`
+
+
+```
+#!/bin/bash
+
+# Remove the specified files
+rm /home/01_html/30_VOAspecial/homePageUrl.txt
+rm /home/01_html/30_VOAspecial/audioUrl.txt
+
+# Set the URL
+total_url="https://www.kekenet.com/broadcast/voaspecial/"
+
+# Download the webpage
+curl -o /home/01_html/30_VOAspecial/latest.html $total_url
+
+# Run the first Python script
+/home/00_software/01_anaconda/install/bin/python /home/01_html/30_VOAspecial/01keke.py
+
+# Run the second Python script
+/home/00_software/01_anaconda/install/bin/python /home/01_html/30_VOAspecial/musicdown.py
+
+# Execute the final command
+sudo /usr/bin/bash /home/01_html/30_VOAspecial/insert_unique_urls.sh
+```
+
 
 - **myscript_loop.sh**
 
@@ -108,7 +138,6 @@ for page_number in {249..200}; do
     /usr/bin/bash insert_unique_urls.sh
 done
 ```
-
 
 
 # mysql数据库操作
