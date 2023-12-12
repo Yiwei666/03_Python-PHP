@@ -21,15 +21,22 @@
             width: 50%;
             margin: 50px auto;
         }
-        label {
-            margin-top: 20px;
+        label[for="name"] {
+            margin-top: 60px; /* Adjust this value as needed */
+            margin-bottom: 10px;
+            display: block;
+        }
+        label[for="domain"] {
+            margin-top: 60px; /* Adjust this value as needed */
+            margin-bottom: 0px;
             display: block;
         }
         input[type="text"] {
             width: 80%;
+            height: 25px; /* Adjust the pixel value as needed */
         }
         input[type="submit"] {
-            margin-top: 20px;
+            margin-top: 3px;      /* 控制域名输入框以及提交框与Domain:的垂直距离 */
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
