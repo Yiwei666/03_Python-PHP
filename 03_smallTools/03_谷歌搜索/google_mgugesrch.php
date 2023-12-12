@@ -54,7 +54,7 @@
 
 <div class="container">
     <form method="post">
-        <label for="name">Name:</label>
+        <label for="name">Name: (Enter a name without spaces, e.g., use HackerNews instead of Hacker News.)</label>
         <input type="text" name="name" id="name" placeholder="a,b,c">
         <label for="domain">Domain:</label>
         <input type="text" name="domain" id="domain" placeholder="X,Y,Z">
