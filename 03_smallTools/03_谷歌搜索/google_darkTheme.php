@@ -103,6 +103,12 @@ if (isset($_GET['logout'])) {
             echo "<script>window.location.replace('$v2exSearchUrl');</script>";
             exit;
         }
+        if(isset($_GET['query_HackerNews'])) {
+            $query_HackerNews = $_GET['query_HackerNews'];
+            $HackerNews_Url = 'https://www.google.com/search?q=site%3Anews.ycombinator.com+' . $query_HackerNews;
+            echo "<script>window.location.replace('$HackerNews_Url');</script>";
+            exit;
+        }
         if(isset($_GET['reddit_query'])) {
             $reddit_query = $_GET['reddit_query'];
             $redditSearchUrl = 'https://www.google.com/search?q=site%3Areddit.com+' . $reddit_query;
@@ -237,6 +243,11 @@ if (isset($_GET['logout'])) {
     <form method="GET" target="_blank">
         <label for="v2ex_query">在 V2EX 中搜索:</label>
         <input type="text" name="v2ex_query" id="v2ex_query" placeholder="搜索 V2EX">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_HackerNews">在 HackerNews 中搜索:</label>
+        <input type="text" name="query_HackerNews" id="query_HackerNews" placeholder=" HackerNews 搜索">
         <input type="submit" value="搜索">
     </form>
     <form method="GET" target="_blank">
