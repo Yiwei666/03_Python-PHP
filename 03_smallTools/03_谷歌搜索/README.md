@@ -14,10 +14,10 @@ google_mgugesrch.php         # 生成单个或多个网站的谷歌搜索代码�
 
 # 3. 使用案例
 
-输入示例如下
+输入示例如下，如果单个网站name由多个word组成，不要使用空格进行分隔，比如使用`HackerNews`代替`Hacker News`，否则不能正常运行
 ```
 Name:
-ACS,RSC,sciencedirect                # 如果单个网站name由多个word组成，不要使用空格进行分隔，比如使用HackerNews代替Hacker News，否则不能正常运行
+ACS,RSC,sciencedirect                
 
 Domain:
 acs.org,rsc.org,sciencedirect.com
