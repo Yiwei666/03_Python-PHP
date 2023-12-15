@@ -6,14 +6,24 @@
 
 🟢 **01_emailSend.py**
 
-- 发送邮件及附件的脚本，需要在终端中按照提示输入：
+- 上述脚本在使用时需要在终端中按照提示输入：
   -  收件人邮箱地址
   -  主题和正文
   -  是否添加附件以及附件的绝对地址
 
+```py
+# 获取收件人、主题、正文和附件路径
+receiver_email = get_receiver_email()
+subject = get_email_subject()
+body = get_email_body()
+attachment_path = get_attachment_path()
+```
+
+
+
 - 需要在 `send_email()`函数中指定`smtp_server`和`smtp_port`，默认发送邮件采用Gmail的SMTP服务器，相应设置如下
 
-```
+```py
 def send_email(sender_email, sender_password, receiver_email, subject, body, attachment_path):
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
