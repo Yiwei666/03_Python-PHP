@@ -5,34 +5,27 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 
 def send_email(sender_email, sender_password, receiver_email, subject, body, attachment_path):
-    # 设置邮件服务器和端口
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
 
-    # 创建SMTP对象
     server = smtplib.SMTP(smtp_server, smtp_port)
     server.starttls()
 
     try:
-        # 登录到邮箱
         server.login(sender_email, sender_password)
 
-        # 构建邮件
         message = MIMEMultipart()
         message['From'] = sender_email
         message['To'] = receiver_email
         message['Subject'] = subject
-
-        # 添加正文
         message.attach(MIMEText(body, 'plain'))
 
-        # 添加附件
-        with open(attachment_path, 'rb') as file:
-            attachment = MIMEApplication(file.read(), Name=os.path.basename(attachment_path))
-            attachment['Content-Disposition'] = f'attachment; filename="{os.path.basename(attachment_path)}"'
-            message.attach(attachment)
+        if attachment_path:
+            with open(attachment_path, 'rb') as file:
+                attachment = MIMEApplication(file.read(), Name=os.path.basename(attachment_path))
+                attachment['Content-Disposition'] = f'attachment; filename="{os.path.basename(attachment_path)}"'
+                message.attach(attachment)
 
-        # 发送邮件
         server.sendmail(sender_email, receiver_email, message.as_string())
         print("邮件发送成功")
 
@@ -40,16 +33,39 @@ def send_email(sender_email, sender_password, receiver_email, subject, body, att
         print(f"邮件发送失败: {str(e)}")
 
     finally:
-        # 关闭连接
         server.quit()
 
-# 设置发件人、收件人和附件路径
-sender_email = 'sender@gmail.com'                          # 发送者邮箱
-sender_password = 'your_generated_app_password'            # 使用生成的应用密码
-receiver_email = 'reciever@gmail.com'                      # 收件者
-subject = 'Test Email with Attachment'
-body = 'This is a test email with attachment.'
-attachment_path = '/path/to/your/file.txt'  # 附件路径，绝对路径和相对路径皆可
+def get_attachment_path():
+    attachment_input = input("是否添加附件？输入附件的绝对路径或输入 'n' 或 'N' 跳过: ")
+    if attachment_input.lower() in ('n', 'no'):
+        return None
+    elif os.path.exists(attachment_input):
+        return attachment_input
+    else:
+        print("文件路径不存在，请重新输入。")
+        return get_attachment_path()
 
-# 发送邮件
-send_email(sender_email, sender_password, receiver_email, subject, body, attachment_path)
+def get_receiver_email():
+    receiver_email = input("请输入收件人的邮件地址: ")
+    return receiver_email
+
+def get_email_subject():
+    return input("请输入邮件主题: ")
+
+def get_email_body():
+    return input("请输入邮件正文: ")
+
+if __name__ == "__main__":
+    # 设置发件人等信息
+    sender_email = 'sender@gmail.com'
+    sender_password = 'your_generated_app_password'
+
+    # 获取收件人、主题、正文和附件路径
+    receiver_email = get_receiver_email()
+    subject = get_email_subject()
+    body = get_email_body()
+    attachment_path = get_attachment_path()
+
+    # 发送邮件
+    send_email(sender_email, sender_password, receiver_email, subject, body, attachment_path)
+
