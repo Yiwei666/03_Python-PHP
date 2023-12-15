@@ -35,6 +35,20 @@ def send_email(sender_email, sender_password, receiver_email, subject, body, att
 
 `smtp_port`: 这是SMTP服务器的端口号。在这里，587 是TLS加密的SMTP端口。TLS（Transport Layer Security）是一种安全传输层协议，用于在客户端和服务器之间加密通信。这通常是为了确保邮件传输的安全性。
 
+下面是一些常见邮件提供商的 `smtp_server`和`smtp_port`
+
+```
+    Hotmail/Outlook:
+        SMTP服务器: smtp.live.com
+        SMTP端口: 587 (使用STARTTLS加密)
+
+    ProtonMail:
+        ProtonMail使用自己的加密协议，而不是传统的SMTP。因此，通常不需要手动配置SMTP服务器和端口。ProtonMail提供了加密的端到端电子邮件服务。
+
+    Yahoo:
+        SMTP服务器: smtp.mail.yahoo.com
+        SMTP端口: 587 (使用STARTTLS加密)
+```
 
 - 注意：**设置发件人信息时，需要与上述SMTP服务器信息一致**
 
