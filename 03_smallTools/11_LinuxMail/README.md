@@ -20,6 +20,7 @@ attachment_path = get_attachment_path()
 ```
 
 
+### 1. 选择发送邮件的SMTP服务器
 
 - 需要在 `send_email()`函数中指定`smtp_server`和`smtp_port`，默认发送邮件采用Gmail的SMTP服务器，相应设置如下
 
@@ -50,7 +51,11 @@ def send_email(sender_email, sender_password, receiver_email, subject, body, att
         SMTP端口: 587 (使用STARTTLS加密)
 ```
 
-- 注意：**设置发件人信息时，需要与上述SMTP服务器信息一致**
+
+
+### 2. 生成应用程序密码
+
+- 注意：**设置发件人信息时，下面的信息需要与上述SMTP服务器信息一致**
 
 ```py
 # 设置发件人等信息
@@ -58,8 +63,21 @@ sender_email = 'sender@gmail.com'
 sender_password = 'your_generated_app_password'
 ```
 
+在提供的代码中，`sender_password` 变量用于存储为您的 Gmail 账户生成的应用程序专用密码。
 
+如果您在 Gmail 账户上启用了双因素身份验证（2FA）（这是一种良好的安全实践），您需要生成一个“应用程序密码”以在您的脚本中使用。
 
+以下是生成应用程序密码的步骤：
+
+- 转到您的 Google 帐户设置：https://myaccount.google.com/
+- 在左侧导航面板中，单击“安全性”。
+- 在“登录到 Google”部分下，找到“应用密码”选项。
+- 如果提示，登录到您的 Google 帐户。
+- 在“应用密码”页面上，选择要为其生成密码的应用程序和设备。
+- 单击“生成”。
+- 复制生成的应用程序密码，并用它替换 sender_password 变量中的 'your_generated_app_password'。
+- 请注意，这个应用程序密码是一个16位的长、随机生成的密码，专门用于此应用程序，并将用于身份验证，代替您正常的 Google 帐户密码。
+- 如果您怀疑密码已泄漏，您随时可以撤销应用程序密码并生成一个新的。
 
 
 
