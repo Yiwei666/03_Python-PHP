@@ -38,7 +38,7 @@ def send_email(sender_email, sender_password, receiver_email, subject, body, att
 
 - 注意：**设置发件人信息时，需要与上述SMTP服务器信息一致**
 
-```
+```py
 # 设置发件人等信息
 sender_email = 'sender@gmail.com'
 sender_password = 'your_generated_app_password'
