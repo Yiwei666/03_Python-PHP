@@ -126,7 +126,7 @@ chown www-data:www-data questiondata.txt
 
 2. 将`在只读文本区域中显示内容` 中的中文设置为微软雅黑字体，英文和数字设置为 Arial字体
 
-```
+```css
 <!-- 在 head 部分添加以下样式 -->
 <style>
     textarea[readonly] {
@@ -140,7 +140,7 @@ chown www-data:www-data questiondata.txt
 
 3. 能否修改上述代码，将 `输入字典数据的文本区域`  中的 中文设置为 微软雅黑字体，英文和数字设置为 Arial字体
 
-```
+```css
 <!-- 在 head 部分添加以下样式 -->
 <style>
     #questiondata {
@@ -149,7 +149,23 @@ chown www-data:www-data questiondata.txt
 </style>
 ```
 
+4. 添加深色主题，只需要在css style 部分进行如下设置
 
+```css
+body {
+  background-color: #333; /* Dark gray background */
+  color: #eee; /* Light white text color */
+}
+
+a {
+  color: #00bcd4; /* Blue-green color for links */
+}
+
+textarea {
+  background-color: #333; /* Dark gray background for textarea */
+  color: #eee; /* Light white text color for textarea */
+}
+```
 
 
 
