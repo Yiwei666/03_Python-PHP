@@ -7,7 +7,7 @@
 ```
 01_emailSend.py            # 运行脚本，在命令行中按照提示输入收件邮箱、主题、正文以及是否添加附件，发送者邮箱需要提前设置
 
-
+02_emailEngSent.py         # 该代码通过电子邮件将随机选择的PDF附件发送给指定收件人列表，并记录已发送的附件文件名。
 ```
 
 🟢 **01_emailSend.py**
@@ -92,9 +92,22 @@ sender_password = 'your_generated_app_password'
 - 如果您怀疑密码已泄漏，您随时可以撤销应用程序密码并生成一个新的。
 
 
+🟢 **02_emailEngSent.py**
 
+所有收件者会受到相同邮件内容及附件
 
+- 以下参数在邮件发送前需要进行设置
 
+```
+sender_email = 'sender@yahoo.com'                                 # 发邮件者邮箱
+sender_password = 'aaaabbbbccccdddd'                              # 16位应用程序专用密码
+receiver_emails = ['receiver1@gmail.com', 'receiver2@gmail.com']  # 收件者列表
+subject = 'Test Email with Attachment'                            # 主题
+body = 'This is a test email with attachment.'                    # 正文
 
+# 设置文件夹和已发送列表文件的路径变量
+pdf_folder = '/home/01_html/02_PDFsplit'
+sent_pdf_list_path = '/home/01_html/02_emailPDF.txt'
+```
 
 
