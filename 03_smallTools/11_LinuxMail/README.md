@@ -94,11 +94,11 @@ sender_password = 'your_generated_app_password'
 
 🟢 **02_emailEngSent.py**
 
-所有收件者会受到相同邮件内容及附件
+所有收件者会受到相同邮件内容及附件，且随机选取指定目录下未发送过的pdf文件作为附件，大小不能超过25MB，已经发过的附件名会被记录到`sent_pdf_list_path`对应的txt文件中
 
 - 以下参数在邮件发送前需要进行设置
 
-```
+```py
 sender_email = 'sender@yahoo.com'                                 # 发邮件者邮箱
 sender_password = 'aaaabbbbccccdddd'                              # 16位应用程序专用密码
 receiver_emails = ['receiver1@gmail.com', 'receiver2@gmail.com']  # 收件者列表
@@ -106,8 +106,8 @@ subject = 'Test Email with Attachment'                            # 主题
 body = 'This is a test email with attachment.'                    # 正文
 
 # 设置文件夹和已发送列表文件的路径变量
-pdf_folder = '/home/01_html/02_PDFsplit'
-sent_pdf_list_path = '/home/01_html/02_emailPDF.txt'
+pdf_folder = '/home/01_html/02_PDFsplit'                          # pdf附件对应的目录
+sent_pdf_list_path = '/home/01_html/02_emailPDF.txt'              # 记录发送过的pdf附件名
 ```
 
 
