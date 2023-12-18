@@ -80,6 +80,14 @@ textarea[readonly] {
     }
 ```
 
+通过 `width: 78ch`和`height: 20em`控制显示框的长和宽，区别于传统通过像素控制
+
+通过`overflow-y`启用垂直滚动条
+
+通过 ` resize` 允许元素在水平和垂直方向上都可以被用户调整大小
+      
+
+
 - CSS样式中的`textarea`，`textarea[readonly]`和`#display-textbox`
 
 在上述代码中，CSS样式中的`textarea`，`textarea[readonly]`和`#display-textbox`分别控制不同的元素样式，不存在直接的重叠或交叉。这三个选择器分别应用于`textarea`元素、带有`readonly`属性的`textarea`元素，以及具有id为`display-textbox`的元素。它们在页面中的不同元素上应用，互不干扰。
