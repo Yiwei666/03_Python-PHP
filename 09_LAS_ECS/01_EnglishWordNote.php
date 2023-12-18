@@ -2,7 +2,7 @@
 session_start();
 
 // 保存内容的文件名
-$filename = "01_EnglishWordNoteData_bVrbJKkv0j.txt";
+$filename = "01_EnglishWordNoteData_bVraJKkv0i.txt";
 // php文件名
 $scriptname = "01_EnglishWordNote.php";
 // logo的url
@@ -39,6 +39,7 @@ if (isset($_GET['logout'])) {
   <link rel="shortcut icon" href="<?php echo $logo_url; ?>">
   <title><?php echo $write_text; ?></title>
   <style>
+    /* 其他样式保持不变 */
 
     body {
       background-color: #333; /* Dark gray background */
@@ -94,6 +95,28 @@ if (isset($_GET['logout'])) {
       color: #00bcd4; /* Blue-green color for links */
     }
 
+    /* 新增规则，选择.highlight-text样式的文字，设置为红色 */
+    .highlight-text {
+      color: red;
+    }
+
+    #display-textbox {
+      background-color: #333; /* 文本区域的深灰色背景 */
+      color: #eee; /* 文本区域的浅白色文字颜色 */
+      display: block; /* 将显示属性设置为块级元素 */
+      margin: 0 auto; /* 使用自动边距水平居中元素 */
+      text-align: center; /* 将文本在元素中居中 */
+      font-family: 'Microsoft YaHei', Arial, sans-serif; /* 使用Microsoft YaHei、Arial或sans-serif作为首选字体 */
+      padding: 10px; /* 在元素内部添加10像素的填充 */
+      border: 0.5px solid #eee; /* 添加0.5像素的实线边框以提高可见性 */
+      width: 78ch; /* 将元素的宽度设置为字符宽度的80个字符 */
+      height: 20em; /* 将元素的高度设置为大约16行的高度 */
+      overflow-y: auto; /* 如果内容超过指定高度，则启用垂直滚动条 */
+      white-space: pre-wrap; /* 保留文本中的空格和换行符 */
+      resize: both; /* 允许水平和垂直同时调整大小 */
+      overflow: auto; /* 在调整大小后添加溢出属性以启用滚动条 */
+    }
+
   </style>
   <script>
     function toggleVisibility() {
@@ -109,7 +132,7 @@ if (isset($_GET['logout'])) {
   <input type="submit" value="<?php echo $submit_text; ?>">
 </form>
 
-  <br><br>
+<br><br>
 <form action="<?php echo $scriptname; ?>" method="get">
   <input type="submit" value="<?php echo $display_text; ?>" name="display_content">
 </form>
@@ -128,13 +151,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   fwrite($file, $data . $content);
   fclose($file);
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['display_content'])) {
-
   $file = fopen($filename, "r");
   $content = fread($file, filesize($filename));
   fclose($file);
-  echo "<br><br><textarea rows='24' cols='100' readonly>" . $content . "</textarea>";
 
+  // 使用正则表达式在内容中查找并标记需要高亮的文字
+  $content = preg_replace('/"(.*?)"/', '<span class="highlight-text">"$1"</span>', $content);
 
+  echo "<br><br><div id='display-textbox'>$content</div>";
 }
 ?>
 <!--下面的main，footer是有关logout的style-->
