@@ -80,6 +80,21 @@ textarea[readonly] {
     }
 ```
 
+- CSS样式中的`textarea`，`textarea[readonly]`和`#display-textbox`
+
+在上述代码中，CSS样式中的`textarea`，`textarea[readonly]`和`#display-textbox`分别控制不同的元素样式，不存在直接的重叠或交叉。这三个选择器分别应用于`textarea`元素、带有`readonly`属性的`textarea`元素，以及具有id为`display-textbox`的元素。它们在页面中的不同元素上应用，互不干扰。
+
+具体来说：
+
+(1) textarea选择器应用于所有<textarea> 元素，包括用户输入的textarea。
+
+(2) textarea[readonly]选择器应用于带有readonly属性的<textarea> 元素，使其在只读状态下具有不同的样式。
+
+(3) #display-textbox选择器应用于具有id为display-textbox的元素，这个元素可能是用于显示内容的div。
+
+因此，这些选择器不会导致样式冲突，各自独立地应用于它们所指定的元素。
+
+
 
 
 # 部署环境
