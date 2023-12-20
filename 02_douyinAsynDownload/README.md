@@ -173,7 +173,7 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
   - 部署的时候注意修改跳转链接以及icon对应的域名domain.com
   - `2.txt`和`2_addTotalLog.txt`需要提前使用touch命令创建并设置权限和所属组，不然web无法写入
   - 下面参数赋值需要注意
-```
+```php
 <link rel="shortcut icon" href="https://domain.com/00_logo/download.png">           # 域名
 
 $filePath = '/home/01_html/05_douyinAsynDload/2.txt';
@@ -184,11 +184,71 @@ window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";  
 window.open("01_view_log.php", "_blank");          # 01_view_log.php 脚本
 ```
 
+### 3. 01_view_log.php
+
+```php
+<?php
+$filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
+
+// 读取文件的最后两行
+$logContent = shell_exec("tail -n 2 $filePathLog");
+
+// 输出 HTML 头部
+echo "<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>抖音日志最后两行</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .centered-container {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    pre {
+      text-align: center;
+      font-size: 18px;
+      line-height: 5em;
+    }
+  </style>
+</head>
+<body>";
+
+// 输出内容
+echo "<div class='centered-container'>
+        <h2>日志最后两行</h2>
+        <pre>$logContent</pre>
+      </div>";
+
+// 输出 HTML 尾部
+echo "</body>
+</html>";
+?>
+
+```
+
+注意：需要指定读取的文件路径
+
+```php
+$filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
+```
 
 
 
-
-- **02_douyinDown.py**
+### 4. 02_douyinDown.py
 
 1. 在 /home/01_html/05_douyinAsynDload/2.txt 中每一行可能有一个https链接，在/home/01_html/05_douyinAsynDload/4_success.txt  中每一行可能也有一个https链接，二者也有可能都是空的，现在需要筛选出 在2.txt中有的链接，同时在4_success.txt中没有的链接，并且从筛选出来的链接数组中随机抽取一个链接 赋值为 encoded_url。
 
