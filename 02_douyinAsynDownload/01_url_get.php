@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Douyin Downloader</title>
-    <link rel="shortcut icon" href="https://domain.com/00_logo/download.png">
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/download.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         #inputForm {
@@ -13,7 +13,7 @@
             height: 200px;
             margin: 10px 0;
         }
-        #saveButton, #visitButton {
+        #saveButton, #visitButton, #viewButton {
             display: block;
             margin: 0 auto;
             margin-top: 10px;
@@ -22,24 +22,18 @@
 </head>
 <body>
     <?php
-    // 设置时区为你所在的时区
     date_default_timezone_set('Asia/Shanghai');
-    
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // 获取用户输入的字符串
         $userInput = $_POST["input"];
     
-        // 正则表达式匹配 https 链接
         preg_match_all('/https:\/\/[^ ]+/', $userInput, $matches);
     
-        // 获取匹配到的链接
         $links = $matches[0];
     
-        // 定义文件路径
         $filePath = '/home/01_html/05_douyinAsynDload/2.txt';
         $filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
     
-        // 将链接追加到文件和记录日志
         if (!empty($links)) {
             $file = fopen($filePath, "a");
             $logFile = fopen($filePathLog, "a");
@@ -68,11 +62,19 @@
         <br>
         <br>
         <button id="visitButton" onclick="visitUrl()">刷新</button>
+        <br>
+        <br>
+        <br>
+        <button id="viewButton" onclick="viewLog()">查看</button>
     </form>
 
     <script>
         function visitUrl() {
-            window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";
+            window.location.href = "https://mctea.one/05_douyinAsynDload/01_url_get.php";
+        }
+
+        function viewLog() {
+            window.open("01_view_log.php", "_blank");
         }
     </script>
 </body>
