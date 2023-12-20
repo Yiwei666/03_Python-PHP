@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Douyin Downloader</title>
-    <link rel="shortcut icon" href="https://mctea.one/00_logo/download.png">
+    <link rel="shortcut icon" href="https://domain.com/00_logo/download.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         #inputForm {
@@ -72,7 +72,7 @@
 
     <script>
         function visitUrl() {
-            window.location.href = "https://mctea.one/05_douyinAsynDload/01_url_get.php";
+            window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";
         }
     </script>
 </body>
