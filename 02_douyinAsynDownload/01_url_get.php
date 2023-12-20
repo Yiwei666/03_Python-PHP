@@ -20,35 +20,43 @@
         }
     </style>
 </head>
-<body>
+<body>      
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 获取用户输入的字符串
         $userInput = $_POST["input"];
-
+    
         // 正则表达式匹配 https 链接
         preg_match_all('/https:\/\/[^ ]+/', $userInput, $matches);
-
+    
         // 获取匹配到的链接
         $links = $matches[0];
-
+    
         // 定义文件路径
         $filePath = '/home/01_html/05_douyinAsynDload/2.txt';
-
-        // 将链接追加到文件
+        $filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
+    
+        // 将链接追加到文件和记录日志
         if (!empty($links)) {
             $file = fopen($filePath, "a");
+            $logFile = fopen($filePathLog, "a");
+    
             foreach ($links as $link) {
+                $timestamp = date('Y-m-d H:i:s');
                 fwrite($file, $link . PHP_EOL);
+                fwrite($logFile, $link . ',' . $timestamp . PHP_EOL);
             }
+    
             fclose($file);
-            echo "<div id='output'>链接已成功保存到 $filePath 文件中！</div>";
+            fclose($logFile);
+    
+            echo "<div id='output'>链接已成功保存到 $filePath 和 $filePathLog 文件中！</div>";
         } else {
             echo "<div id='output'>未找到有效的链接，请重新输入。</div>";
         }
     }
     ?>
-
+        
     <form id="inputForm" method="POST">
         <textarea id="inputText" name="input" rows="5" cols="50" placeholder="请输入字符串"></textarea>
         <br>
