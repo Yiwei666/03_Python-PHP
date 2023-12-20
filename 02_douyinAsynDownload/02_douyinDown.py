@@ -5,12 +5,19 @@ from datetime import datetime
 import os
 import random
 
-# 从文件中读取2.txt中的链接
-with open("/home/01_html/05_douyinAsynDload/2.txt", "r") as file:
+# 定义文件路径变量
+links_2_path = "/home/01_html/05_douyinAsynDload/2.txt"
+links_4_success_path = "/home/01_html/05_douyinAsynDload/4_success.txt"
+failure_log_path = "/home/01_html/05_douyinAsynDload/3_failure.txt"
+success_log_path = "/home/01_html/05_douyinAsynDload/5_totalSuccessLog.txt"
+download_dir = "/home/01_html/02_douyVideo/"
+
+# 从2.txt读取链接
+with open(links_2_path, "r") as file:
     links_2 = [line.strip() for line in file.readlines()]
 
-# 从文件中读取4_success.txt中的链接
-with open("/home/01_html/05_douyinAsynDload/4_success.txt", "r") as file:
+# 从4_success.txt读取链接
+with open(links_4_success_path, "r") as file:
     links_4_success = [line.strip() for line in file.readlines()]
 
 # 找到2.txt中有但4_success.txt中没有的链接
@@ -39,40 +46,40 @@ if filtered_links:
         src = "https:" + src.replace("amp;", "")
         print("提取的链接：", src)
 
-        # Download the content from the extracted URL
+        # 从提取的URL下载内容
         response = requests.get(src)
 
         if response.status_code == 200:
-            # Append successful download to 4_success.txt
-            with open("/home/01_html/05_douyinAsynDload/4_success.txt", "a") as success_file:
+            # 将成功下载的链接追加到4_success.txt
+            with open(links_4_success_path, "a") as success_file:
                 success_file.write(encoded_url + "\n")
                 print("状态码200，写入4_success.txt")
 
-            # Generate the file name based on the current date and time
+            # 根据当前日期和时间生成文件名
             now = datetime.now()
             file_name = now.strftime("%Y%m%d-%H%M%S") + ".mp4"
 
-            # Change the current working directory to the desired directory
-            os.chdir("/home/01_html/02_douyVideo")
+            # 将工作目录更改为所需目录
+            os.chdir(download_dir)
 
-            # Save the content to a file with the generated file name
+            # 将内容保存到以生成的文件名命名的文件中
             with open(file_name, "wb") as file:
                 file.write(response.content)
                 print("下载完成！保存为", file_name)
 
-            # Append download details to 4_totalSuccessLog.txt
-            with open("/home/01_html/05_douyinAsynDload/5_totalSuccessLog.txt", "a") as log_file:
+            # 将下载详细信息追加到5_totalSuccessLog.txt
+            with open(success_log_path, "a") as log_file:
                 log_file.write(file_name + "," + encoded_url + "\n")
                 print("状态码200，写入5_totalSuccessLog.txt")
         else:
-            # Append failed download to 3_failure.txt
-            with open("/home/01_html/05_douyinAsynDload/3_failure.txt", "a") as failure_file:
+            # 将下载失败的链接追加到3_failure.txt
+            with open(failure_log_path, "a") as failure_file:
                 failure_file.write(encoded_url + "\n")
             print("下载失败！状态码非200，写入3_failure.txt")
     else:
         print("未找到source标签")
-        # Append failed download to 3_failure.txt
-        with open("/home/01_html/05_douyinAsynDload/3_failure.txt", "a") as failure_file:
+        # 将下载失败的链接追加到3_failure.txt
+        with open(failure_log_path, "a") as failure_file:
             failure_file.write(encoded_url + "\n")
         print("下载失败！写入3_failure.txt")
 else:
