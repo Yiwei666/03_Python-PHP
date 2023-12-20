@@ -97,7 +97,7 @@ sender_password = 'your_generated_app_password'
 
 所有收件者会受到相同邮件内容及附件，且随机选取指定目录下未发送过的pdf文件作为附件，大小不能超过25MB，已经发过的附件名会被记录到`sent_pdf_list_path`对应的txt文件中
 
-- 以下参数在邮件发送前需要进行设置
+- 以下参数在邮件发送前需要进行设置，注意采用绝对路径
 
 ```py
 sender_email = 'sender@yahoo.com'                                 # 发邮件者邮箱
@@ -110,5 +110,13 @@ body = 'This is a test email with attachment.'                    # 正文
 pdf_folder = '/home/01_html/02_PDFsplit'                          # pdf附件对应的目录
 sent_pdf_list_path = '/home/01_html/02_emailPDF.txt'              # 记录发送过的pdf附件名
 ```
+
+- crontab 定时
+
+```sh
+0 23 * * * /home/00_software/miniconda/bin/python /home/01_html/02_emailEngSent.py >> /home/01_html/cron.log 2>&1
+```
+
+注意：有些云服务器商使用UTC时间，比如cloudcone，请将UTC时间与本地时间进行换算
 
 
