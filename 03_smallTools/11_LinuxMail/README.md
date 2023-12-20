@@ -1,6 +1,7 @@
 # 项目功能
 
-在linux系统中使用python脚本发送e-mail
+- 在linux系统中使用python脚本发送e-mail
+- 定时发送给若干个收件人，可添加pdf附件
 
 # 文件结构
 
