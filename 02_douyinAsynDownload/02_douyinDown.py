@@ -63,7 +63,7 @@ if filtered_links:
             # Append download details to 4_totalSuccessLog.txt
             with open("/home/01_html/05_douyinAsynDload/5_totalSuccessLog.txt", "a") as log_file:
                 log_file.write(file_name + "," + encoded_url + "\n")
-                print("状态码200，写入4_totalSuccessLog.txt")
+                print("状态码200，写入5_totalSuccessLog.txt")
         else:
             # Append failed download to 3_failure.txt
             with open("/home/01_html/05_douyinAsynDload/3_failure.txt", "a") as failure_file:
