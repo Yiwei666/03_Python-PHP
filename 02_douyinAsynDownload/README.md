@@ -22,7 +22,8 @@
     ├── 02_douyinDown.py                 # 筛选2.txt中存在，4_success.txt中不存在的链接进行下载，定时每2分钟下载一次
     ├── 03_add_3_to_2.sh                 # 凌晨5.10分将3_failure.txt中的链接追加到2.txt中，并清空3_failure.txt
     ├── 04_2_subtract_4.py               # 凌晨5点，筛选2.txt中的链接，保存不存在于4_success.txt中的链接
-    ├── 2.txt                            # 保存所有待下载的链接
+    ├── 2.txt                            # 保存所有待下载的链接，需要提前创建，并设置所属组和权限
+    ├── 2_addTotalLog.txt                # 日志文件，同步记录2.txt中按照时间顺序追加的所有链接，包含时间戳。需要提前创建，并设置所属组和权限
     ├── 3_failure.txt                    # 保存下载失败的链接，定期追加到2.txt中，然后清空
     └── 4_success.txt                    # 存储所有下载成功的链接，保证不重复下载
 
@@ -47,6 +48,7 @@
 -rwxr-xr-x 1 root  root   515 Oct 11 21:30 03_add_3_to_2.sh
 -rwxr-xr-x 1 root  root   674 Oct 11 21:29 04_2_subtract_4.py
 -rw-rw-rw- 1 nginx nginx    0 Oct 12 05:00 2.txt
+-rw-rw-rw- 1 nginx nginx   255 Dec 20 17:37 2_addTotalLog.txt
 -rw-rw-rw- 1 root  root     0 Oct 12 05:10 3_failure.txt
 -rw-rw-rw- 1 root  root  4867 Oct 12 03:20 4_success.txt
 
@@ -84,27 +86,38 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
 ```php
 <body>
     <?php
+    // 设置时区为你所在的时区
+    date_default_timezone_set('Asia/Shanghai');
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 获取用户输入的字符串
         $userInput = $_POST["input"];
-
+    
         // 正则表达式匹配 https 链接
         preg_match_all('/https:\/\/[^ ]+/', $userInput, $matches);
-
+    
         // 获取匹配到的链接
         $links = $matches[0];
-
+    
         // 定义文件路径
         $filePath = '/home/01_html/05_douyinAsynDload/2.txt';
-
-        // 将链接追加到文件
+        $filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
+    
+        // 将链接追加到文件和记录日志
         if (!empty($links)) {
             $file = fopen($filePath, "a");
+            $logFile = fopen($filePathLog, "a");
+    
             foreach ($links as $link) {
+                $timestamp = date('Y-m-d H:i:s');
                 fwrite($file, $link . PHP_EOL);
+                fwrite($logFile, $link . ',' . $timestamp . PHP_EOL);
             }
+    
             fclose($file);
-            echo "<div id='output'>链接已成功保存到 $filePath 文件中！</div>";
+            fclose($logFile);
+    
+            echo "<div id='output'>链接已成功保存到 $filePath 和 $filePathLog 文件中！</div>";
         } else {
             echo "<div id='output'>未找到有效的链接，请重新输入。</div>";
         }
@@ -123,13 +136,15 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
 
     <script>
         function visitUrl() {
-            window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";
+            window.location.href = "https://mctea.one/05_douyinAsynDload/01_url_get.php";
         }
     </script>
 </body>
 ```
 
-**注意：部署的时候注意修改跳转链接**
+- 注意：
+  - 部署的时候注意修改跳转链接以及icon对应的域名domain.com
+  - `2.txt`和`2_addTotalLog.txt`需要提前使用touch命令创建并设置权限和所属组，不然web无法写入
 
 - **02_douyinDown.py**
 
