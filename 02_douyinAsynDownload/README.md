@@ -61,7 +61,7 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
 
 # 环境配置
 
-- **crontab定时任务**
+### 1. crontab定时任务
 
 ```
 */2 * * * * /home/00_software/01_Anaconda/bin/python /home/01_html/05_douyinAsynDload/02_douyinDown.py
@@ -80,32 +80,48 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
 3. 使用crontab写个定时任务，每天5点10分的时候执行 /home/01_html/05_douyinAsynDload/03_add_3_to_2.sh，bash路径为 /usr/bin/bash
 
 
-- **01_url_get.php**
+### 2. 01_url_get.php
 
-能否写一个php脚本，在web页面访问该php脚本的时候显示一个输入框，提示输入保存字符串，用户输入字符串并点击输入保存按钮后，程序会提取该字符串中的 https链接，并将该链接以追加的方式写入到 2.txt文件中。
+1. 能否写一个php脚本，在web页面访问该php脚本的时候显示一个输入框，提示输入保存字符串，用户输入字符串并点击输入保存按钮后，程序会提取该字符串中的 https链接，并将该链接以追加的方式写入到 2.txt文件和2_addTotalLog.txt文件中。
 下面是一个字符串例子，字符串通常是如下格式 “......”，只需要提取“https://v.douyin.com/abcdef/” 部分链接即可。
 
 ```php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Douyin Downloader</title>
+    <link rel="shortcut icon" href="https://domain.com/00_logo/download.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #inputForm {
+            text-align: center;
+        }
+        #inputText {
+            width: 400px;
+            height: 200px;
+            margin: 10px 0;
+        }
+        #saveButton, #visitButton, #viewButton {
+            display: block;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
 <body>
     <?php
-    // 设置时区为你所在的时区
     date_default_timezone_set('Asia/Shanghai');
-    
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // 获取用户输入的字符串
         $userInput = $_POST["input"];
     
-        // 正则表达式匹配 https 链接
         preg_match_all('/https:\/\/[^ ]+/', $userInput, $matches);
     
-        // 获取匹配到的链接
         $links = $matches[0];
     
-        // 定义文件路径
         $filePath = '/home/01_html/05_douyinAsynDload/2.txt';
         $filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
     
-        // 将链接追加到文件和记录日志
         if (!empty($links)) {
             $file = fopen($filePath, "a");
             $logFile = fopen($filePathLog, "a");
@@ -134,19 +150,43 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
         <br>
         <br>
         <button id="visitButton" onclick="visitUrl()">刷新</button>
+        <br>
+        <br>
+        <br>
+        <button id="viewButton" onclick="viewLog()">查看</button>
     </form>
 
     <script>
         function visitUrl() {
-            window.location.href = "https://mctea.one/05_douyinAsynDload/01_url_get.php";
+            window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";
+        }
+
+        function viewLog() {
+            window.open("01_view_log.php", "_blank");
         }
     </script>
 </body>
+</html>
 ```
 
-- 注意：
+2. 注意：
   - 部署的时候注意修改跳转链接以及icon对应的域名domain.com
   - `2.txt`和`2_addTotalLog.txt`需要提前使用touch命令创建并设置权限和所属组，不然web无法写入
+  - 下面参数赋值需要注意
+```
+<link rel="shortcut icon" href="https://domain.com/00_logo/download.png">           # 域名
+
+$filePath = '/home/01_html/05_douyinAsynDload/2.txt';
+$filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
+
+window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";    # 域名和 01_url_get.php脚本
+
+window.open("01_view_log.php", "_blank");          # 01_view_log.php 脚本
+```
+
+
+
+
 
 - **02_douyinDown.py**
 
