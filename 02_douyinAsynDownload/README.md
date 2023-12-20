@@ -18,7 +18,8 @@
 
 ```
 ├── 05_douyinAsynDload                   # 文件夹，存储该项目所有核心脚本
-    ├── 01_url_get.php                   # web页面上提醒输入链接，写入到2.txt中
+    ├── 01_url_get.php                   # web页面上提醒输入链接，写入到2.txt中，提供查看日志按钮
+    ├── 01_view_log.php                  # 查看写入日志，需要指定日志路径
     ├── 02_douyinDown.py                 # 筛选2.txt中存在，4_success.txt中不存在的链接进行下载，定时每2分钟下载一次
     ├── 03_add_3_to_2.sh                 # 凌晨5.10分将3_failure.txt中的链接追加到2.txt中，并清空3_failure.txt
     ├── 04_2_subtract_4.py               # 凌晨5点，筛选2.txt中的链接，保存不存在于4_success.txt中的链接
@@ -45,6 +46,7 @@
 
 ```
 -rw-r--r-- 1 root  root  2052 Oct 11 20:32 01_url_get.php
+-rw-r--r-- 1 root  root   1003 Dec 20 21:54 01_view_log.php
 -rwxr-xr-x 1 root  root  2967 Oct 11 21:13 02_douyinDown.py
 -rwxr-xr-x 1 root  root   515 Oct 11 21:30 03_add_3_to_2.sh
 -rwxr-xr-x 1 root  root   674 Oct 11 21:29 04_2_subtract_4.py
@@ -80,34 +82,12 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
 3. 使用crontab写个定时任务，每天5点10分的时候执行 /home/01_html/05_douyinAsynDload/03_add_3_to_2.sh，bash路径为 /usr/bin/bash
 
 
-### 2. 01_url_get.php
+### 2. 抖音url写入 01_url_get.php
 
 1. 能否写一个php脚本，在web页面访问该php脚本的时候显示一个输入框，提示输入保存字符串，用户输入字符串并点击输入保存按钮后，程序会提取该字符串中的 https链接，并将该链接以追加的方式写入到 2.txt文件和2_addTotalLog.txt文件中。
 下面是一个字符串例子，字符串通常是如下格式 “......”，只需要提取“https://v.douyin.com/abcdef/” 部分链接即可。
 
 ```php
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Douyin Downloader</title>
-    <link rel="shortcut icon" href="https://domain.com/00_logo/download.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        #inputForm {
-            text-align: center;
-        }
-        #inputText {
-            width: 400px;
-            height: 200px;
-            margin: 10px 0;
-        }
-        #saveButton, #visitButton, #viewButton {
-            display: block;
-            margin: 0 auto;
-            margin-top: 10px;
-        }
-    </style>
-</head>
 <body>
     <?php
     date_default_timezone_set('Asia/Shanghai');
@@ -166,7 +146,6 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存�
         }
     </script>
 </body>
-</html>
 ```
 
 2. 注意：
@@ -184,7 +163,7 @@ window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";  
 window.open("01_view_log.php", "_blank");          # 01_view_log.php 脚本
 ```
 
-### 3. 01_view_log.php
+### 3. 抖音写入日志查看 01_view_log.php
 
 ```php
 <?php
@@ -248,7 +227,7 @@ $filePathLog = '/home/01_html/05_douyinAsynDload/2_addTotalLog.txt';
 
 
 
-### 4. 02_douyinDown.py
+### 4. 抖音视频下载 02_douyinDown.py
 
 1. 在 /home/01_html/05_douyinAsynDload/2.txt 中每一行可能有一个https链接，在/home/01_html/05_douyinAsynDload/4_success.txt  中每一行可能也有一个https链接，二者也有可能都是空的，现在需要筛选出 在2.txt中有的链接，同时在4_success.txt中没有的链接，并且从筛选出来的链接数组中随机抽取一个链接 赋值为 encoded_url。
 
