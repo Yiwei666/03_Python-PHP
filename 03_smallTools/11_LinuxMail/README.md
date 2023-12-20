@@ -117,6 +117,6 @@ sent_pdf_list_path = '/home/01_html/02_emailPDF.txt'              # 记录发送
 0 23 * * * /home/00_software/miniconda/bin/python /home/01_html/02_emailEngSent.py >> /home/01_html/cron.log 2>&1
 ```
 
-注意：有些云服务器商使用UTC时间，比如cloudcone，请将UTC时间与本地时间进行换算
+注意：有些云服务器商使用UTC时间，比如cloudcone，请将UTC时间与本地时间进行换算，北京时间比UTC时间快8小时。
 
 
