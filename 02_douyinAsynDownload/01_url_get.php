@@ -20,8 +20,11 @@
         }
     </style>
 </head>
-<body>      
+<body>
     <?php
+    // 设置时区为你所在的时区
+    date_default_timezone_set('Asia/Shanghai');
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // 获取用户输入的字符串
         $userInput = $_POST["input"];
@@ -56,7 +59,7 @@
         }
     }
     ?>
-        
+
     <form id="inputForm" method="POST">
         <textarea id="inputText" name="input" rows="5" cols="50" placeholder="请输入字符串"></textarea>
         <br>
@@ -69,7 +72,7 @@
 
     <script>
         function visitUrl() {
-            window.location.href = "https://domain.com/05_douyinAsynDload/01_url_get.php";
+            window.location.href = "https://mctea.one/05_douyinAsynDload/01_url_get.php";
         }
     </script>
 </body>
