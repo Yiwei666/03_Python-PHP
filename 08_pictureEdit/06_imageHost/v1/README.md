@@ -19,12 +19,12 @@ v1版本仅能返回文件大小MB，文件名，以及文件的绝对路径
 - web端主脚本03_picPasteUpload.php
 
 ```php
-        function displayUploadInfo(response) {
-            var uploadInfoDiv = document.getElementById('uploadInfo');
-            uploadInfoDiv.innerHTML = 'File Size: ' + response.size + ' MB<br>';
-            uploadInfoDiv.innerHTML += 'File Name: ' + response.fileName + '<br>';
-            uploadInfoDiv.innerHTML += 'File Path: ' + response.filePath;
-        }
+function displayUploadInfo(response) {
+    var uploadInfoDiv = document.getElementById('uploadInfo');
+    uploadInfoDiv.innerHTML = 'File Size: ' + response.size + ' MB<br>';
+    uploadInfoDiv.innerHTML += 'File Name: ' + response.fileName + '<br>';
+    uploadInfoDiv.innerHTML += 'File Path: ' + response.filePath;
+}
 ```
 
 
