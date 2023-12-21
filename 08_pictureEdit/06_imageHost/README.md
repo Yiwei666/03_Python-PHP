@@ -141,7 +141,23 @@ service php7.4-fpm restart
 
 🔹 仅重启nginx的web服务是不能够使其生效的
 
+### 5. 显示图片
 
+```php
+// 新增显示内容
+var imageContainer = document.createElement('div');
+var imageCode = `<p align="center">
+                  <img src="${response.adjustedPath}" alt="Image Description" width="700">
+                 </p>`;
+imageContainer.textContent = imageCode;
+
+// 添加样式
+imageContainer.style.backgroundColor = 'black'; // 背景颜色为黑色
+imageContainer.style.color = 'white'; // 文字颜色为白色
+
+uploadInfoDiv.appendChild(document.createElement('br'));
+uploadInfoDiv.appendChild(imageContainer);
+```
 
 
 
