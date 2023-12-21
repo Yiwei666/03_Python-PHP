@@ -139,7 +139,7 @@ upload_max_filesize = 2M
 service php7.4-fpm restart
 ```
 
-  仅重启nginx的web服务是不能够使其生效的
+    仅重启nginx的web服务是不能够使其生效的
 
 
 
