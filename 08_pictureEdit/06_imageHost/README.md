@@ -107,7 +107,39 @@ client_max_body_size 5M;                                                     # �
 ```
 
 
+### 4. 设置 `php.ini` 中对于文件上传大小的限制
 
+- `upload_max_filesize`和`post_max_size`含义
+   - 这两个参数都是用于限制通过 HTTP POST 请求上传到服务器的数据量的 PHP 配置项。当你在 PHP 配置文件（通常是 php.ini 文件）中设置这两个参数时，需要确保将它们设置为相同或更大的值，以便 post_max_size 能够容纳。
+   - `upload_max_filesize`：该参数限制了单个文件上传的最大大小。通常默认值是较小的值，例如 2M，表示允许上传最大为2兆字节（2MB）的文件。如果用户尝试上传一个超过该大小的文件，上传请求将被拒绝。
+   - `post_max_size`：该参数限制了整个 POST 请求的最大大小，包括除了文件上传之外的所有 POST 数据。通常默认值也是较小的值，例如 8M，表示整个 POST 请求的最大大小为8兆字节（8MB）。
+ 
+- ubuntu查看`upload_max_filesize`和`post_max_size`参数命令
+
+```sh
+grep  upload_max_filesize  /etc/php/7.4/fpm/php.ini
+
+grep  post_max_size  /etc/php/7.4/fpm/php.ini
+```
+
+`upload_max_filesize`和`post_max_size`默认值分别 2M 和 8M
+
+```ini
+; Maximum size of POST data that PHP will accept.
+; http://php.net/post-max-size
+post_max_size = 8M
+; Maximum allowed size for uploaded files.
+; http://php.net/upload-max-filesize
+upload_max_filesize = 2M
+```
+
+- **重启 PHP-FPM 服务才能够使上述 `php.ini` 的修改生效**
+
+```sh
+service php7.4-fpm restart
+```
+
+仅重启nginx的web服务是不能够使其生效的
 
 
 
