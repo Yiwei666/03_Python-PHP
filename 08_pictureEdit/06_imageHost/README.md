@@ -83,7 +83,7 @@ chmod 777 /home/01_html/02_LAS1109/35_imageHost/
 drwxrwxrwx   2 root root   4096 Dec 21 14:46 35_imageHost
 ```
 
-### 3.更改nginx最大上传文件限制（默认1MB/单个文件）
+### 3. 更改nginx最大上传文件限制（默认1MB/单个文件）
 
 在 NGINX 配置文件`/etc/nginx/nginx.conf`（ubuntu）中，`client_max_body_size` 参数的默认值通常是1m，表示1兆字节。这意味着默认情况下 NGINX 允许客户端上传的请求体（包括文件上传）的最大大小为1兆字节。
 
