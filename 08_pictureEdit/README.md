@@ -21,6 +21,8 @@ drwxrwxrwx 14 root  root   01_pic                       # 存储图片的文件�
 
 # 3. 安装配置
 
-```
+- picture_main.php脚本需要更改的环境变量如下所示
 
+```php
+$target_dir = "/home/01_html/01_pic/" . $today_folder;
 ```
