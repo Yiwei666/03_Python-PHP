@@ -18,8 +18,8 @@
 
 ```
 ├── 05_douyinAsynDload                   # 文件夹，存储该项目所有核心脚本
-    ├── 01_url_get.php                   # web页面上提醒输入链接，写入到2.txt中，提供查看日志按钮
-    ├── 01_view_log.php                  # 查看写入日志，需要指定日志路径
+    ├── 01_url_get.php                   # web页面上提醒输入链接，写入到2.txt中，提供查看日志按钮，需要指定日志查看脚本名称
+    ├── 01_view_log.php                  # 查看写入日志，环境变量设置需要指定日志文件路径
     ├── 02_douyinDown.py                 # 筛选2.txt中存在，4_success.txt中不存在的链接进行下载，定时每2分钟下载一次
     ├── 03_add_3_to_2.sh                 # 凌晨5.10分将3_failure.txt中的链接追加到2.txt中，并清空3_failure.txt
     ├── 04_2_subtract_4.py               # 凌晨5点，筛选2.txt中的链接，保存不存在于4_success.txt中的链接
@@ -253,6 +253,17 @@ if filtered_links:
 
 2. 继续修改上述代码，将下载成功的 encoded_url 追加到 /home/01_html/05_douyinAsynDload/4_success.txt中，下载失败的 encoded_url 追加到 3_failure.txt 中。
 
+
+3. 定义文件路径变量
+
+```python
+# 定义文件路径变量
+links_2_path = "/home/01_html/05_douyinAsynDload/2.txt"
+links_4_success_path = "/home/01_html/05_douyinAsynDload/4_success.txt"
+failure_log_path = "/home/01_html/05_douyinAsynDload/3_failure.txt"
+success_log_path = "/home/01_html/05_douyinAsynDload/5_totalSuccessLog.txt"
+download_dir = "/home/01_html/02_douyVideo/"
+```
 
 ### 5. 03_add_3_to_2.sh
 
