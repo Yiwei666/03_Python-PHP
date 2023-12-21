@@ -160,7 +160,9 @@ uploadInfoDiv.appendChild(imageContainer);
 ```
 
 
-
+<p align="center">
+<img src="http://120.46.81.41/02_LAS1109/35_imageHost/20231221-221512.png" alt="Image Description" width="700">
+</p>
 
 
 
