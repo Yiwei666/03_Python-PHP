@@ -185,5 +185,47 @@ uploadInfoDiv.appendChild(imageContainer);
 </p>
 
 
+### 6. 环境变量配置
+
+
+- **web脚本 03_picPasteUpload.php**
+
+
+```php
+<link rel="shortcut icon" href="https://mctea.one/00_logo/imageHost.png">
+xhr.open('POST', '/03_serverImageHost.php', true);                                                 // 指定服务器端图片处理脚本
+resultImage.width = 300;                                                                           // 设置预览图片宽度为300px
+```
+
+
+
+
+
+- **服务器脚本 03_serverImageHost.php**
+
+
+```php
+$uploadDirectory = '/home/01_html/02_LAS1109/35_imageHost/';                                       // 指定图床文件夹绝对路径
+
+$adjustedFilePath = str_replace('/home/01_html', 'http://120.46.81.41', $targetFilePath);          // 使用ip或域名更换根目录路径
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
