@@ -13,14 +13,26 @@
 
 - 常用颜色
 
-| RGB       | HEX       | 颜色      | 场景      | 示例     |
-|:---------:|:---------:|:---------:|:---------:|:---------:|
-| 29,31,33    | #1d1f21  | 黑色    | dark reader    | <div style="background-color: #337dff; width: 20px; height: 20px;"></div>   |
-| 内容较长  | 内容较长  | 内容较长  | 右对齐    | 右对齐    |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
+| (29,31,33)       | #1d1f21       | 黑色    | dark reader    | ![Color Box](https://via.placeholder.com/60/1d1f21/000000?text=+)         | 深色主题背景   |  备注     |
+| (51,51,51)       | #333333       | 灰黑色      | 自定义      |  ![Color Box](https://via.placeholder.com/60/#333333/000000?text=+)      | 深色主题背景   | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
+| RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
 
-<div style="background-color: #337dff; width: 20px; height: 20px;"></div>
-
-<span style="background-color: #1d1f21; display: inline-block; width: 20px; height: 20px;"></span>
 
 
 - RGB和HEX十六进制颜色互转网站：https://uutool.cn/color/
+
+
+
+
+
+
