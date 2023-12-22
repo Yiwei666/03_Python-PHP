@@ -8,9 +8,9 @@
         #imageContainer {
             border: 1px solid #ccc;
             padding: 10px;
-            max-width: 300px; /* 设置最大宽度 */
-            max-height: 300px; /* 设置最大高度 */
-            overflow: hidden; /* 超出尺寸时隐藏 */
+            max-width: 300px;
+            max-height: 300px;
+            overflow: hidden;
         }
 
         #uploadButton {
@@ -29,6 +29,7 @@
         <p>Paste your image here:</p>
         <div contenteditable="true" id="imageContainer"></div>
         <button id="uploadButton">Upload Image</button>
+        <div id="uploadInfo"></div>
     </div>
 
     <script>
@@ -47,7 +48,7 @@
                     reader.onload = function (e) {
                         var img = new Image();
                         img.src = e.target.result;
-                        document.getElementById('imageContainer').innerHTML = ''; // 清空容器
+                        document.getElementById('imageContainer').innerHTML = '';
                         document.getElementById('imageContainer').appendChild(img);
                     };
 
@@ -68,20 +69,19 @@
                 var ctx = canvas.getContext('2d');
                 ctx.drawImage(image, 0, 0, image.width, image.height);
 
-                // 将图像保存为 PNG 文件
                 var dataURL = canvas.toDataURL('image/png');
                 var blob = dataURItoBlob(dataURL);
 
-                // 创建 FormData 对象并添加图像文件
                 var formData = new FormData();
                 formData.append('image', blob, 'image.png');
 
-                // 发送图像到服务器
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/03_serverImageHost.php', true); // 请替换为你的服务器上传脚本
+                xhr.open('POST', '/03_serverImageHost.php', true);
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-                        console.log('Image uploaded successfully.');
+                        var response = JSON.parse(xhr.responseText);
+                        displayUploadInfo(response);
+                        imageContainer.innerHTML = '';
                     } else {
                         console.error('Image upload failed.');
                     }
@@ -90,6 +90,41 @@
                 xhr.send(formData);
             }
         });
+
+        function displayUploadInfo(response) {
+            var uploadInfoDiv = document.getElementById('uploadInfo');
+            uploadInfoDiv.innerHTML = 'File Size (MB): ' + response.sizeMB + ' MB<br>';
+            uploadInfoDiv.innerHTML += 'File Size (KB): ' + response.sizeKB + ' KB<br>';
+            uploadInfoDiv.innerHTML += 'File Name: ' + response.fileName + '<br>';
+            uploadInfoDiv.innerHTML += 'File Path: ' + response.filePath + '<br>';
+            
+            // Make Adjusted Path a clickable link
+            var adjustedPathLink = document.createElement('a');
+            adjustedPathLink.href = response.adjustedPath;
+            adjustedPathLink.textContent = 'Adjusted Path: ' + response.adjustedPath;
+            adjustedPathLink.target = '_blank'; // Open in a new tab/window
+            uploadInfoDiv.appendChild(document.createElement('br'));
+            uploadInfoDiv.appendChild(adjustedPathLink);
+
+
+            // 新增显示内容
+            var imageContainer = document.createElement('div');
+            var imageCode = `<p align="center">
+                              <img src="${response.adjustedPath}" alt="Image Description" width="700">
+                             </p>`;
+            imageContainer.innerHTML = imageCode;
+
+            // 添加样式
+            imageContainer.style.backgroundColor = 'black';
+            imageContainer.style.color = 'white';
+
+            // 使用innerText而不是innerHTML
+            imageContainer.innerText = imageCode;
+
+            uploadInfoDiv.appendChild(document.createElement('br'));
+            uploadInfoDiv.appendChild(imageContainer);
+        }
+
 
         function dataURItoBlob(dataURI) {
             var byteString = atob(dataURI.split(',')[1]);
