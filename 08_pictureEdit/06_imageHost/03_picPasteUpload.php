@@ -8,8 +8,12 @@
         #imageContainer {
             border: 1px solid #ccc;
             padding: 10px;
-            max-width: 300px;
-            max-height: 300px;
+            width: auto; /* 初始宽度为自适应 */
+            height: auto; /* 初始高度为自适应 */
+            min-width: 500px; /* 最小宽度，根据需要调整 */
+            min-height: 80px; /* 最小高度，根据需要调整 */
+            max-width: 300px; /* 最大宽度为300px，你可以根据需要调整 */
+            max-height: 300px; /* 最大高度为300px，你可以根据需要调整 */
             overflow: hidden;
         }
 
@@ -22,10 +26,28 @@
             border: none;
             border-radius: 5px;
         }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 100px 0 0 0; /* 顶部距离为20px，调整其他方向的边距为0 */
+        }
+
+        #container {
+            text-align: left;
+            width: 100%; /* 设置容器宽度，可以根据需要调整 */
+            margin-top: 1px; /* 调整容器上边距 */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 调整竖直方向上的对齐方式 */
+        }
+
     </style>
 </head>
 <body>
-    <div>
+    <div id="container">
         <p>Paste your image here:</p>
         <div contenteditable="true" id="imageContainer"></div>
         <button id="uploadButton">Upload Image</button>
@@ -107,7 +129,8 @@
             uploadInfoDiv.appendChild(adjustedPathLink);
 
 
-            // 新增显示内容
+
+            // 新增显示内容：显示代码块，添加复制代码块按钮
             var imageContainer = document.createElement('div');
             var imageCode = `<p align="center">
                               <img src="${response.adjustedPath}" alt="Image Description" width="700">
@@ -156,7 +179,25 @@
             uploadInfoDiv.appendChild(copyButton);
 
 
+
+            // 新增代码段：显示图床中图片预览图
+            var resultImageContainer = document.createElement('div');
+            resultImageContainer.style.textAlign = 'center'; // 设置水平居中
+            resultImageContainer.style.marginTop = '20px'; // 设置距离顶部的距离为20px
+            resultImageContainer.style.backgroundColor = '#eee'; // 设置背景色为灰色
+            resultImageContainer.style.padding = '10px'; // 设置内边距为10px
+
+            var resultImage = new Image();
+            resultImage.src = response.adjustedPath;
+            resultImage.width = 300; // 设置图片宽度为500px
+            resultImage.alt = 'Result Image';
+            resultImageContainer.appendChild(resultImage);
+
+            // 添加到uploadInfoDiv中
+            uploadInfoDiv.appendChild(resultImageContainer);
+
         }
+
 
         function dataURItoBlob(dataURI) {
             var byteString = atob(dataURI.split(',')[1]);
