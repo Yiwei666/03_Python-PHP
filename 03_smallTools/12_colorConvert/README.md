@@ -18,10 +18,10 @@
 |:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
 | (29,31,33)       | #1d1f21       | 黑色    | dark reader    | ![Color Box](https://via.placeholder.com/50/1d1f21/000000?text=+)         | 深色主题背景   |  备注     |
 | (51,51,51)       | #333333       | 灰黑色      | 自定义      |  ![Color Box](https://via.placeholder.com/50/333333/000000?text=+)      | 深色主题背景   | 备注      |
-| (13,17,23)      |  #d1117        | 黑色      | github深色主题      | ![Color Box](https://via.placeholder.com/50/d1117/000000?text=+)     | 深色主题背景     | 备注      |
+| (13,17,23)       | #0d1117        | 黑色      | github深色主题      | ![Color Box](https://via.placeholder.com/50/0d1117/000000?text=+)     | 深色主题背景     | 备注      |
 | (48,48,48)       | #303030       | 灰黑色      | 自定义      | ![Color Box](https://via.placeholder.com/50/303030/000000?text=+)      | 场景     | 曾用于mainpage.html灰黑色背景      |
-| (47,129,247)      | #2f81f7       |蓝色      | github链接      | ![Color Box](https://via.placeholder.com/50/2f81f7/000000?text=+)      | 场景     | 备注      |
-| (37,143,184)       | #258fb8       | 蓝色      | 自定义      | ![Color Box](https://via.placeholder.com/50/258fb8/000000?text=+)      | 场景     | 曾用于mainpage.html超链接      |
+| (47,129,247)     | #2f81f7       |蓝色      | github链接      | ![Color Box](https://via.placeholder.com/50/2f81f7/000000?text=+)      | 场景     | 备注      |
+| (37,143,184)     | #258fb8       | 蓝色      | 自定义      | ![Color Box](https://via.placeholder.com/50/258fb8/000000?text=+)      | 场景     | 曾用于mainpage.html超链接      |
 | (52,53,65)       | #343541       | 灰黑色      | chatgpt深色背景      | ![Color Box](https://via.placeholder.com/50/343541/000000?text=+)      | 场景     | 备注      |
 | RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
 | RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
