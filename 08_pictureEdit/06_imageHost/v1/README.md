@@ -16,7 +16,7 @@ v1版本仅能返回文件大小（MB），文件名，以及文件的绝对路�
 # 环境配置
 
 
-- web端主脚本03_picPasteUpload.php
+- web端主脚本 03_picPasteUpload.php
 
 ```php
 function displayUploadInfo(response) {
@@ -28,7 +28,7 @@ function displayUploadInfo(response) {
 ```
 
 
-- 服务器端图像处理脚本
+- 服务器端图像处理脚本 03_serverImageHost.php
 
 ```php
 <?php
