@@ -117,14 +117,46 @@
             // 添加样式
             imageContainer.style.backgroundColor = 'black';
             imageContainer.style.color = 'white';
+            imageContainer.style.marginTop = '20px'; // 设置距离顶部的距离为20px
+            imageContainer.style.padding = '15px'; // 设置内边距为15px
 
             // 使用innerText而不是innerHTML
             imageContainer.innerText = imageCode;
 
             uploadInfoDiv.appendChild(document.createElement('br'));
             uploadInfoDiv.appendChild(imageContainer);
-        }
 
+            // 添加复制按钮
+            var copyButton = document.createElement('button');
+            copyButton.innerText = '复制代码';
+            copyButton.onclick = function() {
+                // 创建一个文本域，并将代码块文本放入其中
+                var textarea = document.createElement('textarea');
+                textarea.value = imageCode.replace(/^[ \t]+/gm, ''); // 使用正则表达式去除行首空格
+
+                // 将文本域添加到页面中
+                document.body.appendChild(textarea);
+
+                // 选中文本域中的内容
+                textarea.select();
+                
+                // 执行复制命令
+                document.execCommand('copy');
+
+                // 移除文本域
+                document.body.removeChild(textarea);
+
+                alert('代码已复制到剪贴板！');
+            };
+
+            // 设置复制按钮的样式
+            copyButton.style.marginTop = '15px'; // 设置距离顶部的距离为10px
+
+            // 将复制按钮添加到uploadInfoDiv中
+            uploadInfoDiv.appendChild(copyButton);
+
+
+        }
 
         function dataURItoBlob(dataURI) {
             var byteString = atob(dataURI.split(',')[1]);
