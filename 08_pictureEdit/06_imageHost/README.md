@@ -189,6 +189,9 @@ uploadInfoDiv.appendChild(imageContainer);
 ### 6. 环境变量配置
 
 
+在一台新服务器部署本项目时，除了更改php和nginx对于上传文件大小的限制外，还需要指定服务器端脚本名称，域名或ip，图床文件夹绝对路径等等
+
+
 - **web脚本 03_picPasteUpload.php**
 
 
@@ -199,8 +202,6 @@ xhr.open('POST', '/03_serverImageHost.php', true);                              
 
 resultImage.width = 300;                                                                           // 设置预览图片宽度为300px
 ```
-
-
 
 
 
