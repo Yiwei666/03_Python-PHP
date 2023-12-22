@@ -164,6 +164,8 @@ service php7.4-fpm restart
 
 ### 5. 显示图片
 
+- 该部分代码片段可用于预览上传成功后的图床图片
+
 ```php
 // 新增显示内容
 var imageContainer = document.createElement('div');
