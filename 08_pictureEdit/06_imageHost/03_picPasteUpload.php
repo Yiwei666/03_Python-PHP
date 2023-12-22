@@ -21,7 +21,7 @@
             margin-top: 10px;
             cursor: pointer;
             padding: 5px 10px;
-            background-color: #4CAF50;
+            background-color: #008080;     /* upload image 按钮颜色 */     
             color: white;
             border: none;
             border-radius: 5px;
@@ -32,7 +32,13 @@
             justify-content: center;
             align-items: flex-start;
             height: 100vh;
-            margin: 100px 0 0 0; /* 顶部距离为20px，调整其他方向的边距为0 */
+            margin: 60px 0 0 0; /* 顶部距离为20px，调整其他方向的边距为0 */
+            background-color: #242729; /* 背景颜色为灰黑色 */
+            color: #ffffff; /* 字体颜色为白色 */
+        }
+
+        a {
+            color: #337dff; /* 链接颜色为蓝色 */
         }
 
         #container {
@@ -180,11 +186,11 @@
 
 
 
-            // 新增代码段：显示图床中图片预览图
+            // 显示图床中图片预览图
             var resultImageContainer = document.createElement('div');
             resultImageContainer.style.textAlign = 'center'; // 设置水平居中
             resultImageContainer.style.marginTop = '20px'; // 设置距离顶部的距离为20px
-            resultImageContainer.style.backgroundColor = '#eee'; // 设置背景色为灰色
+            resultImageContainer.style.backgroundColor = '#222426'; // 设置背景色为灰黑色
             resultImageContainer.style.padding = '10px'; // 设置内边距为10px
 
             var resultImage = new Image();
