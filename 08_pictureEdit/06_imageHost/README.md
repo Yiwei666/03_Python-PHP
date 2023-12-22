@@ -192,8 +192,10 @@ uploadInfoDiv.appendChild(imageContainer);
 
 
 ```php
-<link rel="shortcut icon" href="https://mctea.one/00_logo/imageHost.png">
+<link rel="shortcut icon" href="https://mctea.one/00_logo/imageHost.png">                          // 指定icon网址
+ 
 xhr.open('POST', '/03_serverImageHost.php', true);                                                 // 指定服务器端图片处理脚本
+
 resultImage.width = 300;                                                                           // 设置预览图片宽度为300px
 ```
 
