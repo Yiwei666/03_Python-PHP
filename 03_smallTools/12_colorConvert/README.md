@@ -23,6 +23,7 @@
 | (47,129,247)     | #2f81f7       |蓝色      | github链接      | ![Color Box](https://via.placeholder.com/50/2f81f7/000000?text=+)      | 场景     | 备注      |
 | (37,143,184)     | #258fb8       | 蓝色      | 自定义      | ![Color Box](https://via.placeholder.com/50/258fb8/000000?text=+)      | 场景     | 曾用于mainpage.html超链接      |
 | (52,53,65)       | #343541       | 灰黑色      | chatgpt深色背景      | ![Color Box](https://via.placeholder.com/50/343541/000000?text=+)      | 场景     | 备注      |
+| (48,56,65) | #303841 | 颜色 | sublime text | ![Color Box](https://via.placeholder.com/50/303841/000000?text=+) | 通用 | 无 |
 | RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
 | RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
 | RGB       | HEX       | 颜色      | 来源      | 示例      | 场景     | 备注      |
