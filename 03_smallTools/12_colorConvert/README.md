@@ -1,12 +1,30 @@
 # 1. 项目功能
 
+将RGB颜色值转为十六进制颜色值，用于HTML页面设置，RGB值可通过微信截图获取
 
 # 2. 文件结构
 
-
+```
+04_RGBtoHEX.php       # RGB和HEX互转
+04_HEXtoRGB.php       # HEX转RGB
+```
 
 # 3. 环境配置
 
+无需环境配置，开箱即用，通过下面的php代码可设置输出的字符串格式
+
+```php
+echo "<div style='width: 120px; height: 75px; background-color: $hexValue;'></div>";
+// echo "<p>| $rgbValue | $hexValue | $colorName | 用户输入 | ![Color Box](https://via.placeholder.com/50/$hexValue/000000?text=+) | 通用 | 无 |</p>";
+
+// 假设 $hexValue 是一个包含十六进制颜色值的变量
+// 使用 str_replace 将 "#" 替换为空字符串
+$cleanedHexValue = str_replace('#', '', $hexValue);
+
+// 输出带有清理后的十六进制颜色值的字符串
+echo "<p>| $rgbValue | $cleanedHexValue | $colorName | 用户输入 | ![Color Box](https://via.placeholder.com/32/$cleanedHexValue/000000?text=+) | 通用 | 无 |</p>";
+echo "<p>$hexValue, $rgbValue</p>";
+```
 
 
 # 4. 笔记
