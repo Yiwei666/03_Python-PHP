@@ -194,7 +194,7 @@ uploadInfoDiv.appendChild(imageContainer);
 在一台新服务器部署本项目时，除了更改php和nginx对于上传文件大小的限制外，还需要指定服务器端脚本名称，域名或ip，图床文件夹绝对路径，域名的根目录等
 
 
-- **web脚本 03_picPasteUpload.php**
+- **web脚本 03_picPasteUpload.php 参数初始化**
 
 
 ```php
@@ -207,7 +207,7 @@ resultImage.width = 300;                                                        
 
 
 
-- **服务器脚本 03_serverImageHost.php**
+- **服务器脚本 03_serverImageHost.php 参数初始化**
 
 
 ```php
