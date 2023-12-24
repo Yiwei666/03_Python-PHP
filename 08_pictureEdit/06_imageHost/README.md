@@ -241,12 +241,23 @@ $adjustedFilePath = str_replace('/home/01_html', 'http://120.46.81.41', $targetF
 # 4. web图片查看及转移环境配置
 
 
+### 1. 05_imageTransferName.txt
+
+1. 提前创建该文本
+
+```
+touch 05_imageTransferName.txt
+```
 
 
+2. 设置权限和所属组，满足php脚本读写
 
+```
+chmod 666 05_imageTransferName.txt
+chown www-data:www-data 05_imageTransferName.txt
+```
 
-
-
+### 2. 
 
 
 
