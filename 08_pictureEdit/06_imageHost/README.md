@@ -44,7 +44,7 @@
 05_imageGallery.php               # 在web上显示指定路径下的所有图片，不包括 05_imageTransferName.txt 文件中列出的文件名
 05_serverImageTransfer.php        # 服务器端实现将前端传递给的文件名写入到 05_imageTransferName.txt 文件中
 05_imageTransferName.txt          # 点击transfer按钮后，存储对应文件名的文本
-
+05_mvImageServer.sh               # bash脚本，用于将05_imageTransferName.txt列出的图片文件名从源目录剪切到另外一个目录
 ```
 
 
