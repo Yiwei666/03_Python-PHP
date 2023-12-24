@@ -52,6 +52,18 @@
             text-align: center;
         }
 
+        .transfer-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
         .page-links {
             position: fixed;
             top: 50%;
@@ -77,7 +89,8 @@
 <?php
 $baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageHost/';
 $imagesDirectory = '/home/01_html/02_LAS1109/35_imageHost/';
-$imagesPerPage = 60;
+$transferDirectory = '/home/01_html/02_LAS1109/35_imageTransfer/';
+$imagesPerPage = 40;
 
 // Get all PNG images in the directory
 $images = glob($imagesDirectory . '*.png');
@@ -104,6 +117,7 @@ foreach ($currentImages as $image) {
     $imageName = basename($image);
     $imageUrl = $baseUrl . $imageName;
     echo '<div class="gallery-item">';
+    echo '<button class="transfer-button" onclick="transferImage(\'' . $imageUrl . '\')">Transfer</button>';
     echo '<a href="' . $imageUrl . '" target="_blank">'; // 添加超链接，target="_blank" 在新页面打开
     echo '<img src="' . $imageUrl . '" alt="' . $imageName . '">';
     echo '</a>';
@@ -120,6 +134,31 @@ for ($i = 1; $i <= $totalPages; $i++) {
 echo '</div>';
 ?>
 
+<script>
+    function transferImage(imageUrl) {
+        // 获取图片文件名
+        var imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+
+        // 使用 AJAX 发送 POST 请求到服务器，只传递文件名
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '05_serverImageTransfer.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    alert('Image transfer information recorded successfully!');
+                } else {
+                    alert('Error: Unable to record transfer information.');
+                }
+            }
+        };
+
+        // 只传递文件名，不包含时间信息
+        xhr.send('imageName=' + encodeURIComponent(imageName));
+
+
+    }
+</script>
 
 </body>
 </html>
