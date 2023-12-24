@@ -263,7 +263,7 @@ chown www-data:www-data 05_imageTransferName.txt
 
 - 环境变量
 
-```
+```php
 # 定义文件路径变量
 inputFile="/home/01_html/05_imageTransferName.txt"
 sourceDirectory="/home/01_html/02_LAS1109/35_imageHost/"
@@ -272,7 +272,7 @@ destinationDirectory="/home/01_html/02_LAS1109/35_imageTransfer/"
 
 - 定时每分钟执行一次
 
-```
+```sh
 */1 * * * * /usr/bin/bash /home/01_html/05_mvImageServer.sh
 ```
 
@@ -281,7 +281,7 @@ destinationDirectory="/home/01_html/02_LAS1109/35_imageTransfer/"
 
 - 环境变量
 
-```
+```php
 // 指定文本文件路径
 $filePath = '/home/01_html/05_imageTransferName.txt';
 ```
@@ -289,7 +289,7 @@ $filePath = '/home/01_html/05_imageTransferName.txt';
 
 ### 4. 05_imageGallery.php
 
-```
+```php
 $baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageHost/';         // 图片url中文件名之前的部分
 $imagesDirectory = '/home/01_html/02_LAS1109/35_imageHost/';       // 图片文件夹
 $imagesPerPage = 40;                                               // web页面中每页显示的图片数量
