@@ -259,17 +259,72 @@ chmod 666 05_imageTransferName.txt
 chown www-data:www-data 05_imageTransferName.txt
 ```
 
-### 2. 
+### 2. 05_mvImageServer.sh
+
+- 环境变量
+
+```
+# 定义文件路径变量
+inputFile="/home/01_html/05_imageTransferName.txt"
+sourceDirectory="/home/01_html/02_LAS1109/35_imageHost/"
+destinationDirectory="/home/01_html/02_LAS1109/35_imageTransfer/"
+```
+
+- 定时每分钟执行一次
+
+```
+*/1 * * * * /usr/bin/bash /home/01_html/05_mvImageServer.sh
+```
 
 
+### 3. 05_serverImageTransfer.php
+
+- 环境变量
+
+```
+// 指定文本文件路径
+$filePath = '/home/01_html/05_imageTransferName.txt';
+```
 
 
+### 4. 05_imageGallery.php
 
+```
+$baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageHost/';         // 图片url中文件名之前的部分
+$imagesDirectory = '/home/01_html/02_LAS1109/35_imageHost/';       // 图片文件夹
+$imagesPerPage = 40;                                               // web页面中每页显示的图片数量
 
+// 读取图片转移记录文件
+$serverScript = '05_serverImageTransfer.php';                      // 点击transfer后记录对应图片名的服务器处理脚本
+$transferFile = '/home/01_html/05_imageTransferName.txt';          // 点击transfer后记录对应图片名的文本
 
+body {
+    text-align: center;
+    background-color: #303030;                                     // 页面背景颜色
+    color: #cccccc;                                                // 页面字体颜色
+}
 
+.gallery-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 400px;                                                 // 图像容器的宽
+    height: 400px;                                                // 图像容器的高
+    margin: 30px;
+    border-radius: 15px;                                          // 图像容器的圆角
+    overflow: hidden;
+    background-color: #1a1c1d;                                    // 图像容器背景颜色
+}
 
+.gallery img {
+    width: 100%;                                                 // 图像容器内图片宽度与容器宽度的比例
+    height: auto;                                                // 高度自适应
+    object-fit: contain;
+    border-radius: 15px;
+}
 
-
+```
 
 
