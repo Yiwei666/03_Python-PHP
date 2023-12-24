@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/gallary.png">
     <title>Image Gallery</title>
     <style>
         body {
@@ -150,7 +151,7 @@ echo '</div>';
 
 <script>
     var serverScriptUrl = '<?php echo $serverScript; ?>';
-    
+
     function transferImage(imageUrl) {
         var imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
         var xhr = new XMLHttpRequest();
