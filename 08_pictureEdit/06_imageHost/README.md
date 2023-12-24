@@ -243,6 +243,8 @@ $adjustedFilePath = str_replace('/home/01_html', 'http://120.46.81.41', $targetF
 
 ### 1. 05_imageTransferName.txt
 
+- 以`20231222-113823.png,2023-12-24 23:45:04`格式存储不显示和需要转移的图片
+
 1. 提前创建该文本
 
 ```bash
