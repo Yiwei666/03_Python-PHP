@@ -133,7 +133,7 @@ drwxrwxrwx   2 root root   4096 Dec 21 14:46 35_imageHost
 如果没有显式地在配置文件中设置 client_max_body_size，NGINX 将使用这个默认值。
 
 ```
-client_max_body_size 5M;                                                     # 默认允许nignx客户端上传的请求体、如文件, 最大为1MB
+client_max_body_size 30M;                                                     # 默认允许nignx客户端上传的请求体、如文件, 最大为1MB
 ```
 
 - 以ubuntu系统中php脚本的请求为例
@@ -145,7 +145,7 @@ client_max_body_size 5M;                                                     # �
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
             include fastcgi_params;
             include snippets/fastcgi-php.conf;                                                             # 新增
-            client_max_body_size 5M;                                                                       # 默认允许nignx客户端上传的请求体、如文件, 最大为1MB
+            client_max_body_size 30M;                                                                       # 默认允许nignx客户端上传的请求体、如文件, 最大为1MB
         }
 ```
 
