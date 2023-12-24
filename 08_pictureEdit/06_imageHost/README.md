@@ -176,6 +176,12 @@ post_max_size = 8M
 upload_max_filesize = 2M
 ```
 
+推荐顺便把php会话的生命周期给改掉
+
+```sh
+grep  session.gc_maxlifetime  /etc/php/7.4/fpm/php.ini
+```
+
 - **重启 PHP-FPM 服务才能够使上述 `php.ini` 的修改生效**
 
 ```sh
