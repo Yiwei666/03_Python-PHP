@@ -91,10 +91,10 @@
 <?php
 $baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageHost/';
 $imagesDirectory = '/home/01_html/02_LAS1109/35_imageHost/';
-$transferDirectory = '/home/01_html/02_LAS1109/35_imageTransfer/';
 $imagesPerPage = 40;
 
 // 读取图片转移记录文件
+$serverScript = '05_serverImageTransfer.php';
 $transferFile = '/home/01_html/05_imageTransferName.txt';
 $transferredImages = [];
 
@@ -149,10 +149,12 @@ echo '</div>';
 ?>
 
 <script>
+    var serverScriptUrl = '<?php echo $serverScript; ?>';
+    
     function transferImage(imageUrl) {
         var imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '05_serverImageTransfer.php', true);
+        xhr.open('POST', serverScriptUrl, true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
