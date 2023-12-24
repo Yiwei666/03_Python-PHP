@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,8 @@
     <style>
         body {
             text-align: center;
-            background-color: #303030; /* 灰黑色背景 */
-            color: #cccccc; /* 设置文本颜色为白色 */            
+            background-color: #303030;
+            color: #cccccc;
         }
 
         .gallery {
@@ -25,15 +26,15 @@
             position: relative;
             width: 400px;
             height: 400px;
-            margin: 30px; /* 上边距:0, 右边距:10px, 下边距:10px, 左边距:0 */
+            margin: 30px;
             border-radius: 15px;
             overflow: hidden;
-            background-color: #1a1c1d; /* 灰黑色背景 */
+            background-color: #1a1c1d;
         }
 
         .gallery img {
             width: 100%;
-            height: auto;  /* auto */
+            height: auto;
             object-fit: contain;
             border-radius: 15px;
         }
@@ -84,6 +85,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <?php
@@ -92,41 +94,53 @@ $imagesDirectory = '/home/01_html/02_LAS1109/35_imageHost/';
 $transferDirectory = '/home/01_html/02_LAS1109/35_imageTransfer/';
 $imagesPerPage = 40;
 
-// Get all PNG images in the directory
-$images = glob($imagesDirectory . '*.png');
-$totalImages = count($images);
+// 读取图片转移记录文件
+$transferFile = '/home/01_html/05_imageTransferName.txt';
+$transferredImages = [];
 
-// Calculate total pages
+if (file_exists($transferFile)) {
+    $lines = file($transferFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        // 解析每行，以逗号分隔
+        $parts = explode(',', $line);
+        if (count($parts) >= 1) {
+            // 获取文件名并拼接完整的文件路径
+            $imageName = trim($parts[0]); // 去除可能的空格
+            $imagePath = $imagesDirectory . $imageName;
+            $transferredImages[] = $imagePath;
+        }
+    }
+}
+
+// 获取所有 PNG 图片
+$allImages = glob($imagesDirectory . '*.png');
+
+// 获取未转移的图片（差集）
+$remainingImages = array_diff($allImages, $transferredImages);
+
+$totalImages = count($remainingImages);
 $totalPages = ceil($totalImages / $imagesPerPage);
-
-// Get current page from the query string, default to 1
 $currentpage = isset($_GET['page']) ? $_GET['page'] : 1;
-
-// Validate current page value
 $currentpage = max(1, min($currentpage, $totalPages));
-
-// Calculate offset for the images array
 $offset = ($currentpage - 1) * $imagesPerPage;
+$currentImages = array_slice($remainingImages, $offset, $imagesPerPage);
 
-// Get images for the current page
-$currentImages = array_slice($images, $offset, $imagesPerPage);
-
-// Display images
+// 显示图片
 echo '<div class="gallery">';
 foreach ($currentImages as $image) {
     $imageName = basename($image);
     $imageUrl = $baseUrl . $imageName;
     echo '<div class="gallery-item">';
     echo '<button class="transfer-button" onclick="transferImage(\'' . $imageUrl . '\')">Transfer</button>';
-    echo '<a href="' . $imageUrl . '" target="_blank">'; // 添加超链接，target="_blank" 在新页面打开
+    echo '<a href="' . $imageUrl . '" target="_blank">';
     echo '<img src="' . $imageUrl . '" alt="' . $imageName . '">';
     echo '</a>';
-    echo '<div class="image-name"><a href="' . $imageUrl . '" target="_blank">' . $imageName . '</a></div>'; // 文件名作为超链接
+    echo '<div class="image-name"><a href="' . $imageUrl . '" target="_blank">' . $imageName . '</a></div>';
     echo '</div>';
 }
 echo '</div>';
 
-// Display pagination links
+// 显示分页链接
 echo '<div class="page-links">';
 for ($i = 1; $i <= $totalPages; $i++) {
     echo '<a class="page-link" href="?page=' . $i . '">' . $i . '</a>';
@@ -136,10 +150,7 @@ echo '</div>';
 
 <script>
     function transferImage(imageUrl) {
-        // 获取图片文件名
         var imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
-
-        // 使用 AJAX 发送 POST 请求到服务器，只传递文件名
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '05_serverImageTransfer.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -152,13 +163,10 @@ echo '</div>';
                 }
             }
         };
-
-        // 只传递文件名，不包含时间信息
         xhr.send('imageName=' + encodeURIComponent(imageName));
-
-
     }
 </script>
 
 </body>
+
 </html>
