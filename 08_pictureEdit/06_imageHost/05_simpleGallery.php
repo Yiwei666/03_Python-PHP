@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Gallery</title>
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/gallary.png">
+    <title>Image Gallery Simple</title>
     <style>
         body {
             text-align: center;
