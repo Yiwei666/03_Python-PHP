@@ -330,6 +330,12 @@ sourceDirectory="/home/01_html/02_LAS1109/35_imageHost/"
 destinationDirectory="/home/01_html/02_LAS1109/35_imageTransfer/"
 ```
 
+- 添加执行权限
+
+```
+chmod +x 05_mvImageServer.sh
+```
+
 - 定时每分钟执行一次
 
 ```sh
