@@ -338,6 +338,20 @@ chmod +x 05_mvImageServer.sh
 
 - 定时每分钟执行一次
 
+### 5. 05_simpleGallery.php
+
+```
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/gallary.png">         // icon地址
+
+$baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageTransfer/';                      // 图片url中图片文件名前面部分
+$imagesDirectory = '/home/01_html/02_LAS1109/35_imageTransfer/';                    // 转移的目标路径
+$imagesPerPage = 60;                                                                // 每页显示的图片数量
+```
+
+
+
+
+
 ```sh
 */1 * * * * /usr/bin/bash /home/01_html/05_mvImageServer.sh
 ```
