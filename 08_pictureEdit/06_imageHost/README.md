@@ -266,35 +266,9 @@ chmod 666 05_imageTransferName.txt
 chown www-data:www-data 05_imageTransferName.txt
 ```
 
-### 2. 05_mvImageServer.sh
-
-- 环境变量
-
-```php
-# 定义文件路径变量
-inputFile="/home/01_html/05_imageTransferName.txt"
-sourceDirectory="/home/01_html/02_LAS1109/35_imageHost/"
-destinationDirectory="/home/01_html/02_LAS1109/35_imageTransfer/"
-```
-
-- 定时每分钟执行一次
-
-```sh
-*/1 * * * * /usr/bin/bash /home/01_html/05_mvImageServer.sh
-```
 
 
-### 3. 05_serverImageTransfer.php
-
-- 环境变量
-
-```php
-// 指定文本文件路径
-$filePath = '/home/01_html/05_imageTransferName.txt';
-```
-
-
-### 4. 05_imageGallery.php
+### 2. 05_imageGallery.php
 
 ```php
 $baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageHost/';         // 图片url中文件名之前的部分
@@ -335,3 +309,29 @@ body {
 ```
 
 
+### 3. 05_serverImageTransfer.php
+
+- 环境变量
+
+```php
+// 指定文本文件路径
+$filePath = '/home/01_html/05_imageTransferName.txt';
+```
+
+
+### 4. 05_mvImageServer.sh
+
+- 环境变量
+
+```php
+# 定义文件路径变量
+inputFile="/home/01_html/05_imageTransferName.txt"
+sourceDirectory="/home/01_html/02_LAS1109/35_imageHost/"
+destinationDirectory="/home/01_html/02_LAS1109/35_imageTransfer/"
+```
+
+- 定时每分钟执行一次
+
+```sh
+*/1 * * * * /usr/bin/bash /home/01_html/05_mvImageServer.sh
+```
