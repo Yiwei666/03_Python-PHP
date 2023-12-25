@@ -1,0 +1,40 @@
+ACS Sustainable Chemistry & Engineering/ACS Sustain. Chem. Eng.
+Angewandte Chemie International Edition in English/Angew. Chem. Int. Ed.
+Chemical Reviews/Chem. Rev.
+Chemical Geology/Chem. Geol.
+Chemical Engineering Science/Chem. Eng. Sci.
+Chemical Engineering Journal/Chem. Eng. J.
+Computer Physics Communications/Comput. Phys. Commun.
+Chemical Physics Letters/Chem. Phys. Lett.
+Energy & Environmental Science/Energy Environ. Sci.
+Earth and Planetary Science Letters/Earth Planet. Sci. Lett.
+Geophysical research letters/Geophys. Res. Lett.
+International Journal of Minerals, Metallurgy and Materials/Int. J. Miner. Metall. Mater.
+Journal of Cleaner Production/J. Clean. Prod.
+Journal of Molecular Liquids/J. Mol. Liq.
+Journal of Hazardous Materials/J. Hazard. Mater.
+Journal of Alloys and Compounds/J. Alloys Compd.
+Journal of Non-crystalline Solids/J. Non Cryst. Solids
+Journal of the American Chemical Society/J. Am. Chem. Soc.
+Journal of applied crystallography/J. Appl. Crystallogr.
+Journal of computational chemistry/J. Comput. Chem.
+JOM/JOM
+Metallurgical and Materials Transactions B/Metall. Mater. Trans. B
+Molecular Physics/Mol. Phys.
+Modelling and simulation in materials science and engineering/Model. Simul. Mat. Sci. Eng.
+Nature/Nature
+Nature Communications/Nat. Commun.
+Nature Reviews Materials/Nat. Rev. Mater.
+Nature materials/Nat. Mater.
+Proceedings of the National Academy of Sciences/Proc. Natl. Acad. Sci. U.S.A.
+Physical review letters/Phys. Rev. Lett.
+Physical Review B/Phys. Rev. B
+Physics and Chemistry of Minerals/Phys. Chem. Miner.
+Resources, Conservation and Recycling/Resour. Conserv. Recycl.
+Science/Science
+Science Advances/Sci. Adv.
+Solar energy materials and solar cells/Sol. Energy Mater Sol. Cells
+Theoretical Chemistry Accounts/Theor. Chem. Acc.
+The Journal of chemical physics/J. Chem. Phys.
+The Journal of Physical Chemistry C/J. Phys. Chem. C
+Wiley Interdisciplinary Reviews: Computational Molecular Science/Wiley Interdiscip. Rev. Comput. Mol. Sci.
