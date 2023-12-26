@@ -14,6 +14,11 @@
 1. 谷歌学术检索文章，导出`GB/T 7714`格式参考文献，后续会被用于提取 文章题目，期刊名，卷，出版年，页码范围
 2. [semanticscholar](https://www.semanticscholar.org/) 导出相应文章`APA`格式参考文献，后续会被用于提取人名
 
+- 通常来说本代码适用于 `Yang S, Wan X, Wei K, et al. Novel reaction media of Na2CO3–CaO for silicon extraction and aluminum removal from diamond wire saw silicon powder by roasting–smelting process[J]. ACS Sustainable Chemistry & Engineering, 2020, 8(10): 4146-4157.` 引文格式，即期刊名不含逗号","，卷后面需要有括号包含期`2020, 8(10): 4146-4157`。
+
+- 对于`Resources, Conservation and Recycling, 2022, 176: 105913.` 期刊名中含有逗号，不含括号指明期数的需要注意。
+
+
 
 # 4. 环境配置
 
@@ -31,7 +36,12 @@
 
 ### 2. 代码思路
 
-
+1. // 提取第一个"."和第二个"."之间的字符串部分，作为 string1，对应文章题目
+2. // 从 string1 中删除 "[J]"，作为 string2，对应修改后的文章题目
+3. // 提取倒数第二个","和最后一个"."之间的字符串部分，作为 string3，例如 "2021, 12(1): 5994"，用来处理 卷 出版年 和 页码范围
+4. // 拼接新的字符串 string4   如 "Result-string4: 123 (2023) 2436-2608."
+5. // 提取倒数第二个 "." 和倒数第一个 "." 之间的字符串部分
+6. // 使用","对该字符串进行分割，获取分割后的第一个字符串，并删掉其中的空格作为 string5，对应 期刊的全称 "Nature Communications"
 
 
 ### 3. APA格式人名转换
