@@ -8,7 +8,23 @@
 
 # 3. 环境配置
 
-### 1. APA格式人名转换
+### 1. 
+
+- **GB/T 7714**
+
+```
+Guo J, Tucker Z D, Wang Y, et al. Ionic liquid enables highly efficient low temperature desalination by directional solvent extraction[J]. Nature communications, 2021, 12(1): 437.
+```
+
+- **APA**
+
+```
+Guo, J., Tucker, Z. D., Wang, Y., Ashfeld, B. L., & Luo, T. (2021). Ionic liquid enables highly efficient low temperature desalination by directional solvent extraction. Nature communications, 12(1), 437.
+```
+
+
+
+### 2. APA格式人名转换
 
 - `"1, 2, 3, 4, 5, &6"`转换为 `"2 1, 4 3, 6 5"`
 
