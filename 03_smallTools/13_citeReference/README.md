@@ -24,9 +24,9 @@
 1. 谷歌学术检索文章，导出`GB/T 7714`格式参考文献，后续会被用于提取 文章题目，期刊名，卷，出版年，页码范围
 2. [semanticscholar](https://www.semanticscholar.org/) 导出相应文章`APA`格式参考文献，后续会被用于提取人名
 
-- 通常来说本代码适用于 `Yang S, Wan X, Wei K, et al. Novel reaction media of Na2CO3–CaO for silicon extraction and aluminum removal from diamond wire saw silicon powder by roasting–smelting process[J]. ACS Sustainable Chemistry & Engineering, 2020, 8(10): 4146-4157.` 引文格式，即期刊名不含逗号","，卷后面需要有括号包含期`2020, 8(10): 4146-4157`。
+- 通常来说本代码适用于 `Yang S, Wan X, Wei K, et al. Novel reaction media of Na2CO3–CaO for silicon extraction and aluminum removal from diamond wire saw silicon powder by roasting–smelting process[J]. ACS Sustainable Chemistry & Engineering, 2020, 8(10): 4146-4157.` 引文格式，修改后的代码考虑了期刊名不含逗号","的情况，如对于`Resources, Conservation and Recycling, 2022, 176: 105913.` 期刊名中含有逗号。
 
-- 对于`Resources, Conservation and Recycling, 2022, 176: 105913.` 期刊名中含有逗号，不含括号指明期数的需要注意。
+- 除了考虑卷后面有括号包含期`2020, 8(10): 4146-4157`的情况，也考虑了不含括号指明期数的`2022, 176: 105913`。
 
 
 
