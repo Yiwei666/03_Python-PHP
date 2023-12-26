@@ -8,19 +8,14 @@
 
 # 3. 环境配置
 
-### 1. 
+### 1. 代码中用到的两种引文格式
 
-- **GB/T 7714**
 
-```
-Guo J, Tucker Z D, Wang Y, et al. Ionic liquid enables highly efficient low temperature desalination by directional solvent extraction[J]. Nature communications, 2021, 12(1): 437.
-```
-
-- **APA**
-
-```
-Guo, J., Tucker, Z. D., Wang, Y., Ashfeld, B. L., & Luo, T. (2021). Ionic liquid enables highly efficient low temperature desalination by directional solvent extraction. Nature communications, 12(1), 437.
-```
+| 引文格式   | 描述   | 示例   |
+|-------|-------|-------|
+| GB/T 7714 | 单元格2 | Guo J, Tucker Z D, Wang Y, et al. Ionic liquid enables highly efficient low temperature desalination by directional solvent extraction[J]. Nature communications, 2021, 12(1): 437. |
+| APA | 单元格5 | Guo, J., Tucker, Z. D., Wang, Y., Ashfeld, B. L., & Luo, T. (2021). Ionic liquid enables highly efficient low temperature desalination by directional solvent extraction. Nature communications, 12(1), 437. |
+| 单元格7 | 单元格8 | 单元格9 |
 
 
 
