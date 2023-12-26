@@ -7,7 +7,7 @@
 # 3. 使用教程
 
 1. 谷歌学术检索文章，导出`GB/T 7714`格式参考文献，后续会被用于提取 文章题目，期刊名，卷，出版年，页码范围
-2. [semanticscholar](https://www.semanticscholar.org/) 导出相应文章APA格式参考文献，后续会被用于提取人名
+2. [semanticscholar](https://www.semanticscholar.org/) 导出相应文章`APA`格式参考文献，后续会被用于提取人名
 
 
 # 4. 环境配置
