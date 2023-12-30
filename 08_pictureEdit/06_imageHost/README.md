@@ -48,6 +48,34 @@
 05_mvImageServer.sh               # bash脚本，用于将05_imageTransferName.txt列出的图片文件名从源目录剪切到另外一个目录
 ```
 
+- 示例
+
+```
+├── 051_picPasteUpload.php
+├── 051_serverImageHost.php
+├── 05_image
+│   ├── 01_imageHost
+│   └── 02_imageTransfer
+├── 05_imageGallery.php
+├── 05_imageTransferName.txt
+├── 05_mvImageServer.sh
+├── 05_serverImageTransfer.php
+├── 05_simpleGallery.php
+
+
+-rw-r--r-- 1 root     root      9035 Dec 24 21:35 051_picPasteUpload.php
+-rw-r--r-- 1 root     root      1155 Dec 24 21:37 051_serverImageHost.php
+drwxrwxrwx 4 root     root      4096 Dec 24 21:13 05_image
+drwxrwxrwx 2 root     root     4096 Dec 29 18:25  01_imageHost
+drwxrwxrwx 2 root     root     4096 Dec 29 11:11  02_imageTransfer
+-rw-r--r-- 1 root     root      5288 Dec 24 21:45 05_imageGallery.php
+-rw-rw-rw- 1 www-data www-data    80 Dec 29 11:10 05_imageTransferName.txt
+-rwxr-xr-x 1 root     root       952 Dec 24 21:47 05_mvImageServer.sh
+-rw-r--r-- 1 root     root       964 Dec 24 21:46 05_serverImageTransfer.php
+-rw-r--r-- 1 root     root      3718 Dec 25 09:13 05_simpleGallery.php
+
+
+```
 
 # 3. 图床搭建环境配置
 
