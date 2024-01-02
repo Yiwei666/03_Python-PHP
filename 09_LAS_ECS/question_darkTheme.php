@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <p><a href="<?php echo $scriptname; ?>?logout=true">Logout</a></p>
 </main>
 <footer>
-  <p>Copyright &copy; 2023 <?php echo $company_name; ?></p>
+  <p>Copyright &copy; <?php echo date("Y"); ?> <?php echo $company_name; ?></p>
 </footer>
 </body>
 </html>
