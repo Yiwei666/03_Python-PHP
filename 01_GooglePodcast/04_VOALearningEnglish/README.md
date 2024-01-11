@@ -43,13 +43,7 @@ python nameURL_extract.py
 - 然后在a标签中定位`jsname="fvi9Ef"`的div 标签，提取该div标签中的`jsdata`属性值，截取该属性值中两个“;”之间的内容作为链接；
 - 请将以上标题和链接依次写入到 nameURL.txt文本中，使用英文逗号进行分隔。注意在写入标题前应该检查该标文本题中存在的各类字符，除了中文汉字，英文字母以及阿拉伯数字外的字符，其余字符全部使用"-"替代。
 
-<p align="center">
-  <br>
-  <br>
-  <img src="image/googlepodcast.png" alt="Image Description" width="800">
-  <br>
-  <br>
-</p>
+**注意：不需要修改`nameURL_extract.py`中的任何参数**
 
 nameURL_extract.py
 
