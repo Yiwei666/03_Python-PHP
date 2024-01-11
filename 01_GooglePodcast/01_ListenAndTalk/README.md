@@ -102,7 +102,7 @@ nohup bash download_mp3.sh &           # 后台运行bash脚本
 
 download_mp3.sh
 
-```
+```sh
 #!/bin/bash
 
 input_file="nameURL.txt"
