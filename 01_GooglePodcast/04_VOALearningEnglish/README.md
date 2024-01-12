@@ -201,6 +201,16 @@ target_dir="/home/01_html/39_VOALearningEnglish/"
 rsync -avz "$source_dir" "$target_server:$target_dir"
 ```
 
+### 6. 设置目标服务器定时删除文件夹任务
+
+目的：避免目标文件夹中积累的音频文件过多，每天凌晨1点定时删除掉文件夹
+
+```cron
+0 1 * * * rm -r /home/01_html/39_VOALearningEnglish/01_audio
+```
+
+
+
 
 # 参考资料
 
