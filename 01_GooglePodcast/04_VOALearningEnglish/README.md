@@ -9,11 +9,13 @@
 
 ```
 .
-├── /01_audio/              # 存放音频的文件夹
-├── homepage.html           # 下载的podcast首页
-├── nameURL_extract.py      # 提取homepage.html首页中的音频链接
-├── nameURL.txt             # 提取到的文件名和链接储存到nameURL.txt文件中
-└── download_mp3.sh         # 基于nameURL.txt文件中的链接下载音频
+├── 01_VOA_execute_tasks.sh              # 任务自动执行脚本
+├── 01_audio                             # 存放音频的文件夹
+├── 83_syn_azure2-1_to_AECS_VOA.sh       # 文件夹同步脚本
+├── download_Random_mp3.sh               # 基于nameURL.txt文件中的链接下载音频
+├── homepage.html                        # 下载的podcast首页
+├── nameURL.txt                          # 提取到的文件名和链接储存到nameURL.txt文件中
+└── nameURL_extract.py                   # 提取homepage.html首页中的音频链接
 ```
 
 
@@ -158,7 +160,7 @@ done
 ```
 
 
-对应脚本
+对应脚本 01_VOA_execute_tasks.sh
 
 ```sh
 #!/bin/bash
@@ -185,15 +187,15 @@ sleep 600  # 10分钟 = 10 * 60 秒
 ### 5. 同步到境内云服务器并设置在线播放脚本
 
 
-83_syn_azure2-1_to_HW.sh
+83_syn_azure2-1_to_AECS_VOA.sh
 
 ```bash
 #!/bin/bash
 
 # 定义源目录和目标服务器信息
-source_dir="/home/01_html/08_EngLearnCuriousMind/"
-target_server="root@125.46.87.48"
-target_dir="/home/01_html/36_EngLearnCuriousMind/"
+source_dir="/home/01_html/09_VOALearningEnglish/"
+target_server="root@39.106.188.186"
+target_dir="/home/01_html/39_VOALearningEnglish/"
 
 # 执行rsync命令
 rsync -avz "$source_dir" "$target_server:$target_dir"
