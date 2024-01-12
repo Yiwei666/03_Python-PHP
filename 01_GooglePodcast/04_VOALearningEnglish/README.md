@@ -1,11 +1,11 @@
-# 项目功能
+# 1. 项目功能
 
 - 下载Google Podcast中空中英语教室出品的 VOA Learning English 博客中的音频
 
 - 官网：https://podcasts.google.com/feed/aHR0cHM6Ly9sZWFybmluZ2VuZ2xpc2gudm9hbmV3cy5jb20vcG9kY2FzdC8_em9uZUlkPTE2ODk
 
 
-# 文件结构
+# 2. 文件结构
 
 ```
 .
@@ -17,9 +17,9 @@
 ```
 
 
-# 环境配置
+# 3. 环境配置
 
-1. 下载相应podcast主页面为 homepage.html
+### 1. 下载相应podcast主页面为 homepage.html
 
 ```bash
 curl -o homepage.html  https://podcasts.google.com/feed/aHR0cHM6Ly9sZWFybmluZ2VuZ2xpc2gudm9hbmV3cy5jb20vcG9kY2FzdC8_em9uZUlkPTE2ODk
@@ -31,7 +31,7 @@ curl -o homepage.html  https://podcasts.google.com/feed/aHR0cHM6Ly9sZWFybmluZ2Vu
 grep 'listitem' homepage.html
 ```
 
-2. 提取homepage.html文件中的文件名和音频链接，文件名中仅包含中文汉字、英文字母以及阿拉伯数字
+### 2. 提取homepage.html文件中的文件名和音频链接，文件名中仅包含中文汉字、英文字母以及阿拉伯数字
 
 在该步骤中，只需要执行以下命令即可
 
@@ -81,7 +81,7 @@ with open('nameURL.txt', 'w', encoding='utf-8') as output_file:
 print('Extraction and writing to nameURL.txt completed.')
 ```
 
-3. 基于nameURL.txt中的文件名和链接下载音频
+### 3. 基于nameURL.txt中的文件名和链接下载音频
 
 避免重复下载，默认下载间隔为5秒钟，注意创建和修改保存音频文件的路径
 
@@ -91,39 +91,6 @@ mkdir 01_audio                         # 创建文件夹
 # chmod +x download_mp3.sh               # 添加执行权限
 
 # nohup bash download_mp3.sh &           # 后台运行bash脚本
-```
-
-
-- download_mp3.sh：下载nameURL.txt中的所有音频
-
-```
-#!/bin/bash
-
-input_file="nameURL.txt"
-output_path="/home/01_html/07_listen_and_talk/01_audio"
-
-# 读取每一行
-while IFS=, read -r filename url; do
-    # 移除文件名和网址中的空格
-    filename=$(echo "$filename" | tr -d ' ')
-    url=$(echo "$url" | tr -d ' ')
-
-    # 检查文件是否已存在
-    if [ -e "$output_path/$filename.mp3" ]; then
-        echo "File $filename.mp3 already exists in $output_path. Skipping..."
-    else
-        # 使用curl获取重定向后的mp3链接
-        redirected_url=$(curl -s -L -o /dev/null -w '%{url_effective}' "$url")
-
-        # 使用wget下载mp3音频，并以文件名命名，输出到指定路径
-        wget -O "$output_path/$filename.mp3" "$redirected_url"
-
-        echo "Downloaded $filename.mp3 from $redirected_url to $output_path"
-    fi
-
-    # 添加5秒的延迟
-    sleep 5
-done < "$input_file"
 ```
 
 
@@ -172,9 +139,49 @@ done
 ```
 
 
+### 4. 设置自动化任务脚本
+
+```
+1. 先删除如下文件夹
+/home/01_html/09_VOALearningEnglish/01_audio
+2. 然后创建文件夹
+/home/01_html/09_VOALearningEnglish/01_audio
+3. 然后运行如下脚本
+/usr/bin/bash  /home/01_html/09_VOALearningEnglish/download_Random_mp3.sh
+4. 然后等待10分钟
+5. 最后运行如下脚本
+/usr/bin/bash  /home/01_html/09_VOALearningEnglish/83_syn_azure2-1_to_AECS_VOA.sh
 
 
-4. 同步到境内云服务器并设置在线播放脚本
+设置cron定时任务，每天凌晨1点执行如下命令
+/usr/bin/bash  /home/01_html/09_VOALearningEnglish/01_VOA_execute_tasks.sh
+```
+
+对应脚本
+
+```sh
+#!/bin/bash
+
+# Step 1: 删除文件夹
+rm -r /home/01_html/09_VOALearningEnglish/01_audio
+
+# Step 2: 创建文件夹
+mkdir -p /home/01_html/09_VOALearningEnglish/01_audio
+
+# Step 3: 运行第一个下载脚本
+/usr/bin/bash /home/01_html/09_VOALearningEnglish/download_Random_mp3.sh
+
+# Step 4: 等待10分钟
+sleep 600  # 10分钟 = 10 * 60 秒
+
+# Step 5: 运行第二个同步脚本
+/usr/bin/bash /home/01_html/09_VOALearningEnglish/83_syn_azure2-1_to_AECS_VOA.sh
+
+```
+
+注意：同步脚本如下所示
+
+### 5. 同步到境内云服务器并设置在线播放脚本
 
 
 83_syn_azure2-1_to_HW.sh
