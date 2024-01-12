@@ -88,9 +88,9 @@ print('Extraction and writing to nameURL.txt completed.')
 ```bash
 mkdir 01_audio                         # 创建文件夹
 
-# chmod +x download_mp3.sh               # 添加执行权限
+chmod +x download_Random_mp3.sh               # 添加执行权限
 
-# nohup bash download_mp3.sh &           # 后台运行bash脚本
+nohup bash download_Random_mp3.sh &           # 后台运行bash脚本
 ```
 
 
@@ -156,6 +156,7 @@ done
 设置cron定时任务，每天凌晨1点执行如下命令
 /usr/bin/bash  /home/01_html/09_VOALearningEnglish/01_VOA_execute_tasks.sh
 ```
+
 
 对应脚本
 
