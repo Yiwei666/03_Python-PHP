@@ -1,6 +1,6 @@
 # 1. 项目功能
 
-- 下载Google Podcast中空中英语教室出品的 VOA Learning English 博客中的音频
+- 下载Google Podcast中的 VOA Learning English 博客中的音频
 
 - 官网：https://podcasts.google.com/feed/aHR0cHM6Ly9sZWFybmluZ2VuZ2xpc2gudm9hbmV3cy5jb20vcG9kY2FzdC8_em9uZUlkPTE2ODk
 
