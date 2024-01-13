@@ -15,6 +15,7 @@
 ├── download_Random_mp3.sh               # 基于nameURL.txt文件中的链接下载音频
 ├── homepage.html                        # 下载的podcast首页
 ├── nameURL.txt                          # 提取到的文件名和链接储存到nameURL.txt文件中
+├── logDown.txt                          # 下载记录日志文件
 └── nameURL_extract.py                   # 提取homepage.html首页中的音频链接
 ```
 
@@ -97,6 +98,8 @@ nohup bash download_Random_mp3.sh &           # 后台运行bash脚本
 
 
 - download_Random_mp3.sh：随机下载nameURL.txt中的5个音频
+
+注意输入、输出和日志文件均要使用绝对路径，否则定时脚本找不到工作目录
 
 ```sh
 #!/bin/bash
