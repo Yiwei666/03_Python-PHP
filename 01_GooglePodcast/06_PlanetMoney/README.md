@@ -136,13 +136,23 @@ sleep 100  # 10分钟 = 10 * 60 秒
 /usr/bin/bash /home/01_html/41_PlanetMoney/83_syn_azure2-1_to_AECS_PlanetMoney.sh
 ```
 
+6. 设置定时任务
 
 
+注意下面两个定时任务的时间需要相同，且**定时任务2的时间不得早于定时任务1的时间**
 
+- 设置下载服务器定时任务1，定时运行流程自动化脚本
 
+```
+# PlanetMoney
+52 17 * * * /usr/bin/bash /home/01_html/41_PlanetMoney/01_PlanetMoney_execute_tasks.sh
+```
 
+- 设置同步服务器定时任务2，定时删除音频文件夹
 
-
+```
+52 17 * * * rm -r /home/01_html/41_PlanetMoney/01_audio
+```
 
 
 
