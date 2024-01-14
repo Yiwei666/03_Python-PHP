@@ -1,4 +1,4 @@
-# 项目功能
+# 1. 项目功能
 
 - 下载google podcast中的音频
 
@@ -6,9 +6,9 @@
 
 podcast音频下载流程参考 `01_GooglePodcast/01_ListenAndTalk`
 
-# English Podcast
+# 2. English Podcast
 
-- 已下载
+### 1. 已下载
 
 1. 6 Minute English
 1. English Learning for Curious Minds
@@ -19,7 +19,7 @@ podcast音频下载流程参考 `01_GooglePodcast/01_ListenAndTalk`
 1. Economist Podcasts
 
 
-- 待下载
+### 2. 待下载
 
 1. The Allusionist
 1. Learn English with the British Council and Premier League
