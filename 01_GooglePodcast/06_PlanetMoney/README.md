@@ -14,7 +14,7 @@
 ├── download_Random_mp3.py                       # 基于nameURL.txt链接下载音频的python脚本
 ├── homepage.html                                # google podcast中 Planet Money 页面
 ├── logDown.txt                                  # 下载日志
-├── nameURL.txt                                  # 存储音频链接的文本
+├── nameURL.txt                                  # download_Random_mp3.py解析写入的存储音频链接的文本
 └── nameURL_extract.py                           # 提取音频链接的脚本
 ```
 
