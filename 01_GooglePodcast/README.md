@@ -20,6 +20,9 @@
 1. Science, Quickly
 1. Economist Podcasts
 1. Business English from All Ears English
+1. Planet Money
+1. The Daily (New York Times)
+
 
 
 ### 2. 待下载
@@ -32,10 +35,14 @@
 1. GRE SAT Advanced English Vocabulary Podcast!
 1. Englishclass101
 1. CNBC's "Fast Money"
-1. The Daily (New York Times)
 1. Today, Explained (vox)
 1. TED Talks Daily
-1. Planet Money
+
+
+
+
+
+
 
 
 
