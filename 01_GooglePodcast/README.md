@@ -24,6 +24,8 @@
 1. The Daily (New York Times)
 1. Today, Explained (vox)
 1. TED Talks Daily
+1. All Ears English Podcast
+
 
 
 ### 2. 待下载
