@@ -95,7 +95,7 @@ sender_password = 'your_generated_app_password'
 - 如果您怀疑密码已泄漏，您随时可以撤销应用程序密码并生成一个新的。
 
 
-## 2. 脚本02_emailEngSent.py
+## 2. 脚本02_emailEngSent.py和03_emailSendURL.py环境变量配置
 
 所有收件者会受到相同邮件内容及附件，且随机选取指定目录下未发送过的pdf文件作为附件，大小不能超过25MB，已经发过的附件名会被记录到`sent_pdf_list_path`对应的txt文件中
 
@@ -111,6 +111,9 @@ body = 'This is a test email with attachment.'                    # 正文
 # 设置文件夹和已发送列表文件的路径变量
 pdf_folder = '/home/01_html/02_PDFsplit'                          # pdf附件对应的目录
 sent_pdf_list_path = '/home/01_html/02_emailPDF.txt'              # 记录发送过的pdf附件名
+
+# base_url为 https://domain.com/04_glencoe/glencoe-Pages_991_993.pdf 文件名前面部分，构造附件访问链接，位于正文最后部分
+base_url = "https://domain.com/04_glencoe/"
 ```
 
 - crontab 定时
