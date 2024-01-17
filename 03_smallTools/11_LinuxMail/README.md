@@ -9,6 +9,8 @@
 01_emailSend.py            # 运行脚本，在命令行中按照提示输入收件邮箱、主题、正文以及是否添加附件，发送者邮箱需要提前设置
 
 02_emailEngSent.py         # 该代码通过电子邮件将随机选择的PDF附件发送给指定收件人列表，并记录已发送的附件文件名。
+
+03_emailSendURL.py         # 相比于02_emailEngSent.py，在正文末尾添加pdf附件的url
 ```
 
 ## 1. 脚本01_emailSend.py
