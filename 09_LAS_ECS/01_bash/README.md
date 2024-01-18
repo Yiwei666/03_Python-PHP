@@ -11,3 +11,10 @@ count_files.sh              # 显示指定目录下文件的数量、大小（�
 
 
 # 3. 环境配置
+
+```
+alias cdhtml='cd /home/01_html; ls -l'
+alias ctf='bash /home/01_html/count_files.sh'
+```
+
+
