@@ -98,12 +98,14 @@ chmod +x download_mp3.sh               # 添加执行权限
 
 nohup bash download_mp3.sh &           # 后台运行bash脚本
 ```
+`nohup` 命令会忽略挂起信号，使得命令在用户退出终端后仍然继续运行。
 
+`nohup` 默认将输出信息写入到名为 `nohup.out` 的文件中。
 
 要在后台运行 Bash 脚本并将输出信息写入到文本文件，你可以使用以下命令：
 
 ```sh
-bash download_mp3.sh > output.txt 2>&1 &
+nohup bash download_mp3.sh > output.txt 2>&1 &
 ```
 
 `>` 将标准输出重定向到文件（output.txt）。
