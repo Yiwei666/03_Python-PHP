@@ -298,3 +298,37 @@ fi
 
 请确保在运行该脚本时，具有适当的写入权限，并且output.txt中的链接有效。
 
+
+### 8. MP4视频转gif动图
+---
+
+要使用FFmpeg将MP4视频转换为GIF，你可以使用以下命令：
+
+```
+ffmpeg -i input.mp4 -vf "fps=10,scale=320:-1:flags=lanczos" -c:v gif output.gif
+```
+
+这个命令包括以下参数：
+
+- `-i input.mp4`: 指定输入的MP4文件。
+- `-vf "fps=10,scale=320:-1:flags=lanczos"`: 视频过滤器，设置GIF的帧率和缩放大小。你可以根据需要调整这些值。
+- `-c:v gif`: 指定输出的视频编码为GIF。
+- `output.gif`: 指定输出的GIF文件名。
+
+请确保你已经安装了FFmpeg，并且可以通过命令行访问它。此外，你可以根据需要调整帧率和缩放大小，以满足你的具体需求。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
