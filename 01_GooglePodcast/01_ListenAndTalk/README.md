@@ -100,6 +100,17 @@ nohup bash download_mp3.sh &           # 后台运行bash脚本
 ```
 
 
+要在后台运行 Bash 脚本并将输出信息写入到文本文件，你可以使用以下命令：
+
+```sh
+bash download_mp3.sh > output.txt 2>&1 &
+```
+
+`>` 将标准输出重定向到文件（output.txt）。
+`2>&1` 将标准错误输出重定向到与标准输出相同的位置，这样你就可以捕获脚本的所有输出。
+`&` 将整个命令放在后台运行。
+
+
 download_mp3.sh
 
 ```sh
