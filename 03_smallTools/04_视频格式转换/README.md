@@ -32,6 +32,7 @@
 # 3. 环境配置
 
 ### 1. ubuntu中FFmpeg安装
+---
 
 要在Ubuntu系统中安装FFmpeg，可以按照以下步骤进行操作：
 
@@ -66,6 +67,7 @@ ffmpeg -version
 
 
 ### 2. FLV格式转为MP4格式
+---
 
 要将FLV格式视频转换为MP4格式，可以使用FFmpeg工具进行转码。请按照以下步骤进行操作：
 
@@ -116,7 +118,8 @@ ffmpeg -i input.mp4 -c:v copy -c:a copy output.mp4
 Bash脚本来将当前目录下的所有FLV格式视频文件转换为MP4格式：
 
 - **convert_videos.sh**
-```
+
+```bash
 #!/bin/bash
 
 for file in *.flv; do
@@ -156,7 +159,8 @@ ps -ef | grep convert_videos.sh           # 命令用于列出正在运行的进
 Bash脚本来将当前目录下的所有非标准MP4格式视频文件转换为标准MP4格式：
 
 - **convert_MP4.sh**
-```
+
+```bash
 #!/bin/bash
 
 for file in *.mp4; do
@@ -176,7 +180,8 @@ done
 运行一个bash脚本来构建MP4视频文件的下载链接并将其保存到一个文本文件中，您可以尝试以下脚本：
 
 - **obtain_mp4URL.sh**
-```
+
+```bash
 #!/bin/bash
 
 # 视频目录路径
@@ -211,7 +216,8 @@ echo "链接构建完成并保存到 $output_file"
 以下是基于output.txt中的下载链接使用curl命令下载视频的示例脚本：
 
 - **download_mp4.sh**
-```
+
+```bash
 #!/bin/bash
 
 # 保存链接的文本文件路径
@@ -247,7 +253,8 @@ echo "视频下载完成"
 更新版本
 
 - **download_mp4_log.sh**
-```
+
+```bash
 #!/bin/bash
 
 # 保存链接的文本文件路径
