@@ -114,6 +114,21 @@ nohup bash download_mp3.sh > output.txt 2>&1 &
 `&` 将整个命令放在后台运行。
 
 
+4. 要取消在 Ubuntu 中运行的 `nohup` 命令，您可以使用 ps 命令查找相关的进程 `ID（PID）`，然后使用 `kill` 命令终止该进程。以下是具体步骤：
+
+- 使用以下命令查找与您的 `download_mp3.sh` 脚本相关的进程 `ID（PID）`：
+
+```
+ps aux | grep "download_mp3.sh"
+```
+
+- 在输出中找到与您的脚本相关的 `PID`，然后使用 `kill` 命令终止该进程。假设 PID 为 `<your_pid>`，则执行以下命令：
+
+```
+kill <your_pid>
+```
+
+
 download_mp3.sh
 
 ```sh
