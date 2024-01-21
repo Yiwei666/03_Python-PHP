@@ -4,6 +4,9 @@
 directory_a="/home/01_html/42_TheDaily/01_audio"
 directory_b="/home/01_html/42_TheDaily/02_audio"
 
+# 指定源文件路径
+source_file="/home/01_html/42_TheDaily/source.txt"
+
 # 检查目录A是否存在
 if [ ! -d "$directory_a" ]; then
   echo "目录A不存在"
@@ -30,4 +33,4 @@ while IFS= read -r filename; do
   else
     echo "警告：目录A中不存在文件 $filename"
   fi
-done < "/home/01_html/42_TheDaily/source.txt"
+done < "$source_file"
