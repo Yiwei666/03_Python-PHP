@@ -34,6 +34,8 @@ python nameURL_extract.py
 
 3. 配置音频下载脚本download_Random_mp3.py
 
+注意：改用python实现，而放弃`download_Random_mp3.sh`脚本的原因是运行不稳定，偶尔会出现有关`shuf_lines=($(shuf -e "${lines[@]}"))`报错
+
 ```python
 import os
 import random
