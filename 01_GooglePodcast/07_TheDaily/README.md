@@ -107,7 +107,7 @@ done < "$source_file"
 然后运行/usr/bin/bash  /home/01_html/45_TodayExplained/source.sh ，扫描目录，将文件名写入source.txt文件
 然后等待60秒钟，再执行如下命令
 删除目录 /home/01_html/45_TodayExplained/02_audio ，避免初次使用该目录存在其他文件
-然后执行 /usr/bin/bash  /home/01_html/45_TodayExplained/source_move_to_target.sh        转移文件到指定目录
+然后执行 /usr/bin/bash  /home/01_html/45_TodayExplained/source_move_to_target.sh   转移文件到指定目录，该目录若不存在会自动创建
 然后执行 /usr/bin/rclone copy /home/01_html/45_TodayExplained/02_audio do1-1:do1-1/45_TodayExplained/01_audio       rclone长传到onedrive
 最后删除目录 /home/01_html/45_TodayExplained/02_audio           释放内存
 ```
