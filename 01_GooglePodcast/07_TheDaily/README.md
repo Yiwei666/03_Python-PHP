@@ -157,6 +157,29 @@ sleep 30
 rm -rf "/home/01_html/45_TodayExplained/02_audio"
 ```
 
+运行上述代码之前，需要注意以下几方面
+
+- 注意远程目录需要提前创建，远程标签要写对
+
+```sh
+/usr/bin/rclone copy "/home/01_html/45_TodayExplained/02_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
+```
+
+- 注意替换目录`45_TodayExplained`
+
+- 指定执行转移文件的目录大小阈值，如12GB
+
+- 定时任务
+
+```
+* * * * * /usr/bin/bash /home/01_html/45_TodayExplained/rclone_limitFileSize.sh
+```
+
+- 最后不满设置的目录大小阈值的文件需要手动上传，完成之后别忘了核对云端的文件数量以及删除`01_audio`目录
+
+```
+rclone copy "/home/01_html/45_TodayExplained/01_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
+```
 
 
 
