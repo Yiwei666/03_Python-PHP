@@ -4,11 +4,31 @@
 
 # 2. 文件结构
 
-
+```
+rclone_random_downmp3.sh          # 随机下载10个mp3音频到云服务器
+```
 
 
 # 3. 环境配置
 
+### 1. rclone_random_downmp3.sh
+
+1. 脚本功能
+
+```
+1. 删除目录 /home/01_html/37_Economist/01_audio 
+2. 创建目录 /home/01_html/37_Economist/01_audio 
+3. 使用rclone读取远程位置 AECS-1109:AECS-1109/37_Economist/01_audio  下的所有文件名到一个数组中
+4. 从上述数组中随机选取10个后缀名为mp3的文件名，下载到指定目录 /home/01_html/37_Economist/01_audio
+```
+
+2. 设置定时任务
+
+每天 13:10 crontab定时执行如下命令
+
+```
+rclone copy AECS-1109:AECS-1109/37_Economist/01_audio/file  /home/01_html/37_Economist/01_audio
+```
 
 
 
