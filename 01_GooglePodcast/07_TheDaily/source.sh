@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # 获取脚本所在目录
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+script_dir="/home/01_html/45_TodayExplained"
 
 # 指定目录
-directory="/home/01_html/42_TheDaily/01_audio"
+directory="/home/01_html/45_TodayExplained/01_audio"
 
 # 检查目录是否存在
 if [ ! -d "$directory" ]; then
