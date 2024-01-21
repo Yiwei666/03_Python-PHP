@@ -171,13 +171,13 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 
 - 定时任务
 
-```
+```crontab
 * * * * * /usr/bin/bash /home/01_html/45_TodayExplained/rclone_limitFileSize.sh
 ```
 
 - 最后不满设置的目录大小阈值的文件需要手动上传，完成之后别忘了核对云端的文件数量以及删除`01_audio`目录
 
-```
+```sh
 rclone copy "/home/01_html/45_TodayExplained/01_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
 ```
 
