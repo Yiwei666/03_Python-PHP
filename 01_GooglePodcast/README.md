@@ -7,6 +7,7 @@
 1. podcast**全部音频**下载流程参考 `01_GooglePodcast/01_ListenAndTalk`
 2. podcast**部分音频**下载流程参考`01_GooglePodcast/04_VOALearningEnglish`
 3. podcast**部分音频采用python脚本**下载流程参考`01_GooglePodcast/06_PlanetMoney`
+4. 文件转移参考`01_GooglePodcast/07_TheDaily`
 
 # 2. English Podcast
 
