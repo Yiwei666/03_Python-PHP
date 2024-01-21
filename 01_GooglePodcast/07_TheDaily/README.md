@@ -52,6 +52,8 @@ echo "文件名已写入到 source.txt 中"
 
 2. source_move_to_target.sh
 
+转移过程中会检查source.txt中的文件是否存在于源目录和目标目录，并给出对应提示
+
 ```sh
 #!/bin/bash
 
