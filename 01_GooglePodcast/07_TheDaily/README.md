@@ -101,7 +101,7 @@ done < "$source_file"
 ```sh
 #!/bin/bash
 
-# 指定目录路径，判断该目录是否小于指定大小
+# 指定下载目录，判断该目录是否小于指定大小
 directory="/home/01_html/45_TodayExplained/01_audio"
 
 # 判断目录大小是否小于12GB
