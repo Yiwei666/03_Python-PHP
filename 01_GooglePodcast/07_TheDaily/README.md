@@ -11,6 +11,7 @@ source.sh                              # 将指定文件夹下的文件名写入
 source_move_to_target.sh               # 将source.txt中记录的文件从一个目录转移到另外一个目录中
 rclone_limitFileSize.sh                # 自动化执行文件的转移和上传
 replace_directory.py                   # 将指定脚本中的A字符串替换为B字符串
+file_diff_checker.py                   # 比较两分代码的不同，打印出不同的行
 ```
 
 # 3. 环境配置
