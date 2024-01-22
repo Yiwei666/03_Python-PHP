@@ -39,24 +39,27 @@
 1. GRE SAT Advanced English Vocabulary Podcast!
 1. Englishclass101
 1. CNBC's "Fast Money"
+1. Espresso English
+1. Coffee Break English
+1. Luke’s English Podcast
+1. Stories Podcast
+1. Simple English News Daily
+1. SEND7 (Simple English News Daily)
+1. 
+1. 
+1. 
+1. 
+1. 
+1. 
+1. 
 
 
 
 
 
+### 参考资料
 
-
-
-
-
-
-
-
-
-
-
-
-
+1. [Top 10 podcasts to help you improve your English](https://ielts.idp.com/prepare/article-10-podcasts-to-help-improve-your-english)
 
 
 
