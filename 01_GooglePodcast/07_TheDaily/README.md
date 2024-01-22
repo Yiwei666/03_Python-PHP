@@ -164,9 +164,11 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 
 - 注意替换目录`45_TodayExplained`
 
-- 指定执行转移文件的目录大小阈值，如12GB
+- 注意设置rclone的上传时间，该时间在满足完全上传的要求外尽可能小，过了该时间将删除`02_audio`文件夹
 
-- 定时任务
+- 指定执行转移文件的目录大小阈值，如12GB，通常设置为可用内存的一半，必须满足在rclone上传期间内，下载量不会达到该阈值
+
+- crontab定时任务，每分钟执行一次，小于设定的内存阈值，则退出脚本
 
 ```crontab
 * * * * * /usr/bin/bash /home/01_html/45_TodayExplained/rclone_limitFileSize.sh
