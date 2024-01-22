@@ -45,8 +45,8 @@
 1. Stories Podcast
 1. Simple English News Daily
 1. SEND7 (Simple English News Daily)
-1. 
-1. 
+1. English Across The Pond (English Outside the Box)
+1. Aussie English Podcast
 1. 
 1. 
 1. 
