@@ -170,7 +170,7 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 /usr/bin/rclone copy "/home/01_html/45_TodayExplained/02_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
 ```
 
-- 注意替换目录`45_TodayExplained`
+- 结合实际情况，注意替换目录`45_TodayExplained`为相应值
 
 - 注意设置rclone的上传时间，该时间在满足完全上传的要求外尽可能小，过了该时间将删除`02_audio`文件夹
 
