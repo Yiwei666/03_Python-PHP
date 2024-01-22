@@ -102,13 +102,21 @@ done < "$source_file"
 
 ```
 1. 判断指定目录的大小 "/home/01_html/45_TodayExplained/01_audio"  是否小于15GB，如果小于，则退出脚本运行
+
 2. 如果大于等于15GB，则 
+
 首先删除掉 /home/01_html/45_TodayExplained/source.txt   文件，避免重复写入
+
 然后运行/usr/bin/bash  /home/01_html/45_TodayExplained/source.sh ，扫描目录，将文件名写入source.txt文件
+
 然后等待60秒钟，再执行如下命令
+
 删除目录 /home/01_html/45_TodayExplained/02_audio ，避免初次使用该目录存在其他文件
+
 然后执行 /usr/bin/bash  /home/01_html/45_TodayExplained/source_move_to_target.sh   转移文件到指定目录，该目录若不存在会自动创建
+
 然后执行 /usr/bin/rclone copy /home/01_html/45_TodayExplained/02_audio do1-1:do1-1/45_TodayExplained/01_audio       rclone长传到onedrive
+
 最后删除目录 /home/01_html/45_TodayExplained/02_audio           释放内存
 ```
 
