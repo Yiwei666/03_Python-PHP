@@ -164,7 +164,7 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 
 运行上述代码之前，需要注意以下几方面
 
-- 注意远程目录需要提前创建，远程标签要写对
+- 注意onedrive远程目录`/45_TodayExplained/01_audio`需要提前创建，脚本中远程标签`do1-1:do1-1`要写对，否则rclone上传时会报错
 
 ```sh
 /usr/bin/rclone copy "/home/01_html/45_TodayExplained/02_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
