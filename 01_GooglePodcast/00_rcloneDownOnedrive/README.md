@@ -1,6 +1,8 @@
 # 1. 项目功能
 
-利用rclone从onedrive拷贝下载文件到云服务器
+1. 利用rclone从onedrive拷贝下载文件到云服务器
+2. 利用rclone将远程目录中的文件名写入到txt文本中
+
 
 # 2. 文件结构
 
