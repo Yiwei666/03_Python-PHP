@@ -182,6 +182,12 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 * * * * * /usr/bin/bash /home/01_html/45_TodayExplained/rclone_limitFileSize.sh
 ```
 
+- 后台运行 `download_mp3.sh` 脚本
+
+```sh
+nohup bash download_mp3.sh > output.txt 2>&1 &
+```
+
 - 最后不满设置的目录大小阈值的文件需要手动上传，完成之后别忘了核对云端的文件数量以及删除`01_audio`目录
 
 ```sh
