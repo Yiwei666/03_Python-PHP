@@ -6,6 +6,7 @@
 
 ```
 rclone_random_downmp3.sh          # 随机下载10个mp3音频到云服务器
+remote_filename_save.sh           # 使用rclone将远程目录下指定文件夹中的所有文件名写入到txt文件中
 ```
 
 
@@ -70,6 +71,31 @@ echo "任务完成"
 ```
 rclone copy AECS-1109:AECS-1109/37_Economist/01_audio/file  /home/01_html/37_Economist/01_audio
 ```
+
+
+### 2. remote_filename_save.sh
+
+使用rclone将远程目录下指定文件夹中的所有文件名写入到txt文件中
+
+```sh
+#!/bin/bash
+
+# 远程路径
+remote_path="do1-1:do1-1/45_TodayExplained/01_audio"
+
+# 1. 使用rclone读取远程位置 $remote_path 下的所有文件名，并将其存储到 remote_filename.txt 文件中
+rclone ls "$remote_path" | awk '{print $NF}' > remote_filename.txt
+
+echo "远程文件名已保存到 remote_filename.txt 文件中"
+```
+
+
+
+
+
+
+
+
 
 
 
