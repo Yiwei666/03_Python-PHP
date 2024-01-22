@@ -198,6 +198,9 @@ rclone copy "/home/01_html/45_TodayExplained/01_audio" "do1-1:do1-1/45_TodayExpl
 
 ### 4. replace_directory.py  
 
+
+这段Python代码通过遍历多个Shell脚本文件，实现了批量替换指定字符串的功能，提供了一个映射关系字典来定义替换规则。替换后的内容被写回原文件，实现了自动化的批量字符串替换操作。
+
 运行前需要初始化`replacement_mapping`需要替换的字符串，以及需要处理的脚本名`script_files`
 
 
