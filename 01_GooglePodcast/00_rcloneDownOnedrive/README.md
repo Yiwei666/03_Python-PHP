@@ -8,7 +8,11 @@
 
 ```
 rclone_random_downmp3.sh          # 随机下载10个mp3音频到云服务器
-remote_filename_save.sh           # 使用rclone将远程目录下指定文件夹中的所有文件名写入到txt文件中
+remote_filename_save.sh           # 使用rclone将远程目录下指定文件夹中的所有文件名写入到remote_filename.txt文件中
+
+download_checker.py               # 基于文本nameURL.txt和文本remote_filename.txt提取未下载的音频文件名和链接到undownload_mp3.txt文本中
+download_checker.sh
+download_checker.php
 ```
 
 
