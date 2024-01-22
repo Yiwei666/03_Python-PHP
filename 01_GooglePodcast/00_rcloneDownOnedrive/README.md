@@ -74,7 +74,7 @@ echo "任务完成"
 
 每天 13:10 crontab定时执行如下命令
 
-```
+```sh
 rclone copy AECS-1109:AECS-1109/37_Economist/01_audio/file  /home/01_html/37_Economist/01_audio
 ```
 
