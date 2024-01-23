@@ -198,6 +198,12 @@ nohup bash download_mp3.sh > output.txt 2>&1 &
 rclone copy "/home/01_html/45_TodayExplained/01_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
 ```
 
+- 确定所有文件都已上传，并且释放了 `01_audio` 文件夹的内存占用后，取消`rclone_limitFileSize.sh`脚本的crontab定时任务，可以减少cpu占用以及方便管理
+
+```
+# * * * * * /usr/bin/bash /home/01_html/45_TodayExplained/rclone_limitFileSize.sh
+```
+
 
 ### 4. replace_directory.py  
 
