@@ -166,19 +166,21 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 
 运行上述代码之前，需要注意以下几方面
 
+- 需要在云服务器的项目文件夹中先创建 `01_audio` 文件夹，用于保存 `download_mp3.sh` 脚本下载的音频， `02_audio` 不需要提前创建
+
 - 注意onedrive远程目录`/45_TodayExplained/01_audio`需要提前创建，脚本中远程标签`do1-1:do1-1`要写对，否则rclone上传时会报错
 
 ```sh
 /usr/bin/rclone copy "/home/01_html/45_TodayExplained/02_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
 ```
 
-- 结合实际情况，注意替换目录`45_TodayExplained`为相应值
+- 结合实际情况，注意替换目录`45_TodayExplained`为相应值，可以采用 `replace_directory.py` 脚本批量转换
 
 - 注意设置rclone的上传时间，该时间在满足完全上传的要求外尽可能小，过了该时间将删除`02_audio`文件夹
 
-- 指定执行转移文件的目录大小阈值，如12GB，通常设置为可用内存的一半，必须满足在rclone上传期间内，下载量不会达到该阈值
+- 指定执行转移文件的目录大小阈值，如 8 GB，通常设置为可用内存的一半，必须满足在rclone上传期间内，下载量不会达到该阈值
 
-- crontab定时任务，每分钟执行一次，小于设定的内存阈值，则退出脚本
+- crontab定时任务，每分钟执行一次，小于设定的内存阈值，则退出脚本，注意更换路径
 
 ```crontab
 * * * * * /usr/bin/bash /home/01_html/45_TodayExplained/rclone_limitFileSize.sh
@@ -190,7 +192,7 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 nohup bash download_mp3.sh > output.txt 2>&1 &
 ```
 
-- 最后不满设置的目录大小阈值的文件需要手动上传，完成之后别忘了核对云端的文件数量以及删除`01_audio`目录
+- 最后不满设置的目录大小阈值的文件需要手动上传，完成之后别忘了核对云端的文件数量以及删除`01_audio`目录释放硬盘容量
 
 ```sh
 rclone copy "/home/01_html/45_TodayExplained/01_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
