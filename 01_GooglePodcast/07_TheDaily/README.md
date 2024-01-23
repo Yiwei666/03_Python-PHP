@@ -176,7 +176,7 @@ rm -rf "/home/01_html/45_TodayExplained/02_audio"
 
 - 结合实际情况，注意替换目录`45_TodayExplained`为相应值，可以采用 `replace_directory.py` 脚本批量转换
 
-- 注意设置rclone的上传时间，该时间在满足完全上传的要求外尽可能小，过了该时间将删除`02_audio`文件夹
+- 注意设置rclone的上传时间，该时间在满足完全上传的要求外尽可能小，过了该时间将删除`02_audio`文件夹，考虑服务器上传带宽，digitalocean 对于 8 GB上传一般在15分钟内完成
 
 - 指定执行转移文件的目录大小阈值，如 8 GB，通常设置为可用内存的一半，必须满足在rclone上传期间内，下载量不会达到该阈值
 
