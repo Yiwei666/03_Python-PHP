@@ -130,7 +130,9 @@ print('未下载的文件名和链接已写入 undownload_mp3.txt 文件。')
 ```
 
 
+### 4. analyze_filenames.py
 
+分析一个名为 'nameURL.txt' 的文件，提取文件名，并统计文件名的总数、不重复文件名的数量以及重复文件名和它们的出现次数。
 
 
 
