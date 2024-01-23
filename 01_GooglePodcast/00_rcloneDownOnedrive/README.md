@@ -13,6 +13,8 @@ remote_filename_save.sh           # 使用rclone将远程目录下指定文件�
 download_checker.py               # 基于文本nameURL.txt和文本remote_filename.txt提取未下载的音频文件名和链接到undownload_mp3.txt文本中
 download_checker.sh               # bash实现
 download_checker.php              # php实现
+
+analyze_filenames.py              # 分析 nameURL.txt 文件中是否有重复的文件名，以及重复文件名出现的次数
 ```
 
 
