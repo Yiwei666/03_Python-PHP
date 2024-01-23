@@ -27,6 +27,10 @@
 1. TED Talks Daily
 1. All Ears English Podcast
 1. Espresso English
+1. Coffee Break English
+
+
+
 
 
 
@@ -40,7 +44,6 @@
 1. GRE SAT Advanced English Vocabulary Podcast!
 1. Englishclass101
 1. CNBC's "Fast Money"
-1. Coffee Break English
 1. Luke’s English Podcast
 1. Stories Podcast
 1. Simple English News Daily
