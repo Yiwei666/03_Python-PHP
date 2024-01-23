@@ -71,6 +71,12 @@ done
 echo "任务完成"
 ```
 
+注意环境配置时，下面代码中的远程位置名与一级目录名可能是不同的，例如`remote_path="AECS-1109:do1-1/47_StuffYouShouldKnow/01_audio"`
+```
+# 远程路径
+remote_path="AECS-1109:AECS-1109/37_Economist/01_audio"
+```
+
 
 2. 设置定时任务
 
