@@ -3,6 +3,12 @@
 input_file="nameURL.txt"
 output_path="/home/01_html/07_listen_and_talk/01_audio"
 
+# 检查输出路径是否存在
+if [ ! -d "$output_path" ]; then
+    echo "Output path $output_path does not exist. Please create the path and run the script again."
+    exit 1
+fi
+
 # 读取每一行
 while IFS=, read -r filename url; do
     # 移除文件名和网址中的空格
