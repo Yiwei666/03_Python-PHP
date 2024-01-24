@@ -148,7 +148,7 @@ selected_pdf = unsent_pdf_list[0] if unsent_pdf_list else None
 
 注意：由于 sorted 函数适用于形似 `headFirstC-Pages_111_120.pdf` 的文件名对象，因此注意不要改动如下pdf文件拆分脚本中的子pdf文件名命名方式
 
-```
+```py
 from PyPDF2 import PdfReader, PdfWriter
 
 def split_pdf_to_pages():
