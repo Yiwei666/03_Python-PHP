@@ -131,6 +131,8 @@ base_url = "https://domain.com/04_glencoe/"
 
 ## 3. 04_emailSendOrder.py
 
+### 1. 功能介绍
+
 相比于 `03_emailSendURL.py` 脚本，为了实现按照页码顺序添加pdf附件，代码进行了如下修改
 
 1. 首先，注释了随机选取文件名的代码，使用sorted函数，通过key参数指定一个函数，该函数用于提取排序关键字。
@@ -147,6 +149,13 @@ selected_pdf = unsent_pdf_list[0] if unsent_pdf_list else None
 ```
 
 注意：由于 sorted 函数适用于形似 `headFirstC-Pages_111_120.pdf` 的文件名对象，因此注意不要改动如下pdf文件拆分脚本中的子pdf文件名命名方式
+
+```
+output_pdf = f"headFirstC-Pages_{start_page + 1}_{min(start_page + m, total_pages)}.pdf"
+```
+
+
+### 2. pdf拆分脚本子pdf文件命名
 
 ```py
 from PyPDF2 import PdfReader, PdfWriter
