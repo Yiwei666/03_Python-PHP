@@ -158,7 +158,7 @@ selected_pdf = unsent_pdf_list[0] if unsent_pdf_list else None
 output_pdf = f"headFirstC-Pages_{start_page + 1}_{min(start_page + m, total_pages)}.pdf"
 ```
 
-`05_emailheadFCSent.py`
+PDF拆分脚本 `05_emailheadFCSent.py`
 
 ```py
 from PyPDF2 import PdfReader, PdfWriter
