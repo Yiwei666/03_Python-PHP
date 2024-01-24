@@ -152,7 +152,7 @@ selected_pdf = unsent_pdf_list[0] if unsent_pdf_list else None
 
 ### 2. pdf拆分脚本中子pdf文件命名
 
-- 注意：由于上述脚本中 sorted 函数适用于形似 `headFirstC-Pages_111_120.pdf` 的文件名对象，即使用`_`下划线对文件名分割，并获取索引为2的字符串，转换为整型进行排序，因此注意不要改动如下pdf文件拆分脚本中的子pdf文件名命名方式
+- 注意：由于上述脚本中 sorted 函数适用于形似 `headFirstC-Pages_111_120.pdf` 的文件名对象，即使用`'_'`下划线对文件名分割，并获取索引为2的字符串，转换为整型进行排序，因此注意不要改动如下pdf文件拆分脚本中的子pdf文件名命名方式
 
 ```py
 output_pdf = f"headFirstC-Pages_{start_page + 1}_{min(start_page + m, total_pages)}.pdf"
