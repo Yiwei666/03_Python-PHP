@@ -11,6 +11,8 @@
 02_emailEngSent.py         # 该代码通过电子邮件将随机选择的PDF附件发送给指定收件人列表，并记录已发送的附件文件名。
 
 03_emailSendURL.py         # 相比于02_emailEngSent.py，在正文末尾添加pdf附件的url
+
+04_emailSendOrder.py       # 相比于03_emailSendURL.py，按照pdf文件名的页码顺序添加附件，而不是随机添加附件
 ```
 
 ## 1. 脚本01_emailSend.py
@@ -123,5 +125,46 @@ base_url = "https://domain.com/04_glencoe/"
 ```
 
 注意：有些云服务器商使用UTC时间，比如cloudcone，请将UTC时间与本地时间进行换算，北京时间比UTC时间快8小时。
+
+
+
+
+## 3. 04_emailSendOrder.py
+
+相比于 `03_emailSendURL.py` 脚本，为了实现按照页码顺序添加pdf附件，代码进行了如下修改
+
+1. 首先，注释了随机选取文件名的代码，使用sorted函数，通过key参数指定一个函数，该函数用于提取排序关键字。
+2. 在这里，使用了一个 lambda 函数，它将文件名拆分成多个部分，提取其中的数字并将其转换为整数，然后使用这些整数作为排序关键字。
+3. 将排序后的结果赋值给原始列表，选取排序后列表中的第一个文件名作为附件，实现有序添加附件
+
+```py
+# 从未发送的pdf文件中随机选择一个
+# selected_pdf = random.choice(unsent_pdf_list)
+
+# 对未发送的pdf文件名列表进行排序，获取如 headFirstC-Pages_21_30.pdf 中的最后一个整数，获取排序后的第一个文件名
+unsent_pdf_list = sorted(unsent_pdf_list, key=lambda x: int(x.split('_')[2].split('.')[0]))
+selected_pdf = unsent_pdf_list[0] if unsent_pdf_list else None
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
