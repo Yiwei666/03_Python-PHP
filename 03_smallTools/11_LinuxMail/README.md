@@ -146,6 +146,37 @@ unsent_pdf_list = sorted(unsent_pdf_list, key=lambda x: int(x.split('_')[2].spli
 selected_pdf = unsent_pdf_list[0] if unsent_pdf_list else None
 ```
 
+注意：由于 sorted 函数适用于形似 `headFirstC-Pages_111_120.pdf` 的文件名对象，因此注意不要改动如下pdf文件拆分脚本中的子pdf文件名命名方式
+
+```
+from PyPDF2 import PdfReader, PdfWriter
+
+def split_pdf_to_pages():
+    input_pdf = input("请输入PDF文件的绝对路径：")
+    m = int(input("请输入每组包含的页数（m应大于等于1）："))
+    
+    if m < 1:
+        print("错误：每组包含的页数必须大于等于1。")
+        return
+
+    pdf = PdfReader(input_pdf)
+    total_pages = len(pdf.pages)
+
+    for start_page in range(0, total_pages, m):
+        pdf_writer = PdfWriter()
+
+        # Add pages to the current chunk
+        for page_num in range(start_page, min(start_page + m, total_pages)):
+            pdf_writer.add_page(pdf.pages[page_num])
+
+        output_pdf = f"headFirstC-Pages_{start_page + 1}_{min(start_page + m, total_pages)}.pdf"
+
+        with open(output_pdf, 'wb') as output_file:
+            pdf_writer.write(output_file)
+
+if __name__ == "__main__":
+    split_pdf_to_pages()
+```
 
 
 
