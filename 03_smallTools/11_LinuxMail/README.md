@@ -148,14 +148,15 @@ unsent_pdf_list = sorted(unsent_pdf_list, key=lambda x: int(x.split('_')[2].spli
 selected_pdf = unsent_pdf_list[0] if unsent_pdf_list else None
 ```
 
+
+
+### 2. pdf拆分脚本子pdf文件命名
+
 注意：由于 sorted 函数适用于形似 `headFirstC-Pages_111_120.pdf` 的文件名对象，因此注意不要改动如下pdf文件拆分脚本中的子pdf文件名命名方式
 
 ```
 output_pdf = f"headFirstC-Pages_{start_page + 1}_{min(start_page + m, total_pages)}.pdf"
 ```
-
-
-### 2. pdf拆分脚本子pdf文件命名
 
 ```py
 from PyPDF2 import PdfReader, PdfWriter
