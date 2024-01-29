@@ -34,7 +34,7 @@
 
 ### 1. 配置刷新按钮对应的网址
 
-```
+```javascript
 <script>
     function refreshPage() {
         /* Redirect to the specified URL */
@@ -64,9 +64,11 @@
 4. // 拼接新的字符串 string4   如 "Result-string4: 123 (2023) 2436-2608."
 5. // 提取字符串$G中倒数第二个"."和倒数第二个","之间的字符串作为期刊名。 （注意：不能提取倒数第二个 "." 和倒数第一个 "." 之间的字符串部分，然后 使用","对该字符串进行分割，获取分割后的第一个字符串，并删掉其中的空格作为期刊名 string5，对应期刊的全称，如"Nature Communications"。因为可能存在期刊名中含有逗号的情况，如"Resources, Conservation and Recycling"
 6. 能否修改下面这行代码，增加一个判断逻辑，如果$string3 含有 "("字符，$s1, $s2, $s3, $s4则对应如下代码
-```
+
+```php
 list($s1, $s2, $s3, $s4) = array_map('trim', preg_split("/[,:\(\)]+/", $string3, -1, PREG_SPLIT_NO_EMPTY));
 ```
+
 7. 如果不含有 "("字符，则 $s1, $s2, $s4对应 ","  ":" 将$string3分割成的三部分字符串 , 设置$s3 = "NULL" 字符串恒定值
 
 
