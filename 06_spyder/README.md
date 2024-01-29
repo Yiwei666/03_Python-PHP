@@ -1,9 +1,11 @@
-### 项目功能
-```
-利用搜狗微信接口，爬取某一关键词的微信公众号文章临时链接
-```
+# 1. 项目功能
 
-### 项目结构
+
+利用搜狗微信接口，爬取某一关键词的微信公众号文章临时链接
+
+
+# 2. 项目结构
+
 ```
 ├─sougouspider
 │  │  scrapy.cfg
@@ -47,20 +49,28 @@
         conver_json.py
 ```
 
+# 3. 环境配置
 
-### 一. 注意事项
+
+###  1. 注意事项
+
+Note: 
+
+1. 推荐在anaconda prompt和anaconda powershell prompt窗口中执行如下所有安装命令，或者在cmd窗口的base环境中运行，cmd窗口中激活base环境命令如下:
+
 ```
-Note: 推荐在anaconda prompt和anaconda powershell prompt窗口中执行如下所有安装命令，或者在cmd窗口的base环境中运行，cmd窗口中激活base环境命令如下:
 conda activate base
-
-提前安装docker，配置好代理池，在 http://localhost:5555/random 获取代理IP
-
-提前pip安装scrapy，fake-useragent包
 ```
 
-### 二. 安装流程
+2. 提前安装docker，配置好代理池，在 http://localhost:5555/random 获取代理IP
+
+3. 提前pip安装scrapy，fake-useragent包
+
+
+### 2. 安装流程
 
 **1. 创建sougouspider项目**
+
 ```
 scrapy startproject sougouspider
 ```
@@ -267,7 +277,7 @@ scrapy crawl sgspider -o XXX.json  # XXX.json是爬虫生成的json文件名，s
 使用同级目录下的conver_json.py脚本处理后可以复制粘贴到markdown文件中查看
 
 
-**参考资料和链接**   
+### 参考资料
 
 [【学习笔记】爬虫框架Scrapy入门](http://t.csdn.cn/TY3ex)
 
