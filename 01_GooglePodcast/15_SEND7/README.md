@@ -42,7 +42,7 @@ python analyze_filenames.py
 python replace_directory.py
 ```
 
-配置如下脚本的路径
+上述python脚本将自动配置如下脚本的路径
 
 ```
 .
@@ -52,7 +52,7 @@ python replace_directory.py
 └── source_move_to_target.sh
 ```
 
-输出结果如下所示
+更改路径的输出结果如下所示
 
 ```
 D:\onedrive\英语\02_azure2-1\51_SEND7>python replace_directory.py
