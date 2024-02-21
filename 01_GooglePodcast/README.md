@@ -29,7 +29,7 @@
 1. Espresso English
 1. Coffee Break English
 1. The English We Speak (BBC)
-
+1. SEND7 (Simple English News Daily)
 
 
 
@@ -45,8 +45,6 @@
 1. CNBC's "Fast Money"
 1. Luke’s English Podcast
 1. Stories Podcast
-1. Simple English News Daily
-1. SEND7 (Simple English News Daily)
 1. English Across The Pond (English Outside the Box)
 1. Aussie English Podcast
 1. Overheard at National Geographic
