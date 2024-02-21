@@ -134,12 +134,17 @@ D:\onedrive\英语\02_azure2-1\51_SEND7>python replace_directory.py
 
 ### 8. 后台运行音频下载脚本
 
-- 后台运行 `download_mp3.sh` 脚本
+- 后台运行 `download_mp3.sh` 脚本，在项目文件夹下执行如下命令
 
 ```sh
 nohup bash download_mp3.sh > output.txt 2>&1 &
 ```
 
+- 实时监视下载信息
+
+```sh
+tail -f output.txt
+```
 
 ### 9. 释放云服务器存储
 
