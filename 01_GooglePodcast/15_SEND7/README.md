@@ -6,6 +6,8 @@
   
 # 2. 文件结构
 
+1. 从google podcast下载音频及上传到onedrive的文件结构
+
 ```
 ├── 01_audio
 ├── homepage.html
