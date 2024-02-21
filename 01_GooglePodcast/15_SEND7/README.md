@@ -116,8 +116,8 @@ for script_file in script_files:
 .
 ├── download_mp3.sh
 ├── rclone_limitFileSize.sh
-├── source.sh
-└── source_move_to_target.sh
+├── source.sh                        # 将指定文件夹下的文件名写入到脚本同级目录下的source.txt文件中
+└── source_move_to_target.sh         # 将source.txt中记录的文件从一个目录转移到另外一个目录中
 ```
 
 将上述脚本中的`"50_TheEnglishWeSpeak"`字符串更改为`"51_SEND7"`
