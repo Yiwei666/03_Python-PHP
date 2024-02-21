@@ -165,7 +165,14 @@ D:\onedrive\英语\02_azure2-1\51_SEND7>python replace_directory.py
 
 - 需要在云服务器的项目文件夹中先创建 `01_audio` 文件夹，用于保存 `download_mp3.sh` 脚本下载的音频， `02_audio` 不需要提前创建
 
-- 注意onedrive远程目录`/51_SEND7/01_audio`需要提前创建，`rclone_limitFileSize.sh`脚本中远程标签`do1-1:do1-1`要写对，否则rclone上传时会报错
+
+- 注意onedrive远程目录`/51_SEND7/01_audio`需要提前创建
+```sh
+rclone mkdir do1-1:do1-1/51_SEND7/01_audio
+```
+
+
+- `rclone_limitFileSize.sh`脚本中远程标签`do1-1:do1-1`要写对，否则rclone上传时会报错
 
 ```sh
 /usr/bin/rclone copy "/home/01_html/51_SEND7/02_audio" "do1-1:do1-1/51_SEND7/01_audio"  && sleep 1200
@@ -219,10 +226,16 @@ kill <your_pid>
 
 ### 9. 释放云服务器存储
 
-- 最后不满设置的目录大小阈值的文件需要手动上传，完成之后别忘了核对云端的文件数量以及删除`01_audio`目录释放硬盘容量
+- 最后不满设置的目录大小阈值的文件需要手动上传
 
 ```sh
 rclone copy "/home/01_html/51_SEND7/01_audio" "do1-1:do1-1/51_SEND7/01_audio"
+```
+
+- 完成之后别忘了核对onedrive云端的文件数量以及删除`01_audio`目录释放硬盘容量
+
+```sh
+rclone size  do1-1:do1-1/51_SEND7/01_audio
 ```
 
 - 确定所有文件都已上传，并且释放了 `01_audio` 文件夹的内存占用后，取消`rclone_limitFileSize.sh`脚本的crontab定时任务，可以减少cpu占用以及方便管理
