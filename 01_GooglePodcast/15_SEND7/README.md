@@ -6,6 +6,18 @@
   
 # 2. 文件结构
 
+```
+├── 01_audio
+├── homepage.html
+├── nameURL_extract.py
+├── nameURL.txt
+├── analyze_filenames.py
+├── download_mp3.sh
+├── rclone_limitFileSize.sh
+├── source.sh
+├── source_move_to_target.sh
+└── output.txt
+```
 
 # 3. 环境配置
 
