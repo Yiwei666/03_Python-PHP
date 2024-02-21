@@ -29,4 +29,15 @@ grep 'listitem' homepage.html
 python nameURL_extract.py
 ```
 
+3. 分析 nameURL.txt 文件中是否有重复的文件名，以及重复文件名出现的次数
+
+```python
+python analyze_filenames.py
+```
+
+
+4. 
+
+
+
 
