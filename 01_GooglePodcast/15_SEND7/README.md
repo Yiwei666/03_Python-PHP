@@ -207,7 +207,7 @@ tail -f output.txt
 - 最后不满设置的目录大小阈值的文件需要手动上传，完成之后别忘了核对云端的文件数量以及删除`01_audio`目录释放硬盘容量
 
 ```sh
-rclone copy "/home/01_html/45_TodayExplained/01_audio" "do1-1:do1-1/45_TodayExplained/01_audio"
+rclone copy "/home/01_html/51_SEND7/01_audio" "do1-1:do1-1/51_SEND7/01_audio"
 ```
 
 - 确定所有文件都已上传，并且释放了 `01_audio` 文件夹的内存占用后，取消`rclone_limitFileSize.sh`脚本的crontab定时任务，可以减少cpu占用以及方便管理
