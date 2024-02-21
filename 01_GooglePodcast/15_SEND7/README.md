@@ -265,6 +265,12 @@ rclone size  do1-1:do1-1/51_SEND7/01_audio
 
 - 更改音频下载脚本中`rclone_51_SEND7.sh`中的路径变量，从onedrive中下载指定数量的音频
 
+```
+1. 删除目录 /home/01_html/51_SEND7/01_audio 
+2. 创建目录 /home/01_html/51_SEND7/01_audio 
+3. 使用rclone读取远程位置 AECS-1109:AECS-1109/51_SEND7/01_audio  下的所有文件名到一个数组中
+4. 从上述数组中随机选取10个后缀名为mp3的文件名，下载到指定目录 /home/01_html/51_SEND7/01_audio
+```
 
 ### 11. 设置crontab定时任务，定时执行`rclone_51_SEND7.sh`脚本下载指定数量音频
 
