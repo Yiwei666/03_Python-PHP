@@ -259,6 +259,19 @@ rclone size  do1-1:do1-1/51_SEND7/01_audio
 ```
 
 
+### 10. 设置音频播放脚本和音频下载脚本
+
+- 更改音频播放脚本中`51_SEND7.php`中的路径变量
+
+- 更改音频下载脚本中`rclone_51_SEND7.sh`中的路径变量，从onedrive中下载指定数量的音频
+
+
+### 11. 设置crontab定时任务，定时执行`rclone_51_SEND7.sh`脚本下载指定数量音频
+
+```crontab
+5 23 * * * /usr/bin/bash /home/01_html/51_SEND7/rclone_51_SEND7.sh
+```
+
 
 
 
