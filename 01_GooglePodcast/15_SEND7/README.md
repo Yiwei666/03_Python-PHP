@@ -128,7 +128,7 @@ D:\onedrive\英语\02_azure2-1\51_SEND7>python replace_directory.py
 - crontab定时任务，每分钟执行一次，小于设定的内存阈值，则退出脚本，注意更换路径
 
 ```crontab
-* * * * * /usr/bin/bash /home/01_html/45_TodayExplained/rclone_limitFileSize.sh
+* * * * * /usr/bin/bash /home/01_html/51_SEND7/rclone_limitFileSize.sh
 ```
 
 
