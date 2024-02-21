@@ -9,7 +9,7 @@
 
 # 3. 环境配置
 
-1. 下载相应podcast主页面为 homepage.html
+### 1. 下载相应podcast主页面为 homepage.html
 
 ```bash
 curl -o homepage.html https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5idXp6c3Byb3V0LmNvbS85Njg5ODMucnNz?sa=X&ved=0CAcQrrcFahgKEwjYqeCCrLyEAxUAAAAAHQAAAAAQ9Tc
@@ -21,7 +21,7 @@ curl -o homepage.html https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5idXp6c
 grep 'listitem' homepage.html
 ```
 
-2. 提取homepage.html文件中的文件名和音频链接，文件名中仅包含中文汉字、英文字母以及阿拉伯数字
+### 2. 提取homepage.html文件中的文件名和音频链接，文件名中仅包含中文汉字、英文字母以及阿拉伯数字
 
 在该步骤中，只需要执行以下命令即可
 
@@ -29,14 +29,14 @@ grep 'listitem' homepage.html
 python nameURL_extract.py
 ```
 
-3. 分析 nameURL.txt 文件中是否有重复的文件名，以及重复文件名出现的次数
+### 3. 分析 nameURL.txt 文件中是否有重复的文件名，以及重复文件名出现的次数
 
 ```python
 python analyze_filenames.py
 ```
 
 
-4. 在 windows 运行`replace_directory.py`脚本，
+### 4. 在 windows 运行`replace_directory.py`脚本，
 
 ```py
 python replace_directory.py
