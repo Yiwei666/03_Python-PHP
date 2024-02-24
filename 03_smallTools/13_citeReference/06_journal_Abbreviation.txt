@@ -34,6 +34,7 @@ Resources, Conservation and Recycling/Resour. Conserv. Recycl.
 Science/Science
 Science Advances/Sci. Adv.
 Solar energy materials and solar cells/Sol. Energy Mater Sol. Cells
+Science and Technology of Advanced Materials/Sci. Technol. Adv. Mater.
 Theoretical Chemistry Accounts/Theor. Chem. Acc.
 The Journal of chemical physics/J. Chem. Phys.
 The Journal of Physical Chemistry C/J. Phys. Chem. C
