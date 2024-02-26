@@ -251,6 +251,12 @@ kill <your_pid>
 rclone copy "/home/01_html/51_SEND7/01_audio" "do1-1:do1-1/51_SEND7/01_audio"
 ```
 
+- rclone上传除音频文件夹外其余的文件，不覆盖已存在的目标文件
+
+```sh
+rclone copy --ignore-existing "/home/01_html/51_SEND7" "do1-1:do1-1/51_SEND7"
+```
+
 - 完成之后别忘了核对onedrive云端的文件数量以及删除`01_audio`目录释放硬盘容量
 
 ```sh
