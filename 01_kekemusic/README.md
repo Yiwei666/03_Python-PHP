@@ -43,6 +43,30 @@ musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是py
 
 ### 1. Python库
 
+1. 初级版本
+
+需要调用以下 Python 库：
+
+- re：用于正则表达式操作。
+- requests：用于发送 HTTP 请求。
+- time：用于处理时间相关的操作。
+- BeautifulSoup：用于解析 HTML 文档。
+- chardet：用于检测字符编码。
+
+安装命令如下：
+
+```
+pip install requests beautifulsoup4 chardet
+```
+
+请注意，`re`和`time`是 Python 标准库，通常情况下无需单独安装。
+
+查看ubuntu系统上是否安装过 `requests, beautifulsoup4, chardet`
+
+```
+pip list | grep -E 'requests|beautifulsoup4|chardet'
+```
+
 
 ### 2. mysql数据写入脚本
 ---
