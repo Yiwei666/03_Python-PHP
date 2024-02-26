@@ -39,6 +39,11 @@
 musicUrl.txt, music.html, latest.html, finalmusic.txt 上述四个文件都是python脚本运行产生的临时文件
 ```
 
+# 3. 环境配置
+
+### 1. Python库
+
+
 ### 2. mysql数据写入脚本
 ---
 
