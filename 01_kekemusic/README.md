@@ -67,6 +67,9 @@ pip install requests beautifulsoup4 chardet
 pip list | grep -E 'requests|beautifulsoup4|chardet'
 ```
 
+2. 高级版本
+
+
 
 ### 2. mysql数据写入脚本
 ---
