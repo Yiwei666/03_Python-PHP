@@ -179,6 +179,9 @@ D:\onedrive\英语\02_azure2-1\51_SEND7>python replace_directory.py
 
 - 需要在云服务器的项目文件夹中先创建 `01_audio` 文件夹，用于保存 `download_mp3.sh` 脚本下载的音频， `02_audio` 不需要提前创建
 
+```sh
+mkdir 01_audio
+```
 
 - 注意onedrive远程目录`/51_SEND7/01_audio`需要提前创建
 ```sh
