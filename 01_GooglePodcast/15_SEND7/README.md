@@ -37,11 +37,13 @@ grep 'listitem' homepage.html
 
 ### 2. 提取homepage.html文件中的文件名和音频链接，文件名中仅包含中文汉字、英文字母以及阿拉伯数字
 
-在该步骤中，只需要执行以下命令即可
+在该步骤中，只需要执行以下命令即可生成 `nameURL.txt` 文件
 
 ```python
 python nameURL_extract.py
 ```
+
+note：记得将生成的 `nameURL.txt ` 文件上传至github
 
 ### 3. 分析 nameURL.txt 文件中是否有重复的文件名，以及重复文件名出现的次数
 
