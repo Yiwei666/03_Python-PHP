@@ -1,6 +1,25 @@
+# 1. 项目功能
 
-### 1. 项目文件结构
----
+
+
+
+
+
+# 2. 文件结构
+
+1. 初级版本
+
+```
+.
+├── 01keke.py
+├── latest.html
+├── musicdown.py
+├── music.html
+└── musicUrl.txt
+```
+
+
+2. 高级版本：将下载的链接写入到mysql数据库中
 
 ```
     ├── kekemusic.php              # 音频链接来源于finalmusic.txt文本
