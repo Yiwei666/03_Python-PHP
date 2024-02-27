@@ -66,7 +66,7 @@ drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # å­˜å‚
 chmod +x 02_douyinDown.py 03_add_3_to_2.sh 04_2_subtract_4.py
 
 chown www-data:www-data 2.txt
-chown www-data:www-data 2.txt 2_addTotalLog.txt
+chown www-data:www-data 2_addTotalLog.txt
 
 chmod 666 2.txt 2_addTotalLog.txt 3_failure.txt 4_success.txt
 
