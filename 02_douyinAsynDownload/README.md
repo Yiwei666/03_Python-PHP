@@ -98,6 +98,19 @@ chmod 755 02_douyVideo
 3. 使用crontab写个定时任务，每天5点10分的时候执行 /home/01_html/05_douyinAsynDload/03_add_3_to_2.sh，bash路径为 /usr/bin/bash
 
 
+- rclone将视频从云服务器上传至onedrive
+
+```crontab
+0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo cc1-2:do1-2/01_html/02_douyVideo
+```
+
+- rclone将视频从onedrive下载至云服务器
+
+```
+30 * * * * rclone copy --ignore-existing HW-1012:do1-2/01_html/02_douyVideo /home/01_html/01_tecent1017/25_film_videos
+```
+
+
 ### 2. 抖音url写入 01_url_get.php
 
 1. 能否写一个php脚本，在web页面访问该php脚本的时候显示一个输入框，提示输入保存字符串，用户输入字符串并点击输入保存按钮后，程序会提取该字符串中的 https链接，并将该链接以追加的方式写入到 2.txt文件和2_addTotalLog.txt文件中。
