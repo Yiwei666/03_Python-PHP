@@ -60,7 +60,9 @@ drwxrwxr-x  2 nginx nginx    65536 Oct 12 03:20 02_douyVideo             # 存�
 drwxr-xr-x  2 root  root       157 Oct 11 21:29 05_douyinAsynDload       # 存储核心脚本的文件夹
 ```
 
-```
+权限设置命令
+
+```sh
 chmod +x 02_douyinDown.py 03_add_3_to_2.sh 04_2_subtract_4.py
 
 chown www-data:www-data 2.txt
