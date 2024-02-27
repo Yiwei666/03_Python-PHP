@@ -252,6 +252,22 @@ CREATE DATABASE your_database_name;
 
 替换 your_database_name 为您希望的数据库名称。
 
+原始数据库中包含有 `information_schema, mysql, performance_schema, sys` 等4个数据库
+
+```
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| your_database_name |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.02 sec)
+```
+
 3. 选择数据库：
 
 创建数据库后，您需要选择它以便执行后续操作。在 MySQL 命令行中，输入以下命令：
