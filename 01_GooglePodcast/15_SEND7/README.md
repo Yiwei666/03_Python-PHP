@@ -114,7 +114,7 @@ for script_file in script_files:
 
 运行前需要修改下面部分的代码
 
-```
+```py
 replacement_mapping = {
     #"45_TodayExplained": "46_AllEarsEnglishPodcast",
     # "46_AllEarsEnglishPodcast": "47_StuffYouShouldKnow"
