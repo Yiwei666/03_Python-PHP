@@ -30,6 +30,7 @@
 1. Coffee Break English
 1. The English We Speak (BBC)
 1. SEND7 (Simple English News Daily)
+1. 60 Minutes
 
 
 
