@@ -112,6 +112,22 @@ for script_file in script_files:
     print("完成替换\n")
 ```
 
+运行前需要修改下面部分的代码
+
+```
+replacement_mapping = {
+    #"45_TodayExplained": "46_AllEarsEnglishPodcast",
+    # "46_AllEarsEnglishPodcast": "47_StuffYouShouldKnow"
+    # "47_StuffYouShouldKnow": "48_EspressoEnglish"
+    # "48_EspressoEnglish": "49_CoffeeBreakEnglish"
+    # "49_CoffeeBreakEnglish": "50_TheEnglishWeSpeak"
+    "50_TheEnglishWeSpeak": "51_SEND7"
+    # 在这里添加更多的映射关系 
+}
+```
+
+
+
 上述python脚本将自动配置如下脚本的路径
 
 ```
