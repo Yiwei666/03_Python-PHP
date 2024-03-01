@@ -228,7 +228,7 @@ rclone mkdir do1-1:do1-1/51_SEND7/01_audio
 rm -rf "/home/01_html/51_SEND7/02_audio"
 ```
 
-注意上述代码中，`sleep`命令会在`rclone copy`命令复制完成之后再执行，所以sleep后面的暂停时间可以设置的小一些，但是不能够没有sleep命令，因为没有的话会不能复制完成之后就会执行下一条删除命令
+注意上述代码中，`sleep`命令会在`rclone copy`命令复制完成之后再执行，所以`sleep`后面的暂停时间可以设置的小一些，但是不能够没有`sleep`命令，因为没有的话会在复制还未完成之后，就会执行下一条删除命令
 
 ### 7. 创建`rclone_limitFileSize.sh`相关定时任务
 
