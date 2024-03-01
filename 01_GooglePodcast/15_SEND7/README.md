@@ -220,6 +220,15 @@ rclone mkdir do1-1:do1-1/51_SEND7/01_audio
 
 - 指定执行转移文件的目录大小阈值，如 8 GB，通常设置为可用内存的一半，必须满足在rclone上传期间内，下载量不会达到该阈值
 
+```sh
+# 执行 rclone 命令，onedrive上该目录需要提前创建，等待时间需要保证rclone上传完毕，同时新下载的文件大小小于阈值
+/usr/bin/rclone copy "/home/01_html/55_HubermanLab/02_audio" "do1-1:do1-1/51_SEND7/01_audio"  && sleep 20
+
+# 删除目录，释放硬盘空间 /home/01_html/51_SEND7/02_audio
+rm -rf "/home/01_html/51_SEND7/02_audio"
+```
+
+注意上述代码中，`sleep`命令会在`rclone copy`命令复制完成之后再执行，所以sleep后面的暂停时间可以设置的小一些，但是不能够没有sleep命令，因为没有的话会不能复制完成之后就会执行下一条删除命令
 
 ### 7. 创建`rclone_limitFileSize.sh`相关定时任务
 
