@@ -20,7 +20,9 @@ source.sh                     # 将指定文件夹01_audio中的音频文件名�
 source_move_to_target.sh      # 基于上述txt文件将音频文件转移到02_audio文件夹中
 ```
 
-除了`51_autoDownPodcast.sh`脚本需要初始化两个参数之外，其余均不需要改动参数，均需要提前上传至云服务器的`/home/01_html/51_podcastTemplate`目录下，因为`51_autoDownPodcast.sh`脚本需要从云服务器的该目录下载这些脚本
+- 除了`51_autoDownPodcast.sh`脚本需要初始化两个参数之外，其余均不需要改动参数
+
+- 均需要提前上传至云服务器的`/home/01_html/51_podcastTemplate`目录下，因为`51_autoDownPodcast.sh`脚本需要从云服务器的该目录下载这些脚本
 
 
 
