@@ -248,15 +248,34 @@ tail -f output.txt
 
 1. 使用以下命令查找与您的 `download_mp3.sh` 脚本相关的进程 `ID（PID）`：
 
-```
+```sh
 ps aux | grep "download_mp3.sh"
 ```
 
 2. 在输出中找到与您的脚本相关的 `PID`，然后使用 `kill` 命令终止该进程。假设 PID 为 `<your_pid>`，则执行以下命令：
 
-```
+```sh
 kill <your_pid>
 ```
+
+3. 暂停进程
+
+```sh
+kill -STOP pid
+```
+
+执行完后之后，下面的T代表暂停
+
+```
+root     2577942  0.0  0.3   7368  3092 pts/3    T    20:35   0:00 bash /home/01_html/55_HubermanLab/download_mp3.sh
+```
+
+4. 继续执行脚本
+
+```sh
+kill -CONT pid
+```
+
 
 
 ### 9. 释放云服务器存储
