@@ -9,7 +9,7 @@
 3. podcast**部分音频采用python脚本**下载流程参考`01_GooglePodcast/06_PlanetMoney`
 4. 文件转移及rclone定时上传、多个脚本字符串取代、脚本异同比较参考`01_GooglePodcast/07_TheDaily`
 5. 综上，最完整的下载流程参考文档`01_GooglePodcast/15_SEND7/README.md`
-6. 由于上述项目5中仍需要手动初始化多个参数，项目6实现了自动化流程下载 参考 `01_GooglePodcast/15_podcastTemplate`
+6. 由于上述项目5中仍需要手动初始化多个参数，项目6实现了自动化流程下载，参考 `01_GooglePodcast/15_podcastTemplate`
 
 # 2. English Podcast
 
