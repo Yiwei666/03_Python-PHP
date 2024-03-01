@@ -31,8 +31,8 @@ rm -rf "/home/01_html/51_SEND7/02_audio"  && sleep 3
 /usr/bin/bash "/home/01_html/51_SEND7/source_move_to_target.sh"  && sleep 3
 
 # 执行 rclone 命令，onedrive上该目录需要提前创建，等待时间需要保证rclone上传完毕，同时新下载的文件大小小于阈值
-# 
-/usr/bin/rclone copy "/home/01_html/51_SEND7/02_audio" "cc1-1:cc1-1/51_SEND7/01_audio"  && sleep 1400
+# 注意 sleep命令会在rclone copy复制完成之后才会执行
+/usr/bin/rclone copy "/home/01_html/51_SEND7/02_audio" "cc1-1:cc1-1/51_SEND7/01_audio"  && sleep 20
 
 # 删除目录，释放硬盘空间 /home/01_html/51_SEND7/02_audio
 rm -rf "/home/01_html/51_SEND7/02_audio"
