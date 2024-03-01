@@ -9,7 +9,7 @@
 # 3. 环境配置
 
 
-51_autoDownPodcast.sh 初始版本
+### 1. 51_autoDownPodcast.sh 初始版本
 
 ```bash
 #!/bin/bash
@@ -53,6 +53,16 @@ nohup bash "$directoryPod/download_mp3.sh" > "$directoryPod/output.txt" 2>&1 &
 # 上传文件
 # rclone copy "$directoryPod" "cc1-1:cc1-1/$directoryName"
 ```
+
+上述脚本在使用时只需要对以下两个变量进行赋值即可
+
+```
+podcastURL="https://podcasts.google.com/feed/aHR0cHM6Ly9qb2Vyb2dhbmV4cC5saWJzeW4uY29tL3Jzcw?sa=X&ved=0CAcQrrcFahgKEwiwjKnApNKEAxUAAAAAHQAAAAAQxhc"
+directoryPod="/home/01_html/54_JoeRogan"
+```
+
+
+
 
 
 
