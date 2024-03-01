@@ -4,6 +4,11 @@
 
 # 2. 项目结构
 
+1. 本地文件夹
+
+下面的文件位于本地`D:\onedrive\英语\02_azure2-1\51_podcastTemplate`目录下
+
+除了`51_autoDownPodcast.sh`脚本需要初始化两个参数之外，其余均不需要改动参数，均需要提前上传至云服务器的`/home/01_html/51_podcastTemplate`目录下，因为`51_autoDownPodcast.sh`脚本需要从云服务器上下载这些脚本
 
 ```
 51_autoDownPodcast.sh         # 自动化部署的音频下载脚本，只需要初始化两个参数即可
