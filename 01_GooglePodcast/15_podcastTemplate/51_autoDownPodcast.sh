@@ -11,7 +11,9 @@ mkdir -p "$directoryPod"
 curl -o "$directoryPod/download_mp3.sh" "https://19640810.xyz/51_podcastTemplate/download_mp3.sh"
 curl -o "$directoryPod/analyze_filenames.py" "https://19640810.xyz/51_podcastTemplate/analyze_filenames.py"
 curl -o "$directoryPod/nameURL_extract.py" "https://19640810.xyz/51_podcastTemplate/nameURL_extract.py"
-
+curl -o "$directoryPod/rclone_limitFileSize.sh" "https://19640810.xyz/51_podcastTemplate/rclone_limitFileSize.sh"
+curl -o "$directoryPod/source.sh" "https://19640810.xyz/51_podcastTemplate/source.sh"
+curl -o "$directoryPod/source_move_to_target.sh" "https://19640810.xyz/51_podcastTemplate/source_move_to_target.sh"
 
 # 获取路径中最后一个部分
 directoryName=$(basename "$directoryPod")
@@ -19,7 +21,9 @@ directoryName=$(basename "$directoryPod")
 # 将 download_mp3.sh 脚本中的 "51_SEND7" 字符串替换为 $directoryName
 sed -i "s/51_SEND7/$directoryName/g" "$directoryPod/download_mp3.sh"
 sed -i "s/51_SEND7/$directoryName/g" "$directoryPod/nameURL_extract.py"
-
+sed -i "s/51_SEND7/$directoryName/g" "$directoryPod/rclone_limitFileSize.sh"
+sed -i "s/51_SEND7/$directoryName/g" "$directoryPod/source.sh"
+sed -i "s/51_SEND7/$directoryName/g" "$directoryPod/source_move_to_target.sh"
 
 # 下载网页
 curl -o "$directoryPod/homepage.html" "$podcastURL"
@@ -38,3 +42,9 @@ nohup bash "$directoryPod/download_mp3.sh" > "$directoryPod/output.txt" 2>&1 &
 
 # 上传文件
 # rclone copy "$directoryPod" "cc1-1:cc1-1/$directoryName"
+
+# 设置定时任务
+# * * * * * /usr/bin/bash /home/01_html/54_JoeRogan/rclone_limitFileSize.sh
+
+# 释放云服务器存储
+# rm -rf "$directoryPod/01_audio"
