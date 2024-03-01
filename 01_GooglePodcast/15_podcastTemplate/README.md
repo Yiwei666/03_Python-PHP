@@ -1,6 +1,6 @@
 # 1. 项目功能
 
-
+仅需要手动初始化`51_autoDownPodcast.sh`脚本中的两个参数，即可实现google podcast中指定博客的音频批量下载
 
 # 2. 项目结构
 
