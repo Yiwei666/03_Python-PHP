@@ -56,7 +56,7 @@ nohup bash "$directoryPod/download_mp3.sh" > "$directoryPod/output.txt" 2>&1 &
 
 上述脚本在使用时只需要对以下两个变量进行赋值即可
 
-```
+```sh
 podcastURL="https://podcasts.google.com/feed/aHR0cHM6Ly9qb2Vyb2dhbmV4cC5saWJzeW4uY29tL3Jzcw?sa=X&ved=0CAcQrrcFahgKEwiwjKnApNKEAxUAAAAAHQAAAAAQxhc"
 directoryPod="/home/01_html/54_JoeRogan"
 ```
