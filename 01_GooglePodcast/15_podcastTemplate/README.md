@@ -5,11 +5,61 @@
 # 2. 项目结构
 
 
+```
+51_autoDownPodcast.sh         # 自动化部署的音频下载脚本，只需要初始化两个参数即可
+analyze_filenames.py          # 分析是否有重复音频链接
+download_mp3.sh               # 下载音频的脚本
+nameURL_extract.py            # 提取音频链接脚本
+
+rclone_limitFileSize.sh       # rclone上传相关脚本，当系统存储容量小于音频大小时使用
+source.sh                     # 将指定文件夹01_audio中的音频文件名写入到txt文件中
+source_move_to_target.sh      # 基于上述txt文件将音频文件转移到02_audio文件夹中
+```
+
+
+
+
+
+
+1. 当下载的音频大小小于服务器内存时，可将如下脚本
+
+```
+51_autoDownPodcast.sh
+```
+
+
+
+
+
+
+3. 
+
+```
+.
+├── 01_audio
+├── analyze_filenames.py
+├── download_mp3.sh
+├── homepage.html
+├── nameURL_extract.py
+├── nameURL.txt
+├── output.txt
+├── rclone_limitFileSize.sh
+├── source_move_to_target.sh
+├── source.sh
+└── source.txt
+```
+
+
+
+
+
+
+
 
 # 3. 环境配置
 
 
-### 1. 51_autoDownPodcast.sh 初始版本
+1. 51_autoDownPodcast.sh 初始版本
 
 ```bash
 #!/bin/bash
