@@ -6,7 +6,7 @@
 
 ### 1. 本地文件夹
 
-- 下面的文件位于本地`D:\onedrive\英语\02_azure2-1\51_podcastTemplate`目录下
+- 下面的文件位于本地`D:\onedrive\英语\02_azure2-1\51_podcastTemplate`目录下，每次在新环境中部署该项目时，从该本地文件夹中获取模板文件即可
 
 
 ```
@@ -22,7 +22,7 @@ source_move_to_target.sh      # 基于上述txt文件将音频文件转移到02_
 
 - 除了`51_autoDownPodcast.sh`脚本需要初始化两个参数之外，其余均不需要改动参数
 
-- 均需要提前上传至云服务器的`/home/01_html/51_podcastTemplate`目录下，因为`51_autoDownPodcast.sh`脚本需要从云服务器的该目录下载这些脚本
+- 上述均需要提前上传至云服务器的`/home/01_html/51_podcastTemplate`目录下，因为`51_autoDownPodcast.sh`脚本需要从云服务器的该目录下载这些脚本
 
 
 
