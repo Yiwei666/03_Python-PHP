@@ -307,6 +307,13 @@ rclone copy --ignore-existing "/home/01_html/51_SEND7" "do1-1:do1-1/51_SEND7"
 rclone size  do1-1:do1-1/51_SEND7/01_audio
 ```
 
+可以通过以下命令判断rclone进程是否结束
+
+```sh
+ps aux | grep rclone
+```
+
+
 - 确定所有文件都已上传，并且释放了 `01_audio` 文件夹的内存占用后，取消`rclone_limitFileSize.sh`脚本的crontab定时任务，可以减少cpu占用以及方便管理
 
 ```
