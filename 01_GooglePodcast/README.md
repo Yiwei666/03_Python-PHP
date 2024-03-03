@@ -20,7 +20,7 @@
 1. Listen & Talk 英語
 1. VOA Learning English Podcast
 1. ESL Podcast - English as second language
-1. Science, Quickly
+1. Science, Quickly (Scientific American)
 1. Economist Podcasts
 1. Business English from All Ears English
 1. Planet Money
