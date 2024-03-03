@@ -52,6 +52,7 @@
 
 1. Arts & Culture - VOA Learning English
 1. CNBC's "Fast Money"
+1. AI Today Podcast: Artificial Intelligence Insights, Experts, and Opinion
 1. The Allusionist
 1. Learn English with the British Council and Premier League
 1. Learn English | EnglishClass101.com
