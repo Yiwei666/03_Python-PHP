@@ -41,6 +41,7 @@
 1. Speak English Now Podcast
 1. Plain English
 1. American Stories - VOA Learning English
+1. Science Weekly
 
 
 ### 2. 待下载
