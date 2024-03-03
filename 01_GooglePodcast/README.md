@@ -49,13 +49,14 @@
 
 ### 2. 待下载
 
+
+1. Arts & Culture - VOA Learning English
+1. CNBC's "Fast Money"
 1. The Allusionist
 1. Learn English with the British Council and Premier League
 1. Learn English | EnglishClass101.com
 1. GRE SAT Advanced English Vocabulary Podcast!
 1. Englishclass101
-1. CNBC's "Fast Money"
-1. Luke’s English Podcast
 1. Stories Podcast
 1. English Across The Pond (English Outside the Box)
 1. Aussie English Podcast
