@@ -271,4 +271,38 @@ fi
 
 ```
 
+- 界面显示的过程信息如下所示
+
+```log
+请输入google podcast的url：
+https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5hY2FzdC5jb20vcHVibGljL3Nob3dzLzAxODVjZWE1LTllM2ItNGI4Mi1hODg3LTI2ZjkxZjkyNzY1Zg?sa=X&ved=0CAcQrrcFahgKEwiwkcCTgN-EAxUAAAAAHQAAAAAQ_gU
+请输入文件夹名称，如 51_SEND7：
+72_NaturePodcast
+您输入的第一个变量是：https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5hY2FzdC5jb20vcHVibGljL3Nob3dzLzAxODVjZWE1LTllM2ItNGI4Mi1hODg3LTI2ZjkxZjkyNzY1Zg?sa=X&ved=0CAcQrrcFahgKEwiwkcCTgN-EAxUAAAAAHQAAAAAQ_gU
+您输入的第二个变量是：72_NaturePodcast
+是否确认输入正确？(输入 y 确认，其他键退出): y
+保存成功！
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1062  100  1062    0     0    884      0  0:00:01  0:00:01 --:--:--   885
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1119  100  1119    0     0   1345      0 --:--:-- --:--:-- --:--:--  1346
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1384  100  1384    0     0   1125      0  0:00:01  0:00:01 --:--:--  1125
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1328  100  1328    0     0   1388      0 --:--:-- --:--:-- --:--:--  1389
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   473  100   473    0     0    497      0 --:--:-- --:--:-- --:--:--   497
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   971  100   971    0     0   2766      0 --:--:-- --:--:-- --:--:--  2774
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 3144k    0 3144k    0     0  2957k      0 --:--:--  0:00:01 --:--:-- 2958k
+Extraction and writing to nameURL.txt completed.
+```
 
