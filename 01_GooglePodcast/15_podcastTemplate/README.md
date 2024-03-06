@@ -10,7 +10,10 @@
 
 
 ```
-51_autoDownPodcast.sh         # 自动化部署的音频下载脚本，只需要初始化两个参数即可
+51_autoDownPodcast.sh         # 自动化部署的音频下载脚本，只需要手动初始化两个参数即可
+511_autoDownPodcast.sh        # 自动化部署的音频下载脚本，只需要在终端界面中交互传递参数即可，不需要手动初始化参数
+log.txt                       # 511_autoDownPodcast.sh脚本输出的记录输入参数的日志文件
+
 analyze_filenames.py          # 分析是否有重复音频链接
 download_mp3.sh               # 下载音频的脚本
 nameURL_extract.py            # 提取音频链接脚本
