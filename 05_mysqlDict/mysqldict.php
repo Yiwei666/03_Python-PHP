@@ -26,6 +26,12 @@ if (empty($requestedTable)) {
 // 查询所有表格的名称
 $tableNames = array("GREtable", "TOEFLtable","ILETStable", "CET6table","GRE7500table","SATtable","GEEtable","CET4table");
 
+// 页面背景颜色改为灰黑色，字体颜色为白色
+echo '<style>';
+echo 'body { background-color: #333; color: #eee; }';
+echo 'a { color: #00bcd4; }'; // Blue-green color for links
+echo '</style>';
+
 echo '<div style="display:flex; justify-content:space-between;">';
 echo '<div style="position:fixed; top:50%; left:5%; transform:translateY(-50%); width:20%;">';
 // 显示所有表格的名称，并添加链接，以便在单击时更改所请求的表格
