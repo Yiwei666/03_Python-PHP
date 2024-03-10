@@ -321,10 +321,13 @@ Extraction and writing to nameURL.txt completed.
 rclone mkdir "cc1-1:cc1-1/$directoryName/01_audio"
 ```
 
-2. `rclone_limitFileSize.sh`上传脚本
+2. `rclone_limitFileSize.sh`上传脚本的远程标签
 
 ```sh
-
+# nohup rclone copy /home/01_html/51_SEND7 cc1-1:cc1-1/51_SEND7  &
+# nohup rclone copy /home/01_html/51_SEND7 cc1-1:cc1-1/51_SEND7 --transfers=16 &
+# rclone size cc1-1:cc1-1/51_SEND7/01_audio
+/usr/bin/rclone copy "/home/01_html/51_SEND7/02_audio" "cc1-1:cc1-1/51_SEND7/01_audio" --transfers=12 && sleep 20
 ```
 
 
