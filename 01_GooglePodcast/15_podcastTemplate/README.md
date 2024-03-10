@@ -185,7 +185,7 @@ directoryPod="/home/01_html/54_JoeRogan"
 
 ### 3. 511_autoDownPodcast.sh 高阶版本
 
-通过对 `51_autoDownPodcast.sh` 脚本进行修改，实现在终端界面上通过交互对 `podcastURL 和 directoryPod` 进行参数初始化，并进行检查、确认，最后写入到log.txt日志中
+通过对 `51_autoDownPodcast.sh` 脚本进行修改，实现在终端界面上通过交互对 `podcastURL 和 directoryPod` 进行参数初始化，并进行检查、确认，最后写入到`log.txt`日志中
 
 ```sh
 #!/bin/bash
@@ -310,4 +310,23 @@ https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5hY2FzdC5jb20vcHVibGljL3Nob3d
 100 3144k    0 3144k    0     0  2957k      0 --:--:--  0:00:01 --:--:-- 2958k
 Extraction and writing to nameURL.txt completed.
 ```
+
+### 4. 更换上传的onedrive云盘
+
+需要修改以下脚本中的远程标签
+
+1. `511_autoDownPodcast.sh` 中创建云盘目录的命令
+
+```sh
+rclone mkdir "cc1-1:cc1-1/$directoryName/01_audio"
+```
+
+2. `rclone_limitFileSize.sh`上传脚本
+
+```sh
+
+```
+
+
+
 
