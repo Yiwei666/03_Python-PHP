@@ -98,6 +98,11 @@ chmod 755 02_douyVideo
 3. 使用crontab写个定时任务，每天5点10分的时候执行 /home/01_html/05_douyinAsynDload/03_add_3_to_2.sh，bash路径为 /usr/bin/bash
 
 
+### 注意
+
+在最新配置中新增两个crontab定时任务，通过`rclone`将服务器`cc1-2`下载后的视频，在每小时的`0`分上传至onedrive指定文件夹`cc1-2:do1-2/01_html/02_douyVideo`下，在客户端服务器`HW-1012`上每小时的`30`分通过rclone下载到指定目录下
+
+
 - rclone将视频从云服务器上传至onedrive
 
 ```crontab
@@ -106,7 +111,7 @@ chmod 755 02_douyVideo
 
 - rclone将视频从onedrive下载至云服务器
 
-```
+```crontab
 30 * * * * rclone copy --ignore-existing HW-1012:do1-2/01_html/02_douyVideo /home/01_html/01_tecent1017/25_film_videos
 ```
 
