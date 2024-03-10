@@ -60,10 +60,47 @@ source_move_to_target.sh      # 基于上述txt文件将音频文件转移到02_
 
 3. 在新的环境部署时，下载音频前需要核对自动化脚本修改的参数是否正确
 
+
 # 3. 环境配置
 
+### 1. Python库
 
-### 1. 51_autoDownPodcast.sh 初始版本
+1. analyze_filenames.py
+
+标准库即可
+
+2. nameURL_extract.py
+
+只需要安装`beautifulsoup4`，`re` 是标准库
+
+```sh
+pip install beautifulsoup4
+```
+
+3. 常用 Python 库：
+
+- re：用于正则表达式操作。
+- requests：用于发送 HTTP 请求。
+- time：用于处理时间相关的操作。
+- BeautifulSoup：用于解析 HTML 文档。
+- chardet：用于检测字符编码。
+
+安装命令如下：
+
+```
+pip install requests beautifulsoup4 chardet
+```
+
+请注意，`re`和`time`是 Python 标准库，通常情况下无需单独安装。
+
+查看ubuntu系统上是否安装过 `requests, beautifulsoup4, chardet`
+
+```
+pip list | grep -E 'requests|beautifulsoup4|chardet'
+```
+
+
+### 2. 51_autoDownPodcast.sh 初始版本
 
 仅下载 `download_mp3.sh, analyze_filenames.py, nameURL_extract.py` 三个脚本，并对 `download_mp3.sh, nameURL_extract.py` 脚本进行参数初始化
 
@@ -119,7 +156,7 @@ directoryPod="/home/01_html/54_JoeRogan"
 
 
 
-### 2. 51_autoDownPodcast.sh 进阶版本
+### 3. 51_autoDownPodcast.sh 进阶版本
 
 除了下载 `download_mp3.sh, analyze_filenames.py, nameURL_extract.py` 三个脚本，新增下载 `rclone_limitFileSize.sh, source.sh, source_move_to_target.sh` 3个脚本，并进行相应地参数初始化
 
@@ -183,7 +220,7 @@ podcastURL="https://podcasts.google.com/feed/aHR0cHM6Ly9qb2Vyb2dhbmV4cC5saWJzeW4
 directoryPod="/home/01_html/54_JoeRogan"
 ```
 
-### 3. 511_autoDownPodcast.sh 高阶版本
+### 4. 511_autoDownPodcast.sh 高阶版本
 
 通过对 `51_autoDownPodcast.sh` 脚本进行修改，实现在终端界面上通过交互对 `podcastURL 和 directoryPod` 进行参数初始化，并进行检查、确认，最后写入到`log.txt`日志中
 
@@ -311,7 +348,7 @@ https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5hY2FzdC5jb20vcHVibGljL3Nob3d
 Extraction and writing to nameURL.txt completed.
 ```
 
-### 4. 更换上传的onedrive云盘
+### 5. 更换上传的onedrive云盘
 
 需要修改以下脚本中的远程标签
 
