@@ -152,7 +152,47 @@ print('未下载的文件名和链接已写入 undownload_mp3.txt 文件。')
 分析一个名为 'nameURL.txt' 的文件，提取文件名，并统计文件名的总数、不重复文件名的数量以及重复文件名和它们的出现次数。
 
 
+### 5. deleteLess_1MB.sh
 
+```sh
+#!/bin/bash
+
+# 设置远程目录路径
+remote_dir="rc2:cc1-1/113_ComedyBangBang/01_audio"
+
+# 检查远程目录是否存在
+if ! rclone lsd "$remote_dir" &>/dev/null; then
+    echo "远程目录 $remote_dir 不存在或无权访问"
+    exit 1
+fi
+
+# 初始化删除文件计数器
+deleted_count=0
+
+# 创建或清空日志文件
+: > delete_log.txt
+
+# 使用 rclone 列出远程目录下的所有 mp3 文件及其大小
+while IFS=" " read -r size file; do
+    full_path="$remote_dir/$file"
+    if [ "$size" == "0" ]; then
+        rclone deletefile "$full_path"
+        echo "Deleted $full_path"
+        echo "$full_path" >> delete_log.txt
+        ((deleted_count++))
+    fi
+done < <(rclone ls "$remote_dir" --max-depth 1 --include "*.mp3")
+
+echo "总共删除了 $deleted_count 个文件"
+```
+
+
+该脚本实现了以下功能：
+
+1. 检查指定的远程目录是否存在或可访问。
+2. 使用rclone列出远程目录下所有的MP3文件，并获取它们的文件大小。
+3. 对于大小为0的MP3文件，使用rclone删除它们，并记录删除的文件路径。
+4. 输出总共删除了多少个文件。
 
 
 
