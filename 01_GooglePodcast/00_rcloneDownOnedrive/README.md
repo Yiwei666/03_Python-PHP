@@ -195,6 +195,8 @@ for file_name, count in file_name_count.items():
 
 ### 5. deleteLess_1MB.sh
 
+利用rclone批量删除onedrive指定目录下大小为0的mp3文件
+
 ```sh
 #!/bin/bash
 
