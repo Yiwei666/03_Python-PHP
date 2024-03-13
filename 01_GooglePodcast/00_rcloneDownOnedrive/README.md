@@ -2,6 +2,7 @@
 
 1. 利用rclone从onedrive拷贝下载文件到云服务器
 2. 利用rclone将远程目录中的文件名写入到txt文本中
+3. 使用rclone远程批量删除onedrive指定目录下大小为0的mp3文件
 
 
 # 2. 文件结构
