@@ -99,9 +99,9 @@ pip install requests beautifulsoup4 chardet
 pip list | grep -E 'requests|beautifulsoup4|chardet'
 ```
 
-4. alias
+4. alias别名设置
 
-```
+```alias
 alias lw='ls -l 01_audio/ | wc -l'
 
 alias pa='python analyze_filenames.py'
