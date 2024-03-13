@@ -15,6 +15,8 @@ download_checker.sh               # bash实现
 download_checker.php              # php实现
 
 analyze_filenames.py              # 分析 nameURL.txt 文件中是否有重复的文件名，以及重复文件名出现的次数
+
+deleteLess_1MB.sh                 # 利用rclone批量删除onedrive中大小为0的mp3文件
 ```
 
 
