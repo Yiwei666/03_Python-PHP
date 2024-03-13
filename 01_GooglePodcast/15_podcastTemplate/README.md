@@ -63,7 +63,7 @@ source_move_to_target.sh      # 基于上述txt文件将音频文件转移到02_
 
 # 3. 环境配置
 
-### 1. Python库
+### 1. Python库和alias
 
 1. analyze_filenames.py
 
@@ -98,6 +98,18 @@ pip install requests beautifulsoup4 chardet
 ```
 pip list | grep -E 'requests|beautifulsoup4|chardet'
 ```
+
+4. alias
+
+```
+alias lw='ls -l 01_audio/ | wc -l'
+
+alias pa='python analyze_filenames.py'
+
+alias rs='rclone size "rc2:cc1-1/$(basename "$(pwd)")/01_audio"'
+```
+
+
 
 
 ### 2. 51_autoDownPodcast.sh 初始版本
