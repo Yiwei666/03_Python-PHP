@@ -106,6 +106,8 @@ alias cdhtml='cd /home/01_html; ls -l'
 
 alias lw='ls -l 01_audio/ | wc -l'
 
+alias lw='echo $(($(ls -l 01_audio/ | wc -l) - 1))'
+
 alias pa='python analyze_filenames.py'
 
 alias rs='rclone size "rc2:cc1-1/$(basename "$(pwd)")/01_audio"'
