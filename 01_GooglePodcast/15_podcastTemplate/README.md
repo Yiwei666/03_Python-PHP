@@ -106,7 +106,7 @@ alias cdhtml='cd /home/01_html; ls -l'
 
 alias lw='ls -l 01_audio/ | wc -l'
 
-alias lw='echo $(($(ls -l 01_audio/ | wc -l) - 1))'
+alias lw='echo $(($(ls -l 01_audio/ | wc -l) - 1))'             # 减去1的真实文件数
 
 alias pa='python analyze_filenames.py'
 
@@ -115,6 +115,10 @@ alias rs='rclone size "rc2:cc1-1/$(basename "$(pwd)")/01_audio"'
 alias gr='ps aux | grep rclone'
 
 alias gd='ps aux | grep download_mp3.sh'
+
+alias ds='du -sh .'
+
+alias rls='rclone lsd rc2:cc1-1'
 ```
 
 
