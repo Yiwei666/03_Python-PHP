@@ -35,6 +35,7 @@ rm -rf "/home/01_html/51_SEND7/02_audio"  && sleep 3
 # nohup rclone copy /home/01_html/51_SEND7 cc1-1:cc1-1/51_SEND7 --transfers=16 &
 # rclone size cc1-1:cc1-1/51_SEND7/01_audio
 # nohup bash rclone_limitFileSize.sh &
+# * * * * * /usr/bin/bash /home/01_html/51_SEND7/rclone_limitFileSize.sh
 /usr/bin/rclone copy "/home/01_html/51_SEND7/02_audio" "cc1-1:cc1-1/51_SEND7/01_audio" --transfers=12 && sleep 20
 
 # 删除目录，释放硬盘空间 /home/01_html/51_SEND7/02_audio
