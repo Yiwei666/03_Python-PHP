@@ -1,3 +1,6 @@
+
+cc1-1
+------------------------------------------------
 时间: 2024-03-06 10:23:59
 变量1: 70_ScienceVs
 变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vc2NpZW5jZXZz?sa=X&ved=0CAcQrrcFahgKEwiov9n-tt6EAxUAAAAAHQAAAAAQhwQ
@@ -154,3 +157,137 @@
 时间: 2024-03-14 13:45:05
 变量1: 120_MotleyFoolMoney
 变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mb29sLmxpYnN5bi5jb20vcnNz?sa=X&ved=0CBEQlvsGahkKEwjA7YW53emEAxUAAAAAHQAAAAAQveYE
+
+
+rn1-1
+--------------------------------------------------------
+
+时间: 2024-03-14 13:54:41
+变量1: 121_MoneyFortheRestofUs
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYXJ0MTkuY29tL21vbmV5LWZvci10aGUtcmVzdC1vZi11cw?sa=X&ved=0CBEQlvsGahkKEwjA7YW53emEAxUAAAAAHQAAAAAQpfQE
+时间: 2024-03-14 20:27:14
+变量1: 122_InvestLiketheBest
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9pbnZlc3RsaWtldGhlYmVzdC5saWJzeW4uY29tL3Jzcw?sa=X&ved=0CBEQlvsGahkKEwjA7YW53emEAxUAAAAAHQAAAAAQgfwE
+时间: 2024-03-15 21:27:03
+变量1: 123_MillennialInvesting
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vUFBMTEM5MDYyMTY1OTky?sa=X&ved=0CBwQ27cFahkKEwjA7YW53emEAxUAAAAAHQAAAAAQgOIE
+时间: 2024-03-17 21:04:16
+变量1: 124_IELTSSpeakingforSuccess
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy9mOWNlZTc0L3BvZGNhc3QvcnNz?sa=X&ved=0CBsQ27cFahgKEwiI16OKteuEAxUAAAAAHQAAAAAQxAM
+时间: 2024-03-17 21:52:22
+变量1: 125_IELTSEnergyEnglish7
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9pZWx0c2VuZXJneS5saWJzeW4uY29tL3Jzcw?sa=X&ved=0CB4Q27cFahgKEwiI16OKteuEAxUAAAAAHQAAAAAQxAM
+时间: 2024-03-18 09:06:48
+变量1: 126_MyIELTSClassroom
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5idXp6c3Byb3V0LmNvbS8xMDIyNDU1LnJzcw?sa=X&ved=0CB0Q27cFahgKEwiI16OKteuEAxUAAAAAHQAAAAAQxAM
+时间: 2024-03-18 12:02:08
+变量1: 127_TheIntelligencefromEconomist
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYWNhc3QuY29tL3RoZWludGVsbGlnZW5jZXBvZGNhc3Q?sa=X&ved=0CBwQ27cFahgKEwiI16OKteuEAxUAAAAAHQAAAAAQhkU
+时间: 2024-03-18 18:05:06
+变量1: 128_EconomicsExplained
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy8yYzc5NDkzNC9wb2RjYXN0L3Jzcw?sa=X&ved=0CB4Q27cFahgKEwiI16OKteuEAxUAAAAAHQAAAAAQhkU
+时间: 2024-03-18 19:38:33
+变量1: 129_LivingPlanet
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuZHcuY29tL3htbC9wb2RjYXN0X2xpdmluZy1wbGFuZXQ?sa=X&ved=0CAMQ4aUDahgKEwiI16OKteuEAxUAAAAAHQAAAAAQplM
+时间: 2024-03-19 14:03:26
+变量1: 130_LivingonEarth
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cubG9lLm9yZy9wb2RjYXN0LnJzcw?sa=X&ved=0CBsQ27cFahgKEwiI16OKteuEAxUAAAAAHQAAAAAQllM
+时间: 2024-03-19 20:02:11
+变量1: 131_Founders
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS8zaG54cDd5aw?sa=X&ved=0CAcQrrcFahgKEwjYtKfixu2EAxUAAAAAHQAAAAAQ6gU
+时间: 2024-03-20 09:49:18
+变量1: 132_FoundersJournal
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vTU9CSTQxNDE2NTIyODk?sa=X&ved=0CBoQ27cFahgKEwjo_ZO92-6EAxUAAAAAHQAAAAAQ6gU
+时间: 2024-03-20 11:30:24
+变量1: 133_InternetToday
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9pdGRhaWx5LmxpYnN5bi5jb20vcnNz?sa=X&ved=0CAcQrrcFahgKEwjo_ZO92-6EAxUAAAAAHQAAAAAQihs
+时间: 2024-03-20 15:28:27
+变量1: 134_RidiculousHistory
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cub21ueWNvbnRlbnQuY29tL2QvcGxheWxpc3QvZTczYzk5OGUtNmU2MC00MzJmLTg2MTAtYWUyMTAxNDBjNWIxL2RjYTBkOGFkLWUwYjgtNGE1Mi1hMmE4LWFlMzAwMTg4ZDFlMi9mZTk0MDBkOC1kZDJhLTQ4OWYtODJkOS1hZTMwMDE4OGQxZWIvcG9kY2FzdC5yc3M?sa=X&ved=0CAcQrrcFahgKEwjo_ZO92-6EAxUAAAAAHQAAAAAQ-CM
+时间: 2024-03-21 09:05:21
+变量1: 135_EnglishVocabularyHelp
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy8yMmNjMDk2Yy9wb2RjYXN0L3Jzcw?sa=X&ved=0CB4Q27cFahgKEwjYqNv73-6EAxUAAAAAHQAAAAAQ5Q8
+时间: 2024-03-21 10:24:37
+变量1: 136_InsideChina
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9jbXMuc2NtcC5jb20vcnNzL2dvb2dsZV9hc3Npc3RhbnQvMzI1NDc3L21lZGlhX3Jzcy54bWw_YXJ0aWNsZS10eXBlPTMyOTQzMQ?sa=X&ved=0CAcQrrcFahgKEwjIjcH74O6EAxUAAAAAHQAAAAAQ0gU
+时间: 2024-03-21 11:31:09
+变量1: 137_TheChinaShow
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuc3ByZWFrZXIuY29tL3Nob3cvMzU1OTk1OS9lcGlzb2Rlcy9mZWVk?sa=X&ved=0CBEQlvsGahgKEwjIjcH74O6EAxUAAAAAHQAAAAAQnAo
+时间: 2024-03-21 13:05:45
+变量1: 138_RoundTableChina
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hZXpmbS5tZWxkaW5nY2xvdWQuY29tL3Jzcy9wcm9ncmFtLzEx?sa=X&ved=0CBsQ27cFahgKEwjIjcH74O6EAxUAAAAAHQAAAAAQ0gU
+时间: 2024-03-21 14:15:17
+变量1: 139_TheWeeds
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vdGhld2VlZHM?sa=X&ved=0CB4Q27cFahkKEwjIjcH74O6EAxUAAAAAHQAAAAAQ2KQB
+时间: 2024-03-21 17:59:37
+变量1: 140_HowtoBeaBetterHuman
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9saW5rLmNodGJsLmNvbS9IVEJBQkhBcHBsZT9wbGF0Zm9ybT1yc3M?sa=X&ved=0CAcQrrcFahgKEwigzvD05u6EAxUAAAAAHQAAAAAQzgo
+时间: 2024-03-21 19:58:00
+变量1: 141_BusinessWars
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYXJ0MTkuY29tL2J1c2luZXNzLXdhcnM?sa=X&ved=0CBEQlvsGahgKEwigzvD05u6EAxUAAAAAHQAAAAAQiBg
+时间: 2024-03-22 09:14:39
+变量1: 142_BusinessMovers
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYXJ0MTkuY29tL2J1c2luZXNzLW1vdmVycw?sa=X&ved=0CBoQ27cFahgKEwigzvD05u6EAxUAAAAAHQAAAAAQ-Bc
+时间: 2024-03-22 11:27:39
+变量1: 143_MyBrotherMyBrotherMe
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS93alF2WXRkbA?sa=X&ved=0CAcQrrcFahgKEwigzvD05u6EAxUAAAAAHQAAAAAQtzI
+时间: 2024-03-22 14:54:21
+变量1: 144_HowDidThisGetMade
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9BbzBDMjRNOA?sa=X&ved=0CAcQrrcFahgKEwigzvD05u6EAxUAAAAAHQAAAAAQ5z0
+时间: 2024-03-22 16:16:47
+变量1: 145_BadFriends
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9PbzlMWDVGSQ?sa=X&ved=0CBsQ27cFahgKEwigzvD05u6EAxUAAAAAHQAAAAAQy0E
+时间: 2024-03-22 17:23:48
+变量1: 146_GoldMindswithKevinHart
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9pamtuT0tlVQ?sa=X&ved=0CB0Q27cFahgKEwigzvD05u6EAxUAAAAAHQAAAAAQy0E
+时间: 2024-03-22 17:50:35
+变量1: 147_TigerBelly
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cub21ueWNvbnRlbnQuY29tL2QvcGxheWxpc3QvODg1YWNlODMtMDI3YS00N2FkLWFkNjctYWNhNzAwMmYxZGY4LzdiZGMyZjdlLWNjNTItNGRkNy1iMzI3LWFjYTgwMDVkMTZjYi80YTYyMTllOC1mMWQzLTRjZjctYmQ5My1hY2E4MDA1ZDE2ZTcvcG9kY2FzdC5yc3M?sa=X&ved=0CAkQlvsGahcKEwjQy_vG7-6EAxUAAAAAHQAAAAAQAg
+时间: 2024-03-22 20:36:02
+变量1: 148_KillTony
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5mZWVkYnVybmVyLmNvbS9LaWxsVG9ueQ?sa=X&ved=2ahUKEwjPqvLb7-6EAxUvIVkFHRalAKYQlvsGegQIARAR
+时间: 2024-03-23 12:30:05
+变量1: 149_2Bears1Cave
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly8yYmVhcnMxY2F2ZS5saWJzeW4uY29tL3Jzcw?sa=X&ved=0CAcQrrcFahkKEwigzvD05u6EAxUAAAAAHQAAAAAQ3ogC
+时间: 2024-03-23 14:22:38
+变量1: 150_FreakonomicsRadio
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9ZOGxGYk9UNA?sa=X&ved=0CAcQrrcFahgKEwiY866ArvuEAxUAAAAAHQAAAAAQlwY
+时间: 2024-03-23 16:01:55
+变量1: 150_FreakonomicsRadio
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9ZOGxGYk9UNA?sa=X&ved=0CAcQrrcFahgKEwiY866ArvuEAxUAAAAAHQAAAAAQlwY
+时间: 2024-03-23 20:07:21
+变量1: 151_HowIBuiltThiswithGuyRaz
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5ucHIub3JnLzUxMDMxMy9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwiY866ArvuEAxUAAAAAHQAAAAAQ_xE
+时间: 2024-03-24 14:39:13
+变量1: 152_EnglishAcrossThePond
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuc3ByZWFrZXIuY29tL3Nob3cvNTI1MzE0Ny9lcGlzb2Rlcy9mZWVk?sa=X&ved=0CBsQ27cFahgKEwiY866ArvuEAxUAAAAAHQAAAAAQyxs
+时间: 2024-03-24 15:49:57
+变量1: 153_AWaywithWords
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vYXd3dw?sa=X&ved=0CAcQrrcFahgKEwiY866ArvuEAxUAAAAAHQAAAAAQ9zs
+时间: 2024-03-24 17:55:37
+变量1: 154_HappyEnglishPodcast
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuc3ByZWFrZXIuY29tL3Nob3cvNTkwMDk5Ny9lcGlzb2Rlcy9mZWVk?sa=X&ved=0CAcQrrcFahgKEwiY866ArvuEAxUAAAAAHQAAAAAQ_l0
+时间: 2024-03-24 21:37:37
+变量1: 155_GrammarGirlQuickandDirtyTips
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9YY0gycDNBaA?sa=X&ved=0CAcQrrcFahgKEwi4-5XcuPuEAxUAAAAAHQAAAAAQuiI
+时间: 2024-03-25 13:14:41
+变量1: 156_WaitWaitDontTellMe
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5ucHIub3JnLzM0NDA5ODUzOS9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwi4-5XcuPuEAxUAAAAAHQAAAAAQoi8
+时间: 2024-03-25 19:16:54
+变量1: 157_TheMemoryPalace
+变量2: https://podcasts.google.com/feed/aHR0cDovL2ZlZWRzLmZlZWRidXJuZXIuY29tL3RoZW1lbW9yeXBhbGFjZQ?sa=X&ved=0CAcQrrcFahgKEwi4-5XcuPuEAxUAAAAAHQAAAAAQhjU
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
