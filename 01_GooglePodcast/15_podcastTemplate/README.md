@@ -119,6 +119,32 @@ alias gd='ps aux | grep download_mp3.sh'
 alias ds='du -sh .'
 
 alias rls='rclone lsd rc2:cc1-1'
+
+# 添加定时任务函数
+
+addCronJob() {
+	    local currentDir=$(basename "$(pwd)")
+            local jobCommand="* * * * * /usr/bin/bash /home/01_html/${currentDir}/rclone_limitFileSize.sh"
+
+            (crontab -l 2>/dev/null; echo "$jobCommand") | crontab -
+	    echo "Cron job added: $jobCommand"
+		}
+
+alias ac='addCronJob'
+
+# 注释定时任务函数
+
+cancelCronJobForCurrentDir() {
+	    local currentDir=$(basename "$(pwd)")
+            local tempFile=$(mktemp)
+            crontab -l > "$tempFile" 2>/dev/null
+            sed -i "/\/${currentDir}\//s/^/#/" "$tempFile"
+            crontab "$tempFile"
+            rm "$tempFile"
+            echo "Cron job for directory $currentDir has been commented out."
+			    }
+
+alias co='cancelCronJobForCurrentDir'
 ```
 
 
