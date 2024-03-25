@@ -2,7 +2,7 @@ rc2: 84-157
 rc3: 158-?
 
 
-cc1-1
+服务器 cc1-1
 ------------------------------------------------
 时间: 2024-03-06 10:23:59
 变量1: 70_ScienceVs
@@ -281,7 +281,7 @@ rn1-1
 变量2: https://podcasts.google.com/feed/aHR0cDovL2ZlZWRzLmZlZWRidXJuZXIuY29tL3RoZW1lbW9yeXBhbGFjZQ?sa=X&ved=0CAcQrrcFahgKEwi4-5XcuPuEAxUAAAAAHQAAAAAQhjU
 
 
-rn1-2
+服务器 rn1-2
 --------------------------------------------------------
 
 
