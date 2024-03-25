@@ -119,7 +119,9 @@ alias gd='ps aux | grep download_mp3.sh'
 alias ds='du -sh .'
 
 alias rls='rclone lsd rc2:cc1-1'
+```
 
+```
 # 添加定时任务函数
 
 addCronJob() {
@@ -131,7 +133,9 @@ addCronJob() {
 		}
 
 alias ac='addCronJob'
+```
 
+```
 # 注释定时任务函数
 
 cancelCronJobForCurrentDir() {
