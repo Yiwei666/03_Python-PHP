@@ -121,7 +121,7 @@ alias ds='du -sh .'
 alias rls='rclone lsd rc2:cc1-1'
 ```
 
-```
+```sh
 # 添加定时任务函数
 
 addCronJob() {
@@ -135,7 +135,7 @@ addCronJob() {
 alias ac='addCronJob'
 ```
 
-```
+```sh
 # 注释定时任务函数
 
 cancelCronJobForCurrentDir() {
