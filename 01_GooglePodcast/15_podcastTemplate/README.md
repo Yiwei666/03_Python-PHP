@@ -121,6 +121,11 @@ alias ds='du -sh .'
 alias rls='rclone lsd rc2:cc1-1'
 
 alias rcy='nohup rclone copy /home/01_html/$(basename "$(pwd)") rc3:cc1-1/$(basename "$(pwd)") --transfers=16 &'
+
+alias ks='kill -STOP $(pgrep -f "/home/01_html/$(basename "$(pwd)")/download_mp3.sh")'
+alias kc='kill -CONT $(pgrep -f "/home/01_html/$(basename "$(pwd)")/download_mp3.sh")'
+
+alias rma='rm -rf 01_audio'
 ```
 
 ```sh
