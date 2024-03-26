@@ -119,6 +119,8 @@ alias gd='ps aux | grep download_mp3.sh'
 alias ds='du -sh .'
 
 alias rls='rclone lsd rc2:cc1-1'
+
+alias rcy='nohup rclone copy /home/01_html/$(basename "$(pwd)") rc3:cc1-1/$(basename "$(pwd)") --transfers=16 &'
 ```
 
 ```sh
