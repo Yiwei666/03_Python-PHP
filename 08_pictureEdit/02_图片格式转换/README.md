@@ -13,7 +13,7 @@
 
 - Python环境配置
 
-sys、os 和 getopt 是python标准库模块
+sys、os 和 getopt 是python标准库模块, 检查如下模块是否安装
 
 ```
 pip list | grep -E 'Pillow|pathlib'
