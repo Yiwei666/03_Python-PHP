@@ -13,7 +13,7 @@
 
 命令执行
 ```
-$ python imageCompression.py -h
+$ python imageCompression.py -i a.jpg,image-30.png -q 30 
 
 
 test.py [-i <imgs>] [-q <quality>] [-s <subsampling>] [-j <jpga>] [-d <dir>]
@@ -28,5 +28,5 @@ test.py [-i <imgs>] [-q <quality>] [-s <subsampling>] [-j <jpga>] [-d <dir>]
                       2: equivalent to 4:2:0 
 
 
-命令示例：python test.py -i a.jpg,b.jpg -q 20
+命令示例：python imageCompression.py -i a.jpg,b.jpg -q 20
 ```
