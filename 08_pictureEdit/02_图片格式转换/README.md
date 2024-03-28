@@ -27,7 +27,7 @@ python imageCompression.py -i a.jpg,image-30.png -q 30
 
 - 命令行参数
 
-```
+```py
 test.py [-i <imgs>] [-q <quality>] [-s <subsampling>] [-j <jpga>] [-d <dir>]
      -i, --imgs 需要压缩的图片，多个图片以逗号分隔 "a.jpg,b.jpg
      -q, --quality 默认压缩的图片质量为15，可以调整0-95 
