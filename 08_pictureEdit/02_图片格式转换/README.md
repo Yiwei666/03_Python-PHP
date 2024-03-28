@@ -1,21 +1,25 @@
-### 项目功能
----
+# 1. 项目功能
 
-- 01_jpg_To_png.py
+### 1. 01_jpg_To_png.py
 
 能否写个python脚本，将同级目录下的jpg图片转换为png图片，文件名不变
 
-- imageCompression.py
+
+### 2. imageCompression.py
 
 脚本功能：jpg和png图片压缩
 
 项目地址：https://github.com/liangxiaobo/imageCompression/tree/master
 
-命令执行
+- 命令执行
+
+```py
+python imageCompression.py -i a.jpg,image-30.png -q 30 
 ```
-$ python imageCompression.py -i a.jpg,image-30.png -q 30 
 
+- 命令行参数
 
+```
 test.py [-i <imgs>] [-q <quality>] [-s <subsampling>] [-j <jpga>] [-d <dir>]
      -i, --imgs 需要压缩的图片，多个图片以逗号分隔 "a.jpg,b.jpg
      -q, --quality 默认压缩的图片质量为15，可以调整0-95 
