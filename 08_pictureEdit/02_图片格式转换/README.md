@@ -11,6 +11,14 @@
 
 项目地址：https://github.com/liangxiaobo/imageCompression/tree/master
 
+- Python环境配置
+
+sys、os 和 getopt 是python标准库模块
+
+```
+pip list | grep -E 'Pillow|pathlib'
+```
+
 - 命令执行
 
 ```py
