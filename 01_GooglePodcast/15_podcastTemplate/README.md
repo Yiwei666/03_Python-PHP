@@ -128,6 +128,9 @@ alias kc='kill -CONT $(pgrep -f "/home/01_html/$(basename "$(pwd)")/download_mp3
 alias rma='rm -rf 01_audio'
 
 alias rcyrma='nohup rclone copy /home/01_html/$(basename "$(pwd)")  rc3:cc1-1/$(basename "$(pwd)") --transfers=16   && sleep 10  &&  rm -rf 01_audio  &'
+
+alias cl='crontab -l'
+alias ce='crontab -e'
 ```
 
 ```sh
