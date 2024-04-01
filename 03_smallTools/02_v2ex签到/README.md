@@ -18,12 +18,14 @@
 # 3. 注意事项
 
 
-1. 登陆账号获取cookies，headers等信息。
+### 1. 登陆账号获取cookies，headers等信息。
 ```
 https://www.v2ex.com/mission/daily                      # 首次request获取once值
 
 https://www.v2ex.com/mission/daily/redeem?once=70042    # 合成签到链接
 ```   
+
+1. 获取cookie操作
 
 - 打开开发者工具——快捷键`Ctrl+Shift+I`
 - 在开发者工具中，点击`应用程序`（Application）标签。如果你看不到这个标签，可能需要点击`>>`按钮来找到它。
