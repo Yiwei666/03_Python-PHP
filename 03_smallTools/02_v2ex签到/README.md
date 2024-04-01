@@ -52,7 +52,7 @@ cookies = {
 
 - 推荐在chrome浏览器中登录v2ex获取cookie信息，firefox浏览器获取的cookies运行报错
 
-# 安装配置
+# 4. 安装配置
 
 设定cron定时任务，注意v2ex要求签到间隔为24小时
 ```
