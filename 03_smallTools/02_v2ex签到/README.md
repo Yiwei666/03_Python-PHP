@@ -25,6 +25,16 @@ https://www.v2ex.com/mission/daily                      # 首次request获取onc
 https://www.v2ex.com/mission/daily/redeem?once=70042    # 合成签到链接
 ```   
 
+- 打开开发者工具——快捷键`Ctrl+Shift+I`
+- 在开发者工具中，点击`应用程序`（Application）标签。如果你看不到这个标签，可能需要点击`>>`按钮来找到它。
+- 在左侧的菜单中，找到`存储`（Storage）下的`Cookies`，然后选择你想查看的网站。你会在右侧看到该网站的所有Cookie列表。
+- 这里可以查看Cookie的名称、值、域、路径、过期时间等信息。你还可以对Cookie进行编辑或删除操作，以测试网站的不同行为。这对于开发者调试网站功能特别有用。
+
+<p align="center">
+<img src="https://19640810.xyz/05_image/01_imageHost/20240401-210732.png" alt="Image Description" width="800">
+</p>
+
+
 2. cron的日志目录
 ```
 /var/log/cron
