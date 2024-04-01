@@ -31,7 +31,7 @@ https://www.v2ex.com/mission/daily/redeem?once=70042    # 合成签到链接
 - 这里可以查看Cookie的名称、值、域、路径、过期时间等信息。你还可以对Cookie进行编辑或删除操作，以测试网站的不同行为。这对于开发者调试网站功能特别有用。
 
 <p align="center">
-<img src="https://19640810.xyz/05_image/01_imageHost/20240401-210732.png" alt="Image Description" width="800">
+<img src="https://19640810.xyz/05_image/01_imageHost/20240401-210732.png" alt="Image Description" width="1000">
 </p>
 
 
