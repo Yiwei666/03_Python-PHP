@@ -104,7 +104,7 @@ pip list | grep -E 'requests|beautifulsoup4|chardet'
 ```ls
 alias cdhtml='cd /home/01_html; ls -l'
 
-alias lw='ls -l 01_audio/ | wc -l'
+# alias lw='ls -l 01_audio/ | wc -l'
 
 alias lw='echo $(($(ls -l 01_audio/ | wc -l) - 1))'             # 减去1的真实文件数
 
