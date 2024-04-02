@@ -133,6 +133,9 @@ alias cl='crontab -l'
 alias ce='crontab -e'
 ```
 
+
+- 注意：将下述`addCronJob`、`cancelCronJobForCurrentDir`等函数写入到`bashrc`之前，请在文本编辑器中将所有缩进删除，粘贴时会自动缩进，否则会乱码
+
 ```sh
 # 添加定时任务函数
 
