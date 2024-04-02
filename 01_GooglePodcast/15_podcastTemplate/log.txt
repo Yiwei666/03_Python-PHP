@@ -283,7 +283,177 @@ rn1-1
 
 服务器 rn1-2
 --------------------------------------------------------
-
+时间: 2024-03-25 19:50:52
+变量1: 158_Conversations
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuYWJjLm5ldC5hdS9yYWRpby9wcm9ncmFtcy9jb252ZXJzYXRpb25zL2ZlZWQvNzcxMTEwNC9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwi4-5XcuPuEAxUAAAAAHQAAAAAQvDk
+时间: 2024-03-25 19:54:12
+变量1: 158_Conversations
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuYWJjLm5ldC5hdS9yYWRpby9wcm9ncmFtcy9jb252ZXJzYXRpb25zL2ZlZWQvNzcxMTEwNC9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwi4-5XcuPuEAxUAAAAAHQAAAAAQvDk
+时间: 2024-03-25 21:10:57
+变量1: 159_AllSongsConsidered
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5ucHIub3JnLzUxMDAxOS9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwjg-_-qz_yEAxUAAAAAHQAAAAAQjQU
+时间: 2024-03-25 23:10:58
+变量1: 160_Dissect
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vZGlzc2VjdHdpZGU?sa=X&ved=0CAcQrrcFahgKEwjg-_-qz_yEAxUAAAAAHQAAAAAQ-Qk
+时间: 2024-03-25 23:56:51
+变量1: 161_LexFridman
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9sZXhmcmlkbWFuLmNvbS9mZWVkL3BvZGNhc3Qv?sa=X&ved=0CAcQrrcFahgKEwjg47mo84GFAxUAAAAAHQAAAAAQ8ws
+时间: 2024-03-26 09:10:58
+变量1: 162_TheAllusionist
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cub21ueWNvbnRlbnQuY29tL2QvcGxheWxpc3QvM2FlZWI3NWYtMzM1OC00MmQ0LTgyMzItYWNhZDAxN2VhM2JkL2RhYzVhNzQyLTBhMWItNGY0Yi1iOTE3LWFjYjcwMTU1NjRmNy9lN2UxMGE2Ny02NTFjLTRkZGYtOWM0Ny1hY2I3MDE1NTY1MWQvcG9kY2FzdC5yc3M?sa=X&ved=0CAcQrrcFahgKEwiQqIK-yoSFAxUAAAAAHQAAAAAQtQk
+时间: 2024-03-26 11:03:39
+变量1: 163_SoundsLikeACult
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cub21ueWNvbnRlbnQuY29tL2QvcGxheWxpc3QvODg1YWNlODMtMDI3YS00N2FkLWFkNjctYWNhNzAwMmYxZGY4LzY4ZDkyMTIwLTc4NTYtNGEyOS1hNzZlLWFlMWQwMTU4NmRlZS9lOWQ1N2MxMy0xZGQyLTRkYWMtOTg4Ni1hZTFkMDE1ODZkZmQvcG9kY2FzdC5yc3M?sa=X&ved=0CAcQrrcFahgKEwiQkufBvo-FAxUAAAAAHQAAAAAQ6Qc
+时间: 2024-03-26 14:22:36
+变量1: 164_60SongsThatExplainthe90s
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vNjAtc29uZ3M?sa=X&ved=0CAcQrrcFahgKEwigr6q2wY-FAxUAAAAAHQAAAAAQzwI
+时间: 2024-03-26 17:44:47
+变量1: 165_PopCultureHappyHour
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5ucHIub3JnLzUxMDI4Mi9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwigr6q2wY-FAxUAAAAAHQAAAAAQ1Qc
+时间: 2024-03-26 23:47:08
+变量1: 166_MikeBirbigliaWorkingItOut
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9NVFcwQjJFbA?sa=X&ved=0CAcQrrcFahgKEwigr6q2wY-FAxUAAAAAHQAAAAAQwQw
+时间: 2024-03-27 11:49:51
+变量1: 167_TheLazyGenius
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS96bHBfcEowMw?sa=X&ved=0CAcQrrcFahgKEwjgoJPcw4-FAxUAAAAAHQAAAAAQrQE
+时间: 2024-03-27 13:22:10
+变量1: 168_TheRamseyShow
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vUk00MDMxNjQ5MDIw?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQpgU
+时间: 2024-03-27 14:20:31
+变量1: 169_PopApologists
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3VuZGNsb3VkLmNvbS91c2Vycy9zb3VuZGNsb3VkOnVzZXJzOjE3NjQ5MjYwNC9zb3VuZHMucnNz?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQ3Ak
+时间: 2024-03-27 19:35:50
+变量1: 170_TheSchoolofGreatness
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9BQXZ1cDlaeg?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQwA0
+时间: 2024-03-27 21:09:20
+变量1: 171_FreshAir
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5ucHIub3JnLzM4MTQ0NDkwOC9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQpBU
+时间: 2024-03-27 23:21:09
+变量1: 172_TheRestIsHistory
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYWNhc3QuY29tL3RoZS1yZXN0LWlzLWhpc3RvcnktcG9kY2FzdA?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQkBo
+时间: 2024-03-28 09:11:51
+变量1: 173_MorningWire
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9XQ2I1U2dZag?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQxCE
+时间: 2024-03-28 13:32:13
+变量1: 174_TheToast
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYXJ0MTkuY29tL3RoZS10b2FzdA?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQqjY
+时间: 2024-03-28 16:43:59
+变量1: 175_Throughline
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5ucHIub3JnLzUxMDMzMy9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQ8D4
+时间: 2024-03-28 20:09:33
+变量1: 176_ConanOBrienNeedsAFriend
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS9kSG9vaFZOSA?sa=X&ved=0CAcQrrcFahgKEwjIx9Ssxo-FAxUAAAAAHQAAAAAQ0kM
+时间: 2024-03-28 23:03:00
+变量1: 177_MrBallenPodcast
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy84MDg0YWQwYy9wb2RjYXN0L3Jzcw?sa=X&ved=0CAcQrrcFahgKEwi4idelnpKFAxUAAAAAHQAAAAAQpwQ
+时间: 2024-03-28 23:53:28
+变量1: 178_YoureWrongAbout
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5idXp6c3Byb3V0LmNvbS8xMTEyMjcwLnJzcw?sa=X&ved=0CAcQrrcFahgKEwi4idelnpKFAxUAAAAAHQAAAAAQjQY
+时间: 2024-03-29 11:59:06
+变量1: 179_PracticalAI
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9jaGFuZ2Vsb2cuY29tL3ByYWN0aWNhbGFpL2ZlZWQ?sa=X&ved=0CAcQrrcFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQugM
+时间: 2024-03-29 13:56:23
+变量1: 180_ScienceMagazine
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vQUFBUzg3MTcwNzM4NTQ?sa=X&ved=0CBwQ27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-29 17:16:06
+变量1: 181_ShirtloadsofScience
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5saWJzeW4uY29tLzg4NzE5L3Jzcw?sa=X&ved=0CB0Q27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-29 20:02:03
+变量1: 182_QuantaScience
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hcGkucXVhbnRhbWFnYXppbmUub3JnL2ZlZWQvcG9kY2FzdC8?sa=X&ved=0CCAQ27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-29 23:07:48
+变量1: 183_UnsungScience
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYXJ0MTkuY29tL3Vuc3VuZy1zY2llbmNl?sa=X&ved=0CCQQ27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-29 23:27:41
+变量1: 184_TheScienceShow
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cuYWJjLm5ldC5hdS9yYWRpb25hdGlvbmFsL2ZlZWQvMjg4NTQ4MC9wb2RjYXN0LnhtbA?sa=X&ved=0CCkQ27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-30 10:38:49
+变量1: 185_InstantGenius
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYWNhc3QuY29tL3NjaWVuY2UtZm9jdXMtcG9kY2FzdA?sa=X&ved=0CCoQ27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-30 13:32:49
+变量1: 186_PhysicsWorldWeekly
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9waHlzaWNzd29ybGQuY29tL2ZlZWQvcG9kY2FzdC13ZWVrbHkv?sa=X&ved=0CC8Q27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-30 16:22:16
+变量1: 187_SciShowTangents
+变量2: https://podcasts.google.com/feed/aHR0cDovL2ZlZWRzLndueWMub3JnL3NjaXNob3ctdGFuZ2VudHM?sa=X&ved=0CDEQ27cFahgKEwjQr6O1ppKFAxUAAAAAHQAAAAAQ1wU
+时间: 2024-03-30 18:36:15
+变量1: 188_Sawbones
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zaW1wbGVjYXN0LmNvbS95MUxGX3NuMg?sa=X&ved=0CAcQrrcFahgKEwiw2uap2ZOFAxUAAAAAHQAAAAAQoQQ
+时间: 2024-03-30 20:17:39
+变量1: 189_ArmchairExpert
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3Muc2ltcGxlY2FzdC5jb20vcG9kY2FzdHMvNDEyMy9yc3M?sa=X&ved=0CAcQrrcFahgKEwiw2uap2ZOFAxUAAAAAHQAAAAAQsQ0
+时间: 2024-03-30 23:37:04
+变量1: 190_OnwithKaraSwisher
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vVk1QMTY4NDcxNTg5Mw?sa=X&ved=0CAcQrrcFahgKEwiw2uap2ZOFAxUAAAAAHQAAAAAQzxE
+时间: 2024-03-31 10:43:42
+变量1: 191_Pivot
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vcGl2b3Q?sa=X&ved=0CAcQrrcFahgKEwiw2uap2ZOFAxUAAAAAHQAAAAAQoxQ
+时间: 2024-03-31 13:31:04
+变量1: 192_MyDadWroteAPorno
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5hY2FzdC5jb20vcHVibGljL3Nob3dzL2VlNmZkMzE2LTljZTEtNGY4YS1iYTJjLWE0YTRiZjU2NDNlNA?sa=X&ved=0CAcQrrcFahgKEwiAwJD1rJSFAxUAAAAAHQAAAAAQng0
+时间: 2024-03-31 15:11:12
+变量1: 193_NoSuchThingAsAFish
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hdWRpb2Jvb20uY29tL2NoYW5uZWxzLzIzOTkyMTYucnNz?sa=X&ved=0CAUQrrcFahcKEwjo-7TntJSFAxUAAAAAHQAAAAAQAg
+时间: 2024-03-31 16:58:13
+变量1: 194_ReplyAll
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vcmVwbHlhbGw?sa=X&ved=0CAcQrrcFahgKEwjo-7TntJSFAxUAAAAAHQAAAAAQ5Qg
+时间: 2024-03-31 17:40:17
+变量1: 195_WhatsNewWithWIRED
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hcGkuc3Bva2VubGF5ZXIuY29tL2ZlZWQvY2hhbm5lbC92MS13aXJlZC1ob21lcGFnZS1leHQvM2M5OTI5YjcyNTM4YzEyYmQ5MmFjNjc2MmY4ZDc5OGI5ZDRlOGNkY2E3NjkyZWE3NGY0NjYwNjFkMDE4MTZjYg?sa=X&ved=0CAcQrrcFahgKEwjo-7TntJSFAxUAAAAAHQAAAAAQoww
+时间: 2024-03-31 23:13:35
+变量1: 196_TenPercentHappier
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yc3MuYXJ0MTkuY29tL3Rlbi1wZXJjZW50LWhhcHBpZXI?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQoZYB
+时间: 2024-04-01 13:12:16
+变量1: 197_TheIndicatorfromPlanetMoney
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5ucHIub3JnLzUxMDMyNS9wb2RjYXN0LnhtbA?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQr50B
+时间: 2024-04-01 19:56:39
+变量1: 198_YouMustRememberThis
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vWU1SVDcwNjgyNTM1ODg?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQ37wB
+时间: 2024-04-01 21:21:02
+变量1: 199_Revolutions
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9yZXZvbHV0aW9uc3BvZGNhc3QubGlic3luLmNvbS9yc3M?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQx8AB
+时间: 2024-04-01 22:07:35
+变量1: 200_ArtCurious
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vYXJ0Y3VyaW91c3BvZGNhc3Q?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQ_8cB
+时间: 2024-04-01 22:57:30
+变量1: 201_TheHistoryofLiterature
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vaGlzdG9yeS1vZi1saXRlcmF0dXJl?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQz8sB
+时间: 2024-04-02 09:12:24
+变量1: 202_GoodNightStoriesforRebelGirls
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5tZWdhcGhvbmUuZm0vUkdTODI2MDEwOTcwOA?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQwdMB
+时间: 2024-04-02 09:45:52
+变量1: 203_TheDocumentary
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5mZWVkYnVybmVyLmNvbS9jby9qd291?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQmdcB
+时间: 2024-04-02 11:48:11
+变量1: 204_Lore
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5saWJzeW4uY29tLzY1MjY3L3Jzcw?sa=X&ved=0CAcQrrcFahkKEwjo-7TntJSFAxUAAAAAHQAAAAAQhdwB
+时间: 2024-04-02 13:06:01
+变量1: 205_StartsWithABang
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5zb3VuZGNsb3VkLmNvbS91c2Vycy9zb3VuZGNsb3VkOnVzZXJzOjE4MzgxNDQ3MC9zb3VuZHMucnNz?sa=X&ved=0CAcQrrcFahgKEwiQ86_m6JiFAxUAAAAAHQAAAAAQ8hg
+时间: 2024-04-02 13:24:12
+变量1: 206_PNASScienceSessions
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9wbmFzLXNjaWVuY2Utc2Vzc2lvbnMtcG9kY2FzdC5saWJzeW4uY29tL3Jzcw?sa=X&ved=0CAcQrrcFahgKEwiQ86_m6JiFAxUAAAAAHQAAAAAQyBs
+时间: 2024-04-02 14:13:27
+变量1: 207_TheBMJPodcast
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkLnBvZGJlYW4uY29tL3RoZWJtanBvZGNhc3QvZmVlZC54bWw?sa=X&ved=0CAcQrrcFahgKEwiQ86_m6JiFAxUAAAAAHQAAAAAQpCI
+时间: 2024-04-02 14:59:55
+变量1: 208_TheLancetVoice
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5idXp6c3Byb3V0LmNvbS84NjE4NjgucnNz?sa=X&ved=0CAcQrrcFahgKEwiQ86_m6JiFAxUAAAAAHQAAAAAQ0jE
+时间: 2024-04-02 15:01:26
+变量1: 209_WorkingScientist
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5hY2FzdC5jb20vcHVibGljL3Nob3dzLzhiOTI2NGMwLWVhNmEtNDFjMy04NGNkLTlkN2IzNTA5ODZlMg?sa=X&ved=0CAcQrrcFahkKEwiQ86_m6JiFAxUAAAAAHQAAAAAQnYEB
+时间: 2024-04-02 15:41:54
+变量1: 210_TheScienceofHappiness
+变量2: https://podcasts.google.com/feed/aHR0cDovL2ZlZWRzLmZlZWRidXJuZXIuY29tL1RoZVNjaWVuY2VPZkhhcHBpbmVzcw?sa=X&ved=0CAcQrrcFahgKEwiA69_X-qKFAxUAAAAAHQAAAAAQwAI
+时间: 2024-04-02 16:24:12
+变量1: 211_BBCInsideScience
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9mZWVkcy5hY2FzdC5jb20vcHVibGljL3Nob3dzLzVlY2JlMmViZGMwZTg3MGNmZTNmODczNw?sa=X&ved=0CAcQrrcFahgKEwiA69_X-qKFAxUAAAAAHQAAAAAQqQQ
+时间: 2024-04-02 16:59:31
+变量1: 212_StartupPodcast
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy84NjhlNWEwNC9wb2RjYXN0L3Jzcw?sa=X&ved=0CAcQrrcFahgKEwiA69_X-qKFAxUAAAAAHQAAAAAQngk
+时间: 2024-04-02 17:16:52
+变量1: 213_StuffToBlowYourMind
+变量2: https://podcasts.google.com/feed/aHR0cHM6Ly93d3cub21ueWNvbnRlbnQuY29tL2QvcGxheWxpc3QvZTczYzk5OGUtNmU2MC00MzJmLTg2MTAtYWUyMTAxNDBjNWIxLzZlYTE1MmMwLTllM2EtNDVkZS04NjcyLWFlMmYwMDU2YjExMy9kODkzNjc0Ni05ZTIyLTRkYmEtYjc2Mi1hZTJmMDA1NmIxMjYvcG9kY2FzdC5yc3M?sa=X&ved=0CAcQrrcFahgKEwiA69_X-qKFAxUAAAAAHQAAAAAQ7As
 
 
 
