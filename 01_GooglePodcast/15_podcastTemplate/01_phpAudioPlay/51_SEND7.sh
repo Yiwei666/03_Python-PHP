@@ -22,6 +22,7 @@ foreach ($files as $file) {
 <html>
   <head>
     <title>51_SEND7</title>
+    <link rel="shortcut icon" href="https://mctea.one/00_logo/googlepodcast.png">
     <meta charset="UTF-8">
     <style>
       .audio-player {
