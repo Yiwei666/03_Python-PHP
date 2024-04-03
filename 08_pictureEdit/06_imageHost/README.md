@@ -265,6 +265,7 @@ resultImage.width = 300;                                                        
 
 - **服务器脚本 03_serverImageHost.php 参数初始化**
 
+注意：`$uploadDirectory` 变量最后有 `/`
 
 ```php
 $uploadDirectory = '/home/01_html/02_LAS1109/35_imageHost/';                                       // 指定图床文件夹绝对路径
