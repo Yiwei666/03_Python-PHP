@@ -44,7 +44,9 @@
 
 # 3. 注意事项
 
-1. 运行上述 twitter_PHP_download.php 脚本需要安装 cURL模块
+### 1. cURL模块安装
+
+- 运行上述 twitter_PHP_download.php 脚本需要安装 cURL模块
 
 - 对于ubuntu系统
 ```
@@ -66,7 +68,9 @@ sudo service php-fpm restart
 
 ```
 
-2. 运行上述 twitter_PHP_download.php 脚本，提示输入mp4视频下载链接
+### 2. 第三方twitter视频解析网站
+
+- 运行上述 twitter_PHP_download.php 脚本，提示输入mp4视频下载链接
 
 推特视频链接可基于如下在线解析网站解析，然后粘贴链接到输入框，提交即可
 
