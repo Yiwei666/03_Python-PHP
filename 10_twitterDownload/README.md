@@ -8,7 +8,7 @@
 
 # 2. 文件结构
 
-1. 基于mp4视频链接下载视频到指定目录
+### 1. 基于mp4视频链接下载视频到指定目录
 
 ```
 ├── twitter_PHP_download.php               # -rw-r--r-- 1 root     root            # 下载视频
@@ -23,7 +23,7 @@
 ```
 
 
-2. 从本地上传mp4文件到云服务器指定目录
+### 2. 从本地上传mp4文件到云服务器指定目录
 
 ```
 ├── 06_multiple_Video_Upload.php           # -rw-r--r-- 1 root     root             使用JavaScript和jQuery实现了一个简单的MP4视频上传功能，并在上传过程中显示上传进度条
@@ -40,6 +40,9 @@
 2. `06_upload.php` 中需要指定云服务器中存储视频的目录
 3. `upload_MP4_video.php` 是一个独立使用的视频上传脚本，支持多个视频同时上传
 
+### 3. 较大twitter视频下载
+
+参考 `01_bigVideoDown项目文件夹`
 
 
 # 3. 注意事项
