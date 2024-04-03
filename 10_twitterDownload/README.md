@@ -1,14 +1,12 @@
-### 项目功能
----
+# 1. 项目功能
 
 - 提交MP4链接，下载mp4视频到云服务器指定目录
-- 异步下载较大的twitter视频到云服务器指定目录
 - 基于php脚本，在线观看云服务器指定目录mp4视频
 - 上传本地MP4视频到云服务器指定目录
+- 异步下载较大的twitter视频到云服务器指定目录
 
 
-### 文件结构
----
+# 2. 文件结构
 
 1. 基于mp4视频链接下载视频到指定目录
 
@@ -44,8 +42,8 @@
 
 ```
 
-### 注意事项
----
+# 3. 注意事项
+
 1. 运行上述 twitter_PHP_download.php 脚本需要安装 cURL模块
 
 - 对于ubuntu系统
@@ -81,8 +79,7 @@ sudo service php-fpm restart
 - https://twittervid.com/
 
 
-### 环境部署
----
+# 4. 环境部署
 
 1. 存储视频的文件夹需要有读写权限，改变文件或目录的所有者
 
@@ -131,9 +128,8 @@ $videoUrl = $domain . '/05_twitter_video/' . $videoName;
 $uploadDir = '/home/01_html/05_twitter_video/';
 ```
 
-### php 配置文件设置
+# 5. php 配置文件设置
 
----
 
 主要影响文件上传的两个设置是upload_max_filesize和post_max_size。以下是具体的修改方法：
 
