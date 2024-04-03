@@ -85,6 +85,16 @@ wget -O "$TARGET_PATH" "$URL"
 > "$FILE"
 ```
 
+- 只需要设置如下几个变量即可
+
+```sh
+# 目标目录和文件定义
+DIR="/home/01_html/05_twitter_bigfile"
+FILE="$DIR/01_url.txt"
+VIDEO_DIR="/home/01_html/05_twitter_video"
+```
+
+
 ### 2. `01_url.txt`组和权限设置
 
 
@@ -96,7 +106,12 @@ chmod 644 /home/01_html/05_twitter_bigfile/01_url.txt
 
 ### 3. 前端获取网址脚本 `05_twitter_bigVideo_download.php`
 
+- 指定存储网址的文本路径
 
+```php
+// Append the video URL to the specified file
+$filePath = '/home/01_html/05_twitter_bigfile/01_url.txt';
+```
 
 
 
