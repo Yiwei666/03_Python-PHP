@@ -36,9 +36,9 @@
 ```
 
 注意：
-1. 06_multiple_Video_Upload.php 需要指定 06_upload.php 脚本名称
-2. 06_upload.php 中需要指定云服务器中存储视频的目录
-3. upload_MP4_video.php 是一个独立使用的视频上传脚本，支持多个视频同时上传
+1. `06_multiple_Video_Upload.php` 需要指定 `06_upload.php` 脚本名称
+2. `06_upload.php` 中需要指定云服务器中存储视频的目录
+3. `upload_MP4_video.php` 是一个独立使用的视频上传脚本，支持多个视频同时上传
 
 
 
