@@ -8,12 +8,22 @@
 
 ```
 .
-├── 01_url.txt
-└── 05_bashDownTwitterBigVideo.sh
+├── 05_twitter_bigVideo_download.php       # 获取用户在网页提交的twitter链接
+├── 05_twitter_bigfile                     # 项目文件夹
+│   ├── 01_url.txt                         # 存储前端写入的链接
+│   └── 05_bashDownTwitterBigVideo.sh      # 后端处理脚本
+├── 05_twitter_video                       # 储存视频文件夹
+│   ├── 1234.mp4                           # 视频
+│   ├── ...
 ```
 
 
-### 2. 总体思路
+# 3. 环境配置
+
+
+### 1. 定时脚本 `05_bashDownTwitterBigVideo.sh`
+
+1. 总体思路
 
 ```
 编写一个bash脚本完成如下任务
@@ -24,14 +34,15 @@
 5. 将下载的mp4命令为 年月日-时分秒-11位随机数字，如：20230722-215223-269940798.mp4
 ```
 
-# 3. 环境配置
-
+2. 权限和定时设置
 
 ```sh
-* * * * * /usr/bin/bash /home/01_html/05_twitter_bigfile/05_bashDownTwitterBigVideo.sh
-
 chmod +x /home/01_html/05_twitter_bigfile/05_bashDownTwitterBigVideo.sh
+* * * * * /usr/bin/bash /home/01_html/05_twitter_bigfile/05_bashDownTwitterBigVideo.sh
 ```
+
+
+
 
 ```sh
 chown www-data:www-data /home/01_html/05_twitter_bigfile/01_url.txt
