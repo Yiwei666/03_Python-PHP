@@ -74,6 +74,10 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+            overflow-y: auto; /* 当内容超出高度时显示滚动条 */
+            padding-right: 5px; /* 为滚动条留出空间，避免内容被遮挡 */
+            width: 100px; /* 设置侧边栏的宽度 */
+            max-height: 90vh; /* 设置侧边栏的最大高度为视口高度的90% */
         }
 
         .page-link {
