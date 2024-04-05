@@ -107,6 +107,7 @@ chmod +x "/home/01_html/$dir3_mvImageServer.sh"
 
 2. 提示输入域名或者ip地址，如 `http://120.46.81.41` 或者 `https://domain.com`
 
+代码：
 
 ```sh
 #!/bin/bash
