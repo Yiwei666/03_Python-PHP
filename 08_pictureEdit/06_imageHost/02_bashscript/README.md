@@ -107,7 +107,7 @@ chmod +x "/home/01_html/$dir3_mvImageServer.sh"
 
 2. 提示输入域名或者ip地址，如 `http://120.46.81.41` 或者 `https://domain.com`
 
-3. `nginx.conf`和`php.ini`中关于上述文件的大小限制需要手动修改
+3. `nginx.conf`和`php.ini`中关于上传图片的大小限制需要手动修改
 
 4. 关于文件的限制访问，请手动添加
 
