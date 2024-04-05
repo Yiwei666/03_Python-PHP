@@ -1,10 +1,27 @@
 # 1. 项目功能
 
-在ubuntu系统中一键安装图床脚本
+自动从github上下载本仓库，在ubuntu系统中一键安装图床，并初始化相关参数和设置权限
 
 # 2. 文件结构
 
-只需要在 `home/01_html` 路径下运行 `08_gitDownload.sh` bash脚本即可，自动从github上下载本仓库，根据提示初始化相关参数，设置相应权限
+- 只需要在 `home/01_html` 路径下运行 `08_gitDownload.sh` bash脚本即可，自动从github上下载本仓库，根据提示初始化相关参数，设置相应权限
+
+- 安装后在 `home/01_html` 路径下的相关文件结构如下所示
+
+```
+├── 08_gitDownload.sh
+├── 08_x
+│   └── image
+│       ├── 01_imageHost
+│       └── 02_imageTransfer
+├── 08_x_imageGallery.php
+├── 08_x_imageTransferName.txt
+├── 08_x_mvImageServer.sh
+├── 08_x-picPasteUpload.php
+├── 08_x-serverImageHost.php
+├── 08_x_serverImageTransfer.php
+├── 08_x_simpleGallery.php
+```
 
 # 3. 环境配置
 
