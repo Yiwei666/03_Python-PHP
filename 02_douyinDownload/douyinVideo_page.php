@@ -78,6 +78,7 @@ if (isset($_GET['logout'])) {
             overflow-y: auto;
             max-height: 80vh; /* 设置最大高度，以防止侧边栏过长 */
             width: 50px; /* 设置侧边栏宽度 */
+            text-align: center; /* 页码数字在侧边栏的水平方向上居中 */
         }
         
         .sidebar a {
