@@ -20,6 +20,7 @@
 
 # 3. 环境配置
 
+注意事项：在网页上提交两个视频网址的时间间隔要大于1分钟，因为后端bash脚本每分钟执行一次
 
 ### 1. 定时脚本 `05_bashDownTwitterBigVideo.sh`
 
@@ -36,8 +37,12 @@
 
 2. 权限和定时设置
 
+
 ```sh
+# 设置可执行权限
 chmod +x /home/01_html/05_twitter_bigfile/05_bashDownTwitterBigVideo.sh
+
+# crontab定时任务
 * * * * * /usr/bin/bash /home/01_html/05_twitter_bigfile/05_bashDownTwitterBigVideo.sh
 ```
 
@@ -85,7 +90,7 @@ wget -O "$TARGET_PATH" "$URL"
 > "$FILE"
 ```
 
-- 只需要设置如下几个变量即可
+- 后端定时下载的bash脚本中需要设置如下几个变量即可
 
 ```sh
 # 目标目录和文件定义
@@ -97,6 +102,7 @@ VIDEO_DIR="/home/01_html/05_twitter_video"
 
 ### 2. `01_url.txt`组和权限设置
 
+设置存储网址文本的权限和所属组，不然前端脚本无法写入
 
 ```sh
 chown www-data:www-data /home/01_html/05_twitter_bigfile/01_url.txt
@@ -106,7 +112,7 @@ chmod 644 /home/01_html/05_twitter_bigfile/01_url.txt
 
 ### 3. 前端获取网址脚本 `05_twitter_bigVideo_download.php`
 
-- 指定存储网址的文本路径
+- 需要在前端脚本中指定存储网址的文本路径，如下所示
 
 ```php
 // Append the video URL to the specified file
