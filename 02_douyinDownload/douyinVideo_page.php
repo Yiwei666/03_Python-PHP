@@ -77,6 +77,7 @@ if (isset($_GET['logout'])) {
             background-color: #f5f5f5;
             overflow-y: auto;
             max-height: 80vh; /* 设置最大高度，以防止侧边栏过长 */
+            width: 50px; /* 设置侧边栏宽度 */
         }
         
         .sidebar a {
@@ -84,7 +85,8 @@ if (isset($_GET['logout'])) {
             margin-bottom: 15px;
             color: #333;
             text-decoration: none;
-            font-size: 30px;
+            font-size: 20px; /* 或其他你希望的大小 */
+            font-family: 'Times New Roman', Times, serif; /* 设置字体为新罗马 */
         }
         
         .sidebar a.current-page {
