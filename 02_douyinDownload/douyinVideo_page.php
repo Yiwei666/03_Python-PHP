@@ -228,5 +228,28 @@ if (isset($_GET['logout'])) {
             window.scrollTo({ top: documentHeight - windowHeight, behavior: 'smooth' });
         });
     </script>
+
+    <script>
+        // 当文档加载完毕时
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidebar = document.querySelector('.sidebar');
+            var currentPageLink = document.querySelector('.sidebar a.current-page');
+            if (currentPageLink) {
+                currentPageLink.style.textDecoration = 'underline';
+            }
+
+            // 恢复滚动位置
+            if (localStorage.getItem('sidebarScrollPosition')) {
+                sidebar.scrollTop = localStorage.getItem('sidebarScrollPosition');
+            }
+        });
+
+        // 在页面即将卸载时保存滚动位置
+        window.addEventListener('beforeunload', function() {
+            var sidebar = document.querySelector('.sidebar');
+            localStorage.setItem('sidebarScrollPosition', sidebar.scrollTop);
+        });
+    </script>
+
 </body>
 </html>
