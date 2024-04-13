@@ -20,7 +20,7 @@ if (isset($_GET['logout'])) {
 $dir4 = "/home/01_html/08_x/image/01_imageHost";
 $dir5 = str_replace("/home/01_html", "", $dir4); // 去除目录前缀
 $domain = "https://abc.com"; // 域名网址
-$picnumber = 8; // 设置需要显示的图片数量
+$picnumber = 6; // 设置需要显示的图片数量
 
 // 读取目录中的所有 png 图片
 $images = glob($dir4 . '/*.png');
@@ -54,23 +54,23 @@ if ($images && count($images) >= $picnumber) {
         width: 100vw;
     }
     .image {
-        width: 500px;
+        width: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '900px' : '500px'; ?>;
         height: auto;
         margin-bottom: 20px;
     }
     .refresh-button {
         position: fixed;
-        right: calc(50% - 300px);
-        top: 50%; /* Centered vertically */
+        right: calc(50% - 500px);
+        top: 50%;
         transform: translateY(-50%);
-        width: 50px; /* Fixed size in pixels */
-        height: 50px; /* Fixed size in pixels */
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         background-color: #4CAF50;
         color: white;
         border: none;
         cursor: pointer;
-        z-index: 1000; /* Ensures the button is always on top */
+        z-index: 1000;
     }
 </style>
 </head>
