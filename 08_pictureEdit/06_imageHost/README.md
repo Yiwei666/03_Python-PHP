@@ -385,10 +385,10 @@ $imagesPerPage = 60;                                                            
 
 ### 6. 08_picDisplay.php
 
-```
+```php
 $dir4 = "/home/01_html/08_x/image/01_imageHost";  // 需要制定图片绝对路径
 $dir5 = str_replace("/home/01_html", "", $dir4); 
-$domain = "https://19640810.xyz";                 // 指定域名网址
+$domain = "https://abc.com";                 // 指定域名网址
 $picnumber = 8;                                   // 设置需要显示的图片数量
 ```
 
