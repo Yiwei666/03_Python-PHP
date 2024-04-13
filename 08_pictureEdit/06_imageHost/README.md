@@ -385,6 +385,8 @@ $imagesPerPage = 60;                                                            
 
 ### 6. 08_picDisplay.php
 
+1. 环境配置
+
 ```php
 $dir4 = "/home/01_html/08_x/image/01_imageHost";  // 需要制定图片绝对路径
 $dir5 = str_replace("/home/01_html", "", $dir4); 
@@ -392,9 +394,24 @@ $domain = "https://abc.com";                      // 指定根目录对应的域
 $picnumber = 8;                                   // 设置需要显示的图片数量
 ```
 
+2. 设备终端类型检测
+
+```php
+<?php echo $_SERVER['HTTP_USER_AGENT']; ?>
+```
+
+```sh
+Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0                                  # 电脑firefox浏览器
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36   # 电脑chrome浏览器
+Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36             # 手机chrome桌面版网站设置，默认开启    
+
+Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.36   # 手机chrome手机模式
+Mozilla/5.0 (Android 11; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0                                              # 手机firefox浏览器
+```
 
 
-- 思路
+
+3. 代码总体思路
 
 ```
 1. 已知在 $dir4 目录下有多张png格式的图片，例如$dir4="/home/01_html/08_x/image/01_imageHost"。注意$dir5为 $dir4去掉"/home/01_html"部分
