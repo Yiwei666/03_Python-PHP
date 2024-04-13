@@ -396,6 +396,8 @@ $picnumber = 8;                                   // 设置需要显示的图片
 
 2. 设备终端类型检测
 
+- 输出并检查用户代理字符串
+
 ```php
 <?php echo $_SERVER['HTTP_USER_AGENT']; ?>
 ```
@@ -407,6 +409,16 @@ Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/12
 
 Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.36   # 手机chrome手机模式
 Mozilla/5.0 (Android 11; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0                                              # 手机firefox浏览器
+```
+
+- 相关代码
+
+```php
+    .image {
+        width: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '900px' : '500px'; ?>;
+        height: auto;
+        margin-bottom: 20px;
+    }
 ```
 
 
