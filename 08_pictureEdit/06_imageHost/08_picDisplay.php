@@ -1,25 +1,8 @@
 <?php
-session_start();
-
-// If the user is not logged in, redirect to the login page
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-  header('Location: login.php');
-  exit;
-}
-
-// If the user clicked the logout link, log them out and redirect to the login page
-if (isset($_GET['logout'])) {
-  session_destroy(); // destroy all session data
-  header('Location: login.php');
-  exit;
-}
-?>
-
-<?php
 // 定义图片存储的目录
 $dir4 = "/home/01_html/08_x/image/01_imageHost";
 $dir5 = str_replace("/home/01_html", "", $dir4); // 去除目录前缀
-$domain = "https://19640810.xyz"; // 域名网址
+$domain = "https://abc.com"; // 域名网址
 $picnumber = 5; // 设置需要显示的图片数量
 
 // 读取目录中的所有 png 图片
@@ -54,7 +37,7 @@ if ($images && count($images) >= $picnumber) {
         padding: 20px 0;
     }
     .image {
-        width: 500px;
+        width: 400px;
         height: auto;
         margin-bottom: 20px;
     }
