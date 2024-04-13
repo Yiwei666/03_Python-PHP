@@ -88,6 +88,12 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
+        .current-page {
+            text-decoration: underline; /* 下划线 */
+            color: blue; /* 文字颜色变为红色 */
+            font-weight: bold; /* 加粗显示 */
+        }
     </style>
 </head>
 
@@ -174,6 +180,32 @@ echo '</div>';
     }
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var pageLinksSidebar = document.querySelector('.page-links');
+
+        // 恢复滚动位置
+        var savedScrollPosition = localStorage.getItem('pageLinksScrollPosition');
+        if (savedScrollPosition) {
+            pageLinksSidebar.scrollTop = parseInt(savedScrollPosition, 10);
+        }
+
+        // 高亮显示当前页面
+        var currentPageNumber = window.location.search.match(/page=(\d+)/) ? window.location.search.match(/page=(\d+)/)[1] : 1;
+        var currentPageLink = document.querySelector('.page-links a[href*="page=' + currentPageNumber + '"]');
+        if (currentPageLink) {
+            currentPageLink.classList.add('current-page');
+        }
+    });
+
+    window.addEventListener('beforeunload', function() {
+        var pageLinksSidebar = document.querySelector('.page-links');
+        if (pageLinksSidebar) {
+            localStorage.setItem('pageLinksScrollPosition', pageLinksSidebar.scrollTop.toString());
+        }
+    });
+</script>
+    
 </body>
 
 </html>
