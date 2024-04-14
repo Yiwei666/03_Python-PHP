@@ -46,6 +46,7 @@
 05_serverImageTransfer.php        # 服务器端实现将前端传递给的文件名写入到 05_imageTransferName.txt 文件中
 05_imageTransferName.txt          # 点击transfer按钮后，存储对应文件名的文本
 05_mvImageServer.sh               # bash脚本，用于将05_imageTransferName.txt列出的图片文件名从源目录剪切到另外一个目录
+08_picDisplay.php                 # 在网页上随机显示图库中的5张图片（能够识别终端类型：手机/电脑，图片采用懒加载）
 ```
 
 - 示例
