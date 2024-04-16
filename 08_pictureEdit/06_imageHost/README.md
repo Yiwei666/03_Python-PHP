@@ -245,7 +245,32 @@ uploadInfoDiv.appendChild(imageContainer);
 </p>
 
 
-### 6. 环境变量配置
+### 6. 不显示图片
+
+1. 上传和下载共享总带宽，如果多个脚本同时上传高清图片，预览图片会可能会消耗大部分下载带宽，从而影响到上传速率。因此，可以考虑取消上传成功后的图片预览。
+
+2. 在最新的`03_picPasteUpload.php`脚本中，如果不想要显示图片预览图，可将代码中的如下部分注释掉。
+
+```js
+/*
+var resultImageContainer = document.createElement('div');
+resultImageContainer.style.textAlign = 'center'; // 设置水平居中
+resultImageContainer.style.marginTop = '20px'; // 设置距离顶部的距离为20px
+resultImageContainer.style.backgroundColor = '#222426'; // 设置背景色为灰黑色
+resultImageContainer.style.padding = '10px'; // 设置内边距为10px
+
+var resultImage = new Image();
+resultImage.src = response.adjustedPath;
+resultImage.width = 300; // 设置图片宽度为500px
+resultImage.alt = 'Result Image';
+resultImageContainer.appendChild(resultImage);
+
+uploadInfoDiv.appendChild(resultImageContainer);
+*/
+```
+
+
+### 7. 环境变量配置
 
 
 在一台新服务器部署本项目时，除了更改php和nginx对于上传文件大小的限制外，还需要指定服务器端脚本名称，域名或ip，图床文件夹绝对路径，域名的根目录等
