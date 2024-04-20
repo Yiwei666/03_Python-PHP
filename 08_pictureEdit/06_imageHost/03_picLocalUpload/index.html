@@ -20,6 +20,8 @@
             justify-content: center;
             align-items: center;
             background-color: #242729; /* 设置为与页面背景色一致的深灰色 */
+            border-radius: 5px; /* 添加倒角 */
+            
         }
 
         #uploadButton {
@@ -48,7 +50,7 @@
 
         #container {
             text-align: center;
-            width: 520px;
+            width: 550px;
             padding: 20px;
             box-sizing: border-box;
         }
@@ -59,14 +61,12 @@
             margin-top: 10px;
         }
 
-
-
     </style>
 </head>
 <body>
     <div id="container">
         <p>Paste your image here:</p>
-        <div contenteditable="true" id="imageContainer"></div>
+        <div contenteditable="true" id="imageContainer" style="text-align: left; justify-content: flex-start;"></div> <!-- 调整光标位置和文本对齐 -->
         <button id="uploadButton">Upload Image</button>
         <div id="uploadInfo"></div>
     </div>
