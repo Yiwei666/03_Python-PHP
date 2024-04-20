@@ -6,11 +6,11 @@
 
 # 3. Node.js 环境配置
 
-### 步骤 1: Node.js 环境准备
+### 1. Node.js 环境准备
 
 确保Node.js已安装在你的Windows机器上。如果未安装，请从 Node.js官网 下载并安装。
 
-### 步骤 2: 创建项目和安装依赖
+### 2. 创建项目和安装依赖
 
 在你的项目目录中创建Node.js应用：
 
@@ -24,7 +24,7 @@ npm install express multer
 这将安装Express和multer，Express用于创建服务器，multer用于处理文件上传。
 
 
-### 步骤 3: 编写Node.js服务器代码
+### 3. 编写Node.js服务器代码
 
 在项目目录中创建 `server.js` 文件，加入以下代码：
 
@@ -33,7 +33,7 @@ npm install express multer
 ```
 
 
-### 步骤 5: 创建前端页面（访问：`http://localhost:4000`）
+### 4. 创建前端页面（访问：`http://localhost:4000`）
 
 在项目目录下创建一个名为 `public` 的文件夹，并在其中创建 `index.html` 文件，内容可以是修改后适用于上传的简单HTML页面：
 
@@ -43,7 +43,7 @@ npm install express multer
 ```
 
 
-### 步骤 6: 运行服务器
+### 5. 运行服务器
 
 在命令行中，启动你的服务器：
 
