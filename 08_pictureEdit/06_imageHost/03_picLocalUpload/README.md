@@ -69,12 +69,17 @@ Access to XMLHttpRequest at 'file:///D:/upload' from origin 'null' has been bloc
 
 # 4. windows图片上传到云服务器
 
+1. 上传文件
 
 ```sh
 scp -r "D:\onedrive\图片\01_家乡风景\海外风景" root@75.46.107.63:/home/01_html/08_x/image/03_picTemp
 ```
 
+2. 将文件从临时文件夹转移到图床文件夹
 
+```
+mv /home/01_html/08_x/image/03_picTemp/海外风景/* /home/01_html/08_x/image/01_imageHost/
+```
 
 
 
