@@ -55,7 +55,15 @@ node server.js
 
 2. 注意：如果是直接通过浏览器打开`index.html`的绝对路径`file:///D:/software/27_nodejs/my-image-uploader/public/index.html`，那么是无法上传成功的
 
-3. 确保你提前在Windows上创建了目标文件夹 `D:/hotmail/OneDrive/图片/01_家乡风景`，以避免出现路径错误。这种方法满足你直接在本地Windows环境中运行并处理文件的需求。
+3. 前端脚本出现问题了，记得去浏览器控制台查看报错信息，例如：
+
+```
+Access to XMLHttpRequest at 'file:///D:/upload' from origin 'null' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, data, isolated-app, chrome-extension, chrome-untrusted, https, edge.
+```
+
+这个错误信息表明您遇到了一个跨源资源共享（CORS）政策的问题，它阻止了您的页面从`file://`协议发出的`XMLHttpRequest（XHR）`请求。这个问题通常在直接从文件系统（如双击打开HTML文件）而不是通过`HTTP服务器`访问网页时出现。由于安全原因，现代浏览器限制了从`file://协议`发出的`XHR请求`。
+
+4. 确保你提前在Windows上创建了目标文件夹 `D:/hotmail/OneDrive/图片/01_家乡风景`，以避免出现路径错误。这种方法满足你直接在本地Windows环境中运行并处理文件的需求。
 
 
 
