@@ -5,55 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clipboard Image Uploader</title>
     <style>
+
         #imageContainer {
             border: 1px solid #ccc;
             padding: 10px;
-            width: auto; /* 自适应宽度 */
-            height: auto; /* 自适应高度 */
-            min-width: 500px; /* 最小宽度500px */
-            min-height: 80px; /* 最小高度80px */
-            max-width: 500px; /* 最大宽度500px，更正为500px以避免矛盾 */
-            max-height: 300px; /* 最大高度300px */
+            width: auto;
+            height: auto;
+            min-width: 500px;
+            min-height: 80px;
+            max-width: 500px;
+            max-height: 300px;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: white;
+            background-color: #242729; /* 设置为与页面背景色一致的深灰色 */
         }
 
         #uploadButton {
             margin-top: 10px;
             cursor: pointer;
             padding: 5px 10px;
-            background-color: #008080; /* 浅蓝绿色 */
+            background-color: #008080;
             color: white;
             border: none;
             border-radius: 5px;
-            width: 100%; /* 使按钮宽度与输入框相匹配 */
+            width: auto; /* 设置按钮宽度自适应内容 */
+            max-width: 200px; /* 最大宽度限制 */
+            margin-left: auto; /* 水平居中 */
+            margin-right: auto; /* 水平居中 */
         }
 
         body {
             display: flex;
             justify-content: center;
-            align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #242729; /* 深灰色背景 */
-            color: #ffffff; /* 白色文字 */
+            background-color: #242729;
+            color: #ffffff;
+            padding-top: 20px; /* 设置顶部间距 */
         }
 
         #container {
             text-align: center;
-            width: 520px; /* 容器宽度，稍大于输入框以包含边框 */
-            padding: 20px; /* 添加一些内边距 */
+            width: 520px;
+            padding: 20px;
             box-sizing: border-box;
         }
 
         #uploadInfo {
-            text-align: left; /* 信息文本左对齐 */
-            color: #ffffff; /* 信息文字颜色 */
-            margin-top: 10px; /* 信息区域与按钮的间距 */
+            text-align: left;
+            color: #ffffff;
+            margin-top: 10px;
         }
+
+
+
     </style>
 </head>
 <body>
