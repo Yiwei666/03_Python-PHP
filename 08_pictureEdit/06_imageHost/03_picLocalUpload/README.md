@@ -66,10 +66,12 @@ Access to XMLHttpRequest at 'file:///D:/upload' from origin 'null' has been bloc
 4. 确保你提前在Windows上创建了目标文件夹 `D:/hotmail/OneDrive/图片/01_家乡风景`，以避免出现路径错误。这种方法满足你直接在本地Windows环境中运行并处理文件的需求。
 
 
+# 4. windows图片上传到云服务器
 
 
-
-
+```sh
+scp -r "D:\onedrive\图片\01_家乡风景\海外风景" root@75.46.107.63:/home/01_html/08_x/image/03_picTemp
+```
 
 
 
