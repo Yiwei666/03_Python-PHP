@@ -33,9 +33,10 @@ npm install express multer
 ```
 
 
-### 步骤 5: 创建前端页面
+### 步骤 5: 创建前端页面（访问：`http://localhost:4000`）
 
 在项目目录下创建一个名为 `public` 的文件夹，并在其中创建 `index.html` 文件，内容可以是修改后适用于上传的简单HTML页面：
+
 
 ```html
 
@@ -50,9 +51,11 @@ npm install express multer
 node server.js
 ```
 
-此时，当你在浏览器中访问 `http://localhost:4000`，你将看到一个文件上传表单。选择文件后，文件将上传到指定的Windows路径下。
+1. 此时，当你在浏览器中访问 `http://localhost:4000`，你将看到一个文件上传表单。选择文件后，文件将上传到指定的Windows路径下。
 
-确保你提前在Windows上创建了目标文件夹 `D:/hotmail/OneDrive/图片/01_家乡风景`，以避免出现路径错误。这种方法满足你直接在本地Windows环境中运行并处理文件的需求。
+2. 注意：如果是直接通过浏览器打开`index.html`的绝对路径`file:///D:/software/27_nodejs/my-image-uploader/public/index.html`，那么是无法上传成功的
+
+3. 确保你提前在Windows上创建了目标文件夹 `D:/hotmail/OneDrive/图片/01_家乡风景`，以避免出现路径错误。这种方法满足你直接在本地Windows环境中运行并处理文件的需求。
 
 
 
