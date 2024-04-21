@@ -95,6 +95,7 @@ cd /d D:\software\27_nodejs\my-image-uploader && node server.js
 ```bash
 alias mvp='mv /home/01_html/08_x/image/03_picTemp/海外风景/* /home/01_html/08_x/image/01_imageHost/'
 alias lwp='echo $(($(ls -l /home/01_html/08_x/image/01_imageHost/ | wc -l) - 1))'
+alias lwt='echo $(($(ls -l /home/01_html/08_x/image/03_picTemp/海外风景/ | wc -l) - 1))'
 alias dsp='du -sh /home/01_html/08_x/image/01_imageHost/'
 alias cdp='cd /home/01_html/08_x/image/03_picTemp/海外风景/'
 ```
