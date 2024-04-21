@@ -81,6 +81,15 @@ scp -r "D:\onedrive\图片\01_家乡风景\海外风景" root@75.46.107.63:/home
 mv /home/01_html/08_x/image/03_picTemp/海外风景/* /home/01_html/08_x/image/01_imageHost/
 ```
 
+3. windows快捷命令
+
+参考`https://github.com/Yiwei666/05_C_programing/blob/main/sft/python.txt`
+
+```cmd
+scp -r "D:\onedrive\图片\01_家乡风景\海外风景" root@75.46.108.63:/home/01_html/08_x/image/03_picTemp
+cd /d D:\software\27_nodejs\my-image-uploader && node server.js
+```
+
 
 
 
