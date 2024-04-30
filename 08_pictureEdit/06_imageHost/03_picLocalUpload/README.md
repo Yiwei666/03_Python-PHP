@@ -4,6 +4,10 @@
 
 # 2. 文件结构
 
+```
+server.js          # cmd控制台运行脚本
+index.html         # 浏览器中打开，打开网址 http://localhost:4000
+```
 
 # 3. Node.js 环境配置
 
