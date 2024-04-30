@@ -229,8 +229,8 @@ done
 
 
 
-### 3. mysql数据库创建
----
+# 4. mysql数据库创建
+
 
 当您想要创建一个数据库以及其中的表结构时，您可以使用 MySQL 的命令行界面或图形化工具（如 phpMyAdmin）来执行这些操作。以下是在 MySQL 命令行中创建数据库和表结构的步骤示例：
 
@@ -330,8 +330,8 @@ FROM kkmusicTABLE
 ORDER BY datetime ASC;
 ```
 
-### 4. 定时任务
----
+# 5. 定时任务
+
 
 01keke.py 和 musicdown.py 搭配使用的crontab定时任务脚本
 
@@ -360,7 +360,7 @@ which python
 **注意：由于本项目没有涉及到浏览器php脚本对后端文本的读写和python脚本调用，因此不需要设置权限。python脚本的调用和对txt文件的读写依赖于crontab定时任务，因此不需要设置执行和读写权限。**
 
 
-### 5. mysql数据迁移
+# 6. mysql数据迁移
 ---
 
 ```
