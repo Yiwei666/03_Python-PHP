@@ -8,6 +8,7 @@
 
 ```
 01_jpg_To_png.py         # jpg图片转png
+03_png_To_jpg.py         # png图片转jpg
 imageCompression.py      # 图片压缩
 ```
 
