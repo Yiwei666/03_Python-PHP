@@ -361,7 +361,6 @@ which python
 
 
 # 6. mysql数据迁移
----
 
 ```
 sudo mysqldump -p kkmusicdb > backup.sql           # 导出源服务器数据
