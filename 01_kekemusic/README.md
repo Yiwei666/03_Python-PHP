@@ -373,4 +373,11 @@ sudo mysql -u root -p kkmusicdb < backup.sql       # 在新服务器中导入数
 - 参考资料：https://github.com/Yiwei666/12_blog/blob/main/005/005.md
 
 
+# 参考资料
+
+1. mysql详细安装和配置教程：https://github.com/Yiwei666/12_blog/blob/main/002/002.md#2-ubuntu%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85mysql
+
+
+
+
 
