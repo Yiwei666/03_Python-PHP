@@ -83,7 +83,6 @@ while ($row = $result->fetch_assoc()) {
         justify-content: center;
         padding: 5px;
     }
-    /* 侧边栏样式 */
     .sidebar {
         position: fixed;
         right: 0;
@@ -106,6 +105,11 @@ while ($row = $result->fetch_assoc()) {
         text-decoration: none;
         color: blue;
         display: block; /* 使链接填满整个列表项 */
+    }
+    /* 当前页样式 */
+    .active-page {
+        text-decoration: underline; /* 添加下划线 */
+        color: red; /* 改变字体颜色为红色 */
     }
 </style>
 <script>
@@ -142,7 +146,11 @@ function updateLikes(imageId, action) {
     <nav>
         <ul>
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <li><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+                <li>
+                    <a href="?page=<?php echo $i; ?>" class="<?php echo ($page == $i) ? 'active-page' : ''; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
             <?php endfor; ?>
         </ul>
     </nav>
