@@ -58,7 +58,7 @@ while ($row = $result->fetch_assoc()) {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        max-width: 1700px; /* 确保容器宽度适当 */
+        max-width: 1700px;
     }
     .image-container {
         width: 400px;
@@ -87,12 +87,12 @@ while ($row = $result->fetch_assoc()) {
         position: fixed;
         right: 0;
         top: 0;
-        width: 100px; /* 设置侧边栏宽度 */
-        height: 100vh; /* 使侧边栏高度撑满视窗 */
-        background-color: #f9f9f9; /* 设置背景色 */
-        overflow-y: auto; /* 添加垂直滚动条 */
-        box-shadow: -3px 0 5px rgba(0,0,0,0.2); /* 添加阴影效果 */
-        z-index: 1000; /* 确保侧边栏在其他内容之上 */
+        width: 100px;
+        height: 100vh;
+        background-color: #f9f9f9;
+        overflow-y: auto;
+        box-shadow: -3px 0 5px rgba(0,0,0,0.2);
+        z-index: 1000;
     }
     nav ul {
         display: block;
@@ -104,12 +104,11 @@ while ($row = $result->fetch_assoc()) {
     nav ul li a {
         text-decoration: none;
         color: blue;
-        display: block; /* 使链接填满整个列表项 */
+        display: block;
     }
-    /* 当前页样式 */
     .active-page {
-        text-decoration: underline; /* 添加下划线 */
-        color: red; /* 改变字体颜色为红色 */
+        text-decoration: underline;
+        color: red;
     }
 </style>
 <script>
@@ -125,6 +124,18 @@ function updateLikes(imageId, action) {
         document.getElementById(`dislike-${imageId}`).textContent = data.dislikes;
     });
 }
+
+// 在页面加载时恢复滚动位置
+document.addEventListener("DOMContentLoaded", function() {
+    if (localStorage.getItem('sidebarScrollPos')) {
+        document.querySelector('.sidebar').scrollTop = localStorage.getItem('sidebarScrollPos');
+    }
+});
+
+// 在页面卸载时保存滚动位置
+window.onbeforeunload = function() {
+    localStorage.setItem('sidebarScrollPos', document.querySelector('.sidebar').scrollTop);
+};
 </script>
 </head>
 <body>
@@ -141,7 +152,6 @@ function updateLikes(imageId, action) {
         </div>
     <?php endforeach; ?>
 </div>
-<!-- 侧边栏导航 -->
 <div class="sidebar">
     <nav>
         <ul>
