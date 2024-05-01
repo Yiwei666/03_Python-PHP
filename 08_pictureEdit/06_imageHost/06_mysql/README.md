@@ -15,6 +15,8 @@
 08_picDisplay_mysql_inRight.php            # 点赞图标位于图片内右侧居中
 08_picDisplay_mysql_inRigTra.php           # 点赞图标位于图片内右侧居中，点赞图标所在方框设置为透明
 08_picDisplay_order.php                    # 基于总点赞数排序显示图片
+08_picDisplay_mysql_gallery.php            # 显示数据库中所有图片，添加分页、侧边栏、localStorage
+08_picDisplay_mysql_order.php              # 显示数据库中所有图片，按照总点赞数由多到少排序，添加分页、侧边栏、localStorage
 ```
 
 # 3. 环境配置
