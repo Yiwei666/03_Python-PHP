@@ -5,7 +5,7 @@ include '08_db_config.php';  // 包含数据库连接信息
 $dir4 = "/home/01_html/08_x/image/01_imageHost";
 $dir5 = str_replace("/home/01_html", "", $dir4); // 去除目录前缀
 $domain = "https://19640810.xyz"; // 域名网址
-$picnumber = 6; // 设置需要显示的图片数量
+$picnumber = 3; // 设置需要显示的图片数量
 
 // 用户登录和登出检查
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imageId']) && isset($_
     if ($action == 'like') {
         $mysqli->query("UPDATE images SET likes = likes + 1 WHERE id = $imageId");
     } elseif ($action == 'dislike') {
-        $mysqli->query("UPDATE images SET dislikes = dislikes - 1 WHERE id = $imageId");  // 注意这里的变化
+        $mysqli->query("UPDATE images SET dislikes = dislikes + 1 WHERE id = $imageId");  // 注意这里的变化
     }
 
     // 获取更新后的值
@@ -74,9 +74,28 @@ $selectedImages = array_rand($images, min($picnumber, count($images)));
 <meta charset="UTF-8">
 <title>Image Gallery with Likes and Dislikes</title>
 <style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+    .image-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
     .image {
-        width: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i', $_SERVER['HTTP_USER_AGENT']) ? '900px' : '500px'; ?>;
+        width: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i', $_SERVER['HTTP_USER_AGENT']) ? '900px' : '600px'; ?>;
         height: auto;
+    }
+    .interaction-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 20px;
     }
 </style>
 <script>
