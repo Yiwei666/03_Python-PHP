@@ -465,5 +465,18 @@ Mozilla/5.0 (Android 11; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0            
 ```
 
 
+# 5. to do list
+
+1. uninstall bash脚本
+2. 安装脚本中添加终端自适应脚本
+3. cookie相关脚本设置
+4. 图片压缩设置
+5. rclone备份图片到onedrive
+6. mysql相关设置
+
+
+
+
+
 
 
