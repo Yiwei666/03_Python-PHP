@@ -18,23 +18,6 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-// 处理点赞和点踩的请求
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imageId']) && isset($_POST['action'])) {
-    $imageId = intval($_POST['imageId']);
-    $action = $_POST['action'];
-    if ($action == 'like') {
-        $mysqli->query("UPDATE images SET likes = likes + 1 WHERE id = $imageId");
-    } elseif ($action == 'dislike') {
-        $mysqli->query("UPDATE images SET dislikes = dislikes + 1 WHERE id = $imageId");
-    }
-
-    // 获取更新后的值
-    $result = $mysqli->query("SELECT likes, dislikes FROM images WHERE id = $imageId");
-    $row = $result->fetch_assoc();
-    echo json_encode($row);
-    exit;
-}
-
 // 初始化图片数据库
 $directory = $dir4;
 $imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
