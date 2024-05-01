@@ -128,7 +128,7 @@ function updateLikes(imageId, action) {
     <?php foreach ($selectedImages as $key): ?>
         <?php $image = $images[$key]; ?>
         <div class="image-container">
-            <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>" class="image" alt="Random Image">
+            <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>" class="image" alt="Random Image" loading="lazy">
             <div class="interaction-container">
                 <button onclick="updateLikes(<?php echo $image['id']; ?>, 'like')">👍</button>
                 <span id="like-<?php echo $image['id']; ?>"><?php echo $image['likes']; ?></span>
