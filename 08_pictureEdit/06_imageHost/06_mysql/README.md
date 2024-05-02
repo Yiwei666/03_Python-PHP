@@ -77,7 +77,7 @@ sudo mysql -u root
 
 如果没有要求输入密码，而是直接进入了 MySQL 提示符，那么很可能没有设置密码。您可以尝试运行以下查询来查看 MySQL 用户和权限信息：
 
-```
+```sql
 SELECT User, Host, plugin FROM mysql.user;
 ```
 
@@ -187,7 +187,7 @@ CREATE TABLE images (
 
 6. 数据筛选
 
-```
+```sql
 SELECT COUNT(*) FROM images;                              # 查询一个表中的数据条数
 SELECT COUNT(*) FROM images WHERE likes > 100;            # 如果你想知道哪些图片的点赞数超过100
 ```
