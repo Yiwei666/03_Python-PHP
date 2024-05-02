@@ -148,7 +148,7 @@ sudo mysql -u root -p
 CREATE DATABASE your_database_name;
 ```
 
-3. 创建用户并授权
+3. 创建用户并授权（root用户可跳过）
 
 ```mysql
 CREATE USER 'your_username'@'localhost' IDENTIFIED BY 'your_password';
@@ -192,7 +192,36 @@ SELECT COUNT(*) FROM images;                              # 查询一个表中�
 SELECT COUNT(*) FROM images WHERE likes > 100;            # 如果你想知道哪些图片的点赞数超过100
 ```
 
+7. 数据查询
 
+
+- 要查看MySQL数据库中一个表的前10行数据，可以使用以下命令：
+
+```sql
+SELECT * FROM images
+ORDER BY id
+LIMIT 10;
+```
+
+- 对于查看表的后10行数据，可以使用以下命令：
+
+```sql
+SELECT * FROM images
+ORDER BY id DESC
+LIMIT 10;
+```
+
+- 这条命令将数据按照id降序排列，从而使得最新的记录排在前面，然后通过LIMIT 10返回最后10行。如果你需要它们按原始顺序展示，可以对结果再次使用ORDER BY id ASC：
+
+```sql
+SELECT * FROM (
+    SELECT * FROM images
+    ORDER BY id DESC
+    LIMIT 10
+) AS last_ten
+ORDER BY id ASC;
+```
+这里，我们使用了一个子查询来首先获取最后10行，然后在外层查询中对这些结果按id进行升序排序，以返回按原始顺序的记录。
 
 
 
