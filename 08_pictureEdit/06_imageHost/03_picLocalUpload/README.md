@@ -5,8 +5,10 @@
 # 2. 文件结构
 
 ```
-server.js          # cmd控制台运行脚本
-index.html         # 浏览器中打开，打开网址 http://localhost:4000
+server.js                  # cmd控制台运行脚本
+index.html                 # 浏览器中打开，打开网址 http://localhost:4000
+
+move_duplicates.py         # 查找指定文件夹下的所有相同图片，并移动到子文件夹中
 ```
 
 # 3. Node.js 环境配置
