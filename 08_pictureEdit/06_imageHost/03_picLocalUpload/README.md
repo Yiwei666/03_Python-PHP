@@ -8,7 +8,7 @@
 server.js                  # cmd控制台运行脚本
 index.html                 # 浏览器中打开，打开网址 http://localhost:4000
 
-move_duplicates.py         # 查找指定文件夹下的所有相同图片，并移动到子文件夹中
+move_duplicates.py         # 查找指定文件夹下的所有相同PNG图片，并移动到子文件夹中
 ```
 
 # 3. Node.js 环境配置
@@ -170,7 +170,7 @@ alias dsp='du -sh /home/01_html/08_x/image/01_imageHost/'
 alias cdp='cd /home/01_html/08_x/image/03_picTemp/海外风景/'
 ```
 
-# 5. 查找指定文件夹下所有相同图片
+# 5. 查找指定文件夹下所有相同PNG图片
 
 这段代码的功能是
 
