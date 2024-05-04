@@ -51,7 +51,7 @@ $dbname = 'image_db'; // 数据库名称
 ```
 
 
-### 2. `08_image_management.php`  
+### 2. `08_image_management.php` 图像点赞/反对
 
 1. 功能分析：
 
