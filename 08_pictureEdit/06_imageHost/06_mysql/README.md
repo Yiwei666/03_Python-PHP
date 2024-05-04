@@ -148,7 +148,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 ```
 
 
-### 1. `08_picDisplay_mysql.php`
+### 3. `08_picDisplay_mysql.php`
 
 1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
 2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
@@ -161,6 +161,11 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 08_db_config.php             # 包含数据库连接的配置信息。
 08_image_management.php      # 处理图片的喜欢和不喜欢的更新请求。
 ```
+
+
+
+
+
 
 # 4. ubuntu系统安装MySQL
 
