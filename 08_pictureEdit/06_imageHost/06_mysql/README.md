@@ -55,16 +55,16 @@ $dbname = 'image_db'; // 数据库名称
 
 1. 功能分析：
 
-- 首先引入数据库配置文件 08_db_config.php 以获取数据库连接。
-- 检查当前请求是否为 POST 方法。
-- 从 POST 请求中获取 imageId 和 action 两个参数：
-  - imageId：图像的唯一标识符。
-  - action：用户操作，可能为like（点赞）或dislike（反对）。
+- 首先引入数据库配置文件 `08_db_config.php` 以获取数据库连接。
+- 检查当前请求是否为 `POST` 方法。
+- 从 POST 请求中获取 `imageId` 和 `action` 两个参数：
+  - `imageId`：图像的唯一标识符。
+  - `action`：用户操作，可能为`like`（点赞）或`dislike`（反对）。
 - 根据 action 的值执行不同的 SQL 查询：
   - like：点赞计数加一。
   - dislike：反对计数加一。
 - 使用 mysqli 对象执行 SQL 查询并更新数据库。
-- 返回更新后的点赞和反对数，以 JSON 格式输出。
+- 返回更新后的点赞和反对数，以 `JSON` 格式输出。
 
 2. 注意点：
 
