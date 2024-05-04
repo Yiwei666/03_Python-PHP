@@ -10,6 +10,7 @@
 ```
 08_db_config.php                           # 通常包含数据库连接信息如服务器地址、用户名、密码等
 08_image_management.php                    # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
+08_image_management.php                    # 后台控制数据库中的likes和dislikes数量变化
 
 08_picDisplay_mysql.php                    # 点赞图标位于图片外右侧居中
 08_picDisplay_mysql_inRight.php            # 点赞图标位于图片内右侧居中
