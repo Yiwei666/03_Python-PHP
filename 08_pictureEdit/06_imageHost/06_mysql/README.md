@@ -407,7 +407,11 @@ SHOW VARIABLES LIKE 'character\_set\_database';  # 查看数据库的编码方�
 
 
 
+# 参考资料
 
+1. 可可英语：https://github.com/Yiwei666/03_Python-PHP/tree/main/01_kekemusic
+2. 在线词典：https://github.com/Yiwei666/03_Python-PHP/tree/main/05_mysqlDict
+3. mysql数据库博客：https://github.com/Yiwei666/12_blog/blob/main/002/002.md
 
 
 
