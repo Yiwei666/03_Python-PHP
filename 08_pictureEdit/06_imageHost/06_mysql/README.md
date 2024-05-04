@@ -141,7 +141,11 @@ mysql> describe images
 +------------+--------------+------+-----+---------+----------------+
 ```
 
+4. 导出`image_db`数据库为`08_image_backup_02.sql`。在终端中输入如下命令，然后输入mysql的root密码即可。
 
+```bash
+mysqldump -p image_db  > 08_image_backup_02.sql
+```
 
 
 ### 1. `08_picDisplay_mysql.php`
