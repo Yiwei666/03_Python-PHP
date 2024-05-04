@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 环境变量中唯一需要注意的初始化参数是`08_db_config.php`，获取数据库连接
 
-```
+```php
 include '08_db_config.php';
 ```
 
