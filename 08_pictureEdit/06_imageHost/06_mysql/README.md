@@ -21,6 +21,107 @@
 
 # 3. 环境配置
 
+### 1. `08_db_config.php` 数据库连接
+
+通过mysqli对象实现与数据库的连接，并检查连接是否成功。
+
+```php
+<?php
+$host = 'localhost'; // 通常是 'localhost' 或一个IP地址
+$username = 'root'; // 数据库用户名
+$password = '123456789'; // 数据库密码
+$dbname = 'image_db'; // 数据库名称
+
+// 创建数据库连接
+$mysqli = new mysqli($host, $username, $password, $dbname);
+
+// 检查连接
+if ($mysqli->connect_error) {
+    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
+?>
+```
+
+- 需要初始化的参数包括用户名、密码、数据库名称
+
+```php
+$username = 'root'; // 数据库用户名
+$password = '123456789'; // 数据库密码
+$dbname = 'image_db'; // 数据库名称
+```
+
+
+### 2. `08_image_management.php`  
+
+功能分析：
+
+- 首先引入数据库配置文件 08_db_config.php 以获取数据库连接。
+- 检查当前请求是否为 POST 方法。
+- 从 POST 请求中获取 imageId 和 action 两个参数：
+  - imageId：图像的唯一标识符。
+  - action：用户操作，可能为like（点赞）或dislike（反对）。
+- 根据 action 的值执行不同的 SQL 查询：
+  - like：点赞计数加一。
+  - dislike：反对计数加一。
+- 使用 mysqli 对象执行 SQL 查询并更新数据库。
+- 返回更新后的点赞和反对数，以 JSON 格式输出。
+
+注意点：
+
+- 确保数据库中已经有 images 表，并且包含 likes 和 dislikes 字段。
+- 防止 SQL 注入攻击：使用准备好的 SQL 语句进行查询。
+
+这些代码实现了数据库连接配置和简单的图像点赞/反对功能。
+
+```php
+<?php
+// 引入数据库配置文件
+include '08_db_config.php';
+
+// 确保是 POST 请求
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // 获取 POST 数据
+    $imageId = isset($_POST['imageId']) ? intval($_POST['imageId']) : null;
+    $action = isset($_POST['action']) ? $_POST['action'] : '';
+
+    // 根据 action 更新数据库
+    if ($imageId && ($action === 'like' || $action === 'dislike')) {
+        if ($action === 'like') {
+            $query = "UPDATE images SET likes = likes + 1 WHERE id = ?";
+        } elseif ($action === 'dislike') {
+            $query = "UPDATE images SET dislikes = dislikes + 1 WHERE id = ?";  // 注意此处也改为加一
+        }
+
+        // 准备和执行 SQL 语句
+        if ($stmt = $mysqli->prepare($query)) {
+            $stmt->bind_param("i", $imageId);
+            $stmt->execute();
+            $stmt->close();
+
+            // 获取更新后的值
+            $result = $mysqli->query("SELECT likes, dislikes FROM images WHERE id = $imageId");
+            $row = $result->fetch_assoc();
+
+            // 返回 JSON 数据
+            echo json_encode($row);
+        } else {
+            echo json_encode(['error' => 'Failed to prepare statement']);
+        }
+    } else {
+        echo json_encode(['error' => 'Invalid input']);
+    }
+} else {
+    // 非 POST 请求处理
+    echo json_encode(['error' => 'Invalid request method']);
+}
+
+?>
+```
+
+
+
+
+
 ### 1. `08_picDisplay_mysql.php`
 
 1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
