@@ -1,20 +1,3 @@
-<?php
-session_start();
-
-// If the user is not logged in, redirect to the login page
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-  header('Location: login.php');
-  exit;
-}
-
-// If the user clicked the logout link, log them out and redirect to the login page
-if (isset($_GET['logout'])) {
-  session_destroy(); // destroy all session data
-  header('Location: login.php');
-  exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,6 +66,13 @@ if (isset($_GET['logout'])) {
             $query = $_GET['query'];
             $searchUrl = 'https://www.google.com/search?q=site%3Areddit.com+OR+site%3Aquora.com+OR+site%3Av2ex.com+' . $query;
             echo "<script>window.location.replace('$searchUrl');</script>";
+            exit;
+        }
+
+        if(isset($_GET['query_Telegraph'])) {
+            $query_Telegraph = $_GET['query_Telegraph'];
+            $Telegraph_Url = 'https://www.google.com/search?q=site%3Atelegra.ph+' . $query_Telegraph;
+            echo "<script>window.location.replace('$Telegraph_Url');</script>";
             exit;
         }
         if(isset($_GET['query_keinsciSobereva'])) {
@@ -228,6 +218,11 @@ if (isset($_GET['logout'])) {
     <form method="GET" target="_blank">
         <label for="query">搜索:</label>
         <input type="text" name="query" id="query" placeholder="在 Reddit、Quora 和 V2EX 中搜索">
+        <input type="submit" value="搜索">
+    </form>
+    <form method="GET">
+        <label for="query_Telegraph">在 Telegraph 中搜索:</label>
+        <input type="text" name="query_Telegraph" id="query_Telegraph" placeholder=" Telegraph 搜索">
         <input type="submit" value="搜索">
     </form>
     <form method="GET">
