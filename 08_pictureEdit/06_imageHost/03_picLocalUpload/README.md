@@ -258,9 +258,19 @@ destination_folder = r"D:\onedrive\图片\01_家乡风景\海外风景\01_repeat
 ```
 
 
+# 6. 服务器项目相关alias
 
-
-
+```bash
+alias mvp='mv /home/01_html/08_x/image/03_picTemp/海外风景/* /home/01_html/08_x/image/01_imageHost/'
+alias lwp='echo $(($(ls -l /home/01_html/08_x/image/01_imageHost/ | wc -l) - 1))'
+alias lwt='echo $(($(ls -l /home/01_html/08_x/image/03_picTemp/海外风景/ | wc -l) - 1))'
+alias dsp='du -sh /home/01_html/08_x/image/01_imageHost/'
+alias cdp='cd /home/01_html/08_x/image/03_picTemp/海外风景/'
+alias lwc='ls -l | grep "^-" | wc -l'
+# rc6_onedrive = 
+alias rsp='rclone size "rc6:cc1-1/01_html/08_x/image/01_imageHost/"'
+alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/  rc6:cc1-1/01_html/08_x/image/01_imageHost/ --transfers=16 &'
+```
 
 
 
