@@ -104,6 +104,16 @@ app.listen(port, () => {
 ```
 
 
+- 参数初始化需要注意的环境变量
+
+```js
+const uploadPath = 'D:/onedrive/图片/01_家乡风景/海外风景';                      // 指定存储图片的路径
+const adjustedPath = filePath.replace('D:/onedrive/', 'D:/onedrive/');          // 替换 filePath 中的部分路径字符串，显示在返回成功后的页面，需根据实际情况调整路径
+```
+
+注意：上述第一个 `D:/onedrive/` 是 `uploadPath` 中的一部分
+
+
 ### 4. 创建前端页面（访问：`http://localhost:4000`）
 
 在项目目录下创建一个名为 `public` 的文件夹，并在其中创建 `index.html` 文件，内容可以是修改后适用于上传的简单HTML页面：
