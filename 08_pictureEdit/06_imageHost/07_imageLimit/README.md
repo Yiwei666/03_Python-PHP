@@ -5,7 +5,7 @@
 # 2. 文件结构
 
 ```
-08_pic_url_check.js
+08_pic_url_check.js      # 通过referer限制用户通过构造链接访问图片
 ```
 
 # 3. 环境配置
