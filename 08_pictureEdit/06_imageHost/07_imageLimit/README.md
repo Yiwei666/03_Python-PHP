@@ -113,7 +113,7 @@ app.listen(port, () => {
 
 ### 4. 运行及alias
 
-```
+```bash
 alias tgn='tail -n 50 /var/log/nginx/access.log'
 alias gn='ps aux | grep node'
 alias vb='vi ~/.bashrc'
