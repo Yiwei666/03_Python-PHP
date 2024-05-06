@@ -21,7 +21,7 @@ npm install express
 ### 2. 配置nginx反向代理
 
 1. 打开并编辑 Nginx 配置文件，例如 `/etc/nginx/nginx.conf` 或自定义配置文件。
-2. 添加以下配置，将请求转发到本地 Node.js 服务器（端口为 3000）：
+2. 添加以下配置，将请求转发到本地 Node.js 服务器（端口为 `3000`）：
 
 ```nginx
 # 转发到 Node.js 服务器
@@ -99,7 +99,7 @@ app.listen(port, () => {
 ```
 
 1. Nginx 配置：
-   - Nginx 充当反向代理，将客户端对指定路径（/08_x/image/01_imageHost/）的请求转发到在本地运行的 Node.js 服务器。
+   - Nginx 充当反向代理，将客户端对指定路径（`/08_x/image/01_imageHost/`）的请求转发到在本地运行的 Node.js 服务器。
 2. Node.js 中的逻辑：
    - Node.js 服务器会接收到 Nginx 转发的请求。
    - 通过中间件检查请求的 Referer 头。
