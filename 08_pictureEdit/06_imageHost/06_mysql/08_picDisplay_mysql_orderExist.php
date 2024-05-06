@@ -21,30 +21,33 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-// 分页逻辑
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$page = max($page, 1);
-
-// 查询数据库中总图片数量
-$result = $mysqli->query("SELECT COUNT(*) as total FROM images");
-$row = $result->fetch_assoc();
-$totalImages = $row['total'];
-$totalPages = ceil($totalImages / $imagesPerPage);
-
-// 计算当前页应该显示的图片
-$offset = ($page - 1) * $imagesPerPage;
-$query = "SELECT id, image_name, likes, dislikes FROM images ORDER BY (likes - dislikes) DESC LIMIT $imagesPerPage OFFSET $offset";
-$images = [];
-$validImages = [];
+// 获取数据库中所有图片的记录
+$query = "SELECT id, image_name, likes, dislikes FROM images";
 $result = $mysqli->query($query);
 
-// 检查图片文件是否存在
+// 检查文件夹中实际存在的图片
+$validImages = [];
 while ($row = $result->fetch_assoc()) {
     $imagePath = $dir4 . '/' . $row['image_name'];
     if (file_exists($imagePath)) {
         $validImages[] = $row;
     }
 }
+
+// 对实际存在的图片按照 (likes - dislikes) 排序
+usort($validImages, function ($a, $b) {
+    return ($b['likes'] - $b['dislikes']) - ($a['likes'] - $a['dislikes']);
+});
+
+// 计算实际存在的图片数量，并基于此重新分页
+$totalImages = count($validImages);
+$totalPages = ceil($totalImages / $imagesPerPage);
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = max($page, 1);
+
+// 计算当前页要显示的图片
+$offset = ($page - 1) * $imagesPerPage;
+$imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
 
 ?>
 
@@ -149,7 +152,7 @@ while ($row = $result->fetch_assoc()) {
 </head>
 <body>
 <div class="container">
-    <?php foreach ($validImages as $image): ?>
+    <?php foreach ($imagesToDisplay as $image): ?>
         <div class="image-container">
             <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>" class="image" alt="Image" loading="lazy">
             <div class="interaction-container">
