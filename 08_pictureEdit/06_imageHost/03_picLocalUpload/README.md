@@ -272,6 +272,12 @@ alias rsp='rclone size "rc6:cc1-1/01_html/08_x/image/01_imageHost/"'
 alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/  rc6:cc1-1/01_html/08_x/image/01_imageHost/ --transfers=16 &'
 alias clg='cat  /var/log/nginx/access.log'
 alias tgn='tail -n 50 /var/log/nginx/access.log'
+alias gn='ps aux | grep node'
+alias vb='vi ~/.bashrc'
+alias sb='source ~/.bashrc'
+alias kn='kill $(pgrep -f "08_pic_url_check.js")'
+# alias np='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js &'
+alias sn='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js > /home/01_html/08_x_nodejs/nohup.out &'
 ```
 
 
