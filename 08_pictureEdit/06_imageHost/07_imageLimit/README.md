@@ -12,11 +12,16 @@
 
 ### 1. 安装`express`依赖包 ：
 
+
+
 ```bash
 npm install express
 ```
 
 ### 2. 配置nginx反向代理
+
+1. 打开并编辑 Nginx 配置文件，例如 `/etc/nginx/nginx.conf` 或自定义配置文件。
+2. 添加以下配置，将请求转发到本地 Node.js 服务器（端口为 3000）：
 
 ```nginx
 # 转发到 Node.js 服务器
@@ -28,6 +33,9 @@ location /08_x/image/01_imageHost/ {
     proxy_set_header X-Forwarded-Proto https;
 }
 ```
+
+- Nginx 配置文件中用于设置反向代理的指令，确保对特定路径的请求可以被转发到 Node.js 服务器。
+ 
 
 ### 3. 创建 Node.js 应用
 
@@ -88,6 +96,31 @@ const port = 3000;
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+```
+
+1. Nginx 配置：
+   - Nginx 充当反向代理，将客户端对指定路径（/08_x/image/01_imageHost/）的请求转发到在本地运行的 Node.js 服务器。
+2. Node.js 中的逻辑：
+   - Node.js 服务器会接收到 Nginx 转发的请求。
+   - 通过中间件检查请求的 Referer 头。
+   - 如果 Referer 中包含指定 PHP 脚本文件的名称（从 `/home/01_html` 目录中提取），则认为请求合法，继续提供资源。
+   - 如果 Referer 中不包含任何合法的 PHP 文件名，则判断请求非法，重定向到登录页面。
+3. 资源提供：
+   - 如果请求被认为合法，Node.js 服务器会通过 express.static 中间件提供相应的图片资源给客户端。
+
+总结：这种设计将请求的初步过滤责任交给 Node.js，由它负责验证来源的合法性，再决定是否提供图片资源或重定向到登录页面。
+
+
+### 4. 运行及alias
+
+```
+alias tgn='tail -n 50 /var/log/nginx/access.log'
+alias gn='ps aux | grep node'
+alias vb='vi ~/.bashrc'
+alias sb='source ~/.bashrc'
+alias kn='kill $(pgrep -f "08_pic_url_check.js")'
+# alias np='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js &'
+alias sn='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js > /home/01_html/08_x_nodejs/nohup.out &'
 ```
 
 
