@@ -278,6 +278,7 @@ alias sb='source ~/.bashrc'
 alias kn='kill $(pgrep -f "08_pic_url_check.js")'
 # alias np='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js &'
 alias sn='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js > /home/01_html/08_x_nodejs/nohup.out &'
+alias phd='php /home/01_html/08_image_dislikes_delete.php'
 ```
 
 
