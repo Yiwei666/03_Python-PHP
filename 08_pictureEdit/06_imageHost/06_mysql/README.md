@@ -9,6 +9,7 @@
 
 ```
 08_db_config.php                           # 通常包含数据库连接信息如服务器地址、用户名、密码等
+08_db_sync_images.php                      
 08_image_management.php                    # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
 08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
 08_image_dislikes_delete.php               # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
@@ -56,8 +57,54 @@ $password = '123456789'; // 数据库密码
 $dbname = 'image_db'; // 数据库名称
 ```
 
+### 2. `08_db_sync_images.php` 数据库同步图片信息功能模块
 
-### 2. `08_image_management.php` 图像点赞/反对
+1. 将图片目录与数据库同步的功能独立成一个可重用的 PHP 脚本模块。
+2. 图片目录与数据库同步：代码首先从指定目录中读取所有 PNG 格式的图片，然后检查这些图片是否已经存储在数据库中。未记录在数据库的图片将被添加到数据库。
+
+```php
+<?php
+include '08_db_config.php'; // 包含数据库连接信息
+
+function syncImages($directory) {
+    global $mysqli;
+
+    $imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
+    $existingImages = [];
+
+    // 获取数据库中已存在的图片
+    $result = $mysqli->query("SELECT image_name FROM images");
+    while ($row = $result->fetch_assoc()) {
+        $existingImages[] = $row['image_name'];
+    }
+
+    // 检查目录中的图片是否已在数据库中
+    foreach ($imagesInDirectory as $filePath) {
+        $imageName = basename($filePath);
+        if (!in_array($imageName, $existingImages)) {
+            // 如果图片不在数据库中，则添加
+            $stmt = $mysqli->prepare("INSERT INTO images (image_name, likes, dislikes) VALUES (?, 0, 0)");
+            $stmt->bind_param("s", $imageName);
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+}
+
+// 可以根据需要在这个脚本中直接调用 syncImages 函数或在其他文件中调用
+?>
+```
+
+- 可以在任何 PHP 脚本中通过以下方式调用此功能：
+
+```php
+include '08_db_sync_images.php';
+syncImages("/home/01_html/08_x/image/01_imageHost"); // 调用函数并提供图片存储目录
+// syncImages($dir4);
+```
+
+
+### 3. `08_image_management.php` 图像点赞/反对
 
 1. 功能分析：
 
@@ -153,7 +200,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 ```
 
 
-### 3. `08_picDisplay_mysql.php`
+### 4. `08_picDisplay_mysql.php`
 
 1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
 2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
@@ -167,10 +214,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 08_image_management.php      # 处理图片的喜欢和不喜欢的更新请求。
 ```
 
-
-
-
-### 4. 08_image_management.php
+### 5. 08_image_management.php
 
 ```
 通过引入`08_image_management.php` 文件，现在能不能编写一个脚本，实现以下需求
