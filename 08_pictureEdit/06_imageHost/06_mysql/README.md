@@ -170,7 +170,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 
 
 
-### 3. 08_image_management.php
+### 4. 08_image_management.php
 
 ```
 通过引入`08_image_management.php` 文件，现在能不能编写一个脚本，实现以下需求
