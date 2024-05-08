@@ -215,7 +215,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 08_image_management.php      # 处理图片的喜欢和不喜欢的更新请求。
 ```
 
-### 5. `08_image_management.php`
+### 5. `08_image_likes_manager.php`
 
 ```
 通过引入`08_image_management.php` 文件，现在能不能编写一个脚本，实现以下需求
