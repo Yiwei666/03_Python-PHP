@@ -215,7 +215,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 08_image_management.php      # 处理图片的喜欢和不喜欢的更新请求。
 ```
 
-### 5. 08_image_management.php
+### 5. `08_image_management.php`
 
 ```
 通过引入`08_image_management.php` 文件，现在能不能编写一个脚本，实现以下需求
@@ -227,6 +227,14 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 ```
 
 
+### 6. `08_image_dislikes_delete.php`
+
+- 该脚本中需要初始化的参数如下所示
+
+```php
+include '08_db_config.php';                                      // 包含数据库连接的配置信息
+$project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
+```
 
 
 
