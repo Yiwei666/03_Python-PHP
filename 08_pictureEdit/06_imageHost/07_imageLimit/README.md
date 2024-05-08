@@ -98,6 +98,16 @@ app.listen(port, () => {
 });
 ```
 
+- 环境变量
+
+```js
+const rootDir = '/home/01_html';
+res.redirect('https://19640810.xyz/login.php');
+app.use('/08_x/image/01_imageHost', express.static('/home/01_html/08_x/image/01_imageHost'));
+```
+
+
+
 1. Nginx 配置：
    - Nginx 充当反向代理，将客户端对指定路径（`/08_x/image/01_imageHost/`）的请求转发到在本地运行的 Node.js 服务器。
 2. Node.js 中的逻辑：
