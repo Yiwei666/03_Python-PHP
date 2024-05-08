@@ -266,19 +266,23 @@ alias lwp='echo $(($(ls -l /home/01_html/08_x/image/01_imageHost/ | wc -l) - 1))
 alias lwt='echo $(($(ls -l /home/01_html/08_x/image/03_picTemp/海外风景/ | wc -l) - 1))'
 alias dsp='du -sh /home/01_html/08_x/image/01_imageHost/'
 alias cdp='cd /home/01_html/08_x/image/03_picTemp/海外风景/'
+alias cdh='cd /home/01_html; ls -l'
 alias lwc='ls -l | grep "^-" | wc -l'
+
 # rc6_onedrive = 
 alias rsp='rclone size "rc6:cc1-1/01_html/08_x/image/01_imageHost/"'
 alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/  rc6:cc1-1/01_html/08_x/image/01_imageHost/ --transfers=16 &'
 alias clg='cat  /var/log/nginx/access.log'
 alias tgn='tail -n 50 /var/log/nginx/access.log'
 alias gn='ps aux | grep node'
+alias cb='cat ~/.bashrc'
 alias vb='vi ~/.bashrc'
 alias sb='source ~/.bashrc'
 alias kn='kill $(pgrep -f "08_pic_url_check.js")'
 # alias np='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js &'
 alias sn='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js > /home/01_html/08_x_nodejs/nohup.out &'
 alias phd='php /home/01_html/08_image_dislikes_delete.php'
+alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
 
