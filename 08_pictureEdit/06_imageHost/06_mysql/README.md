@@ -20,11 +20,11 @@
 08_picDisplay_mysql_inRigTra.php           # 点赞图标位于图片内右侧居中，点赞图标所在方框设置为透明，能够写入图片名到数据库
 
 08_picDisplay_order.php                    # 基于总点赞数排序显示有限张图片，例如50张图片
-08_picDisplay_mysql_gallery.php            # 显示数据库中所有图片，添加分页、侧边栏、localStorage
+08_picDisplay_mysql_gallery.php            # 显示数据库中所有图片，添加分页、侧边栏、localStorage，按照文件名默认排序
 08_picDisplay_mysql_order.php              # 显示数据库中所有图片，按照总点赞数由多到少排序，添加分页、侧边栏、localStorage
 
 08_picDisplay_mysql_orderExist.php         # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，不显示已删除图片导致的空白页
-08_picDisplay_mysql_galleryExist.php       # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，不显示已删除图片导致的空白页
+08_picDisplay_mysql_galleryExist.php       # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，不显示已删除图片导致的空白页，按照文件名默认排序
 ```
 
 # 3. 环境配置
