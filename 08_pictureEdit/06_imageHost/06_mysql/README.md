@@ -198,6 +198,8 @@ mysql> describe images
 
 ```bash
 mysqldump -p image_db  > 08_image_backup_02.sql
+
+alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
 
