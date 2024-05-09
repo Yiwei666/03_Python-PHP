@@ -240,6 +240,7 @@ $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项
 2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
 3. 图片展示：从数据库中随机选取指定数量的图片（在此脚本中设置为3张），然后在网页上显示。
 4. 互动功能：用户可以点击喜欢或不喜欢的按钮来更新图片的喜欢和不喜欢的数量。
+5. 终端识别：能够根据客户端类型（手机/电脑）自适应图片宽度
 
 此外，该脚本还调用了以下外部脚本或文件：
 
@@ -248,6 +249,24 @@ $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项
 08_image_management.php      # 处理图片的喜欢和不喜欢的更新请求。
 ```
 
+- 环境变量配置
+
+```php
+include '08_db_config.php';  // 包含数据库连接信息
+
+$dir4 = "/home/01_html/08_x/image/01_imageHost";
+$dir5 = str_replace("/home/01_html", "", $dir4); // 去除目录前缀
+$domain = "https://19640810.xyz"; // 域名网址
+$picnumber = 3; // 设置需要显示的图片数量
+
+fetch('08_image_management.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}&action=${action}`
+})
+```
+
+注意：从数据库中随机选取图片名称，然后通过构造链接进行访问，但是并未考虑到项目文件夹中图片已经删除，但是数据库中仍保留其信息。因此，对于部分已删除图片显示的是空白。
 
 
 # 4. ubuntu系统安装MySQL
