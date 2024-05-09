@@ -231,6 +231,10 @@ alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_
 
 ### 6. `08_image_dislikes_delete.php`
 
+`08_image_dislikes_delete.php` 是 `08_image_likes_manager.php` 升级版本，新增功能4：
+
+统计 dislikes 在 [a, b] 范围内的图片数量，并将云服务器项目文件夹中dislikes 在 [a, b] 范围的这些对应的图片都删除掉，删除前打印出这些文件的名称，提醒用户确认，最后打印删除后的项目文件中图片总数量。
+
 - 该脚本中需要初始化的参数如下所示
 
 ```php
