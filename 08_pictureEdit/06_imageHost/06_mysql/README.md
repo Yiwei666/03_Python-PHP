@@ -228,6 +228,12 @@ alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_
 5. 功能3：打印数据库中 likes 在[a，b] 之间的图片数量，以及数据库中图片的总数量
 ```
 
+- 该脚本中需要初始化的参数如下所示
+
+```php
+include '08_db_config.php';                                      // 包含数据库连接的配置信息
+```
+
 
 ### 6. `08_image_dislikes_delete.php`
 
