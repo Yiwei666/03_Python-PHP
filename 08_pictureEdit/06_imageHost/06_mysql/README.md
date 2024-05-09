@@ -202,22 +202,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
-
-### 4. `08_picDisplay_mysql.php`
-
-1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
-2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
-3. 图片展示：从数据库中随机选取指定数量的图片（在此脚本中设置为3张），然后在网页上显示。
-4. 互动功能：用户可以点击喜欢或不喜欢的按钮来更新图片的喜欢和不喜欢的数量。
-
-此外，该脚本还调用了以下外部脚本或文件：
-
-```
-08_db_config.php             # 包含数据库连接的配置信息。
-08_image_management.php      # 处理图片的喜欢和不喜欢的更新请求。
-```
-
-### 5. `08_image_likes_manager.php`
+### 4. `08_image_likes_manager.php`
 
 ```
 通过引入`08_image_management.php` 文件，现在能不能编写一个脚本，实现以下需求
@@ -235,7 +220,7 @@ include '08_db_config.php';                                      // 包含数据
 ```
 
 
-### 6. `08_image_dislikes_delete.php`
+### 5. `08_image_dislikes_delete.php`
 
 `08_image_dislikes_delete.php` 是 `08_image_likes_manager.php` 升级版本，新增功能4：
 
@@ -246,6 +231,21 @@ include '08_db_config.php';                                      // 包含数据
 ```php
 include '08_db_config.php';                                      // 包含数据库连接的配置信息
 $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
+```
+
+
+### 6. `08_picDisplay_mysql.php`
+
+1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
+2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
+3. 图片展示：从数据库中随机选取指定数量的图片（在此脚本中设置为3张），然后在网页上显示。
+4. 互动功能：用户可以点击喜欢或不喜欢的按钮来更新图片的喜欢和不喜欢的数量。
+
+此外，该脚本还调用了以下外部脚本或文件：
+
+```
+08_db_config.php             # 包含数据库连接的配置信息。
+08_image_management.php      # 处理图片的喜欢和不喜欢的更新请求。
 ```
 
 
