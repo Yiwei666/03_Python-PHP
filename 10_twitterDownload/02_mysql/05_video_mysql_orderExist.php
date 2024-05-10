@@ -6,7 +6,7 @@ function decrypt($data, $key) {
     return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
 }
 
-$key = 'your-signing-key-1'; // 应与加密时使用的密钥相同
+$key = 'your-signing-key-1'; // 应与登陆脚本中加密时使用的密钥相同
 
 // 如果用户未登录，则尝试通过 Cookie 验证身份
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
