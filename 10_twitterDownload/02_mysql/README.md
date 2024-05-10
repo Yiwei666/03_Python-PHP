@@ -99,7 +99,22 @@ FROM videos
 WHERE video_name = '20240508-171501-11580948017.mp4';
 ```
 
+2. 删除特定数据
 
+```sql
+DELETE FROM videos
+WHERE video_name = '20240508-171501-11580948017.mp4';
+```
+
+删除 `video_name` 为 `20240508-171501-11580948017.mp4` 的数据
+
+
+3. 查看数据表中的数据总数
+
+```sql
+SELECT COUNT(*)
+FROM videos;
+```
 
 
 
