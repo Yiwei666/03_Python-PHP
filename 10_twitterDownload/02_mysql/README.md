@@ -43,6 +43,22 @@ $password = '123456'; // 数据库密码
 $dbname = 'video_db'; // 数据库名称
 ```
 
+- 数据库中`videos`表格结构
+
+```php
+mysql> describe videos;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int          | NO   | PRI | NULL    | auto_increment |
+| video_name | varchar(255) | NO   |     | NULL    |                |
+| likes      | int          | YES  |     | 0       |                |
+| dislikes   | int          | YES  |     | 0       |                |
++------------+--------------+------+-----+---------+----------------+
+4 rows in set (0.03 sec)
+```
+
+
 ### 2. `05_db_sync_videos.php` 视频名数据库写入功能模块
 
 - 环境变量
@@ -59,7 +75,7 @@ $dir4 = '/home/01_html/05_twitter_video/';
 syncVideos($dir4); // 同步目录和数据库中的视频文件
 ```
 
-
+### 3. 
 
 
 
