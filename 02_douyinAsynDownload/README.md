@@ -1,10 +1,10 @@
 
-# 项目功能
+# 1. 项目功能
 
 异步下载抖音视频，不需要等待单个视频下载完成再提交下个视频链接，可以连续写入多个链接，存储到txt文件中，每隔固定时间读取下载
 
 
-# 项目架构
+# 2. 项目架构
 
 - **架构**
 
@@ -77,7 +77,7 @@ chmod 755 02_douyVideo
 
 
 
-# 环境配置
+# 3. 环境配置
 
 ### 1. crontab定时任务
 
@@ -347,6 +347,14 @@ with open(file_2, 'w') as output_file:
 
 print("链接已成功处理！")
 ```
+
+# 相关资料
+
+- Node.js结合Nginx反向代理实现随机播放视频：https://github.com/Yiwei666/02_javascript_cf-worker/blob/main/01_douyin/README.md
+
+
+
+
 
 
 
