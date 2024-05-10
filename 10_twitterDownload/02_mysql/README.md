@@ -128,6 +128,13 @@ $domain = "https://mcha.me";
 
 // 设置每页显示的视频数量
 $videosPerPage = 8;
+
+function updateLikes(videoId, action) {
+        fetch('05_video_management.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `videoId=${videoId}&action=${action}`
+        })
 ```
 
 
