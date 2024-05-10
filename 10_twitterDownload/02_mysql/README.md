@@ -45,7 +45,7 @@ $dbname = 'video_db'; // 数据库名称
 
 - 数据库中`videos`表格结构
 
-```mysql
+```
 mysql> describe videos;
 +------------+--------------+------+-----+---------+----------------+
 | Field      | Type         | Null | Key | Default | Extra          |
@@ -56,6 +56,17 @@ mysql> describe videos;
 | dislikes   | int          | YES  |     | 0       |                |
 +------------+--------------+------+-----+---------+----------------+
 4 rows in set (0.03 sec)
+```
+
+- 创建上述表结构的命令
+
+```sql
+CREATE TABLE videos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    video_name VARCHAR(255) NOT NULL,
+    likes INT DEFAULT 0,
+    dislikes INT DEFAULT 0
+);
 ```
 
 
