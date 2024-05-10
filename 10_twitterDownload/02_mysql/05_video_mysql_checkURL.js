@@ -52,19 +52,22 @@ app.get('/05_twitter_video/:videoName', (req, res) => {
 
   // 先验证Referer
   if (!validateReferer(req)) {
-    return res.status(403).send('Forbidden: Invalid referer');
+    console.log('Invalid referer:', req.headers.referer);
+    return res.redirect('https://mcha.me/login.php');
   }
 
   // 再验证签名
   if (!validateSignature(videoName, expires, signature)) {
-    return res.status(403).send('Forbidden: Invalid signature or expired link');
+    console.log('Invalid signature or expired link');
+    return res.redirect('https://mcha.me/login.php');
   }
 
   const videoPath = path.join('/home/01_html/05_twitter_video', videoName);
-  if (fs.existsSync(videoPath)) {  // 使用同步 fs 的 existsSync 方法
+  if (fs.existsSync(videoPath)) {
     res.sendFile(videoPath);
   } else {
-    res.status(404).send('Not Found');
+    console.log('Video not found:', videoName);
+    res.redirect('https://mcha.me/login.php');
   }
 });
 
