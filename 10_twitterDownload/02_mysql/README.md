@@ -142,7 +142,7 @@ function updateLikes(videoId, action) {
 
 按照数据库中`likes-dislikes`值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 
-- 环境变量
+- 环境变量：除了初始化`05_video_mysql_orderExist.php`中的参数外，还需要额外初始化如下代码中的 `$signingKey`和`$expiryTime` 这两个参数
 
 ```php
 // 生成带有签名的URL
@@ -157,7 +157,11 @@ function generateSignedUrl($videoName) {
 <video src="<?php echo generateSignedUrl(htmlspecialchars($video['video_name'])); ?>" class="video" controls alt="Video" loading="lazy"></video>
 ```
 
+上述代码部分时相较于`05_video_mysql_orderExist.php`添加和替换的部分，用于对视频的url进行加密和签名，下面是被替换的部分
 
+```php
+<video src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($video['video_name']); ?>" class="video" controls alt="Video" loading="lazy"></video>
+```
 
 
 # 4. 数据库相关命令
