@@ -5,8 +5,35 @@
 
 # 2. 文件结构
 
+```
+.
+├── 05_db_config.php
+├── 05_db_sync_videos.php
+├── 05_nodejs_sigURL
+│   ├── 05_video_mysql_checkURL.js
+│   ├── node_modules
+│   ├── nohup.out
+│   ├── package.json
+│   └── package-lock.json
+├── 05_twitter_bigfile
+│   ├── 01_url.txt
+│   └── 05_bashDownTwitterBigVideo.sh
+├── 05_twitter_bigVideo_download.php
+├── 05_twitter_video
+│   ├── 20230722-211832-363167243.mp4
+│   ├── ...
+├── 05_video_dislikes_delete.php
+├── 05_video_management.php
+├── 05_video_mysql_orderExist.php
+├── 05_video_mysql_orderExist_sigURL.php
+├── 05_video_mysql_random.php
+├── 05_video_mysql_random_sigURL.php
+```
 
 # 3. 环境配置
+
+
+
 
 
 
