@@ -43,6 +43,24 @@ $password = '123456'; // 数据库密码
 $dbname = 'video_db'; // 数据库名称
 ```
 
+### 2. `05_db_sync_videos.php` 视频名数据库写入功能模块
+
+- 环境变量
+
+```php
+include '05_db_config.php'; // 包含数据库连接信息
+```
+
+- 调用方式
+
+```php
+include '05_db_sync_videos.php';
+$dir4 = '/home/01_html/05_twitter_video/';
+syncVideos($dir4); // 同步目录和数据库中的视频文件
+```
+
+
+
 
 
 
