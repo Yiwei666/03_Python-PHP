@@ -82,11 +82,20 @@ include '05_db_config.php'; // 包含数据库连接信息
 
 ```php
 include '05_db_sync_videos.php';
-$dir4 = '/home/01_html/05_twitter_video/';
+$dir4 = '/home/01_html/05_twitter_video/';       // 存放视频的目录
 syncVideos($dir4); // 同步目录和数据库中的视频文件
 ```
 
-### 3. 
+### 3. `05_video_dislikes_delete.php`
+
+- 环境变量
+
+```php
+include '05_db_config.php';
+include '05_db_sync_videos.php';
+$dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
+```
+
 
 
 # 4. 数据库相关命令
