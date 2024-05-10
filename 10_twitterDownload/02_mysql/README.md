@@ -70,7 +70,7 @@ CREATE TABLE videos (
 
 ### 2. `05_db_sync_videos.php` 文件名数据库写入
 
-功能模块：将指定目录下的mp4文件名追加到数据库中
+功能模块：将指定目录下的`mp4文件名`追加到数据库中
 
 - 环境变量
 
@@ -100,7 +100,7 @@ $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 
 ### 4. `05_video_management.php`
 
-功能模块：将web页面中点赞/踩的action更新到数据库中
+功能模块：将web页面中`点赞/踩`的`action`更新到数据库中
 
 - 环境变量
 
@@ -111,7 +111,7 @@ include '05_db_config.php';
 
 ### 5. `05_video_mysql_orderExist.php`
 
-按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
+按照数据库中`likes-dislikes`值得大小依次显示视频，每页显示固定数量视频
 
 - 环境变量
 
@@ -129,6 +129,10 @@ $domain = "https://mcha.me";
 // 设置每页显示的视频数量
 $videosPerPage = 8;
 ```
+
+
+### 5. 
+
 
 
 
