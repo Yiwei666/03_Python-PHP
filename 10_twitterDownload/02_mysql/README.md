@@ -7,27 +7,25 @@
 
 ```
 .
-├── 05_db_config.php
-├── 05_db_sync_videos.php
+├── 05_db_config.php                             # 连接数据库
+├── 05_db_sync_videos.php                        # 功能模块：将指定目录下的mp4文件名追加到数据库中
+├── 05_video_dislikes_delete.php                 # 统计likes和dislikies数在某个区间内的视频数量
+├── 05_video_management.php                      # 功能模块：将web页面中点赞/踩的action更新到数据库中
+├── 05_video_mysql_orderExist.php                # 按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
+├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
+├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在某个范围内的视频
+├── 05_video_mysql_random_sigURL.php             # 随机显示likes-dislikes值在某个范围内的视频，视频的url经过签名并加密，并设置有效期
 ├── 05_nodejs_sigURL
-│   ├── 05_video_mysql_checkURL.js
+│   ├── 05_video_mysql_checkURL.js               # node.js应用，运行在云服务器后端，解析并核验签名的url以及referer是否合法，过滤非法请求
 │   ├── node_modules
 │   ├── nohup.out
 │   ├── package.json
 │   └── package-lock.json
-├── 05_twitter_bigfile
-│   ├── 01_url.txt
-│   └── 05_bashDownTwitterBigVideo.sh
-├── 05_twitter_bigVideo_download.php
-├── 05_twitter_video
+├── 05_twitter_video                             # 存储mp4视频的文件夹
 │   ├── 20230722-211832-363167243.mp4
 │   ├── ...
-├── 05_video_dislikes_delete.php
-├── 05_video_management.php
-├── 05_video_mysql_orderExist.php
-├── 05_video_mysql_orderExist_sigURL.php
-├── 05_video_mysql_random.php
-├── 05_video_mysql_random_sigURL.php
+├── twitterVideo_page.php                        # 显示指定路径下未签名、未基于数据库排序的视频，后端开启nginx反向代理后无法正常工作
+└── twitterVideo_random.php                      # 随机显示指定路径下未签名、未基于数据库排序的视频，后端开启nginx反向代理后无法正常工作
 ```
 
 # 3. 环境配置
@@ -70,7 +68,9 @@ CREATE TABLE videos (
 ```
 
 
-### 2. `05_db_sync_videos.php` 视频名数据库写入功能模块
+### 2. `05_db_sync_videos.php` 文件名数据库写入
+
+功能模块：将指定目录下的mp4文件名追加到数据库中
 
 - 环境变量
 
