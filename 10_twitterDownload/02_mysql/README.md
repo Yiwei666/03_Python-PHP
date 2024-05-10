@@ -34,6 +34,7 @@
 
 ### 1. `05_db_config.php` 连接数据库
 
+- 环境变量
 
 ```php
 $host = 'localhost'; // 通常是 'localhost' 或一个IP地址
