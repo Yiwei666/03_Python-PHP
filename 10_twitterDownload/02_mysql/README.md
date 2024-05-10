@@ -130,7 +130,7 @@ $domain = "https://mcha.me";
 $videosPerPage = 8;
 
 function updateLikes(videoId, action) {
-        fetch('05_video_management.php', {
+        fetch('05_video_management.php', {              // 调用功能模块，执行action
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `videoId=${videoId}&action=${action}`
@@ -138,10 +138,24 @@ function updateLikes(videoId, action) {
 ```
 
 
-### 5. 
+### 6. `05_video_mysql_orderExist_sigURL.php`
 
+按照数据库中`likes-dislikes`值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 
+- 环境变量
 
+```php
+// 生成带有签名的URL
+function generateSignedUrl($videoName) {
+    $signingKey = 'your-signing-key-2'; // 签名密钥，确保与Node.js中的一致
+    $expiryTime = time() + 600; // URL有效期为10分钟
+    $signature = hash_hmac('sha256', $videoName . $expiryTime, $signingKey);
+    global $domain, $dir5;
+    return "{$domain}{$dir5}/{$videoName}?expires={$expiryTime}&signature={$signature}";
+}
+
+<video src="<?php echo generateSignedUrl(htmlspecialchars($video['video_name'])); ?>" class="video" controls alt="Video" loading="lazy"></video>
+```
 
 
 
