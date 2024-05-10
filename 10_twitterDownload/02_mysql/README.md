@@ -89,8 +89,23 @@ syncVideos($dir4); // 同步目录和数据库中的视频文件
 ### 3. 
 
 
+# 4. 数据库相关命令
+
+1. 查询指定`列`值的`行`
+
+```sql
+SELECT *
+FROM videos
+WHERE video_name = '20240508-171501-11580948017.mp4';
+```
+
+
+
 
 
 # 相关资料
 
 - 限制用户通过构造链接访问图片：https://github.com/Yiwei666/03_Python-PHP/tree/main/08_pictureEdit/06_imageHost/07_imageLimit
+
+
+
