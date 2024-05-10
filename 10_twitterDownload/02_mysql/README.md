@@ -116,8 +116,23 @@ include '05_db_config.php';
 - 环境变量
 
 ```php
+$key = 'your-signing-key-1';  // 应与登录脚本中的密钥一致
+include '05_db_sync_videos.php';
+syncVideos('/home/01_html/05_twitter_video/'); // 调用函数并提供图片存储目录
+include '05_db_config.php';
 
+// 设置视频所在的文件夹
+$dir4 = "/home/01_html/05_twitter_video";
+$dir5 = str_replace("/home/01_html", "", $dir4);
+$domain = "https://mcha.me";
+
+// 设置每页显示的视频数量
+$videosPerPage = 8;
 ```
+
+
+
+
 
 
 # 4. 数据库相关命令
