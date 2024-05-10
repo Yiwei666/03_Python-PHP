@@ -45,7 +45,7 @@ $dbname = 'video_db'; // 数据库名称
 
 - 数据库中`videos`表格结构
 
-```php
+```mysql
 mysql> describe videos;
 +------------+--------------+------+-----+---------+----------------+
 | Field      | Type         | Null | Key | Default | Extra          |
