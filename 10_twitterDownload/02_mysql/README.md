@@ -9,7 +9,7 @@
 .
 ├── 05_db_config.php                             # 连接数据库
 ├── 05_db_sync_videos.php                        # 功能模块：将指定目录下的mp4文件名追加到数据库中
-├── 05_video_dislikes_delete.php                 # 统计likes和dislikies数在某个区间内的视频数量
+├── 05_video_dislikes_delete.php                 # 统计likes和dislikies数在某个区间内的视频数量，删除likes和dislikies数在某个区间内的视频
 ├── 05_video_management.php                      # 功能模块：将web页面中点赞/踩的action更新到数据库中
 ├── 05_video_mysql_orderExist.php                # 按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
@@ -88,6 +88,8 @@ syncVideos($dir4); // 同步目录和数据库中的视频文件
 
 ### 3. `05_video_dislikes_delete.php`
 
+统计likes和dislikies数在某个区间内的视频数量，删除likes和dislikies数在某个区间内的视频
+
 - 环境变量
 
 ```php
@@ -95,6 +97,20 @@ include '05_db_config.php';
 include '05_db_sync_videos.php';
 $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 ```
+
+### 4. `05_video_management.php`
+
+功能模块：将web页面中点赞/踩的action更新到数据库中
+
+- 环境变量
+
+```php
+include '05_db_config.php';
+```
+
+
+### 5. 
+
 
 
 
