@@ -32,7 +32,15 @@
 
 # 3. 环境配置
 
+### 1. `05_db_config.php` 连接数据库
 
+
+```php
+$host = 'localhost'; // 通常是 'localhost' 或一个IP地址
+$username = 'root'; // 数据库用户名
+$password = '123456'; // 数据库密码
+$dbname = 'video_db'; // 数据库名称
+```
 
 
 
