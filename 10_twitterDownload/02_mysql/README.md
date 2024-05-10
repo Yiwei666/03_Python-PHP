@@ -109,9 +109,15 @@ include '05_db_config.php';
 ```
 
 
-### 5. 
+### 5. `05_video_mysql_orderExist.php`
 
+按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
 
+- 环境变量
+
+```php
+
+```
 
 
 # 4. 数据库相关命令
