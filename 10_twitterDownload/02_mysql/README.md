@@ -247,7 +247,30 @@ proxy_read_timeout 60s;
 
 # 5. Node.js应用
 
+### 1. `05_video_mysql_checkURL.js`
 
+这段代码实现了一个用于提供视频文件的 Node.js 服务器。它使用 Express 框架来处理 HTTP 请求，并具有以下功能：
+
+- 动态更新允许的 PHP 文件列表：服务器会定期扫描指定目录（/home/01_html/），自动更新允许访问的 PHP 文件列表。
+- 验证 Referer：确保请求来源于允许的 PHP 脚本。这有助于增强安全性，防止非法请求。
+- 签名验证：使用 HMAC SHA-256 算法和签名密钥验证请求的签名和过期时间，确保视频链接的安全性和时效性。
+- 提供视频文件：如果请求通过验证，服务器将提供请求的视频文件。如果视频不存在或验证失败，将重定向到登录页面。
+
+### 2. 环境变量
+
+```js
+const port = 3000;
+const signingKey = 'your-signing-key';                               // 替换为您的实际签名密钥，与php中的密钥一致
+const phpScriptDirectory = '/home/01_html/';                         // PHP脚本所在的根目录
+
+app.get('/05_twitter_video/:videoName', (req, res) => {              // 视频所在文件夹
+
+return res.redirect('https://mcha.me/login.php');                    // 非法请求重定向页面
+
+const videoPath = path.join('/home/01_html/05_twitter_video', videoName);         // 视频资源完整目录
+
+setInterval(updateAllowedPHPFiles, 5 * 60 * 1000);                                // 每5分钟更新一次PHP文件列表，与referer验证相关
+```
 
 
 # 6. MySQL相关命令
