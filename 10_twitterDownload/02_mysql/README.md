@@ -166,6 +166,7 @@ function generateSignedUrl($videoName) {
 
 # 4. Nginx反向代理
 
+这段 Nginx 反向代理配置使得所有以 `/05_twitter_video/` 开始的请求都被转发到本地的 `3000` 端口上的服务（如 `Node.js` 应用），同时保持了原始请求的`主机`和 `IP 信息`，并设置了与后端服务通信的`超时时间`。这样配置的目的是确保请求能够正确、安全地从客户端转发到后端服务，并能及时响应。
 
 ```nginx
 location /05_twitter_video/ {
@@ -185,8 +186,59 @@ location /05_twitter_video/ {
 }
 ```
 
+```nginx
+location /05_twitter_video/ {
+```
 
-这段 Nginx 反向代理配置使得所有以 `/05_twitter_video/` 开始的请求都被转发到本地的 `3000` 端口上的服务（如 `Node.js` 应用），同时保持了原始请求的`主机`和 `IP 信息`，并设置了与后端服务通信的`超时时间`。这样配置的目的是确保请求能够正确、安全地从客户端转发到后端服务，并能及时响应。
+- 这一行定义了一个请求匹配规则，当请求的路径以 /05_twitter_video/ 开始时，这个配置块会被应用。
+
+```nginx
+proxy_pass http://localhost:3000;
+```
+
+- 这行指示 Nginx 将匹配到的请求转发到本地的 3000 端口。通常这意味着有一个在本地 3000 端口运行的服务（例如 Node.js 应用），Nginx 会将请求转发给这个服务。
+
+```nginx
+proxy_set_header Host $host;
+```
+
+- 这行设置请求头中的 Host 字段为原始请求的 Host。这样转发的请求保持了原始请求的 Host 信息。
+
+```nginx
+proxy_set_header X-Real-IP $remote_addr;
+```
+
+- 这行设置请求头中的 X-Real-IP 为原始请求的远程地址，也就是访问 Nginx 的用户的 IP 地址。
+
+```nginx
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+```
+
+- 这行添加或更新 X-Forwarded-For 请求头，包含了原始请求的 IP 地址链。这个头部用于跟踪通过代理的请求的原始 IP 地址。
+
+```nginx
+proxy_set_header X-Forwarded-Proto $scheme;
+```
+
+- 这行设置 X-Forwarded-Proto 请求头为原始请求使用的协议（http 或 https），用于指示后端服务请求的原始协议。
+
+```nginx
+proxy_connect_timeout 60s;
+```
+
+- 设置与后端服务建立连接的超时时间为 60 秒。如果在这段时间内无法与后端服务建立连接，Nginx 将返回错误。
+
+```nginx
+proxy_send_timeout 60s;
+```
+
+- 设置向后端服务发送请求的超时时间为 60 秒。如果在这段时间内无法发送完整的请求，Nginx 将返回错误。
+
+```nginx
+proxy_read_timeout 60s;
+```
+
+- 设置从后端服务读取响应的超时时间为 60 秒。如果在这段时间内无法读取到响应，Nginx 将返回错误。
 
 
 # 5. Node.js应用
