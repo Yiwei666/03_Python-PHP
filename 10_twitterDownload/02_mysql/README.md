@@ -166,6 +166,8 @@ function generateSignedUrl($videoName) {
 
 # 4. Nginx反向代理
 
+### 1. Nginx代码块
+
 这段 Nginx 反向代理配置使得所有以 `/05_twitter_video/` 开始的请求都被转发到本地的 `3000` 端口上的服务（如 `Node.js` 应用），同时保持了原始请求的`主机`和 `IP 信息`，并设置了与后端服务通信的`超时时间`。这样配置的目的是确保请求能够正确、安全地从客户端转发到后端服务，并能及时响应。
 
 ```nginx
@@ -185,6 +187,8 @@ location /05_twitter_video/ {
     proxy_read_timeout 60s;
 }
 ```
+
+### 2. 注释
 
 ```nginx
 location /05_twitter_video/ {
