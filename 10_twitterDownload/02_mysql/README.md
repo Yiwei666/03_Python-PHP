@@ -157,7 +157,7 @@ function generateSignedUrl($videoName) {
 <video src="<?php echo generateSignedUrl(htmlspecialchars($video['video_name'])); ?>" class="video" controls alt="Video" loading="lazy"></video>
 ```
 
-上述代码部分时相较于`05_video_mysql_orderExist.php`添加和替换的部分，用于对视频的url进行加密和签名，下面是被替换的部分
+- 上述代码部分时相较于`05_video_mysql_orderExist.php`添加和替换的部分，用于对视频的url进行加密和签名，下面是被替换的部分
 
 ```php
 <video src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($video['video_name']); ?>" class="video" controls alt="Video" loading="lazy"></video>
