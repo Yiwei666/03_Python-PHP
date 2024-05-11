@@ -167,6 +167,26 @@ function generateSignedUrl($videoName) {
 # 4. Nginx反向代理
 
 
+```nginx
+location /05_twitter_video/ {
+    # 转发请求到本地的3000端口上的Node.js应用
+    proxy_pass http://localhost:3000;
+
+    # 保持请求头不变
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    # 可以设置一些超时时间
+    proxy_connect_timeout 60s;
+    proxy_send_timeout 60s;
+    proxy_read_timeout 60s;
+}
+```
+
+
+这段 Nginx 反向代理配置使得所有以 `/05_twitter_video/` 开始的请求都被转发到本地的 `3000` 端口上的服务（如 `Node.js` 应用），同时保持了原始请求的`主机`和 `IP 信息`，并设置了与后端服务通信的`超时时间`。这样配置的目的是确保请求能够正确、安全地从客户端转发到后端服务，并能及时响应。
 
 
 # 5. Node.js应用
