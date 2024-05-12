@@ -247,14 +247,21 @@ include '08_db_config.php';                                      // 包含数据
 
 ### 2. `08_image_dislikes_delete.php`
 
-`08_image_dislikes_delete.php` 是 `08_image_likes_manager.php` 升级版本，新增功能4：
+`08_image_dislikes_delete.php` 是 `08_image_likes_manager.php` 升级版本，
 
-统计 dislikes 在 [a, b] 范围内的图片数量，并将云服务器项目文件夹中dislikes 在 [a, b] 范围的这些对应的图片都删除掉，删除前打印出这些文件的名称，提醒用户确认，最后打印删除后的项目文件中图片总数量。
+1. 新增功能4：统计 dislikes 在 [a, b] 范围内的图片数量，并将云服务器项目文件夹中dislikes 在 [a, b] 范围的这些对应的图片都删除掉，删除前打印出这些文件的名称，提醒用户确认，最后打印删除后的项目文件中图片总数量。
+
+2. 新增功能5：创建的数据库连接对象 $mysqli 中有一列是 image_exists，image_exists列表示数据库中每张图片的存储状态，0表示不存在，1表示存在。功能5就是：对于所有 image_exists为1的图片，分别查找likes和dislikes在 [a, b] 区间内的数量并打印出来。除此之外，还打印出数据库中图片总数，image_exists为0和为1的数量。
+
 
 - 该脚本中需要初始化的参数如下所示
 
 ```php
-include '08_db_config.php';                                      // 包含数据库连接的配置信息
+include '08_db_config.php';                          // 创建数据库连接对象 $mysqli
+include '08_db_sync_images.php';                     // 新下载的图片名写入到数据库中
+syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
+include '08_db_image_status.php';                    // 判断数据库中所有图片的存在状态
+
 $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
 ```
 
@@ -263,7 +270,7 @@ $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项
 
 # 5. web交互脚本
 
-### 6. `08_picDisplay_mysql.php`
+### 1. `08_picDisplay_mysql.php`
 
 1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
 2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
@@ -306,7 +313,7 @@ fetch('08_image_management.php', {
 08_picDisplay_mysql_inRigTra.php           # 点赞图标位于图片内右侧居中，点赞图标所在方框设置为透明，能够写入图片名到数据库
 ```
 
-### 7. `08_picDisplay_order.php`
+### 2. `08_picDisplay_order.php`
 
 1. 用户验证：检查用户是否登录，若未登录，则重定向到登录页面。
 2. 登出操作：若用户点击了登出链接，注销用户会话并重定向到登录页面。
