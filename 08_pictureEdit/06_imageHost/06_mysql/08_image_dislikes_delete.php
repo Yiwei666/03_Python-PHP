@@ -1,6 +1,10 @@
 <?php
 // 引入数据库配置文件
-include '08_db_config.php';
+include '08_db_config.php';                          // 创建数据库连接对象 $mysqli
+include '08_db_sync_images.php';                     // 新下载的图片名写入到数据库中
+syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
+include '08_db_image_status.php';                    // 判断数据库中所有图片的存在状态
+
 
 // 提醒用户输入 a、b 和 x，用空格分隔
 echo "Enter three integers (a, b, x), separated by spaces: ";
@@ -19,12 +23,20 @@ echo "1. Update and count images with likes between [$a, $b]\n";
 echo "2. Update and count images with dislikes between [$a, $b]\n";
 echo "3. Count images with likes between [$a, $b]\n";
 echo "4. Count images with dislikes between [$a, $b] and delete corresponding files\n";
-echo "Enter option (1/2/3/4): ";
+echo "5. Count images with likes and dislikes between [$a, $b] where image_exists is 1\n";
+echo "Enter option (1/2/3/4/5): ";
 $option = trim(fgets(STDIN));
 
 // 获取图片总数
 $total_images_result = $mysqli->query("SELECT COUNT(*) AS total FROM images");
 $total_images = $total_images_result->fetch_assoc()['total'];
+
+// 获取 image_exists 为 0 和 1 的图片数量
+$image_exists_0_result = $mysqli->query("SELECT COUNT(*) AS total FROM images WHERE image_exists = 0");
+$image_exists_0_count = $image_exists_0_result->fetch_assoc()['total'];
+
+$image_exists_1_result = $mysqli->query("SELECT COUNT(*) AS total FROM images WHERE image_exists = 1");
+$image_exists_1_count = $image_exists_1_result->fetch_assoc()['total'];
 
 // 功能 1：打印 likes 在 [a, b] 之间的图片数量并增加 x 个
 if ($option == '1') {
@@ -106,6 +118,21 @@ elseif ($option == '4') {
     } else {
         echo "No files to delete with dislikes between [$a, $b].\n";
     }
+}
+
+// 功能 5：打印 likes 和 dislikes 在 [a, b] 之间且 image_exists 为 1 的图片数量
+elseif ($option == '5') {
+    $likes_count_result = $mysqli->query("SELECT COUNT(*) AS count FROM images WHERE likes BETWEEN $a AND $b AND image_exists = 1");
+    $likes_count = $likes_count_result->fetch_assoc()['count'];
+
+    $dislikes_count_result = $mysqli->query("SELECT COUNT(*) AS count FROM images WHERE dislikes BETWEEN $a AND $b AND image_exists = 1");
+    $dislikes_count = $dislikes_count_result->fetch_assoc()['count'];
+
+    echo "Number of images with likes between [$a, $b] where image_exists is 1: $likes_count\n";
+    echo "Number of images with dislikes between [$a, $b] where image_exists is 1: $dislikes_count\n";
+    echo "Total images in the database: $total_images\n";
+    echo "Number of images where image_exists is 0: $image_exists_0_count\n";
+    echo "Number of images where image_exists is 1: $image_exists_1_count\n";
 }
 
 // 无效选项处理
