@@ -10,6 +10,7 @@
 ```
 08_db_config.php                           # 通常包含数据库连接信息如服务器地址、用户名、密码等
 08_db_sync_images.php                      # 图片目录与数据库同步功能模块
+08_db_image_status.php                     # 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 
 08_image_management.php                    # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
 08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
