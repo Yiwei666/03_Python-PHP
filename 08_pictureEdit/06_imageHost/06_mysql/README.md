@@ -214,7 +214,7 @@ ALTER TABLE images ADD COLUMN image_exists TINYINT DEFAULT 0;
 
 3. 环境变量
 
-```
+```php
 // 引入数据库配置文件
 include '08_db_config.php';
 
