@@ -59,7 +59,7 @@ $password = '123456789'; // 数据库密码
 $dbname = 'image_db'; // 数据库名称
 ```
 
-### 2. `08_db_sync_images.php` 数据库同步图片信息功能模块
+### 2. `08_db_sync_images.php` 数据库同步图片信息
 
 1. 将图片目录与数据库同步的功能独立成一个可重用的 PHP 脚本模块。
 2. 图片目录与数据库同步：代码首先从指定目录中读取所有 PNG 格式的图片，然后检查这些图片是否已经存储在数据库中。未记录在数据库的图片将被添加到数据库。
@@ -203,7 +203,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
-### 4. `08_db_image_status.php`判断图片是否删除功能模块
+### 4. `08_db_image_status.php`判断图片是否删除
 
 1. 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 2. 运行该脚本前需要在数据库`images`表中新增`image_exists`一列
