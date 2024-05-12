@@ -97,7 +97,7 @@ sudo chmod 775 /home/01_html/05_twitter_video
 sudo chown www-data:www-data /home/01_html/05_twitter_video
 ```
 
-## 2. 环境变量配置
+### 2. 环境变量配置
 
 - twitter_PHP_download.php 中需要结合实际情况自定义下载视频的目录
 
