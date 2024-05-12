@@ -27,7 +27,7 @@
 08_picDisplay_mysql_galleryExist.php       # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，不显示已删除图片导致的空白页，按照文件名默认排序
 ```
 
-# 3. 环境配置
+# 3. php功能模块
 
 ### 1. `08_db_config.php` 数据库连接
 
@@ -201,6 +201,15 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 
 alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
+
+# 4. 后台管理脚本
+
+
+
+
+
+# 5. web交互脚本
+
 
 ### 4. `08_image_likes_manager.php`
 
