@@ -203,16 +203,30 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
+### 4. `08_db_image_status.php`判断图片是否删除功能模块
+
+1. 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
+2. 运行该脚本前需要在数据库`images`表中新增`image_exists`一列
+
+```sql
+ALTER TABLE images ADD COLUMN image_exists TINYINT DEFAULT 0;
+```
+
+3. 环境变量
+
+```
+// 引入数据库配置文件
+include '08_db_config.php';
+
+// 定义图片存储目录
+$imagesDirectory = '/home/01_html/08_x/image/01_imageHost';
+```
+
+
 # 4. 后台管理脚本
 
 
-
-
-
-# 5. web交互脚本
-
-
-### 4. `08_image_likes_manager.php`
+### 1. `08_image_likes_manager.php`
 
 ```
 通过引入`08_image_management.php` 文件，现在能不能编写一个脚本，实现以下需求
@@ -230,7 +244,8 @@ include '08_db_config.php';                                      // 包含数据
 ```
 
 
-### 5. `08_image_dislikes_delete.php`
+
+### 2. `08_image_dislikes_delete.php`
 
 `08_image_dislikes_delete.php` 是 `08_image_likes_manager.php` 升级版本，新增功能4：
 
@@ -243,6 +258,10 @@ include '08_db_config.php';                                      // 包含数据
 $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
 ```
 
+
+
+
+# 5. web交互脚本
 
 ### 6. `08_picDisplay_mysql.php`
 
