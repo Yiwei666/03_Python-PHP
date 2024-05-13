@@ -12,7 +12,7 @@
 
 1. 创建数据库
 
-```
+```sql
 CREATE DATABASE douyin_db;
 ```
 
