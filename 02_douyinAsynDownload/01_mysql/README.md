@@ -10,6 +10,13 @@
 
 # 3. 环境配置
 
+1. 创建数据库
+
+```
+CREATE DATABASE douyin_db;
+```
+
+2. 创建表结构
 
 ```sql
 CREATE TABLE douyin_videos (
