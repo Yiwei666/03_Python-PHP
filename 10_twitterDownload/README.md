@@ -1,9 +1,9 @@
 # 1. 项目功能
 
-- 提交MP4链接，下载mp4视频到云服务器指定目录
-- 基于php脚本，在线观看云服务器指定目录mp4视频
-- 上传本地MP4视频到云服务器指定目录
-- 异步下载较大的twitter视频到云服务器指定目录
+1. 提交MP4链接，下载mp4视频到云服务器指定目录
+1. 基于php脚本，在线观看云服务器指定目录mp4视频
+1. 上传本地MP4视频到云服务器指定目录
+1. 异步下载较大的twitter视频到云服务器指定目录
 
 
 # 2. 文件结构
@@ -99,31 +99,31 @@ sudo chown www-data:www-data /home/01_html/05_twitter_video
 
 ### 2. 环境变量配置
 
-- twitter_PHP_download.php 中需要结合实际情况自定义下载视频的目录
+1. `twitter_PHP_download.php` 中需要结合实际情况自定义下载视频的目录
 
 ```
  $filePath = '/home/01_html/05_twitter_video/' . $fileName;
 ```
 
-- 06_multiple_Video_Upload.php 需要指定同级目录下服务器端处理视频上传的php脚本
+2. `06_multiple_Video_Upload.php` 需要指定同级目录下服务器端处理视频上传的php脚本
 
 ```
 url: '06_upload.php',
 ```
 
-- 06_upload.php 需要自定义文件上传目录
+3. `06_upload.php` 需要自定义文件上传目录
 
 ```
  $uploadDir = '/home/01_html/MuChaManor/';
 ```
 
-- lsTwitter.php 自定义需要查看的目录
+4. `lsTwitter.php` 自定义需要查看的目录
 
 ```
 $directory = '/home/01_html/05_twitter_video';
 ```
 
-- twitterVideo_page.php 自定义域名以及播放视频的目录
+5. `twitterVideo_page.php` 自定义域名以及播放视频的目录
 
 ```
 $domain = 'https://domain.com';
@@ -131,7 +131,7 @@ $videoPath = '/home/01_html/05_twitter_video/';
 $videoUrl = $domain . '/05_twitter_video/' . $videoName;
 ```
 
-- upload_MP4_video.php 自定义上传视频的目录
+6. `upload_MP4_video.php` 自定义上传视频的目录
 
 ```
 $uploadDir = '/home/01_html/05_twitter_video/';
@@ -140,9 +140,9 @@ $uploadDir = '/home/01_html/05_twitter_video/';
 # 5. php 配置文件设置
 
 
-主要影响文件上传的两个设置是upload_max_filesize和post_max_size。以下是具体的修改方法：
+主要影响文件上传的两个设置是 `upload_max_filesize` 和 `post_max_size`。以下是具体的修改方法：
 
-**1. 检查当前PHP配置：**
+### 1. 检查当前PHP配置
 
 在进行任何更改之前，请通过创建一个包含以下内容的PHP文件并在服务器上运行它来检查当前PHP配置：
 
@@ -152,11 +152,11 @@ phpinfo();
 ?>
 ```
 
-查找upload_max_filesize和post_max_size的值。这些值将决定可以上传的文件的最大大小以及包含上传文件的整个POST请求的最大大小。
+查找`upload_max_filesize`和`post_max_size`的值。这些值将决定可以上传的文件的最大大小以及包含上传文件的整个POST请求的最大大小。
 
-**2. 增加文件上传限制：**
+### 2. 增加文件上传限制
 
-如果upload_max_filesize和post_max_size的当前值低于你的MP4视频大小，你需要将它们增加。编辑服务器的PHP配置文件（通常命名为php.ini），并为以下设置指定适当的值：
+如果`upload_max_filesize`和`post_max_size`的当前值低于你的MP4视频大小，你需要将它们增加。编辑服务器的PHP配置文件（通常命名为`php.ini`），并为以下设置指定适当的值：
 
 ```
 upload_max_filesize = 100M
@@ -171,16 +171,16 @@ ubuntu系统中php配置文件路径
 
 上述的"100M"仅为示例，你可以将其设置为所需的允许上传文件的最大大小。记得选择一个足够大的值，以适应你最大的MP4视频文件大小。
 
-**3. 重启Web服务器：**
+### 3. 重启Web服务器
 
-在更改php.ini文件后，需要重启Web服务器以应用新的配置设置。
+在更改`php.ini`文件后，需要重启Web服务器以应用新的配置设置。
 
 ```
 sudo service nginx restart
 sudo service php7.4-fpm restart  # 将 "7.4" 替换为你安装的 PHP 版本号
 ```
 
-**4. 验证更改：**
+### 4. 验证更改
 
 再次运行处理视频上传的PHP脚本，并检查视频是否能够被正确上传并具有有效的大小。
 
@@ -188,7 +188,9 @@ sudo service php7.4-fpm restart  # 将 "7.4" 替换为你安装的 PHP 版本号
 
 
 
-5. 413 Request Entity Too Large nginx/1.18.0 (Ubuntu)报错
+### 5. 报错提示
+
+- 报错：413 Request Entity Too Large nginx/1.18.0 (Ubuntu)报错
 
 当出现 "413 Request Entity Too Large" 错误时，这意味着 Nginx 服务器拒绝了太大的请求实体，其中包括上传的文件和其他 POST 数据。这是由于 Nginx 服务器的默认请求大小限制导致的。
 
