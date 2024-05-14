@@ -182,6 +182,29 @@ $topVideosLimit = 150;
 const videoUrl = `https://mcha.me/05_twitter_video/${randomVideoName}`;
 ```
 
+### 8. 05_video_mysql_random_sigURL.php             
+
+随机显示 `likes-dislikes` 值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
+
+```php
+// 生成签名的函数
+function generateSignedUrl($videoName) {
+    $signingKey = 'your-signing-key-2'; // 签名密钥
+    $expiryTime = time() + 600; // 有效期10分钟
+    $signature = hash_hmac('sha256', $videoName . $expiryTime, $signingKey); // 使用HMAC SHA256生成签名
+    return "https://mcha.me/05_twitter_video/{$videoName}?expires={$expiryTime}&signature={$signature}";
+}
+```
+
+将`05_video_mysql_random.php`中的如下代码进行替换
+
+```
+var serverVideoList = <?php echo json_encode(array_map('generateSignedUrl', $videoList)); ?>;
+```
+
+
+
+
 
 # 4. Nginx反向代理
 
