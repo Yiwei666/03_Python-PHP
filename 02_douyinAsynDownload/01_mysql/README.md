@@ -109,7 +109,15 @@ include '18_db_config.php';  // 引入数据库配置文件，建立 $mysqli 数
 
 下载抖音视频的爬虫脚本
 
-- 环境变量
+1. python第三方模块安装
+
+```bash
+pip install pymysql
+pip install requests
+pip install beautifulsoup4
+```
+
+3. 环境变量
 
 ```py
 # 数据库配置
