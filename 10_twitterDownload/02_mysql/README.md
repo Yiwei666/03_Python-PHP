@@ -184,7 +184,8 @@ const videoUrl = `https://mcha.me/05_twitter_video/${randomVideoName}`;
 
 ### 8. 05_video_mysql_random_sigURL.php             
 
-随机显示 `likes-dislikes` 值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
+1. 功能：随机显示 `likes-dislikes` 值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
+2. 环境变量：除了包含`05_video_mysql_random.php`参数初始化之外，还需要初始化如下新增函数中的`$signingKey`和`$expiryTime`变量。
 
 ```php
 // 生成签名的函数
