@@ -117,7 +117,14 @@ pip install requests
 pip install beautifulsoup4
 ```
 
-3. 环境变量
+查看上述3个模块是否已安装
+
+```bash
+pip list | grep -E "PyMySQL|requests|beautifulsoup4"
+```
+
+
+2. 环境变量
 
 ```py
 # 数据库配置
