@@ -1,16 +1,15 @@
 # 1. 项目功能
 
-
-
+使用mysql数据库来储存、管理抖音视频的下载
 
 # 2. 文件结构
 
 ```
-├── 18_db_config.php
-├── 18_douyinDown.py
-├── 18_url_get.php
-├── 18_view_log.php
-├── 02_douyVideo
+├── 18_db_config.php        # 创建mysql连接对象
+├── 18_url_get.php          # 将web页面上提交的抖音链接保存到数据库中，忽略已存在的链接
+├── 18_view_log.php         # 在web页面上显示最后两次提交的抖音视频链接
+├── 18_douyinDown.py        # 下载抖音视频的爬虫脚本
+├── 02_douyVideo            # 存储视频的文件夹
 │   ├── 20240513-204331.mp4
 │   ├── ...
 ```
@@ -18,7 +17,8 @@
 
 # 3. 环境配置
 
-1. 创建数据库
+
+### 1. 创建数据库
 
 ```sql
 CREATE DATABASE douyin_db;
@@ -43,4 +43,42 @@ CREATE TABLE douyin_videos (
 - `download_status`: 标记视频的下载状态，0 表示未下载，1 表示已下载。
 - `downloaded_video_name`: 下载后的视频命名。
 - `video_download_time`: 视频的下载时间。
+
+
+```
++-----------------------+--------------+------+-----+---------+----------------+
+| Field                 | Type         | Null | Key | Default | Extra          |
++-----------------------+--------------+------+-----+---------+----------------+
+| id                    | int          | NO   | PRI | NULL    | auto_increment |
+| video_url             | varchar(255) | NO   |     | NULL    |                |
+| url_write_time        | datetime     | NO   |     | NULL    |                |
+| download_status       | tinyint      | NO   |     | 0       |                |
+| downloaded_video_name | varchar(255) | YES  |     | NULL    |                |
+| video_download_time   | datetime     | YES  |     | NULL    |                |
++-----------------------+--------------+------+-----+---------+----------------+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
