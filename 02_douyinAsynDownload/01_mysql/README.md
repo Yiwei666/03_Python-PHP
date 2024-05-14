@@ -105,9 +105,24 @@ include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli �
 include '18_db_config.php';  // 引入数据库配置文件，建立 $mysqli 数据库连接对象
 ```
 
-### 5. 
+### 5. 18_douyinDown.py
 
+下载抖音视频的爬虫脚本
 
+- 环境变量
+
+```py
+# 数据库配置
+db_config = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': '123456',
+    'database': 'douyin_db'
+}
+
+# 定义下载目录
+download_dir = "/home/01_html/02_douyVideo/"
+```
 
 
 
