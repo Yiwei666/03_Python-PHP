@@ -17,8 +17,9 @@
 
 # 3. 环境配置
 
+### 1. 创建数据库和表
 
-### 1. 创建数据库
+1. 创建数据库
 
 ```sql
 CREATE DATABASE douyin_db;
@@ -44,6 +45,7 @@ CREATE TABLE douyin_videos (
 - `downloaded_video_name`: 下载后的视频命名。
 - `video_download_time`: 视频的下载时间。
 
+3. 表结构
 
 ```
 +-----------------------+--------------+------+-----+---------+----------------+
@@ -57,6 +59,7 @@ CREATE TABLE douyin_videos (
 | video_download_time   | datetime     | YES  |     | NULL    |                |
 +-----------------------+--------------+------+-----+---------+----------------+
 ```
+
 
 ### 2. 18_db_config.php
 
@@ -102,8 +105,7 @@ include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli �
 include '18_db_config.php';  // 引入数据库配置文件，建立 $mysqli 数据库连接对象
 ```
 
-
-
+### 5. 
 
 
 
