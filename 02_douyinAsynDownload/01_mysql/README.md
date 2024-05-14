@@ -73,15 +73,34 @@ $dbname = 'douyin_db'; // 数据库名称
 
 ### 3. 18_url_get.php
 
-
+将web页面上提交的抖音链接保存到数据库中，忽略已存在的链接
 
 - 环境变量
 
+```php
+include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli 数据库连接对象
+
+<script>
+    function visitUrl() {
+        window.location.href = "https://mctea.one/05_douyinAsynDload/18_url_get.php";    // 刷新按钮
+    }
+
+    function viewLog() {
+        window.open("18_view_log.php", "_blank");     // 查看最后输入两条url
+    }
+</script>
+```
 
 
+### 4. 18_view_log.php
 
+在web页面上显示最后两次提交的抖音视频链接
 
+- 环境变量
 
+```php
+include '18_db_config.php';  // 引入数据库配置文件，建立 $mysqli 数据库连接对象
+```
 
 
 
