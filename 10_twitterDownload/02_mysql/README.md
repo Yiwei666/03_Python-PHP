@@ -163,6 +163,8 @@ function generateSignedUrl($videoName) {
 <video src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($video['video_name']); ?>" class="video" controls alt="Video" loading="lazy"></video>
 ```
 
+相当于把`$domain . $dir5 . '/' . htmlspecialchars($video['video_name'])`替换为`generateSignedUrl(htmlspecialchars($video['video_name']))`
+
 ### 7. `05_video_mysql_random.php`
 
 随机显示 `likes-dislikes` 值在 top 150 范围内的视频，且在单次循环中不重复播放相同视频
