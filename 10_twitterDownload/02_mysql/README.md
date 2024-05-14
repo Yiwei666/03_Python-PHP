@@ -163,6 +163,23 @@ function generateSignedUrl($videoName) {
 <video src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($video['video_name']); ?>" class="video" controls alt="Video" loading="lazy"></video>
 ```
 
+### 7. `05_video_mysql_random.php`
+
+随机显示 `likes-dislikes` 值在 top 150 范围内的视频，且在单次循环中不重复播放相同视频
+
+- 环境变量
+
+```php
+include '05_db_config.php';
+
+$key = 'your-signing-key-1'; // 应与登录脚本中的密钥一致
+
+// 初始化视频数量的变量
+$topVideosLimit = 150;
+
+const videoUrl = `https://mcha.me/05_twitter_video/${randomVideoName}`;
+```
+
 
 # 4. Nginx反向代理
 
