@@ -205,7 +205,7 @@ alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_
 
 ### 4. `08_db_image_status.php`判断图片是否删除
 
-1. 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
+1. 该功能模块将项目文件夹下已删除的图片在数据库中`image_exists`赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 2. 运行该脚本前需要在数据库`images`表中新增`image_exists`一列
 
 ```sql
@@ -220,6 +220,12 @@ include '08_db_config.php';
 
 // 定义图片存储目录
 $imagesDirectory = '/home/01_html/08_x/image/01_imageHost';
+```
+
+4. `08_db_image_status.php`功能模块调用方式
+
+```php
+include '08_db_image_status.php';                    // 判断数据库中所有图片的存在状态
 ```
 
 
@@ -258,8 +264,10 @@ include '08_db_config.php';                                      // 包含数据
 
 ```php
 include '08_db_config.php';                          // 创建数据库连接对象 $mysqli
+
 include '08_db_sync_images.php';                     // 新下载的图片名写入到数据库中
 syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
+
 include '08_db_image_status.php';                    // 判断数据库中所有图片的存在状态
 
 $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
