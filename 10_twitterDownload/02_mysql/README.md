@@ -182,7 +182,7 @@ $topVideosLimit = 150;
 const videoUrl = `https://mcha.me/05_twitter_video/${randomVideoName}`;
 ```
 
-### 8. 05_video_mysql_random_sigURL.php             
+### 8. `05_video_mysql_random_sigURL.php`
 
 1. 功能：随机显示 `likes-dislikes` 值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
 2. 环境变量：除了包含`05_video_mysql_random.php`参数初始化之外，还需要初始化如下新增函数中的`$signingKey`和`$expiryTime`变量。
@@ -197,15 +197,19 @@ function generateSignedUrl($videoName) {
 }
 ```
 
-将`05_video_mysql_random.php`中的如下代码进行替换
+3. 代码替换：将`05_video_mysql_random.php`中的如下代码进行替换
 
+```php
+var serverVideoList = <?php echo json_encode($videoList); ?>;
 ```
+
+替换后`05_video_mysql_random_sigURL.php`中相应代码为
+
+```php
 var serverVideoList = <?php echo json_encode(array_map('generateSignedUrl', $videoList)); ?>;
 ```
 
-
-
-
+这里的 `array_map` 函数将 `generateSignedUrl` 应用于 `$videoList` 数组的每个元素。这样，每个视频名称都会转换成一个带签名的 URL。然后，这些 URL 通过 `json_encode` 被转换成 JSON 格式的数组，最后赋值给 JavaScript 变量 `erverVideoList`。
 
 # 4. Nginx反向代理
 
