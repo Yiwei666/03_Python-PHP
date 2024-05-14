@@ -143,8 +143,8 @@ download_dir = "/home/01_html/02_douyVideo/"
 # 参考资料
 
 1. mysql数据库博客：https://github.com/Yiwei666/12_blog/blob/main/002/002.md
-2. 图片管理系统：https://github.com/Yiwei666/03_Python-PHP/tree/main/08_pictureEdit/06_imageHost/06_mysql#4-ubuntu%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85mysql
-
+2. 图床管理系统：https://github.com/Yiwei666/03_Python-PHP/blob/main/08_pictureEdit/06_imageHost/06_mysql/README.md
+3. twitter视频下载管理系统：https://github.com/Yiwei666/03_Python-PHP/blob/main/10_twitterDownload/02_mysql/README.md
 
 
 
