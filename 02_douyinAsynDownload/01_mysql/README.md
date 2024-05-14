@@ -85,7 +85,7 @@ include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli �
 
 <script>
     function visitUrl() {
-        window.location.href = "https://mctea.one/05_douyinAsynDload/18_url_get.php";    // 刷新按钮
+        window.location.href = "https://mctea.one/18_url_get.php";    // 刷新按钮
     }
 
     function viewLog() {
