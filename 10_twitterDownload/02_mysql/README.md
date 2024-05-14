@@ -302,9 +302,9 @@ FROM videos;
 
 
 
-# 7. 相关资料
+# 7. 参考资料
 
-- 限制用户通过构造链接访问图片：https://github.com/Yiwei666/03_Python-PHP/tree/main/08_pictureEdit/06_imageHost/07_imageLimit
-
-
-
+1. mysql数据库博客：https://github.com/Yiwei666/12_blog/blob/main/002/002.md
+2. 图床管理系统：https://github.com/Yiwei666/03_Python-PHP/blob/main/08_pictureEdit/06_imageHost/06_mysql/README.md
+3. twitter视频下载管理系统：https://github.com/Yiwei666/03_Python-PHP/blob/main/10_twitterDownload/02_mysql/README.md
+4. 抖音视频下载管理系统：https://github.com/Yiwei666/03_Python-PHP/blob/main/02_douyinAsynDownload/01_mysql/README.md
