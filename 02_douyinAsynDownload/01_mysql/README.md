@@ -5,7 +5,15 @@
 
 # 2. 文件结构
 
-
+```
+├── 18_db_config.php
+├── 18_douyinDown.py
+├── 18_url_get.php
+├── 18_view_log.php
+├── 02_douyVideo
+│   ├── 20240513-204331.mp4
+│   ├── ...
+```
 
 
 # 3. 环境配置
