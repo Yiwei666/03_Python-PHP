@@ -75,7 +75,7 @@
 
     <script>
         function visitUrl() {
-            window.location.href = "https://mctea.one/05_douyinAsynDload/18_url_get.php";
+            window.location.href = "https://mctea.one/18_url_get.php";
         }
 
         function viewLog() {
