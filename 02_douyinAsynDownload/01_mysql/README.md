@@ -153,7 +153,7 @@ download_dir = "/home/01_html/02_douyVideo/"
 
 4. cron 定时
 
-```cron
+```bash
 # cc1-2 to onedrive
 0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo cc1-2:do1-2/01_html/02_douyVideo
 ```
