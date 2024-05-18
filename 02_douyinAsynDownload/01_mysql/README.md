@@ -139,6 +139,18 @@ db_config = {
 download_dir = "/home/01_html/02_douyVideo/"
 ```
 
+3. 功能
+
+这段代码实现了以下功能：
+
+- 连接到名为 `douyin_db` 的 MySQL 数据库，使用表 `douyin_videos`。
+- 查询所有未下载（`download_status` 为 0）的视频链接。
+- 随机选择一个视频链接，并构造一个新的 URL 来通过第三方服务 `dlpanda.com` 获取真实的视频下载链接。
+- 解析返回的 HTML，获取视频源 URL，并下载视频。
+- 下载的视频以当前时间命名，并保存在指定目录 `/home/01_html/02_douyVideo/` 下。
+- 更新数据库中的视频记录，标记为已下载（`download_status` 设为 1），并记录下载的视频名称和下载时间。
+- 关闭数据库连接。
+
 
 # 参考资料
 
