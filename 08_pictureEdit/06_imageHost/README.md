@@ -47,6 +47,7 @@
 05_imageTransferName.txt          # 点击transfer按钮后，存储对应文件名的文本
 05_mvImageServer.sh               # bash脚本，用于将05_imageTransferName.txt列出的图片文件名从源目录剪切到另外一个目录
 08_picDisplay.php                 # 在网页上随机显示图库中的5张图片（能够识别终端类型：手机/电脑，图片采用懒加载）
+08_picDisplay_one.php             # 网页上随机显示一张图片
 ```
 
 - 示例
@@ -462,6 +463,18 @@ Mozilla/5.0 (Android 11; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0            
 6. 主页滑动页面可以查看所有竖直方向上的所有图片。
 7. 识别终端是手机还是电脑（获取HTTP_USER_AGENT），手机端请设置这些图片宽度为900px，高度自适应；电脑端设置宽度为500px
 8. 新加功能，实现图片从上往下逐张加载，避免用户在等待多张图片加载的同时，一张完整图片也看不到
+```
+
+### 7. 08_picDisplay_one.php
+
+- 环境变量
+
+```php
+$key = 'your-signing-key-1';  // 应与登录脚本中的密钥一致
+
+$dir4 = "/home/01_html/08_x/image/01_imageHost";
+$dir5 = str_replace("/home/01_html", "", $dir4); // 去除目录前缀
+$domain = "https://abc.com"; // 域名网址
 ```
 
 
