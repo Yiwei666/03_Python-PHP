@@ -151,6 +151,13 @@ download_dir = "/home/01_html/02_douyVideo/"
 - 更新数据库中的视频记录，标记为已下载（`download_status` 设为 1），并记录下载的视频名称和下载时间。
 - 关闭数据库连接。
 
+4. cron 定时
+
+```cron
+# cc1-2 to onedrive
+0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo cc1-2:do1-2/01_html/02_douyVideo
+```
+
 
 # 参考资料
 
