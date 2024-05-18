@@ -24,5 +24,5 @@ mysql> describe tk_videos;
 4 rows in set (0.00 sec)
 ```
 
-现在能否编写一个php脚本，将/home/01_html/01_tecent1017/25_film_videos 目录下的所有mp4视频的相关信息写入到mysql数据库中，首先判断目录下的每一个mp4名字是否存在于数据库中，如果不存在，则写入到数据库中，同时将该视频的创建时间写入到 create_time 列，将exist_status状态设置为1。
+现在能否编写一个php脚本，将`/home/01_html/01_tecent1017/25_film_videos` 目录下的所有mp4视频的相关信息写入到mysql数据库中，首先判断目录下的每一个mp4名字是否存在于数据库中，如果不存在，则写入到数据库中，同时将该视频的创建时间写入到 create_time 列，将exist_status状态设置为1。
 
