@@ -69,6 +69,8 @@ $video_dir = "/home/01_html/01_tecent1017/25_film_videos";
 
 ### 3. `03_copy_remote_to_local.php`
 
+这段代码使用 rclone 从远程目录获取 `.mp4` 格式的视频文件名，检查数据库中的记录，并为数据库中不存在的视频文件插入新记录。
+
 1. 功能
 
 - 使用 rclone 获取远程目录的视频文件：通过 rclone 命令获取远程目录中所有 .mp4 格式的视频文件名。
