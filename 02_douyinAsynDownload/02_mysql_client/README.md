@@ -10,7 +10,7 @@
 ```
 ├── 03_mysql_douyin
 │   ├── 03_copy_remote_to_local.php
-│   ├── 03_db_config.php
+│   ├── 03_db_config.php                 // 连接到数据库，创建 $mysql 连接对象
 │   ├── 03_random_replace_video.php
 │   └── 03_tk_video_check.php
 ```
