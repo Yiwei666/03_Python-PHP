@@ -98,10 +98,38 @@ $local_dir = "/home/01_html/01_tecent1017/25_film_videos";
 
 ### 4. `03_random_replace_video.php`
 
+🟢 这段代码主要实现了从本地删除随机选定的视频文件，并从远程目录复制数据库中记录的但本地缺失的视频文件到本地。
 
+1. 功能
 
+- 引入数据库配置并连接数据库。
+- 执行一个 PHP 脚本以执行特定的操作（这部分代码的具体作用不在代码段中体现）。
+- 定义本地和远程目录，用于存储和操作视频文件。
+- 从本地目录读取所有 MP4 视频文件名，并存入数组 A。
+- 从数据库中查询所有视频文件名，并存入数组 B。
+- 从数组 A 中随机选取 N（默认为 50）个视频，并从本地目录删除这些视频。
+- 计算数组 B 和 A 的差集（即存在于 B 中但不在 A 中的视频），然后从这个差集中随机选取 M（默认为 50）个视频。
+- 将这 M 个视频从远程目录复制到本地目录。
+- 关闭数据库连接。
+- 执行另一个 PHP 脚本进行特定的后续检查。
+- 输出整个过程完成的信息。
 
-- 定时任务
+2. 环境变量
+
+```php
+// 引入数据库配置和连接
+include '03_db_config.php'; // 根据实际路径调整
+
+exec('php /home/01_html/03_mysql_douyin/03_copy_remote_to_local.php');
+
+// 定义本地和远程目录
+$local_dir = "/home/01_html/01_tecent1017/25_film_videos";
+$remote_dir = "HW-1012:do1-2/01_html/02_douyVideo";
+
+exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
+```
+
+3. 定时任务
 
 ```bash
 /30 * * * * /usr/bin/php /home/01_html/03_mysql_douyin/03_random_replace_video.php
