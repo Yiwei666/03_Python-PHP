@@ -2,7 +2,7 @@
 // 引入数据库配置和连接
 include '03_db_config.php'; // 根据实际路径调整
 
-exec('php 03_copy_remote_to_local.php');
+exec('php /home/01_html/03_mysql_douyin/03_copy_remote_to_local.php');
 
 // 定义本地和远程目录
 $local_dir = "/home/01_html/01_tecent1017/25_film_videos";
@@ -50,7 +50,7 @@ foreach ($randomDiffBA as $index) {
 // 关闭数据库连接
 $mysqli->close();
 
-exec('php 03_tk_video_check.php');
+exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 echo "Process completed.\n";
 
