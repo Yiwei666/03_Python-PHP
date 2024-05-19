@@ -17,6 +17,8 @@
             display: block;
             margin: 0 auto;
             margin-top: 10px;
+            font-size: 18px;  /* Increase font size for larger button text */
+            padding: 15px 30px; /* Add more padding for a larger button appearance */
         }
     </style>
 </head>
@@ -62,11 +64,23 @@
     <form id="inputForm" method="POST">
         <textarea id="inputText" name="input" rows="5" cols="50" placeholder="请输入字符串"></textarea>
         <br>
+        <br>
+        <br>
+        <br>
         <input id="saveButton" type="submit" value="保存并执行">
         <br>
         <br>
         <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <button id="visitButton" onclick="visitUrl()">刷新</button>
+        <br>
+        <br>
+        <br>
         <br>
         <br>
         <br>
