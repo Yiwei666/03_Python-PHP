@@ -52,7 +52,11 @@ mysql> describe tk_videos;
 
 
 
+- 定时任务
 
+```bash
+/30 * * * * /usr/bin/php /home/01_html/03_mysql_douyin/03_random_replace_video.php
+```
 
 
 
