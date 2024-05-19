@@ -36,7 +36,14 @@ mysql> describe tk_videos;
 4 rows in set (0.00 sec)
 ```
 
+2. 环境变量
 
+```php
+$host = 'localhost'; // 通常是 'localhost' 或一个IP地址
+$username = 'root'; // 数据库用户名
+$password = '123456'; // 数据库密码
+$dbname = 'tiktok_db'; // 数据库名称
+```
 
 ### 2. `03_tk_video_check.php`
 
