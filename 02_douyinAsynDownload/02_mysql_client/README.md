@@ -57,7 +57,15 @@ $dbname = 'tiktok_db'; // 数据库名称
   - 统计和打印信息：计算并打印数据库中所有视频的总数，以及存在状态为 1 和 0 的视频数量。
 - 关闭数据库连接：在操作完成后关闭数据库连接。
 
+2. 环境变量
 
+```php
+// 引入数据库配置和连接
+include '03_db_config.php';
+
+// 指定视频文件所在目录
+$video_dir = "/home/01_html/01_tecent1017/25_film_videos";
+```
 
 ### 3. `03_copy_remote_to_local.php`
 
