@@ -39,6 +39,7 @@ alias lsj="cat /etc/transmission-daemon/settings.json"
 
 ```bash
 transmission-remote -t all --remove-and-delete
+transmission-remote -n 'transmission:123456' -t all --remove-and-delete   # 删除所有的种子
 transmission-remote -t all --remove
 transmission-remote -t 2 --remove-and-delete
 transmission-remote -n 'transmission:123456' -t 1 --remove-and-delete
