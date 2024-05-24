@@ -57,7 +57,7 @@ sudo service transmission-daemon start
 
 ⭐ 重点修改参数
 
-```
+```json
 "rpc-password": "{8916cecbd4d607ecc2e4bd842e3fdb9f54b3918bOZtGPoh0",     // 初始化密码，设置明文，start后自动加密
 "rpc-whitelist-enabled": false,                                          // 由true改为false
 ```
