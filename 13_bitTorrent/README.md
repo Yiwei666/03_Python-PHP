@@ -22,7 +22,19 @@ sudo apt update
 sudo apt install transmission-daemon
 ```
 
-### 2. 更改配置
+### 2. 常用命令以及alias
+
+```bash
+alias trl="transmission-remote -n 'transmission:123456' -l"
+alias trp="service transmission-daemon stop"
+alias trs="service transmission-daemon start"
+alias lsd="ls /var/lib/transmission-daemon/downloads"
+alias cdd='cd /var/lib/transmission-daemon/downloads'
+alias lsj="cat /etc/transmission-daemon/settings.json"
+```
+
+
+### 3. 更改配置
 
 需要先stop，修改完成后再start，running过程中修改配置无效。
 
