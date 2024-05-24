@@ -60,6 +60,9 @@ sudo service transmission-daemon start
 ```json
 "rpc-password": "{8916cecbd4d607ecc2e4bd842e3fdb9f54b3918bOZtGPoh0",     // 初始化密码，设置明文，start后自动加密
 "rpc-whitelist-enabled": false,                                          // 由true改为false
+
+"rpc-whitelist": "127.0.0.1",                                            // 白名单中只有本地回环地址
+"rpc-whitelist-enabled": true,                                           // 开启白名单，只允许本地回环地址以及限定ip通过web界面访问
 ```
 
 
