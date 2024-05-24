@@ -42,6 +42,20 @@ $srtUrl = "https://mctea.one/19_bitTorrent/video/" . urlencode($videoName) . ".s
         sourceElement.type = 'video/mp4';
         videoPlayer.appendChild(sourceElement);
 
+        // 页面加载时，从 localStorage 获取保存的播放时间并设置
+        document.addEventListener('DOMContentLoaded', function() {
+            const lastPlayedTime = localStorage.getItem('lastPlayedTime');
+            if (lastPlayedTime) {
+                videoPlayer.currentTime = parseFloat(lastPlayedTime);
+            }
+            videoPlayer.play();
+        });
+
+        // 保存视频当前播放时间到 localStorage
+        videoPlayer.addEventListener('timeupdate', function() {
+            localStorage.setItem('lastPlayedTime', videoPlayer.currentTime);
+        });
+
         // 加载并转换字幕文件
         fetch(subtitlesUrl)
             .then(response => response.text())
