@@ -24,6 +24,8 @@ sudo apt install transmission-daemon
 
 ### 2. 常用命令以及alias
 
+- alias
+
 ```bash
 alias trl="transmission-remote -n 'transmission:123456' -l"
 alias trp="service transmission-daemon stop"
@@ -33,6 +35,15 @@ alias cdd='cd /var/lib/transmission-daemon/downloads'
 alias lsj="cat /etc/transmission-daemon/settings.json"
 ```
 
+- 命令行
+
+```bash
+transmission-remote -t all --remove-and-delete
+transmission-remote -t all --remove
+transmission-remote -t 2 --remove-and-delete
+transmission-remote -n 'transmission:123456' -t 1 --remove-and-delete
+transmission-remote -n 'username:password' -t 2 --remove-and-delete
+```
 
 ### 3. 更改配置
 
