@@ -24,6 +24,12 @@ $srtUrl = "https://mctea.one/19_bitTorrent/video/" . urlencode($videoName) . ".s
             width: 50%;
             height: auto;
         }
+
+        video::cue {
+            font-size: 25px; /* 调整字幕的字体大小 */
+            color: white; /* 字幕的字体颜色 */
+            background-color: rgba(0, 0, 0, 0.6); /* 字幕的背景颜色 */
+        }
     </style>
 </head>
 <body>
