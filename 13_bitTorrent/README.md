@@ -15,14 +15,30 @@
 
 # 3. Transmission-daemon安装和配置
 
-### 1. 安装
+### 1. 介绍
+
+`Transmission-daemon` 是一个流行的 `BitTorrent` 客户端的后台运行版本，属于 `Transmission` 项目的一部分。这个客户端允许用户通过 BitTorrent 协议下载和上传文件。`Transmission-daemon` 是一个轻量级的程序，专为`服务器`和 `NAS（网络附加存储）`设备设计，可以在没有图形用户界面的环境中运行。
+
+`Transmission-daemon` 与 Torrent 的关系：
+
+- BitTorrent 协议：Torrent 文件是指使用 BitTorrent 协议进行点对点文件共享的文件的元数据。这些文件包含了文件的信息（如文件名、大小和结构）以及用于找到文件分布的计算机（即种子服务器）的信息。
+
+- Transmission-daemon 作用：Transmission-daemon 作为一个 BitTorrent 客户端，使用 Torrent 文件中的信息来下载或上传文件。用户可以通过 torrent 文件或磁力链接来启动下载任务。
+
+- 操作方式：与 Transmission 的桌面应用相比，Transmission-daemon 通常通过网络接口进行控制，例如使用网页界面或通过第三方应用与其 API 交互。这使得它非常适合安装在远程系统或无头服务器上，用户可以在任何有网络连接的地方管理它。
+
+- 功能：Transmission-daemon 提供了大多数 BitTorrent 客户端的标准功能，包括队列管理、文件选择下载、带宽调整、定时任务等。
+
+
+
+### 2. 安装
 
 ```bash
 sudo apt update
 sudo apt install transmission-daemon
 ```
 
-### 2. 常用命令以及alias
+### 3. 常用命令以及alias
 
 - alias
 
@@ -46,7 +62,7 @@ transmission-remote -n 'transmission:123456' -t 1 --remove-and-delete
 transmission-remote -n 'username:password' -t 2 --remove-and-delete
 ```
 
-### 3. 更改配置
+### 4. 更改配置
 
 需要先stop，修改完成后再start，running过程中修改配置无效。
 
