@@ -52,6 +52,9 @@ alias trs="service transmission-daemon start"
 alias lsd="ls /var/lib/transmission-daemon/downloads"
 alias cdd='cd /var/lib/transmission-daemon/downloads'
 alias lsj="cat /etc/transmission-daemon/settings.json"
+alias tns='bash /home/01_html/19_transfer_mp4_srt.sh'
+alias rvs="transmission-remote -n 'transmission:123456' -t all --remove-and-delete"
+alias dwn='bash /home/01_html/19_torrent_down.sh'
 ```
 
 - 命令行
