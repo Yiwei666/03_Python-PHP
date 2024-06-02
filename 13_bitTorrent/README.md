@@ -7,10 +7,13 @@
 
 # 2. 文件结构
 
+```
+├── 19_torrent_down.sh             # 获取并执行磁力下载·
+├── 19_transfer_mp4_srt.sh         # 对mp4和srt文件重命名
+├── 19_video_list.php              # 列出指定目录下所有mp4文件
+├── 19_videoPlayer.php             # 播放mp4视频
 
-
-
-
+```
 
 
 # 3. Transmission-daemon安装和配置
