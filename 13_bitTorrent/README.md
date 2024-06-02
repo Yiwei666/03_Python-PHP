@@ -1,7 +1,7 @@
 # 1. 项目功能
 
-
-
+1. 使用 `BitTorrent` 客户端下载视频，如电影等，相关磁力链接可从 `The Pirate Bay`获取
+2. 通过web服务器在线观看电影视频
 
 
 
@@ -21,11 +21,11 @@
 
 `Transmission-daemon` 与 Torrent 的关系：
 
-- BitTorrent 协议：Torrent 文件是指使用 BitTorrent 协议进行点对点文件共享的文件的元数据。这些文件包含了文件的信息（如文件名、大小和结构）以及用于找到文件分布的计算机（即种子服务器）的信息。
+- `BitTorrent` 协议：Torrent 文件是指使用 BitTorrent 协议进行点对点文件共享的文件的元数据。这些文件包含了文件的信息（如文件名、大小和结构）以及用于找到文件分布的计算机（即种子服务器）的信息。
 
-- Transmission-daemon 作用：Transmission-daemon 作为一个 BitTorrent 客户端，使用 Torrent 文件中的信息来下载或上传文件。用户可以通过 torrent 文件或磁力链接来启动下载任务。
+- `Transmission-daemon` 作用：Transmission-daemon 作为一个 BitTorrent 客户端，使用 Torrent 文件中的信息来下载或上传文件。用户可以通过 torrent 文件或磁力链接来启动下载任务。
 
-- 操作方式：与 Transmission 的桌面应用相比，Transmission-daemon 通常通过网络接口进行控制，例如使用网页界面或通过第三方应用与其 API 交互。这使得它非常适合安装在远程系统或无头服务器上，用户可以在任何有网络连接的地方管理它。
+- 操作方式：与 `Transmission` 的桌面应用相比，Transmission-daemon 通常通过网络接口进行控制，例如使用网页界面或通过第三方应用与其 API 交互。这使得它非常适合安装在远程系统或无头服务器上，用户可以在任何有网络连接的地方管理它。
 
 - 功能：Transmission-daemon 提供了大多数 BitTorrent 客户端的标准功能，包括队列管理、文件选择下载、带宽调整、定时任务等。
 
