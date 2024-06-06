@@ -347,9 +347,32 @@ SELECT COUNT(*)
 FROM videos;
 ```
 
+# 7. alias
+
+```bash
+alias clg='cat  /var/log/nginx/access.log'
+alias tgn='tail -n 50 /var/log/nginx/access.log'
+alias gn='ps aux | grep node'
+alias vb='vi ~/.bashrc'
+alias sb='source ~/.bashrc'
+alias cb='cat ~/.bashrc'
+alias cdh='cd /home/01_html; ls -l'
+alias cjn='cat /usr/local/etc/v2ray/config.json'
+
+alias lwc='ls -l | grep "^-" | wc -l'
+alias rcv='nohup rclone copy /home/01_html/05_twitter_video/  rc6:az1-1/01_html/05_twitter_video/ --transfers=16 &'
+alias rsv='rclone size "rc6:az1-1/01_html/05_twitter_video/"'
+alias rcrv='nohup rclone copy --ignore-existing rc6:az1-1/01_html/05_twitter_video /home/01_html/05_twitter_video &'
+
+alias sv='nohup node /home/01_html/05_nodejs_sigURL/05_video_mysql_checkURL.js > /home/01_html/05_nodejs_sigURL/nohup.out &'
+alias kv='kill $(pgrep -f "05_video_mysql_checkURL.js")'
+alias phv='php /home/01_html/05_video_dislikes_delete.php'
+alias lwv='echo $(($(ls -l /home/01_html/05_twitter_video/ | wc -l) - 1))'
+alias ffg='bash /home/01_html/05_ffmpeg_tool.sh'
+```
 
 
-# 7. 参考资料
+# 8. 参考资料
 
 1. mysql数据库博客：https://github.com/Yiwei666/12_blog/blob/main/002/002.md
 2. 图床管理系统：https://github.com/Yiwei666/03_Python-PHP/blob/main/08_pictureEdit/06_imageHost/06_mysql/README.md
