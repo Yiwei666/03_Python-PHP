@@ -167,3 +167,33 @@ sudo service transmission-daemon start
     "utp-enabled": true
 }
 ```
+
+
+# 4. 视频截取和音频提取
+
+### 1. ffmpeg安装
+
+- ffmpeg：
+
+- mediainfo：
+
+
+```bash
+sudo apt update
+sudo apt install ffmpeg
+sudo apt-get install mediainfo
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
