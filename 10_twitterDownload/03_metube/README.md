@@ -19,7 +19,7 @@
 docker run -d -p 8081:8081 -v /home/01_html/05_temp_ffmpeg:/downloads ghcr.io/alexta69/metube
 ```
 
-参考资料：https://github.com/alexta69/metube
+- 项目地址：https://github.com/alexta69/metube
 
 
 ### 2. 将 Docker 容器的端口映射限制为仅对 `localhost（127.0.0.1）`可见
@@ -31,7 +31,8 @@ docker stop [容器ID或名称]
 docker rm [容器ID或名称]
 ```
 
-您可以使用 `docker ps` 查找正在运行的容器的 `ID 或名称`。
+您可以使用 `docker ps` 查找正在运行的容器的 `ID 或名称`。docker命令[参考](https://github.com/Yiwei666/03_Python-PHP/wiki/06_docker%E5%91%BD%E4%BB%A4)
+
 
 2. 使用更新的端口映射重新启动容器：
 
@@ -53,4 +54,7 @@ location /metube/ {
 }
 ```
 
+4. htpasswd
+
+参考博客：[htpasswd 身份验证](https://github.com/Yiwei666/12_blog/blob/main/004/004.md)
 
