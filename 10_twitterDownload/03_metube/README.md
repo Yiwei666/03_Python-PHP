@@ -56,5 +56,27 @@ location /metube/ {
 
 4. htpasswd
 
+- 创建密码文件
+
+```bash
+htpasswd -c /path/to/.htpasswd username
+```
+
+- 修改nginx配置文件
+
+```nginx
+location /metube/ {
+        auth_basic "Restricted Access";
+        auth_basic_user_file /home/02_htpasswd/.htpasswd;
+
+        proxy_pass http://127.0.0.1:8081/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+}
+```
+
+
 参考博客：[htpasswd 身份验证](https://github.com/Yiwei666/12_blog/blob/main/004/004.md)
 
