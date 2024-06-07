@@ -142,6 +142,59 @@ sudo apt-get install mediainfo
 2. 截取mp4视频片段。将脚本的执行目录切换到当前目录下，然后提示用户输入一个mp4视频的文件名，判断视频是否存在，然后打印视频的总时长。再提示用户输入需要截取的视频的时段范围，精确到秒，例如 `1:20:30-2:5:1`  即提取时段 1小时20分30秒到2小时5分1秒之间的视频片段，视频片段命名为当前时间 “年月日-时分秒-12位随机大小英文字母数字”组合，例如 `20240127-222114-xqc2warlhhAB.mp4`，最后打印截取的视频时长以及大小，使用MB作为单位
 
 
+- 功能5的另外一种实现
+
+```sh
+    5)
+        read -p "请输入MP4视频文件名: " filename
+        if [[ -f "$filename" ]]; then
+            # 获取视频总时长
+            video_duration=$(mediainfo --Inform="General;%Duration%" "$filename")
+            video_duration_sec=$(echo "$video_duration/1000" | bc)
+            echo "视频总时长: ${video_duration_sec} 秒"
+
+            # 输入截取范围
+            read -p "请输入需要截取的视频时段范围（多个时段用逗号分隔，如 01:02:30-01:36:00,02:05:00-03:38:00）: " time_ranges
+            IFS=',' read -r -a ranges <<< "$time_ranges"
+            filter_complex=""
+            concat_input=""
+            index=0
+
+            # 为每个片段生成过滤器描述
+            for range in "${ranges[@]}"; do
+                start_time=$(echo $range | cut -d '-' -f 1)
+                end_time=$(echo $range | cut -d '-' -f 2)
+                # 注意：这里每个片段都视为独立的输入
+                filter_complex+="[$index:v] [$index:a] "
+                concat_input+="-ss $start_time -to $end_time -i \"$filename\" "
+                ((index++))
+            done
+
+            # 连接所有过滤器输入
+            filter_complex+="concat=n=$index:v=1:a=1 [v] [a]"
+
+            # 生成最终输出文件名
+            output=$(date +"%Y%m%d-%H%M%S")-$(tr -dc 'a-zA-Z0-9' </dev/urandom | head -c 12).mp4
+            
+            # 执行ffmpeg命令，合并视频
+            ffmpeg_cmd="ffmpeg $concat_input -filter_complex \"$filter_complex\" -map \"[v]\" -map \"[a]\" -y \"$output\""
+            eval $ffmpeg_cmd
+
+            # 获取合并视频的时长和大小
+            merged_duration=$(mediainfo --Inform="General;%Duration%" "$output")
+            merged_duration_sec=$(echo "$merged_duration/1000" | bc)
+            merged_size=$(mediainfo --Inform="General;%FileSize%" "$output")
+            merged_size_mb=$(echo "scale=2; $merged_size/1048576" | bc)
+            echo "合并的视频总时长: ${merged_duration_sec} 秒"
+            echo "合并的视频大小: ${merged_size_mb} MB"
+        else
+            echo "文件不存在！"
+        fi
+        ;;
+```
+
+
+
 ### 3. 环境配置
 
 需要提前安装`ffmpeg和mediainfo`，除此之外，无需初始化任何参数。
