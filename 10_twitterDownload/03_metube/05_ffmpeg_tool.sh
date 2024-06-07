@@ -5,7 +5,8 @@ echo "1. 提取MP4视频音频"
 echo "2. 截取MP4视频片段"
 echo "3. 转移文件到指定目录"
 echo "4. MP4文件重命名"
-read -p "请输入选项（1, 2, 3或4）: " option
+echo "5. 提取多个视频片段并合并为一个文件"
+read -p "请输入选项（1, 2, 3, 4或5）: " option
 
 case $option in
     1)
@@ -69,11 +70,56 @@ case $option in
             ((count++))
             name="${file%.*}"
             newname=$(echo "$name" | sed 's/ /_/g' | sed 's/[[:punct:]]/-/g')
-            newname="${count}_${newname}.mp4" # 确保重命名后的文件名包含正确的扩展名
+            newname="${count}_${newname}.mp4"
             mv "$file" "$newname"
             echo "重命名 '$file' 为 '$newname'"
         done
         ;;
+    5)
+        read -p "请输入MP4视频文件名: " filename
+        if [[ -f "$filename" ]]; then
+            # 获取视频总时长
+            video_duration=$(mediainfo --Inform="General;%Duration%" "$filename")
+            video_duration_sec=$(echo "$video_duration/1000" | bc)
+            echo "视频总时长: ${video_duration_sec} 秒"
+
+            # 输入截取范围
+            read -p "请输入需要截取的视频时段范围（多个时段用逗号分隔，如 01:02:30-01:36:00,02:05:00-03:38:00）: " time_ranges
+            IFS=',' read -r -a ranges <<< "$time_ranges"
+
+            filter_complex=""
+            for i in "${!ranges[@]}"; do
+                start_time=$(echo "${ranges[$i]}" | cut -d '-' -f 1)
+                end_time=$(echo "${ranges[$i]}" | cut -d '-' -f 2)
+                filter_complex+="[$i:v:0][$i:a:0]"
+            done
+
+            filter_complex+="concat=n=${#ranges[@]}:v=1:a=1[v][a]"
+
+            output=$(date +"%Y%m%d-%H%M%S")-$(tr -dc 'a-zA-Z0-9' </dev/urandom | head -c 12).mp4
+
+            ffmpeg_cmd="ffmpeg"
+            for i in "${!ranges[@]}"; do
+                start_time=$(echo "${ranges[$i]}" | cut -d '-' -f 1)
+                end_time=$(echo "${ranges[$i]}" | cut -d '-' -f 2)
+                ffmpeg_cmd+=" -ss $start_time -to $end_time -i \"$filename\""
+            done
+
+            ffmpeg_cmd+=" -filter_complex \"$filter_complex\" -map \"[v]\" -map \"[a]\" \"$output\""
+            eval $ffmpeg_cmd
+
+            # 获取合并视频的时长和大小
+            merged_duration=$(mediainfo --Inform="General;%Duration%" "$output")
+            merged_duration_sec=$(echo "$merged_duration/1000" | bc)
+            merged_size=$(mediainfo --Inform="General;%FileSize%" "$output")
+            merged_size_mb=$(echo "scale=2; $merged_size/1048576" | bc)
+            echo "合并的视频总时长: ${merged_duration_sec} 秒"
+            echo "合并的视频大小: ${merged_size_mb} MB"
+        else
+            echo "文件不存在！"
+        fi
+        ;;
+        
     *)
         echo "无效的选项。"
         ;;
