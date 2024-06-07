@@ -89,7 +89,7 @@ location /metube/ {
 
 - 执行文件下载到`/usr/local/bin`目录下
 
-```
+```bash
 curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
 chmod a+rx /usr/local/bin/yt-dlp
 ```
@@ -98,13 +98,13 @@ chmod a+rx /usr/local/bin/yt-dlp
 
 - 判断是否安装成功
 
-```
+```bash
 yt-dlp --version
 ```
 
 - 更新
 
-```
+```bash
 yt-dlp -U
 ```
 
