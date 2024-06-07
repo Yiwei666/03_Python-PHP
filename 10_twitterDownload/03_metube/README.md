@@ -81,7 +81,10 @@ location /metube/ {
 参考博客：[htpasswd 身份验证](https://github.com/Yiwei666/12_blog/blob/main/004/004.md)
 
 
-# 4. yt-dlp安装和配置
+
+# 4. `yt-dlp`安装和配置
+
+### 1. `yt-dlp`下载安装
 
 - 执行文件下载到`/usr/local/bin`目录下
 
@@ -91,5 +94,22 @@ chmod a+rx /usr/local/bin/yt-dlp
 ```
 
 参考资料：https://github.com/yt-dlp/yt-dlp/wiki/Installation
+
+- 判断是否安装成功
+
+```
+yt-dlp --version
+```
+
+- 更新
+
+```
+yt-dlp -U
+```
+
+### 2. 命令行
+
+
+
 
 
