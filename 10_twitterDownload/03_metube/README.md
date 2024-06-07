@@ -10,7 +10,7 @@
 
 
 
-# 3. 环境配置
+# 3. metube安装和配置
 
 ### 1. 启动容器
 
@@ -79,4 +79,17 @@ location /metube/ {
 
 
 参考博客：[htpasswd 身份验证](https://github.com/Yiwei666/12_blog/blob/main/004/004.md)
+
+
+# 4. yt-dlp安装和配置
+
+- 执行文件下载到`/usr/local/bin`目录下
+
+```
+curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+chmod a+rx /usr/local/bin/yt-dlp
+```
+
+参考资料：https://github.com/yt-dlp/yt-dlp/wiki/Installation
+
 
