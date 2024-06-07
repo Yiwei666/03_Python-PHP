@@ -19,8 +19,8 @@
 docker run -d -p 8081:8081 -v /home/01_html/05_temp_ffmpeg:/downloads ghcr.io/alexta69/metube
 ```
 
-:star: 项目地址`metube`：https://github.com/alexta69/metube
-:star: 相关项目`yt-dlp`：https://github.com/yt-dlp/yt-dlp
+:star: 项目地址`metube`：https://github.com/alexta69/metube  
+:star: 相关项目`yt-dlp`：https://github.com/yt-dlp/yt-dlp  
 
 ### 2. 将 Docker 容器的端口映射限制为仅对 `localhost（127.0.0.1）`可见
 
