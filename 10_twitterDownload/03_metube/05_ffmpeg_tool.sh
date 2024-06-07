@@ -4,7 +4,8 @@ echo "选择功能："
 echo "1. 提取MP4视频音频"
 echo "2. 截取MP4视频片段"
 echo "3. 转移文件到指定目录"
-read -p "请输入选项（1, 2或3）: " option
+echo "4. MP4文件重命名"
+read -p "请输入选项（1, 2, 3或4）: " option
 
 case $option in
     1)
@@ -58,6 +59,20 @@ case $option in
         else
             echo "文件不存在！"
         fi
+        ;;
+    4)
+        echo "当前目录下的所有文件："
+        ls
+        echo "重命名所有MP4文件..."
+        count=0
+        for file in *.mp4; do
+            ((count++))
+            name="${file%.*}"
+            newname=$(echo "$name" | sed 's/ /_/g' | sed 's/[[:punct:]]/-/g')
+            newname="${count}_${newname}.mp4" # 确保重命名后的文件名包含正确的扩展名
+            mv "$file" "$newname"
+            echo "重命名 '$file' 为 '$newname'"
+        done
         ;;
     *)
         echo "无效的选项。"
