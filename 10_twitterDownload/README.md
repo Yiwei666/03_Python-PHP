@@ -52,20 +52,20 @@
 - 运行上述 twitter_PHP_download.php 脚本需要安装 cURL模块
 
 - 对于ubuntu系统
-```
+```bash
 sudo apt-get update
 sudo apt-get install php-curl
 ```
 
 - 对于centos系统
 
-```
+```bash
 sudo yum install php-curl
 ```
 
 - 重启相关进程
 
-```
+```bash
 sudo service nginx restart
 sudo service php-fpm restart
 
@@ -92,7 +92,7 @@ sudo service php-fpm restart
 
 - 存储视频的文件夹需要有读写权限，改变文件或目录的所有者
 
-```
+```bash
 sudo chmod 775 /home/01_html/05_twitter_video
 sudo chown www-data:www-data /home/01_html/05_twitter_video
 ```
@@ -101,31 +101,31 @@ sudo chown www-data:www-data /home/01_html/05_twitter_video
 
 1. `twitter_PHP_download.php` 中需要结合实际情况自定义下载视频的目录
 
-```
+```php
  $filePath = '/home/01_html/05_twitter_video/' . $fileName;
 ```
 
 2. `06_multiple_Video_Upload.php` 需要指定同级目录下服务器端处理视频上传的php脚本
 
-```
+```php
 url: '06_upload.php',
 ```
 
 3. `06_upload.php` 需要自定义文件上传目录
 
-```
+```php
  $uploadDir = '/home/01_html/MuChaManor/';
 ```
 
 4. `lsTwitter.php` 自定义需要查看的目录
 
-```
+```php
 $directory = '/home/01_html/05_twitter_video';
 ```
 
 5. `twitterVideo_page.php` 自定义域名以及播放视频的目录
 
-```
+```php
 $domain = 'https://domain.com';
 $videoPath = '/home/01_html/05_twitter_video/';
 $videoUrl = $domain . '/05_twitter_video/' . $videoName;
@@ -133,7 +133,7 @@ $videoUrl = $domain . '/05_twitter_video/' . $videoName;
 
 6. `upload_MP4_video.php` 自定义上传视频的目录
 
-```
+```php
 $uploadDir = '/home/01_html/05_twitter_video/';
 ```
 
@@ -146,7 +146,7 @@ $uploadDir = '/home/01_html/05_twitter_video/';
 
 在进行任何更改之前，请通过创建一个包含以下内容的PHP文件并在服务器上运行它来检查当前PHP配置：
 
-```
+```php
 <?php
 phpinfo();
 ?>
@@ -175,7 +175,7 @@ ubuntu系统中php配置文件路径
 
 在更改`php.ini`文件后，需要重启Web服务器以应用新的配置设置。
 
-```
+```bash
 sudo service nginx restart
 sudo service php7.4-fpm restart  # 将 "7.4" 替换为你安装的 PHP 版本号
 ```
@@ -198,7 +198,7 @@ sudo service php7.4-fpm restart  # 将 "7.4" 替换为你安装的 PHP 版本号
 
 在 HTTPS 配置块中找到 server 块，然后添加或修改以下配置项，将上传大小限制设置为更大的值，比如 20MB：
 
-```
+```nginx
 server {
     # 其他配置项...
     client_max_body_size 20M;
@@ -222,7 +222,7 @@ client_max_body_size 20M;
 
 运行以下命令检查 Nginx 配置是否正确：
 
-```
+```bash
 sudo nginx -t
 ```
 
@@ -232,7 +232,7 @@ sudo nginx -t
 
 使配置更改生效，重启 Nginx 服务：
 
-```
+```bash
 sudo service nginx restart
 ```
 
