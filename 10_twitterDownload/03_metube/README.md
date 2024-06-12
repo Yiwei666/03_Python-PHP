@@ -199,7 +199,16 @@ sudo apt-get install mediainfo
 
 需要提前安装`ffmpeg和mediainfo`，除此之外，无需初始化任何参数。
 
+- 功能2：
 
+```sh
+save_path="/home/01_html/05_twitter_video/$output"
+```
 
+- 功能3：
 
+```sh
+mv "$filename" /home/01_html/05_twitter_video/
+echo "文件已成功转移到 /home/01_html/05_twitter_video/ 目录"
+```
 
