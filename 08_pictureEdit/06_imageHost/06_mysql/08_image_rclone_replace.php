@@ -4,9 +4,9 @@ include '08_db_config.php';
 include '08_db_sync_images.php';                     // 新下载的图片名写入到数据库中
 syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
 
-// 获取图片数据库中 likes 大于等于0 的图片名，存到数组A中
+// 获取图片数据库中 likes - dislikes 大于等于0 的图片名，存到数组A中
 $arrayA = [];
-$result = $mysqli->query("SELECT image_name FROM images WHERE likes >= 0");
+$result = $mysqli->query("SELECT image_name FROM images WHERE likes - dislikes >= 0");
 while ($row = $result->fetch_assoc()) {
     $arrayA[] = $row['image_name'];
 }
@@ -41,6 +41,7 @@ foreach ($arrayC_diff_D as $filename) {
 // 若数组D的长度等于5000，则退出脚本；若数组D的长度小于5000，则利用rclone copy命令下载 B-D 中的图片到目录
 if (count($arrayD) == 5000) {
     echo "Array D has 5000 elements. Exiting script.\n";
+    $mysqli->close();
     exit(0);
 } else {
     $diffBD = array_diff($arrayB, $arrayD);
@@ -50,7 +51,7 @@ if (count($arrayD) == 5000) {
     foreach ($diffBD as $filename) {
         $remote_file_path = $remote_dir . '/' . $filename;
         $local_file_path = $local_dir;
-        $copy_command = "rclone copy '$remote_file_path' '$local_file_path'";
+        $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=8";
         exec($copy_command, $copy_output, $copy_return_var);
         if ($copy_return_var != 0) {
             echo "Failed to copy " . $filename . "\n";
@@ -61,8 +62,6 @@ if (count($arrayD) == 5000) {
 }
 
 $mysqli->close();
-
 exec('php /home/01_html/08_db_image_status.php');
-
 echo "Process completed.\n";
 ?>
