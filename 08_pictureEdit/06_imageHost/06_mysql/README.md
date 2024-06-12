@@ -15,6 +15,7 @@
 08_image_management.php                    # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
 08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
 08_image_dislikes_delete.php               # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
+08_image_rclone_replace.php                # 随机替换目录下的图片，确保目录下的总图片数为5000
 
 08_picDisplay_mysql.php                    # 点赞图标位于图片外右侧居中，能够写入图片名到数据库
 08_picDisplay_mysql_inRight.php            # 点赞图标位于图片内右侧居中，能够写入图片名到数据库
@@ -274,6 +275,29 @@ $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项
 ```
 
 
+### 2. `08_image_rclone_replace.php`
+
+1. 首先获取 图片数据库中 `likes-dislikes` 大于等于0 的图片名，存到数组A中，从中随机抽取5000张图片名存到数组B中
+2. 获取 `/home/01_html/08_x/image/01_imageHost` 目录下的所有png图片名，存到数组C中
+3. 数组B和数组C的交集称为数组D
+4. 删除掉 `/home/01_html/08_x/image/01_imageHost` 目录下存在于 C-D 数组的图片
+5. 若数组 D 的长度等于5000，则退出脚本；若数组D的长度小于5000，则利用 `rclone copy` 命令下载 B-D 中的图片到  `/home/01_html/08_x/image/01_imageHost` 目录
+相关参考命令如下：
+
+```php
+$diffBD = array_diff($arrayB, $arrayD);
+foreach ($randomDiffBD as $index) {
+    $remote_file_path = $remote_dir . '/' . $diffBD[$index];
+    $local_file_path = $local_dir;
+    $copy_command = "rclone copy '$remote_file_path' '$local_file_path'";
+    exec($copy_command, $copy_output, $copy_return_var);
+    if ($copy_return_var != 0) {
+        echo "Failed to copy " . $diffBD[$index] . "\n";
+    } else {
+        echo "Copied " . $diffBD[$index] . " successfully\n";
+    }
+}
+```
 
 
 # 5. web交互脚本
