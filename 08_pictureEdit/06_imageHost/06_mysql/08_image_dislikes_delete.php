@@ -52,7 +52,8 @@ if ($option == '1') {
 elseif ($option == '2') {
     $count_result = $mysqli->query("SELECT COUNT(*) AS count FROM images WHERE dislikes BETWEEN $a AND $b");
     $count = $count_result->fetch_assoc()['count'];
-    $mysqli->query("UPDATE images SET likes = likes + $x WHERE dislikes BETWEEN $a AND $b");
+    // $mysqli->query("UPDATE images SET likes = likes + $x WHERE dislikes BETWEEN $a AND $b");
+    $mysqli->query("UPDATE images SET dislikes = dislikes + $x WHERE dislikes BETWEEN $a AND $b");
     echo "Number of images with dislikes between [$a, $b]: $count\n";
     echo "Total images in the database: $total_images\n";
     echo "Updated likes by adding $x to all matching images.\n";
