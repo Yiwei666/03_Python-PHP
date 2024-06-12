@@ -38,10 +38,12 @@ case $option in
             start_time=$(echo $time_range | cut -d '-' -f 1)
             end_time=$(echo $time_range | cut -d '-' -f 2)
             output=$(date +"%Y%m%d-%H%M%S")-$(tr -dc 'a-zA-Z0-9' </dev/urandom | head -c 12).mp4
-            ffmpeg -i "$filename" -ss "$start_time" -to "$end_time" -c copy "$output"
-            clip_duration=$(mediainfo --Inform="General;%Duration%" "$output")
+            # 保存到指定目录
+            save_path="/home/01_html/05_twitter_video/$output"
+            ffmpeg -i "$filename" -ss "$start_time" -to "$end_time" -c copy "$save_path"
+            clip_duration=$(mediainfo --Inform="General;%Duration%" "$save_path")
             clip_duration_sec=$(echo "$clip_duration/1000" | bc)
-            clip_size=$(mediainfo --Inform="General;%FileSize%" "$output")
+            clip_size=$(mediainfo --Inform="General;%FileSize%" "$save_path")
             clip_size_mb=$(echo "scale=2; $clip_size/1048576" | bc)
             echo "截取的视频时长: ${clip_duration_sec} 秒"
             echo "视频大小: ${clip_size_mb} MB"
@@ -86,26 +88,28 @@ case $option in
             # 输入截取范围
             read -p "请输入需要截取的视频时段范围（多个时段用逗号分隔，如 01:02:30-01:36:00,02:05:00-03:38:00）: " time_ranges
             IFS=',' read -r -a ranges <<< "$time_ranges"
-
             filter_complex=""
-            for i in "${!ranges[@]}"; do
-                start_time=$(echo "${ranges[$i]}" | cut -d '-' -f 1)
-                end_time=$(echo "${ranges[$i]}" | cut -d '-' -f 2)
-                filter_complex+="[$i:v:0][$i:a:0]"
+            concat_input=""
+            index=0
+
+            # 为每个片段生成过滤器描述
+            for range in "${ranges[@]}"; do
+                start_time=$(echo $range | cut -d '-' -f 1)
+                end_time=$(echo $range | cut -d '-' -f 2)
+                # 注意：这里每个片段都视为独立的输入
+                filter_complex+="[$index:v] [$index:a] "
+                concat_input+="-ss $start_time -to $end_time -i \"$filename\" "
+                ((index++))
             done
 
-            filter_complex+="concat=n=${#ranges[@]}:v=1:a=1[v][a]"
+            # 连接所有过滤器输入
+            filter_complex+="concat=n=$index:v=1:a=1 [v] [a]"
 
+            # 生成最终输出文件名
             output=$(date +"%Y%m%d-%H%M%S")-$(tr -dc 'a-zA-Z0-9' </dev/urandom | head -c 12).mp4
-
-            ffmpeg_cmd="ffmpeg"
-            for i in "${!ranges[@]}"; do
-                start_time=$(echo "${ranges[$i]}" | cut -d '-' -f 1)
-                end_time=$(echo "${ranges[$i]}" | cut -d '-' -f 2)
-                ffmpeg_cmd+=" -ss $start_time -to $end_time -i \"$filename\""
-            done
-
-            ffmpeg_cmd+=" -filter_complex \"$filter_complex\" -map \"[v]\" -map \"[a]\" \"$output\""
+            
+            # 执行ffmpeg命令，合并视频
+            ffmpeg_cmd="ffmpeg $concat_input -filter_complex \"$filter_complex\" -map \"[v]\" -map \"[a]\" -y \"$output\""
             eval $ffmpeg_cmd
 
             # 获取合并视频的时长和大小
@@ -119,7 +123,6 @@ case $option in
             echo "文件不存在！"
         fi
         ;;
-        
     *)
         echo "无效的选项。"
         ;;
