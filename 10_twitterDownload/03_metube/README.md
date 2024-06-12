@@ -197,7 +197,7 @@ sudo apt-get install mediainfo
 
 ### 3. 环境配置
 
-需要提前安装`ffmpeg和mediainfo`，除此之外，无需初始化任何参数。
+需要提前安装`ffmpeg和mediainfo`，除此之外，部分功能需要初始化以下参数。
 
 - 功能2：
 
