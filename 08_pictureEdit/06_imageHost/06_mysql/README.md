@@ -264,18 +264,20 @@ include '08_db_config.php';                                      // 包含数据
 - 该脚本中需要初始化的参数如下所示
 
 ```php
-include '08_db_config.php';                          // 创建数据库连接对象 $mysqli
+include '08_db_config.php';                             // 创建数据库连接对象 $mysqli
 
-include '08_db_sync_images.php';                     // 新下载的图片名写入到数据库中
+include '08_db_sync_images.php';                        // 新下载的图片名写入到数据库中
 syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
 
-include '08_db_image_status.php';                    // 判断数据库中所有图片的存在状态
+include '08_db_image_status.php';                       // 判断数据库中所有图片的存在状态
 
 $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
 ```
 
 
 ### 2. `08_image_rclone_replace.php`
+
+💎 **代码功能：**
 
 1. 首先获取 图片数据库中 `likes-dislikes` 大于等于0 的图片名，存到数组A中，从中随机抽取5000张图片名存到数组B中
 2. 获取 `/home/01_html/08_x/image/01_imageHost` 目录下的所有png图片名，存到数组C中
@@ -298,6 +300,23 @@ foreach ($randomDiffBD as $index) {
     }
 }
 ```
+
+💎 **环境变量**
+
+```php
+include '08_db_config.php';
+include '08_db_sync_images.php';                           // 新下载的图片名写入到数据库中
+syncImages("/home/01_html/08_x/image/01_imageHost");       // 调用 08_db_sync_images.php 模块中的 syncImages 函数，该函数需要传递图片存储路径参数
+
+$directory = '/home/01_html/08_x/image/01_imageHost';      // 指定图片所在路径
+
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 请替换为远程目录路径
+
+exec('php /home/01_html/08_db_image_status.php');          // 更新图片的状态
+exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');      // 重启 08_pic_url_check.js 应用
+```
+
+
 
 
 # 5. web交互脚本
