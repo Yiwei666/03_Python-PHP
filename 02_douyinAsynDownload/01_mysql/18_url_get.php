@@ -12,6 +12,7 @@
             width: 400px;
             height: 200px;
             margin: 10px 0;
+            margin-top: 200px;  /* 增加距离页面顶部的距离 */
         }
         #saveButton, #visitButton, #viewButton {
             display: block;
