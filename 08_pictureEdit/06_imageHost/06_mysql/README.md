@@ -275,7 +275,7 @@ $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项
 ```
 
 
-### 2. `08_image_rclone_replace.php`
+### 3. `08_image_rclone_replace.php`
 
 💎 **代码功能：**
 
@@ -301,7 +301,9 @@ foreach ($randomDiffBD as $index) {
 }
 ```
 
-💎 **环境变量**
+💎 **环境变量：**
+
+1. 参数初始化
 
 ```php
 include '08_db_config.php';
@@ -316,7 +318,9 @@ exec('php /home/01_html/08_db_image_status.php');          // 更新图片的状
 exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');      // 重启 08_pic_url_check.js 应用
 ```
 
+2. 环境配置
 
+需要提前安装 PM2，实现对于 node.js 脚本的重启管理 
 
 
 # 5. web交互脚本
