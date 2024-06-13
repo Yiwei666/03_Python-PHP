@@ -5,7 +5,6 @@ web下载youtube视频到vps，web观看下载后的视频
 # 2. 文件结构
 
 ```
-
 ├── 05_youtube_PHP_download.php                      # -rw-r--r--  1 root  root
 ├── print_log_youtube.php                            # -rw-r--r--  1 root  root
 ├── run_python_youtube.php                           # -rw-r--r--  1 root  root
@@ -20,7 +19,6 @@ web下载youtube视频到vps，web观看下载后的视频
 │   ├── aespa-Dreams Come True.mp4
 │   ├── aespa-Girls.mp4
 │   ......                                           # 下载的多个视频，省略
-
 ```
 
 
