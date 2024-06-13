@@ -1,12 +1,8 @@
-### 项目功能
----
-```
+# 1. 项目功能
+
 web下载youtube视频到vps，web观看下载后的视频
 
-```
-
-
-### 项目结构
+# 2. 文件结构
 ---
 
 ```
@@ -29,24 +25,21 @@ web下载youtube视频到vps，web观看下载后的视频
 ```
 
 
-### 注意事项
----
+# 3. 环境配置
 
-运行如下脚本提示输入youtube视频链接和mp4文件名，分两行输入，如下所示    
-05_youtube_PHP_download.php   
+运行`05_youtube_PHP_download.php `脚本提示输入youtube视频链接和mp4文件名，分两行输入，如下所示    
 
 ```
 https://youtu.be/G7KNmW9a75Y
 MileyCyrus-Flowers.mp4
-
 ```
 
-* 相关文件的权限和环境配置参考 03_Python-PHP/02_douyinDownload/README.md
+* 相关文件的权限和环境配置参考 `03_Python-PHP/02_douyinDownload/README.md`
 
 
 
-### 视频在线下载
----
+# 4. 视频在线下载网站
+
 - youtube 高清视频下载
 
 网站1：https://youtube4kdownloader.com/
