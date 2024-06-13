@@ -51,7 +51,7 @@ if (count($arrayD) == 5000) {
     foreach ($diffBD as $filename) {
         $remote_file_path = $remote_dir . '/' . $filename;
         $local_file_path = $local_dir;
-        $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=8";
+        $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=12";
         exec($copy_command, $copy_output, $copy_return_var);
         if ($copy_return_var != 0) {
             echo "Failed to copy " . $filename . "\n";
@@ -63,5 +63,6 @@ if (count($arrayD) == 5000) {
 
 $mysqli->close();
 exec('php /home/01_html/08_db_image_status.php');
+exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
 echo "Process completed.\n";
 ?>
