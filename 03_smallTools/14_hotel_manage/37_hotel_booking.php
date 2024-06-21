@@ -22,17 +22,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endDayChinese = isset($weekDays[$endDay]) ? $weekDays[$endDay] : '';
 
     echo "入住星期: " . $startDayChinese . " - " . $endDayChinese . "<br>";
-    
+
     // 处理到账金额，支持基本的算术运算
     $amount = eval('return ' . $_POST["amount"] . ';');
     echo "到账金额: " . $amount . " 元" . "<br>";
-    
     echo "房型: " . $_POST["room_type"] . "<br>";
     echo "间数: " . $_POST["number_of_rooms"] . "<br>";
+
+    // 计算佣金率、客人付款和平台佣金
+    if ($_POST["platform"] == "美团酒店") {
+        $commissionRate = 0.12;
+    } else {
+        $commissionRate = 0.10;
+    }
+    echo "佣金率: " . ($commissionRate * 100) . "%<br>";
+
+    $customerPayment = $amount / (1 - $commissionRate);
+    echo "客人付款: " . round($customerPayment, 2) . " 元<br>";
+
+    $platformCommission = $customerPayment * $commissionRate;
+    echo "平台佣金: " . round($platformCommission, 2) . " 元<br>";
+
     echo "备注: " . $_POST["remarks"] . "<br>";
 }
-
 ?>
+
 
 
 
