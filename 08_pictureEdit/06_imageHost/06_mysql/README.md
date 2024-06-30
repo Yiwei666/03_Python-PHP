@@ -213,6 +213,22 @@ alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_
 ALTER TABLE images ADD COLUMN image_exists TINYINT DEFAULT 0;
 ```
 
+- 新增`image_exists`列后的完整表格如下
+
+```
+mysql> describe images;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int          | NO   | PRI | NULL    | auto_increment |
+| image_name   | varchar(255) | NO   |     | NULL    |                |
+| likes        | int          | YES  |     | 0       |                |
+| dislikes     | int          | YES  |     | 0       |                |
+| image_exists | tinyint      | YES  |     | 0       |                |
++--------------+--------------+------+-----+---------+----------------+
+```
+
+
 3. 环境变量
 
 ```php
