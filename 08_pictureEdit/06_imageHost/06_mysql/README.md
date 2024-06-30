@@ -8,15 +8,18 @@
 # 2. 文件结构
 
 ```
+# 1. 功能模块
 08_db_config.php                           # 通常包含数据库连接信息如服务器地址、用户名、密码等
 08_db_sync_images.php                      # 图片目录与数据库同步功能模块
 08_db_image_status.php                     # 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
-
 08_image_management.php                    # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
+
+# 2. 后台管理
 08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
 08_image_dislikes_delete.php               # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
 08_image_rclone_replace.php                # 随机替换目录下的图片，确保目录下的总图片数为5000
 
+# 3. web交互
 08_picDisplay_mysql.php                    # 点赞图标位于图片外右侧居中，能够写入图片名到数据库，随机显示数据库中的 n 张图片
 08_picDisplay_mysql_inRight.php            # 点赞图标位于图片内右侧居中，能够写入图片名到数据库
 08_picDisplay_mysql_inRigTra.php           # 点赞图标位于图片内右侧居中，点赞图标所在方框设置为透明，能够写入图片名到数据库
