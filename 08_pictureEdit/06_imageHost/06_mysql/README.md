@@ -204,7 +204,7 @@ mysqldump -p image_db  > 08_image_backup_02.sql
 alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
-### 4. `08_db_image_status.php`判断图片是否删除
+### 4. `08_db_image_status.php` 判断图片是否删除
 
 1. 该功能模块将项目文件夹下已删除的图片在数据库中`image_exists`赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 2. 运行该脚本前需要在数据库`images`表中新增`image_exists`一列
