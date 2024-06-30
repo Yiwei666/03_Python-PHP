@@ -412,6 +412,32 @@ $domain = "https://19640810.xyz"; // 域名网址
 $picnumber = 50; // 设置需要显示的图片数量
 ```
 
+### 3. `08_picDisplay_mysql_orderExist.php`
+
+1. 环境变量
+
+```php
+include '08_db_config.php';
+
+// 设置图片所在的文件夹
+$dir4 = "/home/01_html/08_x/image/01_imageHost";
+$dir5 = str_replace("/home/01_html", "", $dir4);
+$domain = "https://19640810.xyz";
+
+// 设置每页显示的图片数量
+$imagesPerPage = 20;
+
+fetch('08_image_management.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}&action=${action}`
+})
+```
+
+2. 核心特性
+   - 按照总点赞数由大到小降序排序
+   - 只显示图片目录中实际存在的图片，页面中没有图片空白缺失
+
 
 # 4. ubuntu系统安装MySQL
 
