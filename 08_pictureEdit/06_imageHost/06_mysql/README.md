@@ -355,7 +355,7 @@ alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
 3. 图片展示：从数据库中随机选取指定数量的图片（在此脚本中设置为3张），然后在网页上显示。
 4. 互动功能：用户可以点击喜欢或不喜欢的按钮来更新图片的喜欢和不喜欢的数量。
-5. 终端识别：能够根据客户端类型（手机/电脑）自适应图片宽度
+5. 终端识别：能够根据客户端类型（手机/电脑）自适应图片宽度，相关实现可以参考[链接](https://github.com/Yiwei666/03_Python-PHP/blob/main/08_pictureEdit/06_imageHost/README.md#6-08_picdisplayphp-%E9%9A%8F%E6%9C%BA%E6%98%BE%E7%A4%BA%E6%8C%87%E5%AE%9A%E7%9B%AE%E5%BD%95%E4%B8%8B-n-%E5%BC%A0%E5%9B%BE%E7%89%87)
 
 此外，该脚本还调用了以下外部脚本或文件：
 
