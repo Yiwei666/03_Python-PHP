@@ -60,11 +60,21 @@ pic_temp_dir = '/home/01_html/08_x/image/03_picTemp/海外风景'
 
 
 
-### 4. 
+### 4. `08_web_failure_redownload.py`
+
+1. 确保图片保存目录存在：如果目录不存在，则创建该目录。
+2. 读取失败URL文件 `03_failure_downURL.txt` 中的图片URL列表。
+3. 下载图片并保存：对每个图片URL，生成基于时间戳的文件名，下载图片数据并保存为PNG文件。
+4. 记录下载失败的URL：如果下载失败，将URL记录到重新下载失败的日志文件 `04_reDownload_failURL.txt` 中。
+5. 等待2秒：每次下载完成后，程序等待2秒再进行下一次下载。
+6. 输出下载结果：打印总URL数、成功下载数和失败下载数。
 
 
-
-
+```py
+temp_url_path = '/home/01_html/08_x/image/05_webPicDownload/03_failure_downURL.txt'
+failure_url_path = '/home/01_html/08_x/image/05_webPicDownload/04_reDownload_failURL.txt'
+pic_temp_dir = '/home/01_html/08_x/image/03_picTemp/海外风景'
+```
 
 
 
