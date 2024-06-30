@@ -282,8 +282,8 @@ $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项
 1. 首先获取 图片数据库中 `likes-dislikes` 大于等于0 的图片名，存到数组A中，从中随机抽取5000张图片名存到数组B中
 2. 获取 `/home/01_html/08_x/image/01_imageHost` 目录下的所有png图片名，存到数组C中
 3. 数组B和数组C的交集称为数组D
-4. 删除掉 `/home/01_html/08_x/image/01_imageHost` 目录下存在于 C-D 数组的图片
-5. 若数组 D 的长度等于5000，则退出脚本；若数组D的长度小于5000，则利用 `rclone copy` 命令下载 B-D 中的图片到  `/home/01_html/08_x/image/01_imageHost` 目录
+4. 删除掉 `/home/01_html/08_x/image/01_imageHost` 目录下存在于 `C-D` 数组的图片，即删除 D 在 C 中的补集
+5. 若数组 D 的长度等于5000，则退出脚本；若数组D的长度小于5000，则利用 `rclone copy` 命令下载 `B-D` 中的图片到  `/home/01_html/08_x/image/01_imageHost` 目录，即下载 D 在 B 中的补集
 相关参考命令如下：
 
 ```php
