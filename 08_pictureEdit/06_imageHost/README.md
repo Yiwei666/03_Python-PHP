@@ -410,7 +410,7 @@ $imagesPerPage = 60;                                                            
 ```
 
 
-### 6. 08_picDisplay.php
+### 6. `08_picDisplay.php` 随机显示指定目录下 n 张图片
 
 1. 环境配置
 
@@ -451,7 +451,6 @@ Mozilla/5.0 (Android 11; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0            
 ```
 
 
-
 3. 代码总体思路
 
 ```
@@ -465,9 +464,15 @@ Mozilla/5.0 (Android 11; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0            
 8. 新加功能，实现图片从上往下逐张加载，避免用户在等待多张图片加载的同时，一张完整图片也看不到
 ```
 
-### 7. 08_picDisplay_one.php
 
-- 环境变量
+### 7. `08_picDisplay_one.php` 随机显示指定目录下 1 张图片
+
+1. `08_picDisplay_one.php`是`08_picDisplay.php`改进版本，在页面中仅显示指定文件夹下的一张图片，未使用mysql进行数据管理
+2. 核心特性：
+   - 引入cookie验证用户访问权限
+   - 保留终端类型检测，以便用户在不同设备上获得更好的浏览体验
+
+3. 环境变量
 
 ```php
 $key = 'your-signing-key-1';  // 应与登录脚本中的密钥一致
