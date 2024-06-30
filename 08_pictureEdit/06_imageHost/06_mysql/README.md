@@ -322,6 +322,14 @@ exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');      // 重�
 
 需要提前安装 PM2，实现对于 node.js 脚本的重启管理 
 
+```bash
+alias pms='pm2 stop /home/01_html/08_x_nodejs/08_pic_url_check.js'
+alias pmr='pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js'
+alias pmd='pm2 delete /home/01_html/08_x_nodejs/08_pic_url_check.js'
+alias pml='pm2 list'
+alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
+```
+
 
 # 5. web交互脚本
 
