@@ -326,6 +326,8 @@ chown www-data:www-data 05_imageTransferName.txt
 
 ### 2. 05_imageGallery.php
 
+1. 环境变量
+
 ```php
 $baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageHost/';         // 图片url中文件名之前的部分
 $imagesDirectory = '/home/01_html/02_LAS1109/35_imageHost/';       // 图片文件夹
@@ -363,6 +365,13 @@ body {
 }
 
 ```
+
+💎 **新增功能**
+1. 添加具有垂直滚动条的页码侧边栏
+2. 设置侧边栏的高度，宽度，页码与滚动条的水平距离，滚动条的触发条件
+3. 高亮当前页码
+4. 无论用户何时回到页面，他们都可以从他们停止浏览的地方继续
+
 
 
 ### 3. 05_serverImageTransfer.php
