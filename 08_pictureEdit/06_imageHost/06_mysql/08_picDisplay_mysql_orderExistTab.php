@@ -32,13 +32,9 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-// 上面是基于cookie和session的登陆验证
-
-
 include '08_db_config.php';
 include '08_db_sync_images.php';
 syncImages("/home/01_html/08_x/image/01_imageHost"); // 调用函数并提供图片存储目录
-
 
 // 设置图片所在的文件夹
 $dir4 = "/home/01_html/08_x/image/01_imageHost";
@@ -48,20 +44,16 @@ $domain = "https://19640810.xyz";
 // 设置每页显示的图片数量
 $imagesPerPage = 20;
 
-// 获取数据库中所有图片的记录
-$query = "SELECT id, image_name, likes, dislikes FROM images";
+// 获取数据库中标记为存在的所有图片的记录
+$query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
 $result = $mysqli->query($query);
 
-// 检查文件夹中实际存在的图片
+// 按照 (likes - dislikes) 排序
 $validImages = [];
 while ($row = $result->fetch_assoc()) {
-    $imagePath = $dir4 . '/' . $row['image_name'];
-    if (file_exists($imagePath)) {
-        $validImages[] = $row;
-    }
+    $validImages[] = $row;
 }
 
-// 对实际存在的图片按照 (likes - dislikes) 排序
 usort($validImages, function ($a, $b) {
     return ($b['likes'] - $b['dislikes']) - ($a['likes'] - $a['dislikes']);
 });
@@ -77,7 +69,6 @@ $offset = ($page - 1) * $imagesPerPage;
 $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
