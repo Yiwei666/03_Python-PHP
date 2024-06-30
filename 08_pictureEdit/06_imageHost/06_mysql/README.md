@@ -349,7 +349,7 @@ alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 
 # 5. web交互脚本
 
-### 1. `08_picDisplay_mysql.php`
+### 1. `08_picDisplay_mysql.php` 随机显示数据库中 n 张图片
 
 1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
 2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
@@ -392,7 +392,7 @@ fetch('08_image_management.php', {
 08_picDisplay_mysql_inRigTra.php           # 点赞图标位于图片内右侧居中，点赞图标所在方框设置为透明，能够写入图片名到数据库
 ```
 
-### 2. `08_picDisplay_order.php`
+### 2. `08_picDisplay_order.php` 按总点赞数递减显示数据库中 n 张图片
 
 1. 用户验证：检查用户是否登录，若未登录，则重定向到登录页面。
 2. 登出操作：若用户点击了登出链接，注销用户会话并重定向到登录页面。
