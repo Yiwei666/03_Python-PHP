@@ -17,11 +17,11 @@
 08_image_dislikes_delete.php               # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
 08_image_rclone_replace.php                # 随机替换目录下的图片，确保目录下的总图片数为5000
 
-08_picDisplay_mysql.php                    # 点赞图标位于图片外右侧居中，能够写入图片名到数据库
+08_picDisplay_mysql.php                    # 点赞图标位于图片外右侧居中，能够写入图片名到数据库，随机显示数据库中的 n 张图片
 08_picDisplay_mysql_inRight.php            # 点赞图标位于图片内右侧居中，能够写入图片名到数据库
 08_picDisplay_mysql_inRigTra.php           # 点赞图标位于图片内右侧居中，点赞图标所在方框设置为透明，能够写入图片名到数据库
 
-08_picDisplay_order.php                    # 基于总点赞数排序显示有限张图片，例如50张图片
+08_picDisplay_order.php                    # 基于总点赞数排序显示有限张图片，例如50张图片，未分页，显示为1列，可能有图片缺失空白
 08_picDisplay_mysql_gallery.php            # 显示数据库中所有图片，添加分页、侧边栏、localStorage，按照文件名默认排序
 08_picDisplay_mysql_order.php              # 显示数据库中所有图片，按照总点赞数由多到少排序，添加分页、侧边栏、localStorage
 
