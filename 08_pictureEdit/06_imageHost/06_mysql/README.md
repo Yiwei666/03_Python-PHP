@@ -31,6 +31,7 @@
 08_picDisplay_mysql_orderExist.php         # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，不显示已删除图片导致的空白页
 08_picDisplay_mysql_galleryExist.php       # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，不显示已删除图片导致的空白页，按照文件名默认排序
 08_picDisplay_mysql_orderExistTab.php      # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，显示在新标签页打开图片的图标
+08_picDisplay_mysql_galleryExistTab.php    # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，按照文件名默认排序，显示在新标签页打开图片的图标
 ```
 
 # 3. php功能模块
@@ -481,6 +482,35 @@ fetch('08_image_management.php', {
 
 ```js
 <button onclick="window.open('<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>', '_blank')">🔗</button>
+```
+
+
+### 5. `08_picDisplay_mysql_galleryExistTab.php`
+
+-  在`08_picDisplay_mysql_galleryExist.php`基础上进行改进，保留了原有功能，新增在新标签页打开图片的按钮。
+
+1. 新增特性如下：
+   - 新增图标，点击后在新的标签页打开相应图片
+   - 使用数据库中的`image_exists`列来直接过滤和处理存在的图片，而不是在文件系统上检查每张图片的存在性。这将提高性能，特别是当图片数量较多时。
+
+2. 环境变量
+
+```php
+include '08_db_config.php';
+
+// 设置图片所在的文件夹
+$dir4 = "/home/01_html/08_x/image/01_imageHost";
+$dir5 = str_replace("/home/01_html", "", $dir4);
+$domain = "https://19640810.xyz";
+
+// 设置每页显示的图片数量
+$imagesPerPage = 20;
+
+fetch('08_image_management.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}&action=${action}`
+})
 ```
 
 
