@@ -187,6 +187,7 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
                 <span id="like-<?php echo $image['id']; ?>"><?php echo $image['likes']; ?></span>
                 <button onclick="updateLikes(<?php echo $image['id']; ?>, 'dislike')">👎</button>
                 <span id="dislike-<?php echo $image['id']; ?>"><?php echo $image['dislikes']; ?></span>
+                <button onclick="window.open('<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>', '_blank')">🔗</button>
             </div>
         </div>
     <?php endforeach; ?>
