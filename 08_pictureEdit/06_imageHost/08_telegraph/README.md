@@ -38,7 +38,7 @@
 - 在`total_url_path`指定的文件中，附加当前日期和时间，然后追加所有图片URL。
 - 在`temp_url_path`指定的文件中，覆盖写入所有图片URL。
 
-```
+```py
 total_url_path = '01_total_url.txt'
 temp_url_path = '02_temp_url.txt'
 ```
@@ -52,7 +52,7 @@ temp_url_path = '02_temp_url.txt'
 5. 等待2秒：每次下载完成后，程序等待2秒再进行下一次下载。
 6. 输出下载结果：打印总URL数、成功下载数和失败下载数。
 
-```
+```py
 temp_url_path = '/home/01_html/08_x/image/05_webPicDownload/02_temp_url.txt'
 failure_url_path = '/home/01_html/08_x/image/05_webPicDownload/03_failure_downURL.txt'
 pic_temp_dir = '/home/01_html/08_x/image/03_picTemp/海外风景'
