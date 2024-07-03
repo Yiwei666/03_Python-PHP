@@ -7,15 +7,15 @@
 
 # 2. 项目结构
 
-- 01_merged_pdf.py
+### 1. `01_merged_pdf.py`
 
 按照目录下pdf文件的默认排序对所有pdf文档进行合并
 
-- 02_pdf_split_convert
+### 2. `02_pdf_split_convert`
 
 针对多页pdf进行拆分，获取单独页，并转换为png格式
 
-- pdf_split_into_two_parts.py
+### 3. `pdf_split_into_two_parts.py`
 
 将一个总页数大于2的pdf文件拆分成两部分。
 第一部分必须是从第1页开始，可以是1页，也可以是连续的多页，如果是多页的话，页码范围用“-”连接，比如1-2，1-5等等，如果只是第一页的话，只需要输入1即可，其他的输入格式提示输入错误。
