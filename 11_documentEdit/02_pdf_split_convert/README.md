@@ -1,18 +1,18 @@
 # 1. 项目功能
 
-- 01_pdf_split.py
+### 1. `01_pdf_split.py`
 
 利用PyPDF2库将pdf文件拆分成单独页，使用页数命名单独页
 
-- 02_pdf_to_png.py
+### 2. `02_pdf_to_png.py`
 
 利用pdf2image库将所有pdf文件转换成png格式
 
-- 03_pdf_split_per2.py
+### 3. `03_pdf_split_per2.py`
 
 该代码用于将输入的PDF文件拆分为包含两个页面的多个PDF文件。如果总页数是奇数，最后一个文件只包含最后一页。如果总页数是偶数，每个文件包含两页。
 
-- 04_pdf_split_perM.py
+### 4. `04_pdf_split_perM.py`
 
 用于将输入的PDF文件按照指定的每组页数进行拆分的程序。
 
