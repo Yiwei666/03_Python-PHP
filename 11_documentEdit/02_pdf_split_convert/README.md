@@ -14,9 +14,9 @@
 
 ### 4. `04_pdf_split_perM.py`
 
-用于将输入的PDF文件按照指定的每组页数进行拆分的程序。
+1. 功能：用于将输入的PDF文件按照指定的每组页数进行拆分的程序。
 
-用户需要输入要处理的PDF文件的绝对路径和每组包含的页数（m），然后程序会按照指定的每组页数将输入的PDF文件拆分成多个小的PDF文件。每个小的PDF文件包含连续的页数，文件名格式为"glencoe-Pages_start_page_end_page.pdf"，其中start_page表示当前拆分组的起始页码，end_page表示结束页码。
+2. 用户需要输入要处理的PDF文件的绝对路径和每组包含的页数（m），然后程序会按照指定的每组页数将输入的PDF文件拆分成多个小的PDF文件。每个小的PDF文件包含连续的页数，文件名格式为`glencoe-Pages_start_page_end_page.pdf`，其中`start_page`表示当前拆分组的起始页码，`end_page`表示结束页码。
 
 
 # 2. 环境部署
