@@ -79,7 +79,7 @@
                 ctx.drawImage(img, 0, 0);
                 canvas.toBlob(function(blob) {
                     var date = new Date();
-                    var filename = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}.png`;
+                    var filename = generateFilename(date);
                     var link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
                     link.download = filename;
@@ -92,6 +92,11 @@
                 console.error('图片加载失败:', url);
             };
             img.src = url;
+        }
+
+        function generateFilename(date) {
+            var randomString = Math.random().toString(36).substr(2, 6);
+            return `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}-${randomString}.png`;
         }
     }, 3000); // Adjust the delay here based on the typical load time of your target pages
 })();
