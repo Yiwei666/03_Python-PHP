@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Image Link Cleaner with Download Function
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  try to take over the web with new download features
 // @author       You
 // @match        *://*/*
-// @grant        GM_download
+// @grant        none
 // ==/UserScript==
 
 (function() {
@@ -69,20 +69,29 @@
         });
 
         function downloadImage(url) {
-            var date = new Date();
-            var filename = `${date.getFullYear()}${(date.getMonth()+1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}.png`;
-
-            // 使用 Tampermonkey 的 GM_download 功能来处理下载
-            GM_download({
-                url: url,
-                name: filename,
-                onerror: function(error) {
-                    console.error('下载失败:', error);
-                },
-                onload: function() {
-                    console.log('下载成功');
-                }
-            });
+            var img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                canvas.toBlob(function(blob) {
+                    var date = new Date();
+                    var filename = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}-${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}.png`;
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, 'image/png');
+            };
+            img.onerror = function() {
+                console.error('图片加载失败:', url);
+            };
+            img.src = url;
         }
     }, 3000); // Adjust the delay here based on the typical load time of your target pages
 })();
