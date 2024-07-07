@@ -1,4 +1,5 @@
-### 项目功能
+# 1. 项目功能
+
 ```
 01 支持本地运行和随机输出单词到web页面，记录打卡天数
 02 根据单词选意思，根据意思选单词
@@ -8,7 +9,7 @@
 06 词库包括四六级，托福，雅思，GRE，SAT等，数据库见文件夹 03_Python-PHP/05_mysqlDict/word/
 ```
 
-### 项目结构
+# 2. 文件结构
 
 ```
 ├── pythonWord.php                      # -rw-r--r--  1 root  root
@@ -18,6 +19,7 @@
 
 注意：当你执行一个脚本时，操作系统会检查脚本文件的权限位，如果父文件夹具有可执行权限并且脚本文件本身有读取权限，那么你可以直接执行该脚本。
 ```
+
 
 
 **09N_背单词(alpha).py**
@@ -48,3 +50,27 @@ def wordToSentence(wordInput) 函数支持近义词查找和造句
 ```
 在vps上运行、经过优化后的代码，运行速度和web响应时间略有提升
 ```
+
+
+# 3. 环境配置
+
+```bash
+# 将目录及其内容的所属组更改为 'root'
+sudo chown -R :root 15_pythonword
+
+# 将目录权限设置为 drwxrwxr-x (775)
+sudo chmod 775 15_pythonword
+
+# 将 09N_单词数据库.json 文件的权限设置为 -rw-rw-rw- (666)
+sudo chmod 666 15_pythonword/09N_单词数据库.json
+
+# 将 09N_单词数据库.json 文件的所有者更改为 nginx:nginx
+sudo chown nginx:nginx 15_pythonword/09N_单词数据库.json
+
+# 将 09N_背单词.py 文件的权限设置为 -rw-r--r-- (644)
+sudo chmod 644 15_pythonword/09N_背单词.py
+
+# 将 09N_背单词.py 文件的所有者更改为 root:root
+sudo chown root:root 15_pythonword/09N_背单词.py
+```
+
