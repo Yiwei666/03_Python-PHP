@@ -20,5 +20,11 @@ sudo apt-get install ffmpeg
 sudo apt-get install imagemagick
 ```
 
+### 2. `creat_video.sh`
 
+- 源码：[creat_video.sh](creat_video.sh)
 
+```
+image_dir="/home/01_html/06_videoSynthesis/pic"
+music_dir="/home/01_html/06_videoSynthesis/music"
+```
