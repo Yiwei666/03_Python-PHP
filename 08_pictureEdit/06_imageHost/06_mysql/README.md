@@ -275,12 +275,15 @@ include '08_db_config.php';                                      // 包含数据
 
 ### 2. `08_image_dislikes_delete.php`
 
+- 源码：[08_image_dislikes_delete.php](08_image_dislikes_delete.php)
+
 `08_image_dislikes_delete.php` 是 `08_image_likes_manager.php` 升级版本，
 
 1. 新增功能4：统计 dislikes 在 [a, b] 范围内的图片数量，并将云服务器项目文件夹中dislikes 在 [a, b] 范围的这些对应的图片都删除掉，删除前打印出这些文件的名称，提醒用户确认，最后打印删除后的项目文件中图片总数量。
 
-2. 新增功能5：创建的数据库连接对象 $mysqli 中有一列是 image_exists，image_exists列表示数据库中每张图片的存储状态，0表示不存在，1表示存在。功能5就是：对于所有 image_exists为1的图片，分别查找likes和dislikes在 [a, b] 区间内的数量并打印出来。除此之外，还打印出数据库中图片总数，image_exists为0和为1的数量。
+2. 新增功能5：创建的数据库连接对象 `$mysqli` 中有一列是 `image_exists`，`image_exists`列表示数据库中每张图片的`存储状态`，0表示不存在，1表示存在。功能5就是：对于所有 `image_exists`为1的图片，分别查找likes和dislikes在 `[a, b]` 区间内的数量并打印出来。除此之外，还打印出数据库中图片总数，`image_exists`为0和为1的数量。
 
+3. 新功能6：将允许用户选择将特定范围内的 `likes-dislikes` 的图片复制到指定的目录。
 
 - 该脚本中需要初始化的参数如下所示
 
@@ -293,6 +296,10 @@ syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供
 include '08_db_image_status.php';                       // 判断数据库中所有图片的存在状态
 
 $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
+
+# 功能6
+$destination_folder = '/home/01_html/08_x/image/06_picVideo/';
+$source_file = "/home/01_html/08_x/image/01_imageHost/" . $row['image_name'];
 ```
 
 
