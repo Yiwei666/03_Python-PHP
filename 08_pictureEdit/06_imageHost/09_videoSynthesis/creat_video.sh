@@ -53,14 +53,10 @@ echo "每张图片展示时间: $display_time 秒"
 # 创建临时目录
 temp_dir=$(mktemp -d)
 
-# 处理图片，使其宽度和高度为偶数，并拷贝到临时目录
+# 处理图片，使其宽度和高度适应1080x1920分辨率，保持长宽比，并拷贝到临时目录
 for i in "${!selected_images[@]}"; do
   image=${selected_images[$i]}
-  width=$(identify -format "%w" "$image")
-  height=$(identify -format "%h" "$image")
-  new_width=$((width - width % 2))
-  new_height=$((height - height % 2))
-  convert "$image" -resize ${new_width}x${new_height}! "$temp_dir/img_$i.png"
+  convert "$image" -resize 1080x1920\> -background black -gravity center -extent 1080x1920 "$temp_dir/img_$i.png"
   echo "处理图片: $temp_dir/img_$i.png"
 done
 
@@ -72,7 +68,7 @@ for i in $(seq 0 $(($n-1))); do
 done
 
 # 添加最后一帧持续时间
-echo "file '$temp_dir/img_$((n-1)).png'" >> $ffmpeg_input
+echo "file '$temp_dir/img_$((n-1))..png'" >> $ffmpeg_input
 
 # 输出视频文件名
 output_video="${selected_mp3%.mp3}.mp4"
