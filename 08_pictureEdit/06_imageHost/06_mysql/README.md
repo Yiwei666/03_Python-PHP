@@ -295,6 +295,7 @@ syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供
 
 include '08_db_image_status.php';                       // 判断数据库中所有图片的存在状态
 
+# 功能4
 $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项目文件夹的路径
 
 # 功能6
