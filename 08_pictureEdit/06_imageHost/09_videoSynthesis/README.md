@@ -6,6 +6,8 @@
 
 ```
 creat_video.sh          # 基于png图片和mp3音频合成mp4视频
+06_video_list.php       # 列出指定目录下的所有MP4文件名
+06_videoPlayer.php      # 跳转播放 06_video_list.php 中点击的MP4文件
 ```
 
 
@@ -57,4 +59,27 @@ mpg123 -t filename.mp3
 这个脚本的输出是一个视频文件，其中包含按照音频长度均匀分配的随机选择的图片，配合用户选定的音频背景。
 
 
+### 3. MP4在线播放
+
+1. `06_video_list.php`
+
+环境变量
+
+```php
+$dir = "/home/01_html/06_videoSynthesis";
+
+// 指定传递参数的php脚本名
+echo "<a href='06_videoPlayer.php?video=$videoEncoded' target='_blank'>$video</a><br />";
+```
+
+2. `06_videoPlayer.php`
+
+环境变量
+
+```php
+// 构建视频URL
+$videoUrl = "https://chaye.one/06_videoSynthesis/" . urlencode($videoName) . ".mp4";
+// 构建字幕URL
+$srtUrl = "https://chaye.one/06_videoSynthesis/" . urlencode($videoName) . ".srt";
+```
 
