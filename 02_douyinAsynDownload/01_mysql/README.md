@@ -153,6 +153,15 @@ download_dir = "/home/01_html/02_douyVideo/"
 
 4. cron 定时
 
+- 每两分钟执行一次 `18_douyinDown.py`
+
+```bash
+*/2 * * * * /home/00_software/01_Anaconda/bin/python /home/01_html/18_douyinDown.py
+```
+
+
+### rclone上传onedrive
+
 ```bash
 # cc1-2 to onedrive
 0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo cc1-2:do1-2/01_html/02_douyVideo
