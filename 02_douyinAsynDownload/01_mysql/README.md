@@ -156,6 +156,7 @@ download_dir = "/home/01_html/02_douyVideo/"
 ```bash
 # cc1-2 to onedrive
 0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo cc1-2:do1-2/01_html/02_douyVideo
+# 0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo rc4:do1-2/01_html/02_douyVideo
 ```
 
 
