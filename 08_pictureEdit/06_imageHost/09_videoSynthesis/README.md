@@ -24,7 +24,9 @@ sudo apt-get install imagemagick
 
 - 源码：[creat_video.sh](creat_video.sh)
 
-```
+- 环境变量
+
+```bash
 image_dir="/home/01_html/06_videoSynthesis/pic"
 music_dir="/home/01_html/06_videoSynthesis/music"
 ```
