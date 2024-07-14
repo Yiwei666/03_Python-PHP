@@ -18,18 +18,26 @@ creat_video.sh          # 基于png图片和mp3音频合成mp4视频
 sudo apt-get update
 sudo apt-get install ffmpeg
 sudo apt-get install imagemagick
+sudo apt install mpg123
 ```
 
 ### 2. `creat_video.sh`
 
 - 源码：[creat_video.sh](creat_video.sh)
 
-- 环境变量
+1. 环境变量
 
 ```bash
 image_dir="/home/01_html/06_videoSynthesis/pic"
 music_dir="/home/01_html/06_videoSynthesis/music"
 ```
+
+2. 查看mp3视频时长
+
+```bash
+mpg123 -t filename.mp3
+```
+
 
 💎 **功能**
 
