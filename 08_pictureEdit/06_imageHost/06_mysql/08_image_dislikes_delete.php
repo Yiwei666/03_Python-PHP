@@ -24,7 +24,8 @@ echo "2. Update and count images with dislikes between [$a, $b]\n";
 echo "3. Count images with likes between [$a, $b]\n";
 echo "4. Count images with dislikes between [$a, $b] and delete corresponding files\n";
 echo "5. Count images with likes and dislikes between [$a, $b] where image_exists is 1\n";
-echo "Enter option (1/2/3/4/5): ";
+echo "6. Copy images with likes-dislikes in range [$a, $b] to another dirctory\n";
+echo "Enter option (1/2/3/4/5/6): ";
 $option = trim(fgets(STDIN));
 
 // 获取图片总数
@@ -135,6 +136,27 @@ elseif ($option == '5') {
     echo "Number of images where image_exists is 0: $image_exists_0_count\n";
     echo "Number of images where image_exists is 1: $image_exists_1_count\n";
 }
+
+elseif ($option == '6') {
+    $query = "SELECT image_name FROM images WHERE (likes - dislikes) BETWEEN $a AND $b";
+    $result = $mysqli->query($query);
+    $destination_folder = '/home/01_html/08_x/image/06_picVideo/';
+    if (!file_exists($destination_folder)) {
+        mkdir($destination_folder, 0777, true);
+    }
+    $num_copied = 0;
+    while ($row = $result->fetch_assoc()) {
+        $source_file = "/home/01_html/08_x/image/01_imageHost/" . $row['image_name'];
+        $destination_file = $destination_folder . $row['image_name'];
+        if (file_exists($source_file)) {
+            if (copy($source_file, $destination_file)) {
+                $num_copied++;
+            }
+        }
+    }
+    echo "Number of images copied: $num_copied\n";
+}
+
 
 // 无效选项处理
 else {
