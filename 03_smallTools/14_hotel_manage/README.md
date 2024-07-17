@@ -42,4 +42,4 @@ plt.xlabel('Value Range')
 plt.ylabel('Frequency')
 plt.grid(True)
 plt.show()
-``
+```
