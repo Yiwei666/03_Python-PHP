@@ -28,7 +28,10 @@
 └── twitterVideo_random.php                      # 随机显示指定路径下未签名、未基于数据库排序的视频，后端开启nginx反向代理后无法正常工作
 ```
 
-# 3. php功能模块
+
+# 3. 环境变量
+
+## 1. php功能模块
 
 ### 1. `05_db_config.php` 连接数据库
 
@@ -101,7 +104,7 @@ syncVideos($dir4); // 同步目录和数据库中的视频文件
 
 
 
-# 4. 后台管理脚本
+## 2. 后台管理脚本
 
 
 ### 3. `05_video_dislikes_delete.php`
@@ -119,7 +122,7 @@ $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 
 
 
-# 5. web交互脚本
+## 3. web交互脚本
 
 
 ### 5. `05_video_mysql_orderExist.php`
