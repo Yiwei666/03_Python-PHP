@@ -68,7 +68,7 @@ CREATE TABLE videos (
 ```
 
 
-### 2. `05_video_management.php`
+### 2. `05_video_management.php` 视频点赞/踩
 
 功能模块：将web页面中`点赞/踩`的`action`更新到数据库中
 
