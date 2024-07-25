@@ -107,7 +107,7 @@ syncVideos($dir4); // 同步目录和数据库中的视频文件
 ## 2. 后台管理脚本
 
 
-### 3. `05_video_dislikes_delete.php`
+### 1. `05_video_dislikes_delete.php`
 
 统计likes和dislikies数在某个区间内的视频数量，删除likes和dislikies数在某个区间内的视频
 
@@ -125,7 +125,7 @@ $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 ## 3. web交互脚本
 
 
-### 5. `05_video_mysql_orderExist.php`
+### 1. `05_video_mysql_orderExist.php`
 
 按照数据库中`likes-dislikes`值得大小依次显示视频，每页显示固定数量视频
 
@@ -154,7 +154,7 @@ function updateLikes(videoId, action) {
 ```
 
 
-### 6. `05_video_mysql_orderExist_sigURL.php`
+### 2. `05_video_mysql_orderExist_sigURL.php`
 
 按照数据库中`likes-dislikes`值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 
@@ -181,7 +181,7 @@ function generateSignedUrl($videoName) {
 
 相当于把`$domain . $dir5 . '/' . htmlspecialchars($video['video_name'])`替换为`generateSignedUrl(htmlspecialchars($video['video_name']))`
 
-### 7. `05_video_mysql_random.php`
+### 3. `05_video_mysql_random.php`
 
 随机显示 `likes-dislikes` 值在 top 150 范围内的视频，且在单次循环中不重复播放相同视频
 
@@ -198,7 +198,7 @@ $topVideosLimit = 150;
 const videoUrl = `https://mcha.me/05_twitter_video/${randomVideoName}`;
 ```
 
-### 8. `05_video_mysql_random_sigURL.php`
+### 4. `05_video_mysql_random_sigURL.php`
 
 1. 功能：随机显示 `likes-dislikes` 值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
 2. 环境变量：除了包含`05_video_mysql_random.php`参数初始化之外，还需要初始化如下新增函数中的`$signingKey`和`$expiryTime`变量。
