@@ -28,7 +28,7 @@
 └── twitterVideo_random.php                      # 随机显示指定路径下未签名、未基于数据库排序的视频，后端开启nginx反向代理后无法正常工作
 ```
 
-# 3. 环境配置
+# 3. php功能模块
 
 ### 1. `05_db_config.php` 连接数据库
 
@@ -86,6 +86,9 @@ $dir4 = '/home/01_html/05_twitter_video/';       // 存放视频的目录
 syncVideos($dir4); // 同步目录和数据库中的视频文件
 ```
 
+# 4. 后台管理脚本
+
+
 ### 3. `05_video_dislikes_delete.php`
 
 统计likes和dislikies数在某个区间内的视频数量，删除likes和dislikies数在某个区间内的视频
@@ -107,6 +110,10 @@ $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 ```php
 include '05_db_config.php';
 ```
+
+
+
+# 5. web交互脚本
 
 
 ### 5. `05_video_mysql_orderExist.php`
@@ -210,6 +217,13 @@ var serverVideoList = <?php echo json_encode(array_map('generateSignedUrl', $vid
 ```
 
 这里的 `array_map` 函数将 `generateSignedUrl` 应用于 `$videoList` 数组的每个元素。这样，每个视频名称都会转换成一个带签名的 URL。然后，这些 URL 通过 `json_encode` 被转换成 JSON 格式的数组，最后赋值给 JavaScript 变量 `erverVideoList`。
+
+
+
+
+
+
+
 
 # 4. Nginx反向代理
 
