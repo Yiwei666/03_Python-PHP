@@ -68,7 +68,19 @@ CREATE TABLE videos (
 ```
 
 
-### 2. `05_db_sync_videos.php` 文件名数据库写入
+### 2. `05_video_management.php`
+
+功能模块：将web页面中`点赞/踩`的`action`更新到数据库中
+
+- 环境变量
+
+```php
+include '05_db_config.php';
+```
+
+
+
+### 3. `05_db_sync_videos.php` 文件名数据库写入
 
 功能模块：将指定目录下的`mp4文件名`追加到数据库中
 
@@ -86,6 +98,9 @@ $dir4 = '/home/01_html/05_twitter_video/';       // 存放视频的目录
 syncVideos($dir4); // 同步目录和数据库中的视频文件
 ```
 
+
+
+
 # 4. 后台管理脚本
 
 
@@ -101,15 +116,6 @@ include '05_db_sync_videos.php';
 $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 ```
 
-### 4. `05_video_management.php`
-
-功能模块：将web页面中`点赞/踩`的`action`更新到数据库中
-
-- 环境变量
-
-```php
-include '05_db_config.php';
-```
 
 
 
