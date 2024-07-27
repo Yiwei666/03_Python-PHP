@@ -230,14 +230,26 @@ var serverVideoList = <?php echo json_encode(array_map('generateSignedUrl', $vid
 
 ### 5. `051_video_list.php`
 
-源码：[051_video_list.php](051_video_list.php)
+- 源码：[051_video_list.php](051_video_list.php)
+- 环境变量
 
+```php
+$dir = "/home/01_html/05_twitter_video";
+
+// 指定传递参数的php脚本名
+echo "<a href='051_videoPlayer_sigURL.php?video=$videoEncoded' target='_blank'>$video</a><br />";
+```
 
 
 ### 6. `051_videoPlayer_sigURL.php`
 
-源码：[051_videoPlayer_sigURL.php](051_videoPlayer_sigURL.php)
+- 源码：[051_videoPlayer_sigURL.php](051_videoPlayer_sigURL.php)
+- 环境变量
 
+```php
+
+
+```
 
 
 
