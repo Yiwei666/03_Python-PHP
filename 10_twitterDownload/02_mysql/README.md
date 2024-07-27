@@ -103,7 +103,7 @@ $dir4 = '/home/01_html/05_twitter_video/';       // 存放视频的目录
 syncVideos($dir4); // 同步目录和数据库中的视频文件
 ```
 
-### 4. 
+### 4. `05_db_status_size.php` 写入视频存在状态和大小
 
 1. 表格中新增两列，一列是`size`，代表视频的大小，单位是`MB`，默认值是0，另外一列是`exist_status`，取值为0或者1，默认值是0，代表视频不存在，1代表存在
 
@@ -130,6 +130,20 @@ ADD COLUMN size INT DEFAULT 0,
 ADD COLUMN exist_status TINYINT DEFAULT 0;
 ```
 
+2. 功能：
+    - 遍历mysql数据库中的所有视频文件名，逐个更新 `size` 和 `exist_status` 值，所有视频文件均位于 `/home/01_html/05_twitter_video/` 目录下，更新过程遵循以下规则
+    - 首先判断视频是否存在，存在的视频，`exist_status`设为1，否则设置为0
+    - `size`表示视频的大小，单位是MB，保留2位小数，对于存在的视频，size根据实际情况设定，不存在的视频不修改size原有的值
+
+3. 环境变量
+
+```
+// 引入数据库配置文件
+include '05_db_config.php';
+
+// 视频存储目录
+$dir = '/home/01_html/05_twitter_video/';
+```
 
 
 
