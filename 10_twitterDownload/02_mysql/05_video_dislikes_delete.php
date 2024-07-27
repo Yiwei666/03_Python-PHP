@@ -2,9 +2,10 @@
 // 引入数据库配置文件
 include '05_db_config.php';
 include '05_db_sync_videos.php';
-$dir4='/home/01_html/05_twitter_video/';
+$dir4 = '/home/01_html/05_twitter_video/';
 
-syncVideos($dir4); // 调用函数并提供图片存储目录
+// 调用函数并提供视频存储目录
+syncVideos($dir4); // Sync video files from the specified directory
 
 // 提醒用户输入 a、b 和 x，用空格分隔
 echo "Enter three integers (a, b, x), separated by spaces: ";
@@ -26,11 +27,11 @@ echo "4. Count videos with dislikes between [$a, $b] and delete corresponding fi
 echo "Enter option (1/2/3/4): ";
 $option = trim(fgets(STDIN));
 
-// 获取图片总数
+// 获取视频总数
 $total_videos_result = $mysqli->query("SELECT COUNT(*) AS total FROM videos");
 $total_videos = $total_videos_result->fetch_assoc()['total'];
 
-// 功能 1：打印 likes 在 [a, b] 之间的图片数量并增加 x 个
+// 功能 1：打印 likes 在 [a, b] 之间的视频数量并增加 x 个
 if ($option == '1') {
     $count_result = $mysqli->query("SELECT COUNT(*) AS count FROM videos WHERE likes BETWEEN $a AND $b");
     $count = $count_result->fetch_assoc()['count'];
@@ -40,17 +41,17 @@ if ($option == '1') {
     echo "Updated likes by adding $x to all matching videos.\n";
 }
 
-// 功能 2：打印 dislikes 在 [a, b] 之间的图片数量并增加 x 个
+// 功能 2：打印 dislikes 在 [a, $b] 之间的视频数量并增加 x 个 dislikes
 elseif ($option == '2') {
     $count_result = $mysqli->query("SELECT COUNT(*) AS count FROM videos WHERE dislikes BETWEEN $a AND $b");
     $count = $count_result->fetch_assoc()['count'];
-    $mysqli->query("UPDATE videos SET likes = likes + $x WHERE dislikes BETWEEN $a AND $b");
+    $mysqli->query("UPDATE videos SET dislikes = dislikes + $x WHERE dislikes BETWEEN $a AND $b");
     echo "Number of videos with dislikes between [$a, $b]: $count\n";
     echo "Total videos in the database: $total_videos\n";
-    echo "Updated likes by adding $x to all matching videos.\n";
+    echo "Updated dislikes by adding $x to all matching videos.\n";
 }
 
-// 功能 3：打印 likes 在 [a, b] 之间的图片数量
+// 功能 3：打印 likes 在 [a, b] 之间的视频数量
 elseif ($option == '3') {
     $count_result = $mysqli->query("SELECT COUNT(*) AS count FROM videos WHERE likes BETWEEN $a AND $b");
     $count = $count_result->fetch_assoc()['count'];
@@ -58,9 +59,9 @@ elseif ($option == '3') {
     echo "Total videos in the database: $total_videos\n";
 }
 
-// 功能 4：打印 dislikes 在 [a, b] 之间的图片数量，删除相关文件
+// 功能 4：打印 dislikes 在 [a, b] 之间的视频数量，删除相关文件
 elseif ($option == '4') {
-    // 获取 dislikes 在 [a, b] 之间的所有图片文件名称
+    // 获取 dislikes 在 [a, b] 之间的所有视频文件名称
     $files_result = $mysqli->query("SELECT video_name FROM videos WHERE dislikes BETWEEN $a AND $b");
     $project_folder = $dir4; // 替换为项目文件夹的路径
     $files_to_delete = [];
