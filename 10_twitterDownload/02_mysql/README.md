@@ -103,6 +103,41 @@ $dir4 = '/home/01_html/05_twitter_video/';       // 存放视频的目录
 syncVideos($dir4); // 同步目录和数据库中的视频文件
 ```
 
+### 4. 
+
+1. 表格中新增两列，一列是`size`，代表视频的大小，单位是`MB`，默认值是0，另外一列是`exist_status`，取值为0或者1，默认值是0，代表视频不存在，1代表存在
+
+```
+mysql> describe videos;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int          | NO   | PRI | NULL    | auto_increment |
+| video_name   | varchar(255) | NO   |     | NULL    |                |
+| likes        | int          | YES  |     | 0       |                |
+| dislikes     | int          | YES  |     | 0       |                |
+| size         | int          | YES  |     | 0       |                |
+| exist_status | tinyint      | YES  |     | 0       |                |
++--------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+```
+
+- 新增两列的mysql语句
+
+```sql
+mysql> describe videos;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int          | NO   | PRI | NULL    | auto_increment |
+| video_name   | varchar(255) | NO   |     | NULL    |                |
+| likes        | int          | YES  |     | 0       |                |
+| dislikes     | int          | YES  |     | 0       |                |
+| size         | int          | YES  |     | 0       |                |
+| exist_status | tinyint      | YES  |     | 0       |                |
++--------------+--------------+------+-----+---------+----------------+
+```
+
 
 
 
