@@ -228,9 +228,9 @@ var serverVideoList = <?php echo json_encode(array_map('generateSignedUrl', $vid
 这里的 `array_map` 函数将 `generateSignedUrl` 应用于 `$videoList` 数组的每个元素。这样，每个视频名称都会转换成一个带签名的 URL。然后，这些 URL 通过 `json_encode` 被转换成 JSON 格式的数组，最后赋值给 JavaScript 变量 `erverVideoList`。
 
 
-### 5. `051_video_list.php`
+### 5. `051_video_list.php` 列出指定目录下所有文件名
 
-- 源码：[051_video_list.php](051_video_list.php)
+- 源码：[051_video_list.php](051_video_list.php) 
 - 环境变量
 
 ```php
@@ -241,7 +241,7 @@ echo "<a href='051_videoPlayer_sigURL.php?video=$videoEncoded' target='_blank'>$
 ```
 
 
-### 6. `051_videoPlayer_sigURL.php`
+### 6. `051_videoPlayer_sigURL.php` 在线播放MP4
 
 - 源码：[051_videoPlayer_sigURL.php](051_videoPlayer_sigURL.php)
 - 环境变量
