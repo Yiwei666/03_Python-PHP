@@ -77,6 +77,8 @@ echo "<a href='06_videoPlayer.php?video=$videoEncoded' target='_blank'>$video</a
 
 ### 2. `06_videoPlayer.php`
 
+由于上述生成的视频分辨率是`1080x1920`，在线播放时无论是在手机端还是电脑端，只需要满足`height：100%，width：auto`即可
+
 - 环境变量
 
 ```php
@@ -85,6 +87,7 @@ $videoUrl = "https://chaye.one/06_videoSynthesis/" . urlencode($videoName) . ".m
 // 构建字幕URL
 $srtUrl = "https://chaye.one/06_videoSynthesis/" . urlencode($videoName) . ".srt";
 ```
+
 
 - 参考资料：https://github.com/Yiwei666/03_Python-PHP/tree/main/13_bitTorrent
 
