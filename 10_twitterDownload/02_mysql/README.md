@@ -12,6 +12,7 @@
 ├── 05_video_dislikes_delete.php                 # 统计likes和dislikies数在某个区间内的视频数量，删除likes和dislikies数在某个区间内的视频
 ├── 05_video_management.php                      # 功能模块：将web页面中点赞/踩的action更新到数据库中
 ├── 05_db_status_size.php                        # 写入视频存在状态和大小到mysql数据库中
+├── 05_db_video_cover.php                        # 生成视频封面
 ├── 05_video_mysql_orderExist.php                # 按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
@@ -145,6 +146,27 @@ include '05_db_config.php';
 // 视频存储目录
 $dir = '/home/01_html/05_twitter_video/';
 ```
+
+
+### 5. `05_db_video_cover.php` 生成视频封面
+
+1. 源码：[05_db_video_cover.php](05_db_video_cover.php)
+2. 脚本思路
+    - 首先读取mysql数据库中所有 `exist_status` 为1的mp4视频文件名，这些视频都存在于 `/home/01_html/05_twitter_video` 目录下
+    -  `/home/01_html/05_video_cover` 目录是存储视频封面的文件夹，判断该目录下是否有视频同名的png图片，例如 数据库中 `20240727-123606-xbsIiiwSl8pZ.mp4` 视频名对应的png文件为 `20240727-123606-xbsIiiwSl8pZ.png`
+    - 如果已经存在同名png图片，则跳过，否则截取视频的第一帧作为封面，存到 `/home/01_html/05_video_cover` 目录下，图片大小尽量不要超过1MB
+3. 环境变量
+
+```php
+// 引入数据库配置文件
+include '05_db_config.php';
+
+// 视频存储目录和封面存储目录
+$videoDir = '/home/01_html/05_twitter_video/';
+$coverDir = '/home/01_html/05_video_cover/';
+```
+
+注意：在运行该脚本前需要先运行`05_db_status_size.php`脚本，以便把服务器中存在的视频都写入到mysql数据库中，保证`exist_status` 为1；可以使用`05_simpleGallery.php`脚本来可视化生成后的视频封面。
 
 
 
