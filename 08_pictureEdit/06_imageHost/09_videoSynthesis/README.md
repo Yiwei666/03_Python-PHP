@@ -14,6 +14,8 @@ creat_video.sh          # 基于png图片和mp3音频合成mp4视频
 
 # 3. 环境配置
 
+## 1. 视频生成
+
 ### 1. 安装ffmpeg和imagemagick
 
 ```bash
@@ -59,9 +61,9 @@ mpg123 -t filename.mp3
 这个脚本的输出是一个视频文件，其中包含按照音频长度均匀分配的随机选择的图片，配合用户选定的音频背景。
 
 
-### 3. MP4在线播放
+## 2. MP4在线播放
 
-1. `06_video_list.php`
+### 1. `06_video_list.php`
 
 - 环境变量
 
@@ -72,7 +74,8 @@ $dir = "/home/01_html/06_videoSynthesis";
 echo "<a href='06_videoPlayer.php?video=$videoEncoded' target='_blank'>$video</a><br />";
 ```
 
-2. `06_videoPlayer.php`
+
+### 2. `06_videoPlayer.php`
 
 - 环境变量
 
