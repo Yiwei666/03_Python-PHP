@@ -15,6 +15,8 @@
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
 ├── 05_video_mysql_random_sigURL.php             # 随机显示likes-dislikes值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
+├── 051_video_list.php                               # 列出指定目录下的所有MP4文件
+├── 051_videoPlayer_sigURL.php                       # 播放某一个MP4文件，需要登陆验证以及签名验证
 ├── 05_nodejs_sigURL
 │   ├── 05_video_mysql_checkURL.js               # node.js应用，运行在云服务器后端，解析并核验签名的url以及referer是否合法，过滤非法请求
 │   ├── node_modules
@@ -181,6 +183,7 @@ function generateSignedUrl($videoName) {
 
 相当于把`$domain . $dir5 . '/' . htmlspecialchars($video['video_name'])`替换为`generateSignedUrl(htmlspecialchars($video['video_name']))`
 
+
 ### 3. `05_video_mysql_random.php`
 
 随机显示 `likes-dislikes` 值在 top 150 范围内的视频，且在单次循环中不重复播放相同视频
@@ -197,6 +200,7 @@ $topVideosLimit = 150;
 
 const videoUrl = `https://mcha.me/05_twitter_video/${randomVideoName}`;
 ```
+
 
 ### 4. `05_video_mysql_random_sigURL.php`
 
@@ -244,14 +248,29 @@ echo "<a href='051_videoPlayer_sigURL.php?video=$videoEncoded' target='_blank'>$
 ### 6. `051_videoPlayer_sigURL.php` 在线播放MP4
 
 - 源码：[051_videoPlayer_sigURL.php](051_videoPlayer_sigURL.php)
+- 功能：点击`051_video_list.php`中的文件名，会传递文件名参数给`051_videoPlayer_sigURL.php`脚本并生成签名URL，Node.js校验通过后会在线播放。注意该脚本需要登陆验证后使用，通过`session`校验。
 - 环境变量
 
 ```php
-
-
+$key = 'your-signing-key-1';              // 应与加密时使用的密钥相同
+return "https://mcha.me/05_twitter_video/{$videoName}?expires={$expiryTime}&signature={$signature}";
+$signingKey = 'your-signing-key-2';       // 签名密钥，确保与Node.js中的一致
 ```
 
+- 可以通过如下代码来调试生成的签名是否满足Node.js核验需求
 
+```php
+function generateSignedUrl($videoName, $key, $expiryTime) {
+    $signature = hash_hmac('sha256', $videoName . $expiryTime, $key);
+    // 调试输出生成的签名
+    // echo "PHP generated signature: " . $signature . "<br>";
+    // echo "PHP videoName: " . $videoName . "<br>";
+    // echo "PHP Expiry Time: " . $expiryTime . "<br>";
+    return "https://mcha.me/05_twitter_video/{$videoName}?expires={$expiryTime}&signature={$signature}";
+}
+```
+
+注意：初始化上述所有参数之后记得重启Node.js应用
 
 
 # 4. Nginx反向代理
