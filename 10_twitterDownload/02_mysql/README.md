@@ -125,17 +125,9 @@ mysql> describe videos;
 - 新增两列的mysql语句
 
 ```sql
-mysql> describe videos;
-+--------------+--------------+------+-----+---------+----------------+
-| Field        | Type         | Null | Key | Default | Extra          |
-+--------------+--------------+------+-----+---------+----------------+
-| id           | int          | NO   | PRI | NULL    | auto_increment |
-| video_name   | varchar(255) | NO   |     | NULL    |                |
-| likes        | int          | YES  |     | 0       |                |
-| dislikes     | int          | YES  |     | 0       |                |
-| size         | int          | YES  |     | 0       |                |
-| exist_status | tinyint      | YES  |     | 0       |                |
-+--------------+--------------+------+-----+---------+----------------+
+ALTER TABLE videos
+ADD COLUMN size INT DEFAULT 0,
+ADD COLUMN exist_status TINYINT DEFAULT 0;
 ```
 
 
