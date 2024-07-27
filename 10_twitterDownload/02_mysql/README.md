@@ -15,8 +15,8 @@
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
 ├── 05_video_mysql_random_sigURL.php             # 随机显示likes-dislikes值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
-├── 051_video_list.php                               # 列出指定目录下的所有MP4文件
-├── 051_videoPlayer_sigURL.php                       # 播放某一个MP4文件，需要登陆验证以及签名验证
+├── 051_video_list.php                               # 列出指定目录下的所有MP4文件，不需要mysql
+├── 051_videoPlayer_sigURL.php                       # 播放某一个MP4文件，需要登陆验证以及签名验证，不需要mysql
 ├── 05_nodejs_sigURL
 │   ├── 05_video_mysql_checkURL.js               # node.js应用，运行在云服务器后端，解析并核验签名的url以及referer是否合法，过滤非法请求
 │   ├── node_modules
