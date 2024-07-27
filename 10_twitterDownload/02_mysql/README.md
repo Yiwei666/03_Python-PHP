@@ -137,7 +137,7 @@ ADD COLUMN exist_status TINYINT DEFAULT 0;
 
 3. 环境变量
 
-```
+```php
 // 引入数据库配置文件
 include '05_db_config.php';
 
