@@ -11,6 +11,7 @@
 ├── 05_db_sync_videos.php                        # 功能模块：将指定目录下的mp4文件名追加到数据库中
 ├── 05_video_dislikes_delete.php                 # 统计likes和dislikies数在某个区间内的视频数量，删除likes和dislikies数在某个区间内的视频
 ├── 05_video_management.php                      # 功能模块：将web页面中点赞/踩的action更新到数据库中
+├── 05_db_status_size.php                        # 写入视频存在状态和大小到mysql数据库中
 ├── 05_video_mysql_orderExist.php                # 按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
