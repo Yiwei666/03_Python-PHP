@@ -29,7 +29,13 @@ function validateSignature(videoName, expires, signature) {
     .createHmac('sha256', signingKey)
     .update(`${videoName}${expires}`)
     .digest('hex');
-
+  
+  // 调试输出生成的签名
+  console.log("Node.js expected signature:", expectedSignature);
+  console.log("Node.js provided signature:", signature);
+  console.log("Node.js videoUrl:", videoUrl);
+  console.log("Node.js expires:", expires);
+  
   return expectedSignature === signature && parseInt(expires) > Date.now() / 1000;
 }
 
