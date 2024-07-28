@@ -296,6 +296,7 @@ var serverVideoList = <?php echo json_encode(array_map('generateSignedUrl', $vid
 这里的 `array_map` 函数将 `generateSignedUrl` 应用于 `$videoList` 数组的每个元素。这样，每个视频名称都会转换成一个带签名的 URL。然后，这些 URL 通过 `json_encode` 被转换成 JSON 格式的数组，最后赋值给 JavaScript 变量 `erverVideoList`。
 
 
+
 ### 5. `051_video_list.php` 列出指定目录下所有文件名
 
 - 源码：[051_video_list.php](051_video_list.php) 
@@ -307,6 +308,7 @@ $dir = "/home/01_html/05_twitter_video";
 // 指定传递参数的php脚本名
 echo "<a href='051_videoPlayer_sigURL.php?video=$videoEncoded' target='_blank'>$video</a><br />";
 ```
+
 
 
 ### 6. `051_videoPlayer_sigURL.php` 在线播放MP4
@@ -335,6 +337,24 @@ function generateSignedUrl($videoName, $key, $expiryTime) {
 ```
 
 注意：初始化上述所有参数之后记得重启Node.js应用
+
+
+
+
+### 7. `05_vidcover_sql_orderExist_sigURL.php`
+
+
+1. 检查目标文件夹权限
+
+确保`/home/01_html/05_video_cover/`文件夹具有写入权限（写入生成的图片），可以通过以下命令进行检查和修改：
+
+```bash
+sudo chmod -R 755 /home/01_html/05_video_cover/
+sudo chown -R www-data:www-data /home/01_html/05_video_cover/
+```
+
+
+
 
 
 # 4. Nginx反向代理
