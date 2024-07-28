@@ -215,10 +215,29 @@ ALTER TABLE videos ADD COLUMN operation TINYINT DEFAULT 0;
 ```
 
 
-2. 
+2. 功能：
+    - 读取数据库中的所有视频信息，对于 `operation` 列为1的视频名，如果对应的 `exist_status` 为0，则调用下面的函数下载该视频，并将 `operation` 重置为0。对于 `operation` 列为`-1`的视频名，如果对应的 `exist_status` 为 1，则删除掉`/home/01_html/05_twitter_video/`路径下的该视频，并将 operation 重置为0。
 
+3. 环境变量
 
+```
+include '05_db_config.php';
 
+// 本地目录
+$local_dir = "/home/01_html/05_twitter_video/";
+// 远程目录
+$remote_dir = "rc6:az1-1/01_html/05_twitter_video/";
+
+$file_path = "/home/01_html/05_twitter_video/" . $video_name;
+```
+
+4. 定时任务
+
+```cron
+*/2 * * * * php home/01_html/05_rcloneDown_video.php
+```
+
+注意：每隔两分钟执行一次，对于某些比较大的视频，rclone下载时间可能较长
 
 
 
