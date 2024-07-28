@@ -12,13 +12,14 @@
 ├── 05_video_dislikes_delete.php                 # 统计likes和dislikies数在某个区间内的视频数量，删除likes和dislikies数在某个区间内的视频
 ├── 05_video_management.php                      # 功能模块：将web页面中点赞/踩的action更新到数据库中
 ├── 05_db_status_size.php                        # 写入视频存在状态和大小到mysql数据库中
-├── 05_db_video_cover.php                        # 生成视频封面
+├── 05_db_video_cover.php                        # 生成视频封面，可在后台使用，或在web脚本中调用
 ├── 05_video_mysql_orderExist.php                # 按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
 ├── 05_video_mysql_random_sigURL.php             # 随机显示likes-dislikes值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
 ├── 051_video_list.php                               # 列出指定目录下的所有MP4文件，不需要mysql
 ├── 051_videoPlayer_sigURL.php                       # 播放某一个MP4文件，需要登陆验证以及签名验证，不需要mysql
+├── 05_vidcover_sql_orderExist_sigURL.php        # 在web页面展示视频封面，点击跳转按钮播放对应的视频，提高页面加载速度
 ├── 05_nodejs_sigURL
 │   ├── 05_video_mysql_checkURL.js               # node.js应用，运行在云服务器后端，解析并核验签名的url以及referer是否合法，过滤非法请求
 │   ├── node_modules
@@ -381,7 +382,7 @@ if (isMobileDevice) {
 
 
 
-### 7. `05_vidcover_sql_orderExist_sigURL.php`
+### 7. `05_vidcover_sql_orderExist_sigURL.php` 视频封面+在线播放
 
 1. 源码：[05_vidcover_sql_orderExist_sigURL.php](05_vidcover_sql_orderExist_sigURL.php)
 
