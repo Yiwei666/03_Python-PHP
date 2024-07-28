@@ -195,7 +195,7 @@ $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 
 ### 1. `05_video_mysql_orderExist.php`
 
-按照数据库中`likes-dislikes`值得大小依次显示视频，每页显示固定数量视频
+按照数据库中`likes-dislikes`值得大小依次显示视频，每页显示固定数量视频，只显示文件夹中实际存在的视频，此处并不是通过`exist_status`来判断视频的存在状态，而是通过直接获取指定文件夹中的MP4文件名来显现的。
 
 - 环境变量
 
