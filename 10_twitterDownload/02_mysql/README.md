@@ -339,7 +339,7 @@ function generateSignedUrl($videoName, $key, $expiryTime) {
 
 4. 自定义不同终端的视频显示方式：修改两次
 
-```
+```php
 video {
     width: 100%;
     height: auto;
