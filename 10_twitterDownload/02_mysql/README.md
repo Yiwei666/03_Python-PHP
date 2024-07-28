@@ -166,8 +166,9 @@ $videoDir = '/home/01_html/05_twitter_video/';
 $coverDir = '/home/01_html/05_video_cover/';
 ```
 
-注意：在运行该脚本前需要先运行`05_db_status_size.php`脚本，以便把服务器中存在的视频都写入到mysql数据库中，保证`exist_status` 为1；可以使用`05_simpleGallery.php`脚本来可视化生成后的视频封面。
-
+4. 注意事项：
+    - 在运行该脚本前需要先运行`05_db_status_size.php`脚本，以便把服务器中存在的视频都写入到mysql数据库中，保证`exist_status` 为1；可以使用`05_simpleGallery.php`脚本来可视化生成后的视频封面。
+    - 如果在web脚本中调用该模块，需要注释（`\\`）掉脚本中的`echo`语句，否则会打印到web页面。另外，保证储存图片封面的文件夹具有`www-data`写入权限。
 
 
 ## 2. 后台管理脚本
@@ -342,7 +343,7 @@ function generateSignedUrl($videoName, $key, $expiryTime) {
 
 
 ### 7. `05_vidcover_sql_orderExist_sigURL.php`
-
+- 源码：[05_vidcover_sql_orderExist_sigURL.php](05_vidcover_sql_orderExist_sigURL.php)
 
 1. 检查目标文件夹权限
 
