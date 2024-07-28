@@ -190,7 +190,7 @@ $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 
 ### 2. `05_rcloneDown_video.php` 定时rclone下载视频
 
-1. 表格中新增一列 "ifdown"，默认值为0，取值只有两个，0或者1
+1. 新增一列 `operation`，默认值为0，取值只有3个，分别是 -1，0或者1，分别代表`待删除、无操作和待下载`
 
 ```
 mysql> describe videos;
@@ -203,14 +203,15 @@ mysql> describe videos;
 | dislikes     | int          | YES  |     | 0       |                |
 | size         | int          | YES  |     | 0       |                |
 | exist_status | tinyint      | YES  |     | 0       |                |
-| ifdown       | tinyint      | YES  |     | 0       |                |
+| operation    | tinyint      | YES  |     | 0       |                |
 +--------------+--------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
 ```
 
 - mysql命令
 
 ```sql
-ALTER TABLE videos ADD COLUMN ifdown TINYINT DEFAULT 0;
+ALTER TABLE videos ADD COLUMN operation TINYINT DEFAULT 0;
 ```
 
 
