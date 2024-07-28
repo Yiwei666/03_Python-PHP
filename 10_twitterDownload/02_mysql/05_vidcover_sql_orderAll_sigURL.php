@@ -60,7 +60,7 @@ function generateSignedUrl($videoName) {
 $videosPerPage = 8;
 
 // 获取数据库中所有视频的记录
-$query = "SELECT id, video_name, likes, dislikes, exist_status FROM videos";
+$query = "SELECT id, video_name, likes, dislikes, exist_status, operation FROM videos";
 $result = $mysqli->query($query);
 
 // 获取所有视频记录，并排序
@@ -83,6 +83,24 @@ $page = max($page, 1);
 // 计算当前页要显示的视频
 $offset = ($page - 1) * $videosPerPage;
 $videosToDisplay = array_slice($videos, $offset, $videosPerPage);
+
+// 处理操作更新请求
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['videoId']) && isset($_POST['operation'])) {
+    $videoId = intval($_POST['videoId']);
+    $operation = intval($_POST['operation']);
+
+    $query = "UPDATE videos SET operation = ? WHERE id = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('ii', $operation, $videoId);
+
+    if ($stmt->execute()) {
+        echo "Update successfully!";
+    } else {
+        echo "Failed to update.";
+    }
+    $stmt->close();
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -159,15 +177,16 @@ $videosToDisplay = array_slice($videos, $offset, $videosPerPage);
             text-decoration: underline;
             color: red;
         }
-        .exist-icon {
+        .exist-icon, .operation-icon {
             width: 20px;
             height: 20px;
             margin-right: 10px;
+            cursor: pointer;
         }
     </style>
     <script>
     function updateLikes(videoId, action) {
-        fetch('05_video_management.php', {
+        fetch('', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `videoId=${videoId}&action=${action}`
@@ -182,6 +201,18 @@ $videosToDisplay = array_slice($videos, $offset, $videosPerPage);
     function shareVideo(videoName) {
         const url = `051_videoPlayer_sigURL.php?video=${encodeURIComponent(videoName)}`;
         window.open(url, '_blank');
+    }
+
+    function updateOperation(videoId, operation) {
+        fetch('', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `videoId=${videoId}&operation=${operation}`
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+        });
     }
 
     // 在页面加载时恢复滚动位置
@@ -203,6 +234,8 @@ $videosToDisplay = array_slice($videos, $offset, $videosPerPage);
         <div class="video-container">
             <div class="video-cover" style="background-image: url('<?php echo $domain . str_replace('/home/01_html', '', $coverDir) . '/' . htmlspecialchars(basename($video['video_name'], ".mp4")) . '.png'; ?>');" alt="Video Cover"></div>
             <div class="interaction-container">
+                <span class="operation-icon" title="Delete" onclick="updateOperation(<?php echo $video['id']; ?>, -1)">🗑️</span>
+                <span class="operation-icon" title="Download" onclick="updateOperation(<?php echo $video['id']; ?>, 1)">⬇️</span>
                 <?php if ($video['exist_status'] == 1): ?>
                     <span class="exist-icon" title="Exists">&#9989;</span> <!-- 绿色对勾图标 -->
                 <?php else: ?>
