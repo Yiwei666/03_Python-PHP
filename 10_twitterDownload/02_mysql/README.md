@@ -465,10 +465,43 @@ sudo chown -R www-data:www-data /home/01_html/05_video_cover/
 ### 8. `05_vidcover_sql_orderAll_sigURL.php`
 
 1. 源码：[05_vidcover_sql_orderAll_sigURL.php](05_vidcover_sql_orderAll_sigURL.php)
+
 2. 功能：
     - 在点赞图标左侧位置显示一个图标，如果视频存在于服务器（`exist_status=1`），则显示一个存在的图标，如果视频不存在（`exist_status=0`），则显示一个不存在的图标。然后显示所有视频的封面，保持`点赞/踩，分页，跳转打开视频`等其余功能不变。
+    - 在`状态图标`（对号或叉）左侧新增两个简单的图标，分别代表`删除和下载`，点击对应图标时，显示`“Update successfully!”`并更新数据库中对应视频名的 `operation`列值，`删除对应-1`，`下载对应1`，该列的默认值是0，代表无操作。
 
+3. 环境变量
 
+```php
+$key = 'your-signing-key-1'; // 应与加密时使用的密钥相同
+
+include '05_db_sync_videos.php';
+$dir4 = '/home/01_html/05_twitter_video/';
+syncVideos($dir4); // 同步目录和数据库中的视频文件
+
+include '05_db_status_size.php';        // 将服务器中存在的视频写入到mysql数据库中
+include '05_db_video_cover.php';        // 将服务器中存在的视频生成图片封面
+
+include '05_db_config.php';
+
+// 设置视频和封面所在的文件夹和对应的域名路径
+$videoDir = "/home/01_html/05_twitter_video";
+$coverDir = "/home/01_html/05_video_cover";
+$dir5 = str_replace("/home/01_html", "", $videoDir);
+$domain = "https://mcha.me";
+
+$signingKey = 'your-signing-key-2'; // 签名密钥，确保与Node.js中的一致
+
+fetch('05_video_management.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `videoId=${videoId}&action=${action}`
+})
+
+const url = `051_videoPlayer_sigURL.php?video=${encodeURIComponent(videoName)}`;
+
+<div class="video-cover" style="background-image: url('<?php echo $domain . str_replace('/home/01_html', '', $coverDir) . '/' . htmlspecialchars(basename($video['video_name'], ".mp4")) . '.png'; ?>');" alt="Video Cover"></div>
+```
 
 
 
