@@ -374,7 +374,7 @@ if (isMobileDevice) {
 ```
 
 
-6. 注意：
+5. 注意：
     - 初始化上述所有参数之后记得重启Node.js应用
     - `051_videoPlayer_sigURL.php`脚本可以同时被`051_video_list.php`web脚本和`05_vidcover_sql_orderExist_sigURL.php`调用，只需要将视频文件名参数传递给本脚本即可。
 
@@ -382,9 +382,44 @@ if (isMobileDevice) {
 
 
 ### 7. `05_vidcover_sql_orderExist_sigURL.php`
+
 1. 源码：[05_vidcover_sql_orderExist_sigURL.php](05_vidcover_sql_orderExist_sigURL.php)
 
-2. 设置目标文件夹权限
+2. 背景和思路
+    - 上述代码`05_video_mysql_orderExist_sigURL.php`从数据库中获取视频记录，并显示在网页上，每页显示固定数量的视频。当视频较大时，网页的加载速度会很慢，甚至会失败。
+    - 为了解决这个问题，我为每个视频都生成了一个png格式的图片封面，位于 `/home/01_html/05_video_cover`目录下，且和数据库中的视频同名，例如 数据库中 `20240727-123606-xbsIiiwSl8pZ.mp4` 视频名对应的png文件为 `20240727-123606-xbsIiiwSl8pZ.png`。
+    - 因此，我想要使用图片封面来替代视频，以提高加载速度。在保持`05_video_mysql_orderExist_sigURL.php`原有功能不变，将视频展示替换为图片展示。另外，在`点赞/踩`图标的旁边新增一个`分享`图标，点击该图标时能够将对应图片的视频名称信息传递给 `051_videoPlayer_sigURL.php` 脚本，该脚本能够在新的标签页中播放该视频。
+
+3. 环境变量
+
+```php
+$key = 'your-signing-key-1'; // 应与加密时使用的密钥相同
+
+include '05_db_sync_videos.php';
+$dir4 = '/home/01_html/05_twitter_video/';
+syncVideos($dir4); // 同步目录和数据库中的视频文件
+
+include '05_db_status_size.php';        // 将服务器中存在的视频写入到mysql数据库中
+include '05_db_video_cover.php';        // 将服务器中存在的视频生成图片封面
+
+include '05_db_config.php';
+
+// 设置视频和封面所在的文件夹和对应的域名路径
+$videoDir = "/home/01_html/05_twitter_video";
+$coverDir = "/home/01_html/05_video_cover";
+$dir5 = str_replace("/home/01_html", "", $videoDir);
+$domain = "https://mcha.me";
+
+$signingKey = 'your-signing-key-2'; // 签名密钥，确保与Node.js中的一致
+
+fetch('05_video_management.php'
+
+const url = `051_videoPlayer_sigURL.php?video=${encodeURIComponent(videoName)}`;
+
+<div class="video-cover" style="background-image: url('<?php echo $domain . str_replace('/home/01_html', '', $coverDir) . '/' . htmlspecialchars(basename($video['video_name'], ".mp4")) . '.png'; ?>');" alt="Video Cover"></div>
+```
+
+4. 设置目标文件夹权限
 
 确保`/home/01_html/05_video_cover/`文件夹具有写入权限（写入生成的图片），可以通过以下命令进行检查和修改：
 
@@ -392,8 +427,6 @@ if (isMobileDevice) {
 sudo chmod -R 755 /home/01_html/05_video_cover/
 sudo chown -R www-data:www-data /home/01_html/05_video_cover/
 ```
-
-
 
 
 
