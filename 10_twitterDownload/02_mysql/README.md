@@ -314,9 +314,9 @@ echo "<a href='051_videoPlayer_sigURL.php?video=$videoEncoded' target='_blank'>$
 
 ### 6. `051_videoPlayer_sigURL.php` 在线播放MP4
 
-- 源码：[051_videoPlayer_sigURL.php](051_videoPlayer_sigURL.php)
-- 功能：点击`051_video_list.php`中的文件名，会传递文件名参数给`051_videoPlayer_sigURL.php`脚本并生成签名URL，Node.js校验通过后会在线播放。注意该脚本需要登陆验证后使用，通过`session`校验。
-- 环境变量
+1. 源码：[051_videoPlayer_sigURL.php](051_videoPlayer_sigURL.php)
+2. 功能：点击`051_video_list.php`中的文件名，会传递文件名参数给`051_videoPlayer_sigURL.php`脚本并生成签名URL，Node.js校验通过后会在线播放。注意该脚本需要登陆验证后使用，通过`session`校验。
+3. 环境变量
 
 ```php
 $key = 'your-signing-key-1';              // 应与加密时使用的密钥相同
@@ -337,15 +337,54 @@ function generateSignedUrl($videoName, $key, $expiryTime) {
 }
 ```
 
-注意：初始化上述所有参数之后记得重启Node.js应用
+4. 自定义不同终端的视频显示方式：修改两次
+
+```
+video {
+    width: 100%;
+    height: auto;
+    max-width: 30vw; /* 设置为屏幕宽度的25% */
+    max-height: 60vh; /* 设置为屏幕高度的50% */
+}
+@media only screen and (max-width: 1024px) {
+    video {
+        max-width: 100%;
+        max-height: 70%;
+    }
+}
+
+
+if (isMobileDevice) {
+    if (aspectRatio < 1) { // 高大于宽
+        videoPlayer.style.width = '100%';
+        videoPlayer.style.height = 'auto';
+    } else {
+        videoPlayer.style.width = 'auto';
+        videoPlayer.style.height = '70%';
+    }
+} else {
+    if (aspectRatio < 1) { // 高大于宽
+        videoPlayer.style.width = 'auto';
+        videoPlayer.style.height = '60vh';
+    } else {
+        videoPlayer.style.width = '30vw';
+        videoPlayer.style.height = 'auto';
+    }
+}
+```
+
+
+6. 注意：
+    - 初始化上述所有参数之后记得重启Node.js应用
+    - `051_videoPlayer_sigURL.php`脚本可以同时被`051_video_list.php`web脚本和`05_vidcover_sql_orderExist_sigURL.php`调用，只需要将视频文件名参数传递给本脚本即可。
 
 
 
 
 ### 7. `05_vidcover_sql_orderExist_sigURL.php`
-- 源码：[05_vidcover_sql_orderExist_sigURL.php](05_vidcover_sql_orderExist_sigURL.php)
+1. 源码：[05_vidcover_sql_orderExist_sigURL.php](05_vidcover_sql_orderExist_sigURL.php)
 
-1. 检查目标文件夹权限
+2. 设置目标文件夹权限
 
 确保`/home/01_html/05_video_cover/`文件夹具有写入权限（写入生成的图片），可以通过以下命令进行检查和修改：
 
