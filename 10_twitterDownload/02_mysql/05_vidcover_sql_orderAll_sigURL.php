@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['videoId']) && isset($
     </style>
     <script>
     function updateLikes(videoId, action) {
-        fetch('', {
+        fetch('05_video_management.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `videoId=${videoId}&action=${action}`
