@@ -421,7 +421,7 @@ const url = `051_videoPlayer_sigURL.php?video=${encodeURIComponent(videoName)}`;
 
 4. 设置目标文件夹权限
 
-确保`/home/01_html/05_video_cover/`文件夹具有写入权限（写入生成的图片），可以通过以下命令进行检查和修改：
+由于需要调用模块`05_db_video_cover.php`生成视频封面，因此确保`/home/01_html/05_video_cover/`文件夹具有写入权限（写入生成的图片），可以通过以下命令进行检查和修改：
 
 ```bash
 sudo chmod -R 755 /home/01_html/05_video_cover/
