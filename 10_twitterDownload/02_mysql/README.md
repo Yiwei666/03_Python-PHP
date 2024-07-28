@@ -481,7 +481,7 @@ sudo chown -R www-data:www-data /home/01_html/05_video_cover/
 ```
 
 
-### 8. `05_vidcover_sql_orderAll_sigURL.php`
+### 8. `05_vidcover_sql_orderAll_sigURL.php` 在线下载/删除视频+可视化视频状态
 
 1. 源码：[05_vidcover_sql_orderAll_sigURL.php](05_vidcover_sql_orderAll_sigURL.php)
 
