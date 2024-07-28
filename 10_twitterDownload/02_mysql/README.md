@@ -462,6 +462,16 @@ sudo chown -R www-data:www-data /home/01_html/05_video_cover/
 ```
 
 
+### 8. `05_vidcover_sql_orderAll_sigURL.php`
+
+1. 源码：[05_vidcover_sql_orderAll_sigURL.php](05_vidcover_sql_orderAll_sigURL.php)
+2. 功能：
+    - 在点赞图标左侧位置显示一个图标，如果视频存在于服务器（`exist_status=1`），则显示一个存在的图标，如果视频不存在（`exist_status=0`），则显示一个不存在的图标。然后显示所有视频的封面，保持`点赞/踩，分页，跳转打开视频`等其余功能不变。
+
+
+
+
+
 
 # 4. Nginx反向代理
 
@@ -542,6 +552,7 @@ proxy_read_timeout 60s;
 ```
 
 - 设置从后端服务读取响应的超时时间为 60 秒。如果在这段时间内无法读取到响应，Nginx 将返回错误。
+
 
 
 # 5. Node.js应用
