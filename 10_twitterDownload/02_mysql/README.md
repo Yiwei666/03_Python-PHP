@@ -13,6 +13,7 @@
 ├── 05_video_management.php                      # 功能模块：将web页面中点赞/踩的action更新到数据库中
 ├── 05_db_status_size.php                        # 写入视频存在状态和大小到mysql数据库中
 ├── 05_db_video_cover.php                        # 生成视频封面，可在后台使用，或在web脚本中调用
+├── 05_rcloneDown_video.php                      # 下载/删除视频，基于数据库中的operation值来操作
 ├── 05_video_mysql_orderExist.php                # 按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
@@ -20,6 +21,7 @@
 ├── 051_video_list.php                               # 列出指定目录下的所有MP4文件，不需要mysql
 ├── 051_videoPlayer_sigURL.php                       # 播放某一个MP4文件，需要登陆验证以及签名验证，不需要mysql
 ├── 05_vidcover_sql_orderExist_sigURL.php        # 在web页面展示视频封面，点击跳转按钮播放对应的视频，提高页面加载速度
+├── 05_vidcover_sql_orderAll_sigURL.php          # 可视化视频的状态，将下载和删除对应操作的operatin值写入到数据库中，供服务器定时脚本执行相关操作
 ├── 05_nodejs_sigURL
 │   ├── 05_video_mysql_checkURL.js               # node.js应用，运行在云服务器后端，解析并核验签名的url以及referer是否合法，过滤非法请求
 │   ├── node_modules
@@ -188,7 +190,7 @@ $dir4='/home/01_html/05_twitter_video/';         // 存放视频的目录
 ```
 
 
-### 2. `05_rcloneDown_video.php` 定时rclone下载视频
+### 2. `05_rcloneDown_video.php` 下载/删除视频
 
 1. 新增一列 `operation`，默认值为0，取值只有3个，分别是 -1，0或者1，分别代表`待删除、无操作和待下载`
 
@@ -216,7 +218,9 @@ ALTER TABLE videos ADD COLUMN operation TINYINT DEFAULT 0;
 
 
 2. 功能：
-    - 读取数据库中的所有视频信息，对于 `operation` 列为1的视频名，如果对应的 `exist_status` 为0，则调用下面的函数下载该视频，并将 `operation` 重置为0。对于 `operation` 列为`-1`的视频名，如果对应的 `exist_status` 为 1，则删除掉`/home/01_html/05_twitter_video/`路径下的该视频，并将 operation 重置为0。
+    - 读取数据库中的所有视频信息，对于 `operation` 列为1的视频名，如果对应的 `exist_status` 为0，则调用下面的函数下载该视频，并将 `operation` 重置为0。
+    - 对于 `operation` 列为`-1`的视频名，如果对应的 `exist_status` 为 1，则删除掉`/home/01_html/05_twitter_video/`路径下的该视频，并将 `operation` 重置为0。
+    - 注意：本脚本中不包含对于`exist_status`状态的设置。
 
 3. 环境变量
 
@@ -234,7 +238,7 @@ $file_path = "/home/01_html/05_twitter_video/" . $video_name;
 4. 定时任务
 
 ```cron
-*/2 * * * * php home/01_html/05_rcloneDown_video.php
+*/2 * * * * php /home/01_html/05_rcloneDown_video.php
 ```
 
 注意：每隔两分钟执行一次，对于某些比较大的视频，rclone下载时间可能较长
