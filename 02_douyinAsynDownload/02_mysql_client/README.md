@@ -12,7 +12,7 @@
 │   ├── 03_db_config.php                 // 连接到数据库，创建 $mysql 连接对象
 │   ├── 03_tk_video_check.php            // 对比服务器和数据库中的视频信息，更新存在状态和创建时间等信息
 │   ├── 03_copy_remote_to_local.php      // 基于rclone将onedrive中的视频信息同步到服务器的数据库中
-│   └── 03_random_replace_video.php
+│   └── 03_random_replace_video.php      // 从服务器中删除部分视频，从onedrive中下载部分视频，实现视频更新
 ```
 
 # 3. 环境配置
