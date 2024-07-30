@@ -151,6 +151,8 @@ Access to XMLHttpRequest at 'file:///D:/upload' from origin 'null' has been bloc
 
 # 4. windows图片上传到云服务器
 
+### 1. `scp`命令行上传
+
 1. 上传文件
 
 ```sh
@@ -181,6 +183,27 @@ alias lwt='echo $(($(ls -l /home/01_html/08_x/image/03_picTemp/海外风景/ | w
 alias dsp='du -sh /home/01_html/08_x/image/01_imageHost/'
 alias cdp='cd /home/01_html/08_x/image/03_picTemp/海外风景/'
 ```
+
+
+### 2. `01_scp_proxy.py` 脚本上传
+
+使用本地socks5，1080端口代理上传，尤其是在ssh连接不上的时候
+
+1. 环境变量
+
+```py
+local_path = r"D:\software\27_nodejs\海外风景"  # 本地文件或目录路径
+remote_path = "/home/01_html/08_x/image/03_picTemp/海外风景"  # 远程服务器上的目标路径
+remote_host = "74.48.107.63"  # 远程服务器IP
+remote_port = 22  # 远程服务器SSH端口
+username = "root"  # SSH用户名
+password = "your_password"  # SSH密码
+```
+
+
+
+
+
 
 # 5. 查找指定文件夹下所有相同PNG图片
 
@@ -260,16 +283,8 @@ destination_folder = r"D:\onedrive\图片\01_家乡风景\海外风景\01_repeat
 ```
 
 
-# 6. `01_scp_proxy.py` 
 
-1. 环境变量
-
-```py
-
-```
-
-
-# 7. 服务器项目相关alias
+# 6. 服务器项目相关alias
 
 ```bash
 alias mvp='mv /home/01_html/08_x/image/03_picTemp/海外风景/* /home/01_html/08_x/image/01_imageHost/'
