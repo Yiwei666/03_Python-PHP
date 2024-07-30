@@ -3,11 +3,16 @@ import paramiko
 import socks
 import socket
 from paramiko import SSHClient, AutoAddPolicy
+import time
 
 def setup_socks5_proxy():
     # 设置 SOCKS5 代理
     socks.set_default_proxy(socks.SOCKS5, "localhost", 1080)
     socket.socket = socks.socksocket
+
+def progress_callback(transferred, total):
+    percent = 100.0 * transferred / total
+    print(f"\rProgress: {percent:.2f}%", end='')
 
 def scp_transfer(local_path, remote_path, remote_host, remote_port, username, password):
     setup_socks5_proxy()
@@ -34,14 +39,18 @@ def scp_transfer(local_path, remote_path, remote_host, remote_port, username, pa
                 for file in files:
                     local_file = os.path.join(root, file)
                     remote_file = os.path.normpath(os.path.join(remote_dir, file)).replace("\\", "/")
-                    sftp.put(local_file, remote_file)
+                    print(f"Uploading {local_file} to {remote_file}")
+                    sftp.put(local_file, remote_file, callback=progress_callback)
+                    print()  # 换行
                     # 验证文件传输是否成功
                     if not verify_file_transfer(sftp, remote_file):
                         print(f"File transfer failed for {local_file}")
         else:
             # 如果是文件，直接上传
             remote_file = os.path.normpath(remote_path).replace("\\", "/")
-            sftp.put(local_path, remote_file)
+            print(f"Uploading {local_path} to {remote_file}")
+            sftp.put(local_path, remote_file, callback=progress_callback)
+            print()  # 换行
             # 验证文件传输是否成功
             if not verify_file_transfer(sftp, remote_file):
                 print(f"File transfer failed for {local_path}")
