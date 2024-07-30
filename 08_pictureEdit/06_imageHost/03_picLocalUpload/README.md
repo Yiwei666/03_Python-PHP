@@ -149,6 +149,7 @@ Access to XMLHttpRequest at 'file:///D:/upload' from origin 'null' has been bloc
 4. 确保你提前在Windows上创建了目标文件夹 `D:/hotmail/OneDrive/图片/01_家乡风景`，以避免出现路径错误。这种方法满足你直接在本地Windows环境中运行并处理文件的需求。
 
 
+
 # 4. windows图片上传到云服务器
 
 ### 1. `scp`命令行上传
@@ -200,7 +201,24 @@ username = "root"  # SSH用户名
 password = "your_password"  # SSH密码
 ```
 
+### 3. `02_scp_proxy_threadPool.py` 并行传输
 
+1. 思路：假设本地目录下有`n`个文件（没有目录），并行创建`m+1`个ssh连接，`n/m`的商是`a`，余数是`b`，确保 `a*m+b=n`，然后前`m`个连接平均每个传递`a`个文件，最后一个ssh连接传递`b`个文件，先赋值`m=5`
+
+2. 环境变量
+
+```py
+local_path = r"D:\software\27_nodejs\海外风景"  # 本地文件或目录路径
+remote_path = "/home/01_html/08_x/image/03_picTemp/海外风景"  # 远程服务器上的目标路径
+remote_host = "74.48.107.63"  # 远程服务器IP
+remote_port = 22  # 远程服务器SSH端口
+username = "root"  # SSH用户名
+password = "your_password"  # SSH密码
+
+scp_transfer_parallel(local_path, remote_path, remote_host, remote_port, username, password, m=5)
+```
+
+注意：通过修改参数`m`值可以改变创建的ssh连接数。
 
 
 
