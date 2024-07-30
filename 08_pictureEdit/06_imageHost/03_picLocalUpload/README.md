@@ -9,6 +9,8 @@ server.js                  # cmd控制台运行脚本
 index.html                 # 浏览器中打开，打开网址 http://localhost:4000
 
 move_duplicates.py         # 查找指定文件夹下的所有相同PNG图片，并移动到子文件夹中
+
+01_scp_proxy.py            # 使用本地socks5代理上传文件到云服务器指定目录
 ```
 
 # 3. Node.js 环境配置
@@ -258,7 +260,16 @@ destination_folder = r"D:\onedrive\图片\01_家乡风景\海外风景\01_repeat
 ```
 
 
-# 6. 服务器项目相关alias
+# 6. `01_scp_proxy.py` 
+
+1. 环境变量
+
+```py
+
+```
+
+
+# 7. 服务器项目相关alias
 
 ```bash
 alias mvp='mv /home/01_html/08_x/image/03_picTemp/海外风景/* /home/01_html/08_x/image/01_imageHost/'
