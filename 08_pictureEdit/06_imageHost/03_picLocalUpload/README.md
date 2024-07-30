@@ -219,7 +219,7 @@ password = "your_password"  # SSH密码
 scp_transfer_parallel(local_path, remote_path, remote_host, remote_port, username, password, m=5)
 ```
 
-注意：通过修改参数`m`值可以改变创建的ssh连接数。
+注意：通过修改参数`m`值可以改变创建的ssh连接数。参数m不要设置太大，经测试设置`m=15`时，会有约`5%`的图片上传失败。
 
 
 
