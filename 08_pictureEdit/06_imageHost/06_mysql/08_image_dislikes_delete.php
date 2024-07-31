@@ -5,7 +5,6 @@ include '08_db_sync_images.php';                     // 新下载的图片名写
 syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
 include '08_db_image_status.php';                    // 判断数据库中所有图片的存在状态
 
-
 // 提醒用户输入 a、b 和 x，用空格分隔
 echo "Enter three integers (a, b, x), separated by spaces: ";
 $input = trim(fgets(STDIN));
@@ -24,8 +23,9 @@ echo "2. Update and count images with dislikes between [$a, $b]\n";
 echo "3. Count images with likes between [$a, $b]\n";
 echo "4. Count images with dislikes between [$a, $b] and delete corresponding files\n";
 echo "5. Count images with likes and dislikes between [$a, $b] where image_exists is 1\n";
-echo "6. Copy images with likes-dislikes in range [$a, $b] to another dirctory\n";
-echo "Enter option (1/2/3/4/5/6): ";
+echo "6. Copy images with likes-dislikes in range [$a, $b] to another directory\n";
+echo "7. Count images with image_exists = 1 and likes in range [$a, $b]\n";
+echo "Enter option (1/2/3/4/5/6/7): ";
 $option = trim(fgets(STDIN));
 
 // 获取图片总数
@@ -53,11 +53,10 @@ if ($option == '1') {
 elseif ($option == '2') {
     $count_result = $mysqli->query("SELECT COUNT(*) AS count FROM images WHERE dislikes BETWEEN $a AND $b");
     $count = $count_result->fetch_assoc()['count'];
-    // $mysqli->query("UPDATE images SET likes = likes + $x WHERE dislikes BETWEEN $a AND $b");
     $mysqli->query("UPDATE images SET dislikes = dislikes + $x WHERE dislikes BETWEEN $a AND $b");
     echo "Number of images with dislikes between [$a, $b]: $count\n";
     echo "Total images in the database: $total_images\n";
-    echo "Updated likes by adding $x to all matching images.\n";
+    echo "Updated dislikes by adding $x to all matching images.\n";
 }
 
 // 功能 3：打印 likes 在 [a, b] 之间的图片数量
@@ -137,6 +136,7 @@ elseif ($option == '5') {
     echo "Number of images where image_exists is 1: $image_exists_1_count\n";
 }
 
+// 功能 6：复制 likes - dislikes 在 [a, b] 之间的图片到另一个目录
 elseif ($option == '6') {
     $query = "SELECT image_name FROM images WHERE (likes - dislikes) BETWEEN $a AND $b";
     $result = $mysqli->query($query);
@@ -157,6 +157,16 @@ elseif ($option == '6') {
     echo "Number of images copied: $num_copied\n";
 }
 
+// 功能 7：统计 image_exists = 1 并且 likes 在 [a, b] 范围内的每一个值的图片数量
+elseif ($option == '7') {
+    echo "Counting images with image_exists = 1 and likes in range [$a, $b]:\n";
+    for ($i = $a; $i <= $b; $i++) {
+        $count_result = $mysqli->query("SELECT COUNT(*) AS count FROM images WHERE likes = $i AND image_exists = 1");
+        $count = $count_result->fetch_assoc()['count'];
+        echo "Likes = $i: $count images\n";
+    }
+    echo "Total images in the database: $total_images\n";
+}
 
 // 无效选项处理
 else {
