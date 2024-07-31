@@ -213,6 +213,7 @@ alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_
 
 1. 该功能模块将项目文件夹下已删除的图片在数据库中`image_exists`赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 2. 运行该脚本前需要在数据库`images`表中新增`image_exists`一列
+3. 调用该模块前确保图片文件夹中的所有图片名均已经写入到mysql数据库中
 
 ```sql
 ALTER TABLE images ADD COLUMN image_exists TINYINT DEFAULT 0;
