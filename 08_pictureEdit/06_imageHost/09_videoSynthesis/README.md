@@ -25,7 +25,7 @@ sudo apt-get install imagemagick
 sudo apt install mpg123
 ```
 
-### 2. `creat_video.sh`
+### 2. `creat_video.sh` 视频合成
 
 - 源码：[creat_video.sh](creat_video.sh)
 
