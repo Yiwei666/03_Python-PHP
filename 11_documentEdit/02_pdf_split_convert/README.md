@@ -73,7 +73,11 @@ pip install PyPDF2
 NotImplementedError: only algorithm code 1 and 2 are supported. This PDF uses code 4
 ```
 
+3. 安装`pikepdf`库
 
+```
+pip install pikepdf
+```
 
 
   
