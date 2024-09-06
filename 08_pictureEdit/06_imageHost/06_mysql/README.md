@@ -416,6 +416,17 @@ fetch('08_image_management.php', {
 5. 图片展示：在网页上展示选定数量的图片，并通过设备类型自动调整图片宽度。
 6. 刷新按钮：提供一个按钮，用户点击后刷新页面，以重新显示图片。
 
+
+- 图片读取SQL命令
+
+```php
+// $stmt = $pdo->prepare("SELECT image_name FROM images ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
+$stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
+```
+
+
+
+
 - 环境变量
 
 ```php
@@ -426,6 +437,9 @@ $dir5 = str_replace("/home/01_html", "", $dir4); // 去除目录前缀
 $domain = "https://19640810.xyz"; // 域名网址
 $picnumber = 50; // 设置需要显示的图片数量
 ```
+
+
+
 
 ### 3. `08_picDisplay_mysql_orderExist.php`
 
