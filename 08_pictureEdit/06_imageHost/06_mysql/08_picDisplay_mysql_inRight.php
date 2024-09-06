@@ -43,7 +43,8 @@ foreach ($imagesInDirectory as $filePath) {
 
 // 从数据库读取所有图片信息，并随机选取指定数量
 $images = [];
-$result = $mysqli->query("SELECT id, image_name, likes, dislikes FROM images");
+// $result = $mysqli->query("SELECT id, image_name, likes, dislikes FROM images");
+$result = $mysqli->query("SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1");
 while ($row = $result->fetch_assoc()) {
     $images[] = $row;
 }
