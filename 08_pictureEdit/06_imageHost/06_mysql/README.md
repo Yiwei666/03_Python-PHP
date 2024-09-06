@@ -425,17 +425,16 @@ $result = $mysqli->query("SELECT id, image_name, likes, dislikes FROM images WHE
 - 图片读取SQL命令：根据不同的图片筛选需求，可以使用如下不同的SQL命令，只需要替换掉php脚本中的对应行即可。
 
 ```php
-//从名为images的表中按(likes - dislikes)的顺序获取图片信息，最多显示 picnumber 张图片
+//从名为images的表中按(likes - dislikes)的顺序获取图片信息，最多显示 picnumber 张图片，未考虑图片存在状态，可能显示空白
 $stmt = $pdo->prepare("SELECT image_name FROM images ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
 
-// 这条SQL命令的作用是从数据库中选择符合条件的图片，并按照一定的排序规则进行排序，最终限制返回的记录数量
+// 这条SQL命令的作用是从数据库中选择符合条件的图片，并按照一定的排序规则进行排序，最终限制返回的记录数量，考虑图片存在状态
 $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
 
-// 从 (likes - dislikes) 大于 5 的图片中随机选择 picnumber 条记录
+// 从 (likes - dislikes) 大于 5 的图片中随机选择 picnumber 条记录，考虑图片存在状态
 $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 AND (likes - dislikes) > 5 ORDER BY RAND() LIMIT :picnumber");
 
 ```
-
 
 
 
