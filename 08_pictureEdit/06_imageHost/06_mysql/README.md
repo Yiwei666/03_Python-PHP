@@ -421,7 +421,11 @@ fetch('08_image_management.php', {
 
 ```php
 // $stmt = $pdo->prepare("SELECT image_name FROM images ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
+
+// 这条SQL命令的作用是从数据库中选择符合条件的图片，并按照一定的排序规则进行排序，最终限制返回的记录数量
 $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
+
+
 ```
 
 
