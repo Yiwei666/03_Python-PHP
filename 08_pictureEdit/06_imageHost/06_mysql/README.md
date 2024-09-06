@@ -417,7 +417,7 @@ fetch('08_image_management.php', {
 6. 刷新按钮：提供一个按钮，用户点击后刷新页面，以重新显示图片。
 
 
-- 图片读取SQL命令
+- 图片读取SQL命令：根据不同的图片筛选需求，可以使用如下不同的SQL命令
 
 ```php
 //从名为images的表中按(likes - dislikes)的顺序获取图片信息，最多显示 picnumber 张图片
@@ -429,7 +429,6 @@ $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 ORDE
 // 从 (likes - dislikes) 大于 5 的图片中随机选择 picnumber 条记录
 $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 AND (likes - dislikes) > 5 ORDER BY RAND() LIMIT :picnumber");
 
-// 
 ```
 
 
