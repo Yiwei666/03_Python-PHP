@@ -513,7 +513,12 @@ fetch('08_image_management.php', {
 })
 ```
 
-注意：虽然本脚本中调用了`08_db_sync_images.php`模块将新图片信息插入到数据库中，但没有调用`08_db_image_status.php`模块，因此新插入图片的`image_exists`默认值仍然为0，页面上不会显示新插入的图片。需要在后台手动运行 `08_image_dislikes_delete.php` 脚本完成新图片状态写入，该脚本调用了`08_db_image_status.php`模块。没有在web脚本调用该模块，主要是考虑到尽量减少页面加载时间。
+注意：
+
+- 虽然本脚本中调用了`08_db_sync_images.php`模块将新图片信息插入到数据库中，但没有调用`08_db_image_status.php`模块，因此新插入图片的`image_exists`默认值仍然为0，页面上不会显示新插入的图片。
+- 需要在后台手动运行 `08_image_dislikes_delete.php` 脚本完成新图片状态写入，该脚本调用了`08_db_image_status.php`模块。
+- 没有在web脚本调用该模块，主要是考虑到尽量减少页面加载时间。
+
 
 3. 新增在新标签页打开图片的代码仅一行
 
