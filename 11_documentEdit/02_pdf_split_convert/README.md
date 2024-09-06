@@ -67,7 +67,7 @@ pip install PyPDF2
 
 1. 功能同`05_pdf_extract_merge.py`，但是使用`pikepdf 库`来实现。
 
-2. 由于`PyPDF2`库在提取文件过程可能会出现如下报错，而`pikepdf 库`支持更多加密算法
+2. 由于`PyPDF2`库在提取文件过程可能会出现如下报错，尤其是提取知网下载的pdf学位论文页面时，而`pikepdf 库`支持更多加密算法
 
 ```
 NotImplementedError: only algorithm code 1 and 2 are supported. This PDF uses code 4
