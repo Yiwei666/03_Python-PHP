@@ -30,7 +30,8 @@ try {
 
     // 从数据库中读取图片，按照 (likes - dislikes) 排序
     // $stmt = $pdo->prepare("SELECT image_name FROM images ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
-    $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
+    // $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 ORDER BY (likes - dislikes) DESC LIMIT :picnumber");
+    $stmt = $pdo->prepare("SELECT image_name FROM images WHERE image_exists = 1 AND (likes - dislikes) > 5 ORDER BY RAND() LIMIT :picnumber");
     $stmt->bindParam(':picnumber', $picnumber, PDO::PARAM_INT);
     $stmt->execute();
     $selectedImages = $stmt->fetchAll(PDO::FETCH_ASSOC);
