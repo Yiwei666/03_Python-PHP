@@ -397,7 +397,7 @@ fetch('08_image_management.php', {
 
 注意：从数据库中随机选取图片名称，然后通过构造链接进行访问，~~但是并未考虑到项目文件夹中图片已经删除，但是数据库中仍保留其信息。因此，对于部分已删除图片显示的是空白~~。新代码中通过如下命令，即新增`WHERE image_exists = 1`查询，确保已删除的图片在页面中不会显示空白。
 
-```
+```php
 // $result = $mysqli->query("SELECT id, image_name, likes, dislikes FROM images");
 $result = $mysqli->query("SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1");
 ```
