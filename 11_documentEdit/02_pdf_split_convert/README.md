@@ -11,7 +11,7 @@ pdf文件拆分与合并
 03_pdf_split_per2.py       # 该代码用于将输入的PDF文件拆分为包含两个页面的多个PDF文件。如果总页数是奇数，最后一个文件只包含最后一页。如果总页数是偶数，每个文件包含两页。
 04_pdf_split_perM.py       # 用于将输入的PDF文件按照指定的每组页数进行拆分的程序
 05_pdf_extract_merge.py    # 对于1个包含n页（n大于等于2）的pdf文件，提取部分页合并成一个新的pdf文件
-
+06_pikepdf_extract_merge.py     # 功能同05_pdf_extract_merge.py，但是使用 pikepdf 库来实现
 ```
 
 # 3. 环境配置
@@ -63,9 +63,15 @@ pip install PyPDF2
 4. 按照原始pdf文件中页码的先后顺序，而不是输入的页码顺序合并pdf页，合并后的pdf页命名需要包含所含页码
 
 
+### 4. `06_pikepdf_extract_merge.py`
 
+1. 功能同`05_pdf_extract_merge.py`，但是使用`pikepdf 库`来实现。
 
+2. 由于`PyPDF2`库在提取文件过程可能会出现如下报错，而`pikepdf 库`支持更多加密算法
 
+```
+NotImplementedError: only algorithm code 1 and 2 are supported. This PDF uses code 4
+```
 
 
 
