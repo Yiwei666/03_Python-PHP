@@ -5,7 +5,7 @@
 
 # 项目结构
 
-1. uname.php
+1. [uname.php](uname.php)
 
 输入网站名和网址，生成 markdown 和 html 格式的链接
 
