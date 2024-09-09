@@ -1,9 +1,10 @@
-# 项目功能
+# 1. 项目功能
 
 - 用于音视频、文档、日志等处理的小脚本
 
 
-# 项目结构
+
+# 2. 项目结构
 
 1. [uname.php](uname.php)
 
@@ -38,7 +39,7 @@
 生成指定位数的序列号，序列号包含大小写英文字符和数字的组合
 
 
-7. question_darkTheme.php
+7. [question_darkTheme.php](question_darkTheme.php)
 
 `question.php` 深色主题版本。若想要将显示框文本左对齐，只需将`text-align: left`值修改为left即可
 
@@ -50,7 +51,7 @@ textarea[readonly] {
 }
 ```
 
-8. 01_EnglishWordNote.php
+8. [01_EnglishWordNote.php](01_EnglishWordNote.php)
 
 功能：记录英语单词
 
@@ -105,7 +106,7 @@ textarea[readonly] {
 
 
 
-# 部署环境
+# 3. 环境配置
 
 
 
