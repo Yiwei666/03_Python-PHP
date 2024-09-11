@@ -79,6 +79,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="<?php echo date("Y/m/d", strtotime("+2 day")) . ' - ' . date("Y/m/d", strtotime("+3 days")); ?>">
                 <?php echo date("Y/m/d", strtotime("+2 day")) . ' - ' . date("Y/m/d", strtotime("+3 days")); ?>
             </option>
+            <option value="<?php echo date("Y/m/d", strtotime("+3 day")) . ' - ' . date("Y/m/d", strtotime("+4 days")); ?>">
+                <?php echo date("Y/m/d", strtotime("+3 day")) . ' - ' . date("Y/m/d", strtotime("+4 days")); ?>
+            </option>
+            <option value="<?php echo date("Y/m/d", strtotime("+4 day")) . ' - ' . date("Y/m/d", strtotime("+5 days")); ?>">
+                <?php echo date("Y/m/d", strtotime("+4 day")) . ' - ' . date("Y/m/d", strtotime("+5 days")); ?>
+            </option>
+            <option value="<?php echo date("Y/m/d", strtotime("+5 day")) . ' - ' . date("Y/m/d", strtotime("+6 days")); ?>">
+                <?php echo date("Y/m/d", strtotime("+5 day")) . ' - ' . date("Y/m/d", strtotime("+6 days")); ?>
+            </option>
+            <option value="<?php echo date("Y/m/d", strtotime("+6 day")) . ' - ' . date("Y/m/d", strtotime("+7 days")); ?>">
+                <?php echo date("Y/m/d", strtotime("+6 day")) . ' - ' . date("Y/m/d", strtotime("+7 days")); ?>
+            </option>
         </select>
         <br>
         <label for="amount">到账金额:</label>
