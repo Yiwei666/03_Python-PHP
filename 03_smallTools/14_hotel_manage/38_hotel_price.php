@@ -53,15 +53,24 @@
         $z6 = 0.9 * $y6 * $k;
         $z7 = 0.9 * $y7 * $k;
 
+        // 计算折扣后价格 w
+        $w1 = $y1 * $k;
+        $w2 = $y2 * $k;
+        $w3 = $y3 * $k;
+        $w4 = $y4 * $k;
+        $w5 = $y5 * $k;
+        $w6 = $y6 * $k;
+        $w7 = $y7 * $k;
+
         // 显示结果
         echo "<h3>计算结果</h3>";
-        echo "大床房(不含早餐)：折扣前价格 y1 = ￥" . number_format($y1, 0) . "，预计到手金额 z1 = ￥" . number_format($z1, 2) . "<br>";
-        echo "标准大床房(含早餐)：折扣前价格 y2 = ￥" . number_format($y2, 0) . "，预计到手金额 z2 = ￥" . number_format($z2, 2) . "<br>";
-        echo "标准双床房(含早餐)：折扣前价格 y3 = ￥" . number_format($y3, 0) . "，预计到手金额 z3 = ￥" . number_format($z3, 2) . "<br>";
-        echo "轻奢大床房(含早晚餐)：折扣前价格 y4 = ￥" . number_format($y4, 0) . "，预计到手金额 z4 = ￥" . number_format($z4, 2) . "<br>";
-        echo "轻奢双床房(含早晚餐)：折扣前价格 y5 = ￥" . number_format($y5, 0) . "，预计到手金额 z5 = ￥" . number_format($z5, 2) . "<br>";
-        echo "豪华大床房(含早中晚餐)：折扣前价格 y6 = ￥" . number_format($y6, 0) . "，预计到手金额 z6 = ￥" . number_format($z6, 2) . "<br>";
-        echo "豪华双床房(含早中晚餐)：折扣前价格 y7 = ￥" . number_format($y7, 0) . "，预计到手金额 z7 = ￥" . number_format($z7, 2) . "<br>";
+        echo "大床房(不含早餐)：折扣前价格 y1 = ￥" . number_format($y1, 0) . "，折扣后价格 w1 = ￥" . number_format($w1, 0) . "，预计到手金额 z1 = ￥" . number_format($z1, 2) . "<br>";
+        echo "标准大床房(含早餐)：折扣前价格 y2 = ￥" . number_format($y2, 0) . "，折扣后价格 w2 = ￥" . number_format($w2, 0)  . "，预计到手金额 z2 = ￥" . number_format($z2, 2) . "<br>";
+        echo "标准双床房(含早餐)：折扣前价格 y3 = ￥" . number_format($y3, 0) . "，折扣后价格 w3 = ￥" . number_format($w3, 0)  . "，预计到手金额 z3 = ￥" . number_format($z3, 2) . "<br>";
+        echo "轻奢大床房(含早晚餐)：折扣前价格 y4 = ￥" . number_format($y4, 0) . "，折扣后价格 w4 = ￥" . number_format($w4, 0)  . "，预计到手金额 z4 = ￥" . number_format($z4, 2) . "<br>";
+        echo "轻奢双床房(含早晚餐)：折扣前价格 y5 = ￥" . number_format($y5, 0) . "，折扣后价格 w5 = ￥" . number_format($w5, 0)  . "，预计到手金额 z5 = ￥" . number_format($z5, 2) . "<br>";
+        echo "豪华大床房(含早中晚餐)：折扣前价格 y6 = ￥" . number_format($y6, 0) . "，折扣后价格 w6 = ￥" . number_format($w6, 0)  . "，预计到手金额 z6 = ￥" . number_format($z6, 2) . "<br>";
+        echo "豪华双床房(含早中晚餐)：折扣前价格 y7 = ￥" . number_format($y7, 0) . "，折扣后价格 w7 = ￥" . number_format($w7, 0)  . "，预计到手金额 z7 = ￥" . number_format($z7, 2) . "<br>";
     }
     ?>
 </body>
