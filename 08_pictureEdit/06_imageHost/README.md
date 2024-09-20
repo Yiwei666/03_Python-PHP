@@ -304,7 +304,7 @@ $adjustedFilePath = str_replace('/home/01_html', 'http://120.46.81.41', $targetF
 # 4. web图片查看及转移环境配置
 
 
-### 1. 05_imageTransferName.txt
+### 1. `05_imageTransferName.txt`
 
 - 以`20231222-113823.png,2023-12-24 23:45:04`格式存储不显示和需要转移的图片
 
@@ -324,7 +324,7 @@ chown www-data:www-data 05_imageTransferName.txt
 
 
 
-### 2. 05_imageGallery.php
+### 2. `05_imageGallery.php`
 
 1. 环境变量
 
@@ -373,8 +373,90 @@ body {
 4. 无论用户何时回到页面，他们都可以从他们停止浏览的地方继续
 
 
+**2. Transfer验证**
 
-### 3. 05_serverImageTransfer.php
+- 原代码：点击Transfer按钮不需要验证，即可将需要转移的图片信息发送到服务器处理脚本
+
+```php
+<script>
+    var serverScriptUrl = '<?php echo $serverScript; ?>';
+
+    function transferImage(imageUrl) {
+        var imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', serverScriptUrl, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    alert('Image transfer information recorded successfully!');
+                } else {
+                    alert('Error: Unable to record transfer information.');
+                }
+            }
+        };
+        xhr.send('imageName=' + encodeURIComponent(imageName));
+    }
+</script>
+```
+
+
+- 新功能：添加Transfer验证后的代码，提示用户输入密码，服务器脚本核验通过后才进行后续操作
+
+```php
+<script>
+    var serverScriptUrl = '<?php echo $serverScript; ?>'; // 服务器端处理脚本的URL
+
+    function transferImage(imageUrl) {
+        // 提示用户输入密码
+        var userPassword = prompt('Please enter the password to transfer the image:');
+
+        // 如果用户取消输入，则退出
+        if (!userPassword) {
+            alert('Password input canceled.');
+            return;
+        }
+
+        // 获取图片的文件名
+        var imageName = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+
+        // 创建 XMLHttpRequest 对象
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', serverScriptUrl, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        
+        // 设置回调函数，处理服务器端响应
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    if (xhr.responseText === 'success') {
+                        alert('Image transfer information recorded successfully!');
+                    }
+                } else if (xhr.status == 403) { // 处理密码错误的情况
+                    if (xhr.responseText.includes('error: incorrect password')) {
+                        alert('Incorrect password. Please try again.');
+                    }
+                } else if (xhr.status == 400) { // 处理 imageName 参数缺失的情况
+                    if (xhr.responseText.includes('error: imageName parameter is missing')) {
+                        alert('Error: image name is missing.');
+                    }
+                } else {
+                    alert('Error: Unable to record transfer information.');
+                }
+            }
+        };
+
+        // 发送图片名称和用户输入的密码到服务器端进行验证
+        xhr.send('imageName=' + encodeURIComponent(imageName) + '&password=' + encodeURIComponent(userPassword));
+    }
+</script>
+```
+
+注意：上述两个脚本模块可以互换，不涉及到任何环境变量设置和参数初始化。添加验证后的模块需要在服务器脚本`05_serverImageTransfer.php`初始化密码参数。
+
+
+
+### 3. `05_serverImageTransfer.php`
 
 - 环境变量
 
@@ -384,7 +466,7 @@ $filePath = '/home/01_html/05_imageTransferName.txt';
 ```
 
 
-### 4. 05_mvImageServer.sh
+### 4. `05_mvImageServer.sh`
 
 - 环境变量
 
@@ -408,7 +490,7 @@ chmod +x 05_mvImageServer.sh
 ```
 
 
-### 5. 05_simpleGallery.php
+### 5. `05_simpleGallery.php`
 
 ```sh
 <link rel="shortcut icon" href="https://mctea.one/00_logo/gallary.png">             // icon地址
