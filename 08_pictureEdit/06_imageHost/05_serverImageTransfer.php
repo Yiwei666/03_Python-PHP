@@ -1,6 +1,26 @@
 <?php
-// 添加获取POST参数的检查
+// 定义正确的密码
+$correctPassword = '123456';
+
+// 获取 POST 参数
 $imageName = isset($_POST['imageName']) ? $_POST['imageName'] : '';
+$password = isset($_POST['password']) ? $_POST['password'] : '';
+
+// 检查是否提供了正确的密码
+if ($password !== $correctPassword) {
+    // 返回错误响应，密码不正确
+    http_response_code(403); // 403 Forbidden
+    echo 'error: incorrect password';
+    exit; // 停止执行后续代码
+}
+
+// 检查 imageName 参数是否为空
+if (empty($imageName)) {
+    // 返回错误响应，缺少 imageName 参数
+    http_response_code(400); // 400 Bad Request
+    echo 'error: imageName parameter is missing';
+    exit; // 停止执行后续代码
+}
 
 // 指定文本文件路径
 $filePath = '/home/01_html/05_imageTransferName.txt';
@@ -22,8 +42,5 @@ if (!empty($imageName)) {
 
     // 返回成功响应
     echo 'success';
-} else {
-    // 如果没有传递 imageName 参数，返回错误响应
-    echo 'error: imageName parameter is missing';
 }
 ?>
