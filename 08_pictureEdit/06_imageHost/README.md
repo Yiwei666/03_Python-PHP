@@ -465,6 +465,9 @@ body {
 ### 1. 环境变量
 
 ```php
+// 定义正确的密码
+$correctPassword = '123456';
+
 // 指定文本文件路径
 $filePath = '/home/01_html/05_imageTransferName.txt';
 ```
