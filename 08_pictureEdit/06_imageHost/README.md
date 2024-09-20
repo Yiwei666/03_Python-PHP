@@ -304,7 +304,7 @@ $adjustedFilePath = str_replace('/home/01_html', 'http://120.46.81.41', $targetF
 # 4. web图片查看及转移环境配置
 
 
-### 1. `05_imageTransferName.txt`
+## 1. `05_imageTransferName.txt`
 
 - 以`20231222-113823.png,2023-12-24 23:45:04`格式存储不显示和需要转移的图片
 
@@ -324,9 +324,9 @@ chown www-data:www-data 05_imageTransferName.txt
 
 
 
-### 2. `05_imageGallery.php`
+## 2. `05_imageGallery.php`
 
-1. 环境变量
+### 1. 环境变量
 
 ```php
 $baseUrl = 'http://120.46.81.41/02_LAS1109/35_imageHost/';         // 图片url中文件名之前的部分
@@ -456,7 +456,7 @@ body {
 
 
 
-### 3. `05_serverImageTransfer.php`
+## 3. `05_serverImageTransfer.php`
 
 - 环境变量
 
@@ -466,7 +466,7 @@ $filePath = '/home/01_html/05_imageTransferName.txt';
 ```
 
 
-### 4. `05_mvImageServer.sh`
+## 4. `05_mvImageServer.sh`
 
 - 环境变量
 
@@ -490,7 +490,7 @@ chmod +x 05_mvImageServer.sh
 ```
 
 
-### 5. `05_simpleGallery.php`
+## 5. `05_simpleGallery.php`
 
 ```sh
 <link rel="shortcut icon" href="https://mctea.one/00_logo/gallary.png">             // icon地址
@@ -501,7 +501,7 @@ $imagesPerPage = 60;                                                            
 ```
 
 
-### 6. `08_picDisplay.php` 随机显示指定目录下 n 张图片
+## 6. `08_picDisplay.php` 随机显示指定目录下 n 张图片
 
 1. 环境配置
 
@@ -556,7 +556,7 @@ Mozilla/5.0 (Android 11; Mobile; rv:109.0) Gecko/114.0 Firefox/114.0            
 ```
 
 
-### 7. `08_picDisplay_one.php` 随机显示指定目录下 1 张图片
+## 7. `08_picDisplay_one.php` 随机显示指定目录下 1 张图片
 
 1. `08_picDisplay_one.php`是`08_picDisplay.php`改进版本，在页面中仅显示指定文件夹下的一张图片，未使用mysql进行数据管理
 2. 核心特性：
