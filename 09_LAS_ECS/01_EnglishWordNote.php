@@ -155,8 +155,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $content = fread($file, filesize($filename));
   fclose($file);
 
-  // 使用正则表达式在内容中查找并标记需要高亮的文字
+  // 先将 / / 之间的内容替换为占位符，避免干扰
+  $content = preg_replace('/\/(.*?)\//', '[[PLACEHOLDER_YELLOW_$1]]', $content);
+
+  // 对 " " 之间的内容进行红色高亮显示
   $content = preg_replace('/"(.*?)"/', '<span class="highlight-text">"$1"</span>', $content);
+
+  // 将占位符替换为蓝色高亮的 / / 内容
+  $content = preg_replace('/\[\[PLACEHOLDER_YELLOW_(.*?)\]\]/', '<span style="color: #258fb8;">/$1/</span>', $content);
 
   echo "<br><br><div id='display-textbox'>$content</div>";
 }
