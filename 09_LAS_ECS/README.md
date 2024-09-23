@@ -3,8 +3,27 @@
 - 用于音视频、文档、日志等处理的小脚本
 
 
-
 # 2. 项目结构
+
+```
+uname.php                             # 输入网站名和网址，生成 markdown 和 html 格式的链接
+11_musicMix.php                       # 通过构造音频链接，随机播放指定文件夹下的mp3音频
+11_musicMixTxt.php                    # 从一个包含MP3音频链接的文件中读取链接，并以随机的方式播放这些音频文件
+lsfile_js.php                         # 代码将会显示具有.html、.php和.js扩展名的文件列表
+
+13_MixPlayers.php                     # 聚合在线音频播放器
+    ├── 13_MixPlayers_codeGenerate.php        # 输入路径生成相应代码，添加到13_MixPlayers.php文件中
+    ├── 13_MixPlayers.php                     # 生成多个在线播放器，每个播放器对应一个音频文件夹
+
+serialNumberGenerate.php              # 生成指定位数的序列号，序列号包含大小写英文字符和数字的组合
+question_darkTheme.php                # `question.php` 深色主题版本
+01_EnglishWordNote.php                # 单词记录本
+
+```
+
+
+# 3. 环境配置
+
 
 ## 1. [uname.php](uname.php)
 
@@ -106,7 +125,6 @@ textarea[readonly] {
 
 
 
-# 3. 环境配置
 
 
 
