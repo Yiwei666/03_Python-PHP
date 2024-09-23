@@ -70,9 +70,12 @@ textarea[readonly] {
 }
 ```
 
+
 ## 8. [01_EnglishWordNote.php](01_EnglishWordNote.php)
 
 功能：记录英语单词
+
+### 1. `" "`内文本红色高亮
 
 - 新增的显示框`" "`内文本高亮css style
 
@@ -100,11 +103,11 @@ textarea[readonly] {
     }
 ```
 
-通过 `width: 78ch`和`height: 20em`控制显示框的长和宽，区别于传统通过像素控制
+1. 通过 `width: 78ch`和`height: 20em`控制显示框的长和宽，区别于传统通过像素控制
 
-通过`overflow-y`启用垂直滚动条
+2. 通过`overflow-y`启用垂直滚动条
 
-通过 ` resize` 允许元素在水平和垂直方向上都可以被用户调整大小
+3. 通过 ` resize` 允许元素在水平和垂直方向上都可以被用户调整大小
       
 
 
@@ -124,9 +127,45 @@ textarea[readonly] {
 
 
 
+### 2. `/ /`内文本蓝色高亮
 
+实现`" "`内文本红色高亮的同时`/ /`内文本蓝色高亮，两者之间没有干扰
 
+```php
+  // 正确匹配 "[" 和 "]" 之间的内容并进行蓝色高亮显示
+  // $content = preg_replace('/\[(.*?)\]/', '<span style="color: blue;">[$1]</span>', $content);
 
+  // 使用正则表达式在内容中查找并标记需要高亮的文字（两个斜杠之间的内容为黄色）
+  // $content = preg_replace('/\/(.*?)\//', '<span style="color: yellow;">/$1/</span>', $content);
 
+  // 使用正则表达式在内容中查找并标记需要高亮的文字
+  // $content = preg_replace('/"(.*?)"/', '<span class="highlight-text">"$1"</span>', $content);
+
+  // 先将 / / 之间的内容替换为占位符，避免干扰
+  $content = preg_replace('/\/(.*?)\//', '[[PLACEHOLDER_YELLOW_$1]]', $content);
+
+  // 对 " " 之间的内容进行红色高亮显示
+  $content = preg_replace('/"(.*?)"/', '<span class="highlight-text">"$1"</span>', $content);
+
+  // 将占位符替换为蓝色高亮的 / / 内容
+  $content = preg_replace('/\[\[PLACEHOLDER_YELLOW_(.*?)\]\]/', '<span style="color: #258fb8;">/$1/</span>', $content);
+```
+
+1. 解释：
+    - 占位符的使用：在第一次 `preg_replace` 中，我们将 `/ /` 之间的内容替换为一个自定义的占位符 `[[PLACEHOLDER_YELLOW_$1]]`，以避免后续的替换干扰。
+    - 处理引号高亮：紧接着处理引号 `"` 之间的内容高亮，确保它的替换操作不会干扰 `/ /` 的高亮操作。
+    - 恢复占位符：最后，再通过 `preg_replace` 将占位符替换为带有蓝色高亮的 `/ /` 标签。
+
+2. 确保`" "`红色高亮的一行关键代码
+
+```php
+/* 新增规则，选择.highlight-text样式的文字，设置为红色 */
+.highlight-text {
+  color: red;
+}
+
+// 使用正则表达式在内容中查找并标记需要高亮的文字
+$content = preg_replace('/"(.*?)"/', '<span class="highlight-text">"$1"</span>', $content);
+```
 
 
