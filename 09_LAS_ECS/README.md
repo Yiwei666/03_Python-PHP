@@ -117,11 +117,11 @@ textarea[readonly] {
 
 具体来说：
 
-◻️ textarea选择器应用于所有<textarea> 元素，包括用户输入的textarea。
+◻️ `textarea`选择器应用于所有`<textarea>` 元素，包括用户输入的`textarea`。
 
-◻️ textarea[readonly]选择器应用于带有readonly属性的<textarea> 元素，使其在只读状态下具有不同的样式。
+◻️ `textarea[readonly]`选择器应用于带有`readonly`属性的`<textarea>` 元素，使其在只读状态下具有不同的样式。
 
-◻️ #display-textbox选择器应用于具有id为display-textbox的元素，这个元素可能是用于显示内容的div。
+◻️ `#display-textbox`选择器应用于具有id为`display-textbox`的元素，这个元素可能是用于显示内容的`div`。
 
 因此，这些选择器不会导致样式冲突，各自独立地应用于它们所指定的元素。
 
