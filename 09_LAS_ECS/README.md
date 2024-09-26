@@ -17,8 +17,8 @@ lsfile_js.php                         # 代码将会显示具有.html、.php和.
 
 serialNumberGenerate.php              # 生成指定位数的序列号，序列号包含大小写英文字符和数字的组合
 question_darkTheme.php                # `question.php` 深色主题版本
-01_EnglishWordNote.php                # 单词记录本
-
+01_EnglishWordNote.php                # 单词记录本，包括记录和显示
+01_EnglishDisplay.php                 # 显示单词记录内容，可根据终端类型自适应文本显示框高度
 ```
 
 
@@ -167,5 +167,14 @@ textarea[readonly] {
 // 使用正则表达式在内容中查找并标记需要高亮的文字
 $content = preg_replace('/"(.*?)"/', '<span class="highlight-text">"$1"</span>', $content);
 ```
+
+
+### 3. [01_EnglishDisplay.php](01_EnglishDisplay.php)
+
+1. `01_EnglishDisplay.php`是`01_EnglishWordNote.php`简化版本，只包含文本显示功能，无提交功能。
+2. 能够识别终端类型，可根据终端类型自适应文本框显示高度。
+
+
+
 
 
