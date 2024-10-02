@@ -19,7 +19,7 @@
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
 ├── 05_video_mysql_random_sigURL.php             # 随机显示likes-dislikes值在 top 150 范围内的视频，视频的url经过签名并加密，并设置有效期
 ├── 051_video_list.php                               # 列出指定目录下的所有MP4文件，不需要mysql
-├── 051_videoPlayer_sigURL.php                       # 播放某一个MP4文件，需要登陆验证以及签名验证，不需要mysql
+├── 051_videoPlayer_sigURL.php                       # 基于051_video_list.php列出的文件名跳转，播放某一个MP4文件，需要登陆验证以及签名验证，不需要mysql
 ├── 05_vidcover_sql_orderExist_sigURL.php        # 在web页面展示视频封面，点击跳转按钮播放对应的视频，提高页面加载速度
 ├── 05_vidcover_sql_orderAll_sigURL.php          # 可视化视频的状态，将下载和删除对应操作的operatin值写入到数据库中，供服务器定时脚本执行相关操作
 ├── 05_nodejs_sigURL
