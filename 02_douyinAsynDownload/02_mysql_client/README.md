@@ -45,6 +45,14 @@ $password = '123456'; // 数据库密码
 $dbname = 'tiktok_db'; // 数据库名称
 ```
 
+3. 导出/备份数据库文件命令
+
+```sh
+alias sbt='mysqldump -p tiktok_db > /home/01_html/backup_tiktok_db_$(date +%Y%m%d_%H%M%S).sql'
+```
+
+
+
 ### 2. `03_tk_video_check.php`
 
 🟢 同步本地视频文件和数据库记录，通过检查、更新和统计本地视频文件的存在状态和数据库中的相应记录
