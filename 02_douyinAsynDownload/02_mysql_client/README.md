@@ -136,6 +136,9 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 ```
 
 
+# 参考资料
+
+1. [MySQL安装及数据迁移](https://github.com/Yiwei666/12_blog/blob/main/002/002.md)
 
 
 
