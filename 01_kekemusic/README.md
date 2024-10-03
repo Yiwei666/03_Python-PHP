@@ -362,12 +362,14 @@ which python
 
 # 6. mysql数据迁移
 
-```
+```sh
 sudo mysqldump -p kkmusicdb > backup.sql           # 导出源服务器数据
 
 CREATE DATABASE kkmusicdb;                         # 在新服务器创建kkmusicdb数据库
 
 sudo mysql -u root -p kkmusicdb < backup.sql       # 在新服务器中导入数据
+
+alias sbk='mysqldump -p kkmusicdb > /home/01_html/backup_kkmusicdb_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
 - 参考资料：https://github.com/Yiwei666/12_blog/blob/main/005/005.md
