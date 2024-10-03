@@ -139,8 +139,10 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 3. 定时任务
 
+每小时的第 30 分钟 执行一次 PHP 脚本
+
 ```bash
-/30 * * * * /usr/bin/php /home/01_html/03_mysql_douyin/03_random_replace_video.php
+30 * * * * /usr/bin/php /home/01_html/03_mysql_douyin/03_random_replace_video.php
 ```
 
 
