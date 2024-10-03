@@ -128,12 +128,23 @@ curl  -o  name.mp4    https://s20.youtube4kdownloader.com/download7/hd5/zhwr5y5f
 -rw-rw-rw-  1 nginx nginx             # questiondata.txt，对应centos系统
 ```
 
-权限设置命令
+- 权限设置命令
 
 ```
 chmod 666 questiondata.txt
 chown www-data:www-data questiondata.txt
 ```
+
+- 下面几个脚本的数据文本权限设置同上
+
+```
+infoo.php
+paragraph.php
+washbrain.php
+siteCollect.php
+siteName.php
+```
+
 
 2. 将`在只读文本区域中显示内容` 中的中文设置为微软雅黑字体，英文和数字设置为 Arial字体
 
