@@ -4,12 +4,23 @@
 
 # 2. 文件结构
 
+### 1. 自动化安装脚本
+
+- 对onedrive中储存的mp3音频，设置rclone批量化定时下载的自动安装脚本
+- 要求mp3音频存储目录具有统一的结构
+
 ```
 ├── 51_podcastTemplate                       # 文件夹
     ├── 511_inputAutoSetPodcast.sh           # 通过终端页面交互对自动化脚本进行参数初始化
     ├── 51_autoSetPodcast.sh                 # 需要手动参数初始化的自动化下载脚本
     ├── 51_SEND7.sh                          # 网页播放音频的php脚本，原本后缀是`.php`的，由于通过curl下载的`51_SEND7.php`不是源代码，而是被服务器解释并生成了HTML内容的文件，因此将后缀改成了`.sh`
     └── rclone_51_SEND7.sh                   # 定时脚本，用于定时下载音频
+```
+
+### 2. rclone手动下载定时脚本
+
+```
+rclone_09_music.sh                           # 对于音频分散在多个子文件夹中的定时下载脚本，功能类似于 rclone_51_SEND7.sh
 ```
 
 
@@ -196,6 +207,17 @@ remote_path="rc1:cc1-1/51_SEND7/01_audio"
 
 1. 参数`rc1:cc1-1`需要根据实际情况来设置，否则rclone无法下载音频。
 2. 确保onedrive中`rc1:cc1-1/51_SEND7/01_audio`存在且有效
+
+
+# 4. rclone_09_music.sh
+
+
+
+
+
+
+
+
 
 
 
