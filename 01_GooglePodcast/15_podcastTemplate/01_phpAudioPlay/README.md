@@ -209,11 +209,20 @@ remote_path="rc1:cc1-1/51_SEND7/01_audio"
 2. 确保onedrive中`rc1:cc1-1/51_SEND7/01_audio`存在且有效
 
 
+
 # 4. rclone_09_music.sh
 
+### 1. 环境变量
 
+```sh
+# 远程路径的主目录
+remote_base_path="rc1:cc1-1/09_music/"
 
+# 本地路径
+local_path="/home/01_html/09_music/01_audio"
+```
 
+注意：`rc1:cc1-1/09_music/`目录下有多个子文件夹，代表不同歌手
 
 
 
