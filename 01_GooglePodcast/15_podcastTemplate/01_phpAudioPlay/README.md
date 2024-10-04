@@ -171,6 +171,7 @@ curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_po
 - 确保服务器 `/home/01_html/51_podcastTemplate`路径下存在`51_SEND7.sh`和`rclone_51_SEND7.sh`两个文件，准确配置服务器ip地址或者域名
 
 
+
 ## 3. 51_SEND7.sh
 
 ### 1. 环境变量
@@ -183,9 +184,18 @@ $baseUrl = 'http://39.105.186.182/51_SEND7/01_audio/';
 确保ip地址或者域名正确，`51_SEND7`不需要修改，`511_inputAutoSetPodcast.sh`安装脚本会自动设置
 
 
+
 ## 4. rclone_51_SEND7.sh
 
+### 1. 环境变量
 
+```sh
+# 远程路径
+remote_path="rc1:cc1-1/51_SEND7/01_audio"
+```
+
+1. 参数`rc1:cc1-1`需要根据实际情况来设置，否则rclone无法下载音频。
+2. 确保onedrive中`rc1:cc1-1/51_SEND7/01_audio`存在且有效
 
 
 
