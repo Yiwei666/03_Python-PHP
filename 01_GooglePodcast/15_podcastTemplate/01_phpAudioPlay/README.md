@@ -17,9 +17,11 @@
 # 3. 环境配置
 
 
-### 1. 51_autoSetPodcast.sh 初级版本
+## 1. 51_autoSetPodcast.sh 初级版本
 
 需要手动对参数`directoryPod`进行初始化
+
+### 1. 代码
 
 ```sh
 #!/bin/bash
@@ -63,8 +65,29 @@ cronjob="$((current_minute + 1)) $current_hour * * * /usr/bin/bash /home/01_html
 echo "脚本运行结束。"
 ```
 
+### 2. 代码注释
 
-### 2. 511_inputAutoSetPodcast.sh 高级版本
+<p align="center">
+<img src="https://19640810.xyz/05_image/01_imageHost/20241004-204329.png" alt="Image Description" width="700">
+</p>
+
+### 3. 环境变量
+
+
+```
+# 定义变量，唯一需要初始化的值
+directoryPod="/home/01_html/67_RealSexEducation"
+
+# 下载脚本文件
+curl -o "/home/01_html/template_51_SEND7.sh" "http://39.105.186.182/51_podcastTemplate/51_SEND7.sh"
+curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_podcastTemplate/rclone_51_SEND7.sh"
+```
+
+1. 确保服务器 `/home/01_html/51_podcastTemplate`路径下存在`51_SEND7.sh`和`rclone_51_SEND7.sh`两个文件，准确配置服务器ip地址或者域名
+2. 初始化`directoryPod`参数，确保该文件夹在onedrive中存在
+
+
+## 2. 511_inputAutoSetPodcast.sh 高级版本
 
 通过界面交互实现对参数的初始化，避免本地修改参数再上传云服务器的繁琐流程
 
