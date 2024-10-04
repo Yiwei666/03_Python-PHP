@@ -71,10 +71,11 @@ echo "脚本运行结束。"
 <img src="https://19640810.xyz/05_image/01_imageHost/20241004-204329.png" alt="Image Description" width="700">
 </p>
 
+
 ### 3. 环境变量
 
 
-```
+```sh
 # 定义变量，唯一需要初始化的值
 directoryPod="/home/01_html/67_RealSexEducation"
 
@@ -82,6 +83,7 @@ directoryPod="/home/01_html/67_RealSexEducation"
 curl -o "/home/01_html/template_51_SEND7.sh" "http://39.105.186.182/51_podcastTemplate/51_SEND7.sh"
 curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_podcastTemplate/rclone_51_SEND7.sh"
 ```
+
 
 1. 确保服务器 `/home/01_html/51_podcastTemplate`路径下存在`51_SEND7.sh`和`rclone_51_SEND7.sh`两个文件，准确配置服务器ip地址或者域名
 2. 初始化`directoryPod`参数，确保该文件夹在onedrive中存在
