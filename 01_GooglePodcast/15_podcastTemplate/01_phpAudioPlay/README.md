@@ -90,9 +90,14 @@ curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_po
 2. 初始化`directoryPod`参数，确保该文件夹在onedrive中存在
 
 
+
 ## 2. 511_inputAutoSetPodcast.sh 高级版本
 
-通过界面交互实现对参数的初始化，避免本地修改参数再上传云服务器的繁琐流程
+1. 通过界面交互实现对参数的初始化，避免本地修改参数再上传云服务器的繁琐流程
+2. 功能与`51_autoSetPodcast.sh`类似，但是`$directoryName`参数是通过页面交互初始化的
+
+
+### 1. 代码
 
 ```sh
 #!/bin/bash
@@ -155,6 +160,16 @@ else
 fi
 
 ```
+
+### 2. 环境变量
+
+```sh
+curl -o "/home/01_html/template_51_SEND7.sh" "http://39.105.186.182/51_podcastTemplate/51_SEND7.sh"
+curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_podcastTemplate/rclone_51_SEND7.sh"
+```
+
+- 确保服务器 `/home/01_html/51_podcastTemplate`路径下存在`51_SEND7.sh`和`rclone_51_SEND7.sh`两个文件，准确配置服务器ip地址或者域名
+
 
 
 
