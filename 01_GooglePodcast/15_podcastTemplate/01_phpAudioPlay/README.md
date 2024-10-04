@@ -22,7 +22,7 @@
 1. 下载两个模板脚本文件，根据用户输入的目录名进行路径替换和定制化，并为其中一个脚本设置定时任务（Cron job）
 2. 需要手动对参数`directoryPod`进行初始化
 
-### 1. 代码
+### 1. 安装脚本代码
 
 ```sh
 #!/bin/bash
@@ -97,7 +97,7 @@ curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_po
 2. 功能与`51_autoSetPodcast.sh`类似，但是`$directoryName`参数是通过页面交互初始化的
 
 
-### 1. 代码
+### 1. 安装脚本代码
 
 ```sh
 #!/bin/bash
