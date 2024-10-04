@@ -185,6 +185,8 @@ curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_po
 
 ## 3. 51_SEND7.sh
 
+功能：从指定的服务器文件夹中读取音频文件，并在网页上随机播放其中的一个 MP3 音频文件
+
 ### 1. 环境变量
 
 ```php
