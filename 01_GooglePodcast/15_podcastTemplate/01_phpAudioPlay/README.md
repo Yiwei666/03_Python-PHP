@@ -173,6 +173,14 @@ curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_po
 
 ## 3. 51_SEND7.sh
 
+### 1. 环境变量
+
+```php
+// 生成音频链接的路径，一般为domain或ip+文件夹
+$baseUrl = 'http://39.105.186.182/51_SEND7/01_audio/';
+```
+
+确保ip地址或者域名正确，`51_SEND7`不需要修改，`511_inputAutoSetPodcast.sh`安装脚本会自动设置
 
 
 ## 4. rclone_51_SEND7.sh
