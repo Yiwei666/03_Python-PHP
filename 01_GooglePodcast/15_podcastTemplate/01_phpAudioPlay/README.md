@@ -171,6 +171,12 @@ curl -o "$directoryPod/template_rclone_51_SEND7.sh" "http://39.105.186.182/51_po
 - 确保服务器 `/home/01_html/51_podcastTemplate`路径下存在`51_SEND7.sh`和`rclone_51_SEND7.sh`两个文件，准确配置服务器ip地址或者域名
 
 
+## 3. 51_SEND7.sh
+
+
+
+## 4. rclone_51_SEND7.sh
+
 
 
 
