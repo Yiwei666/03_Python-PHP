@@ -224,7 +224,7 @@ ALTER TABLE videos ADD COLUMN operation TINYINT DEFAULT 0;
 
 3. 环境变量
 
-```
+```php
 include '05_db_config.php';
 
 // 本地目录
