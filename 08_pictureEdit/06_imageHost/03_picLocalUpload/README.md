@@ -13,6 +13,7 @@ move_duplicates.py         # 查找指定文件夹下的所有相同PNG图片，
 01_scp_proxy.py                   # 使用本地socks5代理上传文件到云服务器指定目录
 02_scp_proxy_threadPool.py        # 创建多个ssh连接进行传输，提高效率，缩短时间
 03_local_remote_compare.py
+04_scp_proxy_check_Reupload.py
 ```
 
 # 3. Node.js 环境配置
@@ -222,6 +223,34 @@ scp_transfer_parallel(local_path, remote_path, remote_host, remote_port, usernam
 
 注意：通过修改参数`m`值可以改变创建的ssh连接数。参数m不要设置太大，经测试设置`m=15`时，会有约`5%`的图片上传失败。
 
+
+### 4. `03_local_remote_compare.py` 服务器和本地图片比较
+
+1. 环境变量
+
+```py
+if __name__ == "__main__":
+    local_path = r"D:\software\27_nodejs\海外风景"  # 本地文件或目录路径
+    remote_path = "/home/01_html/08_x/image/03_picTemp/海外风景"  # 远程服务器上的目标路径
+    remote_host = "74.48.107.63"  # 远程服务器IP
+    remote_port = 22  # 远程服务器SSH端口
+    username = "root"  # SSH用户名
+    password = "your_password"  # SSH密码
+```
+
+### 5. `04_scp_proxy_check_Reupload.py` 服务器和本地图片比较并上传
+
+1. 环境变量
+
+```
+if __name__ == "__main__":
+    local_path = r"D:\software\27_nodejs\海外风景"  # 本地文件或目录路径
+    remote_path = "/home/01_html/08_x/image/03_picTemp/海外风景"  # 远程服务器上的目标路径
+    remote_host = "74.48.107.63"  # 远程服务器IP
+    remote_port = 22  # 远程服务器SSH端口
+    username = "root"  # SSH用户名
+    password = "your_password"  # SSH密码
+```
 
 
 
