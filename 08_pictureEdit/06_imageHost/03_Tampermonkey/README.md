@@ -7,7 +7,10 @@
 ```
 01_picLinkDisplay.js                     # X图片下载的油猴脚本
 02_picURL_xchina.js
+
 03_picURL_everiaclub.js
+03_pic_url.txt                           # 存储03_picURL_everiaclub.js扩展显示的图片链接
+03_pic_everiaclub_download.py            # 基于03_pic_url.txt中的链接下载图片到指定目录
 ```
 
 
