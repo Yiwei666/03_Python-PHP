@@ -21,7 +21,7 @@ lsfile.php                      # 基于session和cookie验证的示例脚本，
 
 # 3. 环境配置
 
-### 1. 08_picDisplay_onlySession.php
+### 1. web脚本仅验证Session
 
 ```php
 <?php
@@ -43,9 +43,9 @@ if (isset($_GET['logout'])) {
 ```
 
 
-### 2. 08_picDisplay_onlyCookie.php
+### 2. web脚本仅验证Cookie
 
-```
+```php
 <?php
 
 function decrypt($data, $key) {
@@ -75,6 +75,48 @@ if (isset($_GET['logout'])) {
 }
 ?>
 ```
+
+
+### 3. 同时验证Session和Cookie
+
+```php
+<?php
+session_start();
+
+function decrypt($data, $key) {
+    list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
+    return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
+}
+
+$key = '11111xxxxxxxxxxxxxxxxxxxxxx'; // 应与加密时使用的密钥相同
+
+// 如果用户未登录，则尝试通过 Cookie 验证身份
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    if (isset($_COOKIE['user_auth'])) {
+        $decryptedValue = decrypt($_COOKIE['user_auth'], $key);
+        if ($decryptedValue == 'mcteaone') { // 验证解密后的值是否与预期匹配
+            $_SESSION['loggedin'] = true; // 将用户标记为已登录
+        } else {
+            header('Location: login.php');
+            exit;
+        }
+    } else {
+        header('Location: login.php');
+        exit;
+    }
+}
+
+// 如果用户点击了注销链接，注销用户并重定向
+if (isset($_GET['logout'])) {
+    session_destroy(); // 销毁所有 session 数据
+    setcookie('user_auth', '', time() - 3600, '/'); // 删除 cookie
+    header('Location: login.php');
+    exit;
+}
+?>
+```
+
+
 
 
 
