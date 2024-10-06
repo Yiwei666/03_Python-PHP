@@ -242,7 +242,7 @@ if __name__ == "__main__":
 
 1. 环境变量
 
-```
+```py
 if __name__ == "__main__":
     local_path = r"D:\software\27_nodejs\海外风景"  # 本地文件或目录路径
     remote_path = "/home/01_html/08_x/image/03_picTemp/海外风景"  # 远程服务器上的目标路径
