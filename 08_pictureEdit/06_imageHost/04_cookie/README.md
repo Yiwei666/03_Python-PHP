@@ -21,6 +21,62 @@ lsfile.php                      # 基于session和cookie验证的示例脚本，
 
 # 3. 环境配置
 
+### 1. 08_picDisplay_onlySession.php
+
+```php
+<?php
+session_start();
+
+// If the user is not logged in, redirect to the login page
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+  header('Location: login.php');
+  exit;
+}
+
+// If the user clicked the logout link, log them out and redirect to the login page
+if (isset($_GET['logout'])) {
+  session_destroy(); // destroy all session data
+  header('Location: login.php');
+  exit;
+}
+?>
+```
+
+
+### 2. 08_picDisplay_onlyCookie.php
+
+```
+<?php
+
+function decrypt($data, $key) {
+    list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
+    return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
+}
+
+$key = '11111xxxxxxxxxxxxxxxxxxxxxx'; // 这应该与加密密钥相匹配
+
+// 尝试仅通过Cookie验证用户身份
+if (isset($_COOKIE['user_auth'])) {
+    $decryptedValue = decrypt($_COOKIE['user_auth'], $key);
+    if ($decryptedValue != 'mcteaone') { // 如果解密后的值不匹配预期，重定向到登录页面
+        header('Location: login.php');
+        exit;
+    }
+} else {
+    header('Location: login.php');
+    exit;
+}
+
+// 如果用户点击了注销链接，清除Cookie并重定向
+if (isset($_GET['logout'])) {
+    setcookie('user_auth', '', time() - 3600, '/'); // 清除身份验证Cookie
+    header('Location: login.php');
+    exit;
+}
+?>
+```
+
+
 
 # 4. 参考资料
 
