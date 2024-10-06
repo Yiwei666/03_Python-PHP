@@ -12,6 +12,7 @@ move_duplicates.py         # 查找指定文件夹下的所有相同PNG图片，
 
 01_scp_proxy.py                   # 使用本地socks5代理上传文件到云服务器指定目录
 02_scp_proxy_threadPool.py        # 创建多个ssh连接进行传输，提高效率，缩短时间
+03_local_remote_compare.py
 ```
 
 # 3. Node.js 环境配置
