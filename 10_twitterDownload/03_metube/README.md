@@ -25,6 +25,7 @@ docker run -d -p 8081:8081 -v /home/01_html/05_temp_ffmpeg:/downloads ghcr.io/al
 :star: 项目地址`metube`：https://github.com/alexta69/metube  
 :star: 相关项目`yt-dlp`：https://github.com/yt-dlp/yt-dlp  
 
+
 ### 2. 将 Docker 容器的端口映射限制为仅对 `localhost（127.0.0.1）`可见
 
 1. 停止并移除现有容器（如果它已经在运行）：
@@ -37,6 +38,25 @@ docker rm [容器ID或名称]
 您可以使用 `docker ps` 查找正在运行的容器的 `ID 或名称`。docker命令[参考](https://github.com/Yiwei666/03_Python-PHP/wiki/06_docker%E5%91%BD%E4%BB%A4)
 
 
+```sh
+docker ps                              # 列出当前正在运行的 Docker 容器
+
+docker ps -a                           # 该命令将显示所有容器的列表，包括正在运行的容器和已经停止的容器。每个容器的信息包括容器的 ID、镜像名称、状态、创建时间等。
+
+docker-compose up -d                   # 运行命令,让容器在后台运行，
+                                       # 命令会根据当前目录下的 docker-compose.yml 文件的定义，启动指定的服务。
+                                       # -d 标志表示以守护进程（后台）模式运行服务，即服务将在后台继续运行而不会占用当前终端。
+
+docker restart <容器名称或容器ID>       # 重启容器
+
+docker logs -f <container_name>        # 命令用于查看指定 Docker 容器的日志输出。在这个命令中，-f 参数表示 "follow"，即实时跟踪日志输出的更新。
+
+docker rm -f <container_name>          # 命令用于强制删除指定的 Docker 容器。
+
+docker stop <container_name>           # 命令停止正在运行的容器。
+```
+
+
 2. 使用更新的端口映射重新启动容器：
 
 ```bash
@@ -44,6 +64,7 @@ docker run -d -p 127.0.0.1:8081:8081 -v /home/01_html/05_temp_ffmpeg:/downloads 
 ```
 
 这条命令将容器的 8081 端口仅映射到本地环境，外部无法访问。
+
 
 3. nginx反向代理
 
