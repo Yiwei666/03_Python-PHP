@@ -140,7 +140,9 @@ alias pmd='pm2 delete /home/01_html/08_x_nodejs/08_pic_url_check.js'
 alias pml='pm2 list'
 ```
 
+注意：PM2 的 `restart` 命令 通常用于已经通过 PM2 启动并且正在运行的进程。如果一个进程没有被 PM2 管理或者从未启动过，`pm2 restart` 就会报错，提示找不到该进程，这是因为 PM2 只能重启它已经管理的进程。
 
-
-
+```sh
+pm2 start /home/01_html/08_x_nodejs/08_pic_url_check.js
+```
 
