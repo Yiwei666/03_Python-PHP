@@ -295,6 +295,37 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 ```
 
 
+### 6. 图片收藏或取消
+
+1. 新增 star 列
+
+在表 `images` 中增加一列 `star`，取值为 `0 或者 1`，并将默认值设置为 `0`，你可以使用以下 SQL 语句：
+
+```sql
+ALTER TABLE images
+ADD COLUMN star TINYINT(1) DEFAULT 0;
+```
+
+- 新的完整表格如下
+
+```
+mysql> describe images;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int          | NO   | PRI | NULL    | auto_increment |
+| image_name   | varchar(255) | NO   |     | NULL    |                |
+| likes        | int          | YES  |     | 0       |                |
+| dislikes     | int          | YES  |     | 0       |                |
+| image_exists | tinyint      | YES  |     | 0       |                |
+| star         | tinyint(1)   | YES  |     | 0       |                |
++--------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+```
+
+
+
+
 # 4. 后台管理脚本
 
 
