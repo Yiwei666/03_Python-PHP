@@ -13,6 +13,7 @@
 08_db_sync_images.php                      # 图片目录与数据库同步功能模块
 08_db_image_status.php                     # 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 08_image_management.php                    # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
+08_image_leftRight_navigation.php          # 点击图片下方🔁按钮，打开该脚本，显示对应的图片，按照数据库默认或者likes降序排列，实现图片的上下翻转
 
 # 2. 后台管理
 08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
@@ -250,6 +251,27 @@ $imagesDirectory = '/home/01_html/08_x/image/01_imageHost';
 ```php
 include '08_db_image_status.php';                    // 判断数据库中所有图片的存在状态
 ```
+
+
+### 5. `08_image_leftRight_navigation.php`图片左右切换
+
+
+- 环境变量
+
+```php
+$key = 'signin-key-1'; // 应与加密时使用的密钥相同
+
+// 引入数据库配置
+include '08_db_config.php';
+
+$domain = "https://19640810.xyz";
+$dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost");
+
+// 更换脚本名 08_image_leftRight_navigation.php
+<button class="arrow arrow-left" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">←</button>
+<button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
+```
+
 
 
 # 4. 后台管理脚本
