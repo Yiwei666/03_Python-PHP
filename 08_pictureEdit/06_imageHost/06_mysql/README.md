@@ -267,7 +267,7 @@ include '08_db_image_status.php';                    // 判断数据库中所有
     - 点击右箭头，会加载下一张图片。
     - 每次切换都会保持与当前排序方式一致。
 
-- 传递参数：用户点击左右箭头时，页面会刷新，并传递当前图片的 id 和排序算法 sort 参数，保证图片切换时依然按照相应的排序方式进行。
+- 传递参数：用户点击左右箭头时，页面会刷新，并传递当前图片的 `id` 和排序算法 `sort` 参数，保证图片切换时依然按照相应的排序方式进行。
 
 
 2. 环境变量
@@ -288,7 +288,7 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 
 3. 模块调用
 
-通常在 `08_picDisplay_mysql_galleryExistTab.php ` 和 `08_picDisplay_mysql_orderExistTab.php`中调用本模块，示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
+通常在 `08_picDisplay_mysql_galleryExistTab.php ` 和 `08_picDisplay_mysql_orderExistTab.php`中调用本模块，点击🔁按钮，传递`id和sort`参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
 
 ```html
 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
