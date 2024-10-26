@@ -256,8 +256,21 @@ include '08_db_image_status.php';                    // 判断数据库中所有
 
 ### 5. `08_image_leftRight_navigation.php` 图片顺序切换
 
+1. 功能：上述代码实现了一个图片浏览与切换功能的网页，其中包括图片的排序与导航。以下是具体功能概述：
 
-- 环境变量
+- 图片排序：根据传递的 sort 参数，图片可以按照两种方式排序：
+    - 排序1（sort=1）：按照 (likes - dislikes) 的差值进行降序排序。
+    - 排序2（sort=2）：保持数据库中的默认排序（不做额外排序处理）。
+
+- 图片导航：用户可以通过左右箭头按钮在图片之间切换：
+    - 点击左箭头，会加载上一张图片。
+    - 点击右箭头，会加载下一张图片。
+    - 每次切换都会保持与当前排序方式一致。
+
+- 传递参数：用户点击左右箭头时，页面会刷新，并传递当前图片的 id 和排序算法 sort 参数，保证图片切换时依然按照相应的排序方式进行。
+
+
+2. 环境变量
 
 ```php
 $key = 'signin-key-1'; // 应与加密时使用的密钥相同
@@ -273,6 +286,13 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
 ```
 
+3. 模块调用
+
+通常在 `08_picDisplay_mysql_galleryExistTab.php ` 和 `08_picDisplay_mysql_orderExistTab.php`中调用本模块，示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
+
+```html
+<button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
+```
 
 
 # 4. 后台管理脚本
@@ -510,6 +530,7 @@ fetch('08_image_management.php', {
    - 同时使用Session和Cookie来验证用户的登录信息
    - 新增图标，点击后在新的标签页打开相应图片
    - 使用数据库中的`image_exists`列来直接过滤和处理存在的图片，而不是在文件系统上检查每张图片的存在性。这将提高性能，特别是当图片数量较多时。
+   - 新增图标，点击后在新的标签页打开相应图片，并且显示图片左右切换的箭头，根据sort参数实现不同排序的图片切换
 
 
 2. 环境变量
@@ -534,13 +555,16 @@ fetch('08_image_management.php', {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: `imageId=${imageId}&action=${action}`
 })
+
+// 指定跳转脚本和排序算法1：动态排序和左右切换功能的图片浏览页面
+<button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=1', '_blank')">🔁</button>
 ```
 
 注意：
 
 - 虽然本脚本中调用了`08_db_sync_images.php`模块将新图片信息插入到数据库中，但没有调用`08_db_image_status.php`模块，因此新插入图片的`image_exists`默认值仍然为0，页面上不会显示新插入的图片。
 - 需要在后台手动运行 `08_image_dislikes_delete.php` 脚本完成新图片状态写入，该脚本调用了`08_db_image_status.php`模块。
-- 没有在web脚本调用该模块，主要是考虑到尽量减少页面加载时间。
+- 没有在web脚本调用`08_db_image_status.php`模块，主要是考虑到尽量减少页面加载时间。
 
 
 3. 新增在新标签页打开图片的代码仅一行
@@ -559,6 +583,7 @@ fetch('08_image_management.php', {
 1. 新增特性如下：
    - 新增图标，点击后在新的标签页打开相应图片
    - 使用数据库中的`image_exists`列来直接过滤和处理存在的图片，而不是在文件系统上检查每张图片的存在性。这将提高性能，特别是当图片数量较多时。
+   - 新增图标，点击后在新的标签页打开相应图片，并且显示图片左右切换的箭头，根据sort参数实现不同排序的图片切换
 
 2. 环境变量
 
@@ -578,6 +603,9 @@ fetch('08_image_management.php', {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: `imageId=${imageId}&action=${action}`
 })
+
+// 指定跳转脚本和排序算法2：动态排序和左右切换功能的图片浏览页面
+<button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
 ```
 
 
