@@ -287,7 +287,7 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
 ```
 
-3. 模块调用
+3. **模块调用**
 
 通常在 `08_picDisplay_mysql_galleryExistTab.php ` 和 `08_picDisplay_mysql_orderExistTab.php`中调用本模块，点击🔁按钮，传递`id和sort`参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
 
@@ -691,7 +691,12 @@ fetch('08_image_management.php', {
 <button onclick="window.open('<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>', '_blank')">🔗</button>
 ```
 
+4. 点击🔁按钮，在新标签页打开图片，并实现图片顺序切换。该功能在本脚本的相关代码仅一行。
+    - 点击🔁按钮，传递`id和sort`参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。`08_image_leftRight_navigation.php`模块名需要根据实际情况调整。
 
+```html
+<button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
+```
 
 
 ### 5. `08_picDisplay_mysql_galleryExistTab.php`
