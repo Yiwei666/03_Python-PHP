@@ -704,7 +704,7 @@ fetch('08_db_toggle_star.php', {
     - 点击🔁按钮，传递`id和sort`参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。`08_image_leftRight_navigation.php`模块名需要根据实际情况调整。
 
 ```html
-<button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
+<button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=1', '_blank')">🔁</button>
 ```
 
 
