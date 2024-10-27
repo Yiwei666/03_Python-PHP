@@ -648,7 +648,8 @@ fetch('08_image_management.php', {
    - 同时使用Session和Cookie来验证用户的登录信息
    - 新增图标，点击后在新的标签页打开相应图片
    - 使用数据库中的`image_exists`列来直接过滤和处理存在的图片，而不是在文件系统上检查每张图片的存在性。这将提高性能，特别是当图片数量较多时。
-   - 新增图标，点击后在新的标签页打开相应图片，并且显示图片左右切换的箭头，根据sort参数实现不同排序的图片切换
+   - 新增图标，点击后在新的标签页打开相应图片，并且显示图片左右切换的箭头，根据sort参数实现不同排序的图片切换，调用 `08_image_leftRight_navigation.php` 脚本
+   - 新增收藏或取消图标，调用 `08_db_toggle_star.php` 模块
 
 
 2. 环境变量
@@ -668,13 +669,21 @@ $domain = "https://19640810.xyz";
 // 设置每页显示的图片数量
 $imagesPerPage = 20;
 
+// 调用点赞模块 08_image_management.php
 fetch('08_image_management.php', {
     method: 'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: `imageId=${imageId}&action=${action}`
 })
 
-// 指定跳转脚本和排序算法1：动态排序和左右切换功能的图片浏览页面
+// 调用收藏模块 08_db_toggle_star.php
+fetch('08_db_toggle_star.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}`
+})
+
+// 指定跳转脚本08_image_leftRight_navigation.php和排序算法sort=1：动态排序和左右切换功能的图片浏览页面
 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=1', '_blank')">🔁</button>
 ```
 
@@ -706,7 +715,9 @@ fetch('08_image_management.php', {
 1. 新增特性如下：
    - 新增图标，点击后在新的标签页打开相应图片
    - 使用数据库中的`image_exists`列来直接过滤和处理存在的图片，而不是在文件系统上检查每张图片的存在性。这将提高性能，特别是当图片数量较多时。
-   - 新增图标，点击后在新的标签页打开相应图片，并且显示图片左右切换的箭头，根据sort参数实现不同排序的图片切换
+   - 新增图标，点击后在新的标签页打开相应图片，并且显示图片左右切换的箭头，根据sort参数实现不同排序的图片切换，调用 `08_image_leftRight_navigation.php` 脚本
+   - 新增收藏或取消图标，调用 `08_db_toggle_star.php` 模块
+
 
 2. 环境变量
 
@@ -721,13 +732,21 @@ $domain = "https://19640810.xyz";
 // 设置每页显示的图片数量
 $imagesPerPage = 20;
 
+// 调用点赞模块 08_image_management.php
 fetch('08_image_management.php', {
     method: 'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: `imageId=${imageId}&action=${action}`
 })
 
-// 指定跳转脚本和排序算法2：动态排序和左右切换功能的图片浏览页面
+// 调用收藏模块 08_db_toggle_star.php
+fetch('08_db_toggle_star.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}`
+})
+
+// 指定跳转脚本08_image_leftRight_navigation.php和排序算法sort=2：动态排序和左右切换功能的图片浏览页面
 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
 ```
 
