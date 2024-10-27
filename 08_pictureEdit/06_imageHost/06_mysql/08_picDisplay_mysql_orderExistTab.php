@@ -6,7 +6,7 @@ function decrypt($data, $key) {
     return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
 }
 
-$key = 'singin-key-1'; // 应与加密时使用的密钥相同
+$key = 'signin-key-1'; // 应与加密时使用的密钥相同
 
 // 如果用户未登录，则尝试通过 Cookie 验证身份
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -32,6 +32,7 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
+
 include '08_db_config.php';
 include '08_db_sync_images.php';
 syncImages("/home/01_html/08_x/image/01_imageHost"); // 调用函数并提供图片存储目录
@@ -45,7 +46,8 @@ $domain = "https://19640810.xyz";
 $imagesPerPage = 20;
 
 // 获取数据库中标记为存在的所有图片的记录
-$query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
+// $query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1";
 $result = $mysqli->query($query);
 
 // 按照 (likes - dislikes) 排序
@@ -140,6 +142,13 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             text-decoration: underline;
             color: red;
         }
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
     </style>
     <script>
     function updateLikes(imageId, action) {
@@ -152,6 +161,21 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
         .then(data => {
             document.getElementById(`like-${imageId}`).textContent = data.likes;
             document.getElementById(`dislike-${imageId}`).textContent = data.dislikes;
+        });
+    }
+
+    // 对应图片收藏或取消操作
+    function toggleStar(imageId) {
+        fetch('08_db_toggle_star.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `imageId=${imageId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 更新五角星按钮的颜色
+            const starBtn = document.getElementById(`star-${imageId}`);
+            starBtn.style.color = data.star == 1 ? 'green' : 'red';
         });
     }
 
@@ -180,6 +204,12 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
                 <span id="dislike-<?php echo $image['id']; ?>"><?php echo $image['dislikes']; ?></span>
                 <button onclick="window.open('<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>', '_blank')">🔗</button>
                 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=1', '_blank')">🔁</button>
+                <!-- 五角星收藏按钮，颜色根据数据库中的 star 值动态设置 -->
+                <button id="star-<?php echo $image['id']; ?>" class="star-btn" 
+                    onclick="toggleStar(<?php echo $image['id']; ?>)" 
+                    style="color: <?php echo ($image['star'] == 1) ? 'green' : 'red'; ?>;">
+                    ★
+                </button>
             </div>
         </div>
     <?php endforeach; ?>
