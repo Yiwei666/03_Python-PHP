@@ -43,17 +43,6 @@ $domain = "https://19640810.xyz";
 // 设置每页显示的图片数量
 $imagesPerPage = 20;
 
-// 用户登录和登出检查
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: login.php');
-    exit;
-}
-if (isset($_GET['logout'])) {
-    session_destroy();
-    header('Location: login.php');
-    exit;
-}
-
 // 获取数据库中所有图片的记录
 // $query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
 $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1";
