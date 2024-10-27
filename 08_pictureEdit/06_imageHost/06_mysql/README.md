@@ -722,6 +722,8 @@ fetch('08_db_toggle_star.php', {
 2. 环境变量
 
 ```php
+$key = 'signin-key-1'; // 应与加密时使用的密钥相同
+
 include '08_db_config.php';
 
 // 设置图片所在的文件夹
