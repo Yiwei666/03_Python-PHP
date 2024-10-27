@@ -1,5 +1,38 @@
 <?php
 session_start();
+
+function decrypt($data, $key) {
+    list($encrypted_data, $iv) = explode('::', base64_decode($data), 2);
+    return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
+}
+
+$key = 'signin-key-1'; // 应与加密时使用的密钥相同
+
+// 如果用户未登录，则尝试通过 Cookie 验证身份
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    if (isset($_COOKIE['user_auth'])) {
+        $decryptedValue = decrypt($_COOKIE['user_auth'], $key);
+        if ($decryptedValue == 'mcteaone') { // 验证解密后的值是否与预期匹配
+            $_SESSION['loggedin'] = true; // 将用户标记为已登录
+        } else {
+            header('Location: login.php');
+            exit;
+        }
+    } else {
+        header('Location: login.php');
+        exit;
+    }
+}
+
+// 如果用户点击了注销链接，注销用户并重定向
+if (isset($_GET['logout'])) {
+    session_destroy(); // 销毁所有 session 数据
+    setcookie('user_auth', '', time() - 3600, '/'); // 删除 cookie
+    header('Location: login.php');
+    exit;
+}
+
+
 include '08_db_config.php';
 
 // 设置图片所在的文件夹
@@ -22,7 +55,8 @@ if (isset($_GET['logout'])) {
 }
 
 // 获取数据库中所有图片的记录
-$query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
+// $query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1";
 $result = $mysqli->query($query);
 
 // 检查文件夹中实际存在的图片
@@ -114,6 +148,13 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             text-decoration: underline;
             color: red;
         }
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
     </style>
     <script>
     function updateLikes(imageId, action) {
@@ -126,6 +167,21 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
         .then(data => {
             document.getElementById(`like-${imageId}`).textContent = data.likes;
             document.getElementById(`dislike-${imageId}`).textContent = data.dislikes;
+        });
+    }
+
+    // 对应图片收藏或取消操作
+    function toggleStar(imageId) {
+        fetch('08_db_toggle_star.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `imageId=${imageId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 更新五角星按钮的颜色
+            const starBtn = document.getElementById(`star-${imageId}`);
+            starBtn.style.color = data.star == 1 ? 'green' : 'red';
         });
     }
 
@@ -154,6 +210,12 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
                 <span id="dislike-<?php echo $image['id']; ?>"><?php echo $image['dislikes']; ?></span>
                 <button onclick="window.open('<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>', '_blank')">🔗</button>
                 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
+                <!-- 五角星收藏按钮，颜色根据数据库中的 star 值动态设置 -->
+                <button id="star-<?php echo $image['id']; ?>" class="star-btn" 
+                    onclick="toggleStar(<?php echo $image['id']; ?>)" 
+                    style="color: <?php echo ($image['star'] == 1) ? 'green' : 'red'; ?>;">
+                    ★
+                </button>
             </div>
         </div>
     <?php endforeach; ?>
