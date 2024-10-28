@@ -143,7 +143,8 @@ if (isset($_GET['logout'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   date_default_timezone_set("Asia/Shanghai");
   $data = $_POST['questiondata'];
-  $data = "[" . date("Y-m-d H:i:s") . "]\n" . $data . "\n\n";
+  // $data = "[" . date("Y-m-d H:i:s") . "]\n" . $data . "\n\n";
+  $data = "[" . date("Y-m-d H:i:s") . " " . date("l") . "]\n" . $data . "\n\n";
   $file = fopen($filename, "r");
   $content = fread($file, filesize($filename));
   fclose($file);
