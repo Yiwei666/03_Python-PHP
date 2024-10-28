@@ -70,6 +70,89 @@ textarea[readonly] {
 }
 ```
 
+```
+代码的功能如下：
+1. 验证用户是否已登录，如果未登录，则重定向到登录页面。
+2. 如果用户单击注销链接，则注销并重定向到登录页面。
+3. 显示一个表单，允许用户输入问题数据并将其提交到服务器。
+4. 显示一个按钮，允许用户隐藏页面内容。
+5. 如果用户提交了问题数据，则将其写入名为“questiondata.txt”的文件中。
+6. 如果用户请求显示最新内容，则从“questiondata.txt”文件中读取内容并将其显示在页面上。
+7. 显示一个成功登录的消息和一个注销链接。
+8. 显示一个版权信息 
+```
+
+1. 需要进行web读写的脚本权限和用户组设置
+
+注意：对应的txt文件，如 `questiondata.txt`的权限和所属用户和组需要进行设置，否则php在web端无法对txt文件进行写入
+
+```
+-rw-rw-rw-  1 www-data www-data       # questiondata.txt，对应ubuntu系统
+-rw-rw-rw-  1 nginx nginx             # questiondata.txt，对应centos系统
+```
+
+- 权限设置命令
+
+```
+chmod 666 questiondata.txt
+chown www-data:www-data questiondata.txt
+```
+
+- 下面几个脚本的数据文本权限设置同上
+
+```
+infoo.php
+paragraph.php
+washbrain.php
+siteCollect.php
+siteName.php
+```
+
+
+2. 将`在只读文本区域中显示内容` 中的中文设置为微软雅黑字体，英文和数字设置为 Arial字体
+
+```css
+<!-- 在 head 部分添加以下样式 -->
+<style>
+    textarea[readonly] {
+      display: block;
+      margin: 0 auto;
+      text-align: center;
+      font-family: 'Microsoft YaHei', Arial, sans-serif; /* 使用微软雅黑字体作为首选字体 */
+    }
+</style>
+```
+
+3. 能否修改上述代码，将 `输入字典数据的文本区域`  中的 中文设置为 微软雅黑字体，英文和数字设置为 Arial字体
+
+```css
+<!-- 在 head 部分添加以下样式 -->
+<style>
+    #questiondata {
+      font-family: 'Microsoft YaHei', Arial, sans-serif; /* 使用微软雅黑字体作为中文首选字体，英文和数字使用Arial字体 */
+    }
+</style>
+```
+
+4. 添加深色主题，只需要在css style 部分进行如下设置
+
+```css
+body {
+  background-color: #333; /* Dark gray background */
+  color: #eee; /* Light white text color */
+}
+
+a {
+  color: #00bcd4; /* Blue-green color for links */
+}
+
+textarea {
+  background-color: #333; /* Dark gray background for textarea */
+  color: #eee; /* Light white text color for textarea */
+}
+```
+
+
 
 ## 8. [01_EnglishWordNote.php](01_EnglishWordNote.php)
 
