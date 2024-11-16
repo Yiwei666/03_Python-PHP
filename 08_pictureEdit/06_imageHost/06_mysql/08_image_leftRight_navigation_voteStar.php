@@ -32,7 +32,6 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-
 // 引入数据库配置
 include '08_db_config.php';
 
@@ -41,7 +40,7 @@ $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $sortType = isset($_GET['sort']) ? (int)$_GET['sort'] : 1; // 默认为排序1
 
 // 从数据库中获取所有图片
-$query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1";
 $result = $mysqli->query($query);
 
 // 将所有图片存入数组
@@ -56,9 +55,6 @@ if ($sortType === 1) {
     usort($validImages, function ($a, $b) {
         return ($b['likes'] - $b['dislikes']) - ($a['likes'] - $a['dislikes']);
     });
-} else {
-    // 排序2：使用数据库中的默认排序
-    // 此时不需要额外处理，保持默认数组顺序即可
 }
 
 // 查找当前图片在图片数组中的位置
@@ -109,7 +105,7 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
             background-color: rgba(0,0,0,0.5);
             color: white;
             border: none;
-            font-size: 30px;
+            font-size: 64px;
             padding: 10px;
             cursor: pointer;
         }
@@ -119,7 +115,57 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
         .arrow-right {
             right: 0;
         }
+        .interaction-container {
+            position: absolute;
+            right: 0;
+            top: calc(50% + 120px); /* 设置点赞区域与右箭头的垂直距离为 20px */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;             /* 点赞与点踩之间的垂直距离 */
+        }
+        .interaction-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 64px;      /* 图标大小 */
+            cursor: pointer;
+        }
+        .interaction-count {
+            color: white;
+            font-size: 40px; /* 调整数字大小 */
+            margin-top: -5px; /* 数字与图标的间距 */
+        }
     </style>
+    <script>
+        // 点赞和点踩功能
+        function updateLikes(imageId, action) {
+            fetch('08_image_management.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `imageId=${imageId}&action=${action}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById(`like-count`).textContent = data.likes;
+                document.getElementById(`dislike-count`).textContent = data.dislikes;
+            });
+        }
+
+        // 收藏和取消收藏功能
+        function toggleStar(imageId) {
+            fetch('08_db_toggle_star.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `imageId=${imageId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                const starBtn = document.getElementById(`star-btn`);
+                starBtn.style.color = data.star == 1 ? 'green' : 'red';
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="image-container">
@@ -129,6 +175,19 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
         
         <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($currentImage['image_name']); ?>" class="image" alt="Image">
         
+        <div class="interaction-container">
+            <!-- 点赞按钮 -->
+            <button class="interaction-btn" onclick="updateLikes(<?php echo $currentImage['id']; ?>, 'like')">👍</button>
+            <span id="like-count" class="interaction-count"><?php echo $currentImage['likes']; ?></span>
+
+            <!-- 点踩按钮 -->
+            <button class="interaction-btn" onclick="updateLikes(<?php echo $currentImage['id']; ?>, 'dislike')">👎</button>
+            <span id="dislike-count" class="interaction-count"><?php echo $currentImage['dislikes']; ?></span>
+
+            <!-- 收藏按钮 -->
+            <button id="star-btn" class="interaction-btn" onclick="toggleStar(<?php echo $currentImage['id']; ?>)" style="color: <?php echo ($currentImage['star'] == 1) ? 'green' : 'red'; ?>;">★</button>
+        </div>
+
         <?php if ($nextIndex >= 0): ?>
             <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation_voteStar.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
         <?php endif; ?>
