@@ -105,7 +105,7 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
             background-color: rgba(0,0,0,0.5);
             color: white;
             border: none;
-            font-size: 64px;
+            font-size: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '64px' : '30px'; ?>;
             padding: 10px;
             cursor: pointer;
         }
@@ -118,22 +118,22 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
         .interaction-container {
             position: absolute;
             right: 0;
-            top: calc(50% + 120px); /* 设置点赞区域与右箭头的垂直距离为 20px */
+            top: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? 'calc(50% + 150px)' : '60%'; ?>;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px;             /* 点赞与点踩之间的垂直距离 */
+            gap: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '30px' : '10px'; ?>;
         }
         .interaction-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 64px;      /* 图标大小 */
+            font-size: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '64px' : '30px'; ?>;
             cursor: pointer;
         }
         .interaction-count {
             color: white;
-            font-size: 40px; /* 调整数字大小 */
+            font-size: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '40px' : '20px'; ?>;
             margin-top: -5px; /* 数字与图标的间距 */
         }
     </style>
@@ -170,7 +170,7 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 <body>
     <div class="image-container">
         <?php if ($prevIndex >= 0): ?>
-            <button class="arrow arrow-left" onclick="window.location.href='08_image_leftRight_navigation_voteStar.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">←</button>
+            <button class="arrow arrow-left" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">←</button>
         <?php endif; ?>
         
         <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($currentImage['image_name']); ?>" class="image" alt="Image">
@@ -189,7 +189,7 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
         </div>
 
         <?php if ($nextIndex >= 0): ?>
-            <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation_voteStar.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
+            <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
         <?php endif; ?>
     </div>
 </body>
