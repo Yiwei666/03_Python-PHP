@@ -426,6 +426,44 @@ function toggleStar(imageId) {
 ```
 
 
+### 7. `08_image_leftRight_navigation_voteStar.php` 点赞+收藏
+
+1. 功能：图片左右切换+点赞/踩+收藏，是 `08_image_leftRight_navigation.php` 升级版本
+
+2. 环境变量
+
+相比于 `08_image_leftRight_navigation.php`，多了`08_image_management.php`和`08_db_toggle_star.php`两个模块调用。
+
+```php
+$key = 'signin-key-1'; // 应与加密时使用的密钥相同
+
+// 引入数据库配置
+include '08_db_config.php';
+
+$domain = "https://19640810.xyz";
+$dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost");
+
+// 点赞和点踩功能
+fetch('08_image_management.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}&action=${action}`
+})
+
+// 收藏和取消收藏功能
+fetch('08_db_toggle_star.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}`
+})
+
+// 更换脚本名 08_image_leftRight_navigation_voteStar.php
+<button class="arrow arrow-left" onclick="window.location.href='08_image_leftRight_navigation_voteStar.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">←</button>
+<button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation_voteStar.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
+```
+
+
+
 # 4. 后台管理脚本
 
 
