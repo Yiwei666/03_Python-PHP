@@ -7,7 +7,7 @@
 
 # 2. 文件结构
 
-```
+```bash
 # 1. 功能模块
 08_db_config.php                           # 通常包含数据库连接信息如服务器地址、用户名、密码等
 08_db_sync_images.php                      # 图片目录与数据库同步功能模块
@@ -34,6 +34,18 @@
 08_picDisplay_mysql_galleryExist.php       # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，不显示已删除图片导致的空白页，按照文件名默认排序
 08_picDisplay_mysql_orderExistTab.php      # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，显示在新标签页打开图片的图标
 08_picDisplay_mysql_galleryExistTab.php    # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，按照文件名默认排序，显示在新标签页打开图片的图标
+
+
+# 4. 衍生脚本
+08_picDisplay_mysql_galleryExistTab_starF.php      # 只显示服务器中star为0的图片，图片按照数据库默认排序显示
+08_picDisplay_mysql_orderExistTab_starF.php        # 只显示服务器中star为0的图片，图片按照点赞数排序显示
+08_image_leftRight_navigation_starF.php            # 对服务器中star为0的图片，支持两种切换算法：点赞数排序和默认排序
+
+08_picDisplay_mysql_galleryExistTab_starT.php      # 只显示服务器中star为1的图片，图片按照数据库默认排序显示
+08_picDisplay_mysql_orderExistTab_starT.php        # 只显示服务器中star为1的图片，图片按照点赞数排序显示
+08_image_leftRight_navigation_starT.php            # 对服务器中star为1的图片，支持两种切换算法：点赞数排序和默认排序
+
+08_image_rclone_top30.php                          # 从图片数据库中随机选取150张点赞数大于等于29的图片，进行下载
 ```
 
 # 3. php功能模块
