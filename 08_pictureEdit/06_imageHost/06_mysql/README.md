@@ -9,12 +9,13 @@
 
 ```bash
 # 1. 功能模块
-08_db_config.php                           # 通常包含数据库连接信息如服务器地址、用户名、密码等
-08_db_sync_images.php                      # 图片目录与数据库同步功能模块
-08_db_image_status.php                     # 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
-08_image_management.php                    # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
-08_image_leftRight_navigation.php          # 点击图片下方🔁按钮，打开该脚本，显示对应的图片，按照数据库默认或者likes降序排列，点击左右箭头实现图片顺序切换
-08_db_toggle_star.php                      # 根据图片的ID，查询该图片是否已被标记为“星标”（star），并在每次请求时切换其状态（从“标记”到“未标记”或反之），然后将新的状态更新到数据库并返回给前端。
+08_db_config.php                               # 通常包含数据库连接信息如服务器地址、用户名、密码等
+08_db_sync_images.php                          # 图片目录与数据库同步功能模块
+08_db_image_status.php                         # 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
+08_image_management.php                        # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
+08_image_leftRight_navigation.php              # 点击图片下方🔁按钮，打开该脚本，显示对应的图片，按照数据库默认或者likes降序排列，点击左右箭头实现图片顺序切换
+08_image_leftRight_navigation_voteStar.php     # 新增点赞/踩以及收藏功能
+08_db_toggle_star.php                          # 根据图片的ID，查询该图片是否已被标记为“星标”（star），并在每次请求时切换其状态（从“标记”到“未标记”或反之），然后将新的状态更新到数据库并返回给前端。
 
 # 2. 后台管理
 08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
