@@ -5,8 +5,8 @@
 # 2. 文件结构
 
 ```
-01_ctrip.js
-02_meituan.js
+01_ctrip.js            # 携程后台订单信息提取
+02_meituan.js          # 美团后台订单信息提取
 ```
 
 
