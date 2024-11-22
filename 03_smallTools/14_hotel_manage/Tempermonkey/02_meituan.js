@@ -91,7 +91,7 @@ extractButton.addEventListener('click', () => {
         const getWeekDay = date => ['周日', '周一', '周二', '周三', '周四', '周五', '周六'][new Date(date).getDay()];
         const checkInDay = getWeekDay(checkInDate);
         const checkOutDay = getWeekDay(checkOutDate);
-        const checkInOutWeekDays = `${checkInDay}-${checkOutDay}`;
+        const checkInOutWeekDays = `${checkInDay} - ${checkOutDay}`;
 
         // 提取佣金总额并转换为数字
         const totalCommissionText = document.querySelector('div[data-v-396ca522] .main-content > div:nth-child(8) > span:nth-child(2)')?.textContent.trim() || '0';
