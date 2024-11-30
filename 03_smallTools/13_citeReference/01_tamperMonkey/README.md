@@ -1,6 +1,6 @@
 # 1. 项目功能
 
-
+使用Tampermonkey脚本，将从 Google Scholar 页面中提取的 GB/T 7714 和 APA 引用格式进行动态合并，并生成新的参考文献格式
 
 # 2. 文件结构
 
