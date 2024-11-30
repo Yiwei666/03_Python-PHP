@@ -12,15 +12,23 @@
 
 # 3. 环境配置
 
+## 1. `01_GBT_APA.js`
 
-### `03_api_cros.js`
 
-- **环境变量**
+
+
+## 2. `02_elsevier.js`
+
+
+
+
+## 3. `03_api_cros.js`
+
+### 1. 环境变量
 
 ```js
 const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.txt';
 ```
-
 
 1. Tampermonkey 设置界面的 XHR 安全 选项与用户脚本中使用的 `XMLHttpRequest（XHR）` 和相关跨域请求的安全性有关。它的功能是控制脚本在发起跨域请求时的权限和行为，确保安全性和兼容性。
 
@@ -29,3 +37,20 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 <p align="center">
 <img src="https://19640810.xyz/05_image/01_imageHost/20241130-163414.png" alt="Image Description" width="1000">
 </p>
+
+
+### 2. 注意事项
+
+1. 浏览器会对网络请求的内容进行缓存，可能导致脚本没有获取最新的数据
+
+2. 在请求 URL 中添加一个随机数或时间戳，确保每次请求的 URL 都唯一，从而绕过缓存
+
+
+
+
+
+
+
+
+
+
