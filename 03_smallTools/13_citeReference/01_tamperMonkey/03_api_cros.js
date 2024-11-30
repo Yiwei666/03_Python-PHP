@@ -55,9 +55,10 @@
 
     function loadJournalAbbreviations() {
         return new Promise((resolve, reject) => {
+            const urlWithTimestamp = `${journalAbbreviationURL}?_=${new Date().getTime()}`; // 添加时间戳绕过缓存
             GM_xmlhttpRequest({
                 method: 'GET',
-                url: journalAbbreviationURL,
+                url: urlWithTimestamp, // 使用带时间戳的 URL
                 onload: function (response) {
                     if (response.status === 200) {
                         const text = response.responseText;
