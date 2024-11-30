@@ -1,41 +1,71 @@
+ACS Applied Materials & Interfaces/ACS Appl. Mater. Interfaces
 ACS Sustainable Chemistry & Engineering/ACS Sustain. Chem. Eng.
+Acta Materialia/Acta Mater.
+Advanced Energy Materials/Adv. Energy Mater.
+Advanced Functional Materials/Adv. Funct. Mater.
+Advanced Materials/Adv. Mater.
 Angewandte Chemie International Edition in English/Angew. Chem. Int. Ed.
-Chemical Reviews/Chem. Rev.
-Chemical Geology/Chem. Geol.
-Chemical Engineering Science/Chem. Eng. Sci.
 Chemical Engineering Journal/Chem. Eng. J.
-Computer Physics Communications/Comput. Phys. Commun.
+Chemical Engineering Science/Chem. Eng. Sci.
+Chemical Geology/Chem. Geol.
 Chemical Physics Letters/Chem. Phys. Lett.
-Energy & Environmental Science/Energy Environ. Sci.
+Chemical Reviews/Chem. Rev.
+Communications Chemistry/Commun. Chem.
+Computer Physics Communications/Comput. Phys. Commun.
 Earth and Planetary Science Letters/Earth Planet. Sci. Lett.
+Energy & Environmental Science/Energy Environ. Sci.
+Geochimica et Cosmochimica Acta/Geochim. Cosmochim. Acta
 Geophysical research letters/Geophys. Res. Lett.
+International Journal of Hydrogen Energy/Int. J. Hydrogen Energy
 International Journal of Minerals, Metallurgy and Materials/Int. J. Miner. Metall. Mater.
-Journal of Cleaner Production/J. Clean. Prod.
-Journal of Molecular Liquids/J. Mol. Liq.
-Journal of Hazardous Materials/J. Hazard. Mater.
-Journal of Alloys and Compounds/J. Alloys Compd.
-Journal of Non-crystalline Solids/J. Non Cryst. Solids
-Journal of the American Chemical Society/J. Am. Chem. Soc.
-Journal of applied crystallography/J. Appl. Crystallogr.
-Journal of computational chemistry/J. Comput. Chem.
+Ironmaking & Steelmaking/Ironmak. Steelmak.
+ISIJ International/ISIJ Int.
 JOM/JOM
+Journal of Alloys and Compounds/J. Alloys Compd.
+Journal of applied crystallography/J. Appl. Crystallogr.
+Journal of Chemical Theory and Computation/J. Chem. Theory Comput.
+Journal of Cleaner Production/J. Clean. Prod.
+Journal of computational chemistry/J. Comput. Chem.
+Journal of Hazardous Materials/J. Hazard. Mater.
+Journal of Materials Science & Technology/J. Mater. Sci. Technol.
+Journal of Molecular Liquids/J. Mol. Liq.
+Journal of Non-crystalline Solids/J. Non Cryst. Solids
+Journal of Physical Chemistry A/J. Phys. Chem. A
+Journal of Physical Chemistry B/J. Phys. Chem. B
+Journal of Physical Chemistry Letters/J. Phys. Chem. Lett.
+Journal of the American Ceramic Society/J. Am. Ceram. Soc.
+Journal of the American Chemical Society/J. Am. Chem. Soc.
 Metallurgical and Materials Transactions B/Metall. Mater. Trans. B
-Molecular Physics/Mol. Phys.
+Metallurgical Research & Technology/Metall. Res. Technol.
 Modelling and simulation in materials science and engineering/Model. Simul. Mat. Sci. Eng.
+Molecular Physics/Mol. Phys.
 Nature/Nature
+Nature Chemistry/Nat. Chem.
 Nature Communications/Nat. Commun.
-Nature Reviews Materials/Nat. Rev. Mater.
+Nature Energy/Nat. Energy
+Nature Geoscience/Nat. Geosci.
 Nature materials/Nat. Mater.
-Proceedings of the National Academy of Sciences/Proc. Natl. Acad. Sci. U.S.A.
-Physical review letters/Phys. Rev. Lett.
+Nature Nanotechnology/Nat. Nanotechnol.
+Nature Reviews Chemistry/Nat. Rev. Chem.
+Nature Reviews Earth & Environment/Nat. Rev. Earth Environ.
+Nature Reviews Materials/Nat. Rev. Mater.
+Nature Sustainability/Nat. Sustainability
+Physical Chemistry Chemical Physics/PCCP
 Physical Review B/Phys. Rev. B
+Physical review letters/Phys. Rev. Lett.
 Physics and Chemistry of Minerals/Phys. Chem. Miner.
+Proceedings of the National Academy of Sciences/Proc. Natl. Acad. Sci. U.S.A.
 Resources, Conservation and Recycling/Resour. Conserv. Recycl.
 Science/Science
 Science Advances/Sci. Adv.
-Solar energy materials and solar cells/Sol. Energy Mater Sol. Cells
 Science and Technology of Advanced Materials/Sci. Technol. Adv. Mater.
-Theoretical Chemistry Accounts/Theor. Chem. Acc.
+Scripta Materialia/Scr. Mater.
+Separation and Purification Technology/Sep. Purif. Technol.
+Solar energy materials and solar cells/Sol. Energy Mater Sol. Cells
+Steel Research International/Steel Res. Int.
 The Journal of chemical physics/J. Chem. Phys.
+The Journal of Physical Chemistry A/J. Phys. Chem. A
 The Journal of Physical Chemistry C/J. Phys. Chem. C
+The Journal of Physical Chemistry Letters/J. Phys. Chem. Lett.
+Theoretical Chemistry Accounts/Theor. Chem. Acc.
 Wiley Interdisciplinary Reviews: Computational Molecular Science/Wiley Interdiscip. Rev. Comput. Mol. Sci.
