@@ -5,7 +5,7 @@
 
 # 2. 文件结构
 
-```
+```bash
 06_referenceJML.php                        # 引文格式转换脚本，需要输入 GB/T 7714 和 APA 两种引文格式
 06_journal_Abbreviation.txt                # 存储期刊全称和简写的txt文本，按照首字母排序
 06_sort_journal_Abbreviation.py            # 对06_journal_Abbreviation.txt所有行按照英文字母递增进行排序
