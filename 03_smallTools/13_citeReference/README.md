@@ -157,11 +157,18 @@ echo $string7;
 读取脚本所在目录下的 `06_journal_Abbreviation.txt` 中的每一行内容，示例内容如下所示，对这些行进行重新排序，排序时忽略字母大小写，按照英文字母递增的顺序进行排序，例如先比较第一个字母，第一个字母相同时比较第二个字母，以此类推，注意每行内容除了字母外还会有空格和符号，注意处理。
 
 
+### 2. 环境变量
 
-
+```py
+# 定义文件名
+input_file = "06_journal_Abbreviation.txt"
+output_file = "sorted_06_journal_Abbreviation.txt"
+```
 
 
 ## 3. `06_journal_abbreviation_AddView.php`
+
+- 功能：PHP代码实现了一个基于网页的期刊全称与简写管理系统，支持用户新增键值对、校验重复、按字母排序保存，并通过表格展示所有期刊信息。
 
 ### 1. 代码思路
 
