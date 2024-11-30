@@ -20,5 +20,5 @@
 2. Tampermonkey 的 XHR 安全选项可以限制哪些跨域请求被允许，哪些会被阻止。如下所示，可以将自己服务器的IP或者域名添加到跨域的白名单中，否则通过 GM_xmlhttpRequest 发起跨域请求会被阻止并提示错误。
 
 <p align="center">
-<img src="https://19640810.xyz/05_image/01_imageHost/20241130-163414.png" alt="Image Description" width="900">
+<img src="https://19640810.xyz/05_image/01_imageHost/20241130-163414.png" alt="Image Description" width="1000">
 </p>
