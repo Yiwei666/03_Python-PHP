@@ -176,11 +176,20 @@ echo $string7;
 注意，页面样式要尽量美观
 
 
+### 2. 环境配置
 
+1. 修改txt文本路径
 
+```php
+// 文件路径
+$file_path = "/home/01_html/06_journal_Abbreviation.txt";
+```
 
+2. 设置组和权限
 
-
+```bash
+chown www-data:www-data /home/01_html/06_journal_Abbreviation.txt
+```
 
 
 # 4. 参考资料
