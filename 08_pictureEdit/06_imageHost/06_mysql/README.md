@@ -14,7 +14,7 @@
 08_db_image_status.php                         # 该功能模块将项目文件夹下已删除的图片在数据库中image_exists赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 08_image_management.php                        # 用于响应用户对图片进行喜欢或不喜欢操作的后端服务，通过更新数据库并实时反馈结果到前端用户界面
 08_image_leftRight_navigation.php              # 点击图片下方🔁按钮，打开该脚本，显示对应的图片，按照数据库默认或者likes降序排列，点击左右箭头实现图片顺序切换
-08_image_leftRight_navigation_voteStar.php     # 新增点赞/踩以及收藏功能
+08_image_leftRight_navigation_voteStar.php     # 新增点赞/踩以及收藏功能，是 08_image_leftRight_navigation.php 升级版本
 08_db_toggle_star.php                          # 根据图片的ID，查询该图片是否已被标记为“星标”（star），并在每次请求时切换其状态（从“标记”到“未标记”或反之），然后将新的状态更新到数据库并返回给前端。
 
 # 2. 后台管理
@@ -268,7 +268,7 @@ include '08_db_image_status.php';                    // 判断数据库中所有
 ```
 
 
-### 5. `08_image_leftRight_navigation.php` 图片顺序切换
+### 5. `08_image_leftRight_navigation.php` 图片顺序切换（已弃用）
 
 1. 功能：上述代码实现了一个图片浏览与切换功能的网页，其中包括图片的排序与导航。以下是具体功能概述：
 
@@ -307,6 +307,9 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 ```html
 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
 ```
+
+注意：该模块`08_image_leftRight_navigation.php`在实际生产中已弃用，由升级版本`08_image_leftRight_navigation_voteStar.php`取代。
+
 
 
 ### 6. `08_db_toggle_star.php` 图片收藏或取消
