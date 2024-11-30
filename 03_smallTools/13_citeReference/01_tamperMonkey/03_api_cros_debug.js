@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Merge Citation Formats with Dynamic Journal Abbreviations
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.7
 // @description  Extract and merge GB/T 7714 and APA citation formats into a new reference style with dynamic journal abbreviation fetching
 // @author       Ayo
 // @match        https://scholar.google.com.hk/*
@@ -20,32 +20,54 @@
     debugContainer.style.position = 'fixed';
     debugContainer.style.top = '0';
     debugContainer.style.right = '0';
-    debugContainer.style.width = '50%';
-    debugContainer.style.height = '30%';
-    debugContainer.style.overflowY = 'scroll';
-    debugContainer.style.backgroundColor = '#f4f4f4';
+    debugContainer.style.width = '40%';
+    debugContainer.style.height = 'auto';
+    debugContainer.style.maxHeight = '30%';
+    debugContainer.style.overflowY = 'auto';
+    debugContainer.style.backgroundColor = '#f9f9f9';
     debugContainer.style.color = '#333';
     debugContainer.style.padding = '10px';
     debugContainer.style.zIndex = '9998';
     debugContainer.style.border = '1px solid #ccc';
-    debugContainer.style.fontFamily = 'monospace';
-    debugContainer.style.whiteSpace = 'pre-wrap';
-    debugContainer.style.boxSizing = 'border-box';
+    debugContainer.style.fontFamily = 'Arial, sans-serif';
+    debugContainer.style.fontSize = '12px';
+    debugContainer.style.lineHeight = '1.5';
+    debugContainer.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
     debugContainer.id = 'debug-container';
     document.body.appendChild(debugContainer);
 
-    const button = document.createElement('button');
-    button.textContent = '生成新格式参考文献';
-    button.style.position = 'fixed';
-    button.style.bottom = '10px';
-    button.style.right = '10px';
-    button.style.zIndex = '9999';
-    button.style.backgroundColor = '#4CAF50';
-    button.style.color = 'white';
-    button.style.border = 'none';
-    button.style.padding = '10px';
-    button.style.cursor = 'pointer';
-    document.body.appendChild(button);
+    const generateButton = document.createElement('button');
+    generateButton.textContent = '生成新格式参考文献';
+    generateButton.style.position = 'fixed';
+    generateButton.style.bottom = '50px';
+    generateButton.style.right = '10px';
+    generateButton.style.zIndex = '9999';
+    generateButton.style.backgroundColor = '#4CAF50';
+    generateButton.style.color = 'white';
+    generateButton.style.border = 'none';
+    generateButton.style.padding = '10px';
+    generateButton.style.cursor = 'pointer';
+    generateButton.style.borderRadius = '5px';
+    generateButton.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)';
+    document.body.appendChild(generateButton);
+
+    const copyButton = document.createElement('button');
+    copyButton.textContent = '复制参考文献';
+    copyButton.style.position = 'fixed';
+    copyButton.style.bottom = '10px';
+    copyButton.style.right = '10px';
+    copyButton.style.zIndex = '9999';
+    copyButton.style.backgroundColor = '#2196F3';
+    copyButton.style.color = 'white';
+    copyButton.style.border = 'none';
+    copyButton.style.padding = '10px';
+    copyButton.style.cursor = 'pointer';
+    copyButton.style.borderRadius = '5px';
+    copyButton.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)';
+    copyButton.style.display = 'none'; // 初始状态隐藏
+    document.body.appendChild(copyButton);
+
+    let result3 = ''; // 用于存储最终参考文献
 
     function appendDebugInfo(label, content) {
         const debugLine = document.createElement('div');
@@ -70,7 +92,6 @@
                             }
                             return acc;
                         }, {});
-                        appendDebugInfo('期刊简称加载成功', JSON.stringify(abbreviations, null, 2));
                         resolve(abbreviations);
                     } else {
                         reject(new Error(`HTTP 状态码: ${response.status}`));
@@ -83,7 +104,7 @@
         });
     }
 
-    button.addEventListener('click', async function () {
+    generateButton.addEventListener('click', async function () {
         try {
             debugContainer.innerHTML = ''; // 清空调试信息
             if (Object.keys(journalAbbreviations).length === 0) {
@@ -176,10 +197,25 @@
             const string7 = reorderedAuthors.join(', ') + ', ';
             appendDebugInfo('重排后的作者名 (string7)', string7);
 
-            const result3 = `${string7}${string2}, ${string6} ${string4}`;
+            result3 = `${string7}${string2}, ${string6} ${string4}`;
             appendDebugInfo('最终合并的新格式参考文献 (result3)', result3);
+
+            // 显示复制按钮
+            copyButton.style.display = 'block';
         } catch (e) {
             appendDebugInfo('脚本执行出错', e.message);
+        }
+    });
+
+    copyButton.addEventListener('click', function () {
+        if (result3) {
+            navigator.clipboard.writeText(result3).then(() => {
+                alert('参考文献已复制到剪贴板！');
+            }).catch(err => {
+                alert('复制失败，请手动复制。');
+            });
+        } else {
+            alert('没有可复制的内容，请先生成参考文献。');
         }
     });
 })();
