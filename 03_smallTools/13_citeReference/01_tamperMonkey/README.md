@@ -11,3 +11,14 @@
 ```
 
 # 3. 环境配置
+
+
+### `03_api_cros.js`
+
+1. Tampermonkey 设置界面的 XHR 安全 选项与用户脚本中使用的 `XMLHttpRequest（XHR）` 和相关跨域请求的安全性有关。它的功能是控制脚本在发起跨域请求时的权限和行为，确保安全性和兼容性。
+
+2. Tampermonkey 的 XHR 安全选项可以限制哪些跨域请求被允许，哪些会被阻止。如下所示，可以将自己服务器的IP或者域名添加到跨域的白名单中，否则通过 GM_xmlhttpRequest 发起跨域请求会被阻止并提示错误。
+
+<p align="center">
+<img src="https://19640810.xyz/05_image/01_imageHost/20241130-163414.png" alt="Image Description" width="900">
+</p>
