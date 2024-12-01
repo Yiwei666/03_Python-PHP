@@ -116,8 +116,20 @@ APA 作者部分 (authorParts): Schettino,E.,González-Jiménez,J. M.,Marchesi,C
 ### 2. 提取结果示例
 
 ```txt
-
+GB/T 7714 引用: Bykova E, Bykov M, Černok A, et al. Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts[J]. Nature communications, 2018, 9(1): 4789.
+APA 引用: Bykova, E., Bykov, M., Černok, A., Tidholm, J., Simak, S. I., Hellman, O., ... & Dubrovinsky, L. (2018). Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts. Nature communications, 9(1), 4789.
+文章标题 (string2): Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts
+卷、出版年和页码范围 (string3): 2018, 9(1): 4789
+格式化的出版信息 (string4): 9 (2018) 4789.
+期刊全称 (string5): Nature communications
+期刊简称或全称 (string6): Nat. Commun.
+APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S. I.,Hellman,O.,...  Dubrovinsky,L.
+重排后的作者名 (string7): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S. I. Simak, O. Hellman, L. ...  Dubrovinsky, 
+最终合并的新格式参考文献 (result3): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S. I. Simak, O. Hellman, L. ...  Dubrovinsky, Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts, Nat. Commun. 9 (2018) 4789.
 ```
+
+注意：测试结果与 `02_elsevier.js` 测试结果格式一样，没有改变。
+
 
 
 
