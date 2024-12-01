@@ -19,9 +19,10 @@
 
 - 仅显示 GB/T 和 APA格式参考文献，且不支持复制粘贴
 
+
 ## 2. `01_GBT_APA_doi.js`
 
-### 1. 功能
+### 1. 功能特性
 
 1. 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询。
 
@@ -32,6 +33,8 @@
 
 
 ### 2. 提取结果示例
+
+- 测试结果1：
 
 ```txt
 GB/T 7714: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
@@ -50,14 +53,23 @@ DOI: 10.1038/35003143
 
 
 
+
+
 ## 3. `02_elsevier.js`
 
-### 1. 脚本特性
+### 1. 功能特性
+
+- 使用脚本内硬编码获取`期刊全称和简写`
+- 合成elsevier出版社期刊参考文献格式
+- APA格式作者名字部分中的空格和"..."处理未考虑，例如`K. I. Funakoshi`和`M. ...  Fiorentini`
+
 
 
 ### 2. 提取结果示例
 
-```
+- 测试结果1：
+
+```txt
 GB/T 7714 引用: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
 APA 引用: Katayama, Y., Mizutani, T., Utsumi, W., Shimomura, O., Yamakata, M., & Funakoshi, K. I. (2000). A first-order liquid–liquid phase transition in phosphorus. Nature, 403(6766), 170-173.
 文章标题 (string2): A first-order liquid–liquid phase transition in phosphorus
@@ -69,6 +81,22 @@ APA 作者部分 (authorParts): Katayama,Y.,Mizutani,T.,Utsumi,W.,Shimomura,O.,Y
 重排后的作者名 (string7): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, K. I. Funakoshi, 
 最终合并的新格式参考文献 (result3): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, K. I. Funakoshi, A first-order liquid–liquid phase transition in phosphorus, Nature 403 (2000) 170-173.
 ```
+
+- 测试结果2：
+
+```
+GB/T 7714 引用: Schettino E, González-Jiménez J M, Marchesi C, et al. Mantle-to-crust metal transfer by nanomelts[J]. Communications Earth & Environment, 2023, 4(1): 256.
+APA 引用: Schettino, E., González-Jiménez, J. M., Marchesi, C., Palozza, F., Blanco-Quintero, I. F., Gervilla, F., ... & Fiorentini, M. (2023). Mantle-to-crust metal transfer by nanomelts. Communications Earth & Environment, 4(1), 256.
+文章标题 (string2): Mantle-to-crust metal transfer by nanomelts
+卷、出版年和页码范围 (string3): 2023, 4(1): 256
+格式化的出版信息 (string4): 4 (2023) 256.
+期刊全称 (string5): Communications Earth & Environment
+期刊简称或全称 (string6): Communications Earth & Environment
+APA 作者部分 (authorParts): Schettino,E.,González-Jiménez,J. M.,Marchesi,C.,Palozza,F.,Blanco-Quintero,I. F.,Gervilla,F.,...  Fiorentini,M.
+重排后的作者名 (string7): E. Schettino, J. M. González-Jiménez, C. Marchesi, F. Palozza, I. F. Blanco-Quintero, F. Gervilla, M. ...  Fiorentini, 
+最终合并的新格式参考文献 (result3): E. Schettino, J. M. González-Jiménez, C. Marchesi, F. Palozza, I. F. Blanco-Quintero, F. Gervilla, M. ...  Fiorentini, Mantle-to-crust metal transfer by nanomelts, Communications Earth & Environment 4 (2023) 256.
+```
+
 
 
 
