@@ -4,10 +4,12 @@
 
 # 2. 文件结构
 
-```
-01_GBT_APA.js        # 仅从页面上获取GBT和APA格式的参考文献，未合成新格式文献
-02_elsevier.js       # 基于获取的GBT和APA格式参考文献，转换成适用于elsevier期刊的格式，但是期刊缩写采用脚本内硬编码实现
-03_api_cros.js       # 脚本通过指定的远程URL获取期刊简称字典，用于将期刊全称转换为简称。使用 GM_xmlhttpRequest 解决跨域请求
+```bash
+01_GBT_APA.js              # 仅从页面上获取GBT和APA格式的参考文献，未合成新格式文献
+01_GBT_APA_doi.js          # 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询
+02_elsevier.js             # 基于获取的GBT和APA格式参考文献，转换成适用于elsevier期刊的格式，但是期刊缩写采用脚本内硬编码实现
+03_api_cros.js             # 脚本通过指定的远程URL获取期刊简称字典，用于将期刊全称转换为简称。使用 GM_xmlhttpRequest 解决跨域请求
+03_api_cros_debug.js       # 在03_api_cros.js基础上优化，包括不打印所有期刊名称、新增复制按钮、优化页面字体和布局
 ```
 
 # 3. 环境配置
