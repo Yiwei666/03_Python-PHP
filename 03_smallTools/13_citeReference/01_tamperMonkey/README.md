@@ -74,7 +74,20 @@ APA 作者部分 (authorParts): Katayama,Y.,Mizutani,T.,Utsumi,W.,Shimomura,O.,Y
 
 ## 4. `03_api_cros.js`
 
-### 1. 环境变量
+
+### 1. 脚本特性
+
+1. 浏览器会对网络请求的内容进行缓存，可能导致脚本没有获取最新的数据
+
+2. 在请求 URL 中添加一个随机数或时间戳，确保每次请求的 URL 都唯一，从而绕过缓存
+
+
+
+### 2. 提取结果示例
+
+
+
+### 3. 环境变量
 
 ```js
 const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.txt';
@@ -88,15 +101,6 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 <img src="https://19640810.xyz/05_image/01_imageHost/20241130-163414.png" alt="Image Description" width="1000">
 </p>
 
-### 2. 提取结果示例
-
-
-
-### 3. 注意事项
-
-1. 浏览器会对网络请求的内容进行缓存，可能导致脚本没有获取最新的数据
-
-2. 在请求 URL 中添加一个随机数或时间戳，确保每次请求的 URL 都唯一，从而绕过缓存
 
 
 
@@ -117,6 +121,16 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 ```
 
 
+
+## 6. `04_api_cros_doi.js`
+
+### 1. 功能特性
+
+### 2. 提取结果示例
+
+```
+
+```
 
 
 
