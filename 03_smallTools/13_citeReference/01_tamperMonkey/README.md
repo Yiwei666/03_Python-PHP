@@ -30,6 +30,8 @@
     - 上述相似度计算算法基于 Levenshtein 距离，通过计算提取标题和查询标题之间的最小编辑操作次数，并将相似度（`1 - 编辑距离 / 最大字符串长度`）与设定的阈值（`0.8`）比较来判断是否匹配成功。
     - 这种算法的特点是 灵活处理字符串之间的轻微差异（如拼写、格式），但对长字符串的效率较低且无法捕捉语义相似性。
 
+3. 新增一个校验，即判断通过CrossRef API查询到的title是否是 `GB/T 7714` 格式参考文献的一部分（标题部分），即判断查询到的title是否是准确的，从而确保获取的doi是正确的。有什么好的实现思路呢？是否需要使用模糊查询呢？严格匹配字符串似乎很容易出问题，因为可能会有一些格式问题。
+
 
 
 ### 2. 提取结果示例
@@ -163,8 +165,17 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 
 ### 2. 提取结果示例
 
-```
-
+```txt
+GB/T 7714 引用: Bykova E, Bykov M, Černok A, et al. Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts[J]. Nature communications, 2018, 9(1): 4789.
+APA 引用: Bykova, E., Bykov, M., Černok, A., Tidholm, J., Simak, S. I., Hellman, O., ... & Dubrovinsky, L. (2018). Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts. Nature communications, 9(1), 4789.
+文章标题 (string2): Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts
+卷、出版年和页码范围 (string3): 2018, 9(1): 4789
+格式化的出版信息 (string4): 9 (2018) 4789.
+期刊全称 (string5): Nature communications
+期刊简称或全称 (string6): Nat. Commun.
+APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S. I.,Hellman,O.,... Dubrovinsky,L.
+重排后的作者名 (string7): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S. I. Simak, O. Hellman, L. ... Dubrovinsky,
+最终合并的新格式参考文献 (result3): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S. I. Simak, O. Hellman, L. ... Dubrovinsky, Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts, Nat. Commun. 9 (2018) 4789.
 ```
 
 
@@ -172,6 +183,16 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 ## 6. `04_api_cros_doi.js`
 
 ### 1. 功能特性
+
+在`04_api_cros_doi.js`代码v1版本基础上进行扩展，保持原有代码的逻辑、功能、样式等都不要变，新增如下功能：
+
+1. 通过`CrossRef API`基于GB/T 7714 格式参考文献查询doi和title，参考`01_GBT_APA_doi.js`代码。
+
+2. 计算参考文献中的论文标题（string2）与api返回的title的相似度，从而确保返回的doi是准确的。上面两个需求可以参考`01_GBT_APA_doi.js`代码的函数来实现（已验证有效性）。
+
+3. 将获取的准确的doi进行字符串拼接，得到的字符串变量为 doiLink, 拼接格式为 `"https://doi.org/"+doi+"."`，然后 result3 字符串末尾的 "."删掉，与doiLink字符产进行拼接，二者之间使用 `", "` 进行衔接。获取的字符串为 result4，这也是合成的新格式的参考文献，在页面进行显示。另外，复制参考文献按钮对应的内容同步更新为result4。
+
+
 
 ### 2. 提取结果示例
 
