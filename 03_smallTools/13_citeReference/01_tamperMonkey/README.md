@@ -17,9 +17,20 @@
 ## 1. `01_GBT_APA.js`
 
 
+## 2. `01_GBT_APA_doi.js`
+
+### 1. 功能
+
+1. 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询。
+
+2. 基于 GB/T 7714 格式参考文献提取论文标题，与CrossRef API返回的标题进行相似度分析，显示匹配结果，从而判断 DOI 的准确性。
+
+
+
 
 
 ## 2. `02_elsevier.js`
+
 
 
 
