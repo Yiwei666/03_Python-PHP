@@ -214,12 +214,45 @@ APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S
 
 ### 3. 提取结果示例
 
-```
+- 测试结果1：已新增doi查询，生成含有doi的参考文献，但作者部分仍存在名字缩写间有空格、"..."未处理的问题。
 
 ```
+信息: 正在加载期刊简称...
+GB/T 7714 引用: Bykova E, Bykov M, Černok A, et al. Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts[J]. Nature communications, 2018, 9(1): 4789.
+APA 引用: Bykova, E., Bykov, M., Černok, A., Tidholm, J., Simak, S. I., Hellman, O., ... & Dubrovinsky, L. (2018). Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts. Nature communications, 9(1), 4789.
+文章标题 (string2): Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts
+卷、出版年和页码范围 (string3): 2018, 9(1): 4789
+格式化的出版信息 (string4): 9 (2018) 4789.
+期刊全称 (string5): Nature communications
+期刊简称或全称 (string6): Nat. Commun.
+APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S. I.,Hellman,O.,... Dubrovinsky,L.
+重排后的作者名 (string7): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S. I. Simak, O. Hellman, L. ... Dubrovinsky,
+最终合并的新格式参考文献 (result3): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S. I. Simak, O. Hellman, L. ... Dubrovinsky, Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts, Nat. Commun. 9 (2018) 4789.
+信息: 正在查询 DOI...
+DOI 查询结果: 找到匹配的 DOI: 10.1038/s41467-018-07265-z
+最终合成的新格式参考文献 (result4): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S. I. Simak, O. Hellman, L. ... Dubrovinsky, Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts, Nat. Commun. 9 (2018) 4789, https://doi.org/10.1038/s41467-018-07265-z.
+```
 
+- 测试结果2：空格和"..."问题已经解决
 
-
-
+```
+信息: 正在加载期刊简称...
+GB/T 7714 引用: Bykova E, Bykov M, Černok A, et al. Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts[J]. Nature communications, 2018, 9(1): 4789.
+APA 引用: Bykova, E., Bykov, M., Černok, A., Tidholm, J., Simak, S. I., Hellman, O., ... & Dubrovinsky, L. (2018). Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts. Nature communications, 9(1), 4789.
+文章标题 (string2): Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts
+卷、出版年和页码范围 (string3): 2018, 9(1): 4789
+格式化的出版信息 (string4): 9 (2018) 4789.
+期刊全称 (string5): Nature communications
+期刊简称或全称 (string6): Nat. Commun.
+APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S. I.,Hellman,O.,... & Dubrovinsky,L.
+重排后的作者名 (string7): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, L. ...Dubrovinsky,
+修正后的作者名 (string7): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, et al.,
+最终合并的新格式参考文献 (result3): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, et al., Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts, Nat. Commun. 9 (2018) 4789.
+信息: 正在查询 DOI...
+API 返回的标题: Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts
+计算的相似度: 100.00%
+DOI 查询结果: 找到匹配的 DOI: 10.1038/s41467-018-07265-z
+最终合成的新格式参考文献 (result4): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, et al., Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts, Nat. Commun. 9 (2018) 4789, https://doi.org/10.1038/s41467-018-07265-z.
+```
 
 
