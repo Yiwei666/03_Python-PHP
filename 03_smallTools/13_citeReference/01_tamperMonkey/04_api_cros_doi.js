@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Merge Citation Formats with DOI Lookup
+// @name         Merge Citation Formats with DOI Lookup and Author Correction
 // @namespace    http://tampermonkey.net/
-// @version      1.8
-// @description  Extract and merge GB/T 7714 and APA citation formats into a new reference style with dynamic journal abbreviation fetching and DOI lookup
-// @author       Ayo
+// @version      1.9
+// @description  Extract and merge GB/T 7714 and APA citation formats into a new reference style with dynamic journal abbreviation fetching, DOI lookup, and author list correction
+// @author
 // @match        https://scholar.google.com.hk/*
 // @grant        GM_xmlhttpRequest
 // @connect      api.crossref.org
@@ -23,7 +23,7 @@
     debugContainer.style.right = '0';
     debugContainer.style.width = '40%';
     debugContainer.style.height = 'auto';
-    debugContainer.style.maxHeight = '30%';
+    debugContainer.style.maxHeight = '50%';
     debugContainer.style.overflowY = 'auto';
     debugContainer.style.backgroundColor = '#f9f9f9';
     debugContainer.style.color = '#333';
@@ -179,12 +179,14 @@
 
             const apaAuthors = apaText.split('(')[0].trim();
             let authorParts = apaAuthors.split(',').map((s) => s.trim());
-            authorParts = authorParts.map((part) => part.replace('&', '').trim());
             if (authorParts.length % 2 !== 0) {
                 appendDebugInfo('警告', '作者部分格式异常，长度不是偶数，将最后一项处理为单独的作者');
                 authorParts.push('Unknown');
             }
             appendDebugInfo('APA 作者部分 (authorParts)', authorParts);
+            // authorParts = authorParts.map((part) => part.replace('&', '').trim());
+            // 删除 '&' 之外，还删除每个数组元素中包含的空格
+            authorParts = authorParts.map((part) => part.replace('&', '').replace(/\s+/g, ''));
 
             let reorderedAuthors = [];
             for (let i = 0; i < authorParts.length; i += 2) {
@@ -194,8 +196,29 @@
                     reorderedAuthors.push(authorParts[i]);
                 }
             }
-            const string7 = reorderedAuthors.join(', ') + ', ';
+            let string7 = reorderedAuthors.join(', ') + ', ';
             appendDebugInfo('重排后的作者名 (string7)', string7);
+
+            // 对 string7 进行格式检查和修正
+            let authorSubstrings = string7.split(',').map(s => s.trim()).filter(s => s !== '');
+            let modifiedAuthorSubstrings = [];
+            let containsEllipsis = false;
+            for (let i = 0; i < authorSubstrings.length; i++) {
+                if (authorSubstrings[i].includes('...')) {
+                    modifiedAuthorSubstrings.push('et al.');
+                    containsEllipsis = true;
+                    break; // 停止处理后续作者
+                } else {
+                    modifiedAuthorSubstrings.push(authorSubstrings[i]);
+                }
+            }
+            // 重新构建 string7
+            const newString7 = modifiedAuthorSubstrings.join(', ') + ', ';
+            if (containsEllipsis) {
+                appendDebugInfo('修正后的作者名 (string7)', newString7);
+            }
+            // 更新 string7 为新的值
+            string7 = newString7;
 
             result3 = `${string7}${string2}, ${string6} ${string4}`;
             appendDebugInfo('最终合并的新格式参考文献 (result3)', result3);
@@ -244,7 +267,11 @@
                         const apiTitle = firstResult.title ? firstResult.title.join(' ') : '';
 
                         // 比较标题
-                        const isMatch = compareTitles(apiTitle, extractedTitle);
+                        const similarityScore = calculateSimilarity(apiTitle.toLowerCase(), extractedTitle.toLowerCase());
+                        const isMatch = similarityScore > 0.1;
+
+                        appendDebugInfo('API 返回的标题', apiTitle);
+                        appendDebugInfo('计算的相似度', (similarityScore * 100).toFixed(2) + '%');
 
                         if (isMatch && doi) {
                             appendDebugInfo('DOI 查询结果', `找到匹配的 DOI: ${doi}`);
@@ -291,7 +318,7 @@
 
         // 使用字符串相似度算法（Levenshtein 距离）
         const similarity = calculateSimilarity(title1.toLowerCase(), title2.toLowerCase());
-        return similarity > 0.8; // 阈值设置为 80%
+        return similarity > 0.2; // 阈值设置为 80%
     }
 
     // 计算字符串相似度（Levenshtein 距离）
