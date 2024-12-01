@@ -30,6 +30,25 @@
 
 
 
+### 2. 提取结果示例
+
+```txt
+GB/T 7714: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
+
+APA: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
+
+提取的文章标题: A first-order liquid–liquid phase transition in phosphorus
+
+DOI 查询结果
+DOI: 10.1038/35003143
+
+标题: A first-order liquid–liquid phase transition in phosphorus
+
+匹配结果: 匹配成功
+```
+
+
+
 ## 3. `02_elsevier.js`
 
 
