@@ -51,7 +51,23 @@ DOI: 10.1038/35003143
 
 ## 3. `02_elsevier.js`
 
+### 1. 脚本特性
 
+
+### 2. 提取结果示例
+
+```
+GB/T 7714 引用: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
+APA 引用: Katayama, Y., Mizutani, T., Utsumi, W., Shimomura, O., Yamakata, M., & Funakoshi, K. I. (2000). A first-order liquid–liquid phase transition in phosphorus. Nature, 403(6766), 170-173.
+文章标题 (string2): A first-order liquid–liquid phase transition in phosphorus
+卷、出版年和页码范围 (string3): 2000, 403(6766): 170-173
+格式化的出版信息 (string4): 403 (2000) 170-173.
+期刊全称 (string5): Nature
+期刊简称或全称 (string6): Nature
+APA 作者部分 (authorParts): Katayama,Y.,Mizutani,T.,Utsumi,W.,Shimomura,O.,Yamakata,M.,Funakoshi,K. I.
+重排后的作者名 (string7): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, K. I. Funakoshi, 
+最终合并的新格式参考文献 (result3): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, K. I. Funakoshi, A first-order liquid–liquid phase transition in phosphorus, Nature 403 (2000) 170-173.
+```
 
 
 
@@ -71,8 +87,11 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 <img src="https://19640810.xyz/05_image/01_imageHost/20241130-163414.png" alt="Image Description" width="1000">
 </p>
 
+### 2. 提取结果示例
 
-### 2. 注意事项
+
+
+### 3. 注意事项
 
 1. 浏览器会对网络请求的内容进行缓存，可能导致脚本没有获取最新的数据
 
@@ -90,6 +109,11 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 
 
 
+### 2. 提取结果示例
+
+```
+
+```
 
 
 
