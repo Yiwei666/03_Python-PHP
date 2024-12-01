@@ -20,6 +20,7 @@
 - 仅显示 GB/T 和 APA格式参考文献，且不支持复制粘贴
 
 
+
 ## 2. `01_GBT_APA_doi.js`
 
 ### 1. 功能特性
@@ -184,6 +185,14 @@ APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S
 
 ### 1. 功能特性
 
+1. 整合`01_GBT_APA_doi.js`代码功能，新增基于CrossRef API查询doi和title，并计算相似度。
+2. 生成带有doi号格式的参考文献
+3. 删除APA参考文献作者部分名字中的空格，使用`et al.`替代含有`"..."`的最后一项作者部分。
+
+### 2. 编程思路
+
+**思路一：**
+
 在`04_api_cros_doi.js`代码v1版本基础上进行扩展，保持原有代码的逻辑、功能、样式等都不要变，新增如下功能：
 
 1. 通过`CrossRef API`基于GB/T 7714 格式参考文献查询doi和title，参考`01_GBT_APA_doi.js`代码。
@@ -193,8 +202,17 @@ APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S
 3. 将获取的准确的doi进行字符串拼接，得到的字符串变量为 doiLink, 拼接格式为 `"https://doi.org/"+doi+"."`，然后 result3 字符串末尾的 "."删掉，与doiLink字符产进行拼接，二者之间使用 `", "` 进行衔接。获取的字符串为 result4，这也是合成的新格式的参考文献，在页面进行显示。另外，复制参考文献按钮对应的内容同步更新为result4。
 
 
+**思路二：**
 
-### 2. 提取结果示例
+非常好，我想在有两个新的请求，在上述代码基础上进行修改扩展：
+
+1. 新增显示api查询返回的title以及计算的相似度（以便人工审阅）
+
+2. 对于string7进行格式检查和修正。对于 string7 变量，其中含有多个","，例如"M. Zhu, G. Wu, K. Tang, M. Müller, J. Safarian, "，或者 "J. Chen, C. Chen, M. Qin, B. Li, B. Lin, Q. Mao, Y. ... Wang, " ， 首先使用"," 进行分割得到多个子字符串，例如"J. Safarian"或者"Y. ... Wang"，如果分割后的子字符串不含"..."，则string7保持不变。如果含有"..."，则将该子字符串替换成"et al."，例如上述string7替换后为 "J. Chen, C. Chen, M. Qin, B. Li, B. Lin, Q. Mao, et al.," 将替换后的值重新赋值为 string7，后续使用的都是修改后的值。
+
+
+
+### 3. 提取结果示例
 
 ```
 
