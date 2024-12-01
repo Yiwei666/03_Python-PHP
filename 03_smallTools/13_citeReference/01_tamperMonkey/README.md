@@ -82,9 +82,10 @@ APA 作者部分 (authorParts): Katayama,Y.,Mizutani,T.,Utsumi,W.,Shimomura,O.,Y
 最终合并的新格式参考文献 (result3): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, K. I. Funakoshi, A first-order liquid–liquid phase transition in phosphorus, Nature 403 (2000) 170-173.
 ```
 
+
 - 测试结果2：
 
-```
+```txt
 GB/T 7714 引用: Schettino E, González-Jiménez J M, Marchesi C, et al. Mantle-to-crust metal transfer by nanomelts[J]. Communications Earth & Environment, 2023, 4(1): 256.
 APA 引用: Schettino, E., González-Jiménez, J. M., Marchesi, C., Palozza, F., Blanco-Quintero, I. F., Gervilla, F., ... & Fiorentini, M. (2023). Mantle-to-crust metal transfer by nanomelts. Communications Earth & Environment, 4(1), 256.
 文章标题 (string2): Mantle-to-crust metal transfer by nanomelts
@@ -103,15 +104,20 @@ APA 作者部分 (authorParts): Schettino,E.,González-Jiménez,J. M.,Marchesi,C
 ## 4. `03_api_cros.js`
 
 
-### 1. 脚本特性
+### 1. 功能特性
 
-1. 浏览器会对网络请求的内容进行缓存，可能导致脚本没有获取最新的数据
+1. 使用api或者url获取期刊全称/简写，避免脚本内`期刊全称和简写`硬编码的问题。
 
-2. 在请求 URL 中添加一个随机数或时间戳，确保每次请求的 URL 都唯一，从而绕过缓存
+2. 浏览器会对网络请求的内容进行缓存，可能导致脚本没有获取最新的数据。在请求 URL 中添加一个随机数或时间戳，确保每次请求的 URL 都唯一，从而绕过缓存。
 
+3. 由于同源策略的限制，使用 `GM_xmlhttpRequest` 解决api调用时的跨域问题。
 
 
 ### 2. 提取结果示例
+
+```txt
+
+```
 
 
 
@@ -128,6 +134,7 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 <p align="center">
 <img src="https://19640810.xyz/05_image/01_imageHost/20241130-163414.png" alt="Image Description" width="1000">
 </p>
+
 
 
 
