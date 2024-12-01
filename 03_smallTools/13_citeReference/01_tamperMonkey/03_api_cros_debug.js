@@ -179,12 +179,13 @@
 
             const apaAuthors = apaText.split('(')[0].trim();
             let authorParts = apaAuthors.split(',').map((s) => s.trim());
-            authorParts = authorParts.map((part) => part.replace('&', '').trim());
+            // authorParts = authorParts.map((part) => part.replace('&', '').trim());
             if (authorParts.length % 2 !== 0) {
                 appendDebugInfo('警告', '作者部分格式异常，长度不是偶数，将最后一项处理为单独的作者');
                 authorParts.push('Unknown');
             }
             appendDebugInfo('APA 作者部分 (authorParts)', authorParts);
+            authorParts = authorParts.map((part) => part.replace('&', '').replace(/\s+/g, ''));
 
             let reorderedAuthors = [];
             for (let i = 0; i < authorParts.length; i += 2) {
@@ -194,8 +195,31 @@
                     reorderedAuthors.push(authorParts[i]);
                 }
             }
-            const string7 = reorderedAuthors.join(', ') + ', ';
+            let string7 = reorderedAuthors.join(', ') + ', ';
             appendDebugInfo('重排后的作者名 (string7)', string7);
+
+
+            // 对 string7 进行格式检查和修正
+            let authorSubstrings = string7.split(',').map(s => s.trim()).filter(s => s !== '');
+            let modifiedAuthorSubstrings = [];
+            let containsEllipsis = false;
+            for (let i = 0; i < authorSubstrings.length; i++) {
+                if (authorSubstrings[i].includes('...')) {
+                    modifiedAuthorSubstrings.push('et al.');
+                    containsEllipsis = true;
+                    break; // 停止处理后续作者
+                } else {
+                    modifiedAuthorSubstrings.push(authorSubstrings[i]);
+                }
+            }
+            // 重新构建 string7
+            const newString7 = modifiedAuthorSubstrings.join(', ') + ', ';
+            if (containsEllipsis) {
+                appendDebugInfo('修正后的作者名 (string7)', newString7);
+            }
+            // 更新 string7 为新的值
+            string7 = newString7;
+
 
             result3 = `${string7}${string2}, ${string6} ${string4}`;
             appendDebugInfo('最终合并的新格式参考文献 (result3)', result3);
