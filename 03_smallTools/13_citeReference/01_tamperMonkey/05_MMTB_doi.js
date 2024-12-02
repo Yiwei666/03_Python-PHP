@@ -4,7 +4,7 @@
 // @version      1.9
 // @description  Extract and merge GB/T 7714 and APA citation formats into a new reference style with dynamic journal abbreviation fetching, DOI lookup, and author list correction
 // @author
-// @match        https://scholar.google.com.hk/*
+// @match        https://scholar.google.com/*
 // @grant        GM_xmlhttpRequest
 // @connect      api.crossref.org
 // @connect      *
@@ -164,7 +164,16 @@
                 [s1, s2, s4] = parts;
                 s3 = "NULL";
             }
-            const string4 = `${s2} (${s1}) ${s4}.`;
+            // const string4 = `${s2} (${s1}) ${s4}.`;
+            // const string4 = `${s1}, vol. ${s2}, pp. ${s4}.`;
+            // 根据 s4 是否包含 "-" 来设置 string4 的值
+            let string4 = '';
+            if (s4.includes('-')) {
+                string4 = `${s1}, vol. ${s2}, pp. ${s4}.`;
+            } else {
+                string4 = `${s1}, vol. ${s2}, ${s4}.`;
+            }
+
             appendDebugInfo('格式化的出版信息 (string4)', string4);
 
             const secondLastDot = gbText.lastIndexOf('.', lastPeriod - 1);
@@ -196,7 +205,30 @@
                     reorderedAuthors.push(authorParts[i]);
                 }
             }
-            let string7 = reorderedAuthors.join(', ') + ', ';
+            // let string7 = reorderedAuthors.join(', ') + ', ';
+            let string7 = '';
+
+            if (reorderedAuthors.length === 0) {
+                // 如果没有作者，保持空字符串
+                string7 = '';
+            } else if (reorderedAuthors.length === 1) {
+                // 如果只有一个作者，直接添加冒号和空格
+                string7 = reorderedAuthors[0] + ': ';
+            } else if (reorderedAuthors.length === 2) {
+                // 如果有两个作者，用 " and " 连接
+                string7 = reorderedAuthors.join(' and ') + ': ';
+            } else {
+                // 如果有三个或更多作者
+                // 取出最后一个作者
+                let lastAuthor = reorderedAuthors[reorderedAuthors.length - 1];
+                // 取出除最后一个作者之外的其他作者
+                let otherAuthors = reorderedAuthors.slice(0, -1);
+                // 将其他作者用逗号和空格连接
+                string7 = otherAuthors.join(', ');
+                // 在最后一个作者前添加 ", and "
+                string7 += ', and ' + lastAuthor + ': ';
+            }
+
             appendDebugInfo('重排后的作者名 (string7)', string7);
 
             // 对 string7 进行格式检查和修正
@@ -213,14 +245,16 @@
                 }
             }
             // 重新构建 string7
-            const newString7 = modifiedAuthorSubstrings.join(', ') + ', ';
+            // const newString7 = modifiedAuthorSubstrings.join(', ') + ', ';
+            const newString7 = modifiedAuthorSubstrings.join(', ') + ' ';
             if (containsEllipsis) {
                 appendDebugInfo('修正后的作者名 (string7)', newString7);
             }
             // 更新 string7 为新的值
             string7 = newString7;
 
-            result3 = `${string7}${string2}, ${string6} ${string4}`;
+            // result3 = `${string7}${string2}, ${string6} ${string4}`;
+            result3 = `${string7}${string6}, ${string4}`;
             appendDebugInfo('最终合并的新格式参考文献 (result3)', result3);
 
             // 显示复制按钮
