@@ -7,6 +7,7 @@
 ```bash
 01_GBT_APA.js              # 仅从页面上获取GBT和APA格式的参考文献，未合成新格式文献
 01_GBT_APA_doi.js          # 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询
+01_GBT_api_items.js        # 通过api返回的信息获取显示：标题、期刊名、出版年、卷号、期号、页码、文章号、作者等信息
 02_elsevier.js             # 基于获取的GBT和APA格式参考文献，转换成适用于elsevier期刊的格式，但是期刊缩写采用脚本内硬编码实现
 03_api_cros.js             # 脚本通过指定的远程URL获取期刊简称字典，用于将期刊全称转换为简称。使用 GM_xmlhttpRequest 解决跨域请求
 03_api_cros_debug.js       # 在03_api_cros.js基础上优化，包括不打印所有期刊名称、新增复制按钮、优化页面字体和布局
@@ -92,6 +93,35 @@ DOI: 10.1038/35003143
 匹配结果: 匹配成功
 ```
 
+
+# 3. `01_GBT_api_items.js`
+
+### 1. 功能特性
+
+通过api返回的信息获取显示：  标题、期刊名、出版年、卷号、期号、页码、文章号、作者等信息，后续脚本可以基于这些信息生成任意格式参考文献。
+
+
+### 2. 提取结果示例
+
+
+```txt
+提取结果
+GB/T 7714: Wang T, Liu X, Sun Y, et al. Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations[J]. Chemical Geology, 2020, 555: 119814.
+APA: Wang T, Liu X, Sun Y, et al. Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations[J]. Chemical Geology, 2020, 555: 119814.
+提取的文章标题: Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations
+DOI 查询结果
+DOI: 10.1016/j.chemgeo.2020.119814
+标题: Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations
+期刊名: Chemical Geology
+出版年: 2020
+卷: 555
+期: 未找到期号
+页码: 119814
+文章号: 119814
+完整作者信息: Tianhua Wang, Xiandong Liu, Yicheng Sun, Xiancai Lu, Rucheng Wang
+缩写作者信息: T. Wang, X. Liu, Y. Sun, X. Lu, and R. Wang
+匹配结果: 匹配成功
+```
 
 
 
