@@ -15,24 +15,25 @@
 
 # 3. 环境配置
 
-## 1. `01_GBT_APA.js`
+# 1. `01_GBT_APA.js`
 
 - 仅显示 GB/T 和 APA格式参考文献，且不支持复制粘贴
 
 
 
-## 2. `01_GBT_APA_doi.js`
+# 2. `01_GBT_APA_doi.js`
 
 ### 1. 功能特性
 
-1. 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询。
+1. 在`01_GBT_APA.js`基础上通过`CrossRef API`新增doi和title查询。
 
-2. 基于 GB/T 7714 格式参考文献提取论文标题，与CrossRef API返回的标题进行相似度分析，显示匹配结果，从而判断 DOI 的准确性。
+2. 基于 `GB/T 7714` 格式参考文献提取论文标题，与`CrossRef API`返回的标题进行相似度分析，显示匹配结果，从而判断 DOI 的准确性。
     - 上述相似度计算算法基于 Levenshtein 距离，通过计算提取标题和查询标题之间的最小编辑操作次数，并将相似度（`1 - 编辑距离 / 最大字符串长度`）与设定的阈值（`0.8`）比较来判断是否匹配成功。
     - 这种算法的特点是 灵活处理字符串之间的轻微差异（如拼写、格式），但对长字符串的效率较低且无法捕捉语义相似性。
 
 3. 新增一个校验，即判断通过CrossRef API查询到的title是否是 `GB/T 7714` 格式参考文献的一部分（标题部分），即判断查询到的title是否是准确的，从而确保获取的doi是正确的。有什么好的实现思路呢？是否需要使用模糊查询呢？严格匹配字符串似乎很容易出问题，因为可能会有一些格式问题。
 
+注意：代码在进行 DOI 查询时，使用的是从网页上提取的 `GB/T 7714` 格式的完整引用字符串 gbText 作为查询参数，发送给 `CrossRef API` 进行搜索。
 
 
 ### 2. 提取结果示例
@@ -58,7 +59,7 @@ DOI: 10.1038/35003143
 
 
 
-## 3. `02_elsevier.js`
+# 3. `02_elsevier.js`
 
 ### 1. 功能特性
 
@@ -104,7 +105,7 @@ APA 作者部分 (authorParts): Schettino,E.,González-Jiménez,J. M.,Marchesi,C
 
 
 
-## 4. `03_api_cros.js`
+# 4. `03_api_cros.js`
 
 
 ### 1. 功能特性
@@ -154,7 +155,7 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 
 
 
-## 5. `03_api_cros_debug.js`
+# 5. `03_api_cros_debug.js`
 
 ### 1. 新增功能
 
@@ -181,7 +182,7 @@ APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S
 
 
 
-## 6. `04_api_cros_doi.js`
+# 6. `04_api_cros_doi.js`
 
 ### 1. 功能特性
 
