@@ -50,11 +50,29 @@ const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText
 
 
 
-### 2. 提取结果示例
+### 2. 编程思路
+
+**关键思路一**：
+
+新增显示基于 crossRef 查询返回的作者信息，按照如下格式显示
+
+1. 对于每个作者，按照 given+" "+family 进行拼接，不同作者之间使用", "进行拼接 （完整作者信息）
+
+
+能不能在上述代码基础上继续修改？（缩写作者信息）
+
+1. 对于每一个作者的 given名 字符串，如果字符串中含有空格，则使用空格将given名分割成若干部分，对于每一部分保留首字母并大写并添加"."，然后再将这几部分拼接到一块作为缩写的given名
+
+2. 如果有两个作者，则使用 " and " 进行拼接；如果有三个及以上的作者，最后两个作者之间使用 ", and " 进行拼接，其余作者之间使用", "进行拼接
+
+
+
+### 3. 提取结果示例
 
 - 测试结果1：
 
 ```txt
+提取结果
 GB/T 7714: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
 
 APA: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
@@ -65,6 +83,10 @@ DOI 查询结果
 DOI: 10.1038/35003143
 
 标题: A first-order liquid–liquid phase transition in phosphorus
+
+完整作者信息: Yoshinori Katayama, Takeshi Mizutani, Wataru Utsumi, Osamu Shimomura, Masaaki Yamakata, Ken-ichi Funakoshi
+
+缩写作者信息: Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, and K. Funakoshi
 
 匹配结果: 匹配成功
 ```
