@@ -11,6 +11,7 @@
 03_api_cros.js             # 脚本通过指定的远程URL获取期刊简称字典，用于将期刊全称转换为简称。使用 GM_xmlhttpRequest 解决跨域请求
 03_api_cros_debug.js       # 在03_api_cros.js基础上优化，包括不打印所有期刊名称、新增复制按钮、优化页面字体和布局
 04_api_cros_doi.js         # 在 03_api_cros_debug.js 基础上新增doi查询、核验，生成带有doi格式的参考文献
+05_MMTB_doi.js             # 适用于MMTB期刊格式的参考文献生成
 ```
 
 # 3. 环境配置
@@ -42,6 +43,12 @@
 ```js
 const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText)}`;
 ```
+
+- 其他：
+    - 注意：`https://scholar.google.com.hk/` 域名可能会有提示 "我们的系统检测到您的计算机网络中存在异常流量"，限制使用。
+    - 但是 `https://scholar.google.com/`  不会限制，使用插件时要注意
+
+
 
 ### 2. 提取结果示例
 
@@ -262,5 +269,80 @@ API 返回的标题: Metastable silica high pressure polymorphs as structural pr
 DOI 查询结果: 找到匹配的 DOI: 10.1038/s41467-018-07265-z
 最终合成的新格式参考文献 (result4): E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, et al., Metastable silica high pressure polymorphs as structural proxies of deep Earth silicate melts, Nat. Commun. 9 (2018) 4789, https://doi.org/10.1038/s41467-018-07265-z.
 ```
+
+
+# 7. `05_MMTB_doi.js`
+
+
+### 1. 功能特性
+
+
+
+
+
+### 2. 编程思路
+
+在 `04_api_cros_doi.js` 基础上进行修改和扩展，下面是关键修改地方
+
+1. 关键修改一：
+
+```js
+let string7 = reorderedAuthors.join(', ') + ', ';
+```
+能否修改上述代码，假如 reorderedAuthors 中作者数量等于2，两个作者使用`" and "`进行连接；如果作者数量大于2，对于倒数第一个和倒数第二个作者，使用`", and "`进行连接，其余作者之间连接仍保持为`', '`  例如  `"S.C. Duan, X.L. Guo, H.J. Guo and J. Guo,"` 
+上述代码怎么修改最简单？
+
+
+2. 关键修改二：
+
+E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, et al. Nat. Commun., 2018, vol. 9, pp. 4789, https://doi.org/10.1038/s41467-018-07265-z.
+对于上面这个参考文献，"pp. 4789" 部分使用正确吗，还是应该用"p. 4789"？这部分不应该是一个页码范围吗？
+
+```js
+const string4 = `${s1}, vol. ${s2}, pp. ${s4}.`;
+```
+能否修改上述代码，新增一个判断，如果s4中含有"-"，则 （适用于有页码范围的情况）
+
+```js
+const string4 = `${s1}, vol. ${s2}, pp. ${s4}.`; 
+```
+
+否则（适用于仅有文章号，没有页码的情况）
+
+```js
+const string4 = `${s1}, vol. ${s2}, ${s4}.`;
+```
+
+
+
+### 3. 提取结果示例
+
+- 测试结果1：
+
+```txt
+信息: 正在加载期刊简称...
+GB/T 7714 引用: Katayama Y, Mizutani T, Utsumi W, et al. A first-order liquid–liquid phase transition in phosphorus[J]. Nature, 2000, 403(6766): 170-173.
+APA 引用: Katayama, Y., Mizutani, T., Utsumi, W., Shimomura, O., Yamakata, M., & Funakoshi, K. I. (2000). A first-order liquid–liquid phase transition in phosphorus. Nature, 403(6766), 170-173.
+文章标题 (string2): A first-order liquid–liquid phase transition in phosphorus
+卷、出版年和页码范围 (string3): 2000, 403(6766): 170-173
+格式化的出版信息 (string4): 2000, vol. 403, pp. 170-173.
+期刊全称 (string5): Nature
+期刊简称或全称 (string6): Nature
+APA 作者部分 (authorParts): Katayama,Y.,Mizutani,T.,Utsumi,W.,Shimomura,O.,Yamakata,M.,& Funakoshi,K. I.
+重排后的作者名 (string7): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, and K.I. Funakoshi:
+最终合并的新格式参考文献 (result3): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, and K.I. Funakoshi: Nature, 2000, vol. 403, pp. 170-173.
+信息: 正在查询 DOI...
+API 返回的标题: A first-order liquid–liquid phase transition in phosphorus
+计算的相似度: 100.00%
+DOI 查询结果: 找到匹配的 DOI: 10.1038/35003143
+最终合成的新格式参考文献 (result4): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, and K.I. Funakoshi: Nature, 2000, vol. 403, pp. 170-173, https://doi.org/10.1038/35003143.
+```
+
+
+
+
+
+
+
 
 
