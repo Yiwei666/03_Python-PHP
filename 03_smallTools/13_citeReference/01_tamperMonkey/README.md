@@ -12,7 +12,7 @@
 03_api_cros.js             # 脚本通过指定的远程URL获取期刊简称字典，用于将期刊全称转换为简称。使用 GM_xmlhttpRequest 解决跨域请求
 03_api_cros_debug.js       # 在03_api_cros.js基础上优化，包括不打印所有期刊名称、新增复制按钮、优化页面字体和布局
 04_api_cros_doi.js         # 在 03_api_cros_debug.js 基础上新增doi查询、核验，生成带有doi格式的参考文献
-05_MMTB_doi.js             # 适用于MMTB期刊格式的参考文献生成
+05_MMTB_doi.js             # 适用于MMTB期刊格式的参考文献生成，在04_api_cros_doi.js基础上修改，修改部分包括：使用and替代&，删除论文title，调整卷、年、页码/文章号顺序等
 05_MMTB_api_author.js      # 使用 CrossRef API 返回的作者信息构建新格式的作者部分，解决 apa格式中的 and替代&、省略号"..."、given名中可能存在空格、作者不全等问题。
 ```
 
