@@ -33,8 +33,15 @@
 
 3. 新增一个校验，即判断通过CrossRef API查询到的title是否是 `GB/T 7714` 格式参考文献的一部分（标题部分），即判断查询到的title是否是准确的，从而确保获取的doi是正确的。有什么好的实现思路呢？是否需要使用模糊查询呢？严格匹配字符串似乎很容易出问题，因为可能会有一些格式问题。
 
-- 注意：代码在进行 DOI 查询时，使用的是从网页上提取的 `GB/T 7714` 格式的完整引用字符串 gbText 作为查询参数，发送给 `CrossRef API` 进行搜索。
 
+- 注意：
+    - 代码在进行 DOI 查询时，使用的是从网页上提取的 `GB/T 7714` 格式的完整引用字符串 `gbText` 作为查询参数，发送给 `CrossRef API` 进行搜索。
+    - 仅用标题可能会导致检索到多个相同标题的文献，使用完整引用可减少这种情况。
+    - 使用 `encodeURIComponent` 对引用字符串进行 URL 编码，构建查询 URL。
+
+```js
+const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText)}`;
+```
 
 ### 2. 提取结果示例
 
