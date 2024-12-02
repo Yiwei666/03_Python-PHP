@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name         Extract Citation Data with DOI Lookup
+// @name         Extract Citation Data with DOI Lookup and Authors
 // @namespace    http://tampermonkey.net/
-// @version      1.2
-// @description  Extract citation strings from GB/T 7714 and APA rows on Google Scholar and query DOI via CrossRef API
+// @version      1.3
+// @description  Extract citation strings from GB/T 7714 and APA rows on Google Scholar, query DOI and authors via CrossRef API
 // @author       Ayo
-// @match        https://scholar.google.com.hk/*
+// @match        https://scholar.google.com/*
 // @grant        GM_xmlhttpRequest
 // @connect      api.crossref.org
 // ==/UserScript==
@@ -68,7 +68,7 @@
     });
 
     // 动态创建弹窗显示结果
-    function displayResult({ gbText, apaText, doi = '查询中...', title = '查询中...', matchResult = '', extractedTitle = '' }) {
+    function displayResult({ gbText, apaText, doi = '查询中...', title = '查询中...', authors = '查询中...', matchResult = '', extractedTitle = '' }) {
         let container = document.getElementById('result-container');
         if (!container) {
             container = document.createElement('div');
@@ -77,6 +77,7 @@
             container.style.top = '50px';
             container.style.right = '10px';
             container.style.width = '300px';
+            container.style.maxHeight = '500px';
             container.style.padding = '10px';
             container.style.border = '1px solid #ccc';
             container.style.backgroundColor = '#fff';
@@ -94,6 +95,7 @@
             <h3>DOI 查询结果</h3>
             <p><strong>DOI:</strong> ${doi}</p>
             <p><strong>标题:</strong> ${title}</p>
+            <p><strong>作者:</strong> ${authors}</p>
             <p><strong>匹配结果:</strong> ${matchResult}</p>
         `;
     }
@@ -113,23 +115,27 @@
                         const doi = firstResult.DOI || '未找到 DOI';
                         const title = firstResult.title ? firstResult.title.join(' ') : '未找到标题';
 
+                        // 获取作者信息
+                        const authorsArray = firstResult.author || [];
+                        const authors = authorsArray.map(author => `${author.given || ''} ${author.family || ''}`.trim()).join(', ') || '未找到作者信息';
+
                         // 校验标题是否匹配
                         const matchResult = compareTitles(title, extractedTitle)
                             ? '匹配成功'
                             : '标题不匹配，请检查引用或查询结果';
 
                         // 更新弹窗内容
-                        displayResult({ gbText: reference, apaText: reference, doi, title, matchResult, extractedTitle });
+                        displayResult({ gbText: reference, apaText: reference, doi, title, authors, matchResult, extractedTitle });
                     } else {
-                        displayResult({ gbText: reference, apaText: reference, doi: '未找到 DOI', title: '未找到标题', extractedTitle });
+                        displayResult({ gbText: reference, apaText: reference, doi: '未找到 DOI', title: '未找到标题', authors: '未找到作者信息', extractedTitle });
                     }
                 } catch (e) {
                     console.error("解析 API 响应时出错:", e);
-                    displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', extractedTitle });
+                    displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', authors: '查询失败', extractedTitle });
                 }
             },
             onerror: () => {
-                displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', extractedTitle });
+                displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', authors: '查询失败', extractedTitle });
             }
         });
     }
@@ -150,7 +156,7 @@
 
         // 使用字符串相似度算法（Levenshtein 距离）
         const similarity = calculateSimilarity(title1.toLowerCase(), title2.toLowerCase());
-        return similarity > 0.8; // 阈值设置为 80%
+        return similarity > 0.5; // 阈值设置为 80%
     }
 
     // 计算字符串相似度（Levenshtein 距离）
