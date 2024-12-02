@@ -12,6 +12,7 @@
 03_api_cros_debug.js       # 在03_api_cros.js基础上优化，包括不打印所有期刊名称、新增复制按钮、优化页面字体和布局
 04_api_cros_doi.js         # 在 03_api_cros_debug.js 基础上新增doi查询、核验，生成带有doi格式的参考文献
 05_MMTB_doi.js             # 适用于MMTB期刊格式的参考文献生成
+05_MMTB_api_author.js      # 使用 CrossRef API 返回的作者信息构建新格式的作者部分，解决 apa格式中的 and替代&、省略号"..."、given名中可能存在空格、作者不全等问题。
 ```
 
 # 3. 环境配置
@@ -366,6 +367,58 @@ API 返回的标题: A first-order liquid–liquid phase transition in phosphoru
 DOI 查询结果: 找到匹配的 DOI: 10.1038/35003143
 最终合成的新格式参考文献 (result4): Y. Katayama, T. Mizutani, W. Utsumi, O. Shimomura, M. Yamakata, and K.I. Funakoshi: Nature, 2000, vol. 403, pp. 170-173, https://doi.org/10.1038/35003143.
 ```
+
+
+# 8. `05_MMTB_api_author.js`
+
+### 1. 功能特性
+
+- 使用 CrossRef API 返回的作者信息构建新格式的作者部分，解决 apa格式中的 and替代&、省略号"..."、given名中可能存在空格、作者不全等问题。
+
+
+### 2. 编程思路
+
+**关键思路一：**
+
+我认为`05_MMTB_doi.js`代码中，从apa格式中提取作者信息，构建 string7 的过程不够优雅，我想到了另外一种更好的方式：使用CrossRef返回的作者信息来构建 string7。
+
+1. 对于CrossRef返回的每个作者，按照 given+" "+family 进行拼接，不同作者之间使用", "进行拼接。
+
+2. 对于每一个作者的 given名 字符串，如果字符串中含有空格，则使用空格将given名分割成若干部分，对于每一部分保留首字母并大写并添加"."，然后再将这几部分拼接到一块作为缩写的given名。
+
+3. 如果有两个作者，则使用 " and " 进行拼接；如果有三个及以上的作者，最后两个作者之间使用 ", and " 进行拼接，其余作者之间使用", "进行拼接。
+
+基于上述方式来获取 string7，其余代码部分不要变，只修改string7 的构建方式
+
+
+### 3. 提取结果示例
+
+```txt
+信息: 正在加载期刊简称...
+GB/T 7714 引用: Suer T A, Siebert J, Remusat L, et al. Reconciling metal–silicate partitioning and late accretion in the Earth[J]. Nature Communications, 2021, 12(1): 2913.
+APA 引用: Suer, T. A., Siebert, J., Remusat, L., Day, J. M., Borensztajn, S., Doisneau, B., & Fiquet, G. (2021). Reconciling metal–silicate partitioning and late accretion in the Earth. Nature Communications, 12(1), 2913.
+文章标题 (string2): Reconciling metal–silicate partitioning and late accretion in the Earth
+卷、出版年和页码范围 (string3): 2021, 12(1): 2913
+格式化的出版信息 (string4): 2021, vol. 12, 2913.
+期刊全称 (string5): Nature Communications
+期刊简称或全称 (string6): Nat. Commun.
+初步合并的新格式参考文献 (result3): Nat. Commun., 2021, vol. 12, 2913.
+信息: 正在查询 DOI...
+API 返回的标题: Reconciling metal–silicate partitioning and late accretion in the Earth
+计算的相似度: 100.00%
+DOI 查询结果: 找到匹配的 DOI: 10.1038/s41467-021-23137-5
+构建的作者字符串 (string7): T. Suer, J. Siebert, L. Remusat, J.M.D. Day, S. Borensztajn, B. Doisneau, and G. Fiquet:
+最终合成的新格式参考文献 (result): T. Suer, J. Siebert, L. Remusat, J.M.D. Day, S. Borensztajn, B. Doisneau, and G. Fiquet: Nat. Commun., 2021, vol. 12, 2913, https://doi.org/10.1038/s41467-021-23137-5.
+```
+
+
+
+
+
+
+
+
+
 
 
 
