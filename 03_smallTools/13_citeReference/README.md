@@ -172,6 +172,9 @@ output_file = "sorted_06_journal_Abbreviation.txt"
 
 - 功能：PHP代码实现了一个基于网页的期刊全称与简写管理系统，支持用户新增键值对、校验重复、按字母排序保存，并通过表格展示所有期刊信息。
 
+- 期刊简写查询网站：https://cassi.cas.org/search.jsp
+
+
 ### 1. 代码思路
 
 1. 首先读取 `/home/01_html/06_journal_Abbreviation.txt`，其中每一行都是由`“期刊全称/简写”`组成，使用`“/”`分隔，分别对应期刊的键和值，示例内容如下。
