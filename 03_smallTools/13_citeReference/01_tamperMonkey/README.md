@@ -301,13 +301,14 @@ let string7 = reorderedAuthors.join(', ') + ', ';
 
 2. 关键修改二：
 
-E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, et al. Nat. Commun., 2018, vol. 9, pp. 4789, https://doi.org/10.1038/s41467-018-07265-z.
-对于上面这个参考文献，"pp. 4789" 部分使用正确吗，还是应该用"p. 4789"？这部分不应该是一个页码范围吗？
+`E. Bykova, M. Bykov, A. Černok, J. Tidholm, S.I. Simak, O. Hellman, et al. Nat. Commun., 2018, vol. 9, pp. 4789, https://doi.org/10.1038/s41467-018-07265-z.`
+
+对于上面这个参考文献，`"pp. 4789"` 部分使用正确吗，还是应该用`"p. 4789"`？这部分不应该是一个页码范围吗？
 
 ```js
 const string4 = `${s1}, vol. ${s2}, pp. ${s4}.`;
 ```
-能否修改上述代码，新增一个判断，如果s4中含有"-"，则 （适用于有页码范围的情况）
+能否修改上述代码，新增一个判断，如果s4中含有`"-"`，则 （适用于有页码范围的情况）
 
 ```js
 const string4 = `${s1}, vol. ${s2}, pp. ${s4}.`; 
