@@ -8,10 +8,14 @@
 01_GBT_APA.js              # 仅从页面上获取GBT和APA格式的参考文献，未合成新格式文献
 01_GBT_APA_doi.js          # 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询
 01_GBT_api_items.js        # 通过api返回的信息获取显示：标题、期刊名、出版年、卷号、期号、页码、文章号、作者等信息
+
+# Elsevier
 02_elsevier.js             # 基于获取的GBT和APA格式参考文献，转换成适用于elsevier期刊的格式，但是期刊缩写采用脚本内硬编码实现
 03_api_cros.js             # 脚本通过指定的远程URL获取期刊简称字典，用于将期刊全称转换为简称。使用 GM_xmlhttpRequest 解决跨域请求
 03_api_cros_debug.js       # 在03_api_cros.js基础上优化，包括不打印所有期刊名称、新增复制按钮、优化页面字体和布局
 04_api_cros_doi.js         # 在 03_api_cros_debug.js 基础上新增doi查询、核验，生成带有doi格式的参考文献
+
+# Springer
 05_MMTB_doi.js             # 适用于MMTB期刊格式的参考文献生成，在04_api_cros_doi.js基础上修改，修改部分包括：使用and替代&，删除论文title，调整卷、年、页码/文章号顺序等
 05_MMTB_api_author.js      # 使用 CrossRef API 返回的作者信息，来构建新格式参考文献的作者部分，解决 apa格式中的 and替代&、省略号"..."、given名中可能存在空格、作者不全等问题。
 ```
