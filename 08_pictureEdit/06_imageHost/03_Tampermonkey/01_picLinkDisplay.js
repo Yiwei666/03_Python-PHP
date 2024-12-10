@@ -4,7 +4,7 @@
 // @version      0.4
 // @description  try to take over the web with new download features
 // @author       You
-// @match        *://*/*
+// @match        https://x.com/*
 // @grant        none
 // ==/UserScript==
 
