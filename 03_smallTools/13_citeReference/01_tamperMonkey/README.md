@@ -20,7 +20,19 @@
 05_MMTB_api_author.js      # 使用 CrossRef API 返回的作者信息，来构建新格式参考文献的作者部分，解决 apa格式中的 and替代&、省略号"..."、given名中可能存在空格、作者不全等问题。
 ```
 
-# 3. 环境配置
+# 3. 参考文献格式
+
+### 1. Journal of molecular liquids
+
+
+
+### 2. Metallurgical and Materials Transactions B
+
+
+### 3. 
+
+
+# 4. 环境配置
 
 # 1. `01_GBT_APA.js`
 
