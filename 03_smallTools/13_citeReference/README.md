@@ -10,9 +10,9 @@
 06_journal_Abbreviation.txt                # 存储期刊全称和简写的txt文本，按照首字母排序
 06_sort_journal_Abbreviation.py            # 对06_journal_Abbreviation.txt所有行按照英文字母递增进行排序
 06_journal_abbreviation_AddView.php        # 在线写入和查看 06_journal_Abbreviation.txt 中的内容
+
 06_journal_Abbreviation_UBC-library.txt    # 从UBC大学图书馆爬取的期刊全称和缩写
-
-
+06_journal_name_extract_UBC.py             # 从html文件中提取期刊全称和缩写的脚本
 ```
 
 
@@ -205,6 +205,25 @@ $file_path = "/home/01_html/06_journal_Abbreviation.txt";
 ```bash
 chown www-data:www-data /home/01_html/06_journal_Abbreviation.txt
 ```
+
+
+## 4. `06_journal_name_extract_UBC.py`
+
+提取UBC图书馆网页中的期刊全称和简写到txt文本中
+
+### 1. 代码思路
+
+- 脚本所在目录下有一个 `journal.html` 文件，请编写python脚本，提取其中的一些信息。
+
+- `journal.html`从`https://woodward.library.ubc.ca/woodward/research-help/journal-abbreviations/`网址保存即可。
+
+- 首先查找 `id="jaresults"`  的div标签，其下有一个table标签，table中有tbody标签，该标签下有很多 tr子标签，筛选满足要求的tr子标签，确保tr子标签中有两个td标签，且两个td标签均不为空，将第二个td标签中的内容和第一个td标签中的内容拼接，使用`"/"`连接，第二个在前，第一个在后。将提取后的内容写入到 `journal.txt` 文件中。
+
+
+
+
+
+
 
 
 # 4. 参考资料
