@@ -64,6 +64,7 @@
     - 代码在进行 DOI 查询时，使用的是从网页上提取的 `GB/T 7714` 格式的完整引用字符串 `gbText` 作为查询参数，发送给 `CrossRef API` 进行搜索。
     - 仅用标题可能会导致检索到多个相同标题的文献，使用完整引用可减少这种情况。
     - 使用 `encodeURIComponent` 对引用字符串进行 URL 编码，构建查询 URL。
+    - 期刊缩写查询网站：[https://cassi.cas.org/search.jsp](https://cassi.cas.org/search.jsp)
 
 ```js
 const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText)}`;
