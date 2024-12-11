@@ -15,6 +15,8 @@
 
     const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.txt'; // 替换为实际的期刊简称数据源
     let journalAbbreviations = {}; // 缓存期刊简称字典
+    let gbText = ''; // 全局变量，保存 GB/T 7714 引用
+    let apaText = ''; // 全局变量，保存 APA 引用
 
     // 加载期刊简称字典
     function loadJournalAbbreviations() {
@@ -54,7 +56,6 @@
             console.error('期刊简称加载失败:', error);
         }
 
-        // 创建按钮
         const button = document.createElement('button');
         button.textContent = '提取内容并查询 DOI';
         button.style.position = 'fixed';
@@ -68,7 +69,6 @@
         button.style.cursor = 'pointer';
         document.body.appendChild(button);
 
-        // 点击按钮事件
         button.addEventListener('click', function () {
             try {
                 const gbElement = document.evaluate(
@@ -92,10 +92,9 @@
                     return;
                 }
 
-                const gbText = gbElement.textContent.trim();
-                const apaText = apaElement.textContent.trim();
+                gbText = gbElement.textContent.trim(); // 全局变量存储 GB/T 7714 引用
+                apaText = apaElement.textContent.trim(); // 全局变量存储 APA 引用
 
-                // 提取 GB/T 7714 中的标题
                 const extractedTitle = extractTitleFromReference(gbText);
 
                 displayResult({ gbText, apaText, extractedTitle });
@@ -108,7 +107,6 @@
         });
     });
 
-    // 动态创建弹窗显示结果
     function displayResult({ gbText, apaText, doi = '查询中...', title = '查询中...', fullAuthors = '查询中...', abbreviatedAuthors = '查询中...', journal = '查询中...', journalAbbreviation = '查询中...', publicationYear = '查询中...', volume = '查询中...', issue = '查询中...', pages = '查询中...', articleNumber = '查询中...', matchResult = '', extractedTitle = '' }) {
         let container = document.getElementById('result-container');
         if (!container) {
@@ -149,7 +147,6 @@
         `;
     }
 
-    // 查询 CrossRef API 并更新弹窗
     function queryDOI(reference, extractedTitle) {
         const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(reference)}`;
 
@@ -182,68 +179,59 @@
                             ? '匹配成功'
                             : '标题不匹配，请检查引用或查询结果';
 
-                        displayResult({ gbText: reference, apaText: reference, doi, title, journal, journalAbbreviation, publicationYear, volume, issue, pages, articleNumber, fullAuthors, abbreviatedAuthors, matchResult, extractedTitle });
+                        displayResult({
+                            gbText,
+                            apaText,
+                            doi, title, journal, journalAbbreviation,
+                            publicationYear, volume, issue, pages,
+                            articleNumber, fullAuthors, abbreviatedAuthors,
+                            matchResult, extractedTitle
+                        });
                     } else {
-                        displayResult({ gbText: reference, apaText: reference, doi: '未找到 DOI', title: '未找到标题', journal: '未找到期刊名', journalAbbreviation: '未找到期刊简称', publicationYear: '未找到出版年', volume: '未找到卷号', issue: '未找到期号', pages: '未找到页码', articleNumber: '未找到文章号', fullAuthors: '未找到作者信息', abbreviatedAuthors: '未找到作者信息', extractedTitle });
+                        displayResult({
+                            gbText,
+                            apaText,
+                            doi: '未找到 DOI', title: '未找到标题',
+                            journal: '未找到期刊名', journalAbbreviation: '未找到期刊简称',
+                            publicationYear: '未找到出版年', volume: '未找到卷号',
+                            issue: '未找到期号', pages: '未找到页码',
+                            articleNumber: '未找到文章号',
+                            fullAuthors: '未找到作者信息',
+                            abbreviatedAuthors: '未找到作者信息',
+                            extractedTitle
+                        });
                     }
                 } catch (e) {
                     console.error("解析 API 响应时出错:", e);
-                    displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', journal: '查询失败', journalAbbreviation: '查询失败', publicationYear: '查询失败', volume: '查询失败', issue: '查询失败', pages: '查询失败', articleNumber: '查询失败', fullAuthors: '查询失败', abbreviatedAuthors: '查询失败', extractedTitle });
+                    displayResult({
+                        gbText,
+                        apaText,
+                        doi: '查询失败', title: '查询失败',
+                        journal: '查询失败', journalAbbreviation: '查询失败',
+                        publicationYear: '查询失败', volume: '查询失败',
+                        issue: '查询失败', pages: '查询失败',
+                        articleNumber: '查询失败',
+                        fullAuthors: '查询失败',
+                        abbreviatedAuthors: '查询失败',
+                        extractedTitle
+                    });
                 }
             },
             onerror: () => {
-                displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', journal: '查询失败', journalAbbreviation: '查询失败', publicationYear: '查询失败', volume: '查询失败', issue: '查询失败', pages: '查询失败', articleNumber: '查询失败', fullAuthors: '查询失败', abbreviatedAuthors: '查询失败', extractedTitle });
+                displayResult({
+                    gbText,
+                    apaText,
+                    doi: '查询失败', title: '查询失败',
+                    journal: '查询失败', journalAbbreviation: '查询失败',
+                    publicationYear: '查询失败', volume: '查询失败',
+                    issue: '查询失败', pages: '查询失败',
+                    articleNumber: '查询失败',
+                    fullAuthors: '查询失败',
+                    abbreviatedAuthors: '查询失败',
+                    extractedTitle
+                });
             }
         });
-    }
-
-    // 格式化完整作者信息
-    function formatFullAuthors(authorsArray) {
-        if (!authorsArray || authorsArray.length === 0) {
-            return '';
-        }
-
-        const formattedAuthors = authorsArray.map(author => {
-            const given = author.given || '';
-            const family = author.family || '';
-            return `${given} ${family}`.trim();
-        });
-
-        return formattedAuthors.join(', ');
-    }
-
-    // 格式化缩写后的作者信息
-    function formatAbbreviatedAuthors(authorsArray) {
-        if (!authorsArray || authorsArray.length === 0) {
-            return '';
-        }
-
-        const formattedAuthors = authorsArray.map(author => {
-            const given = author.given || '';
-            const family = author.family || '';
-
-            let abbreviatedGiven = '';
-            if (given.includes(' ')) {
-                const parts = given.split(' ');
-                abbreviatedGiven = parts.map(part => part.charAt(0).toUpperCase() + '.').join('');
-            } else {
-                abbreviatedGiven = given.charAt(0).toUpperCase() + '.';
-            }
-
-            return `${abbreviatedGiven} ${family}`.trim();
-        });
-
-        const numAuthors = formattedAuthors.length;
-
-        if (numAuthors === 1) {
-            return formattedAuthors[0];
-        } else if (numAuthors === 2) {
-            return `${formattedAuthors[0]} and ${formattedAuthors[1]}`;
-        } else {
-            const allButLastTwo = formattedAuthors.slice(0, -2).join(', ');
-            const lastTwo = formattedAuthors.slice(-2).join(', and ');
-            return allButLastTwo ? `${allButLastTwo}, ${lastTwo}` : lastTwo;
-        }
     }
 
     function extractTitleFromReference(reference) {
@@ -296,5 +284,52 @@
         const parser = new DOMParser();
         const decodedString = parser.parseFromString(str, 'text/html').body.textContent || '';
         return decodedString.trim();
+    }
+
+    function formatFullAuthors(authorsArray) {
+        if (!authorsArray || authorsArray.length === 0) {
+            return '';
+        }
+
+        const formattedAuthors = authorsArray.map(author => {
+            const given = author.given || '';
+            const family = author.family || '';
+            return `${given} ${family}`.trim();
+        });
+
+        return formattedAuthors.join(', ');
+    }
+
+    function formatAbbreviatedAuthors(authorsArray) {
+        if (!authorsArray || authorsArray.length === 0) {
+            return '';
+        }
+
+        const formattedAuthors = authorsArray.map(author => {
+            const given = author.given || '';
+            const family = author.family || '';
+
+            let abbreviatedGiven = '';
+            if (given.includes(' ')) {
+                const parts = given.split(' ');
+                abbreviatedGiven = parts.map(part => part.charAt(0).toUpperCase() + '.').join('');
+            } else {
+                abbreviatedGiven = given.charAt(0).toUpperCase() + '.';
+            }
+
+            return `${abbreviatedGiven} ${family}`.trim();
+        });
+
+        const numAuthors = formattedAuthors.length;
+
+        if (numAuthors === 1) {
+            return formattedAuthors[0];
+        } else if (numAuthors === 2) {
+            return `${formattedAuthors[0]} and ${formattedAuthors[1]}`;
+        } else {
+            const allButLastTwo = formattedAuthors.slice(0, -2).join(', ');
+            const lastTwo = formattedAuthors.slice(-2).join(', and ');
+            return allButLastTwo ? `${allButLastTwo}, ${lastTwo}` : lastTwo;
+        }
     }
 })();
