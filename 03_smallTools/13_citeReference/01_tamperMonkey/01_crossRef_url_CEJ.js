@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info
 // @namespace    http://tampermonkey.net/
-// @version      1.8
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号和文章编号
-// @author      
+// @version      1.9
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号和文章编号，同时新增合成引用的复制功能
+// @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
 // @grant        GM_xmlhttpRequest
@@ -131,8 +131,8 @@
             container.style.position = 'fixed';
             container.style.top = '50px';
             container.style.right = '10px';
-            container.style.width = '350px';
-            container.style.maxHeight = '600px';
+            container.style.width = '550px';
+            container.style.maxHeight = '800px';
             container.style.padding = '10px';
             container.style.border = '1px solid #ccc';
             container.style.backgroundColor = '#fff';
@@ -173,8 +173,32 @@
             <p><strong>缩写作者信息:</strong> ${abbreviatedAuthors}</p>
             <p><strong>匹配结果:</strong> ${matchResult}</p>
             <h3>合成引用</h3>
-            <p>${composedCitation}</p>
+            <p id="composed-citation">${composedCitation}</p>
+            <button id="copy-citation-button" style="margin-top: 10px; padding: 5px 10px; background-color: #008CBA; color: white; border: none; cursor: pointer;">复制合成引用</button>
+            <span id="copy-status" style="margin-left: 10px; color: green;"></span>
         `;
+
+        // 添加复制功能
+        const copyButton = document.getElementById('copy-citation-button');
+        const copyStatus = document.getElementById('copy-status');
+
+        copyButton.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(composedCitation);
+                copyStatus.textContent = '已复制!';
+                setTimeout(() => {
+                    copyStatus.textContent = '';
+                }, 2000);
+            } catch (err) {
+                console.error('复制失败:', err);
+                copyStatus.textContent = '复制失败';
+                copyStatus.style.color = 'red';
+                setTimeout(() => {
+                    copyStatus.textContent = '';
+                    copyStatus.style.color = 'green';
+                }, 2000);
+            }
+        });
     }
 
     function queryDOI(reference, extractedTitle) {
