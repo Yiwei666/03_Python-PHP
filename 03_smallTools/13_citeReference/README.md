@@ -10,6 +10,9 @@
 06_journal_Abbreviation.txt                # 存储期刊全称和简写的txt文本，按照首字母排序
 06_sort_journal_Abbreviation.py            # 对06_journal_Abbreviation.txt所有行按照英文字母递增进行排序
 06_journal_abbreviation_AddView.php        # 在线写入和查看 06_journal_Abbreviation.txt 中的内容
+06_journal_Abbreviation_UBC-library.txt    # 从UBC大学图书馆爬取的期刊全称和缩写
+
+
 ```
 
 
