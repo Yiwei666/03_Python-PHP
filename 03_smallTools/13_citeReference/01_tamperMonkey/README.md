@@ -152,18 +152,50 @@ DOI: 10.1016/j.chemgeo.2020.119814
 
 
 
+
 # 4. `01_crossRef_url.js`
+
 
 ### 1. 功能特性
 
 保留`01_GBT_api_items.js`功能基础上，新增从外部url资源加载期刊全称-简称映射字典的功能，页面上新增显示期刊简写
 
 
+
 ### 2. 提取结果示例
 
 ```txt
+提取结果
+GB/T 7714: Nakajima K, Ohno H, Kondo Y, et al. Simultaneous material flow analysis of nickel, chromium, and molybdenum used in alloy steel by means of input–output analysis[J]. Environmental science & technology, 2013, 47(9): 4653-4660.
 
+APA: Nakajima, K., Ohno, H., Kondo, Y., Matsubae, K., Takeda, O., Miki, T., ... & Nagasaka, T. (2013). Simultaneous material flow analysis of nickel, chromium, and molybdenum used in alloy steel by means of input–output analysis. Environmental science & technology, 47(9), 4653-4660.
 
+提取的文章标题: Simultaneous material flow analysis of nickel, chromium, and molybdenum used in alloy steel by means of input–output analysis
+
+DOI 查询结果
+DOI: 10.1021/es3043559
+
+标题: Simultaneous Material Flow Analysis of Nickel, Chromium, and Molybdenum Used in Alloy Steel by Means of Input–Output Analysis
+
+期刊名: Environmental Science & Technology
+
+期刊简称: Environ. Sci. Technol.
+
+出版年: 2013
+
+卷: 47
+
+期: 9
+
+页码: 4653-4660
+
+文章号: 未找到文章号
+
+完整作者信息: Kenichi Nakajima, Hajime Ohno, Yasushi Kondo, Kazuyo Matsubae, Osamu Takeda, Takahiro Miki, Shinichiro Nakamura, Tetsuya Nagasaka
+
+缩写作者信息: K. Nakajima, H. Ohno, Y. Kondo, K. Matsubae, O. Takeda, T. Miki, S. Nakamura, and T. Nagasaka
+
+匹配结果: 匹配成功
 ```
 
 
