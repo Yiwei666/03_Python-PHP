@@ -8,6 +8,7 @@
 01_GBT_APA.js              # 仅从页面上获取GBT和APA格式的参考文献，未合成新格式文献
 01_GBT_APA_doi.js          # 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询
 01_GBT_api_items.js        # 通过api返回的信息获取显示：标题、期刊名、出版年、卷号、期号、页码、文章号、作者等信息
+01_crossRef_url.js         # 在01_GBT_api_items.js基础上新增显示期刊简写，简写是通过外部url资源加载获取的
 
 # Elsevier
 02_elsevier.js             # 基于获取的GBT和APA格式参考文献，转换成适用于elsevier期刊的格式，但是期刊缩写采用脚本内硬编码实现
@@ -32,11 +33,17 @@
 ### 3. 
 
 
+
+
+
+
 # 4. 环境配置
 
 # 1. `01_GBT_APA.js`
 
 - 仅显示 GB/T 和 APA格式参考文献，且不支持复制粘贴
+
+
 
 
 
@@ -110,6 +117,9 @@ DOI: 10.1038/35003143
 ```
 
 
+
+
+
 # 3. `01_GBT_api_items.js`
 
 ### 1. 功能特性
@@ -138,6 +148,26 @@ DOI: 10.1016/j.chemgeo.2020.119814
 缩写作者信息: T. Wang, X. Liu, Y. Sun, X. Lu, and R. Wang
 匹配结果: 匹配成功
 ```
+
+
+
+# 4. `01_crossRef_url.js`
+
+### 1. 功能特性
+
+保留`01_GBT_api_items.js`功能基础上，新增从外部url资源加载期刊全称-简称映射字典的功能，页面上新增显示期刊简写
+
+
+### 2. 提取结果示例
+
+```txt
+
+
+```
+
+
+
+
 
 
 
