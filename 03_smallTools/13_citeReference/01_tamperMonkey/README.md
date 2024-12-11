@@ -13,6 +13,7 @@
 01_GBT_APA_doi.js          # 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询
 01_GBT_api_items.js        # 通过api返回的信息获取显示：标题、期刊名、出版年、卷号、期号、页码、文章号、作者等信息
 01_crossRef_url.js         # 在01_GBT_api_items.js基础上新增显示期刊简写，简写是通过外部url资源加载获取的
+01_crossRef_url_CEJ.js     # 基于01_crossRef_url.js合成 CEJ 参考文献格式，考虑期、文章号或者页码不存在的情况
 
 # Elsevier
 02_elsevier.js             # 基于获取的GBT和APA格式参考文献，转换成适用于elsevier期刊的格式，但是期刊缩写采用脚本内硬编码实现
@@ -204,8 +205,36 @@ DOI: 10.1021/es3043559
 
 
 
+# 5. `01_crossRef_url_CEJ.js`
+
+### 1. 功能特性
+
+合成 Chemical Engineering Journal 参考文献格式，考虑期、文章号/页码不存在的情况 
 
 
+### 2. 编程思路
+
+请修改`01_crossRef_url.js`代码，新增一个显示（其余所有显示及相关代码均不变），该显示基于crossRef API 返回的信息进行合成，格式如下
+
+```
+缩写作者信息+", "+标题+", "+期刊简称+" "+卷+" ("+期+")"+" ("+出版年+") "+页码/文章号+", "+"https://doi.org/"+doi
+```
+
+注意：
+1. 如果 缩写作者信息 字符串中有and，则删除掉其中的 `"and "` 字符部分。
+2. 如果页码不存在，则使用文章号
+3. 如果期号不存在，则不需要包含  `" ("+期+")"`   这一部分
+
+非常好，请再新增一个按钮，点击该按钮能够复制 新合成的参考文献，以便我可以在其他地方粘贴
+
+
+### 3. 提取结果示例
+
+```txt
+M. Zhang Y. Li, Breaking of Henry’s law for sulfide liquid–basaltic melt partitioning of Pt and Pd, Nat. Commun. 12 (1) (2021) 5994, https://doi.org/10.1038/s41467-021-26311-x
+
+Z. Sun, Y. Ma, D. Ponge, S. Zaefferer, E.A. Jägle, B. Gault, A.D. Rollett, D. Raabe, Thermodynamics-guided alloy and process design for additive manufacturing, Nat. Commun. 13 (1) (2022) 4361, https://doi.org/10.1038/s41467-022-31969-y
+```
 
 
 
