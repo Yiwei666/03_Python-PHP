@@ -121,7 +121,7 @@ const adjustedPath = filePath.replace('D:/onedrive/', 'D:/onedrive/');          
 
 ### 4. 创建前端页面（访问：`http://localhost:4000`）
 
-在项目目录下创建一个名为 `public` 的文件夹，并在其中创建 `index.html` 文件，内容可以是修改后适用于上传的简单HTML页面：
+在项目目录`my-image-uploader`下创建一个名为 `public` 的文件夹，并在其中创建 `index.html` 文件，内容可以是修改后适用于上传的简单HTML页面：
 
 
 ```html
