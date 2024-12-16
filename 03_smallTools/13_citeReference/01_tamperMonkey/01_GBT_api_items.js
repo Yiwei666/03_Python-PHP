@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info
 // @namespace    http://tampermonkey.net/
-// @version      1.7
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号和文章编号
+// @version      1.9
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号、文章编号、出版商和 ISSN（标注类型）
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
@@ -69,7 +69,7 @@
     });
 
     // 动态创建弹窗显示结果
-    function displayResult({ gbText, apaText, doi = '查询中...', title = '查询中...', fullAuthors = '查询中...', abbreviatedAuthors = '查询中...', journal = '查询中...', publicationYear = '查询中...', volume = '查询中...', issue = '查询中...', pages = '查询中...', articleNumber = '查询中...', matchResult = '', extractedTitle = '' }) {
+    function displayResult({ gbText, apaText, doi = '查询中...', title = '查询中...', fullAuthors = '查询中...', abbreviatedAuthors = '查询中...', journal = '查询中...', publicationYear = '查询中...', volume = '查询中...', issue = '查询中...', pages = '查询中...', articleNumber = '查询中...', publisher = '查询中...', issnPrint = '查询中...', issnOnline = '查询中...', matchResult = '', extractedTitle = '' }) {
         let container = document.getElementById('result-container');
         if (!container) {
             container = document.createElement('div');
@@ -102,6 +102,9 @@
             <p><strong>期:</strong> ${issue}</p>
             <p><strong>页码:</strong> ${pages}</p>
             <p><strong>文章号:</strong> ${articleNumber}</p>
+            <p><strong>出版商:</strong> ${publisher}</p>
+            <p><strong>ISSN (印刷版):</strong> ${issnPrint}</p>
+            <p><strong>ISSN (电子版):</strong> ${issnOnline}</p>
             <p><strong>完整作者信息:</strong> ${fullAuthors}</p>
             <p><strong>缩写作者信息:</strong> ${abbreviatedAuthors}</p>
             <p><strong>匹配结果:</strong> ${matchResult}</p>
@@ -132,6 +135,13 @@
                         const pages = firstResult.page || '未找到页码';
                         const articleNumber = firstResult['article-number'] || '未找到文章号';
 
+                        // 获取出版商
+                        const publisher = firstResult.publisher || '未找到出版商';
+
+                        // 获取印刷版和电子版 ISSN
+                        const issnPrint = firstResult['ISSN-type']?.find(item => item.type === 'print')?.value || '未找到印刷版 ISSN';
+                        const issnOnline = firstResult['ISSN-type']?.find(item => item.type === 'electronic')?.value || '未找到电子版 ISSN';
+
                         // 获取完整作者信息
                         const authorsArray = firstResult.author || [];
                         const fullAuthors = formatFullAuthors(authorsArray) || '未找到作者信息';
@@ -145,17 +155,17 @@
                             : '标题不匹配，请检查引用或查询结果';
 
                         // 更新弹窗内容
-                        displayResult({ gbText: reference, apaText: reference, doi, title, journal, publicationYear, volume, issue, pages, articleNumber, fullAuthors, abbreviatedAuthors, matchResult, extractedTitle });
+                        displayResult({ gbText: reference, apaText: reference, doi, title, journal, publicationYear, volume, issue, pages, articleNumber, publisher, issnPrint, issnOnline, fullAuthors, abbreviatedAuthors, matchResult, extractedTitle });
                     } else {
-                        displayResult({ gbText: reference, apaText: reference, doi: '未找到 DOI', title: '未找到标题', journal: '未找到期刊名', publicationYear: '未找到出版年', volume: '未找到卷号', issue: '未找到期号', pages: '未找到页码', articleNumber: '未找到文章号', fullAuthors: '未找到作者信息', abbreviatedAuthors: '未找到作者信息', extractedTitle });
+                        displayResult({ gbText: reference, apaText: reference, doi: '未找到 DOI', title: '未找到标题', journal: '未找到期刊名', publicationYear: '未找到出版年', volume: '未找到卷号', issue: '未找到期号', pages: '未找到页码', articleNumber: '未找到文章号', publisher: '未找到出版商', issnPrint: '未找到印刷版 ISSN', issnOnline: '未找到电子版 ISSN', fullAuthors: '未找到作者信息', abbreviatedAuthors: '未找到作者信息', extractedTitle });
                     }
                 } catch (e) {
                     console.error("解析 API 响应时出错:", e);
-                    displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', journal: '查询失败', publicationYear: '查询失败', volume: '查询失败', issue: '查询失败', pages: '查询失败', articleNumber: '查询失败', fullAuthors: '查询失败', abbreviatedAuthors: '查询失败', extractedTitle });
+                    displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', journal: '查询失败', publicationYear: '查询失败', volume: '查询失败', issue: '查询失败', pages: '查询失败', articleNumber: '查询失败', publisher: '查询失败', issnPrint: '查询失败', issnOnline: '查询失败', fullAuthors: '查询失败', abbreviatedAuthors: '查询失败', extractedTitle });
                 }
             },
             onerror: () => {
-                displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', journal: '查询失败', publicationYear: '查询失败', volume: '查询失败', issue: '查询失败', pages: '查询失败', articleNumber: '查询失败', fullAuthors: '查询失败', abbreviatedAuthors: '查询失败', extractedTitle });
+                displayResult({ gbText: reference, apaText: reference, doi: '查询失败', title: '查询失败', journal: '查询失败', publicationYear: '查询失败', volume: '查询失败', issue: '查询失败', pages: '查询失败', articleNumber: '查询失败', publisher: '查询失败', issnPrint: '查询失败', issnOnline: '查询失败', fullAuthors: '查询失败', abbreviatedAuthors: '查询失败', extractedTitle });
             }
         });
     }
