@@ -38,7 +38,7 @@ npm install express multer
 
 ### 3. 编写Node.js服务器代码
 
-在项目目录中创建 `server.js` 文件，加入以下代码：
+在项目目录`my-image-uploader`中创建 `server.js` 文件，加入以下代码：
 
 ```js
 const express = require('express');
