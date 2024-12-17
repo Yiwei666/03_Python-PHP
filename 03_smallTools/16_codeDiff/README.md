@@ -15,6 +15,8 @@ server.js        # 后端脚本，计算两个版本的差异
 
 1. 在你的工作目录中初始化一个新的 Node.js 项目
 
+创建项目文件夹`code-diff-app`，并初始化
+
 ```
 mkdir code-diff-app
 cd code-diff-app
