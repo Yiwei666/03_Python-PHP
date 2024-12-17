@@ -13,7 +13,7 @@ server.js        # 后端脚本，计算两个版本的差异
 
 ## 1. windows本地部署
 
-### 1. 在你的工作目录中初始化一个新的 Node.js 项目
+1. 在你的工作目录中初始化一个新的 Node.js 项目
 
 ```
 mkdir code-diff-app
@@ -22,14 +22,14 @@ npm init -y
 ```
 
 
-### 2. 在项目根目录`code-diff-app`下安装依赖
+2. 在项目根目录`code-diff-app`下安装依赖
 
 ```
 npm install express body-parser diff
 ```
 
 
-### 3. 创建后端服务器
+3. 创建后端服务器
 
 在项目根目录`code-diff-app`下创建一个名为 [server.js](server.js) 的文件，并添加以下内容：
 
@@ -67,12 +67,12 @@ app.listen(PORT, () => {
 });
 ```
 
-### 4. 创建前端界面
+4. 创建前端界面
 
 在项目根目录`code-diff-app`下创建一个 public 文件夹，并在其中创建 [index.html](index.html) 文件：
 
 
-### 5. 运行应用
+5. 运行应用
 
 ```
 node server.js
