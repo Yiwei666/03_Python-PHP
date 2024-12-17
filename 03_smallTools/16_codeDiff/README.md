@@ -4,9 +4,23 @@
 
 # 2. 文件结构
 
+1. 文件
+
 ```
 index.html       # 前端网页，用于粘贴不同版本代码，显示计算差异
 server.js        # 后端脚本，计算两个版本的差异
+```
+
+2. 项目文件夹目录树
+
+```
+└── code-diff-app
+    ├── node_modules
+    ├── package-lock.json
+    ├── package.json
+    ├── public
+        └── index.html
+    └── server.js
 ```
 
 # 3. 环境配置
