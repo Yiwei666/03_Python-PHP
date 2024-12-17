@@ -69,7 +69,7 @@ app.listen(PORT, () => {
 
 4. 创建前端界面
 
-在项目根目录`code-diff-app`下创建一个 public 文件夹，并在其中创建 index.html 文件：
+在项目根目录`code-diff-app`下创建一个 public 文件夹，并在其中创建 [index.html](index.html) 文件：
 
 
 5. 运行应用
