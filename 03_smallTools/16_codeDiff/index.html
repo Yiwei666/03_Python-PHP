@@ -1,0 +1,196 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>代码差异比较工具</title>
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 Diff2Html CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+    <!-- 引入自定义样式 -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 50px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+        .container {
+            max-width: 1200px;
+        }
+        textarea {
+            resize: vertical;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+        }
+        #diffOutput {
+            margin-top: 20px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 16px; /* 增大字体 */
+            line-height: 1.4; /* 减小行间距 */
+        }
+        .header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #6c757d;
+        }
+        /* 自定义 Diff2Html 样式以接近 GitHub */
+        .diff2html-wrapper {
+            font-size: 16px; /* 增大字体 */
+            line-height: 1.4; /* 减小行间距 */
+        }
+        .diff2html-wrapper .diff {
+            border: none;
+        }
+        .diff2html-wrapper .diff-header {
+            background-color: #f6f8fa;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        .diff2html-wrapper .diff-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .diff2html-wrapper .diff-table th,
+        .diff2html-wrapper .diff-table td {
+            padding: 4px 8px; /* 减小单元格内边距 */
+            vertical-align: top;
+            white-space: pre;
+        }
+        .diff2html-wrapper .diff-line-num {
+            width: 50px;
+            text-align: right;
+            color: #6a737d;
+            user-select: none;
+        }
+        .diff2html-wrapper .diff-code {
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 16px; /* 增大字体 */
+        }
+        .diff2html-wrapper .add {
+            background-color: #e6ffed;
+        }
+        .diff2html-wrapper .remove {
+            background-color: #ffeef0;
+        }
+        .diff2html-wrapper .unchanged {
+            background-color: #fff;
+        }
+        /* 代码块高亮调整 */
+        .diff2html-wrapper pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>代码差异比较工具</h1>
+            <p class="lead">轻松比较两个代码版本的差异</p>
+        </div>
+
+        <!-- 输入区域 -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">旧版本代码</h5>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="oldCode" class="form-control" placeholder="粘贴旧版本代码"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">新版本代码</h5>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="newCode" class="form-control" placeholder="粘贴新版本代码"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="text-center mb-4">
+            <button id="compareBtn" class="btn btn-lg btn-primary">比较差异</button>
+        </div>
+
+        <!-- 差异结果显示区域 -->
+        <div id="diffOutput" class="card">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">差异结果</h5>
+            </div>
+            <div class="card-body diff2html-wrapper">
+                <pre id="diffContent" class="m-0"></pre>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>&copy; 2024 代码差异比较工具. 版权所有.</p>
+        </div>
+    </div>
+
+    <!-- 引入 Bootstrap JS 和依赖 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 引入 Diff2Html JS -->
+    <script src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html.min.js"></script>
+    <!-- 引入 highlight.js 用于语法高亮 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        document.getElementById('compareBtn').addEventListener('click', () => {
+            const oldText = document.getElementById('oldCode').value.trim();
+            const newText = document.getElementById('newCode').value.trim();
+
+            if (!oldText || !newText) {
+                alert('请确保两个代码输入框均已填写。');
+                return;
+            }
+
+            fetch('/api/diff', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ oldText, newText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('diffContent').innerText = data.error;
+                } else {
+                    // 使用 Diff2Html 生成 HTML
+                    const diffHtml = Diff2Html.html(data.diff, {
+                        drawFileList: false,
+                        matching: 'lines',
+                        outputFormat: 'line-by-line',
+                        // 语法高亮
+                        renderNothingWhenEmpty: false
+                    });
+                    document.getElementById('diffContent').innerHTML = diffHtml;
+                    // 应用语法高亮
+                    document.querySelectorAll('#diffOutput pre code').forEach((block) => {
+                        hljs.highlightBlock(block);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('diffContent').innerText = '计算差异时发生错误。';
+            });
+        });
+    </script>
+</body>
+</html>
