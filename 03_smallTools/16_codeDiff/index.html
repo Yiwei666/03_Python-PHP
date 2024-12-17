@@ -27,7 +27,7 @@
             margin-top: 20px;
             font-family: Consolas, "Courier New", monospace;
             font-size: 16px; /* 增大字体 */
-            line-height: 1.4; /* 减小行间距 */
+            line-height: 2; /* 减小行间距 */
         }
         .header {
             margin-bottom: 30px;
@@ -45,7 +45,7 @@
         /* 自定义 Diff2Html 样式以接近 GitHub */
         .diff2html-wrapper {
             font-size: 16px; /* 增大字体 */
-            line-height: 1.4; /* 减小行间距 */
+            line-height: 2; /* 减小行间距 */
         }
         .diff2html-wrapper .diff {
             border: none;
@@ -86,6 +86,19 @@
         /* 代码块高亮调整 */
         .diff2html-wrapper pre {
             margin: 0;
+        }
+        
+        /* 新增样式：使差异结果的横向滚动条悬浮在屏幕底部 */
+        #diffOutput .card-body {
+            position: -webkit-sticky;
+            position: sticky;
+            bottom: 0;
+            overflow-x: auto;
+            background: #fff;
+            z-index: 999;
+        }
+        #diffOutput #diffContent {
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -176,7 +189,6 @@
                         drawFileList: false,
                         matching: 'lines',
                         outputFormat: 'line-by-line',
-                        // 语法高亮
                         renderNothingWhenEmpty: false
                     });
                     document.getElementById('diffContent').innerHTML = diffHtml;
