@@ -31,7 +31,7 @@ npm install express body-parser diff
 
 3. 创建后端服务器
 
-在项目根目录`code-diff-app`下创建一个名为 server.js 的文件，并添加以下内容：
+在项目根目录`code-diff-app`下创建一个名为 [server.js](server.js) 的文件，并添加以下内容：
 
 ```js
 // server.js
