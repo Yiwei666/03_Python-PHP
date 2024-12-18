@@ -45,6 +45,11 @@ npm init -y
 npm install express body-parser diff
 ```
 
+- 库说明：
+    - `Express`：一个快速、灵活的Node.js Web框架，用于构建Web应用程序和API，提供了路由、视图渲染以及中间件等功能。
+    - `Body-parser`：一个Express的中间件，用于解析传入请求体的数据，特别是`application/json`和`application/x-www-form-urlencoded`格式的数据，便于在服务端访问客户端提交的参数。
+    - `Diff`：一个轻量级工具库，用于对比两段文本、数组或对象，生成差异数据，通常用于版本控制、文档比较等场景。
+
 
 3. 创建后端服务器
 
