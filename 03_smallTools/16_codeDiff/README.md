@@ -182,23 +182,23 @@ app.listen(PORT, '0.0.0.0', () => {
 
 1. Nginx 配置：
 
-您的 Nginx 配置将 `/codediffu/` 路径下的请求代理到 `http://127.0.0.1:2000/`。
+- 您的 Nginx 配置将 `/codediffu/` 路径下的请求代理到 `http://127.0.0.1:2000/`。
 
-例如，`/codediffu/api/diff` 会被代理到 `http://127.0.0.1:2000/api/diff`。
+- 例如，`/codediffu/api/diff` 会被代理到 `http://127.0.0.1:2000/api/diff`。
 
 
 2. 前端请求：
 
-您的前端代码在 `index.html` 中使用了绝对路径 `/api/diff` 发送请求。
+- 您的前端代码在 `index.html` 中使用了绝对路径 `/api/diff` 发送请求。
 
-由于应用部署在 `/codediffu/` 下，绝对路径 `/api/diff` 实际上指向的是 `https://domain.com/api/diff`，而不是 `https://domain.com/codediffu/api/diff`。
+- 由于应用部署在 `/codediffu/` 下，绝对路径 `/api/diff` 实际上指向的是 `https://domain.com/api/diff`，而不是 `https://domain.com/codediffu/api/diff`。
 
 
 3. 结果：
 
-Nginx 没有配置 `/api/diff` 路径的代理，因此会尝试在静态文件目录中查找 `/api/diff`，导致 404 错误页面被返回。
+- Nginx 没有配置 `/api/diff` 路径的代理，因此会尝试在静态文件目录中查找 `/api/diff`，导致 404 错误页面被返回。
 
-前端尝试解析返回的 HTML 404 页面作为 JSON，导致 `SyntaxError: Unexpected token '<'` 错误。
+- 前端尝试解析返回的 HTML 404 页面作为 JSON，导致 `SyntaxError: Unexpected token '<'` 错误。
 
 
 
