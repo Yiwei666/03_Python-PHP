@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <title>Code Diff Tool</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f6f8fa;
+        }
+
+        header {
+            background: #24292e;
+            color: #fff;
+            padding: 16px;
+            font-size: 18px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+
+        .input-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box label {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .input-box textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 10px;
+            font-family: Consolas, "Courier New", Courier, monospace;
+            font-size: 14px;
+            box-sizing: border-box;
+            border: 1px solid #d1d5da;
+            border-radius: 4px;
+            background: #fff;
+            resize: vertical;
+        }
+
+        .diff-container {
+            display: flex;
+            border: 1px solid #d1d5da;
+            background: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .diff-header {
+            padding: 10px;
+            border-bottom: 1px solid #e1e4e8;
+            background: #f6f8fa;
+            font-weight: bold;
+        }
+
+        .diff-panels {
+            display: flex;
+            width: 100%;
+            height: 700px;
+            overflow: hidden;
+        }
+
+        .diff-panel {
+            width: 50%;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        .diff-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Consolas, "Courier New", Courier, monospace;
+            font-size: 14px;
+            border: none;
+        }
+
+        .diff-table th, .diff-table td {
+            padding: 4px 8px;
+            vertical-align: top;
+            white-space: pre;
+            line-height: 1.5em;
+            border: none;
+        }
+
+        .diff-table th {
+            text-align: right;
+            color: #6a737d;
+            width: 50px;
+        }
+
+        .line-num {
+            background: #f6f8fa;
+            color: #6a737d;
+            text-align: right;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .diff-add {
+            background: #e6ffed;
+            color: #22863a;
+        }
+
+        .diff-remove {
+            background: #ffeef0;
+            color: #b31d28;
+        }
+
+        .diff-context {
+            background: #f6f8fa;
+            color: #24292e;
+        }
+
+        /* Hover highlight */
+        .diff-table tr:hover td:not(.line-num) {
+            background: #eef3f7;
+        }
+
+        .hint {
+            color: #6a737d;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 800px) {
+            .input-section {
+                flex-direction: column;
+            }
+            .input-box {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    Code Diff Tool
+</header>
+<div class="container">
+    <div class="input-section">
+        <div class="input-box">
+            <label for="old-code">Old Version</label>
+            <textarea id="old-code" placeholder="Paste old version code here..."></textarea>
+        </div>
+        <div class="input-box">
+            <label for="new-code">New Version</label>
+            <textarea id="new-code" placeholder="Paste new version code here..."></textarea>
+        </div>
+    </div>
+    <div class="diff-container" id="diff-container" style="display:none;">
+        <div class="diff-header">
+            Differences (Side-by-Side)
+        </div>
+        <div class="diff-panels">
+            <div class="diff-panel" id="diff-panel-left">
+                <table class="diff-table" id="diff-table-left"></table>
+            </div>
+            <div class="diff-panel" id="diff-panel-right">
+                <table class="diff-table" id="diff-table-right"></table>
+            </div>
+        </div>
+    </div>
+    <div class="hint">Paste code in both text areas to automatically see differences.</div>
+</div>
+
+<!-- Using diff.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/diff@5.0.0/dist/diff.min.js"></script>
+<script>
+    const oldCodeArea = document.getElementById('old-code');
+    const newCodeArea = document.getElementById('new-code');
+    const diffContainer = document.getElementById('diff-container');
+    const diffTableLeft = document.getElementById('diff-table-left');
+    const diffTableRight = document.getElementById('diff-table-right');
+    const panelLeft = document.getElementById('diff-panel-left');
+    const panelRight = document.getElementById('diff-panel-right');
+
+    let lastOldValue = '';
+    let lastNewValue = '';
+
+    // Synchronize scrolling between the two panels
+    function syncScroll(source, target) {
+        target.scrollTop = source.scrollTop;
+        target.scrollLeft = source.scrollLeft;
+    }
+
+    panelLeft.addEventListener('scroll', () => syncScroll(panelLeft, panelRight));
+    panelRight.addEventListener('scroll', () => syncScroll(panelRight, panelLeft));
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>"']/g, function (m) {
+            switch (m) {
+                case '&': return '&amp;';
+                case '<': return '&lt;';
+                case '>': return '&gt;';
+                case '"': return '&quot;';
+                case "'": return '&#39;';
+            }
+        });
+    }
+
+    // Highlight differences at character level for lines that differ
+    function highlightLineDiff(oldText, newText) {
+        // Distinct highlight colors for character-level changes:
+        // For removed chars: a more saturated pinkish-red (#fca0a0)
+        // For added chars: a brighter lime-green (#afff93)
+
+        if (!oldText && newText) {
+            // Only new line
+            return {
+                oldHtml: '',
+                newHtml: `<span style="background-color:#afff93;">${escapeHtml(newText) || ' '}</span>`
+            };
+        } else if (oldText && !newText) {
+            // Only old line
+            return {
+                oldHtml: `<span style="background-color:#fca0a0;">${escapeHtml(oldText) || ' '}</span>`,
+                newHtml: ''
+            };
+        } else if (oldText === newText) {
+            // Same line
+            return {
+                oldHtml: escapeHtml(oldText) || ' ',
+                newHtml: escapeHtml(newText) || ' '
+            };
+        } else {
+            // Use Diff.diffChars for character-level diff
+            const changes = Diff.diffChars(oldText, newText);
+            let oldHtml = '';
+            let newHtml = '';
+            changes.forEach(part => {
+                const escapedValue = escapeHtml(part.value) || ' ';
+                if (part.added) {
+                    // In new text only
+                    newHtml += `<span style="background-color:#afff93;">${escapedValue}</span>`;
+                } else if (part.removed) {
+                    // In old text only
+                    oldHtml += `<span style="background-color:#fca0a0;">${escapedValue}</span>`;
+                } else {
+                    // In both
+                    oldHtml += escapedValue;
+                    newHtml += escapedValue;
+                }
+            });
+            return {oldHtml, newHtml};
+        }
+    }
+
+    function renderDiff(diffText) {
+        // Clear existing diff
+        diffTableLeft.innerHTML = '';
+        diffTableRight.innerHTML = '';
+
+        const lines = diffText.split('\n');
+        
+        // Filter out meta lines
+        const contentLines = [];
+        for (const line of lines) {
+            if (line.startsWith('---') || line.startsWith('+++') || line.startsWith('@@')) {
+                continue;
+            }
+            contentLines.push(line);
+        }
+
+        let oldLineNum = 1;
+        let newLineNum = 1;
+
+        const leftBuffer = [];
+        const rightBuffer = [];
+
+        // Basic pairing logic
+        for (const line of contentLines) {
+            if (line.startsWith('-')) {
+                // Old only
+                leftBuffer.push({
+                    num: oldLineNum++,
+                    text: line.substring(1),
+                    class: 'diff-remove'
+                });
+                rightBuffer.push({
+                    num: '',
+                    text: '',
+                    class: 'diff-remove'
+                });
+            } else if (line.startsWith('+')) {
+                // Pair with the immediately preceding unmatched removed line if available
+                let paired = false;
+                const lastIndex = leftBuffer.length - 1;
+                if (lastIndex >= 0 && 
+                    rightBuffer[lastIndex].num === '' && 
+                    rightBuffer[lastIndex].class === 'diff-remove' && 
+                    leftBuffer[lastIndex].class === 'diff-remove') {
+                    rightBuffer[lastIndex] = {
+                        num: newLineNum++,
+                        text: line.substring(1),
+                        class: 'diff-add'
+                    };
+                    paired = true;
+                }
+
+                if (!paired) {
+                    // standalone add line
+                    leftBuffer.push({
+                        num: '',
+                        text: '',
+                        class: 'diff-add'
+                    });
+                    rightBuffer.push({
+                        num: newLineNum++,
+                        text: line.substring(1),
+                        class: 'diff-add'
+                    });
+                }
+            } else {
+                // context line
+                let contextText = line.startsWith(' ') ? line.substring(1) : line;
+                leftBuffer.push({
+                    num: oldLineNum++,
+                    text: contextText,
+                    class: 'diff-context'
+                });
+                rightBuffer.push({
+                    num: newLineNum++,
+                    text: contextText,
+                    class: 'diff-context'
+                });
+            }
+        }
+
+        // Render lines
+        for (let i = 0; i < leftBuffer.length; i++) {
+            const leftLine = leftBuffer[i];
+            const rightLine = rightBuffer[i];
+
+            let {oldHtml, newHtml} = highlightLineDiff(leftLine.text, rightLine.text);
+
+            if (!oldHtml.trim()) oldHtml = ' ';
+            if (!newHtml.trim()) newHtml = ' ';
+
+            const leftTr = document.createElement('tr');
+            const leftNumTd = document.createElement('td');
+            leftNumTd.className = 'line-num';
+            leftNumTd.textContent = leftLine.num;
+            const leftCodeTd = document.createElement('td');
+            leftCodeTd.className = leftLine.class;
+            leftCodeTd.innerHTML = oldHtml;
+
+            leftTr.appendChild(leftNumTd);
+            leftTr.appendChild(leftCodeTd);
+            diffTableLeft.appendChild(leftTr);
+
+            const rightTr = document.createElement('tr');
+            const rightNumTd = document.createElement('td');
+            rightNumTd.className = 'line-num';
+            rightNumTd.textContent = rightLine.num;
+            const rightCodeTd = document.createElement('td');
+            rightCodeTd.className = rightLine.class;
+            rightCodeTd.innerHTML = newHtml;
+
+            rightTr.appendChild(rightNumTd);
+            rightTr.appendChild(rightCodeTd);
+            diffTableRight.appendChild(rightTr);
+        }
+    }
+
+    async function updateDiff() {
+        const oldText = oldCodeArea.value;
+        const newText = newCodeArea.value;
+
+        if (oldText && newText && (oldText !== lastOldValue || newText !== lastNewValue)) {
+            lastOldValue = oldText;
+            lastNewValue = newText;
+            try {
+                const res = await fetch('/api/diff', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ oldText, newText })
+                });
+                const data = await res.json();
+                if (data.diff) {
+                    diffContainer.style.display = 'block';
+                    renderDiff(data.diff);
+                } else {
+                    diffContainer.style.display = 'none';
+                }
+            } catch (e) {
+                console.error('Error fetching diff:', e);
+            }
+        } else if (!oldText || !newText) {
+            diffContainer.style.display = 'none';
+        }
+    }
+
+    oldCodeArea.addEventListener('input', updateDiff);
+    newCodeArea.addEventListener('input', updateDiff);
+</script>
+</body>
+</html>
