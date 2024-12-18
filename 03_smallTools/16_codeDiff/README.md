@@ -88,6 +88,11 @@ app.listen(PORT, () => {
 
 在项目根目录`code-diff-app`下创建一个 public 文件夹，并在其中创建 [index.html](index.html) 文件：
 
+-  `index.html`：采用内联视图（Inline View）
+
+-  `index_split.html`代码思路：在页面中左右水平显示两个大的输入框，分别用于粘贴两个版本的代码，然后动态的显示这两个版本代码的区别（自动判断用户是否粘贴了两个版本的代码，并进行计算显示），依次在这两个版本的代码上进行标注，采用并排视图（Side-by-Side View）
+
+
 
 5. 运行应用
 
