@@ -186,7 +186,7 @@ app.listen(PORT, '0.0.0.0', () => {
 ### 4. 问题分析
 
 - 如果直接使用上述windows下的`index.html`文件（使用`/api/diff`绝对路径，即`fetch('/api/diff', { /* options */ })`），则会出现以下问题：
-    - 浏览器将请求发送到 `https://mcha.me/api/diff`，而不是 `https://mcha.me/codediffu/api/diff`。
+    - 浏览器将请求发送到 `https://domain.com/api/diff`，而不是 `https://domain.com/codediffu/api/diff`。
     - 由于 Nginx 没有配置 `/api/diff` 的代理规则，Nginx 会尝试在静态文件目录中查找 `/api/diff`，导致返回 404 错误页面。
 
 
