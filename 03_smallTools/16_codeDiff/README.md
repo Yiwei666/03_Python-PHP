@@ -9,7 +9,7 @@
 ```
 index.html             # 前端网页，用于粘贴不同版本代码，显示计算差异。采用内联视图（Inline View）
 index_split.html       # 代码差异显示，采用并排视图（Side-by-Side View）
-server.js        # 后端脚本，计算两个版本的差异
+server.js              # 后端脚本，计算两个版本的差异
 ```
 
 2. 项目文件夹目录树
