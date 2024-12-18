@@ -28,7 +28,9 @@ server.js              # 后端脚本，计算两个版本的差异
 
 ## 1. windows本地部署
 
-1. 在你的工作目录中初始化一个新的 Node.js 项目
+### 1. 初始化项目
+
+在你的工作目录中初始化一个新的 Node.js 项目
 
 创建项目文件夹`code-diff-app`，并初始化
 
@@ -38,8 +40,9 @@ cd code-diff-app
 npm init -y
 ```
 
+### 2. 安装依赖
 
-2. 在项目根目录`code-diff-app`下安装依赖
+在项目根目录`code-diff-app`下安装依赖
 
 ```
 npm install express body-parser diff
@@ -51,7 +54,9 @@ npm install express body-parser diff
     - `Diff`：一个轻量级工具库，用于对比两段文本、数组或对象，生成差异数据，通常用于版本控制、文档比较等场景。
 
 
-3. 创建后端服务器
+
+
+### 3. 创建后端服务器
 
 在项目根目录`code-diff-app`下创建一个名为 [server.js](server.js) 的文件，并添加以下内容：
 
@@ -89,19 +94,19 @@ app.listen(PORT, () => {
 });
 ```
 
-4. 创建前端界面
+### 4. 创建前端界面
 
 在项目根目录`code-diff-app`下创建一个 public 文件夹，并在其中创建 [index.html](index.html) 文件：
 
 -  `index.html`：采用内联视图（Inline View）
 
--  `index_split.html`代码思路：
+-  `index_split.html`：采用并排视图（Side-by-Side View）
     -  在页面中左右水平显示两个大的输入框，分别用于粘贴两个版本的代码，然后动态的显示这两个版本代码的区别（自动判断用户是否粘贴了两个版本的代码，并进行计算显示），依次在这两个版本的代码上进行标注，采用并排视图（Side-by-Side View）
     -  两个版本代码差异显示区域，左右各占屏幕宽度50%，对于长行代码，超过50%部分使用横向滚动条。注意，对于代码差异显示区域超过 800 px的部分，采用纵向滚动条。对于横向和纵向滚动条，滑动时，两个版本的代码应该能够同步进行左右或者上下滑动。
 
 
 
-5. 运行应用
+### 5. 运行应用
 
 ```
 node server.js
