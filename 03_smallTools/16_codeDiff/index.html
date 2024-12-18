@@ -12,7 +12,7 @@
     <style>
         body {
             background-color: #f8f9fa;
-            padding-top: 50px;
+            padding-top: 20px; /* 减小上方间距 */
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
         }
         .container {
@@ -26,28 +26,19 @@
         #diffOutput {
             margin-top: 20px;
             font-family: Consolas, "Courier New", monospace;
-            font-size: 16px; /* 增大字体 */
-            line-height: 2; /* 减小行间距 */
-            max-height: 800px; /* 新增：限制高度为800px */
-            overflow-y: auto;  /* 新增：超过800px时出现纵向滚动条 */
-        }
-        .header {
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 16px;
+            line-height: 2;
+            max-height: 800px;
+            overflow-y: auto;
         }
         .footer {
             margin-top: 50px;
             text-align: center;
             color: #6c757d;
         }
-        /* 自定义 Diff2Html 样式以接近 GitHub */
         .diff2html-wrapper {
-            font-size: 16px; /* 增大字体 */
-            line-height: 2; /* 减小行间距 */
+            font-size: 16px;
+            line-height: 2;
         }
         .diff2html-wrapper .diff {
             border: none;
@@ -62,7 +53,7 @@
         }
         .diff2html-wrapper .diff-table th,
         .diff2html-wrapper .diff-table td {
-            padding: 4px 8px; /* 减小单元格内边距 */
+            padding: 4px 8px;
             vertical-align: top;
             white-space: pre;
         }
@@ -74,7 +65,7 @@
         }
         .diff2html-wrapper .diff-code {
             font-family: Consolas, "Courier New", monospace;
-            font-size: 16px; /* 增大字体 */
+            font-size: 16px;
         }
         .diff2html-wrapper .add {
             background-color: #e6ffed;
@@ -85,7 +76,6 @@
         .diff2html-wrapper .unchanged {
             background-color: #fff;
         }
-        /* 代码块高亮调整 */
         .diff2html-wrapper pre {
             margin: 0;
         }
@@ -96,11 +86,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- 头部 -->
-        <div class="header">
-            <h1>代码差异比较工具</h1>
-            <p class="lead">轻松比较两个代码版本的差异</p>
-        </div>
+        <!-- 删除头部介绍文本 -->
 
         <!-- 输入区域 -->
         <div class="row">
@@ -126,10 +112,7 @@
             </div>
         </div>
 
-        <!-- 操作按钮 -->
-        <div class="text-center mb-4">
-            <button id="compareBtn" class="btn btn-lg btn-primary">比较差异</button>
-        </div>
+        <!-- 删除“比较差异”按钮 -->
 
         <!-- 差异结果显示区域 -->
         <div id="diffOutput" class="card">
@@ -155,12 +138,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script>
-        document.getElementById('compareBtn').addEventListener('click', () => {
+        function compareDiff() {
             const oldText = document.getElementById('oldCode').value.trim();
             const newText = document.getElementById('newCode').value.trim();
 
             if (!oldText || !newText) {
-                alert('请确保两个代码输入框均已填写。');
                 return;
             }
 
@@ -176,7 +158,6 @@
                 if (data.error) {
                     document.getElementById('diffContent').innerText = data.error;
                 } else {
-                    // 使用 Diff2Html 生成 HTML
                     const diffHtml = Diff2Html.html(data.diff, {
                         drawFileList: false,
                         matching: 'lines',
@@ -184,7 +165,6 @@
                         renderNothingWhenEmpty: false
                     });
                     document.getElementById('diffContent').innerHTML = diffHtml;
-                    // 应用语法高亮
                     document.querySelectorAll('#diffOutput pre code').forEach((block) => {
                         hljs.highlightBlock(block);
                     });
@@ -194,7 +174,11 @@
                 console.error('Error:', error);
                 document.getElementById('diffContent').innerText = '计算差异时发生错误。';
             });
-        });
+        }
+
+        // 当用户在两个文本框中粘贴或输入代码时自动进行计算
+        document.getElementById('oldCode').addEventListener('input', compareDiff);
+        document.getElementById('newCode').addEventListener('input', compareDiff);
     </script>
 </body>
 </html>
