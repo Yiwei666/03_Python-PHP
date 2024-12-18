@@ -128,9 +128,6 @@ fetch('/api/diff', {
 })
 ```
 
-在这种情况下，浏览器会将请求发送到当前域名的根路径下的 `/api/diff`。例如，如果您的网站是 `https://domain.com/codediffu/`，那么绝对路径 `/api/diff` 会被解析为 `https://domain.com/api/diff`。
-
-
 2. 将其修改为：
 
 ```js
@@ -143,9 +140,9 @@ fetch('api/diff', { // 使用相对路径
 })
 ```
 
-假设当前页面的 URL 是 `https://mcha.me/codediffu/`，那么相对路径 `api/diff` 会被解析为 `https://mcha.me/codediffu/api/diff`。
+- 假设当前页面的 URL 是 `https://mcha.me/codediffu/`，那么相对路径 `api/diff` 会被解析为 `https://mcha.me/codediffu/api/diff`。
 
-
+- 在绝对路径这种情况下，浏览器会将请求发送到当前域名的根路径下的 `/api/diff`。例如，如果您的网站是 `https://domain.com/codediffu/`，那么绝对路径 `/api/diff` 会被解析为 `https://domain.com/api/diff`。由于 Nginx 没有配置 `/api/diff` 的代理规则，Nginx 会尝试在静态文件目录中查找 `/api/diff`，导致返回 404 错误页面。
 
 
 ### 2. 确保 Nginx 正确代理 API 请求
