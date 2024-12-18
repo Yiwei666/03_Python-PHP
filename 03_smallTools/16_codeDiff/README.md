@@ -114,7 +114,7 @@ node server.js
 
 将前端的 API 请求路径从绝对路径 `/api/diff` 修改为相对于当前路径的相对路径 `api/diff`
 
-修改上述 `public/index.html`
+1. 修改上述 `public/index.html`
 
 找到以下代码部分：
 
@@ -128,7 +128,10 @@ fetch('/api/diff', {
 })
 ```
 
-将其修改为：
+在这种情况下，浏览器会将请求发送到当前域名的根路径下的 `/api/diff`。例如，如果您的网站是 `https://domain.com/codediffu/`，那么绝对路径 `/api/diff` 会被解析为 `https://domain.com/api/diff`。
+
+
+2. 将其修改为：
 
 ```js
 fetch('api/diff', { // 使用相对路径
@@ -139,6 +142,10 @@ fetch('api/diff', { // 使用相对路径
     body: JSON.stringify({ oldText, newText }),
 })
 ```
+
+假设当前页面的 URL 是 `https://mcha.me/codediffu/`，那么相对路径 `api/diff` 会被解析为 `https://mcha.me/codediffu/api/diff`。
+
+
 
 
 ### 2. 确保 Nginx 正确代理 API 请求
@@ -178,27 +185,32 @@ app.listen(PORT, '0.0.0.0', () => {
 
 ### 4. 问题分析
 
-如果直接使用上述windows下的`index.html`文件（使用`/api/diff`绝对路径），则会出现问题，下面是分析：
+a. 如果直接使用上述windows下的`index.html`文件（使用`/api/diff`绝对路径，即`fetch('/api/diff', { /* options */ })`），则会出现以下问题：
+    - 浏览器将请求发送到 `https://mcha.me/api/diff`，而不是 `https://mcha.me/codediffu/api/diff`，
+    - 由于 Nginx 没有配置 `/api/diff` 的代理规则，Nginx 会尝试在静态文件目录中查找 `/api/diff`，导致返回 404 错误页面
+
+
+b. 下面是具体分析：
 
 1. Nginx 配置：
 
-- 您的 Nginx 配置将 `/codediffu/` 路径下的请求代理到 `http://127.0.0.1:2000/`。
-
-- 例如，`/codediffu/api/diff` 会被代理到 `http://127.0.0.1:2000/api/diff`。
+    - 您的 Nginx 配置将 `/codediffu/` 路径下的请求代理到 `http://127.0.0.1:2000/`。
+    
+    - 例如，`/codediffu/api/diff` 会被代理到 `http://127.0.0.1:2000/api/diff`。
 
 
 2. 前端请求：
 
-- 您的前端代码在 `index.html` 中使用了绝对路径 `/api/diff` 发送请求。
-
-- 由于应用部署在 `/codediffu/` 下，绝对路径 `/api/diff` 实际上指向的是 `https://domain.com/api/diff`，而不是 `https://domain.com/codediffu/api/diff`。
+    - 您的前端代码在 `index.html` 中使用了绝对路径 `/api/diff` 发送请求。
+    
+    - 由于应用部署在 `/codediffu/` 下，绝对路径 `/api/diff` 实际上指向的是 `https://domain.com/api/diff`，而不是 `https://domain.com/codediffu/api/diff`。
 
 
 3. 结果：
 
-- Nginx 没有配置 `/api/diff` 路径的代理，因此会尝试在静态文件目录中查找 `/api/diff`，导致 404 错误页面被返回。
-
-- 前端尝试解析返回的 HTML 404 页面作为 JSON，导致 `SyntaxError: Unexpected token '<'` 错误。
+    - Nginx 没有配置 `/api/diff` 路径的代理，因此会尝试在静态文件目录中查找 `/api/diff`，导致 404 错误页面被返回。
+    
+    - 前端尝试解析返回的 HTML 404 页面作为 JSON，导致 `SyntaxError: Unexpected token '<'` 错误。
 
 
 
