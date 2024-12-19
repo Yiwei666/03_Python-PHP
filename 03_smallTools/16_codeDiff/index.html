@@ -1,4 +1,3 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -9,6 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- 引入 Diff2Html CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+    <!-- 引入 highlight.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
     <!-- 自定义样式 -->
     <style>
         body {
@@ -71,13 +72,13 @@
             font-size: 16px;
         }
         .diff2html-wrapper .add {
-            background-color: #e6ffed;
+            background-color: #a8d5ba; /* 柔和绿色 */
         }
         .diff2html-wrapper .remove {
-            background-color: #ffeef0;
+            background-color: #f5a5a5; /* 柔和红色 */
         }
         .diff2html-wrapper .unchanged {
-            background-color: #fff;
+            background-color: #fff; /* 未变化行 */
         }
         .diff2html-wrapper pre {
             margin: 0;
@@ -106,6 +107,26 @@
             display: inline-block; 
             white-space: nowrap;
             position: relative;
+        }
+
+        /* 缩略图容器样式 - 将其固定在容器外 */
+        #diffContainer {
+            position: relative; 
+            display: inline-block;
+            width: 100%;
+        }
+        #diffMap {
+            position: absolute;
+            top: 0;
+            right: -20px; /* 将缩略图放在diffOutput右侧之外，使其固定不滚动 */
+            width: 15px;
+            background: #f8f9fa;
+            z-index: 99;
+            overflow: hidden;
+        }
+        #diffMap div {
+            width: 100%;
+            display: block;
         }
     </style>
 </head>
@@ -140,17 +161,22 @@
             <div id="horizontalScrollSync"></div>
         </div>
 
-        <!-- 差异结果显示区域 -->
-        <div id="diffOutput" class="card">
-            <div class="card-header bg-secondary text-white">
-                <h5 class="mb-0">差异结果</h5>
-            </div>
-            <div class="card-body diff2html-wrapper">
-                <!-- 利用 #diffContentWrapper 来控制水平移动 -->
-                <div id="diffContentWrapper">
-                    <pre id="diffContent" class="m-0"></pre>
+        <!-- 包裹差异结果和缩略图的容器 -->
+        <div id="diffContainer">
+            <!-- 差异结果显示区域 -->
+            <div id="diffOutput" class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">差异结果</h5>
+                </div>
+                <div class="card-body diff2html-wrapper" style="position: relative;">
+                    <!-- 利用 #diffContentWrapper 来控制水平移动 -->
+                    <div id="diffContentWrapper">
+                        <pre id="diffContent" class="m-0"></pre>
+                    </div>
                 </div>
             </div>
+            <!-- 缩略图放置在外侧，固定不随内容滚动 -->
+            <div id="diffMap"></div>
         </div>
 
         <!-- 页脚 -->
@@ -164,7 +190,6 @@
     <!-- 引入 Diff2Html JS -->
     <script src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html.min.js"></script>
     <!-- 引入 highlight.js 用于语法高亮 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script>
         function compareDiff() {
@@ -174,6 +199,8 @@
             if (!oldText || !newText) {
                 document.getElementById('diffContent').innerHTML = '';
                 document.getElementById('horizontalScrollSync').style.width = '0';
+                document.getElementById('diffMap').innerHTML = '';
+                setDiffMapHeight();
                 return;
             }
 
@@ -189,6 +216,8 @@
                 if (data.error) {
                     document.getElementById('diffContent').innerText = data.error;
                     document.getElementById('horizontalScrollSync').style.width = '0';
+                    document.getElementById('diffMap').innerHTML = '';
+                    setDiffMapHeight();
                 } else {
                     const diffHtml = Diff2Html.html(data.diff, {
                         drawFileList: false,
@@ -204,13 +233,48 @@
                     const diffContent = document.getElementById('diffContent');
                     const scrollWidth = diffContent.scrollWidth;
                     document.getElementById('horizontalScrollSync').style.width = scrollWidth + 'px';
+
+                    // 构建缩略图
+                    const diffOutput = document.getElementById('diffOutput');
+                    const diffMap = document.getElementById('diffMap');
+                    diffMap.innerHTML = '';
+
+                    const lines = document.querySelectorAll('#diffContent tr');
+                    const totalLines = lines.length;
+                    if (totalLines > 0) {
+                        // 缩略图的高度与显示区域的高度一致
+                        const visibleHeight = diffOutput.clientHeight;
+                        const lineHeight = visibleHeight / totalLines;
+                        lines.forEach(line => {
+                            const mapLine = document.createElement('div');
+                            mapLine.style.height = lineHeight + 'px';
+                            // 根据行类型判断颜色
+                            if (line.querySelector('.d2h-del')) {
+                                mapLine.style.backgroundColor = '#f5a5a5'; // 删除行
+                            } else if (line.querySelector('.d2h-ins')) {
+                                mapLine.style.backgroundColor = '#a8d5ba'; // 新增行
+                            } else {
+                                mapLine.style.backgroundColor = '#fff'; // 无变化行
+                            }
+                            diffMap.appendChild(mapLine);
+                        });
+                    }
+                    setDiffMapHeight();
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('diffContent').innerText = '计算差异时发生错误。';
                 document.getElementById('horizontalScrollSync').style.width = '0';
+                document.getElementById('diffMap').innerHTML = '';
+                setDiffMapHeight();
             });
+        }
+
+        function setDiffMapHeight() {
+            const diffOutput = document.getElementById('diffOutput');
+            const diffMap = document.getElementById('diffMap');
+            diffMap.style.height = diffOutput.clientHeight + 'px';
         }
 
         document.getElementById('oldCode').addEventListener('input', compareDiff);
@@ -224,11 +288,15 @@
             diffContentWrapper.style.transform = 'translateX(-' + this.scrollLeft + 'px)';
         });
 
-        // 当窗口大小变化时，重新计算滚动条的宽度
+        // 当窗口大小变化时，重新计算滚动条的宽度和缩略图高度
         window.addEventListener('resize', function() {
             const diffContent = document.getElementById('diffContent');
-            const scrollWidth = diffContent.scrollWidth;
-            document.getElementById('horizontalScrollSync').style.width = scrollWidth + 'px';
+            const horizontalScrollSync = document.getElementById('horizontalScrollSync');
+            if (diffContent) {
+                const scrollWidth = diffContent.scrollWidth;
+                horizontalScrollSync.style.width = scrollWidth + 'px';
+            }
+            setDiffMapHeight();
         });
     </script>
 </body>
