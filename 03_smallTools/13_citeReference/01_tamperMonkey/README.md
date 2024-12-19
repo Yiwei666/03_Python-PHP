@@ -144,21 +144,42 @@ DOI: 10.1038/35003143
 
 
 ```txt
+
 提取结果
+
 GB/T 7714: Wang T, Liu X, Sun Y, et al. Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations[J]. Chemical Geology, 2020, 555: 119814.
+
 APA: Wang T, Liu X, Sun Y, et al. Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations[J]. Chemical Geology, 2020, 555: 119814.
+
 提取的文章标题: Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations
 DOI 查询结果
+
 DOI: 10.1016/j.chemgeo.2020.119814
+
 标题: Coordination of Zr4+/Hf4+/Nb5+/Ta5+ in silicate melts: insight from first principles molecular dynamics simulations
+
 期刊名: Chemical Geology
+
 出版年: 2020
+
 卷: 555
+
 期: 未找到期号
+
 页码: 119814
+
 文章号: 119814
+
+出版商: Elsevier BV
+
+ISSN (印刷版): 0009-2541
+
+ISSN (电子版): 未找到电子版 ISSN
+
 完整作者信息: Tianhua Wang, Xiandong Liu, Yicheng Sun, Xiancai Lu, Rucheng Wang
+
 缩写作者信息: T. Wang, X. Liu, Y. Sun, X. Lu, and R. Wang
+
 匹配结果: 匹配成功
 ```
 
