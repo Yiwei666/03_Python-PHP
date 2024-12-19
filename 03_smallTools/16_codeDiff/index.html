@@ -8,11 +8,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- 引入 Diff2Html CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
-    <!-- 引入自定义样式 -->
+    <!-- 自定义样式 -->
     <style>
         body {
             background-color: #f8f9fa;
-            padding-top: 20px; /* 减小上方间距 */
+            padding-top: 20px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
         }
         .container {
@@ -29,7 +29,9 @@
             font-size: 16px;
             line-height: 2;
             max-height: 800px;
-            overflow-y: auto;
+            overflow-y: auto;     /* 只允许垂直滚动 */
+            overflow-x: hidden;   /* 隐藏内部水平滚动条 */
+            position: relative;
         }
         .footer {
             margin-top: 50px;
@@ -79,15 +81,35 @@
         .diff2html-wrapper pre {
             margin: 0;
         }
-        #diffOutput #diffContent {
+
+        #diffContent {
             white-space: nowrap;
+        }
+
+        /* 顶部水平滚动条容器 */
+        #horizontalScrollWrapper {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            border: 1px solid #ddd;
+            height: 16px;
+            margin-top: 5px;
+            background-color: #f8f9fa;
+        }
+        #horizontalScrollSync {
+            height: 1px; /* 用于撑开宽度，让滚动条可滑动 */
+        }
+
+        /* 包裹 diffContent 的容器，用于通过 transform 移动水平内容 */
+        #diffContentWrapper {
+            display: inline-block; 
+            white-space: nowrap;
+            position: relative;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 删除头部介绍文本 -->
-
         <!-- 输入区域 -->
         <div class="row">
             <div class="col-md-6 mb-4">
@@ -112,7 +134,10 @@
             </div>
         </div>
 
-        <!-- 删除“比较差异”按钮 -->
+        <!-- 顶部水平滚动条 -->
+        <div id="horizontalScrollWrapper">
+            <div id="horizontalScrollSync"></div>
+        </div>
 
         <!-- 差异结果显示区域 -->
         <div id="diffOutput" class="card">
@@ -120,7 +145,10 @@
                 <h5 class="mb-0">差异结果</h5>
             </div>
             <div class="card-body diff2html-wrapper">
-                <pre id="diffContent" class="m-0"></pre>
+                <!-- 利用 #diffContentWrapper 来控制水平移动 -->
+                <div id="diffContentWrapper">
+                    <pre id="diffContent" class="m-0"></pre>
+                </div>
             </div>
         </div>
 
@@ -143,6 +171,8 @@
             const newText = document.getElementById('newCode').value.trim();
 
             if (!oldText || !newText) {
+                document.getElementById('diffContent').innerHTML = '';
+                document.getElementById('horizontalScrollSync').style.width = '0';
                 return;
             }
 
@@ -157,6 +187,7 @@
             .then(data => {
                 if (data.error) {
                     document.getElementById('diffContent').innerText = data.error;
+                    document.getElementById('horizontalScrollSync').style.width = '0';
                 } else {
                     const diffHtml = Diff2Html.html(data.diff, {
                         drawFileList: false,
@@ -168,17 +199,36 @@
                     document.querySelectorAll('#diffOutput pre code').forEach((block) => {
                         hljs.highlightBlock(block);
                     });
+
+                    const diffContent = document.getElementById('diffContent');
+                    const scrollWidth = diffContent.scrollWidth;
+                    document.getElementById('horizontalScrollSync').style.width = scrollWidth + 'px';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
                 document.getElementById('diffContent').innerText = '计算差异时发生错误。';
+                document.getElementById('horizontalScrollSync').style.width = '0';
             });
         }
 
-        // 当用户在两个文本框中粘贴或输入代码时自动进行计算
         document.getElementById('oldCode').addEventListener('input', compareDiff);
         document.getElementById('newCode').addEventListener('input', compareDiff);
+
+        const horizontalScrollWrapper = document.getElementById('horizontalScrollWrapper');
+        const diffContentWrapper = document.getElementById('diffContentWrapper');
+
+        // 当顶部滚动条滚动时，通过transform来左右移动diffContentWrapper的内容
+        horizontalScrollWrapper.addEventListener('scroll', function() {
+            diffContentWrapper.style.transform = 'translateX(-' + this.scrollLeft + 'px)';
+        });
+
+        // 当窗口大小变化时，重新计算滚动条的宽度
+        window.addEventListener('resize', function() {
+            const diffContent = document.getElementById('diffContent');
+            const scrollWidth = diffContent.scrollWidth;
+            document.getElementById('horizontalScrollSync').style.width = scrollWidth + 'px';
+        });
     </script>
 </body>
 </html>
