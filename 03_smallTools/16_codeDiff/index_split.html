@@ -47,7 +47,7 @@
             width: 100%;
             min-height: 100px;
             padding: 10px;
-            font-family: Consolas, "Courier New", Courier, monospace;
+            font-family: Consolas, "Courier New", monospace;
             font-size: 14px;
             box-sizing: border-box;
             border: 1px solid #d1d5da;
@@ -56,8 +56,13 @@
             resize: vertical;
         }
 
+        .diff-wrapper {
+            position: relative;
+        }
+
         .diff-container {
             display: flex;
+            flex-direction: column;
             border: 1px solid #d1d5da;
             background: #fff;
             border-radius: 4px;
@@ -74,9 +79,10 @@
 
         .diff-panels {
             display: flex;
-            width: 100%;
+            width: 98%; /* 调小并排视图宽度以预留空间给缩略图 */
             height: 700px;
             overflow: hidden;
+            margin-right:10px; /* 为缩略图留出空间 */
         }
 
         .diff-panel {
@@ -88,7 +94,7 @@
         .diff-table {
             width: 100%;
             border-collapse: collapse;
-            font-family: Consolas, "Courier New", Courier, monospace;
+            font-family: Consolas, "Courier New", monospace;
             font-size: 14px;
             border: none;
         }
@@ -130,6 +136,12 @@
             color: #24292e;
         }
 
+        .diff-hunk {
+            background: #f6f8fa;
+            color: #999;
+            font-style: italic;
+        }
+
         /* Hover highlight */
         .diff-table tr:hover td:not(.line-num) {
             background: #eef3f7;
@@ -150,6 +162,29 @@
                 margin-bottom: 20px;
             }
         }
+
+        /* Thumbnails container: place it to the right outside the main diff panel area */
+        .thumbnails-container {
+            position: absolute;
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            right: 0; /* 将缩略图固定在容器右侧 */
+        }
+
+        .thumbnail-bar {
+            width: 15px;
+            background: #f6f8fa;
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column; /* 垂直堆叠行表示纵向缩略图 */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .thumbnail-segment {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -167,17 +202,23 @@
             <textarea id="new-code" placeholder="Paste new version code here..."></textarea>
         </div>
     </div>
-    <div class="diff-container" id="diff-container" style="display:none;">
-        <div class="diff-header">
-            Differences (Side-by-Side)
+    <div class="diff-wrapper">
+        <div class="diff-container" id="diff-container" style="display:none;">
+            <div class="diff-header">
+                Differences (Side-by-Side)
+            </div>
+            <div class="diff-panels">
+                <div class="diff-panel" id="diff-panel-left">
+                    <table class="diff-table" id="diff-table-left"></table>
+                </div>
+                <div class="diff-panel" id="diff-panel-right">
+                    <table class="diff-table" id="diff-table-right"></table>
+                </div>
+            </div>
         </div>
-        <div class="diff-panels">
-            <div class="diff-panel" id="diff-panel-left">
-                <table class="diff-table" id="diff-table-left"></table>
-            </div>
-            <div class="diff-panel" id="diff-panel-right">
-                <table class="diff-table" id="diff-table-right"></table>
-            </div>
+        <div class="thumbnails-container" id="thumbnails-container" style="display:none;">
+            <div class="thumbnail-bar" id="thumbnail-left"></div>
+            <div class="thumbnail-bar" id="thumbnail-right"></div>
         </div>
     </div>
     <div class="hint">Paste code in both text areas to automatically see differences.</div>
@@ -193,6 +234,9 @@
     const diffTableRight = document.getElementById('diff-table-right');
     const panelLeft = document.getElementById('diff-panel-left');
     const panelRight = document.getElementById('diff-panel-right');
+    const thumbnailsContainer = document.getElementById('thumbnails-container');
+    const thumbnailLeft = document.getElementById('thumbnail-left');
+    const thumbnailRight = document.getElementById('thumbnail-right');
 
     let lastOldValue = '';
     let lastNewValue = '';
@@ -218,22 +262,18 @@
         });
     }
 
-    // Highlight differences at character level for lines that differ
+    // Highlight differences at character level
     function highlightLineDiff(oldText, newText) {
-        // Distinct highlight colors for character-level changes:
-        // For removed chars: a more saturated pinkish-red (#fca0a0)
-        // For added chars: a brighter lime-green (#afff93)
-
         if (!oldText && newText) {
             // Only new line
             return {
                 oldHtml: '',
-                newHtml: `<span style="background-color:#afff93;">${escapeHtml(newText) || ' '}</span>`
+                newHtml: `<span style="background-color:#afff93;">+${escapeHtml(newText) || ' '}</span>`
             };
         } else if (oldText && !newText) {
             // Only old line
             return {
-                oldHtml: `<span style="background-color:#fca0a0;">${escapeHtml(oldText) || ' '}</span>`,
+                oldHtml: `<span style="background-color:#fca0a0;">-${escapeHtml(oldText) || ' '}</span>`,
                 newHtml: ''
             };
         } else if (oldText === newText) {
@@ -250,17 +290,17 @@
             changes.forEach(part => {
                 const escapedValue = escapeHtml(part.value) || ' ';
                 if (part.added) {
-                    // In new text only
                     newHtml += `<span style="background-color:#afff93;">${escapedValue}</span>`;
                 } else if (part.removed) {
-                    // In old text only
                     oldHtml += `<span style="background-color:#fca0a0;">${escapedValue}</span>`;
                 } else {
-                    // In both
                     oldHtml += escapedValue;
                     newHtml += escapedValue;
                 }
             });
+
+            // Add '+' or '-' prefix if needed
+            // For context lines, no prefix
             return {oldHtml, newHtml};
         }
     }
@@ -271,28 +311,58 @@
         diffTableRight.innerHTML = '';
 
         const lines = diffText.split('\n');
-        
-        // Filter out meta lines
-        const contentLines = [];
-        for (const line of lines) {
-            if (line.startsWith('---') || line.startsWith('+++') || line.startsWith('@@')) {
-                continue;
-            }
-            contentLines.push(line);
-        }
 
-        let oldLineNum = 1;
-        let newLineNum = 1;
+        let oldLineNum = 0;
+        let newLineNum = 0;
 
         const leftBuffer = [];
         const rightBuffer = [];
 
-        // Basic pairing logic
-        for (const line of contentLines) {
-            if (line.startsWith('-')) {
-                // Old only
+        // We will handle hunks now to get correct line numbers
+        // Unified diff format:
+        // @@ -oldStart,oldCount +newStart,newCount @@
+        // Then lines:
+        //  ' ' context
+        //  '-' removed
+        //  '+' added
+        // Show hunk lines as well.
+        let inHunk = false;
+
+        for (const line of lines) {
+            if (line.startsWith('@@')) {
+                // Parse hunk header
+                const match = /@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@/.exec(line);
+                if (match) {
+                    const oldStart = parseInt(match[1], 10);
+                    const newStart = parseInt(match[3], 10);
+                    oldLineNum = oldStart - 1;
+                    newLineNum = newStart - 1;
+                    inHunk = true;
+                }
+                // Add hunk line as diff-hunk
                 leftBuffer.push({
-                    num: oldLineNum++,
+                    num: '',
+                    text: line,
+                    class: 'diff-hunk'
+                });
+                rightBuffer.push({
+                    num: '',
+                    text: line,
+                    class: 'diff-hunk'
+                });
+                continue;
+            }
+
+            if (!inHunk) {
+                // Lines outside hunks are ignored
+                continue;
+            }
+
+            if (line.startsWith('-')) {
+                // Removed line
+                oldLineNum++;
+                leftBuffer.push({
+                    num: oldLineNum,
                     text: line.substring(1),
                     class: 'diff-remove'
                 });
@@ -302,44 +372,43 @@
                     class: 'diff-remove'
                 });
             } else if (line.startsWith('+')) {
-                // Pair with the immediately preceding unmatched removed line if available
-                let paired = false;
+                // Added line
+                newLineNum++;
+                // Try pairing with previous remove line
                 const lastIndex = leftBuffer.length - 1;
-                if (lastIndex >= 0 && 
-                    rightBuffer[lastIndex].num === '' && 
-                    rightBuffer[lastIndex].class === 'diff-remove' && 
-                    leftBuffer[lastIndex].class === 'diff-remove') {
-                    rightBuffer[lastIndex] = {
-                        num: newLineNum++,
-                        text: line.substring(1),
-                        class: 'diff-add'
-                    };
-                    paired = true;
-                }
-
-                if (!paired) {
-                    // standalone add line
+                if (lastIndex >= 0 &&
+                    leftBuffer[lastIndex].class === 'diff-remove' &&
+                    rightBuffer[lastIndex].num === '' &&
+                    rightBuffer[lastIndex].class === 'diff-remove') {
+                    // Pair with previous remove
+                    rightBuffer[lastIndex].num = newLineNum;
+                    rightBuffer[lastIndex].text = line.substring(1);
+                    rightBuffer[lastIndex].class = 'diff-add';
+                } else {
+                    // standalone add
                     leftBuffer.push({
                         num: '',
                         text: '',
                         class: 'diff-add'
                     });
                     rightBuffer.push({
-                        num: newLineNum++,
+                        num: newLineNum,
                         text: line.substring(1),
                         class: 'diff-add'
                     });
                 }
             } else {
-                // context line
+                // Context line
+                oldLineNum++;
+                newLineNum++;
                 let contextText = line.startsWith(' ') ? line.substring(1) : line;
                 leftBuffer.push({
-                    num: oldLineNum++,
+                    num: oldLineNum,
                     text: contextText,
                     class: 'diff-context'
                 });
                 rightBuffer.push({
-                    num: newLineNum++,
+                    num: newLineNum,
                     text: contextText,
                     class: 'diff-context'
                 });
@@ -351,34 +420,120 @@
             const leftLine = leftBuffer[i];
             const rightLine = rightBuffer[i];
 
-            let {oldHtml, newHtml} = highlightLineDiff(leftLine.text, rightLine.text);
+            let oldHtml = escapeHtml(leftLine.text);
+            let newHtml = escapeHtml(rightLine.text);
 
-            if (!oldHtml.trim()) oldHtml = ' ';
-            if (!newHtml.trim()) newHtml = ' ';
+            // Highlight differences only if it's not a hunk or empty line
+            if (leftLine.class !== 'diff-hunk' && rightLine.class !== 'diff-hunk') {
+                const highlighted = highlightLineDiff(leftLine.text, rightLine.text);
+                oldHtml = highlighted.oldHtml;
+                newHtml = highlighted.newHtml;
+
+                // Add sign prefix for added/removed lines if needed
+                if (leftLine.class === 'diff-remove' && leftLine.num !== '') {
+                    // Removed line on left
+                    oldHtml = `<span style="background-color:#fca0a0;">-${oldHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
+                } else if (rightLine.class === 'diff-add' && rightLine.num !== '') {
+                    // Added line on right
+                    newHtml = `<span style="background-color:#afff93;">+${newHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
+                } else if (leftLine.class === 'diff-add' && leftLine.num !== '') {
+                    // If line on left is add line (unusual, but handle)
+                    oldHtml = `<span style="background-color:#afff93;">+${oldHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
+                } else if (rightLine.class === 'diff-remove' && rightLine.num !== '') {
+                    // If line on right is remove line (unusual)
+                    newHtml = `<span style="background-color:#fca0a0;">-${newHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
+                }
+            }
 
             const leftTr = document.createElement('tr');
+            const rightTr = document.createElement('tr');
+
             const leftNumTd = document.createElement('td');
             leftNumTd.className = 'line-num';
-            leftNumTd.textContent = leftLine.num;
+            leftNumTd.textContent = leftLine.class === 'diff-hunk' ? '' : (leftLine.num || '');
             const leftCodeTd = document.createElement('td');
             leftCodeTd.className = leftLine.class;
-            leftCodeTd.innerHTML = oldHtml;
+            leftCodeTd.innerHTML = leftLine.class === 'diff-hunk' ? escapeHtml(leftLine.text) : oldHtml;
 
             leftTr.appendChild(leftNumTd);
             leftTr.appendChild(leftCodeTd);
             diffTableLeft.appendChild(leftTr);
 
-            const rightTr = document.createElement('tr');
             const rightNumTd = document.createElement('td');
             rightNumTd.className = 'line-num';
-            rightNumTd.textContent = rightLine.num;
+            rightNumTd.textContent = rightLine.class === 'diff-hunk' ? '' : (rightLine.num || '');
             const rightCodeTd = document.createElement('td');
             rightCodeTd.className = rightLine.class;
-            rightCodeTd.innerHTML = newHtml;
+            rightCodeTd.innerHTML = rightLine.class === 'diff-hunk' ? escapeHtml(rightLine.text) : newHtml;
 
             rightTr.appendChild(rightNumTd);
             rightTr.appendChild(rightCodeTd);
             diffTableRight.appendChild(rightTr);
+        }
+
+        buildThumbnails(leftBuffer, rightBuffer);
+    }
+
+    function buildThumbnails(leftBuffer, rightBuffer) {
+        thumbnailLeft.innerHTML = '';
+        thumbnailRight.innerHTML = '';
+
+        const totalLines = leftBuffer.length;
+        if (totalLines === 0) {
+            thumbnailsContainer.style.display = 'none';
+            return;
+        }
+
+        // Align thumbnails height with the diff-panels height
+        const diffPanels = diffContainer.querySelector('.diff-panels');
+        const panelsRect = diffPanels.getBoundingClientRect();
+        const wrapperRect = document.querySelector('.diff-wrapper').getBoundingClientRect();
+
+        const containerTop = panelsRect.top - wrapperRect.top; 
+        const containerHeight = diffPanels.clientHeight;
+
+        thumbnailsContainer.style.top = containerTop + 'px';
+        thumbnailsContainer.style.height = containerHeight + 'px';
+        thumbnailsContainer.style.display = 'flex';
+
+        thumbnailLeft.style.height = containerHeight + 'px';
+        thumbnailRight.style.height = containerHeight + 'px';
+
+        const lineHeight = containerHeight / totalLines;
+
+        for (let i = 0; i < totalLines; i++) {
+            const leftLine = leftBuffer[i];
+            const rightLine = rightBuffer[i];
+
+            const leftSeg = document.createElement('div');
+            leftSeg.className = 'thumbnail-segment';
+            leftSeg.style.height = lineHeight + 'px';
+
+            // 使用柔和的颜色
+            if (leftLine.class === 'diff-remove') {
+                leftSeg.style.backgroundColor = '#f5a5a5'; // 柔和红色
+            } else if (leftLine.class === 'diff-add') {
+                leftSeg.style.backgroundColor = '#a8d5ba'; // 柔和绿色
+            } else if (leftLine.class === 'diff-hunk') {
+                leftSeg.style.backgroundColor = '#dddddd';
+            } else {
+                leftSeg.style.backgroundColor = '#ffffff';
+            }
+            thumbnailLeft.appendChild(leftSeg);
+
+            const rightSeg = document.createElement('div');
+            rightSeg.className = 'thumbnail-segment';
+            rightSeg.style.height = lineHeight + 'px';
+            if (rightLine.class === 'diff-remove') {
+                rightSeg.style.backgroundColor = '#f5a5a5'; // 柔和红色
+            } else if (rightLine.class === 'diff-add') {
+                rightSeg.style.backgroundColor = '#a8d5ba'; // 柔和绿色
+            } else if (rightLine.class === 'diff-hunk') {
+                rightSeg.style.backgroundColor = '#dddddd';
+            } else {
+                rightSeg.style.backgroundColor = '#ffffff';
+            }
+            thumbnailRight.appendChild(rightSeg);
         }
     }
 
@@ -403,12 +558,14 @@
                     renderDiff(data.diff);
                 } else {
                     diffContainer.style.display = 'none';
+                    thumbnailsContainer.style.display = 'none';
                 }
             } catch (e) {
                 console.error('Error fetching diff:', e);
             }
         } else if (!oldText || !newText) {
             diffContainer.style.display = 'none';
+            thumbnailsContainer.style.display = 'none';
         }
     }
 
