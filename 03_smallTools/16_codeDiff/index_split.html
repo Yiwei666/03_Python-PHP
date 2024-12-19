@@ -262,25 +262,37 @@
         });
     }
 
+    // 如果行为空或者仅包含空格，则使用&nbsp;确保行高一致
+    function ensureNonEmpty(line) {
+        if (!line.trim()) {
+            return '&nbsp;';
+        }
+        return line;
+    }
+
     // Highlight differences at character level
     function highlightLineDiff(oldText, newText) {
+        // 将空行转为&nbsp;以确保高度一致
+        oldText = oldText === '' ? ' ' : oldText;
+        newText = newText === '' ? ' ' : newText;
+
         if (!oldText && newText) {
             // Only new line
             return {
                 oldHtml: '',
-                newHtml: `<span style="background-color:#afff93;">+${escapeHtml(newText) || ' '}</span>`
+                newHtml: `<span style="background-color:#afff93;">+${ensureNonEmpty(escapeHtml(newText))}</span>`
             };
         } else if (oldText && !newText) {
             // Only old line
             return {
-                oldHtml: `<span style="background-color:#fca0a0;">-${escapeHtml(oldText) || ' '}</span>`,
+                oldHtml: `<span style="background-color:#fca0a0;">-${ensureNonEmpty(escapeHtml(oldText))}</span>`,
                 newHtml: ''
             };
         } else if (oldText === newText) {
             // Same line
             return {
-                oldHtml: escapeHtml(oldText) || ' ',
-                newHtml: escapeHtml(newText) || ' '
+                oldHtml: ensureNonEmpty(escapeHtml(oldText)),
+                newHtml: ensureNonEmpty(escapeHtml(newText))
             };
         } else {
             // Use Diff.diffChars for character-level diff
@@ -288,7 +300,8 @@
             let oldHtml = '';
             let newHtml = '';
             changes.forEach(part => {
-                const escapedValue = escapeHtml(part.value) || ' ';
+                const val = part.value === '' ? ' ' : part.value;
+                const escapedValue = ensureNonEmpty(escapeHtml(val));
                 if (part.added) {
                     newHtml += `<span style="background-color:#afff93;">${escapedValue}</span>`;
                 } else if (part.removed) {
@@ -298,9 +311,6 @@
                     newHtml += escapedValue;
                 }
             });
-
-            // Add '+' or '-' prefix if needed
-            // For context lines, no prefix
             return {oldHtml, newHtml};
         }
     }
@@ -318,14 +328,6 @@
         const leftBuffer = [];
         const rightBuffer = [];
 
-        // We will handle hunks now to get correct line numbers
-        // Unified diff format:
-        // @@ -oldStart,oldCount +newStart,newCount @@
-        // Then lines:
-        //  ' ' context
-        //  '-' removed
-        //  '+' added
-        // Show hunk lines as well.
         let inHunk = false;
 
         for (const line of lines) {
@@ -374,7 +376,6 @@
             } else if (line.startsWith('+')) {
                 // Added line
                 newLineNum++;
-                // Try pairing with previous remove line
                 const lastIndex = leftBuffer.length - 1;
                 if (lastIndex >= 0 &&
                     leftBuffer[lastIndex].class === 'diff-remove' &&
@@ -385,7 +386,6 @@
                     rightBuffer[lastIndex].text = line.substring(1);
                     rightBuffer[lastIndex].class = 'diff-add';
                 } else {
-                    // standalone add
                     leftBuffer.push({
                         num: '',
                         text: '',
@@ -415,32 +415,25 @@
             }
         }
 
-        // Render lines
         for (let i = 0; i < leftBuffer.length; i++) {
             const leftLine = leftBuffer[i];
             const rightLine = rightBuffer[i];
 
-            let oldHtml = escapeHtml(leftLine.text);
-            let newHtml = escapeHtml(rightLine.text);
+            let oldHtml = ensureNonEmpty(escapeHtml(leftLine.text));
+            let newHtml = ensureNonEmpty(escapeHtml(rightLine.text));
 
-            // Highlight differences only if it's not a hunk or empty line
             if (leftLine.class !== 'diff-hunk' && rightLine.class !== 'diff-hunk') {
                 const highlighted = highlightLineDiff(leftLine.text, rightLine.text);
                 oldHtml = highlighted.oldHtml;
                 newHtml = highlighted.newHtml;
 
-                // Add sign prefix for added/removed lines if needed
                 if (leftLine.class === 'diff-remove' && leftLine.num !== '') {
-                    // Removed line on left
                     oldHtml = `<span style="background-color:#fca0a0;">-${oldHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
                 } else if (rightLine.class === 'diff-add' && rightLine.num !== '') {
-                    // Added line on right
                     newHtml = `<span style="background-color:#afff93;">+${newHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
                 } else if (leftLine.class === 'diff-add' && leftLine.num !== '') {
-                    // If line on left is add line (unusual, but handle)
                     oldHtml = `<span style="background-color:#afff93;">+${oldHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
                 } else if (rightLine.class === 'diff-remove' && rightLine.num !== '') {
-                    // If line on right is remove line (unusual)
                     newHtml = `<span style="background-color:#fca0a0;">-${newHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
                 }
             }
@@ -453,7 +446,7 @@
             leftNumTd.textContent = leftLine.class === 'diff-hunk' ? '' : (leftLine.num || '');
             const leftCodeTd = document.createElement('td');
             leftCodeTd.className = leftLine.class;
-            leftCodeTd.innerHTML = leftLine.class === 'diff-hunk' ? escapeHtml(leftLine.text) : oldHtml;
+            leftCodeTd.innerHTML = leftLine.class === 'diff-hunk' ? ensureNonEmpty(escapeHtml(leftLine.text)) : oldHtml;
 
             leftTr.appendChild(leftNumTd);
             leftTr.appendChild(leftCodeTd);
@@ -464,7 +457,7 @@
             rightNumTd.textContent = rightLine.class === 'diff-hunk' ? '' : (rightLine.num || '');
             const rightCodeTd = document.createElement('td');
             rightCodeTd.className = rightLine.class;
-            rightCodeTd.innerHTML = rightLine.class === 'diff-hunk' ? escapeHtml(rightLine.text) : newHtml;
+            rightCodeTd.innerHTML = rightLine.class === 'diff-hunk' ? ensureNonEmpty(escapeHtml(rightLine.text)) : newHtml;
 
             rightTr.appendChild(rightNumTd);
             rightTr.appendChild(rightCodeTd);
@@ -484,7 +477,6 @@
             return;
         }
 
-        // Align thumbnails height with the diff-panels height
         const diffPanels = diffContainer.querySelector('.diff-panels');
         const panelsRect = diffPanels.getBoundingClientRect();
         const wrapperRect = document.querySelector('.diff-wrapper').getBoundingClientRect();
@@ -509,11 +501,10 @@
             leftSeg.className = 'thumbnail-segment';
             leftSeg.style.height = lineHeight + 'px';
 
-            // 使用柔和的颜色
             if (leftLine.class === 'diff-remove') {
-                leftSeg.style.backgroundColor = '#f5a5a5'; // 柔和红色
+                leftSeg.style.backgroundColor = '#f5a5a5'; 
             } else if (leftLine.class === 'diff-add') {
-                leftSeg.style.backgroundColor = '#a8d5ba'; // 柔和绿色
+                leftSeg.style.backgroundColor = '#a8d5ba'; 
             } else if (leftLine.class === 'diff-hunk') {
                 leftSeg.style.backgroundColor = '#dddddd';
             } else {
@@ -525,9 +516,9 @@
             rightSeg.className = 'thumbnail-segment';
             rightSeg.style.height = lineHeight + 'px';
             if (rightLine.class === 'diff-remove') {
-                rightSeg.style.backgroundColor = '#f5a5a5'; // 柔和红色
+                rightSeg.style.backgroundColor = '#f5a5a5'; 
             } else if (rightLine.class === 'diff-add') {
-                rightSeg.style.backgroundColor = '#a8d5ba'; // 柔和绿色
+                rightSeg.style.backgroundColor = '#a8d5ba'; 
             } else if (rightLine.class === 'diff-hunk') {
                 rightSeg.style.backgroundColor = '#dddddd';
             } else {
