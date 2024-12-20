@@ -137,7 +137,49 @@ app.listen(PORT, () => {
     -  对于部分修改的代码行（仅增加、删减或者修改少量代码内容，主体部分不变的代码行），在左右缓冲区中都添加该行内容。
 
 
+⭐ **后端返回diff数据示例**
 
+1. 两个版本代码
+
+```js
+版本1：
+// ==UserScript==
+// @name         Extract Citation Data with DOI Lookup and Complete Reference Info
+// @namespace    http://tampermonkey.net/
+-// @version      1.7
+-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号和文章编号
+// @author
+// @match        https://scholar.google.com/*
+// @match        https://scholar.google.com.hk/*
+// @grant        GM_xmlhttpRequest
+
+
+版本2：
+// ==UserScript==
+// @name         Extract Citation Data with DOI Lookup and Complete Reference Info
+// @namespace    http://tampermonkey.net/
++// @version      1.9
++// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号、文章编号、出版商和 ISSN（标注类型）
+// @author
+// @match        https://scholar.google.com/*
+// @match        https://scholar.google.com.hk/*
+// @grant        GM_xmlhttpRequest
+```
+
+
+2. 后端diff数据返回实例
+
+```js
+@@ -3,7 +3,7 @@
+ // @namespace    http://tampermonkey.net/
+-// @version      1.7
+-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号和文章编号
++// @version      1.9
++// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号、文章编号、出版商和 ISSN（标注类型）
+ // @author
+ // @match        https://scholar.google.com/*
+ // @match        https://scholar.google.com.hk/*
+```
 
 
 
