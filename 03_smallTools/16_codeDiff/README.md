@@ -146,8 +146,8 @@ app.listen(PORT, () => {
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info
 // @namespace    http://tampermonkey.net/
--// @version      1.7
--// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号和文章编号
+// @version      1.7
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号和文章编号
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
@@ -158,8 +158,8 @@ app.listen(PORT, () => {
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info
 // @namespace    http://tampermonkey.net/
-+// @version      1.9
-+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号、文章编号、出版商和 ISSN（标注类型）
+// @version      1.9
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号、文章编号、出版商和 ISSN（标注类型）
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
