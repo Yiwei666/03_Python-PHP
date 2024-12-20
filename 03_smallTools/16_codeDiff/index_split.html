@@ -148,11 +148,13 @@
         .highlight-add {
             background-color: #a8d5ba; /* Soft green */
             color: #22863a;
+            display: inline-block; /* Ensure spans take up space */
         }
 
         .highlight-remove {
             background-color: #f5a5a5; /* Soft red */
             color: #b31d28;
+            display: inline-block; /* Ensure spans take up space */
         }
 
         /* Empty line classes */
@@ -298,13 +300,13 @@
         oldText = oldText === '' ? ' ' : oldText;
         newText = newText === '' ? ' ' : newText;
 
-        if (!oldText && newText) {
+        if (!oldText.trim() && newText.trim()) {
             // Only new line (Addition)
             return {
                 oldHtml: '',
                 newHtml: `<span class="highlight-add">${ensureNonEmpty(escapeHtml(newText))}</span>`
             };
-        } else if (oldText && !newText) {
+        } else if (oldText.trim() && !newText.trim()) {
             // Only old line (Deletion)
             return {
                 oldHtml: `<span class="highlight-remove">${ensureNonEmpty(escapeHtml(oldText))}</span>`,
@@ -408,7 +410,7 @@
                     const del = deletions[j];
                     const add = additions[j];
 
-                    if (del && add) {
+                    if (del !== undefined && add !== undefined) {
                         // Modified line (both deletion and addition)
                         oldLineNum++;
                         newLineNum++;
@@ -423,7 +425,7 @@
                             text: `+ ${highlighted.newHtml}`,
                             class: 'diff-add-line'
                         });
-                    } else if (del) {
+                    } else if (del !== undefined) {
                         // Only deletion
                         oldLineNum++;
                         leftBuffer.push({
@@ -436,7 +438,7 @@
                             text: `<span class="diff-empty-right">&nbsp;</span>`,
                             class: 'diff-empty-right'
                         });
-                    } else if (add) {
+                    } else if (add !== undefined) {
                         // Only addition
                         newLineNum++;
                         leftBuffer.push({
@@ -444,11 +446,20 @@
                             text: `<span class="diff-empty-left">&nbsp;</span>`,
                             class: 'diff-empty-left'
                         });
-                        rightBuffer.push({
-                            num: newLineNum,
-                            text: `+ ${ensureNonEmpty(escapeHtml(add))}`,
-                            class: 'diff-add-line'
-                        });
+                        // Handle empty addition lines
+                        if (add.trim() === '') {
+                            rightBuffer.push({
+                                num: newLineNum,
+                                text: `+ &nbsp;`,
+                                class: 'diff-add-line'
+                            });
+                        } else {
+                            rightBuffer.push({
+                                num: newLineNum,
+                                text: `+ ${ensureNonEmpty(escapeHtml(add))}`,
+                                class: 'diff-add-line'
+                            });
+                        }
                     }
                 }
             } else if (line.startsWith('+')) {
@@ -460,11 +471,20 @@
                     text: `<span class="diff-empty-left">&nbsp;</span>`,
                     class: 'diff-empty-left'
                 });
-                rightBuffer.push({
-                    num: newLineNum,
-                    text: `+ ${ensureNonEmpty(escapeHtml(addLine))}`,
-                    class: 'diff-add-line'
-                });
+                // Handle empty addition lines
+                if (addLine.trim() === '') {
+                    rightBuffer.push({
+                        num: newLineNum,
+                        text: `+ &nbsp;`,
+                        class: 'diff-add-line'
+                    });
+                } else {
+                    rightBuffer.push({
+                        num: newLineNum,
+                        text: `+ ${ensureNonEmpty(escapeHtml(addLine))}`,
+                        class: 'diff-add-line'
+                    });
+                }
                 i++;
             } else if (line.startsWith(' ')) {
                 // Context line
