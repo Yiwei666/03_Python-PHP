@@ -79,16 +79,17 @@
 
         .diff-panels {
             display: flex;
-            width: 98%; /* 调小并排视图宽度以预留空间给缩略图 */
+            width: 98%; /* Adjusted width to reserve space for thumbnails */
             height: 700px;
             overflow: hidden;
-            margin-right:10px; /* 为缩略图留出空间 */
+            margin-right:10px; /* Space for thumbnails */
         }
 
         .diff-panel {
             width: 50%;
             box-sizing: border-box;
             overflow: auto;
+            position: relative;
         }
 
         .diff-table {
@@ -121,13 +122,14 @@
             white-space: nowrap;
         }
 
-        .diff-add {
-            background: #e6ffed;
+        /* Entire line backgrounds */
+        .diff-add-line {
+            background: #e6ffed; /* Light green for entire added lines */
             color: #22863a;
         }
 
-        .diff-remove {
-            background: #ffeef0;
+        .diff-remove-line {
+            background: #ffeef0; /* Light red for entire removed lines */
             color: #b31d28;
         }
 
@@ -140,6 +142,26 @@
             background: #f6f8fa;
             color: #999;
             font-style: italic;
+        }
+
+        /* Highlight specific additions and deletions */
+        .highlight-add {
+            background-color: #a8d5ba; /* Soft green */
+            color: #22863a;
+        }
+
+        .highlight-remove {
+            background-color: #f5a5a5; /* Soft red */
+            color: #b31d28;
+        }
+
+        /* Empty line classes */
+        .diff-empty-left {
+            background-color: #ffffff; /* White background for empty left lines */
+        }
+
+        .diff-empty-right {
+            background-color: #ffffff; /* White background for empty right lines */
         }
 
         /* Hover highlight */
@@ -169,7 +191,7 @@
             display: flex;
             flex-direction: row;
             gap: 5px;
-            right: 0; /* 将缩略图固定在容器右侧 */
+            right: 0; /* Fix thumbnails to the right side of the container */
         }
 
         .thumbnail-bar {
@@ -177,7 +199,7 @@
             background: #f6f8fa;
             border: 1px solid #ddd;
             display: flex;
-            flex-direction: column; /* 垂直堆叠行表示纵向缩略图 */
+            flex-direction: column; /* Vertical stacking for thumbnails */
             overflow: hidden;
             position: relative;
         }
@@ -262,7 +284,7 @@
         });
     }
 
-    // 如果行为空或者仅包含空格，则使用&nbsp;确保行高一致
+    // Ensure non-empty lines for consistent line height
     function ensureNonEmpty(line) {
         if (!line.trim()) {
             return '&nbsp;';
@@ -272,30 +294,30 @@
 
     // Highlight differences at character level
     function highlightLineDiff(oldText, newText) {
-        // 将空行转为&nbsp;以确保高度一致
+        // Convert empty lines to a space to maintain consistent height
         oldText = oldText === '' ? ' ' : oldText;
         newText = newText === '' ? ' ' : newText;
 
         if (!oldText && newText) {
-            // Only new line
+            // Only new line (Addition)
             return {
                 oldHtml: '',
-                newHtml: `<span style="background-color:#afff93;">+${ensureNonEmpty(escapeHtml(newText))}</span>`
+                newHtml: `<span class="highlight-add">${ensureNonEmpty(escapeHtml(newText))}</span>`
             };
         } else if (oldText && !newText) {
-            // Only old line
+            // Only old line (Deletion)
             return {
-                oldHtml: `<span style="background-color:#fca0a0;">-${ensureNonEmpty(escapeHtml(oldText))}</span>`,
+                oldHtml: `<span class="highlight-remove">${ensureNonEmpty(escapeHtml(oldText))}</span>`,
                 newHtml: ''
             };
         } else if (oldText === newText) {
-            // Same line
+            // Same line (Context)
             return {
                 oldHtml: ensureNonEmpty(escapeHtml(oldText)),
                 newHtml: ensureNonEmpty(escapeHtml(newText))
             };
         } else {
-            // Use Diff.diffChars for character-level diff
+            // Modified line: highlight added and removed characters
             const changes = Diff.diffChars(oldText, newText);
             let oldHtml = '';
             let newHtml = '';
@@ -303,9 +325,9 @@
                 const val = part.value === '' ? ' ' : part.value;
                 const escapedValue = ensureNonEmpty(escapeHtml(val));
                 if (part.added) {
-                    newHtml += `<span style="background-color:#afff93;">${escapedValue}</span>`;
+                    newHtml += `<span class="highlight-add">${escapedValue}</span>`;
                 } else if (part.removed) {
-                    oldHtml += `<span style="background-color:#fca0a0;">${escapedValue}</span>`;
+                    oldHtml += `<span class="highlight-remove">${escapedValue}</span>`;
                 } else {
                     oldHtml += escapedValue;
                     newHtml += escapedValue;
@@ -316,7 +338,7 @@
     }
 
     function renderDiff(diffText) {
-        // Clear existing diff
+        // Clear existing diff tables
         diffTableLeft.innerHTML = '';
         diffTableRight.innerHTML = '';
 
@@ -330,7 +352,9 @@
 
         let inHunk = false;
 
-        for (const line of lines) {
+        let i = 0;
+        while (i < lines.length) {
+            const line = lines[i];
             if (line.startsWith('@@')) {
                 // Parse hunk header
                 const match = /@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@/.exec(line);
@@ -341,7 +365,7 @@
                     newLineNum = newStart - 1;
                     inHunk = true;
                 }
-                // Add hunk line as diff-hunk
+                // Add hunk header to both buffers
                 leftBuffer.push({
                     num: '',
                     text: line,
@@ -352,112 +376,175 @@
                     text: line,
                     class: 'diff-hunk'
                 });
+                i++;
                 continue;
             }
 
             if (!inHunk) {
-                // Lines outside hunks are ignored
+                // Ignore lines outside hunks
+                i++;
                 continue;
             }
 
             if (line.startsWith('-')) {
-                // Removed line
-                oldLineNum++;
+                // Collect all consecutive deletions
+                const deletions = [];
+                while (i < lines.length && lines[i].startsWith('-')) {
+                    deletions.push(lines[i].substring(1));
+                    i++;
+                }
+
+                // Collect all consecutive additions
+                const additions = [];
+                while (i < lines.length && lines[i].startsWith('+')) {
+                    additions.push(lines[i].substring(1));
+                    i++;
+                }
+
+                // Determine the number of modified lines
+                const len = Math.max(deletions.length, additions.length);
+
+                for (let j = 0; j < len; j++) {
+                    const del = deletions[j];
+                    const add = additions[j];
+
+                    if (del && add) {
+                        // Modified line (both deletion and addition)
+                        oldLineNum++;
+                        newLineNum++;
+                        const highlighted = highlightLineDiff(del, add);
+                        leftBuffer.push({
+                            num: oldLineNum,
+                            text: `- ${highlighted.oldHtml}`,
+                            class: 'diff-remove-line'
+                        });
+                        rightBuffer.push({
+                            num: newLineNum,
+                            text: `+ ${highlighted.newHtml}`,
+                            class: 'diff-add-line'
+                        });
+                    } else if (del) {
+                        // Only deletion
+                        oldLineNum++;
+                        leftBuffer.push({
+                            num: oldLineNum,
+                            text: `- ${ensureNonEmpty(escapeHtml(del))}`,
+                            class: 'diff-remove-line'
+                        });
+                        rightBuffer.push({
+                            num: '',
+                            text: `<span class="diff-empty-right">&nbsp;</span>`,
+                            class: 'diff-empty-right'
+                        });
+                    } else if (add) {
+                        // Only addition
+                        newLineNum++;
+                        leftBuffer.push({
+                            num: '',
+                            text: `<span class="diff-empty-left">&nbsp;</span>`,
+                            class: 'diff-empty-left'
+                        });
+                        rightBuffer.push({
+                            num: newLineNum,
+                            text: `+ ${ensureNonEmpty(escapeHtml(add))}`,
+                            class: 'diff-add-line'
+                        });
+                    }
+                }
+            } else if (line.startsWith('+')) {
+                // Addition without preceding deletion
+                const addLine = line.substring(1);
+                newLineNum++;
                 leftBuffer.push({
-                    num: oldLineNum,
-                    text: line.substring(1),
-                    class: 'diff-remove'
+                    num: '',
+                    text: `<span class="diff-empty-left">&nbsp;</span>`,
+                    class: 'diff-empty-left'
                 });
                 rightBuffer.push({
-                    num: '',
-                    text: '',
-                    class: 'diff-remove'
+                    num: newLineNum,
+                    text: `+ ${ensureNonEmpty(escapeHtml(addLine))}`,
+                    class: 'diff-add-line'
                 });
-            } else if (line.startsWith('+')) {
-                // Added line
-                newLineNum++;
-                const lastIndex = leftBuffer.length - 1;
-                if (lastIndex >= 0 &&
-                    leftBuffer[lastIndex].class === 'diff-remove' &&
-                    rightBuffer[lastIndex].num === '' &&
-                    rightBuffer[lastIndex].class === 'diff-remove') {
-                    // Pair with previous remove
-                    rightBuffer[lastIndex].num = newLineNum;
-                    rightBuffer[lastIndex].text = line.substring(1);
-                    rightBuffer[lastIndex].class = 'diff-add';
-                } else {
-                    leftBuffer.push({
-                        num: '',
-                        text: '',
-                        class: 'diff-add'
-                    });
-                    rightBuffer.push({
-                        num: newLineNum,
-                        text: line.substring(1),
-                        class: 'diff-add'
-                    });
-                }
-            } else {
+                i++;
+            } else if (line.startsWith(' ')) {
                 // Context line
+                const contextText = line.substring(1);
                 oldLineNum++;
                 newLineNum++;
-                let contextText = line.startsWith(' ') ? line.substring(1) : line;
                 leftBuffer.push({
                     num: oldLineNum,
-                    text: contextText,
+                    text: ensureNonEmpty(escapeHtml(contextText)),
                     class: 'diff-context'
                 });
                 rightBuffer.push({
                     num: newLineNum,
-                    text: contextText,
+                    text: ensureNonEmpty(escapeHtml(contextText)),
                     class: 'diff-context'
                 });
+                i++;
+            } else {
+                // Any other line types are ignored
+                i++;
             }
         }
 
+        // Now, render the buffers
         for (let i = 0; i < leftBuffer.length; i++) {
             const leftLine = leftBuffer[i];
             const rightLine = rightBuffer[i];
 
-            let oldHtml = ensureNonEmpty(escapeHtml(leftLine.text));
-            let newHtml = ensureNonEmpty(escapeHtml(rightLine.text));
+            let oldHtml = '';
+            let newHtml = '';
 
-            if (leftLine.class !== 'diff-hunk' && rightLine.class !== 'diff-hunk') {
-                const highlighted = highlightLineDiff(leftLine.text, rightLine.text);
-                oldHtml = highlighted.oldHtml;
-                newHtml = highlighted.newHtml;
-
-                if (leftLine.class === 'diff-remove' && leftLine.num !== '') {
-                    oldHtml = `<span style="background-color:#fca0a0;">-${oldHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
-                } else if (rightLine.class === 'diff-add' && rightLine.num !== '') {
-                    newHtml = `<span style="background-color:#afff93;">+${newHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
-                } else if (leftLine.class === 'diff-add' && leftLine.num !== '') {
-                    oldHtml = `<span style="background-color:#afff93;">+${oldHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
-                } else if (rightLine.class === 'diff-remove' && rightLine.num !== '') {
-                    newHtml = `<span style="background-color:#fca0a0;">-${newHtml.replace(/<span.*?>(.*?)<\/span>/g, '$1')}</span>`;
-                }
+            // Handle left side
+            if (leftLine.class === 'diff-remove-line') {
+                oldHtml = leftLine.text;
+            } else if (leftLine.class === 'diff-context' || leftLine.class === 'diff-hunk') {
+                oldHtml = leftLine.text;
+            } else if (leftLine.class === 'diff-empty-left') {
+                oldHtml = leftLine.text; // Contains &nbsp;
+            } else {
+                oldHtml = '';
             }
 
-            const leftTr = document.createElement('tr');
-            const rightTr = document.createElement('tr');
+            // Handle right side
+            if (rightLine.class === 'diff-add-line') {
+                newHtml = rightLine.text;
+            } else if (rightLine.class === 'diff-context' || rightLine.class === 'diff-hunk') {
+                newHtml = rightLine.text;
+            } else if (rightLine.class === 'diff-empty-right') {
+                newHtml = rightLine.text; // Contains &nbsp;
+            } else {
+                newHtml = '';
+            }
 
+            // Create left row
+            const leftTr = document.createElement('tr');
             const leftNumTd = document.createElement('td');
             leftNumTd.className = 'line-num';
             leftNumTd.textContent = leftLine.class === 'diff-hunk' ? '' : (leftLine.num || '');
+
             const leftCodeTd = document.createElement('td');
             leftCodeTd.className = leftLine.class;
-            leftCodeTd.innerHTML = leftLine.class === 'diff-hunk' ? ensureNonEmpty(escapeHtml(leftLine.text)) : oldHtml;
+            leftCodeTd.innerHTML = leftLine.class === 'diff-hunk' ? 
+                ensureNonEmpty(escapeHtml(leftLine.text)) : 
+                oldHtml;
 
             leftTr.appendChild(leftNumTd);
             leftTr.appendChild(leftCodeTd);
             diffTableLeft.appendChild(leftTr);
 
+            // Create right row
+            const rightTr = document.createElement('tr');
             const rightNumTd = document.createElement('td');
             rightNumTd.className = 'line-num';
             rightNumTd.textContent = rightLine.class === 'diff-hunk' ? '' : (rightLine.num || '');
+
             const rightCodeTd = document.createElement('td');
             rightCodeTd.className = rightLine.class;
-            rightCodeTd.innerHTML = rightLine.class === 'diff-hunk' ? ensureNonEmpty(escapeHtml(rightLine.text)) : newHtml;
+            rightCodeTd.innerHTML = rightLine.class === 'diff-hunk' ? 
+                ensureNonEmpty(escapeHtml(rightLine.text)) : 
+                newHtml;
 
             rightTr.appendChild(rightNumTd);
             rightTr.appendChild(rightCodeTd);
@@ -501,28 +588,20 @@
             leftSeg.className = 'thumbnail-segment';
             leftSeg.style.height = lineHeight + 'px';
 
-            if (leftLine.class === 'diff-remove') {
-                leftSeg.style.backgroundColor = '#f5a5a5'; 
-            } else if (leftLine.class === 'diff-add') {
-                leftSeg.style.backgroundColor = '#a8d5ba'; 
-            } else if (leftLine.class === 'diff-hunk') {
-                leftSeg.style.backgroundColor = '#dddddd';
+            if (leftLine.class === 'diff-remove-line') {
+                leftSeg.style.backgroundColor = '#f5a5a5'; // Soft red
             } else {
-                leftSeg.style.backgroundColor = '#ffffff';
+                leftSeg.style.backgroundColor = '#ffffff'; // White for other lines
             }
             thumbnailLeft.appendChild(leftSeg);
 
             const rightSeg = document.createElement('div');
             rightSeg.className = 'thumbnail-segment';
             rightSeg.style.height = lineHeight + 'px';
-            if (rightLine.class === 'diff-remove') {
-                rightSeg.style.backgroundColor = '#f5a5a5'; 
-            } else if (rightLine.class === 'diff-add') {
-                rightSeg.style.backgroundColor = '#a8d5ba'; 
-            } else if (rightLine.class === 'diff-hunk') {
-                rightSeg.style.backgroundColor = '#dddddd';
+            if (rightLine.class === 'diff-add-line') {
+                rightSeg.style.backgroundColor = '#a8d5ba'; // Soft green
             } else {
-                rightSeg.style.backgroundColor = '#ffffff';
+                rightSeg.style.backgroundColor = '#ffffff'; // White for other lines
             }
             thumbnailRight.appendChild(rightSeg);
         }
