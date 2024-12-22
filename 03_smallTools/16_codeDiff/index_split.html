@@ -327,8 +327,8 @@
         } else if (oldText === newText) {
             // Same line (Context)
             return {
-                oldHtml: ensureNonEmpty(escapeHtml(oldText)),
-                newHtml: ensureNonEmpty(escapeHtml(newText))
+                oldHtml: "  " + ensureNonEmpty(escapeHtml(oldText)),
+                newHtml: "  " + ensureNonEmpty(escapeHtml(newText))
             };
         } else {
             // Modified line: highlight added and removed characters
@@ -505,12 +505,12 @@
                 newLineNum++;
                 leftBuffer.push({
                     num: oldLineNum,
-                    text: ensureNonEmpty(escapeHtml(contextText)),
+                    text: "  " + ensureNonEmpty(escapeHtml(contextText)),
                     class: 'diff-context'
                 });
                 rightBuffer.push({
                     num: newLineNum,
-                    text: ensureNonEmpty(escapeHtml(contextText)),
+                    text: "  " + ensureNonEmpty(escapeHtml(contextText)),
                     class: 'diff-context'
                 });
                 i++;
