@@ -122,39 +122,43 @@
             white-space: nowrap;
         }
 
-        /* Entire line backgrounds */
-        .diff-add-line {
-            background: #e6ffed; /* Light green for entire added lines */
-            color: #22863a;
+        /* Entire line backgrounds for left (old version) */
+        .diff-remove-line-left {
+            background: #fee8e9; /* Light pink for deletions */
         }
 
-        .diff-remove-line {
-            background: #ffeef0; /* Light red for entire removed lines */
-            color: #b31d28;
+        .diff-modify-line-left {
+            background: #fdf2d0; /* Light yellow for modified lines */
         }
 
+        /* Highlight specific modifications on left */
+        .diff-modify-line-left .highlight-remove {
+            background-color: #ffb6ba; /* Pink for modified parts */
+        }
+
+        /* Entire line backgrounds for right (new version) */
+        .diff-add-line-right {
+            background: #ddffdd; /* Soft light green for additions */
+        }
+
+        .diff-modify-line-right {
+            background: #ddeedd; /* Light green for modified lines */
+        }
+
+        /* Highlight specific modifications on right */
+        .diff-modify-line-right .highlight-add {
+            background-color: #97f295; /* Grass green for modified parts */
+        }
+
+        /* Unchanged lines and hunk headers */
         .diff-context {
-            background: #f6f8fa;
-            color: #24292e;
+            background: #fff; /* White for unchanged lines */
         }
 
         .diff-hunk {
-            background: #f6f8fa;
+            background: #f6f8fa; /* Light grey for hunk headers */
             color: #999;
             font-style: italic;
-        }
-
-        /* Highlight specific additions and deletions */
-        .highlight-add {
-            background-color: #a8d5ba; /* Soft green */
-            color: #22863a;
-            display: inline-block; /* Ensure spans take up space */
-        }
-
-        .highlight-remove {
-            background-color: #f5a5a5; /* Soft red */
-            color: #b31d28;
-            display: inline-block; /* Ensure spans take up space */
         }
 
         /* Empty line classes */
@@ -418,12 +422,12 @@
                         leftBuffer.push({
                             num: oldLineNum,
                             text: `- ${highlighted.oldHtml}`,
-                            class: 'diff-remove-line'
+                            class: 'diff-modify-line-left'
                         });
                         rightBuffer.push({
                             num: newLineNum,
                             text: `+ ${highlighted.newHtml}`,
-                            class: 'diff-add-line'
+                            class: 'diff-modify-line-right'
                         });
                     } else if (del !== undefined) {
                         // Only deletion
@@ -431,7 +435,7 @@
                         leftBuffer.push({
                             num: oldLineNum,
                             text: `- ${ensureNonEmpty(escapeHtml(del))}`,
-                            class: 'diff-remove-line'
+                            class: 'diff-remove-line-left'
                         });
                         rightBuffer.push({
                             num: '',
@@ -451,13 +455,13 @@
                             rightBuffer.push({
                                 num: newLineNum,
                                 text: `+ &nbsp;`,
-                                class: 'diff-add-line'
+                                class: 'diff-add-line-right'
                             });
                         } else {
                             rightBuffer.push({
                                 num: newLineNum,
                                 text: `+ ${ensureNonEmpty(escapeHtml(add))}`,
-                                class: 'diff-add-line'
+                                class: 'diff-add-line-right'
                             });
                         }
                     }
@@ -476,13 +480,13 @@
                     rightBuffer.push({
                         num: newLineNum,
                         text: `+ &nbsp;`,
-                        class: 'diff-add-line'
+                        class: 'diff-add-line-right'
                     });
                 } else {
                     rightBuffer.push({
                         num: newLineNum,
                         text: `+ ${ensureNonEmpty(escapeHtml(addLine))}`,
-                        class: 'diff-add-line'
+                        class: 'diff-add-line-right'
                     });
                 }
                 i++;
@@ -517,7 +521,7 @@
             let newHtml = '';
 
             // Handle left side
-            if (leftLine.class === 'diff-remove-line') {
+            if (leftLine.class === 'diff-remove-line-left' || leftLine.class === 'diff-modify-line-left') {
                 oldHtml = leftLine.text;
             } else if (leftLine.class === 'diff-context' || leftLine.class === 'diff-hunk') {
                 oldHtml = leftLine.text;
@@ -528,7 +532,7 @@
             }
 
             // Handle right side
-            if (rightLine.class === 'diff-add-line') {
+            if (rightLine.class === 'diff-add-line-right' || rightLine.class === 'diff-modify-line-right') {
                 newHtml = rightLine.text;
             } else if (rightLine.class === 'diff-context' || rightLine.class === 'diff-hunk') {
                 newHtml = rightLine.text;
@@ -608,8 +612,10 @@
             leftSeg.className = 'thumbnail-segment';
             leftSeg.style.height = lineHeight + 'px';
 
-            if (leftLine.class === 'diff-remove-line') {
-                leftSeg.style.backgroundColor = '#f5a5a5'; // Soft red
+            if (leftLine.class === 'diff-remove-line-left') {
+                leftSeg.style.backgroundColor = '#fee8e9'; // Light pink for deletions
+            } else if (leftLine.class === 'diff-modify-line-left') {
+                leftSeg.style.backgroundColor = '#fdf2d0'; // Light yellow for modifications
             } else {
                 leftSeg.style.backgroundColor = '#ffffff'; // White for other lines
             }
@@ -618,8 +624,10 @@
             const rightSeg = document.createElement('div');
             rightSeg.className = 'thumbnail-segment';
             rightSeg.style.height = lineHeight + 'px';
-            if (rightLine.class === 'diff-add-line') {
-                rightSeg.style.backgroundColor = '#a8d5ba'; // Soft green
+            if (rightLine.class === 'diff-add-line-right') {
+                rightSeg.style.backgroundColor = '#ddffdd'; // Soft light green for additions
+            } else if (rightLine.class === 'diff-modify-line-right') {
+                rightSeg.style.backgroundColor = '#ddeedd'; // Light green for modifications
             } else {
                 rightSeg.style.backgroundColor = '#ffffff'; // White for other lines
             }
