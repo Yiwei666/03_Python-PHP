@@ -134,6 +134,10 @@
         /* Highlight specific modifications on left */
         .diff-modify-line-left .highlight-remove {
             background-color: #ffb6ba; /* Pink for modified parts */
+            display: inline-block; /* Change from inline to inline-block */
+            height: 1.5em; /* Match the line height */
+            line-height: 1.5em; /* Match the line height */
+            vertical-align: top; /* Align to the top */
         }
 
         /* Entire line backgrounds for right (new version) */
@@ -148,6 +152,10 @@
         /* Highlight specific modifications on right */
         .diff-modify-line-right .highlight-add {
             background-color: #97f295; /* Grass green for modified parts */
+            display: inline-block; /* Change from inline to inline-block */
+            height: 1.5em; /* Match the line height */
+            line-height: 1.5em; /* Match the line height */
+            vertical-align: top; /* Align to the top */
         }
 
         /* Unchanged lines and hunk headers */
