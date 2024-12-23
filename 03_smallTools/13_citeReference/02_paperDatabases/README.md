@@ -65,14 +65,14 @@ paperCategories 表用于实现 papers 和 categories 表之间的多对多关�
 paperID 和 categoryID：
   - 定义为 NOT NULL，确保不能插入空值。
 
-PRIMARY KEY (paperID, categoryID)：
+`PRIMARY KEY (paperID, categoryID)`：
   - 使用组合主键，确保每对 paperID 和 categoryID 的组合是唯一的。
 
-FOREIGN KEY：
+`FOREIGN KEY`：
   - 设置外键约束：
     - paperID 引用 papers 表的 paperID 列。
     - categoryID 引用 categories 表的 categoryID 列。
-  - ON DELETE CASCADE：当 papers 或 categories 表中的相关记录被删除时，paperCategories 表中的对应记录会自动删除。
+  - `ON DELETE CASCADE`：当 papers 或 categories 表中的相关记录被删除时，paperCategories 表中的对应记录会自动删除。
 
 5. 查询所有论文及其分类：
 
