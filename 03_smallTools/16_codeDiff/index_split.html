@@ -98,6 +98,7 @@
             font-family: Consolas, "Courier New", monospace;
             font-size: 14px;
             border: none;
+            white-space: pre;
         }
 
         .diff-table th, .diff-table td {
@@ -298,6 +299,11 @@
         });
     }
 
+    // Function to replace spaces with &nbsp; to preserve indentation
+    function escapeLeadingWhitespace(str) {
+        return str.replace(/ /g, '&nbsp;');
+    }
+
     // Ensure non-empty lines for consistent line height
     function ensureNonEmpty(line) {
         if (!line.trim()) {
@@ -306,35 +312,46 @@
         return line;
     }
 
-    // Highlight differences at character level
+    // Highlight differences at character level, preserving leading indentation
     function highlightLineDiff(oldText, newText) {
         // Convert empty lines to a space to maintain consistent height
         oldText = oldText === '' ? ' ' : oldText;
         newText = newText === '' ? ' ' : newText;
 
-        if (!oldText.trim() && newText.trim()) {
+        // Extract leading whitespace
+        const oldLeadingWhitespaceMatch = oldText.match(/^(\s*)/);
+        const newLeadingWhitespaceMatch = newText.match(/^(\s*)/);
+
+        const oldLeadingWhitespace = oldLeadingWhitespaceMatch ? oldLeadingWhitespaceMatch[1] : '';
+        const newLeadingWhitespace = newLeadingWhitespaceMatch ? newLeadingWhitespaceMatch[1] : '';
+
+        // Extract the rest of the line after leading whitespace
+        const oldContent = oldText.substring(oldLeadingWhitespace.length);
+        const newContent = newText.substring(newLeadingWhitespace.length);
+
+        if (!oldContent.trim() && newContent.trim()) {
             // Only new line (Addition)
             return {
                 oldHtml: '',
-                newHtml: `<span class="highlight-add">${ensureNonEmpty(escapeHtml(newText))}</span>`
+                newHtml: `${escapeLeadingWhitespace(escapeHtml(newLeadingWhitespace))}<span class="highlight-add">${ensureNonEmpty(escapeHtml(newContent))}</span>`
             };
-        } else if (oldText.trim() && !newText.trim()) {
+        } else if (oldContent.trim() && !newContent.trim()) {
             // Only old line (Deletion)
             return {
-                oldHtml: `<span class="highlight-remove">${ensureNonEmpty(escapeHtml(oldText))}</span>`,
+                oldHtml: `${escapeLeadingWhitespace(escapeHtml(oldLeadingWhitespace))}<span class="highlight-remove">${ensureNonEmpty(escapeHtml(oldContent))}</span>`,
                 newHtml: ''
             };
         } else if (oldText === newText) {
             // Same line (Context)
             return {
-                oldHtml: "  " + ensureNonEmpty(escapeHtml(oldText)),
-                newHtml: "  " + ensureNonEmpty(escapeHtml(newText))
+                oldHtml: escapeLeadingWhitespace(escapeHtml(oldLeadingWhitespace)) + ensureNonEmpty(escapeHtml(oldContent)),
+                newHtml: escapeLeadingWhitespace(escapeHtml(newLeadingWhitespace)) + ensureNonEmpty(escapeHtml(newContent))
             };
         } else {
             // Modified line: highlight added and removed characters
-            const changes = Diff.diffChars(oldText, newText);
-            let oldHtml = '';
-            let newHtml = '';
+            const changes = Diff.diffChars(oldContent, newContent);
+            let oldHtml = escapeLeadingWhitespace(escapeHtml(oldLeadingWhitespace));
+            let newHtml = escapeLeadingWhitespace(escapeHtml(newLeadingWhitespace));
             changes.forEach(part => {
                 const val = part.value === '' ? ' ' : part.value;
                 const escapedValue = ensureNonEmpty(escapeHtml(val));
@@ -554,7 +571,7 @@
             const leftTr = document.createElement('tr');
             const leftNumTd = document.createElement('td');
             leftNumTd.className = 'line-num';
-            leftNumTd.textContent = leftLine.class === 'diff-hunk' ? '' : (leftLine.num || '');
+            leftNumTd.innerHTML = leftLine.class === 'diff-hunk' ? '' : (leftLine.num || '');
 
             const leftCodeTd = document.createElement('td');
             leftCodeTd.className = leftLine.class;
@@ -570,7 +587,7 @@
             const rightTr = document.createElement('tr');
             const rightNumTd = document.createElement('td');
             rightNumTd.className = 'line-num';
-            rightNumTd.textContent = rightLine.class === 'diff-hunk' ? '' : (rightLine.num || '');
+            rightNumTd.innerHTML = rightLine.class === 'diff-hunk' ? '' : (rightLine.num || '');
 
             const rightCodeTd = document.createElement('td');
             rightCodeTd.className = rightLine.class;
