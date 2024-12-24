@@ -114,7 +114,7 @@
     // 查询 CrossRef API 并更新弹窗
     function queryDOI(reference, extractedTitle) {
         const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(reference)}`;
-
+    
         GM_xmlhttpRequest({
             method: 'GET',
             url: apiUrl,
@@ -125,7 +125,7 @@
                         const firstResult = data.message.items[0];
                         const doi = firstResult.DOI || '未找到 DOI';
                         const title = firstResult.title ? firstResult.title.join(' ') : '未找到标题';
-
+    
                         // 获取期刊名、出版年、卷、期、页码、文章号
                         const journal = firstResult['container-title'] ? firstResult['container-title'].join(' ') : '未找到期刊名';
                         const publicationYear = firstResult['published-print'] ? firstResult['published-print']['date-parts'][0][0] :
@@ -134,26 +134,27 @@
                         const issue = firstResult.issue || '未找到期号';
                         const pages = firstResult.page || '未找到页码';
                         const articleNumber = firstResult['article-number'] || '未找到文章号';
-
+    
                         // 获取出版商
                         const publisher = firstResult.publisher || '未找到出版商';
-
-                        // 获取印刷版和电子版 ISSN
-                        const issnPrint = firstResult['ISSN-type']?.find(item => item.type === 'print')?.value || '未找到印刷版 ISSN';
-                        const issnOnline = firstResult['ISSN-type']?.find(item => item.type === 'electronic')?.value || '未找到电子版 ISSN';
-
+    
+                        // 获取 ISSN 并标注类型
+                        const issnType = firstResult['issn-type'] || [];
+                        const issnPrint = issnType.find(item => item.type === 'print')?.value || '未找到印刷版 ISSN';
+                        const issnOnline = issnType.find(item => item.type === 'electronic')?.value || '未找到电子版 ISSN';
+    
                         // 获取完整作者信息
                         const authorsArray = firstResult.author || [];
                         const fullAuthors = formatFullAuthors(authorsArray) || '未找到作者信息';
-
+    
                         // 获取并格式化缩写的作者信息
                         const abbreviatedAuthors = formatAbbreviatedAuthors(authorsArray) || '未找到作者信息';
-
+    
                         // 校验标题是否匹配
                         const matchResult = compareTitles(title, extractedTitle)
                             ? '匹配成功'
                             : '标题不匹配，请检查引用或查询结果';
-
+    
                         // 更新弹窗内容
                         displayResult({ gbText: reference, apaText: reference, doi, title, journal, publicationYear, volume, issue, pages, articleNumber, publisher, issnPrint, issnOnline, fullAuthors, abbreviatedAuthors, matchResult, extractedTitle });
                     } else {
