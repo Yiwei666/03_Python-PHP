@@ -176,6 +176,12 @@ JOIN paperCategories pc ON p.paperID = pc.paperID
 JOIN categories c ON pc.categoryID = c.categoryID;
 ```
 
+2. 显示某几列、删除指定行
+
+```sql
+DELETE FROM papers WHERE paperID = 2;
+SELECT paperID, title FROM papers;
+```
 
 
 
