@@ -179,9 +179,13 @@ JOIN categories c ON pc.categoryID = c.categoryID;
 2. 显示某几列、删除指定行
 
 ```sql
+# 删除 paperID 为 10 的那一行：
 DELETE FROM papers WHERE paperID = 2;
+
+# 返回 papers 表中的 title 和 paperID 两列的数据
 SELECT paperID, title FROM papers;
 ```
+
 
 
 
