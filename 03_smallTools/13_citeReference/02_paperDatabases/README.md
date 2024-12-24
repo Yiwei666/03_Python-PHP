@@ -10,12 +10,17 @@
 # 1. 功能模块
 08_db_config.php
 08_category_operations.php
+08_tm_add_paper.php
+08_tm_get_categories.php
+08_tm_get_paper_categories.php
+08_tm_update_paper_categories.php
 
 # 2. web交互
 08_webAccessPaper.php
 
 
 # 3. 油猴脚本
+08_tm_paperManagement.js
 
 ```
 
