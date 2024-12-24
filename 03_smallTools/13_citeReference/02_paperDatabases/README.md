@@ -1,12 +1,23 @@
 # 1. 项目功能
 
+1. 将谷歌学术页面及crossRef API返回的论文元数据写入到云服务器的mysql数据库中
+2. web在线管理论文分类标签（增删查改）和论文访问
+
 
 # 2. 文件结构
 
+```php
+# 1. 功能模块
+08_db_config.php
+08_category_operations.php
+
+# 2. web交互
+08_webAccessPaper.php
+
+```
 
 
 # 3. 数据库和表
-
 
 ### 1. 创建数据库和表
 
@@ -157,11 +168,19 @@ JOIN categories c ON pc.categoryID = c.categoryID;
 
 # 4. php功能模块
 
+### 1. `08_db_config.php`
+
+
+
+### 2. `08_category_operations.php`
+
+
+
 
 
 # 5. web交互脚本
 
-
+### 1. `08_webAccessPaper.php`
 
 
 
