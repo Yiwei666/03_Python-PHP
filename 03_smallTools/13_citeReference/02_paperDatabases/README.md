@@ -5,10 +5,7 @@
 
 
 
-# 3. 环境配置
-
-
-### 1. 创建数据库和表
+# 3. 创建数据库和表
 
 1. 创建名为 paper_db 的数据库：
 
@@ -82,6 +79,28 @@ FROM papers p
 JOIN paperCategories pc ON p.paperID = pc.paperID
 JOIN categories c ON pc.categoryID = c.categoryID;
 ```
+
+
+# 4. php功能模块
+
+
+
+# 5. web交互脚本
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
