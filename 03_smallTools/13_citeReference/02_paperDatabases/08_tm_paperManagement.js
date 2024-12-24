@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info
 // @namespace    http://tampermonkey.net/
-// @version      1.9
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据，包括期号、文章编号、出版商和 ISSN（标注类型），并将数据写入云服务器数据库并进行分类。
+// @version      1.10
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
@@ -83,12 +83,56 @@
                 // 存储提取的数据
                 extractedData = { gbText, apaText, extractedTitle };
 
+                // 先在弹窗中展示初步信息
                 displayResult(extractedData);
 
-                queryDOI(gbText, extractedTitle).then(() => {
-                    // 显示“标签”按钮
-                    tagButton.style.display = 'block';
-                });
+                // 执行 CrossRef DOI 查询
+                queryDOI(gbText, extractedTitle)
+                    .then(() => {
+                        // 如果查询到一个有效 DOI，则再尝试获取它在数据库中已有的分类
+                        if (
+                            extractedData.doi &&
+                            extractedData.doi !== '未找到 DOI' &&
+                            extractedData.doi !== '查询失败'
+                        ) {
+                            return fetchPaperCategories(extractedData.doi)
+                                .then(paperCatIDs => {
+                                    // 如果存在paperCatIDs，则尝试获取分类的名称并在显示中列出
+                                    return fetchCategories().then(allCats => {
+                                        // 将 categoryIDs 转换为数字
+                                        const numericPaperCatIDs = paperCatIDs.map(id => parseInt(id, 10));
+
+                                        // 将所有分类的 categoryID 也转为数字，以便匹配
+                                        const catNameList = [];
+                                        allCats.forEach(cat => {
+                                            const catID = parseInt(cat.categoryID, 10);
+                                            if (numericPaperCatIDs.includes(catID)) {
+                                                catNameList.push(cat.category_name);
+                                            }
+                                        });
+
+                                        // 将已有分类名称保存到 extractedData 以显示
+                                        extractedData.existingCategoryNames = catNameList;
+
+                                        // 再次更新弹窗信息，显示分类标签
+                                        displayResult(extractedData);
+                                    });
+                                })
+                                .catch(() => {
+                                    // 如果获取分类出错，也不影响后续
+                                    return;
+                                });
+                        }
+                    })
+                    .then(() => {
+                        // 最后才显示标签按钮
+                        tagButton.style.display = 'block';
+                    })
+                    .catch(err => {
+                        console.error('DOI查询或分类获取时出错:', err);
+                        // 最后还是让标签按钮显示
+                        tagButton.style.display = 'block';
+                    });
             } catch (e) {
                 console.error("提取时出错:", e);
                 alert('提取过程中发生错误，请检查脚本或页面内容');
@@ -102,7 +146,7 @@
                 return;
             }
 
-            // 发送论文数据到服务器
+            // 发送论文数据到服务器，如果已存在则直接返回 paperID
             sendPaperData(extractedData)
                 .then(response => {
                     if (response.success) {
@@ -119,7 +163,9 @@
                     // 获取论文当前的分类
                     return fetchPaperCategories(extractedData.doi)
                         .then(paperCategories => {
-                            return { categories, paperCategories };
+                            // parseInt
+                            const numericPaperCategories = paperCategories.map(id => parseInt(id, 10));
+                            return { categories, paperCategories: numericPaperCategories };
                         });
                 })
                 .then(({ categories, paperCategories }) => {
@@ -151,7 +197,8 @@
         issnOnline = '查询中...',
         fullAuthors = '查询中...',
         abbreviatedAuthors = '查询中...',
-        matchResult = ''
+        matchResult = '',
+        existingCategoryNames = []
     }) {
         let container = document.getElementById('result-container');
         if (!container) {
@@ -161,7 +208,7 @@
             container.style.top = '80px';
             container.style.right = '10px';
             container.style.width = '350px';
-            container.style.maxHeight = '600px';
+            container.style.maxHeight = '900px';
             container.style.padding = '10px';
             container.style.border = '1px solid #ccc';
             container.style.backgroundColor = '#fff';
@@ -173,11 +220,17 @@
             document.body.appendChild(container);
         }
 
+        // 如果 existingCategoryNames 不为空，则拼接成字符串
+        const categoryLabel = (existingCategoryNames && existingCategoryNames.length > 0)
+            ? existingCategoryNames.join(', ')
+            : '暂无';
+
         container.innerHTML = `
             <h3>提取结果</h3>
             <p><strong>GB/T 7714:</strong> ${gbText}</p>
             <p><strong>APA:</strong> ${apaText}</p>
             <p><strong>提取的文章标题:</strong> ${extractedTitle}</p>
+
             <h3>DOI 查询结果</h3>
             <p><strong>DOI:</strong> ${doi}</p>
             <p><strong>标题:</strong> ${title}</p>
@@ -193,6 +246,7 @@
             <p><strong>完整作者信息:</strong> ${fullAuthors}</p>
             <p><strong>缩写作者信息:</strong> ${abbreviatedAuthors}</p>
             <p><strong>匹配结果:</strong> ${matchResult}</p>
+            <p><strong>分类标签:</strong> ${categoryLabel}</p>
         `;
     }
 
@@ -303,7 +357,8 @@
                                 issnOnline: '未找到电子版 ISSN',
                                 fullAuthors: '未找到作者信息',
                                 abbreviatedAuthors: '未找到作者信息',
-                                extractedTitle: extractTitleFromReference(reference)
+                                extractedTitle: extractTitleFromReference(reference),
+                                existingCategoryNames: []
                             });
 
                             // 更新 'extractedData' with incomplete data
@@ -322,7 +377,8 @@
                                 issnOnline: '未找到电子版 ISSN',
                                 fullAuthors: '未找到作者信息',
                                 abbreviatedAuthors: '未找到作者信息',
-                                matchResult: ''
+                                matchResult: '',
+                                existingCategoryNames: []
                             };
 
                             resolve();
@@ -345,7 +401,8 @@
                             issnOnline: '查询失败',
                             fullAuthors: '查询失败',
                             abbreviatedAuthors: '查询失败',
-                            extractedTitle: extractTitleFromReference(reference)
+                            extractedTitle: extractTitleFromReference(reference),
+                            existingCategoryNames: []
                         });
 
                         resolve(); // 即使出错，也继续执行
@@ -368,7 +425,8 @@
                         issnOnline: '查询失败',
                         fullAuthors: '查询失败',
                         abbreviatedAuthors: '查询失败',
-                        extractedTitle: extractTitleFromReference(reference)
+                        extractedTitle: extractTitleFromReference(reference),
+                        existingCategoryNames: []
                     });
                     resolve(); // 即使出错，也继续执行
                 }
@@ -519,6 +577,7 @@
                     try {
                         const res = JSON.parse(response.responseText);
                         if (res.success) {
+                            // categories 里每个对象有 categoryID, category_name
                             resolve(res.categories);
                         } else {
                             reject(new Error(res.message || '获取分类失败。'));
@@ -534,7 +593,7 @@
         });
     }
 
-    // 获取论文当前的分类
+    // 获取论文当前的分类(返回 categoryID 数组)
     function fetchPaperCategories(doi) {
         return new Promise((resolve, reject) => {
             GM_xmlhttpRequest({
@@ -544,6 +603,7 @@
                     try {
                         const res = JSON.parse(response.responseText);
                         if (res.success) {
+                            // res.categoryIDs 可能是字符串数组，需要后续 parseInt
                             resolve(res.categoryIDs);
                         } else {
                             reject(new Error(res.message || '获取论文分类失败。'));
@@ -591,12 +651,16 @@
             checkbox.id = `category-${category.categoryID}`;
             checkbox.value = category.categoryID;
 
-            // '0 All papers' 实际上是 categoryID = 1，始终选中且禁用
-            if (category.categoryID === 1) {
+            // 将 categoryID 也转成数字以便匹配
+            const catIDNum = parseInt(category.categoryID, 10);
+
+            // '0 All papers' 实际是 categoryID = 1；必须始终选中、不可取消
+            if (catIDNum === 1) {
                 checkbox.checked = true;
                 checkbox.disabled = true;
             } else {
-                if (paperCategories.includes(category.categoryID)) {
+                // 如果该论文已有此分类，则勾选
+                if (paperCategories.includes(catIDNum)) {
                     checkbox.checked = true;
                 }
             }
@@ -629,9 +693,10 @@
         saveButton.addEventListener('click', function () {
             const selectedCategories = [];
             categories.forEach(category => {
+                const catIDNum = parseInt(category.categoryID, 10);
                 const checkbox = document.getElementById(`category-${category.categoryID}`);
                 if (checkbox.checked) {
-                    selectedCategories.push(category.categoryID);
+                    selectedCategories.push(catIDNum);
                 }
             });
 
