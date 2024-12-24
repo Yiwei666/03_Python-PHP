@@ -5,7 +5,10 @@
 
 
 
-# 3. 创建数据库和表
+# 3. 数据库和表
+
+
+### 1. 创建数据库和表
 
 1. 创建名为 paper_db 的数据库：
 
@@ -71,7 +74,65 @@ paperID 和 categoryID：
     - categoryID 引用 categories 表的 categoryID 列。
   - `ON DELETE CASCADE`：当 papers 或 categories 表中的相关记录被删除时，paperCategories 表中的对应记录会自动删除。
 
-5. 查询所有论文及其分类：
+
+### 2. 表结构
+
+上述sql命令创建的表结构如下所示
+
+```sql
+mysql> show tables;
++--------------------+
+| Tables_in_paper_db |
++--------------------+
+| categories         |
+| paperCategories    |
+| papers             |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> describe categories;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| categoryID    | int          | NO   | PRI | NULL    | auto_increment |
+| category_name | varchar(255) | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+
+mysql> describe paperCategories;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| paperID    | int  | NO   | PRI | NULL    |       |
+| categoryID | int  | NO   | PRI | NULL    |       |
++------------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> describe papers;
++------------------+--------------+------+-----+---------+----------------+
+| Field            | Type         | Null | Key | Default | Extra          |
++------------------+--------------+------+-----+---------+----------------+
+| paperID          | int          | NO   | PRI | NULL    | auto_increment |
+| title            | varchar(255) | NO   |     | NULL    |                |
+| authors          | text         | NO   |     | NULL    |                |
+| journal_name     | varchar(255) | NO   |     | NULL    |                |
+| publication_year | int          | NO   |     | NULL    |                |
+| volume           | varchar(50)  | YES  |     | NULL    |                |
+| issue            | varchar(50)  | YES  |     | NULL    |                |
+| pages            | varchar(50)  | YES  |     | NULL    |                |
+| article_number   | varchar(50)  | YES  |     | NULL    |                |
+| doi              | varchar(100) | YES  |     | NULL    |                |
+| issn             | varchar(50)  | YES  |     | NULL    |                |
+| publisher        | varchar(255) | YES  |     | NULL    |                |
++------------------+--------------+------+-----+---------+----------------+
+12 rows in set (0.00 sec)
+```
+
+
+### 3. 数据库查询
+
+
+1. 查询所有论文及其分类：
 
 ```sql
 SELECT p.title, c.category_name 
