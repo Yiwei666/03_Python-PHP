@@ -210,9 +210,15 @@ JOIN categories c ON pc.categoryID = c.categoryID;
 
 
 
+### 2. 环境变量
 
+1. 根据实际修改脚本名 `08_webAccessPaper.php`
 
-
+```php
+// 处理完 POST 请求后刷新页面并显示消息
+header("Location: 08_webAccessPaper.php?message=" . urlencode($message));
+exit();
+```
 
 
 
