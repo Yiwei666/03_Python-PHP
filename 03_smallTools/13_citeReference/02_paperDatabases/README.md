@@ -79,6 +79,8 @@ paperID 和 categoryID：
 
 上述sql命令创建的表结构如下所示
 
+1. `paper_db`数据库中的表
+
 ```sql
 mysql> show tables;
 +--------------------+
@@ -89,7 +91,10 @@ mysql> show tables;
 | papers             |
 +--------------------+
 3 rows in set (0.00 sec)
+```
 
+2. `categories` 表
+```sql
 mysql> describe categories;
 +---------------+--------------+------+-----+---------+----------------+
 | Field         | Type         | Null | Key | Default | Extra          |
@@ -98,7 +103,11 @@ mysql> describe categories;
 | category_name | varchar(255) | NO   |     | NULL    |                |
 +---------------+--------------+------+-----+---------+----------------+
 2 rows in set (0.01 sec)
+```
 
+3. `paperCategories` 表
+
+```sql
 mysql> describe paperCategories;
 +------------+------+------+-----+---------+-------+
 | Field      | Type | Null | Key | Default | Extra |
@@ -107,7 +116,11 @@ mysql> describe paperCategories;
 | categoryID | int  | NO   | PRI | NULL    |       |
 +------------+------+------+-----+---------+-------+
 2 rows in set (0.00 sec)
+```
 
+4. `papers` 表
+
+```sql
 mysql> describe papers;
 +------------------+--------------+------+-----+---------+----------------+
 | Field            | Type         | Null | Key | Default | Extra          |
