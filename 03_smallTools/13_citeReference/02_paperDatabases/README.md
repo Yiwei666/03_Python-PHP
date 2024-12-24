@@ -19,7 +19,18 @@
 
 # 3. 数据库和表
 
-### 1. 创建数据库和表
+### 1. 数据库构建思路
+
+1. 目标：构建一个期刊论文数据库，储存多篇论文的元数据，包括每篇论文 标题，作者，期刊名，出版年，卷，期，页码，文章编号，doi号，期刊ISSN 和 出版商。每条数据在mysql数据库中占据一行，大概有几万条数据。同时还需要对每篇论文进行分类管理。
+
+2. 方案：使用三个表来规范化数据，Papers 表存储论文信息，Categories 表存储分类信息，PaperCategories 表存储论文与分类的关联。
+    - Papers 表存储每篇论文的基本信息。
+    - Categories 表存储所有可能的分类。
+    - PaperCategories 表实现了 Papers 与 Categories 之间的多对多关系，每条记录表示一篇论文属于一个分类。
+
+
+
+### 2. 创建数据库和表
 
 1. 创建名为 paper_db 的数据库：
 
@@ -86,7 +97,7 @@ paperID 和 categoryID：
   - `ON DELETE CASCADE`：当 papers 或 categories 表中的相关记录被删除时，paperCategories 表中的对应记录会自动删除。
 
 
-### 2. 表结构
+### 3. 表结构
 
 上述sql命令创建的表结构如下所示
 
@@ -153,7 +164,7 @@ mysql> describe papers;
 ```
 
 
-### 3. 数据库查询
+### 4. 数据库查询
 
 
 1. 查询所有论文及其分类：
@@ -164,6 +175,8 @@ FROM papers p
 JOIN paperCategories pc ON p.paperID = pc.paperID
 JOIN categories c ON pc.categoryID = c.categoryID;
 ```
+
+
 
 
 # 4. php功能模块
