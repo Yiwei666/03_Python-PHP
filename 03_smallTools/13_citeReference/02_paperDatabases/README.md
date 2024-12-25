@@ -201,7 +201,7 @@ SELECT paperID, title FROM papers;
 
 ### 5. alias
 
-```
+```sh
 alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%Y%m%d_%H%M%S).sql'
 ```
 
