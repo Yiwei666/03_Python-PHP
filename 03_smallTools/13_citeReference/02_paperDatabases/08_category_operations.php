@@ -66,14 +66,21 @@ function updateCategoryName($mysqli, $categoryID, $newCategoryName) {
     }
 }
 
-// 获取特定分类下的论文
+/**
+ * 获取特定分类下的论文
+ * ---------------------------------------------
+ * 本次需求修改点：
+ * 将原先的 ORDER BY p.title ASC
+ * 改为      ORDER BY p.paperID DESC
+ * 并在 SELECT 中增加 p.paperID 字段。
+ */
 function getPapersByCategory($mysqli, $categoryID) {
     $query = "
-        SELECT p.title, p.authors, p.publication_year, p.journal_name, p.doi 
+        SELECT p.paperID, p.title, p.authors, p.publication_year, p.journal_name, p.doi
         FROM papers p
         JOIN paperCategories pc ON p.paperID = pc.paperID
         WHERE pc.categoryID = ?
-        ORDER BY p.title ASC
+        ORDER BY p.paperID DESC
     ";
     $stmt = $mysqli->prepare($query);
     if ($stmt) {
@@ -187,7 +194,6 @@ function updatePaperCategories($mysqli, $paperID, $categoryIDs) {
     }
 }
 
-
 // 分配 "0 All papers" 分类给新论文
 function assignAllPapersCategory($mysqli, $paperID) {
     $categoryID = 1; // All papers
@@ -207,6 +213,4 @@ function assignAllPapersCategory($mysqli, $paperID) {
         return ['success' => false, 'message' => $mysqli->error];
     }
 }
-
 ?>
-
