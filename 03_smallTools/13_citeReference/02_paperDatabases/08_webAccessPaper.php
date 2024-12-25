@@ -1,4 +1,6 @@
 <?php
+// 08_webAccessPaper.php
+
 // 启用错误报告（开发阶段使用，生产环境请关闭）
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -11,7 +13,7 @@ require_once '08_category_operations.php';
 // 获取所有分类
 $categories = getCategories($mysqli);
 
-// 处理 POST 请求
+// 处理 POST 请求（创建、删除、修改分类）
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         $action = $_POST['action'];
@@ -89,7 +91,6 @@ $papers = null;
 if ($selectedCategoryID) {
     $papers = getPapersByCategory($mysqli, $selectedCategoryID);
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -97,18 +98,98 @@ if ($selectedCategoryID) {
     <meta charset="UTF-8">
     <title>分类管理</title>
     <style>
-        body { display: flex; font-family: Arial, sans-serif; margin: 0; padding: 0; }
-        #categories-container { width: 25%; padding: 20px; border-right: 1px solid #ccc; box-sizing: border-box; }
-        #categories-container table { width: 100%; border-collapse: collapse; }
-        #categories-container table td { padding: 10px; border: 1px solid #ddd; text-align: center; }
-        #papers-container { width: 75%; padding: 20px; box-sizing: border-box; }
-        .form-section { margin-bottom: 20px; }
-        .form-section input[type="text"] { width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
-        .form-section button { padding: 8px 12px; }
-        .paper { margin-bottom: 15px; }
-        .paper-title { font-size: 18px; margin: 0; }
-        .paper-meta { font-size: 14px; color: gray; margin: 0; }
-        .message { padding: 10px; margin-bottom: 20px; background-color: #f0f0f0; border: 1px solid #ccc; }
+        body { 
+            display: flex; 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0;
+        }
+        #categories-container { 
+            width: 25%; 
+            padding: 20px; 
+            border-right: 1px solid #ccc; 
+            box-sizing: border-box; 
+        }
+        #categories-container table { 
+            width: 100%; 
+            border-collapse: collapse; 
+        }
+        #categories-container table td { 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            text-align: center; 
+        }
+        #papers-container { 
+            width: 75%; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+        .form-section { 
+            margin-bottom: 20px; 
+        }
+        .form-section input[type="text"] { 
+            width: 100%; 
+            padding: 8px; 
+            margin-bottom: 10px; 
+            box-sizing: border-box; 
+        }
+        .form-section button { 
+            padding: 8px 12px; 
+        }
+        .paper { 
+            margin-bottom: 30px; 
+        }
+        .paper-title { 
+            font-size: 18px; 
+            margin: 0; 
+        }
+        .paper-meta { 
+            font-size: 14px; 
+            margin: 5px 0 5px 0; 
+            color: green; /* 统一设置为草绿色 */
+        }
+        .message { 
+            padding: 10px; 
+            margin-bottom: 20px; 
+            background-color: #f0f0f0; 
+            border: 1px solid #ccc; 
+        }
+        /* 为“标签”按钮设置透明背景并去掉边框 */
+        .paper-categories button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: blue; /* 文字颜色可根据需要调整 */
+            text-decoration: underline; /* 下划线以表明可点击，也可去掉 */
+        }
+        /* 弹窗 (modal) 样式 */
+        #categoryModal {
+            display: none; 
+            position: fixed; 
+            top: 10%; 
+            left: 10%; 
+            width: 80%; 
+            background-color: #fff; 
+            border: 1px solid #ccc; 
+            padding: 20px; 
+            z-index: 9999;
+        }
+        #categoryModal h2 {
+            margin-top: 0;
+        }
+        #categoryModal button {
+            margin: 5px;
+        }
+        .overlay {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            z-index: 9998;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +198,7 @@ if ($selectedCategoryID) {
         <?php if ($message): ?>
             <div class="message"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
+        
         <!-- 创建分类 -->
         <div class="form-section">
             <h4>创建分类</h4>
@@ -126,6 +208,7 @@ if ($selectedCategoryID) {
                 <button type="submit">创建</button>
             </form>
         </div>
+        
         <!-- 删除分类 -->
         <div class="form-section">
             <h4>删除分类</h4>
@@ -135,6 +218,7 @@ if ($selectedCategoryID) {
                 <button type="submit">删除</button>
             </form>
         </div>
+        
         <!-- 修改分类 -->
         <div class="form-section">
             <h4>修改分类</h4>
@@ -145,6 +229,7 @@ if ($selectedCategoryID) {
                 <button type="submit">修改</button>
             </form>
         </div>
+        
         <!-- 显示分类表格 -->
         <h3>现有分类</h3>
         <table>
@@ -155,7 +240,9 @@ if ($selectedCategoryID) {
                     $colCount++;
                 ?>
                     <td>
-                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>"><?= htmlspecialchars($category['category_name']) ?></a>
+                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>">
+                            <?= htmlspecialchars($category['category_name']) ?>
+                        </a>
                     </td>
                     <?php if ($colCount % 3 == 0): ?>
                         </tr><tr>
@@ -168,6 +255,7 @@ if ($selectedCategoryID) {
             </tr>
         </table>
     </div>
+    
     <div id="papers-container">
         <h2>论文列表</h2>
         <?php if ($selectedCategoryID): ?>
@@ -175,12 +263,27 @@ if ($selectedCategoryID) {
                 <?php if ($papers->num_rows > 0): ?>
                     <?php while ($paper = $papers->fetch_assoc()): ?>
                         <div class="paper">
-                            <a class="paper-title" href="https://doi.org/<?= htmlspecialchars($paper['doi']) ?>" target="_blank">
-                                <?= htmlspecialchars($paper['title']) ?>
-                            </a>
+                            <!-- 论文标题（允许包含 <sub> 和 <sup> 等HTML标签） -->
+                            <div class="paper-title">
+                                <a href="https://doi.org/<?= htmlspecialchars($paper['doi']) ?>" target="_blank">
+                                    <?php 
+                                    // 去掉 htmlspecialchars 以便正确显示 <sub>/<sup> 等标签
+                                    echo $paper['title']; 
+                                    ?>
+                                </a>
+                            </div>
+                            <!-- 元信息，顺序调整为：年份, 期刊名, 作者 -->
                             <p class="paper-meta">
-                                <?= htmlspecialchars($paper['authors']) ?>, <?= htmlspecialchars($paper['publication_year']) ?>, <?= htmlspecialchars($paper['journal_name']) ?>
+                                <?= htmlspecialchars($paper['publication_year']) ?>, 
+                                <?= htmlspecialchars($paper['journal_name']) ?>, 
+                                <?= htmlspecialchars($paper['authors']) ?>
                             </p>
+                            <!-- “标签”按钮行（原“更改标签”按钮） -->
+                            <div class="paper-categories">
+                                <button type="button" onclick="openCategoryModal('<?= htmlspecialchars($paper['doi']) ?>')">
+                                    标签
+                                </button>
+                            </div>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -193,5 +296,158 @@ if ($selectedCategoryID) {
             <p>请选择左侧的分类以查看相关论文。</p>
         <?php endif; ?>
     </div>
+
+    <!-- 遮罩层 -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- 弹窗 (modal) 用于更改标签 -->
+    <div id="categoryModal">
+        <h2>更改标签</h2>
+        <div id="categoryCheckboxes"></div>
+        <button id="saveCategoriesBtn">保存</button>
+        <button id="cancelCategoriesBtn">取消</button>
+    </div>
+
+    <script>
+        let currentDOI = null;      // 当前正在修改标签的论文的 DOI
+        let allCategories = [];     // 所有分类的缓存
+
+        // 打开分类选择弹窗
+        function openCategoryModal(doi) {
+            currentDOI = doi;
+            // 显示遮罩层
+            document.getElementById('overlay').style.display = 'block';
+            // 显示弹窗
+            document.getElementById('categoryModal').style.display = 'block';
+            
+            fetchCategories();
+        }
+
+        // 获取所有分类
+        function fetchCategories() {
+            fetch('08_tm_get_categories.php')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        allCategories = data.categories;
+                        fetchPaperCategories(currentDOI);
+                    } else {
+                        alert('获取分类列表失败。');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('获取分类列表时出现错误。');
+                });
+        }
+
+        // 获取当前论文已勾选的分类
+        function fetchPaperCategories(doi) {
+            fetch('08_tm_get_paper_categories.php?doi=' + encodeURIComponent(doi))
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // 渲染分类复选框，并根据当前论文的分类勾选
+                        renderCategoryCheckboxes(allCategories, data.categoryIDs);
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('获取论文分类时出现错误。');
+                });
+        }
+
+        // 动态渲染分类复选框
+        function renderCategoryCheckboxes(allCats, paperCatIDs) {
+            const container = document.getElementById('categoryCheckboxes');
+            container.innerHTML = '';
+
+            // 先把 paperCatIDs 全部转成字符串，防止数字 vs. 字符串不一致
+            const paperCatIDsStr = paperCatIDs.map(id => String(id));
+
+            allCats.forEach(cat => {
+                const catID = String(cat.categoryID); // 转为字符串比较
+                const catName = cat.category_name;
+                let checked = false;
+                let disabledAttr = '';
+
+                // 如果 paperCatIDs 中包含 catID，则默认勾选
+                if (paperCatIDsStr.includes(catID)) {
+                    checked = true;
+                }
+
+                // 如果是 "0 All papers" (categoryID=1)，不允许用户取消勾选
+                if (catID === '1') {
+                    checked = true;    // 保证始终勾选
+                    disabledAttr = 'disabled'; // 禁止取消
+                }
+
+                container.innerHTML += `
+                    <div>
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                name="category" 
+                                value="${catID}"
+                                ${checked ? 'checked' : ''} 
+                                ${disabledAttr}
+                            >
+                            ${catName}
+                        </label>
+                    </div>
+                `;
+            });
+        }
+
+        // 点击“保存”按钮，更新分类
+        document.getElementById('saveCategoriesBtn').addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('#categoryCheckboxes input[type="checkbox"]');
+            const selected = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    // 因为后端需要 number, 故 parseInt
+                    selected.push(parseInt(checkbox.value));
+                }
+            });
+            updatePaperCategories(currentDOI, selected);
+        });
+
+        // 调用后端接口更新论文分类
+        function updatePaperCategories(doi, categoryIDs) {
+            fetch('08_tm_update_paper_categories.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    doi: doi, 
+                    categoryIDs: categoryIDs 
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('分类更新成功。');
+                    closeModal();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('更新分类时出现错误。');
+            });
+        }
+
+        // 点击“取消”或更新完成后关闭弹窗
+        document.getElementById('cancelCategoriesBtn').addEventListener('click', closeModal);
+
+        function closeModal() {
+            document.getElementById('categoryModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
