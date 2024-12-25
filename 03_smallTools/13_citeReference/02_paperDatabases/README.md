@@ -67,6 +67,8 @@ CREATE TABLE papers (
 ```
 
 
+
+
 3. 创建 categories 表
 
 ```sql
@@ -123,6 +125,7 @@ mysql> show tables;
 3 rows in set (0.00 sec)
 ```
 
+
 2. `categories` 表
 ```sql
 mysql> describe categories;
@@ -134,6 +137,7 @@ mysql> describe categories;
 +---------------+--------------+------+-----+---------+----------------+
 2 rows in set (0.01 sec)
 ```
+
 
 3. `paperCategories` 表
 
@@ -195,6 +199,11 @@ SELECT paperID, title FROM papers;
 ```
 
 
+### 5. alias
+
+```
+alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%Y%m%d_%H%M%S).sql'
+```
 
 
 # 4. php功能模块
