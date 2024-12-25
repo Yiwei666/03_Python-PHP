@@ -302,7 +302,7 @@ if ($selectedCategoryID) {
                             <!-- 元信息，顺序为：年份, 期刊名, 作者 -->
                             <p class="paper-meta">
                                 <?= htmlspecialchars($paper['publication_year']) ?>, 
-                                <span class="journal-name"><?= htmlspecialchars($paper['journal_name']) ?></span>, 
+                                <span class="journal-name"><?= htmlspecialchars($paper['journal_name'], ENT_QUOTES, 'UTF-8', false) ?></span>,
                                 <?= htmlspecialchars($paper['authors']) ?>
                             </p>
                             <!-- “标签”按钮行 -->
