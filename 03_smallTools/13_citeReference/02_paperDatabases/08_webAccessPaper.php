@@ -96,7 +96,8 @@ if ($selectedCategoryID) {
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>分类管理</title>
+    <title>Paper Databases</title>
+    <link rel="icon" href="https://mctea.one/00_logo/endnote.png" type="image/png">
     <style>
         body { 
             display: flex; 
@@ -119,6 +120,11 @@ if ($selectedCategoryID) {
             border: 1px solid #ddd; 
             text-align: center; 
         }
+        /* 去除左侧“现有分类”下所有分类标签的下划线，默认字体为 #222，选中后变为 #d14836 */
+        #categories-container table td a {
+            text-decoration: none;
+        }
+        
         #papers-container { 
             width: 75%; 
             padding: 20px; 
@@ -139,14 +145,22 @@ if ($selectedCategoryID) {
         .paper { 
             margin-bottom: 30px; 
         }
-        .paper-title { 
-            font-size: 18px; 
-            margin: 0; 
+        /* 右侧论文标题：去除下划线，设为 17px, 颜色 #1a0dab */
+        .paper-title a { 
+            text-decoration: none; 
+            font-size: 17px; 
+            color: #1a0dab; 
         }
+        /* 右侧论文出版年、期刊和作者：字体 13px, 颜色 #006621 */
         .paper-meta { 
-            font-size: 14px; 
+            font-size: 13px; 
             margin: 5px 0 5px 0; 
-            color: green; /* 统一设置为草绿色 */
+            color: #006621; 
+        }
+        /* 给期刊名称单独添加下划线，下划线颜色为 #006621 */
+        .journal-name {
+            text-decoration: underline;
+            text-decoration-color: #006621;
         }
         .message { 
             padding: 10px; 
@@ -154,13 +168,18 @@ if ($selectedCategoryID) {
             background-color: #f0f0f0; 
             border: 1px solid #ccc; 
         }
-        /* 为“标签”按钮设置透明背景并去掉边框 */
+        /* 为“标签”按钮设置颜色和字号，去掉下划线，并让其左对齐 */
+        .paper-categories {
+            text-align: left;
+        }
         .paper-categories button {
             background-color: transparent;
             border: none;
             cursor: pointer;
-            color: blue; /* 文字颜色可根据需要调整 */
-            text-decoration: underline; /* 下划线以表明可点击，也可去掉 */
+            color: #1a0dab;  /* 蓝色 */
+            font-size: 13px; /* 13 px */
+            text-decoration: none; /* 去掉下划线 */
+            padding: 0; /* 去除默认内边距，使其与左侧对齐 */
         }
         /* 弹窗 (modal) 样式 */
         #categoryModal {
@@ -238,9 +257,15 @@ if ($selectedCategoryID) {
                 $colCount = 0;
                 foreach ($categories as $category): 
                     $colCount++;
+                    // 判断当前分类是否被选中
+                    if ($selectedCategoryID && $selectedCategoryID == $category['categoryID']) {
+                        $catColor = "#d14836"; // 选中时字体颜色为红色
+                    } else {
+                        $catColor = "#222";    // 默认字体颜色为黑色
+                    }
                 ?>
                     <td>
-                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>">
+                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>" style="color: <?= $catColor ?>;">
                             <?= htmlspecialchars($category['category_name']) ?>
                         </a>
                     </td>
@@ -257,7 +282,9 @@ if ($selectedCategoryID) {
     </div>
     
     <div id="papers-container">
-        <h2>论文列表</h2>
+        <!-- 在此处加上对应论文的数量 -->
+        <h2>论文列表<?php if ($selectedCategoryID && $papers !== null) { echo " No. " . $papers->num_rows; } ?></h2>
+        
         <?php if ($selectedCategoryID): ?>
             <?php if ($papers !== null): ?>
                 <?php if ($papers->num_rows > 0): ?>
@@ -272,13 +299,13 @@ if ($selectedCategoryID) {
                                     ?>
                                 </a>
                             </div>
-                            <!-- 元信息，顺序调整为：年份, 期刊名, 作者 -->
+                            <!-- 元信息，顺序为：年份, 期刊名, 作者 -->
                             <p class="paper-meta">
                                 <?= htmlspecialchars($paper['publication_year']) ?>, 
-                                <?= htmlspecialchars($paper['journal_name']) ?>, 
+                                <span class="journal-name"><?= htmlspecialchars($paper['journal_name']) ?></span>, 
                                 <?= htmlspecialchars($paper['authors']) ?>
                             </p>
-                            <!-- “标签”按钮行（原“更改标签”按钮） -->
+                            <!-- “标签”按钮行 -->
                             <div class="paper-categories">
                                 <button type="button" onclick="openCategoryModal('<?= htmlspecialchars($paper['doi']) ?>')">
                                     标签
