@@ -173,23 +173,24 @@ mysql> describe paperCategories;
 
 ```sql
 mysql> describe papers;
-+------------------+--------------+------+-----+---------+----------------+
-| Field            | Type         | Null | Key | Default | Extra          |
-+------------------+--------------+------+-----+---------+----------------+
-| paperID          | int          | NO   | PRI | NULL    | auto_increment |
-| title            | varchar(255) | NO   |     | NULL    |                |
-| authors          | text         | NO   |     | NULL    |                |
-| journal_name     | varchar(255) | NO   |     | NULL    |                |
-| publication_year | int          | NO   |     | NULL    |                |
-| volume           | varchar(50)  | YES  |     | NULL    |                |
-| issue            | varchar(50)  | YES  |     | NULL    |                |
-| pages            | varchar(50)  | YES  |     | NULL    |                |
-| article_number   | varchar(50)  | YES  |     | NULL    |                |
-| doi              | varchar(100) | YES  |     | NULL    |                |
-| issn             | varchar(50)  | YES  |     | NULL    |                |
-| publisher        | varchar(255) | YES  |     | NULL    |                |
-+------------------+--------------+------+-----+---------+----------------+
-12 rows in set (0.00 sec)
++------------------+----------------------------------+------+-----+---------+----------------+
+| Field            | Type                             | Null | Key | Default | Extra          |
++------------------+----------------------------------+------+-----+---------+----------------+
+| paperID          | int                              | NO   | PRI | NULL    | auto_increment |
+| title            | varchar(255)                     | NO   |     | NULL    |                |
+| authors          | text                             | NO   |     | NULL    |                |
+| journal_name     | varchar(255)                     | NO   |     | NULL    |                |
+| publication_year | int                              | NO   |     | NULL    |                |
+| volume           | varchar(50)                      | YES  |     | NULL    |                |
+| issue            | varchar(50)                      | YES  |     | NULL    |                |
+| pages            | varchar(50)                      | YES  |     | NULL    |                |
+| article_number   | varchar(50)                      | YES  |     | NULL    |                |
+| doi              | varchar(100)                     | YES  |     | NULL    |                |
+| issn             | varchar(50)                      | YES  |     | NULL    |                |
+| publisher        | varchar(255)                     | YES  |     | NULL    |                |
+| status           | enum('CL','C','L','N','DW','DL') | NO   |     | N       |                |
++------------------+----------------------------------+------+-----+---------+----------------+
+13 rows in set (0.01 sec)
 ```
 
 
