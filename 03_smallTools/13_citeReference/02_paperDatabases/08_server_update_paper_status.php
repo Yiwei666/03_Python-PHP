@@ -6,15 +6,30 @@
  * 1. 连接 MySQL 数据库，读取 papers 表中的 paperID, doi, status
  * 2. 扫描本地目录(A)和 OneDrive 远程目录(B)，获取已有的 .pdf 文件名（Base32 编码）
  * 3. 针对每一条数据，根据文件在本地和远程的存在情况，按指定逻辑更新 status
- * 4. 如果 status = DW，则执行下载；如果 status = DL，则执行本地删除
+ * 4. 如果 status = DW，则执行下载操作；如果 status = DL，则执行本地删除操作
  * 5. 下载/删除成功后，更新 status
+ *
+ * 注意：请根据实际环境修改：
+ * - 数据库连接参数
+ * - Base32 编码函数
+ * - rclone 命令获取远程文件列表方式
+ * - rclone copy 命令路径
+ * - 错误处理和日志记录方式
  */
 
-// Base32 编码和解码类
+/**
+ * Base32 编码和解码类
+ * 符合 RFC 4648 标准
+ */
 class Base32
 {
     private static $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
+    /**
+     * 将输入字符串进行 Base32 编码
+     * @param string $input
+     * @return string
+     */
     public static function encode($input)
     {
         if (empty($input)) return '';
@@ -48,6 +63,11 @@ class Base32
         return $base32;
     }
 
+    /**
+     * 将 Base32 编码的字符串解码回原始字符串
+     * @param string $input
+     * @return string|false
+     */
     public static function decode($input)
     {
         if (empty($input)) return '';
@@ -83,10 +103,10 @@ class Base32
 }
 
 // 配置部分
-$db_host     = 'localhost';
-$db_name     = 'paper_db';
-$db_user     = 'root';
-$db_password = '123456';
+$db_host     = 'localhost';          // 数据库主机
+$db_name     = 'paper_db';           // 数据库名称
+$db_user     = 'root';               // 数据库用户名
+$db_password = '123456';           // 数据库密码
 
 // 本地目录(A)
 $local_dir   = '/home/01_html/08_paperLocalStorage';
@@ -129,15 +149,15 @@ foreach ($papers as $paper) {
 
     // 如果状态是 DW => 执行 rclone 下载，然后设置为 CL（若成功）
     if ($status === 'DW') {
-        echo "[paperID={$paperID}] status=DW => 准备从远程下载\n";
+        echo "[paperID={$paperID}, doi={$doi}] status=DW => 准备从远程下载\n";
         $download_ok = rcloneDownload($remote_dir, $local_dir, $base32Filename);
         if ($download_ok) {
             updateStatus($pdo, $paperID, 'CL');
-            echo "[paperID={$paperID}] 下载成功 => status 改为 CL\n";
+            echo "[paperID={$paperID}, doi={$doi}] 下载成功 => status 改为 CL\n";
             // 下载成功后，本地也就存在了该文件，可根据需要更新 $local_files 数组
             $local_files[] = $base32Filename;
         } else {
-            echo "[paperID={$paperID}] 下载失败，status 不变\n";
+            echo "[paperID={$paperID}, doi={$doi}] 下载失败，status 不变\n";
         }
         // 处理完 DW，继续下一条
         continue;
@@ -145,15 +165,15 @@ foreach ($papers as $paper) {
 
     // 如果状态是 DL => 执行本地删除，然后设置为 C（若成功）
     if ($status === 'DL') {
-        echo "[paperID={$paperID}] status=DL => 准备删除本地文件\n";
+        echo "[paperID={$paperID}, doi={$doi}] status=DL => 准备删除本地文件\n";
         $delete_ok = deleteLocalFile($local_dir, $base32Filename);
         if ($delete_ok) {
             updateStatus($pdo, $paperID, 'C');
-            echo "[paperID={$paperID}] 删除成功 => status 改为 C\n";
+            echo "[paperID={$paperID}, doi={$doi}] 删除成功 => status 改为 C\n";
             // 删除成功后，本地自然不存在了该文件，可根据需要更新 $local_files 数组
             $local_files = array_diff($local_files, [$base32Filename]);
         } else {
-            echo "[paperID={$paperID}] 删除失败，status 不变\n";
+            echo "[paperID={$paperID}, doi={$doi}] 删除失败，status 不变\n";
         }
         // 处理完 DL，继续下一条
         continue;
@@ -164,25 +184,25 @@ foreach ($papers as $paper) {
         // 如果同时存在，若 status 不是 CL 或 DL，则改为 CL
         if ($status !== 'CL' && $status !== 'DL') {
             updateStatus($pdo, $paperID, 'CL');
-            echo "[paperID={$paperID}] 同时存在本地和远程 => status 改为 CL\n";
+            echo "[paperID={$paperID}, doi={$doi}] 同时存在本地和远程 => status 改为 CL\n";
         }
     } elseif ($inRemote && !$inLocal) {
         // 如果只在远程存在，若 status 不是 C 或 DW，则改为 C
         if ($status !== 'C' && $status !== 'DW') {
             updateStatus($pdo, $paperID, 'C');
-            echo "[paperID={$paperID}] 只在远程存在 => status 改为 C\n";
+            echo "[paperID={$paperID}, doi={$doi}] 只在远程存在 => status 改为 C\n";
         }
     } elseif ($inLocal && !$inRemote) {
         // 如果只在本地存在，若 status 不是 L，则改为 L
         if ($status !== 'L') {
             updateStatus($pdo, $paperID, 'L');
-            echo "[paperID={$paperID}] 只在本地存在 => status 改为 L\n";
+            echo "[paperID={$paperID}, doi={$doi}] 只在本地存在 => status 改为 L\n";
         }
     } else {
         // 本地远程都不存在，若 status 不是 N，则改为 N
         if ($status !== 'N') {
             updateStatus($pdo, $paperID, 'N');
-            echo "[paperID={$paperID}] 本地&远程都不存在 => status 改为 N\n";
+            echo "[paperID={$paperID}, doi={$doi}] 本地&远程都不存在 => status 改为 N\n";
         }
     }
 }
@@ -191,6 +211,8 @@ foreach ($papers as $paper) {
 
 /**
  * 从本地目录获取所有 PDF 文件名（不含子目录）
+ * @param string $dir
+ * @return array
  */
 function getLocalPdfFiles(string $dir): array
 {
@@ -206,6 +228,8 @@ function getLocalPdfFiles(string $dir): array
 /**
  * 从远程目录获取所有 PDF 文件名，使用 rclone
  * 这里示例使用 `rclone lsf --files-only`, 输出就直接是文件名
+ * @param string $remote_dir
+ * @return array
  */
 function getRemotePdfFiles(string $remote_dir): array
 {
@@ -213,11 +237,11 @@ function getRemotePdfFiles(string $remote_dir): array
     $command = "rclone lsf --files-only \"{$remote_dir}\"";
     exec($command, $output, $return_var);
     if ($return_var !== 0) {
-        echo "获取远程目录文件列表失败\n";
+        echo "[Error] 获取远程目录文件列表失败\n";
         return $files; // 空数组
     }
 
-    // $output 数组每行就是一个文件名，比如  "XXXXX.pdf"
+    // $output 数组每行就是一个文件名，比如 "XXXXX.pdf"
     foreach ($output as $line) {
         $line = trim($line);
         if (strlen($line) > 0 && substr($line, -4) === '.pdf') {
@@ -243,10 +267,10 @@ function rcloneDownload(string $remoteDir, string $localDir, string $fileName): 
     exec($copyCommand, $copyOutput, $copyReturnVar);
 
     if ($copyReturnVar !== 0) {
-        echo "Failed to copy {$fileName} from remote. Error code = {$copyReturnVar}\n";
+        echo "[Error] Failed to copy {$fileName} from remote. Error code = {$copyReturnVar}\n";
         return false;
     } else {
-        echo "Copied {$fileName} successfully\n";
+        echo "[Info] Copied {$fileName} successfully\n";
         return true;
     }
 }
@@ -264,11 +288,21 @@ function deleteLocalFile(string $localDir, string $fileName): bool
         // 没有这个文件，说明已经算是“删除成功”
         return true;
     }
-    return unlink($filePath);
+    if (unlink($filePath)) {
+        echo "[Info] Deleted {$fileName} successfully\n";
+        return true;
+    } else {
+        echo "[Error] Failed to delete {$fileName}\n";
+        return false;
+    }
 }
 
 /**
  * 更新数据库中某条记录的 status
+ * @param PDO $pdo
+ * @param int $paperID
+ * @param string $newStatus
+ * @return void
  */
 function updateStatus(PDO $pdo, int $paperID, string $newStatus): void
 {
