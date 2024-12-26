@@ -27,7 +27,7 @@
 
 # 3. 数据库和表
 
-### 1. 数据库构建思路
+## 1. 数据库构建思路
 
 1. 目标：构建一个期刊论文数据库，储存多篇论文的元数据，包括每篇论文 标题，作者，期刊名，出版年，卷，期，页码，文章编号，doi号，期刊ISSN 和 出版商。每条数据在mysql数据库中占据一行，大概有几万条数据。同时还需要对每篇论文进行分类管理。
 
@@ -38,16 +38,18 @@
 
 
 
-### 2. 创建数据库和表
+## 2. 创建数据库和表
 
-1. 创建名为 paper_db 的数据库：
+### 1. 创建名为 paper_db 的数据库：
 
 ```sql
 CREATE DATABASE paper_db;
 ```
 
 
-2. 创建表 papers
+### 2. 创建表 papers
+
+1. 创建基础表
 
 ```sql
 CREATE TABLE papers (
@@ -66,10 +68,25 @@ CREATE TABLE papers (
 );
 ```
 
+2. 在 papers 表中新增一个 `status` 列，并使用 ENUM 类型来限制其取值为您指定的六种状态。以下是具体的 SQL 语句：
+
+```sql
+ALTER TABLE papers 
+ADD COLUMN status ENUM('CL', 'C', 'L', 'N', 'DW', 'DL') NOT NULL DEFAULT 'N';
+```
+
+- status，包含6种值，分别如下：
+  - CL 表示该pdf论文同时存在于onedrive(cloud)和服务器本地(local)
+  - C 表示仅存在于onedrive
+  - L 表示仅存在于服务器本地
+  - N 表示onedrive和服务器本地均不存在
+  - DW 表示等待从onedrive下载到服务器本地
+  - DL 表示等待从 服务器本地 删除
+
+注意：status列默认值设置为 N
 
 
-
-3. 创建 categories 表
+### 3. 创建 categories 表
 
 ```sql
 CREATE TABLE categories (
@@ -80,7 +97,7 @@ CREATE TABLE categories (
 
 
 
-4. 创建 paperCategories 表
+### 4. 创建 paperCategories 表
 
 ```sql
 CREATE TABLE paperCategories (
@@ -107,7 +124,7 @@ paperID 和 categoryID：
   - `ON DELETE CASCADE`：当 papers 或 categories 表中的相关记录被删除时，paperCategories 表中的对应记录会自动删除。
 
 
-### 3. 表结构
+## 3. 表结构
 
 上述sql命令创建的表结构如下所示
 
@@ -176,8 +193,10 @@ mysql> describe papers;
 ```
 
 
-### 4. 数据库查询
 
+## 4. 数据库查询
+
+### 1. 常用查询命令
 
 1. 查询所有论文及其分类：
 
@@ -199,7 +218,9 @@ SELECT paperID, title FROM papers;
 ```
 
 
-### 5. 别名alias
+### 2. 别名alias
+
+1. 备份数据库
 
 ```sh
 alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%Y%m%d_%H%M%S).sql'
