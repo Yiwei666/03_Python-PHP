@@ -13,7 +13,7 @@
 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并进行默认分类
 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
-08_tm_update_paper_categories.php
+08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
 
 # 2. web交互
 08_webAccessPaper.php
