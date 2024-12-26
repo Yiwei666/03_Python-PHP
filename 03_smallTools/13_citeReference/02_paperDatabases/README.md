@@ -215,6 +215,48 @@ alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%
 
 ## 2. `08_category_operations.php`
 
+### 1. 功能
+
+- `getCategories`：从 `categories` 表中获取所有分类信息，并按分类名称升序排列返回一个包含分类数据的数组，或在失败时返回错误信息。
+
+- `addCategory`：向 `categories` 表中插入一个新的分类名，返回操作成功的消息或错误信息。
+
+- `deleteCategory`：根据提供的分类ID删除 `categories` 表中的对应分类，返回成功消息或错误提示。
+
+- `updateCategoryName`：更新指定分类ID对应的分类名称为新的名称，返回成功消息或错误提示。
+
+- `getPapersByCategory`：查询某一分类下的所有论文信息，按论文ID降序排序返回结果集，包含标题、作者、出版年份等论文信息。
+
+- `assignAllPapersCategory`：为指定论文分配 "All papers" 分类（`categoryID = 1`），以确保每篇论文都属于默认分类，返回操作成功与否的标志。
+
+- `getCategoriesByPaperID`：根据论文ID查询论文所属的所有分类ID，并返回分类ID的数组，或在失败时返回错误信息。
+
+- `updatePaperCategories`：通过事务处理删除论文当前的分类并插入新的分类ID列表，确保论文分类更新的原子性，返回操作成功与否和错误提示。
+
+- `getPaperByDOI`：根据论文的DOI从 papers 表中获取其完整信息，返回包含论文信息的数组，或在失败时返回 false。
+
+- `insertPaper`：向 `papers` 表中插入新的论文信息，包括标题、作者、出版年份等，返回成功标志和新论文的ID，或在失败时返回错误信息。
+
+
+### 2. 函数调用
+
+```php
+# 1. 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并分配默认分类
+getPaperByDOI
+insertPaper
+assignAllPapersCategory
+
+# 2. 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
+getCategories
+
+# 3. 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
+getPaperByDOI
+getCategoriesByPaperID
+
+# 4. 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
+getPaperByDOI
+updatePaperCategories
+```
 
 
 
@@ -242,6 +284,7 @@ alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%
 - **分配默认分类**：调用 `assignAllPapersCategory` 函数，将新论文分配到默认分类 "All papers"，并根据分配结果返回成功或部分成功的响应信息。
 
 - 返回响应：通过JSON格式返回操作结果，包括成功标志（success）、论文ID（paperID）或失败原因（message），确保客户端能够处理相应的结果。
+
 
 
 
