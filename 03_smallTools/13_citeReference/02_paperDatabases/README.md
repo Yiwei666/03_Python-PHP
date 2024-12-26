@@ -267,6 +267,37 @@ require_once '08_category_operations.php';
 
 
 
+## 5. `08_tm_get_paper_categories.php`
+
+### 1. 功能
+
+调用`08_category_operations.php`模块中的函数，基于doi查找论文的paperID（ `getPaperByDOI`函数），通过 `paperID` 查询论文所属分类的ID列表（`getCategoriesByPaperID` 函数）。
+
+- 设置响应头信息：配置返回数据格式为JSON，允许跨域GET请求，确保客户端能够正确访问API并解析返回的数据。
+
+- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块包含查询论文和分类的函数，如 getPaperByDOI 和 getCategoriesByPaperID。
+
+```php
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+```
+
+- 获取并验证DOI参数：通过GET参数获取DOI，去除空格后验证其有效性，若为空则返回错误信息 "DOI不能为空"，并终止流程。
+
+- **查询论文信息**：调用 `getPaperByDOI` 函数，通过DOI从数据库获取对应论文的 `paperID`，若未找到论文则返回错误信息 "未找到对应的论文"。
+
+- **查询分类信息**：调用 `getCategoriesByPaperID` 函数，通过 `paperID` 查询论文所属分类的ID列表，若查询成功则返回分类数组，失败则返回错误信息 "获取分类失败"。
+
+- 返回响应结果：根据查询结果生成JSON响应，包含成功标志、分类ID数组或错误信息，确保客户端能清晰了解操作结果。
+
+
+
+## 6. `08_tm_update_paper_categories.php`
+
+
+
+
+
 
 # 5. web交互脚本
 
