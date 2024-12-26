@@ -415,7 +415,7 @@ exit();
 
 
 
-### 2. 函数调用及对应的后端API
+### 2. 函数调用及对应后端API
 
 1. `sendPaperData(data)`
 
