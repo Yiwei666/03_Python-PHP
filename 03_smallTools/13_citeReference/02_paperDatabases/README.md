@@ -217,6 +217,35 @@ alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%
 
 
 
+## 3. `08_tm_add_paper.php`
+
+### 1. 功能
+
+基于油猴脚本传递的论文元数据，调用`08_category_operations.php`模块中的函数，检查数据库中是否已存在相同doi（`getPaperByDOI`函数），插入论文元数据（`insertPaper`函数）以及分配默认分类（`assignAllPapersCategory`函数）。
+
+
+- 设置响应头：配置返回类型为JSON，并允许跨域POST请求，确保客户端能够正确调用API。
+
+- **加载模块**：引入数据库配置模块 (`08_db_config.php`) 和分类操作模块 (`08_category_operations.php`)，提供数据库连接和分类管理功能。
+
+- 接收请求数据：通过 `php://input` 获取POST请求中的原始JSON数据，并解析为PHP数组，用于后续操作。
+
+- 验证数据：检查请求数据的有效性，确保 doi 不为空，否则返回错误信息并终止流程。
+
+- **检查重复**：调用 `getPaperByDOI` 函数检查数据库中是否已存在相同DOI的论文，若存在则直接返回已有的 paperID，避免重复插入。
+
+- 提取字段：从请求数据中提取论文信息（如标题、作者、期刊名、出版年份等），若字段缺失则设置为 null，保证数据完整性。
+
+- **插入论文**：调用 `insertPaper` 函数，将论文数据写入数据库，若成功则获取新生成的 paperID，失败则返回错误信息。
+
+- **分配默认分类**：调用 `assignAllPapersCategory` 函数，将新论文分配到默认分类 "All papers"，并根据分配结果返回成功或部分成功的响应信息。
+
+- 返回响应：通过JSON格式返回操作结果，包括成功标志（success）、论文ID（paperID）或失败原因（message），确保客户端能够处理相应的结果。
+
+
+
+
+
 
 # 5. web交互脚本
 
