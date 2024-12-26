@@ -22,6 +22,9 @@
 # 3. 油猴脚本
 08_tm_paperManagement.js
 
+# 4. 服务器端脚本
+08_server_update_paper_status.php
+
 ```
 
 
