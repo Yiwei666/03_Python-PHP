@@ -199,7 +199,7 @@ SELECT paperID, title FROM papers;
 ```
 
 
-### 5. alias
+### 5. 别名alias
 
 ```sh
 alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%Y%m%d_%H%M%S).sql'
@@ -293,6 +293,31 @@ require_once '08_category_operations.php';
 
 
 ## 6. `08_tm_update_paper_categories.php`
+
+### 1. 功能
+
+调用`08_category_operations.php`模块中的函数，基于doi查找论文的paperID（ `getPaperByDOI`函数），调用 `updatePaperCategories` 函数，删除论文的旧分类并插入新的分类列表。
+
+
+- 设置响应头信息：配置API返回的数据格式为JSON，允许跨域POST请求，并确保请求头和方法符合规范，支持接收客户端发送的JSON数据。
+
+- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块用于处理论文的查询和分类更新操作。
+
+```php
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+```
+
+- 获取并验证POST数据：通过POST请求获取DOI和分类ID数组，确保DOI非空且分类ID为数组格式，若验证失败返回明确的错误信息。
+
+- **查询论文信息**：调用 `getPaperByDOI` 函数，通过DOI查询对应的论文ID（`paperID`），若未找到论文，则返回错误信息 "未找到对应的论文"。
+
+- 确保默认分类存在：检查分类ID数组是否包含默认分类 "All papers" 的 `categoryID = 1`，若不存在则强制加入，确保论文始终属于默认分类。
+
+- **更新论文分类**：调用 `updatePaperCategories` 函数，删除论文的旧分类并插入新的分类列表，若更新成功返回成功消息，若失败则返回具体的错误信息。
+
+- 返回JSON响应：根据操作结果返回明确的JSON响应，包括操作成功与否的标志、成功消息或错误提示，确保客户端能够清晰了解执行结果。
+
 
 
 
