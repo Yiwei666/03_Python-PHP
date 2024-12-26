@@ -81,7 +81,7 @@ const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText
 
 - 谷歌学术全球所有子域名：
 
-```
+```js
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.co.uk/*
 // @match        https://scholar.google.de/*
