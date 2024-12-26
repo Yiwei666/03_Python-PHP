@@ -79,6 +79,32 @@ const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText
     - 注意：`https://scholar.google.com.hk/` 域名可能会有提示 "我们的系统检测到您的计算机网络中存在异常流量"，限制使用。
     - 但是 `https://scholar.google.com/`  不会限制，使用插件时要注意
 
+- 谷歌学术全球所有子域名：
+
+```
+// @match        https://scholar.google.com/*
+// @match        https://scholar.google.co.uk/*
+// @match        https://scholar.google.de/*
+// @match        https://scholar.google.fr/*
+// @match        https://scholar.google.co.jp/*
+// @match        https://scholar.google.ca/*
+// @match        https://scholar.google.com.au/*
+// @match        https://scholar.google.co.in/*
+// @match        https://scholar.google.es/*
+// @match        https://scholar.google.it/*
+// @match        https://scholar.google.com.br/*
+// @match        https://scholar.google.ru/*
+// @match        https://scholar.google.nl/*
+// @match        https://scholar.google.com.sg/*
+// @match        https://scholar.google.com.mx/*
+// @match        https://scholar.google.com.tr/*
+// @match        https://scholar.google.com.ar/*
+// @match        https://scholar.google.co.kr/*
+// @match        https://scholar.google.se/*
+// @match        https://scholar.google.ch/*
+```
+
+
 
 
 ### 2. 编程思路
