@@ -10,7 +10,7 @@
 # 1. 功能模块
 08_db_config.php
 08_category_operations.php
-08_tm_add_paper.php
+08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并进行默认分类
 08_tm_get_categories.php
 08_tm_get_paper_categories.php
 08_tm_update_paper_categories.php
