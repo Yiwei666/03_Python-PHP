@@ -10,6 +10,9 @@ error_reporting(E_ALL);
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
 
+// 引入 Base32 编码类（请确保本地存在 08_web_Base32.php 并包含题目中的实现）
+require_once '08_web_Base32.php';
+
 // 获取所有分类
 $categories = getCategories($mysqli);
 
@@ -172,7 +175,7 @@ if ($selectedCategoryID) {
         .paper-categories {
             text-align: left;
         }
-        .paper-categories button {
+        .paper-categories button, .paper-categories span {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -180,6 +183,10 @@ if ($selectedCategoryID) {
             font-size: 13px; /* 13 px */
             text-decoration: none; /* 去掉下划线 */
             padding: 0; /* 去除默认内边距，使其与左侧对齐 */
+            margin-right: 10px; /* 使多个按钮之间留一点间隙 */
+        }
+        .paper-categories span {
+            cursor: default;
         }
         /* 弹窗 (modal) 样式 */
         #categoryModal {
@@ -307,9 +314,45 @@ if ($selectedCategoryID) {
                             </p>
                             <!-- “标签”按钮行 -->
                             <div class="paper-categories">
+                                <!-- 原有 "标签" 功能 -->
                                 <button type="button" onclick="openCategoryModal('<?= htmlspecialchars($paper['doi']) ?>')">
                                     标签
                                 </button>
+                                
+                                <?php 
+                                    // 根据 status 显示不同提示或按钮
+                                    // 为了生成“查看”按钮需要将 doi 进行 Base32 编码
+                                    $encodedDOI = Base32::encode($paper['doi']);
+                                    // 保留末尾的 '=' 填充
+                                    
+                                    switch($paper['status']) {
+                                        case 'CL':
+                                            // 显示 “删除” 与 “查看”
+                                            echo '<button type="button" onclick="updatePaperStatus(\'' . htmlspecialchars($paper['doi']) . '\', \'DL\')">删除</button>';
+                                            echo '<button type="button" onclick="window.open(\'https://chaye.one/08_paperLocalStorage/' . urlencode($encodedDOI) . '.pdf\', \'_blank\')">查看</button>';
+                                            break;
+                                        case 'DL':
+                                            // 显示 “删除中”
+                                            echo '<span>删除中</span>';
+                                            break;
+                                        case 'C':
+                                            // 显示 “下载”
+                                            echo '<button type="button" onclick="updatePaperStatus(\'' . htmlspecialchars($paper['doi']) . '\', \'DW\')">下载</button>';
+                                            break;
+                                        case 'DW':
+                                            // 显示 “下载中”
+                                            echo '<span>下载中</span>';
+                                            break;
+                                        case 'L':
+                                            // 显示 “查看”
+                                            echo '<button type="button" onclick="window.open(\'https://chaye.one/08_paperLocalStorage/' . urlencode($encodedDOI) . '.pdf\', \'_blank\')">查看</button>';
+                                            break;
+                                        case 'N':
+                                        default:
+                                            // N 或其它未匹配情况，不显示额外按钮/提示
+                                            break;
+                                    }
+                                ?>
                             </div>
                         </div>
                     <?php endwhile; ?>
@@ -474,6 +517,37 @@ if ($selectedCategoryID) {
         function closeModal() {
             document.getElementById('categoryModal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
+        }
+
+        /**
+         * 更新论文状态
+         * 需要您在后端创建对应的处理接口，例如 08_web_update_paper_status.php
+         * 并在其中调用 updatePaperStatus($mysqli, $paperID, $newStatus) 等逻辑
+         */
+        function updatePaperStatus(doi, newStatus) {
+            fetch('08_web_update_paper_status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    doi: doi, 
+                    status: newStatus 
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // 更新成功后刷新页面以便看到最新状态
+                    window.location.reload();
+                } else {
+                    alert(data.message || '更新状态失败。');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('更新状态时出现错误。');
+            });
         }
     </script>
 </body>
