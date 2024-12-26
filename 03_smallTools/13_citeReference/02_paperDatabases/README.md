@@ -233,6 +233,33 @@ alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%
 
 ## 1. `08_db_config.php`
 
+1. 功能：创建数据库连接对象
+
+2. 代码
+
+```php
+<?php
+$host = 'localhost'; // 通常是 'localhost' 或一个IP地址
+$username = 'root'; // 数据库用户名
+$password = '12345678'; // 数据库密码
+$dbname = 'paper_db'; // 数据库名称
+
+// 创建数据库连接
+$mysqli = new mysqli($host, $username, $password, $dbname);
+
+// 检查连接
+if ($mysqli->connect_error) {
+    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
+?>
+```
+
+3. 环境变量：更改数据库密码和名称
+
+```php
+$password = '12345678'; // 数据库密码
+$dbname = 'paper_db'; // 数据库名称
+```
 
 
 ## 2. `08_category_operations.php`
