@@ -76,7 +76,7 @@ function updateCategoryName($mysqli, $categoryID, $newCategoryName) {
  */
 function getPapersByCategory($mysqli, $categoryID) {
     $query = "
-        SELECT p.paperID, p.title, p.authors, p.publication_year, p.journal_name, p.doi
+        SELECT p.paperID, p.title, p.authors, p.publication_year, p.journal_name, p.doi, p.status
         FROM papers p
         JOIN paperCategories pc ON p.paperID = pc.paperID
         WHERE pc.categoryID = ?
@@ -207,6 +207,28 @@ function assignAllPapersCategory($mysqli, $paperID) {
             return ['success' => true];
         } else {
             $stmt->close();
+            return ['success' => false, 'message' => $stmt->error];
+        }
+    } else {
+        return ['success' => false, 'message' => $mysqli->error];
+    }
+}
+
+/**
+ * 根据 paperID 更新论文状态
+ * @param mysqli $mysqli
+ * @param int    $paperID
+ * @param string $newStatus
+ * @return array
+ */
+function updatePaperStatus($mysqli, $paperID, $newStatus) {
+    $query = "UPDATE papers SET status = ? WHERE paperID = ?";
+    $stmt = $mysqli->prepare($query);
+    if ($stmt) {
+        $stmt->bind_param('si', $newStatus, $paperID);
+        if ($stmt->execute()) {
+            return ['success' => true];
+        } else {
             return ['success' => false, 'message' => $stmt->error];
         }
     } else {
