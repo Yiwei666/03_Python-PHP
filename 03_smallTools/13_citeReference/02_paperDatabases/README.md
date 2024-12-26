@@ -11,7 +11,7 @@
 08_db_config.php
 08_category_operations.php
 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并进行默认分类
-08_tm_get_categories.php
+08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
 08_tm_get_paper_categories.php
 08_tm_update_paper_categories.php
 
@@ -206,6 +206,7 @@ alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%
 ```
 
 
+
 # 4. php功能模块
 
 ## 1. `08_db_config.php`
@@ -243,6 +244,26 @@ alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%
 - 返回响应：通过JSON格式返回操作结果，包括成功标志（success）、论文ID（paperID）或失败原因（message），确保客户端能够处理相应的结果。
 
 
+
+## 4. `08_tm_get_categories.php`
+
+### 1. 功能
+
+调用`08_category_operations.php`模块中的 `getCategories`函数，返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名。
+
+
+- 设置响应头信息：配置返回类型为JSON，允许跨域访问和GET请求，以确保客户端能够正确访问API并解析返回数据。
+
+- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块包含获取分类的函数 getCategories。
+
+```php
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+```
+
+- **获取分类数据**：调用 `getCategories` 函数从数据库查询所有分类信息，返回包含 `categoryID` 和 `categoryName` 的分类数组，如果查询失败则返回 false。
+
+- 判断并返回响应：检查获取的分类数据是否为数组，若成功则返回包含分类信息的JSON响应，若失败则返回包含错误信息的失败响应，保证客户端得到明确的操作结果。
 
 
 
