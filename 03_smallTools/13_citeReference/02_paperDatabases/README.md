@@ -422,6 +422,15 @@ require_once '08_category_operations.php';
 
 
 
+## 7. `08_web_Base32.php`              
+
+Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
+
+
+
+
+## 8. `08_web_update_paper_status.php`     
+ 
 
 
 
@@ -613,9 +622,63 @@ class Base32
 
 
 
+# 6. 服务器端脚本
+
+## 1. `08_server_update_paper_status.php`
+
+### 1. 编程思路
+
+1. 获取paper_db数据库中papers表格中所有论文的doi和status，
+
+2. 获取服务器 `$local_dir = "/home/01_html/08_paperLocalStorage"` 目录（A）下的所有pdf文件名，使用 rclone 获取onedrive指定 `$remote_dir = "rc4:/3图书/13_paperRemoteStorage"` 目录（B）中的所有pdf文件名，注意A和B目录下文件名都是base32编码后的文件名(如，`base32Filename.pdf`，其中`"base32Filename"`是已被base32编码部分)，`base32Filename.pdf` 格式如下所示
+
+```
+GEYC4MJQGA3S64ZRGE3DMMZNGAYTKLJQGM3TILJS.pdf
+GEYC4MJQGE3C62ROM5RWCLRSGAYTSLRQG4XDAMZY.pdf
+GEYC4MJQGM4C64ZUGE2TKNZNGAZDALJQGA2TSMRNPI======.pdf
+```
+
+3. 对数据库中每一个doi进行base32编码，并拼接`".pdf"`字符串，获取编码后的完整pdf文件名，对于每一个编码后的pdf文件名，进行以下操作：
+   - 如果编码后的pdf文件名 在A和B目录同时存在，判断其status是否为CL或者DL，如果都不是，则需要将其赋值为CL。
+   - 如果编码后的pdf文件名 在B目录存在，A目录不存在，则检查status是否为C 或者 DW，如果都不是，则需要将其赋值为C。
+   - 如果编码后的pdf文件名 在B目录不存在，A目录存在，则检查status是否为L，如果不是，则需要将其赋值为L。
+   - 如果编码后的pdf文件名 在A和B目录同时都不存在，则检查status是否为N，如果不是，则需要将其赋值为N。
+   - 如果某个论文的status是DW，则执行rclone下载操作，下载成功后，将status由DW设置为CL
+   - 如果某个论文的status是DL，则执行本地删除，删除成功后，将status由DL设置为C
 
 
-# 6. tampermonkey 脚本
+```
+B           A
+onedrive    服务器      status
+1           1           CL   DL (to C)
+1           0           C    DW (to CL)
+0           1           L
+0           0           N
+```
+
+
+4. rclone下载操作可以参考如下部分
+
+```php
+$remote_file_path = $remote_dir . '/' . base32Filename.pdf;
+$local_file_path = $local_dir;
+$copy_command = "rclone copy '$remote_file_path' '$local_file_path'";
+exec($copy_command, $copy_output, $copy_return_var);
+if ($copy_return_var != 0) {
+    echo "Failed to copy " . base32Filename.pdf . "\n";
+} else {
+    echo "Copied " . base32Filename.pdf . " successfully\n";
+}
+```
+
+
+### 2. 环境变量
+
+
+
+
+
+# 7. tampermonkey 脚本
 
 ## 1. `08_tm_paperManagement.js`
 
