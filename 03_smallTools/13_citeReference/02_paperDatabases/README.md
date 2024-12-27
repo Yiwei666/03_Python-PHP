@@ -16,7 +16,7 @@
 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
 
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
-08_web_update_paper_status.php     # 
+08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
 
 # 2. web交互
 08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
