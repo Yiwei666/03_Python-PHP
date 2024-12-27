@@ -430,7 +430,9 @@ require_once '08_category_operations.php';
 
 ## 1. `08_webAccessPaper.php`
 
-### 1. 编程思路一
+### 1. 编程思路
+
+💡 **1. 初始思路**
 
 注意，能否编写一个php脚本，运行在云服务器中，在web页面上访问时可以显示目前已有的分类，调用上述 `08_category_operations.php` 模块来实现。具体要求如下：
 
@@ -445,7 +447,7 @@ require_once '08_category_operations.php';
 
 
 
-### 2. 新增思路二
+💡 **2. 新增思路**
 
 请修改上述 `08_webAccessPaper.php` 代码，在右侧每个论文标题下面的“标签”开头行新增如下设置：
 
@@ -554,7 +556,7 @@ class Base32
 
 ### 2. 标准Base32实现特点
 
-⭐ **. 标准Base32**
+⭐ **1. 标准Base32**
 
 1. 字母表:
    - 使用标准的Base32字母表：A-Z 和 2-7，与RFC 4648定义的一致。
