@@ -424,14 +424,35 @@ require_once '08_category_operations.php';
 
 ## 7. `08_web_Base32.php`              
 
+### 1. 功能
+
 Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
 
 
 
 
 ## 8. `08_web_update_paper_status.php`     
- 
 
+### 1. 功能
+ 
+接收前端发送的 DOI（论文唯一标识）和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
+
+
+1. 引入外部文件
+
+```php
+require_once '08_db_config.php';           // 数据库连接
+require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updatePaperStatus()
+```
+
+2. 调用 `getPaperByDOI($mysqli, $doi)` 函数，去数据库查找对应 DOI 的论文。
+
+3. 获取查询到的 `$paper` 的 ID（这里假设字段是 `paperID`），然后调用 `updatePaperStatus($mysqli, $paperID, $newStatus)` 进行数据库更新操作。
+
+核心流程：前端发送带有 doi 和 status 的 JSON 请求 → 服务器获取这两个参数 → 根据 doi 查找对应论文 → 将论文状态更新为新的状态 → 将更新结果以 JSON 格式返回给前端。
+
+
+### 2. 环境变量
 
 
 
