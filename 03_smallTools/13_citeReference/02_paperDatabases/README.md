@@ -16,8 +16,8 @@
 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
 
 # 2. web交互
-08_webAccessPaper.php                     # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
-08_base32_tool.php              
+08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
+08_base32_tool.php                 # base32在线编码和解码，主要用于doi编码
 
 # 3. 油猴脚本
 08_tm_paperManagement.js
