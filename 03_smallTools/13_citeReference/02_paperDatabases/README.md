@@ -46,10 +46,27 @@
 
 ## 2. 创建数据库和表
 
-### 1. 创建名为 paper_db 的数据库：
+### 1. 创建名为 paper_db 的数据库
+
+1. 创建命令
 
 ```sql
 CREATE DATABASE paper_db;
+```
+
+
+2. `paper_db`数据库中的表
+
+```sql
+mysql> show tables;
++--------------------+
+| Tables_in_paper_db |
++--------------------+
+| categories         |
+| paperCategories    |
+| papers             |
++--------------------+
+3 rows in set (0.00 sec)
 ```
 
 
@@ -92,7 +109,35 @@ ADD COLUMN status ENUM('CL', 'C', 'L', 'N', 'DW', 'DL') NOT NULL DEFAULT 'N';
 注意：status列默认值设置为 N
 
 
+3. 添加status列后的`papers` 表
+
+```sql
+mysql> describe papers;
++------------------+----------------------------------+------+-----+---------+----------------+
+| Field            | Type                             | Null | Key | Default | Extra          |
++------------------+----------------------------------+------+-----+---------+----------------+
+| paperID          | int                              | NO   | PRI | NULL    | auto_increment |
+| title            | varchar(255)                     | NO   |     | NULL    |                |
+| authors          | text                             | NO   |     | NULL    |                |
+| journal_name     | varchar(255)                     | NO   |     | NULL    |                |
+| publication_year | int                              | NO   |     | NULL    |                |
+| volume           | varchar(50)                      | YES  |     | NULL    |                |
+| issue            | varchar(50)                      | YES  |     | NULL    |                |
+| pages            | varchar(50)                      | YES  |     | NULL    |                |
+| article_number   | varchar(50)                      | YES  |     | NULL    |                |
+| doi              | varchar(100)                     | YES  |     | NULL    |                |
+| issn             | varchar(50)                      | YES  |     | NULL    |                |
+| publisher        | varchar(255)                     | YES  |     | NULL    |                |
+| status           | enum('CL','C','L','N','DW','DL') | NO   |     | N       |                |
++------------------+----------------------------------+------+-----+---------+----------------+
+13 rows in set (0.01 sec)
+```
+
+
+
 ### 3. 创建 categories 表
+
+1. 创建命令
 
 ```sql
 CREATE TABLE categories (
@@ -101,9 +146,24 @@ CREATE TABLE categories (
 );
 ```
 
+2. `categories` 表
+```sql
+mysql> describe categories;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| categoryID    | int          | NO   | PRI | NULL    | auto_increment |
+| category_name | varchar(255) | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+```
+
+
 
 
 ### 4. 创建 paperCategories 表
+
+1. 创建命令
 
 ```sql
 CREATE TABLE paperCategories (
@@ -130,38 +190,6 @@ paperID 和 categoryID：
   - `ON DELETE CASCADE`：当 papers 或 categories 表中的相关记录被删除时，paperCategories 表中的对应记录会自动删除。
 
 
-## 3. 表结构
-
-上述sql命令创建的表结构如下所示
-
-1. `paper_db`数据库中的表
-
-```sql
-mysql> show tables;
-+--------------------+
-| Tables_in_paper_db |
-+--------------------+
-| categories         |
-| paperCategories    |
-| papers             |
-+--------------------+
-3 rows in set (0.00 sec)
-```
-
-
-2. `categories` 表
-```sql
-mysql> describe categories;
-+---------------+--------------+------+-----+---------+----------------+
-| Field         | Type         | Null | Key | Default | Extra          |
-+---------------+--------------+------+-----+---------+----------------+
-| categoryID    | int          | NO   | PRI | NULL    | auto_increment |
-| category_name | varchar(255) | NO   |     | NULL    |                |
-+---------------+--------------+------+-----+---------+----------------+
-2 rows in set (0.01 sec)
-```
-
-
 3. `paperCategories` 表
 
 ```sql
@@ -175,33 +203,9 @@ mysql> describe paperCategories;
 2 rows in set (0.00 sec)
 ```
 
-4. `papers` 表
-
-```sql
-mysql> describe papers;
-+------------------+----------------------------------+------+-----+---------+----------------+
-| Field            | Type                             | Null | Key | Default | Extra          |
-+------------------+----------------------------------+------+-----+---------+----------------+
-| paperID          | int                              | NO   | PRI | NULL    | auto_increment |
-| title            | varchar(255)                     | NO   |     | NULL    |                |
-| authors          | text                             | NO   |     | NULL    |                |
-| journal_name     | varchar(255)                     | NO   |     | NULL    |                |
-| publication_year | int                              | NO   |     | NULL    |                |
-| volume           | varchar(50)                      | YES  |     | NULL    |                |
-| issue            | varchar(50)                      | YES  |     | NULL    |                |
-| pages            | varchar(50)                      | YES  |     | NULL    |                |
-| article_number   | varchar(50)                      | YES  |     | NULL    |                |
-| doi              | varchar(100)                     | YES  |     | NULL    |                |
-| issn             | varchar(50)                      | YES  |     | NULL    |                |
-| publisher        | varchar(255)                     | YES  |     | NULL    |                |
-| status           | enum('CL','C','L','N','DW','DL') | NO   |     | N       |                |
-+------------------+----------------------------------+------+-----+---------+----------------+
-13 rows in set (0.01 sec)
-```
 
 
-
-## 4. 数据库查询
+## 3. 数据库查询
 
 ### 1. 常用查询命令
 
