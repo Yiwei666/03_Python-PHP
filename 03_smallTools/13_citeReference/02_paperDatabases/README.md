@@ -430,7 +430,7 @@ require_once '08_category_operations.php';
 
 ## 1. `08_webAccessPaper.php`
 
-### 1. 编程思路
+### 1. 编程思路一
 
 注意，能否编写一个php脚本，运行在云服务器中，在web页面上访问时可以显示目前已有的分类，调用上述 `08_category_operations.php` 模块来实现。具体要求如下：
 
@@ -445,7 +445,26 @@ require_once '08_category_operations.php';
 
 
 
-### 2. 环境变量
+### 2. 新增思路二
+
+请修改上述 `08_webAccessPaper.php` 代码，在右侧每个论文标题下面的“标签”开头行新增如下设置：
+
+1. 如果 status 值为CL，则在“标签”旁显示一个 “删除”提示，点击“删除”后会将 CL 变成 DL；还显示一个 “查看” 提示，点击“查看”后，会在新的标签页打开链接 `"https://domain.com/08_paperLocalStorage/" + base32编码后的doi + ".pdf" 链接`（例如：`https://domain.com/08_paperLocalStorage/GEYC4MJQGA3S64ZRGE3DMMZNGAYTKLJQGM3TILJS.pdf`） base32编码方式参考 6. 附录
+2. 如果 status 值为DL，则在“标签”旁显示一个 “删除中” 提示
+3. 如果 status 值为C，则在“标签”旁显示一个 “下载”提示，点击“下载”后会将 C 变成 DW
+4. 如果 status 值为DW，则在“标签”旁显示一个 “下载中” 提示
+5. 如果 status 值为L，则在“标签”旁显示一个 “查看” 提示，点击“查看”后，会在新的标签页打开链接 `"https://domain.com/08_paperLocalStorage/" + base32编码后的doi + ".pdf"` 链接
+6. 如果 status 值为N，则“标签”旁不用显示任何按钮和提示
+
+上述“标签”旁新增按钮和提示的样式和“标签”一致（包括字体大小、颜色、样式等）
+
+注意：上述需求的实现可能需要调用 `08_db_config.php`、`08_category_operations.php` 模块，可能需要新增一些函数
+
+保持上述 `08_webAccessPaper.php` 代码的界面UI设计、代码逻辑和功能不变，仅对上述提到的需求进行修改。
+
+
+
+### 3. 环境变量
 
 1. 根据实际修改脚本名 `08_webAccessPaper.php`
 
@@ -454,6 +473,83 @@ require_once '08_category_operations.php';
 header("Location: 08_webAccessPaper.php?message=" . urlencode($message));
 exit();
 ```
+
+
+## 2. `08_base32_tool.php`
+
+功能：base32 在线编码和解码
+
+```php
+// Base32编码和解码函数
+class Base32
+{
+    private static $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+
+    public static function encode($input)
+    {
+        if (empty($input)) return '';
+
+        $binary = '';
+        // 将每个字符转换为其二进制表示
+        for ($i = 0; $i < strlen($input); $i++) {
+            $binary .= str_pad(decbin(ord($input[$i])), 8, '0', STR_PAD_LEFT);
+        }
+
+        // 将二进制字符串填充到5的倍数
+        $binary = str_pad($binary, ceil(strlen($binary) / 5) * 5, '0', STR_PAD_RIGHT);
+
+        $base32 = '';
+        for ($i = 0; $i < strlen($binary); $i += 5) {
+            $chunk = substr($binary, $i, 5);
+            $index = bindec($chunk);
+            $base32 .= self::$alphabet[$index];
+        }
+
+        // 添加填充
+        $padding = strlen($base32) % 8;
+        if ($padding !== 0) {
+            $base32 .= str_repeat('=', 8 - $padding);
+        }
+
+        return $base32;
+    }
+
+    public static function decode($input)
+    {
+        if (empty($input)) return '';
+
+        // 移除填充字符
+        $input = strtoupper($input);
+        $input = rtrim($input, '=');
+
+        $binary = '';
+        for ($i = 0; $i < strlen($input); $i++) {
+            $char = $input[$i];
+            $index = strpos(self::$alphabet, $char);
+            if ($index === false) {
+                // 无效的Base32字符
+                return false;
+            }
+            $binary .= str_pad(decbin($index), 5, '0', STR_PAD_LEFT);
+        }
+
+        // 将二进制字符串转换回原始字符串
+        $decoded = '';
+        for ($i = 0; $i < strlen($binary); $i += 8) {
+            $byte = substr($binary, $i, 8);
+            if (strlen($byte) < 8) {
+                // 忽略不完整的字节
+                break;
+            }
+            $decoded .= chr(bindec($byte));
+        }
+
+        return $decoded;
+    }
+}
+```
+
+
 
 
 # 6. tampermonkey 脚本
