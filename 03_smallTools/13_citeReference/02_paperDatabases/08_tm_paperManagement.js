@@ -1,11 +1,30 @@
 // ==UserScript==
-// @name         Extract Citation Data with DOI Lookup and Complete Reference Info
+// @name         Extract Citation Data with DOI Lookup and Complete Reference Info (Base32 added)
 // @namespace    http://tampermonkey.net/
-// @version      1.10
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。
+// @version      1.12
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
+// @match        https://scholar.google.co.uk/*
+// @match        https://scholar.google.de/*
+// @match        https://scholar.google.fr/*
+// @match        https://scholar.google.co.jp/*
+// @match        https://scholar.google.ca/*
+// @match        https://scholar.google.com.au/*
+// @match        https://scholar.google.co.in/*
+// @match        https://scholar.google.es/*
+// @match        https://scholar.google.it/*
+// @match        https://scholar.google.com.br/*
+// @match        https://scholar.google.ru/*
+// @match        https://scholar.google.nl/*
+// @match        https://scholar.google.com.sg/*
+// @match        https://scholar.google.com.mx/*
+// @match        https://scholar.google.com.tr/*
+// @match        https://scholar.google.com.ar/*
+// @match        https://scholar.google.co.kr/*
+// @match        https://scholar.google.se/*
+// @match        https://scholar.google.ch/*
 // @grant        GM_xmlhttpRequest
 // @connect      api.crossref.org
 // @connect      chaye.one
@@ -14,41 +33,60 @@
 (function () {
     'use strict';
 
+    // ======================
+    //    配置区
+    // ======================
+
     // 配置您的服务器API基础URL
     const API_BASE_URL = 'https://chaye.one/'; // 确保末尾有斜杠
 
-    // 定义按钮
-    const extractButton = document.createElement('button');
-    extractButton.textContent = '提取内容并查询 DOI';
-    extractButton.style.position = 'fixed';
-    extractButton.style.top = '10px';
-    extractButton.style.right = '10px';
-    extractButton.style.zIndex = 9999;
-    extractButton.style.backgroundColor = '#4CAF50';
-    extractButton.style.color = 'white';
-    extractButton.style.border = 'none';
-    extractButton.style.padding = '10px';
-    extractButton.style.cursor = 'pointer';
+    // ======================
+    //    界面元素创建
+    // ======================
 
-    const tagButton = document.createElement('button');
-    tagButton.textContent = '标签';
-    tagButton.style.position = 'fixed';
-    tagButton.style.top = '50px';
-    tagButton.style.right = '10px';
-    tagButton.style.zIndex = 9999;
-    tagButton.style.backgroundColor = '#2196F3';
-    tagButton.style.color = 'white';
-    tagButton.style.border = 'none';
-    tagButton.style.padding = '10px';
-    tagButton.style.cursor = 'pointer';
-    tagButton.style.display = 'none'; // 初始隐藏
+    // 创建一个通用的按钮样式函数，以确保所有按钮的样式一致
+    function createButton(text, top, right, backgroundColor) {
+        const button = document.createElement('button');
+        button.textContent = text;
+        button.style.position = 'fixed';
+        button.style.top = `${top}px`;
+        button.style.right = `${right}px`;
+        button.style.zIndex = 9999;
+        button.style.backgroundColor = backgroundColor;
+        button.style.color = 'white';
+        button.style.border = 'none';
+        button.style.padding = '10px 15px';
+        button.style.cursor = 'pointer';
+        button.style.display = 'flex';
+        button.style.alignItems = 'center';
+        button.style.justifyContent = 'center';
+        button.style.fontSize = '13px';
+        button.style.borderRadius = '4px'; // 增加圆角效果
+        return button;
+    }
+
+    // 「提取内容并查询 DOI」按钮
+    const extractButton = createButton('提取内容并查询 DOI', 10, 10, '#4CAF50');
+
+    // 「标签」按钮（初始隐藏，在提取后显示）
+    const tagButton = createButton('标签', 50, 10, '#2196F3');
+    tagButton.style.display = 'none';
+
+    // 「复制 Base32」按钮（初始隐藏，只有成功获取 doi 后才显示）
+    const copyBase32Button = createButton('复制 Base32', 10, 170, '#FF9800');
+    copyBase32Button.style.display = 'none';
 
     // 存储提取的论文数据
     let extractedData = {};
 
+    // ======================
+    //   事件与功能逻辑
+    // ======================
+
     window.addEventListener('load', () => {
         document.body.appendChild(extractButton);
         document.body.appendChild(tagButton);
+        document.body.appendChild(copyBase32Button);
 
         // 点击“提取内容并查询 DOI”按钮事件
         extractButton.addEventListener('click', function () {
@@ -125,13 +163,22 @@
                         }
                     })
                     .then(() => {
-                        // 最后才显示标签按钮
-                        tagButton.style.display = 'block';
+                        // 最后才显示标签按钮 & 如果有合法doi则显示Base32复制按钮
+                        tagButton.style.display = 'flex';
+
+                        if (
+                            extractedData.doi &&
+                            extractedData.doi !== '未找到 DOI' &&
+                            extractedData.doi !== '查询失败'
+                        ) {
+                            // 显示 复制base32 按钮
+                            copyBase32Button.style.display = 'flex';
+                        }
                     })
                     .catch(err => {
                         console.error('DOI查询或分类获取时出错:', err);
                         // 最后还是让标签按钮显示
-                        tagButton.style.display = 'block';
+                        tagButton.style.display = 'flex';
                     });
             } catch (e) {
                 console.error("提取时出错:", e);
@@ -150,9 +197,7 @@
             sendPaperData(extractedData)
                 .then(response => {
                     if (response.success) {
-                        const paperID = response.paperID;
                         alert('论文已成功添加到数据库（或已存在数据库中）。');
-
                         // 获取所有分类
                         return fetchCategories();
                     } else {
@@ -177,7 +222,21 @@
                     alert(error.message);
                 });
         });
+
+        // 点击“复制 Base32”按钮事件
+        copyBase32Button.addEventListener('click', function () {
+            if (!extractedData.doiBase32) {
+                alert('未找到可复制的Base32编码，请先进行查询。');
+                return;
+            }
+            copyToClipboard(extractedData.doiBase32);
+            alert('Base32 已复制到剪贴板！');
+        });
     });
+
+    // ======================
+    //   主要逻辑函数
+    // ======================
 
     // 动态创建弹窗显示结果
     function displayResult({
@@ -198,7 +257,8 @@
         fullAuthors = '查询中...',
         abbreviatedAuthors = '查询中...',
         matchResult = '',
-        existingCategoryNames = []
+        existingCategoryNames = [],
+        doiBase32 = '' // 新增字段，用来显示 DOI 的 Base32
     }) {
         let container = document.getElementById('result-container');
         if (!container) {
@@ -207,7 +267,7 @@
             container.style.position = 'fixed';
             container.style.top = '80px';
             container.style.right = '10px';
-            container.style.width = '350px';
+            container.style.width = '450px';
             container.style.maxHeight = '900px';
             container.style.padding = '10px';
             container.style.border = '1px solid #ccc';
@@ -225,6 +285,11 @@
             ? existingCategoryNames.join(', ')
             : '暂无';
 
+        // 将 doiBase32 也显示在“DOI”下方一行
+        const doiBase32Display = doiBase32
+            ? `<p><strong>DOI Base32:</strong> ${doiBase32}</p>`
+            : ''; // 如果还没有计算出来，则不显示
+
         container.innerHTML = `
             <h3>提取结果</h3>
             <p><strong>GB/T 7714:</strong> ${gbText}</p>
@@ -233,6 +298,7 @@
 
             <h3>DOI 查询结果</h3>
             <p><strong>DOI:</strong> ${doi}</p>
+            ${doiBase32Display}
             <p><strong>标题:</strong> ${title}</p>
             <p><strong>期刊名:</strong> ${journal}</p>
             <p><strong>出版年:</strong> ${publicationYear}</p>
@@ -300,6 +366,12 @@
                                 ? '匹配成功'
                                 : '标题不匹配，请检查引用或查询结果';
 
+                            // 计算 DOI 的 Base32 编码
+                            let doiBase32 = '';
+                            if (doi && doi !== '未找到 DOI') {
+                                doiBase32 = toBase32(doi);
+                            }
+
                             // 更新弹窗内容
                             displayResult({
                                 gbText: reference,
@@ -317,10 +389,11 @@
                                 issnOnline,
                                 fullAuthors,
                                 abbreviatedAuthors,
-                                matchResult
+                                matchResult,
+                                doiBase32
                             });
 
-                            // 更新 'extractedData' with fetched data
+                            // 更新 extractedData
                             extractedData = {
                                 ...extractedData,
                                 doi,
@@ -336,11 +409,13 @@
                                 issnOnline,
                                 fullAuthors,
                                 abbreviatedAuthors,
-                                matchResult
+                                matchResult,
+                                doiBase32
                             };
 
                             resolve();
                         } else {
+                            // 未查询到结果
                             displayResult({
                                 gbText: reference,
                                 apaText: reference,
@@ -358,10 +433,11 @@
                                 fullAuthors: '未找到作者信息',
                                 abbreviatedAuthors: '未找到作者信息',
                                 extractedTitle: extractTitleFromReference(reference),
-                                existingCategoryNames: []
+                                existingCategoryNames: [],
+                                doiBase32: ''
                             });
 
-                            // 更新 'extractedData' with incomplete data
+                            // 更新 extractedData
                             extractedData = {
                                 ...extractedData,
                                 doi: '未找到 DOI',
@@ -378,9 +454,9 @@
                                 fullAuthors: '未找到作者信息',
                                 abbreviatedAuthors: '未找到作者信息',
                                 matchResult: '',
-                                existingCategoryNames: []
+                                existingCategoryNames: [],
+                                doiBase32: ''
                             };
-
                             resolve();
                         }
                     } catch (e) {
@@ -402,9 +478,14 @@
                             fullAuthors: '查询失败',
                             abbreviatedAuthors: '查询失败',
                             extractedTitle: extractTitleFromReference(reference),
-                            existingCategoryNames: []
+                            existingCategoryNames: [],
+                            doiBase32: ''
                         });
-
+                        extractedData = {
+                            ...extractedData,
+                            doi: '查询失败',
+                            doiBase32: ''
+                        };
                         resolve(); // 即使出错，也继续执行
                     }
                 },
@@ -426,8 +507,14 @@
                         fullAuthors: '查询失败',
                         abbreviatedAuthors: '查询失败',
                         extractedTitle: extractTitleFromReference(reference),
-                        existingCategoryNames: []
+                        existingCategoryNames: [],
+                        doiBase32: ''
                     });
+                    extractedData = {
+                        ...extractedData,
+                        doi: '查询失败',
+                        doiBase32: ''
+                    };
                     resolve(); // 即使出错，也继续执行
                 }
             });
@@ -500,7 +587,6 @@
     // 比较两个标题是否匹配
     function compareTitles(title1, title2) {
         if (!title1 || !title2) return false;
-
         // 使用字符串相似度算法（Levenshtein 距离）
         const similarity = calculateSimilarity(title1.toLowerCase(), title2.toLowerCase());
         return similarity > 0.5; // 阈值设置为 50%
@@ -687,6 +773,11 @@
         saveButton.style.color = 'white';
         saveButton.style.border = 'none';
         saveButton.style.cursor = 'pointer';
+        saveButton.style.borderRadius = '4px'; // 增加圆角效果
+        saveButton.style.display = 'flex';
+        saveButton.style.alignItems = 'center';
+        saveButton.style.justifyContent = 'center';
+        saveButton.style.width = '40%'; // 使按钮宽度填满容器
         container.appendChild(saveButton);
 
         // 保存按钮点击事件
@@ -756,6 +847,87 @@
                 }
             });
         });
+    }
+
+    // ======================
+    //   Base32 编码函数
+    // ======================
+
+    /**
+     * 按照 RFC 4648 标准进行 Base32 编码
+     * 包含必要的“=”号填充，使结果长度为 8 的倍数
+     * @param {string} input
+     * @returns {string}
+     */
+    function toBase32(input) {
+        // 1. 转换为 UTF-8 字节数组（如果 DOI 都是 ASCII，其实可以直接取 charCode）
+        //   以防万一，还是做一个简单的 utf8 转换
+        const bytes = stringToUtf8Bytes(input);
+
+        // 2. 将字节数组转换为二进制字符串
+        let bitString = '';
+        for (const b of bytes) {
+            bitString += b.toString(2).padStart(8, '0');
+        }
+
+        // 3. 将二进制按 5 位分割
+        //   若末尾不够 5 位则补 0
+        const remainder = bitString.length % 5;
+        if (remainder !== 0) {
+            bitString = bitString.padEnd(bitString.length + (5 - remainder), '0');
+        }
+
+        // 4. 映射 base32 字母表（RFC4648）
+        const base32Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+        let base32String = '';
+        for (let i = 0; i < bitString.length; i += 5) {
+            const chunk = bitString.substr(i, 5);
+            const index = parseInt(chunk, 2);
+            base32String += base32Alphabet[index];
+        }
+
+        // 5. 在末尾添加 '=' 使长度为 8 的倍数
+        const mod8 = base32String.length % 8;
+        if (mod8 !== 0) {
+            base32String += '='.repeat(8 - mod8);
+        }
+
+        return base32String;
+    }
+
+    // 将字符串转换为 UTF-8 字节
+    function stringToUtf8Bytes(str) {
+        const encoder = new TextEncoder();
+        return encoder.encode(str);
+    }
+
+    // ======================
+    //  工具函数：复制到剪贴板
+    // ======================
+    function copyToClipboard(text) {
+        // 使用现代 API
+        if (navigator.clipboard && window.isSecureContext) {
+            // navigator.clipboard.writeText returns a promise
+            return navigator.clipboard.writeText(text);
+        } else {
+            // 创建一个隐藏的textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            // 使文本区域在页面上不可见
+            textarea.style.position = 'fixed';
+            textarea.style.top = '-99999px';
+            document.body.appendChild(textarea);
+            // 选中并复制
+            textarea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('复制失败:', err);
+            }
+            // 移除
+            document.body.removeChild(textarea);
+            return Promise.resolve();
+        }
     }
 
 })();
