@@ -451,12 +451,12 @@ require_once '08_category_operations.php';
 
 请修改上述 `08_webAccessPaper.php` 代码，在右侧每个论文标题下面的“标签”开头行新增如下设置：
 
-1. 如果 status 值为CL，则在“标签”旁显示一个 “删除”提示，点击“删除”后会将 CL 变成 DL；还显示一个 “查看” 提示，点击“查看”后，会在新的标签页打开链接 `"https://domain.com/08_paperLocalStorage/" + base32编码后的doi + ".pdf" 链接`（例如：`https://domain.com/08_paperLocalStorage/GEYC4MJQGA3S64ZRGE3DMMZNGAYTKLJQGM3TILJS.pdf`） base32编码方式参考 6. 附录
-2. 如果 status 值为DL，则在“标签”旁显示一个 “删除中” 提示
-3. 如果 status 值为C，则在“标签”旁显示一个 “下载”提示，点击“下载”后会将 C 变成 DW
-4. 如果 status 值为DW，则在“标签”旁显示一个 “下载中” 提示
-5. 如果 status 值为L，则在“标签”旁显示一个 “查看” 提示，点击“查看”后，会在新的标签页打开链接 `"https://domain.com/08_paperLocalStorage/" + base32编码后的doi + ".pdf"` 链接
-6. 如果 status 值为N，则“标签”旁不用显示任何按钮和提示
+1. 如果 status 值为`CL`，则在“标签”旁显示一个 “删除”提示，点击“删除”后会将 `CL` 变成 `DL`；还显示一个 “查看” 提示，点击“查看”后，会在新的标签页打开链接 `"https://domain.com/08_paperLocalStorage/" + base32编码后的doi + ".pdf" 链接`（例如：`https://domain.com/08_paperLocalStorage/GEYC4MJQGA3S64ZRGE3DMMZNGAYTKLJQGM3TILJS.pdf`） base32编码方式参考 6. 附录
+2. 如果 status 值为`DL`，则在“标签”旁显示一个 “删除中” 提示
+3. 如果 status 值为`C`，则在“标签”旁显示一个 “下载”提示，点击“下载”后会将 `C` 变成 `DW`
+4. 如果 status 值为`DW`，则在“标签”旁显示一个 “下载中” 提示
+5. 如果 status 值为`L`，则在“标签”旁显示一个 “查看” 提示，点击“查看”后，会在新的标签页打开链接 `"https://domain.com/08_paperLocalStorage/" + base32编码后的doi + ".pdf"` 链接
+6. 如果 status 值为`N`，则“标签”旁不用显示任何按钮和提示
 
 上述“标签”旁新增按钮和提示的样式和“标签”一致（包括字体大小、颜色、样式等）
 
