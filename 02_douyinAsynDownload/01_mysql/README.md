@@ -76,10 +76,49 @@ $dbname = 'douyin_db'; // 数据库名称
 ```
 
 
-### 3. `18_tm_url_api.php`
+### 3. 18_url_get.php
+
+将web页面上提交的抖音链接保存到数据库中，忽略已存在的链接
+
+- 环境变量
+
+```php
+include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli 数据库连接对象
+
+<script>
+    function visitUrl() {
+        window.location.href = "https://mctea.one/18_url_get.php";    // 刷新按钮
+    }
+
+    function viewLog() {
+        window.open("18_view_log.php", "_blank");     // 查看最后输入两条url
+    }
+</script>
+```
 
 
-- 功能：上面这个后端脚本做了以下事情
+
+### 4.1 `18_tm_webGetURL.js`
+
+1. 编程思路
+
+上述 `18_url_get.php` 脚本通过解析用户在页面输入框中提交的字符串，获取链接并储存到`douyin_db`数据库中，现在有一个需求，
+   - 能不能编写一个油猴脚本，在页面右下角显示一个按钮，点击按钮能够获取当前剪贴板中的内容并显示出来，提示用户是否提取链接并提交到数据库？
+   - 如果同于点击同意，则提取其中的 url 并获取时间戳，写入到数据库中（相关实现同上述 `18_url_get.php` 脚本 相关部分，包括提示url在数据库中是否已存在，是否成功写入，是否有有效url等）。
+   - 如果有必要，可以重新编写一个php模块运行在后端，配合前端的油猴脚本工作。请输出完整的油猴脚本代码和php后端模块代码。
+
+
+2. 环境变量
+
+```js
+const postUrl = 'https://domain.com/18_tm_url_api.php'; // 这里替换成你的后端脚本地址
+```
+
+
+### 4.2 `18_tm_url_api.php`
+
+
+- 后端脚本功能：
 
 1. 接收前端 POST 提交的文本 (`clipboardContent`)。
 2. 用正则表达式提取其中的所有 `https://` 开头的链接。
@@ -109,48 +148,8 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 
 
-### 3. 18_url_get.php
 
-将web页面上提交的抖音链接保存到数据库中，忽略已存在的链接
-
-- 环境变量
-
-```php
-include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli 数据库连接对象
-
-<script>
-    function visitUrl() {
-        window.location.href = "https://mctea.one/18_url_get.php";    // 刷新按钮
-    }
-
-    function viewLog() {
-        window.open("18_view_log.php", "_blank");     // 查看最后输入两条url
-    }
-</script>
-```
-
-
-### 3. `18_tm_webGetURL.js`
-
-1. 编程思路
-
-上述 `18_url_get.php` 脚本通过解析用户在页面输入框中提交的字符串，获取链接并储存到`douyin_db`数据库中，现在有一个需求，
-   - 能不能编写一个油猴脚本，在页面右下角显示一个按钮，点击按钮能够获取当前剪贴板中的内容并显示出来，提示用户是否提取链接并提交到数据库？
-   - 如果同于点击同意，则提取其中的 url 并获取时间戳，写入到数据库中（相关实现同上述 `18_url_get.php` 脚本 相关部分，包括提示url在数据库中是否已存在，是否成功写入，是否有有效url等）。
-   - 如果有必要，可以重新编写一个php模块运行在后端，配合前端的油猴脚本工作。请输出完整的油猴脚本代码和php后端模块代码。
-
-
-2. 环境变量
-
-```js
-const postUrl = 'https://domain.com/18_tm_url_api.php'; // 这里替换成你的后端脚本地址
-```
-
-
-
-
-
-### 4. 18_view_log.php
+### 5. 18_view_log.php
 
 在web页面上显示最后两次提交的抖音视频链接
 
@@ -162,7 +161,7 @@ include '18_db_config.php';  // 引入数据库配置文件，建立 $mysqli 数
 
 
 
-### 5. 18_douyinDown.py
+### 6. 18_douyinDown.py
 
 下载抖音视频的爬虫脚本
 
@@ -219,7 +218,7 @@ download_dir = "/home/01_html/02_douyVideo/"
 
 
 
-### rclone上传onedrive
+### 7. rclone上传onedrive
 
 ```bash
 # cc1-2 to onedrive
