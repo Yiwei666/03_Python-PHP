@@ -508,6 +508,7 @@ exit();
 ```
 
 
+
 ## 2. `08_base32_tool.php`
 
 功能：base32 在线编码和解码
@@ -641,6 +642,41 @@ class Base32
 5. 错误处理:
 
    - 在解码过程中，如果遇到无效字符，函数返回false，符合预期的错误处理。
+
+
+
+
+## 3. `08_web_crossRef_query.php`
+
+### 1. 编程思路
+
+1. `08_tm_paperManagement.js`油猴脚本是可以正常工作的，包括利用谷歌学术页面提取的参考文献通过crossRef API获取论文的元数据（doi，论文标题，期刊名等），也能够对doi进行正确的base32编码，`“复制 Base32”` 按钮也能正常复制工作。`“标签”`按钮也能够正常工作，能够通过勾选方框或者取消对号实现对论文分类更新保存。
+2. 但是上述`08_tm_paperManagement.js`油猴脚本有一个美中不足的地方，即油猴脚本是基于crossRef API返回的 `data.message.items[0]` 来获取论文元数据的，如果返回的 `items[0]` 不是正确的，或者是信息缺失的，就不能正常工作了。事实上，API会返回 20个items，第一个items通常都是最准确的，但往往也有例外，但即使第一个不完美，其他items中也能找到想要的那个。综上，我的需求如下：
+   - 修改上述油猴脚本，使其变成一个php脚本，里面可以结合 javascript、php、html语言等等，运行在云服务器上，用户可以通过web页面访问。
+   - 现有的功能保持不变，上述油猴脚本中是通过提取谷歌学术页面中的参考文献作为 crossRef API 查询输入，现在只需要在页面中显示一个输入框，用户通过输入框提交查询信息，作为api查询的输入，不在依赖于从谷歌学术页面提取api的查询信息。因此，油猴脚本中`“提取内容并查询 DOI”`这个按钮在新脚本中就变成了`“查询”`按钮了。
+   - 上述油猴脚本中只显示api返回的`items[0]`的数据，并将其作为潜在的数据库写入信息。新脚本中需要在页面中显示api返回的所有items信息（有20条，items从0到19），当然每条items提取的还是油猴脚本在页面中显示的那些信息。然后在每条items信息的下方显示  `“复制 Base32”` 按钮和`“标签”`按钮，这两个按钮的功能务必与油猴脚本一致，不能更改。与油猴脚本的区别在于，油猴脚本中这两个按钮处理的数据是对应于`items[0]`，新脚本中的按钮处理的数据是对应于 当前items的。这样用户可以自由选择将哪一条items的信息写入到数据库了。
+   - 请参考油猴脚本中的相关功能实现，对上述提到的需求进行代码实现，注意展示的网页要美观，尤其是对于多个items查询信息的展示（可参考谷歌检索结果页面）。请输出编写的完整代码。
+
+
+
+### 2. 环境变量
+
+
+
+```
+const API_BASE_URL = 'https://domain.com/'; // 与原油猴脚本保持一致，php模块调用
+
+fetch(API_BASE_URL + '08_tm_add_paper.php',
+
+fetch(API_BASE_URL + '08_tm_get_categories.php')
+
+fetch(API_BASE_URL + `08_tm_get_paper_categories.php?doi=${encodeURIComponent(doi)}`)
+
+fetch(API_BASE_URL + '08_tm_update_paper_categories.php', {
+```
+
+
+
 
 
 
