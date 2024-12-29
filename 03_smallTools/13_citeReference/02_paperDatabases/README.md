@@ -21,12 +21,13 @@
 # 2. web交互
 08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
 08_base32_tool.php                 # base32在线编码和解码，主要用于doi编码
+08_web_crossRef_query.php          # 在web页面上查询显示论文的元数据（展示crossRef API返回的多条结果），能够将元数据写入到数据库并进行分类，功能类似 08_tm_paperManagement.js
 
 # 3. 油猴脚本
-08_tm_paperManagement.js
+08_tm_paperManagement.js           # 油猴脚本（基于01_GBT_api_items.js扩展），通过在谷歌学术页面提取参考文献，结合crossRef API查询论文的元数据，并将论文元数据写入到mysql数据库中（可选），还能够给论文进行在线新增/取消/更改分类（可选），能够复制doi的base32编码。
 
 # 4. 服务器端脚本
-08_server_update_paper_status.php         # 更新数据库中论文状态码、基于论文状态码执行下载、删除等操作
+08_server_update_paper_status.php         # 更新数据库中论文状态码、基于论文状态码执行下载、删除等操作，可用于cron定时执行
 
 ```
 
