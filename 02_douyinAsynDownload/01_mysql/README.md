@@ -7,6 +7,7 @@
 ```
 ├── 18_db_config.php        # 创建mysql连接对象
 ├── 18_url_get.php          # 将web页面上提交的抖音链接保存到数据库中，忽略已存在的链接
+├── 18_tm_url_api.php       # 后端脚本，接收油猴脚本前端 POST 提交的文本，提取其中的链接，判断是否重复并存入到数据库中。
 ├── 18_view_log.php         # 在web页面上显示最后两次提交的抖音视频链接
 ├── 18_douyinDown.py        # 下载抖音视频的爬虫脚本
 ├── 02_douyVideo            # 存储视频的文件夹
@@ -61,7 +62,7 @@ CREATE TABLE douyin_videos (
 ```
 
 
-### 2. 18_db_config.php
+### 2. `18_db_config.php`
 
 创建mysql连接对象
 
@@ -72,6 +73,39 @@ $username = 'root'; // 数据库用户名
 $password = '123456'; // 数据库密码
 $dbname = 'douyin_db'; // 数据库名称
 ```
+
+
+### 3. `18_tm_url_api.php`
+
+
+- 功能：上面这个后端脚本做了以下事情
+
+1. 接收前端 POST 提交的文本 (`clipboardContent`)。
+2. 用正则表达式提取其中的所有 `https://` 开头的链接。
+3. 遍历每个链接，判断数据库是否已有记录，没有则插入并记录成功次数。
+4. 返回 JSON 数据，告知前端每条链接的处理情况，以及总体状态。
+
+注意：此脚本依赖 `18_db_config.php` 来连接数据库，你需要确保 `18_db_config.php` 中的数据库名称、用户和密码是正确的。也要保证数据库中存在 `douyin_videos` 表，表结构与之前展示的相匹配。
+
+
+- 环境变量
+
+```php
+// 引入数据库配置文件
+include '18_db_config.php';
+```
+
+
+- 注意：上述`18_tm_url_api.php`后端脚本开头必须添加如下内容，以便解决 CORS 跨域问题
+
+```php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+```
+
+或者只允许特定域名访问 `header("Access-Control-Allow-Origin: https://你的域名.com");`
+
 
 
 ### 3. 18_url_get.php
@@ -104,6 +138,8 @@ include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli �
 ```php
 include '18_db_config.php';  // 引入数据库配置文件，建立 $mysqli 数据库连接对象
 ```
+
+
 
 ### 5. 18_douyinDown.py
 
@@ -160,6 +196,8 @@ download_dir = "/home/01_html/02_douyVideo/"
 ```
 
 
+
+
 ### rclone上传onedrive
 
 ```bash
@@ -167,6 +205,8 @@ download_dir = "/home/01_html/02_douyVideo/"
 0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo cc1-2:do1-2/01_html/02_douyVideo
 # 0 * * * * rclone copy --ignore-existing /home/01_html/02_douyVideo rc4:do1-2/01_html/02_douyVideo
 ```
+
+
 
 
 # 参考资料
