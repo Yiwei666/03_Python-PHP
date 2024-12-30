@@ -83,6 +83,7 @@ const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText
 
 ```js
 // @match        https://scholar.google.com/*
+// @match        https://scholar.google.com.hk/*
 // @match        https://scholar.google.co.uk/*
 // @match        https://scholar.google.de/*
 // @match        https://scholar.google.fr/*
