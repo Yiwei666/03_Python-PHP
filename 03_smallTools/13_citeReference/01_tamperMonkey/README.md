@@ -60,13 +60,13 @@ https://api.crossref.org/works?query=${encodeURIComponent(gbText)}
 1. 如何使用礼貌池？
 
    - 在查询参数中包含`mailto`参数：在您的API请求URL中添加一个`mailto`参数，提供一个有效的联系邮箱。例如：
-```sh
+```php
 https://api.crossref.org/works?filter=has-full-text:true&mailto=your-email@example.com
 https://api.crossref.org/works?query=${encodeURIComponent(gbText)}&mailto=your-email@example.com
 ```
 
    - 在User-Agent头中包含mailto:联系信息：设置您的HTTP请求的User-Agent头，包含描述性的应用名称及联系邮箱。例如：
-```sh
+```php
 User-Agent: YourAppName/1.0 (https://yourwebsite.com/; mailto:your-email@example.com)
 ```
 
