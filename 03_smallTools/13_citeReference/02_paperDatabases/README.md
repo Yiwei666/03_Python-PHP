@@ -817,6 +817,8 @@ if ($copy_return_var != 0) {
 ### 4. 环境变量
 
 ```js
+// @connect      api.crossref.org
+// @connect      domain.com
 
 // 配置您的服务器API基础URL
 const API_BASE_URL = 'https://domain.com/'; // 确保末尾有斜杠
