@@ -750,7 +750,7 @@ if ($copy_return_var != 0) {
 
 3. categories 表中有一个标签是"0 All papers"，默认给所有的论文都添加该标签，且页面中无法取消该方框前的对号
 
-如果上述需求的实现需要在服务器中引入新的php模块，可请编写相关模块，目前已有的模块 08_db_config.php、08_category_operations.php 也可以调用。
+如果上述需求的实现需要在服务器中引入新的php模块，可请编写相关模块，目前已有的模块 `08_db_config.php`、`08_category_operations.php` 也可以调用。
 
 
 
@@ -811,5 +811,37 @@ if ($copy_return_var != 0) {
    - 插入新分类：然后，根据用户最新的选择，插入新的分类关联。这包括保留用户未取消的旧分类和新增的分类。
 
    - 提交或回滚事务：如果所有操作成功，提交事务，确保数据库中的分类信息与用户的最新选择一致；如果发生任何错误，回滚事务，保持数据库状态不变。
+
+
+
+### 4. 环境变量
+
+```js
+
+// 配置您的服务器API基础URL
+const API_BASE_URL = 'https://domain.com/'; // 确保末尾有斜杠
+
+// 使用礼貌池提升查询性能
+const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(reference)}&mailto=GroovyBib@example.org`;
+
+url: API_BASE_URL + '08_tm_add_paper.php',
+
+url: API_BASE_URL + '08_tm_get_categories.php',
+
+url: API_BASE_URL + `08_tm_get_paper_categories.php?doi=${encodeURIComponent(doi)}`,
+
+url: API_BASE_URL + '08_tm_update_paper_categories.php',
+
+```
+
+
+
+
+
+
+
+
+
+
 
 
