@@ -47,11 +47,18 @@
 
 ### 2. 注意事项
 
-1. 查询链接构造
+1. 查询链接构造：使用论文标题或参考文献
 
 ```
 https://api.crossref.org/works?query=${encodeURIComponent(gbText)}
 ```
+
+2. 使用doi号进行查询
+
+```
+https://api.crossref.org/works/{DOI}
+```
+
 
 ### 3. 礼貌池
 
