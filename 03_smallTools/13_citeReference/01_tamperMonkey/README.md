@@ -102,7 +102,7 @@ User-Agent: YourAppName/1.0 (https://yourwebsite.com/; mailto:your-email@example
 
 
 
-# 2. `01_GBT_APA_doi.js`
+# 2.1 `01_GBT_APA_doi.js`
 
 ### 1. 功能特性
 
@@ -120,6 +120,7 @@ User-Agent: YourAppName/1.0 (https://yourwebsite.com/; mailto:your-email@example
     - 仅用标题可能会导致检索到多个相同标题的文献，使用完整引用可减少这种情况。
     - 使用 `encodeURIComponent` 对引用字符串进行 URL 编码，构建查询 URL。
     - 期刊缩写查询网站：[https://cassi.cas.org/search.jsp](https://cassi.cas.org/search.jsp)
+    - 可使用API的礼貌池（添加 `&mailto=email-username@domain.com`参数）来提升查询性能
 
 ```js
 const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(gbText)}`;
@@ -203,7 +204,7 @@ DOI: 10.1038/35003143
 
 
 
-# 3. `01_GBT_api_items.js`
+# 2.2 `01_GBT_api_items.js`
 
 ### 1. 功能特性
 
@@ -263,7 +264,7 @@ ISSN (电子版): 未找到电子版 ISSN
 
 
 
-# 4. `01_crossRef_url.js`
+# 2.3 `01_crossRef_url.js`
 
 
 ### 1. 功能特性
@@ -310,7 +311,7 @@ DOI: 10.1021/es3043559
 
 
 
-# 5. `01_crossRef_url_CEJ.js`
+# 2.4 `01_crossRef_url_CEJ.js`
 
 ### 1. 功能特性
 
@@ -343,7 +344,7 @@ Z. Sun, Y. Ma, D. Ponge, S. Zaefferer, E.A. Jägle, B. Gault, A.D. Rollett, D. R
 
 
 
-# 3. `02_elsevier.js`
+# 3.1 `02_elsevier.js`
 
 ### 1. 功能特性
 
@@ -389,7 +390,7 @@ APA 作者部分 (authorParts): Schettino,E.,González-Jiménez,J. M.,Marchesi,C
 
 
 
-# 4. `03_api_cros.js`
+# 3.2 `03_api_cros.js`
 
 
 ### 1. 功能特性
@@ -439,7 +440,7 @@ const journalAbbreviationURL = 'http://39.105.186.182/06_journal_Abbreviation.tx
 
 
 
-# 5. `03_api_cros_debug.js`
+# 3.3 `03_api_cros_debug.js`
 
 ### 1. 新增功能
 
@@ -466,7 +467,7 @@ APA 作者部分 (authorParts): Bykova,E.,Bykov,M.,Černok,A.,Tidholm,J.,Simak,S
 
 
 
-# 6. `04_api_cros_doi.js`
+# 4.1 `04_api_cros_doi.js`
 
 ### 1. 功能特性
 
@@ -541,7 +542,7 @@ DOI 查询结果: 找到匹配的 DOI: 10.1038/s41467-018-07265-z
 ```
 
 
-# 7. `05_MMTB_doi.js`
+# 4.2 `05_MMTB_doi.js`
 
 
 ### 1. 功能特性
@@ -616,7 +617,7 @@ DOI 查询结果: 找到匹配的 DOI: 10.1038/35003143
 ```
 
 
-# 8. `05_MMTB_api_author.js`
+# 4.3 `05_MMTB_api_author.js`
 
 ### 1. 功能特性
 
