@@ -836,7 +836,7 @@ url: API_BASE_URL + '08_tm_update_paper_categories.php',
 
 ```
 
-
+1. `@connect` 指令用于声明脚本可以进行跨域请求的目标域。这是 Tampermonkey 的安全机制，确保脚本只能与指定的域进行通信。
 
 
 
