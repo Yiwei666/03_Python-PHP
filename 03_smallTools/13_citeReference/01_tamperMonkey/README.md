@@ -47,6 +47,28 @@
 
 ### 2. 注意事项
 
+1. 查询链接构造
+
+```
+https://api.crossref.org/works?query=${encodeURIComponent(gbText)}
+```
+
+### 3. 礼貌池
+
+礼貌池是Crossref为那些遵循API使用礼仪的用户分配的一组专用API服务器。这些用户通过在API请求中提供联系信息（如电子邮件）并使用HTTPS协议进行访问，表明其使用API的方式是“礼貌”的，从而获得更好的服务质量和更高的优先级。
+
+1. 如何使用礼貌池？
+
+   - 在查询参数中包含`mailto`参数：在您的API请求URL中添加一个`mailto`参数，提供一个有效的联系邮箱。例如：
+```sh
+https://api.crossref.org/works?filter=has-full-text:true&mailto=your-email@example.com
+https://api.crossref.org/works?query=${encodeURIComponent(gbText)}&mailto=your-email@example.com
+```
+
+   - 在User-Agent头中包含mailto:联系信息：设置您的HTTP请求的User-Agent头，包含描述性的应用名称及联系邮箱。例如：
+```sh
+User-Agent: YourAppName/1.0 (https://yourwebsite.com/; mailto:your-email@example.com)
+```
 
 
 
