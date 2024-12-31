@@ -230,6 +230,38 @@ SELECT paperID, title FROM papers;
 ```
 
 
+3. 使用 `JOIN` 语句将 `paperCategories` 表与 `categories` 表关联，以获取对应的 `category_name`
+
+```sql
+SELECT 
+    paperCategories.paperID, 
+    paperCategories.categoryID, 
+    categories.category_name
+FROM 
+    paperCategories
+JOIN 
+    categories 
+ON 
+    paperCategories.categoryID = categories.categoryID;
+```
+
+使用表别名简化查询（可选）：
+
+```sql
+SELECT 
+    pc.paperID, 
+    pc.categoryID, 
+    c.category_name
+FROM 
+    paperCategories pc
+JOIN 
+    categories c 
+ON 
+    pc.categoryID = c.categoryID;
+```
+
+
+
 ### 2. 别名alias
 
 1. 备份数据库
