@@ -2,9 +2,10 @@
 
 使用php、python、bash等编写的运行在云服务器和客户端的常用小工具
 
+
 # 2. 文件结构
 
-- 常用脚本
+### 1. 常用脚本
 
 ```
 infoo.php, paragraph.php, question.php, washbrain.php           # 总体上使用的是同一个模板， paragraph.php 显示方式略有不同
@@ -25,6 +26,18 @@ loopAudio.php                 # 循环播放指定链接音频
 12_EssentialWord.php
 13_PlanetEarth.php
 ```
+
+### 2. 其他项目
+
+1. cookie相关：
+   - [https://github.com/Yiwei666/10_private_code/tree/main/06_smallTools/01_loginCookie](https://github.com/Yiwei666/10_private_code/tree/main/06_smallTools/01_loginCookie)
+   - [https://github.com/Yiwei666/03_Python-PHP/tree/main/08_pictureEdit/06_imageHost/04_cookie](https://github.com/Yiwei666/03_Python-PHP/tree/main/08_pictureEdit/06_imageHost/04_cookie)
+
+
+
+
+
+
 
 
 # 3. 环境配置
