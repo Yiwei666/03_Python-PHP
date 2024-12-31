@@ -552,7 +552,77 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 ### 3. 环境变量
 
-1. 根据实际修改脚本名 `08_webAccessPaper.php`
+1. `require_once` 语句引入了其他 PHP 模块，确保这些文件在新环境中的路径正确。
+
+```php
+// 引入数据库连接模块和分类操作模块
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+
+// 引入 Base32 编码类（请确保本地存在 08_web_Base32.php 并包含题目中的实现）
+require_once '08_web_Base32.php';
+```
+
+
+2. 设置网站图标（favicon）的路径。
+
+```
+<link rel="icon" href="https://domain.com/00_logo/endnote.png" type="image/png">
+```
+
+
+3. JavaScript 中的 AJAX 请求路径，这些脚本用于获取和更新分类及论文状态。
+
+```js
+// 获取所有分类
+fetch('08_tm_get_categories.php')
+
+// 获取当前论文已勾选的分类
+fetch('08_tm_get_paper_categories.php?doi=' + encodeURIComponent(doi))
+
+// 更新论文分类
+fetch('08_tm_update_paper_categories.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+        doi: doi, 
+        categoryIDs: categoryIDs 
+    })
+})
+
+// 更新论文状态
+fetch('08_web_update_paper_status.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 
+        doi: doi, 
+        status: newStatus 
+    })
+})
+```
+
+
+4. 构建用于查看论文 PDF 的链接
+
+```php
+echo '<button type="button" onclick="window.open(\'https://domain.com/08_paperLocalStorage/' . urlencode($encodedDOI) . '.pdf\', \'_blank\')">查看</button>';
+```
+
+
+5. 将论文标题链接到 DOI 页面
+
+```php
+<a href="https://doi.org/<?= htmlspecialchars($paper['doi']) ?>" target="_blank">
+    <?php echo $paper['title']; ?>
+</a>
+```
+
+
+6. Header 重定向 URL，根据实际修改脚本名 `08_webAccessPaper.php`
 
 ```php
 // 处理完 POST 请求后刷新页面并显示消息
