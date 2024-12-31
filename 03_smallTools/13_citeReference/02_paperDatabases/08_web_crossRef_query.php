@@ -40,6 +40,14 @@ header('Content-Type: text/html; charset=utf-8');
         .search-container button:hover {
             background-color: #45a049;
         }
+        /* 新增：单选按钮容器 */
+        .radio-group {
+            margin-top: 10px;
+        }
+        .radio-group label {
+            margin-right: 20px;
+            cursor: pointer;
+        }
         .results-container {
             margin-top: 20px;
         }
@@ -121,7 +129,6 @@ header('Content-Type: text/html; charset=utf-8');
         .close-cat-btn:hover {
             color: #333;
         }
-
         /* -------------------------
            加载指示器 (Spinner) 样式
            ------------------------- */
@@ -146,7 +153,6 @@ header('Content-Type: text/html; charset=utf-8');
             border-top: 6px solid #4CAF50;
             animation: spin 1s linear infinite;
         }
-
         /* 旋转动画关键帧 */
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -160,8 +166,20 @@ header('Content-Type: text/html; charset=utf-8');
 
 <div class="search-container">
     <h2>输入查询信息</h2>
-    <input type="text" id="query-input" placeholder="请输入需要查询的参考文献信息、标题或关键字..." />
+    <input type="text" id="query-input" placeholder="请输入需要查询的参考文献信息、标题或关键字，或输入DOI..." />
     <button id="search-btn">查询</button>
+    
+    <!-- 新增：单选按钮组，用于选择搜索模式 -->
+    <div class="radio-group">
+        <label>
+            <input type="radio" name="search-mode" value="title" checked>
+            Title
+        </label>
+        <label>
+            <input type="radio" name="search-mode" value="doi">
+            DOI
+        </label>
+    </div>
 </div>
 
 <div class="results-container" id="results-container"></div>
@@ -181,7 +199,9 @@ header('Content-Type: text/html; charset=utf-8');
 
 <script>
 /**
- * 本示例与之前油猴脚本的逻辑相似，但多了一个加载指示器，以便在等待 CrossRef 查询时给出提示。
+ * 本示例与之前的脚本逻辑相似，但新增了搜索模式切换(title / doi)。
+ * 若搜索模式是title，则使用原来的查询API（可返回多条items）。
+ * 若搜索模式是doi，则使用新的API (/works/{DOI}），只会返回一条数据。
  */
 
 // ======================
@@ -204,8 +224,21 @@ const saveCatBtn = document.getElementById('save-categories-btn');
 // loading overlay
 const loadingOverlay = document.getElementById('loading-overlay');
 
+// 关闭分类弹窗
 closeCatBtn.addEventListener('click', () => {
     categorySelectionContainer.style.display = 'none';
+});
+
+// ======================
+//   页面事件绑定
+// ======================
+document.getElementById('search-btn').addEventListener('click', () => {
+    const query = document.getElementById('query-input').value.trim();
+    if (!query) {
+        alert('请先输入查询信息或DOI');
+        return;
+    }
+    searchCrossRef(query);
 });
 
 // 显示加载指示器
@@ -219,36 +252,49 @@ function hideLoading() {
 }
 
 // ======================
-//   页面事件绑定
-// ======================
-document.getElementById('search-btn').addEventListener('click', () => {
-    const query = document.getElementById('query-input').value.trim();
-    if (!query) {
-        alert('请先输入查询信息');
-        return;
-    }
-    searchCrossRef(query);
-});
-
-// ======================
 //   调用 CrossRef API
 // ======================
 function searchCrossRef(query) {
     // 显示 loading
     showLoading();
 
-    const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=20`;
+    // 获取当前的搜索模式
+    const searchMode = document.querySelector('input[name="search-mode"]:checked').value;
+    let apiUrl = '';
+
+    if (searchMode === 'title') {
+        // 原先的查询：一次返回多条 items
+        apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=20`;
+    } else {
+        // 查询 DOI：只返回单一 data.message
+        // 注意：需对传入的 query 做 URL encode 处理
+        apiUrl = `https://api.crossref.org/works/${encodeURIComponent(query)}`;
+    }
+
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
             // 隐藏 loading
             hideLoading();
 
-            if (data.message && data.message.items && data.message.items.length > 0) {
-                currentItemsData = data.message.items;
-                displayResults(data.message.items);
+            if (searchMode === 'title') {
+                // 处理多条结果
+                if (data.message && data.message.items && data.message.items.length > 0) {
+                    currentItemsData = data.message.items;
+                    displayResults(currentItemsData);
+                } else {
+                    document.getElementById('results-container').innerHTML = `<p>未查询到结果。</p>`;
+                }
             } else {
-                document.getElementById('results-container').innerHTML = `<p>未查询到结果。</p>`;
+                // 处理单条结果
+                // data.message 就是一个对象，与 items[i] 结构相似
+                if (data.message) {
+                    // 包装为数组后可重用 displayResults 逻辑
+                    currentItemsData = [ data.message ];
+                    displayResults(currentItemsData);
+                } else {
+                    document.getElementById('results-container').innerHTML = `<p>未查询到结果。</p>`;
+                }
             }
         })
         .catch(err => {
@@ -477,7 +523,7 @@ saveCatBtn.addEventListener('click', () => {
             selectedIDs.push(parseInt(cb.value, 10));
         }
     });
-    // 确保 0 All papers(categoryID=1) 一定在里面
+    // 确保 0 All papers (categoryID=1) 一定在里面
     if (!selectedIDs.includes(1)) {
         selectedIDs.push(1);
     }
