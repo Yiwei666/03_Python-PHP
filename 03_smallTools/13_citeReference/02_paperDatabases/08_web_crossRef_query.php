@@ -7,6 +7,7 @@ header('Content-Type: text/html; charset=utf-8');
 <head>
     <meta charset="UTF-8" />
     <title>CrossRef 查询示例</title>
+    <link rel="icon" href="https://mctea.one/00_logo/doi.png" type="image/png">
     <style>
         body {
             font-family: Arial, sans-serif;
