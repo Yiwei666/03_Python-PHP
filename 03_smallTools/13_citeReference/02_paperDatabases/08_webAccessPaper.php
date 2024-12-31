@@ -192,19 +192,32 @@ if ($selectedCategoryID) {
         #categoryModal {
             display: none; 
             position: fixed; 
-            top: 10%; 
+            top: 5%; 
             left: 10%; 
             width: 80%; 
             background-color: #fff; 
             border: 1px solid #ccc; 
             padding: 20px; 
             z-index: 9999;
+            box-sizing: border-box;
+            max-height: 80%; /* 当内容超出时出现滚动条 */
+            overflow-y: auto;
         }
         #categoryModal h2 {
             margin-top: 0;
         }
         #categoryModal button {
             margin: 5px;
+        }
+        /* 关闭按钮 (右上角) */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
         }
         .overlay {
             display: none; 
@@ -215,6 +228,13 @@ if ($selectedCategoryID) {
             height: 100%; 
             background: rgba(0,0,0,0.5); 
             z-index: 9998;
+        }
+        /* 以4列形式显示分类复选框 */
+        #categoryCheckboxes {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -372,6 +392,9 @@ if ($selectedCategoryID) {
 
     <!-- 弹窗 (modal) 用于更改标签 -->
     <div id="categoryModal">
+        <!-- 右上角关闭按钮 -->
+        <button class="close-btn" onclick="closeModal()">X</button>
+        
         <h2>更改标签</h2>
         <div id="categoryCheckboxes"></div>
         <button id="saveCategoriesBtn">保存</button>
@@ -429,7 +452,7 @@ if ($selectedCategoryID) {
                 });
         }
 
-        // 动态渲染分类复选框
+        // 动态渲染分类复选框（4列布局）
         function renderCategoryCheckboxes(allCats, paperCatIDs) {
             const container = document.getElementById('categoryCheckboxes');
             container.innerHTML = '';
