@@ -566,7 +566,7 @@ require_once '08_web_Base32.php';
 
 2. 设置网站图标（favicon）的路径。
 
-```
+```html
 <link rel="icon" href="https://domain.com/00_logo/endnote.png" type="image/png">
 ```
 
