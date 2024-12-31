@@ -121,6 +121,37 @@ header('Content-Type: text/html; charset=utf-8');
         .close-cat-btn:hover {
             color: #333;
         }
+
+        /* -------------------------
+           加载指示器 (Spinner) 样式
+           ------------------------- */
+        #loading-overlay {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: 99999; /* 盖住所有内容 */
+            text-align: center;
+        }
+        #loading-overlay .spinner {
+            display: inline-block;
+            margin-top: 300px; /* 让spinner大致居中 */
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 6px solid #4CAF50;
+            animation: spin 1s linear infinite;
+        }
+
+        /* 旋转动画关键帧 */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -143,13 +174,14 @@ header('Content-Type: text/html; charset=utf-8');
     <button class="save-categories-btn" id="save-categories-btn">保存分类</button>
 </div>
 
+<!-- 加载指示器 (Spinner) -->
+<div id="loading-overlay">
+    <div class="spinner"></div>
+</div>
+
 <script>
 /**
- * 本示例与之前油猴脚本的逻辑相似，但做了以下改动：
- * 1. 不从谷歌学术页面提取查询信息，而是让用户在页面输入框里输入。
- * 2. 前端一次性将 CrossRef 返回的所有 items（前 20 条）都显示出来，每条都提供「复制 Base32」和「标签」按钮。
- * 3. 仅当点击某条 items 的「标签」按钮时，才对那条信息执行数据库添加、分类管理。
- * 4. 保留原本与后端接口交互的逻辑。您需将后端接口替换为您的实际地址或保证相同路径和参数格式。
+ * 本示例与之前油猴脚本的逻辑相似，但多了一个加载指示器，以便在等待 CrossRef 查询时给出提示。
  */
 
 // ======================
@@ -169,10 +201,22 @@ const categoryListContainer = document.getElementById('category-list');
 const closeCatBtn = document.getElementById('close-cat-btn');
 const saveCatBtn = document.getElementById('save-categories-btn');
 
-// 关闭分类选择
+// loading overlay
+const loadingOverlay = document.getElementById('loading-overlay');
+
 closeCatBtn.addEventListener('click', () => {
     categorySelectionContainer.style.display = 'none';
 });
+
+// 显示加载指示器
+function showLoading() {
+    loadingOverlay.style.display = 'block';
+}
+
+// 隐藏加载指示器
+function hideLoading() {
+    loadingOverlay.style.display = 'none';
+}
 
 // ======================
 //   页面事件绑定
@@ -190,10 +234,16 @@ document.getElementById('search-btn').addEventListener('click', () => {
 //   调用 CrossRef API
 // ======================
 function searchCrossRef(query) {
+    // 显示 loading
+    showLoading();
+
     const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=20`;
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
+            // 隐藏 loading
+            hideLoading();
+
             if (data.message && data.message.items && data.message.items.length > 0) {
                 currentItemsData = data.message.items;
                 displayResults(data.message.items);
@@ -202,6 +252,7 @@ function searchCrossRef(query) {
             }
         })
         .catch(err => {
+            hideLoading();
             console.error('CrossRef 查询出错:', err);
             document.getElementById('results-container').innerHTML = `<p>查询失败，请稍后重试。</p>`;
         });
@@ -570,7 +621,7 @@ function formatAbbreviatedAuthors(authorsArray) {
         }
         return `${abbreviatedGiven} ${family}`.trim();
     });
-    // 同油猴脚本的逻辑
+    // 与之前油猴脚本逻辑相同
     const numAuthors = formattedAuthors.length;
     if (numAuthors === 1) {
         return formattedAuthors[0];
