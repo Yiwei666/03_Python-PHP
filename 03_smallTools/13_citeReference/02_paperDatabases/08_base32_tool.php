@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Base32 编码与解码工具</title>
+    <link rel="icon" href="https://mctea.one/00_logo/base32.png" type="image/png">
     <style>
         body {
             font-family: Arial, sans-serif;
