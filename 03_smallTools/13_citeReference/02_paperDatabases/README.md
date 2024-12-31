@@ -543,9 +543,9 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 
 - 实际解决方案：
-  - 弹窗 #categoryModal 被限制了最大高度 max-height: 80%，若内容超出则出现纵向滚动条。
-  - 分类复选框通过 display: grid; grid-template-columns: repeat(5, 1fr); 分成了 5 列。
-  - 在弹窗右上角添加了“X”按钮（.close-btn），点击即可关闭弹窗。
+  - 弹窗 `#categoryModal` 被限制了最大高度 `max-height: 80%`，若内容超出则出现纵向滚动条。
+  - 分类复选框通过 `display: grid; grid-template-columns: repeat(5, 1fr);` 分成了 5 列。
+  - 在弹窗右上角添加了“X”按钮（`.close-btn`），点击即可关闭弹窗。
 
 
 
