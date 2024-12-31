@@ -1,0 +1,770 @@
+{
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+        "indexed": {
+            "date-parts": [
+                [
+                    2024,
+                    6,
+                    5
+                ]
+            ],
+            "date-time": "2024-06-05T00:24:55Z",
+            "timestamp": 1717547095227
+        },
+        "reference-count": 43,
+        "publisher": "Elsevier BV",
+        "license": [
+            {
+                "start": {
+                    "date-parts": [
+                        [
+                            2024,
+                            5,
+                            1
+                        ]
+                    ],
+                    "date-time": "2024-05-01T00:00:00Z",
+                    "timestamp": 1714521600000
+                },
+                "content-version": "tdm",
+                "delay-in-days": 0,
+                "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+            },
+            {
+                "start": {
+                    "date-parts": [
+                        [
+                            2024,
+                            5,
+                            1
+                        ]
+                    ],
+                    "date-time": "2024-05-01T00:00:00Z",
+                    "timestamp": 1714521600000
+                },
+                "content-version": "tdm",
+                "delay-in-days": 0,
+                "URL": "https://www.elsevier.com/legal/tdmrep-license"
+            },
+            {
+                "start": {
+                    "date-parts": [
+                        [
+                            2024,
+                            3,
+                            28
+                        ]
+                    ],
+                    "date-time": "2024-03-28T00:00:00Z",
+                    "timestamp": 1711584000000
+                },
+                "content-version": "vor",
+                "delay-in-days": 0,
+                "URL": "http://creativecommons.org/licenses/by/4.0/"
+            }
+        ],
+        "funder": [
+            {
+                "DOI": "10.13039/501100007210",
+                "name": "RWTH Aachen University",
+                "doi-asserted-by": "publisher",
+                "award": [
+                    "p0200350"
+                ],
+                "id": [
+                    {
+                        "id": "10.13039/501100007210",
+                        "id-type": "DOI",
+                        "asserted-by": "publisher"
+                    }
+                ]
+            },
+            {
+                "DOI": "10.13039/501100005416",
+                "name": "Norges Forskningsråd",
+                "doi-asserted-by": "publisher",
+                "id": [
+                    {
+                        "id": "10.13039/501100005416",
+                        "id-type": "DOI",
+                        "asserted-by": "publisher"
+                    }
+                ]
+            },
+            {
+                "DOI": "10.13039/100009123",
+                "name": "Norwegian University of Science and Technology",
+                "doi-asserted-by": "publisher",
+                "award": [
+                    "257639"
+                ],
+                "id": [
+                    {
+                        "id": "10.13039/100009123",
+                        "id-type": "DOI",
+                        "asserted-by": "publisher"
+                    }
+                ]
+            }
+        ],
+        "content-domain": {
+            "domain": [
+                "elsevier.com",
+                "sciencedirect.com"
+            ],
+            "crossmark-restriction": true
+        },
+        "short-container-title": [
+            "Chemical Engineering Journal"
+        ],
+        "published-print": {
+            "date-parts": [
+                [
+                    2024,
+                    5
+                ]
+            ]
+        },
+        "DOI": "10.1016/j.cej.2024.150788",
+        "type": "journal-article",
+        "created": {
+            "date-parts": [
+                [
+                    2024,
+                    3,
+                    29
+                ]
+            ],
+            "date-time": "2024-03-29T03:05:28Z",
+            "timestamp": 1711681528000
+        },
+        "page": "150788",
+        "update-policy": "http://dx.doi.org/10.1016/elsevier_cm_policy",
+        "source": "Crossref",
+        "is-referenced-by-count": 0,
+        "title": [
+            "Combined silicon refining for boron removal and Si-Kerf recycling using K2O-CaO-SiO2 slags"
+        ],
+        "prefix": "10.1016",
+        "volume": "488",
+        "author": [
+            {
+                "ORCID": "http://orcid.org/0000-0002-5758-9747",
+                "authenticated-orcid": false,
+                "given": "Mengyi",
+                "family": "Zhu",
+                "sequence": "first",
+                "affiliation": [
+
+                ]
+            },
+            {
+                "ORCID": "http://orcid.org/0000-0002-7506-1794",
+                "authenticated-orcid": false,
+                "given": "Guixuan",
+                "family": "Wu",
+                "sequence": "additional",
+                "affiliation": [
+
+                ]
+            },
+            {
+                "given": "Kai",
+                "family": "Tang",
+                "sequence": "additional",
+                "affiliation": [
+
+                ]
+            },
+            {
+                "ORCID": "http://orcid.org/0000-0002-2260-0934",
+                "authenticated-orcid": false,
+                "given": "Michael",
+                "family": "Müller",
+                "sequence": "additional",
+                "affiliation": [
+
+                ]
+            },
+            {
+                "given": "Jafar",
+                "family": "Safarian",
+                "sequence": "additional",
+                "affiliation": [
+
+                ]
+            }
+        ],
+        "member": "78",
+        "reference": [
+            {
+                "key": "10.1016/j.cej.2024.150788_b0005",
+                "unstructured": "Solar PV, IEA, Paris, (2022). https://www.iea.org/reports/solar-pv."
+            },
+            {
+                "issue": "2020",
+                "key": "10.1016/j.cej.2024.150788_b0010",
+                "first-page": "2633",
+                "article-title": "Review of silicon recovery and purification from saw silicon powder",
+                "volume": "72",
+                "author": "Wei",
+                "year": "1989",
+                "journal-title": "JOM"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0015",
+                "doi-asserted-by": "crossref",
+                "first-page": "88",
+                "DOI": "10.1016/j.egypro.2012.03.011",
+                "article-title": "Processes for upgrading metallurgical grade silicon to Solar grade silicon",
+                "volume": "20",
+                "author": "Safarian",
+                "year": "2012",
+                "journal-title": "Energy Procedia"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0020",
+                "doi-asserted-by": "crossref",
+                "first-page": "1699",
+                "DOI": "10.1007/s11663-018-1250-7",
+                "article-title": "Thermodynamics of boron removal from silicon using CaO-MgO-Al2O3-SiO2 slags",
+                "volume": "49",
+                "author": "Jakobsson",
+                "year": "2018",
+                "journal-title": "Metall and Materi Trans b."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0025",
+                "doi-asserted-by": "crossref",
+                "DOI": "10.1016/j.seppur.2020.116614",
+                "article-title": "Phosphorus separation from metallurgical-grade silicon by magnesium alloying and acid leaching",
+                "volume": "240",
+                "author": "Zhu",
+                "year": "2020",
+                "journal-title": "Sep. Purif. Technol."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0030",
+                "doi-asserted-by": "crossref",
+                "first-page": "15953",
+                "DOI": "10.1021/acssuschemeng.0c05564",
+                "article-title": "New insights into silicon purification by alloying-leaching refining: a Comparative study of Mg–Si, Ca–Si, and Ca–Mg–Si systems",
+                "volume": "8",
+                "author": "Zhu",
+                "year": "2020",
+                "journal-title": "ACS Sustainable Chem. Eng."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0035",
+                "doi-asserted-by": "crossref",
+                "first-page": "777",
+                "DOI": "10.2355/isijinternational.49.777",
+                "article-title": "Behavior and state of boron in CaO–SiO2 slags during refining of Solar grade silicon",
+                "volume": "49",
+                "author": "Teixeira",
+                "year": "2009",
+                "journal-title": "ISIJ Int."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0040",
+                "doi-asserted-by": "crossref",
+                "first-page": "783",
+                "DOI": "10.2355/isijinternational.49.783",
+                "article-title": "Removal of boron from molten silicon using CaO–SiO2 based slags",
+                "volume": "49",
+                "author": "Teixeira",
+                "year": "2009",
+                "journal-title": "ISIJ Int."
+            },
+            {
+                "issue": "2015",
+                "key": "10.1016/j.cej.2024.150788_b0045",
+                "first-page": "595",
+                "article-title": "K (1600 °c)",
+                "volume": "46",
+                "author": "Jakobsson",
+                "year": "1873",
+                "journal-title": "Metall and Materi Trans b."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0050",
+                "doi-asserted-by": "crossref",
+                "first-page": "2085",
+                "DOI": "10.1016/j.solmat.2010.06.025",
+                "article-title": "Distribution of impurity elements in slag–silicon equilibria for oxidative refining of metallurgical silicon for solar cell applications",
+                "volume": "94",
+                "author": "Johnston",
+                "year": "2010",
+                "journal-title": "Sol. Energy. Mater. Sol. Cells."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0055",
+                "doi-asserted-by": "crossref",
+                "first-page": "109",
+                "DOI": "10.1007/s40553-015-0048-7",
+                "article-title": "Boron removal from silicon by CaO-Na2O-SiO2 Ternary slag",
+                "volume": "2",
+                "author": "Safarian",
+                "year": "2015",
+                "journal-title": "Metallurgical and Materials Transactions e."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0060",
+                "doi-asserted-by": "crossref",
+                "first-page": "571",
+                "DOI": "10.1007/s11663-013-9823-y",
+                "article-title": "Thermodynamic and kinetic behavior of B and na through the contact of B-doped silicon with Na2O-SiO2 slags",
+                "volume": "44",
+                "author": "Safarian",
+                "year": "2013",
+                "journal-title": "Metall and Materi Trans b."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0065",
+                "doi-asserted-by": "crossref",
+                "first-page": "12054",
+                "DOI": "10.1021/ie404427c",
+                "article-title": "Multiple slag operation on boron removal from metallurgical-grade silicon using Na2O-SiO2 slags",
+                "volume": "53",
+                "author": "Fang",
+                "year": "2014",
+                "journal-title": "Ind. Eng. Chem. Res."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0070",
+                "doi-asserted-by": "crossref",
+                "first-page": "3079",
+                "DOI": "10.1016/j.jnoncrysol.2012.09.004",
+                "article-title": "Boron removal from metallurgical grade silicon using a CaO–Li2O–SiO2 molten slag refining technique",
+                "volume": "358",
+                "author": "Wu",
+                "year": "2012",
+                "journal-title": "J. Non-Crystalline Solid."
+            },
+            {
+                "issue": "2015",
+                "key": "10.1016/j.cej.2024.150788_b0075",
+                "first-page": "2371",
+                "article-title": "Reaction mechanism and kinetics of boron removal from metallurgical-grade silicon based on Li2O-SiO2 slags",
+                "volume": "68",
+                "author": "Lai",
+                "year": "1989",
+                "journal-title": "JOM"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0080",
+                "doi-asserted-by": "crossref",
+                "first-page": "1796",
+                "DOI": "10.1007/s11663-016-0615-z",
+                "article-title": "Thermodynamics and kinetics of boron removal from metallurgical grade silicon by addition of high basic potassium Carbonate to calcium silicate slag",
+                "volume": "47",
+                "author": "Wu",
+                "year": "2016",
+                "journal-title": "Metall and Materi Trans b."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0085",
+                "doi-asserted-by": "crossref",
+                "first-page": "247",
+                "DOI": "10.1007/s12633-014-9222-2",
+                "article-title": "Boron removal from metallurgical grade silicon using a refining technique of calcium silicate molten slag containing potassium Carbonate",
+                "volume": "7",
+                "author": "Li",
+                "year": "2014",
+                "journal-title": "SILICON"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0090",
+                "doi-asserted-by": "crossref",
+                "first-page": "718",
+                "DOI": "10.1016/j.jclepro.2018.03.152",
+                "article-title": "Clean enhancing elimination of boron from silicon kerf using Na2O-SiO2 slag treatment",
+                "volume": "186",
+                "author": "Huang",
+                "year": "2018",
+                "journal-title": "J. Clean. Prod."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0095",
+                "doi-asserted-by": "crossref",
+                "DOI": "10.1016/j.seppur.2019.115902",
+                "article-title": "Silicon recovery from silicon sawing waste by removal of SiC impurity via CaO–SiO2–Na2O slag absorption",
+                "volume": "231",
+                "author": "Wang",
+                "year": "2020",
+                "journal-title": "Sep. Purif. Technol."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0100",
+                "doi-asserted-by": "crossref",
+                "first-page": "1326",
+                "DOI": "10.2355/isijinternational.38.1326",
+                "article-title": "High temperature behavior of Si3N4-bonded SiC bricks in blast furnace environment",
+                "volume": "38",
+                "author": "Wang",
+                "year": "1998",
+                "journal-title": "ISIJ Int."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0105",
+                "doi-asserted-by": "crossref",
+                "first-page": "66",
+                "DOI": "10.1016/j.jnoncrysol.2004.08.264",
+                "article-title": "The medium range structure of sodium silicate glasses: a molecular dynamics simulation",
+                "volume": "349",
+                "author": "Du",
+                "year": "2004",
+                "journal-title": "J. Non-Crystalline Solid."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0110",
+                "doi-asserted-by": "crossref",
+                "first-page": "295",
+                "DOI": "10.1016/j.calphad.2008.09.009",
+                "article-title": "FactSage thermochemical software and databases — recent developments",
+                "volume": "33",
+                "author": "Bale",
+                "year": "2009",
+                "journal-title": "Calphad"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0115",
+                "doi-asserted-by": "crossref",
+                "first-page": "139",
+                "DOI": "10.1007/BF02403656",
+                "article-title": "Wettability and interfacial energies in SiC-liquid metal systems",
+                "volume": "27",
+                "author": "Nikolopoulos",
+                "year": "1992",
+                "journal-title": "J Mater Sci."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0120",
+                "doi-asserted-by": "crossref",
+                "DOI": "10.1038/s41598-017-16741-3",
+                "article-title": "Percolation channels: a universal idea to describe the atomic structure and dynamics of glasses and melts",
+                "volume": "7",
+                "author": "Le Losq",
+                "year": "2017",
+                "journal-title": "Sci Rep."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0125",
+                "doi-asserted-by": "crossref",
+                "first-page": "163",
+                "DOI": "10.2138/rmg.2022.87.04",
+                "article-title": "Topology and rigidity of silicate melts and glasses",
+                "volume": "87",
+                "author": "Micoulaut",
+                "year": "2022",
+                "journal-title": "Rev. Mineral. Geochem."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0130",
+                "doi-asserted-by": "crossref",
+                "DOI": "10.1016/j.actamat.2022.118413",
+                "article-title": "Probing the homogeneous distribution of sodium atoms in silicate glasses",
+                "volume": "241",
+                "author": "Lee",
+                "year": "2022",
+                "journal-title": "Acta Mater."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0135",
+                "doi-asserted-by": "crossref",
+                "first-page": "638",
+                "DOI": "10.1016/j.fuel.2016.04.099",
+                "article-title": "Viscosity measurements of the SiO2–K2O–CaO system relevant to biomass slags",
+                "volume": "180",
+                "author": "Chen",
+                "year": "2016",
+                "journal-title": "Fuel"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0140",
+                "doi-asserted-by": "crossref",
+                "first-page": "1644",
+                "DOI": "10.1007/s11663-014-0088-x",
+                "article-title": "Distribution of boron between silicon and CaO-MgO-Al2O3-SiO2 slags",
+                "volume": "45",
+                "author": "Jakobsson",
+                "year": "2014",
+                "journal-title": "Metall and Materi Trans b."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0145",
+                "doi-asserted-by": "crossref",
+                "first-page": "93",
+                "DOI": "10.1016/j.fuproc.2015.03.025",
+                "article-title": "Viscosity model for oxide melts relevant to fuel slags. Part 1: pure oxides and binary systems in the system SiO2–Al2O3–CaO–MgO–Na2O–K2O",
+                "volume": "137",
+                "author": "Wu",
+                "year": "2015",
+                "journal-title": "Fuel Process. Technol."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0150",
+                "doi-asserted-by": "crossref",
+                "unstructured": "G. Wu, E. Yazhenskikh, K. Hack, M. Müller, Viscosity model for oxide melts relevant to fuel slags. Part 2: The system SiO 2 –Al 2 O 3 –CaO–MgO–Na 2 O–K 2 O, Fuel Process. Technol. 138 (2015) 520–533. https://doi.org/10.1016/j.fuproc.2015.06.031.",
+                "DOI": "10.1016/j.fuproc.2015.06.031"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0155",
+                "doi-asserted-by": "crossref",
+                "first-page": "3107",
+                "DOI": "10.3390/ma15093107",
+                "article-title": "Design of Refining Slag Based on structural modifications associated with the boron removal for SoG-si",
+                "volume": "15",
+                "author": "Qian",
+                "year": "2022",
+                "journal-title": "Materials."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0160",
+                "doi-asserted-by": "crossref",
+                "first-page": "3045",
+                "DOI": "10.1007/s11663-021-02232-4",
+                "article-title": "Effects of La2O3 addition into CaO-SiO2 slag: structural evolution and impurity Separation from si-sn alloy",
+                "volume": "52",
+                "author": "Zhu",
+                "year": "2021",
+                "journal-title": "Metall Mater Trans b."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0165",
+                "doi-asserted-by": "crossref",
+                "first-page": "3991",
+                "DOI": "10.1111/jace.17081",
+                "article-title": "The influence of modifier cations on the raman stretching modes of Q n species in alkali silicate glasses",
+                "volume": "103",
+                "author": "O’Shaughnessy",
+                "year": "2020",
+                "journal-title": "J Am Ceram Soc."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0170",
+                "doi-asserted-by": "crossref",
+                "first-page": "103",
+                "DOI": "10.1016/j.chemgeo.2004.08.049",
+                "article-title": "Ca and na environments in Na2O–CaO–Al2O3–SiO2 glasses: influence of cation mixing and cation-network interactions",
+                "volume": "213",
+                "author": "Cormier",
+                "year": "2004",
+                "journal-title": "Chem. Geol."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0175",
+                "doi-asserted-by": "crossref",
+                "first-page": "970",
+                "DOI": "10.1016/j.jnoncrysol.2010.10.033",
+                "article-title": "Effect of slag basicity and oxygen potential on the distribution of boron and phosphorus between slag and silicon",
+                "volume": "357",
+                "author": "Johnston",
+                "year": "2011",
+                "journal-title": "J. Non-Crystalline Solid."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0180",
+                "doi-asserted-by": "crossref",
+                "first-page": "273",
+                "DOI": "10.1007/978-94-011-3622-8_68",
+                "article-title": "Thermodynamics for removal of boron from metallurgical silicon by flux treatment",
+                "author": "Suzuki",
+                "year": "1991",
+                "journal-title": "10th European Photovoltaic Solar Energy Conference"
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0185",
+                "doi-asserted-by": "crossref",
+                "first-page": "229",
+                "DOI": "10.3139/146.110867",
+                "article-title": "The thermodynamics of boron extraction from liquid silicon using SiO2–CaO–MgO slag treatment",
+                "volume": "104",
+                "author": "White",
+                "year": "2013",
+                "journal-title": "IJMR."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0190",
+                "doi-asserted-by": "crossref",
+                "first-page": "920",
+                "DOI": "10.1007/s11663-009-9292-5",
+                "article-title": "Wettability of silicon Carbide by CaO-SiO2 slags",
+                "volume": "40",
+                "author": "Safarian",
+                "year": "2009",
+                "journal-title": "Metall Mater Trans b."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0195",
+                "doi-asserted-by": "crossref",
+                "first-page": "683",
+                "DOI": "10.1063/1.1740149",
+                "article-title": "Theory of Electromagnetophoresis. I. Magnetohydrodynamic forces Experienced by spherical and symmetrically oriented cylindrical Particles",
+                "volume": "22",
+                "author": "Leenov",
+                "year": "1954",
+                "journal-title": "J. Chem. Phys."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0200",
+                "doi-asserted-by": "crossref",
+                "first-page": "599",
+                "DOI": "10.1007/BF02651601",
+                "article-title": "Experimental study of the influence of interfacial energies and reactivity on wetting in metal/oxide systems",
+                "volume": "25",
+                "author": "Espié",
+                "year": "1994",
+                "journal-title": "Metall Mater Trans a."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0205",
+                "doi-asserted-by": "crossref",
+                "DOI": "10.1016/j.seppur.2021.119065",
+                "article-title": "Silicon recovery from si sawing waste through slag refining",
+                "volume": "274",
+                "author": "Li",
+                "year": "2021",
+                "journal-title": "Sep. Purif. Technol."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0210",
+                "doi-asserted-by": "crossref",
+                "first-page": "2813",
+                "DOI": "10.1016/S1003-6326(11)61537-9",
+                "article-title": "Removal of SiC particles from solar grade silicon melts by imposition of high frequency magnetic field",
+                "volume": "22",
+                "author": "Kadkhodabeigi",
+                "year": "2012",
+                "journal-title": "Trans. Nonferrous Met. Soc. China."
+            },
+            {
+                "key": "10.1016/j.cej.2024.150788_b0215",
+                "doi-asserted-by": "crossref",
+                "first-page": "2220",
+                "DOI": "10.1016/j.jmrt.2022.01.157",
+                "article-title": "Characterization of SiC and Si3N4 inclusions in solar cell si scraps and their motion at the Si/slag interface",
+                "volume": "17",
+                "author": "Li",
+                "year": "2022",
+                "journal-title": "J. Mater. Res. Technol."
+            }
+        ],
+        "container-title": [
+            "Chemical Engineering Journal"
+        ],
+        "original-title": [
+
+        ],
+        "language": "en",
+        "link": [
+            {
+                "URL": "https://api.elsevier.com/content/article/PII:S1385894724022757?httpAccept=text/xml",
+                "content-type": "text/xml",
+                "content-version": "vor",
+                "intended-application": "text-mining"
+            },
+            {
+                "URL": "https://api.elsevier.com/content/article/PII:S1385894724022757?httpAccept=text/plain",
+                "content-type": "text/plain",
+                "content-version": "vor",
+                "intended-application": "text-mining"
+            }
+        ],
+        "deposited": {
+            "date-parts": [
+                [
+                    2024,
+                    6,
+                    4
+                ]
+            ],
+            "date-time": "2024-06-04T07:20:47Z",
+            "timestamp": 1717485647000
+        },
+        "score": 1,
+        "resource": {
+            "primary": {
+                "URL": "https://linkinghub.elsevier.com/retrieve/pii/S1385894724022757"
+            }
+        },
+        "subtitle": [
+
+        ],
+        "short-title": [
+
+        ],
+        "issued": {
+            "date-parts": [
+                [
+                    2024,
+                    5
+                ]
+            ]
+        },
+        "references-count": 43,
+        "alternative-id": [
+            "S1385894724022757"
+        ],
+        "URL": "https://doi.org/10.1016/j.cej.2024.150788",
+        "relation": {
+
+        },
+        "ISSN": [
+            "1385-8947"
+        ],
+        "issn-type": [
+            {
+                "value": "1385-8947",
+                "type": "print"
+            }
+        ],
+        "subject": [
+
+        ],
+        "published": {
+            "date-parts": [
+                [
+                    2024,
+                    5
+                ]
+            ]
+        },
+        "assertion": [
+            {
+                "value": "Elsevier",
+                "name": "publisher",
+                "label": "This article is maintained by"
+            },
+            {
+                "value": "Combined silicon refining for boron removal and Si-Kerf recycling using K2O-CaO-SiO2 slags",
+                "name": "articletitle",
+                "label": "Article Title"
+            },
+            {
+                "value": "Chemical Engineering Journal",
+                "name": "journaltitle",
+                "label": "Journal Title"
+            },
+            {
+                "value": "https://doi.org/10.1016/j.cej.2024.150788",
+                "name": "articlelink",
+                "label": "CrossRef DOI link to publisher maintained version"
+            },
+            {
+                "value": "article",
+                "name": "content_type",
+                "label": "Content Type"
+            },
+            {
+                "value": "© 2024 The Author(s). Published by Elsevier B.V.",
+                "name": "copyright",
+                "label": "Copyright"
+            }
+        ],
+        "article-number": "150788"
+    }
+}
