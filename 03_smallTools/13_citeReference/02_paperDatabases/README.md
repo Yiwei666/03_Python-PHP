@@ -731,7 +731,7 @@ assertion   […]
 article-number  "150788"
 ```
 
-总结：实现了「title/doi」双检索模式的完整需求
+总结：实现了「title/doi」双检索模式的完整需求，其他加载指示器、分类管理、复制 Base32 等均未改变。
 
 
 
