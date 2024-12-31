@@ -739,14 +739,15 @@ article-number  "150788"
 
 ### 2. 环境变量
 
-
+1. 注意模块调用和API礼貌池
 
 ```php
 const API_BASE_URL = 'https://domain.com/'; // 与原油猴脚本保持一致，php模块调用
 
 // 可添加 mailto 参数使用API礼貌池提升查询性能
-// const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=20`;
-const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&mailto=your-email@example.com&rows=20`;
+// apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=20`;
+apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&mailto=your-email@example.com&rows=20`;
+apiUrl = `https://api.crossref.org/works/${encodeURIComponent(query)}`;
 
 fetch(API_BASE_URL + '08_tm_add_paper.php',
 
@@ -758,7 +759,19 @@ fetch(API_BASE_URL + '08_tm_update_paper_categories.php', {
 ```
 
 
+2. 确保 `0 All papers` (实际上 `categoryID=1`) 要强制选中
 
+```js
+        // 0 All papers (实际上 categoryID=1) 要强制选中
+        if (catIDNum === 1) {
+            checkbox.checked = true;
+            checkbox.disabled = true;
+        } else {
+            if (numericPaperCategories.includes(catIDNum)) {
+                checkbox.checked = true;
+            }
+        }
+```
 
 
 
