@@ -67,21 +67,67 @@ function updateCategoryName($mysqli, $categoryID, $newCategoryName) {
 }
 
 /**
- * 获取特定分类下的论文
- * ---------------------------------------------
- * 本次需求修改点：
- * 将原先的 ORDER BY p.title ASC
- * 改为      ORDER BY p.paperID DESC
- * 并在 SELECT 中增加 p.paperID 字段。
+ * 获取特定分类下的论文，带可选的排序方式
+ *
+ * @param mysqli $mysqli
+ * @param int    $categoryID
+ * @param string $sort 用于决定 ORDER BY 的字段及顺序，默认 paperID_desc
  */
-function getPapersByCategory($mysqli, $categoryID) {
+function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
+    // 根据 $sort 生成对应的 ORDER BY 子句
+    switch ($sort) {
+        case 'paperID_asc':
+            $orderBy = 'ORDER BY p.paperID ASC';
+            break;
+        case 'paperID_desc':
+            $orderBy = 'ORDER BY p.paperID DESC';
+            break;
+        case 'year_asc':
+            $orderBy = 'ORDER BY p.publication_year ASC';
+            break;
+        case 'year_desc':
+            $orderBy = 'ORDER BY p.publication_year DESC';
+            break;
+        case 'status_asc':
+            $orderBy = 'ORDER BY p.status ASC';
+            break;
+        case 'status_desc':
+            $orderBy = 'ORDER BY p.status DESC';
+            break;
+        case 'journal_asc':
+            $orderBy = 'ORDER BY p.journal_name ASC';
+            break;
+        case 'journal_desc':
+            $orderBy = 'ORDER BY p.journal_name DESC';
+            break;
+        case 'authors_asc':
+            $orderBy = 'ORDER BY p.authors ASC';
+            break;
+        case 'authors_desc':
+            $orderBy = 'ORDER BY p.authors DESC';
+            break;
+        case 'title_asc':
+            $orderBy = 'ORDER BY p.title ASC';
+            break;
+        case 'title_desc':
+            $orderBy = 'ORDER BY p.title DESC';
+            break;
+        default:
+            // 默认使用 paperID 降序
+            $orderBy = 'ORDER BY p.paperID DESC';
+            break;
+    }
+
     $query = "
-        SELECT p.paperID, p.title, p.authors, p.publication_year, p.journal_name, p.doi, p.status
+        SELECT 
+            p.paperID, p.title, p.authors, p.publication_year, 
+            p.journal_name, p.doi, p.status
         FROM papers p
         JOIN paperCategories pc ON p.paperID = pc.paperID
         WHERE pc.categoryID = ?
-        ORDER BY p.paperID DESC
+        $orderBy
     ";
+
     $stmt = $mysqli->prepare($query);
     if ($stmt) {
         $stmt->bind_param('i', $categoryID);
@@ -113,12 +159,17 @@ function getPaperByDOI($mysqli, $doi) {
 
 // 插入新的论文
 function insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher) {
-    $query = "INSERT INTO papers (title, authors, journal_name, publication_year, volume, issue, pages, article_number, doi, issn, publisher) 
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO papers 
+        (title, authors, journal_name, publication_year, volume, issue, pages, article_number, doi, issn, publisher) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($query);
 
     if ($stmt) {
-        $stmt->bind_param('sssisssssss', $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher);
+        $stmt->bind_param('sssisssssss', 
+            $title, $authors, $journal_name, $publication_year, 
+            $volume, $issue, $pages, $article_number, 
+            $doi, $issn, $publisher
+        );
         if ($stmt->execute()) {
             $paperID = $stmt->insert_id;
             $stmt->close();
