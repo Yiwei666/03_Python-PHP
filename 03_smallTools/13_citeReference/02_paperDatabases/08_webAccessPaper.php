@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
 
-// 引入 Base32 编码类
+// 引入 Base32 编码类（请确保本地存在 08_web_Base32.php 并包含题目中的实现）
 require_once '08_web_Base32.php';
 
 // 获取所有分类
@@ -89,10 +89,13 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
 // 获取当前选中的分类
 $selectedCategoryID = isset($_GET['categoryID']) ? intval($_GET['categoryID']) : null;
 
-// 获取选中分类的论文
+// 获取排序参数，默认 paperID_desc
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'paperID_desc';
+
+// 获取选中分类的论文（带排序）
 $papers = null;
 if ($selectedCategoryID) {
-    $papers = getPapersByCategory($mysqli, $selectedCategoryID);
+    $papers = getPapersByCategory($mysqli, $selectedCategoryID, $sort);
 }
 ?>
 <!DOCTYPE html>
@@ -132,6 +135,7 @@ if ($selectedCategoryID) {
             width: 75%; 
             padding: 20px; 
             box-sizing: border-box; 
+            position: relative; /* 允许绝对定位的元素放置在这里 */
         }
         .form-section { 
             margin-bottom: 20px; 
@@ -171,7 +175,7 @@ if ($selectedCategoryID) {
             background-color: #f0f0f0; 
             border: 1px solid #ccc; 
         }
-        /* 为“标签”按钮设置颜色和字号，去掉下划线，并让其左对齐 */
+        /* 为“标签”按钮、工具按钮等 设置颜色和字号，去掉下划线 */
         .paper-categories {
             text-align: left;
         }
@@ -183,10 +187,21 @@ if ($selectedCategoryID) {
             font-size: 13px; /* 13 px */
             text-decoration: none; /* 去掉下划线 */
             padding: 0; /* 去除默认内边距，使其与左侧对齐 */
-            margin-right: 10px; /* 使多个按钮之间留一点间隙 */
+            margin-right: 10px; /* 多个按钮之间留一点间隙 */
         }
         .paper-categories span {
             cursor: default;
+        }
+        /* “工具”按钮单独定义，但样式保持一致 */
+        #toolsBtn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: #1a0dab;
+            font-size: 13px;
+            text-decoration: none;
+            padding: 0;
+            margin-right: 10px;
         }
         /* 弹窗 (modal) 样式 */
         #categoryModal {
@@ -229,12 +244,43 @@ if ($selectedCategoryID) {
             background: rgba(0,0,0,0.5); 
             z-index: 9998;
         }
-        /* 以4列形式显示分类复选框 (此处设置成5列也可) */
+        /* 以5列形式显示分类复选框 */
         #categoryCheckboxes {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 5px;
             margin-bottom: 20px;
+        }
+
+        /* 工具菜单的样式 - 简易下拉 */
+        #toolsMenu {
+            display: none;
+            position: absolute;
+            top: 0; 
+            right: 10px; /* 距离右侧10px */
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            padding: 10px;
+            z-index: 10000; /* 使其置顶 */
+        }
+        #toolsMenu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        #toolsMenu li {
+            margin: 5px 0;
+        }
+        /* 工具菜单内的链接也保持与按钮一致的颜色 */
+        #toolsMenu a {
+            color: #1a0dab;
+            text-decoration: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        #toolsMenu a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -292,7 +338,7 @@ if ($selectedCategoryID) {
                     }
                 ?>
                     <td>
-                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>" style="color: <?= $catColor ?>;">
+                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>&sort=<?= urlencode($sort) ?>" style="color: <?= $catColor ?>;">
                             <?= htmlspecialchars($category['category_name']) ?>
                         </a>
                     </td>
@@ -310,7 +356,37 @@ if ($selectedCategoryID) {
     
     <div id="papers-container">
         <!-- 在此处加上对应论文的数量 -->
-        <h2>论文列表<?php if ($selectedCategoryID && $papers !== null) { echo " No. " . $papers->num_rows; } ?></h2>
+        <h2>
+            论文列表
+            <?php 
+            if ($selectedCategoryID && $papers !== null) { 
+                echo " No. " . $papers->num_rows; 
+            } 
+            ?>
+            <!-- 工具按钮（右上角） -->
+            <?php if ($selectedCategoryID): ?>
+                <button id="toolsBtn" type="button">工具</button>
+            <?php endif; ?>
+        </h2>
+
+        <!-- 工具下拉菜单 -->
+        <div id="toolsMenu">
+            <ul>
+                <!-- 这部分通过 sort=xxx 的方式控制排序 -->
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=paperID_asc">论文ID升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=paperID_desc">论文ID降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=year_desc">发表年降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=year_asc">发表年升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=status_desc">状态码降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=status_asc">状态码升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=journal_asc">期刊名升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=journal_desc">期刊名降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=authors_asc">作者名升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=authors_desc">作者名降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=title_asc">标题升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=title_desc">标题降序</a></li>
+            </ul>
+        </div>
         
         <?php if ($selectedCategoryID): ?>
             <?php if ($papers !== null): ?>
@@ -340,11 +416,10 @@ if ($selectedCategoryID) {
                                 </button>
                                 
                                 <?php 
-                                    // 根据 status 显示不同提示或按钮
-                                    // 为了生成“查看”按钮需要将 doi 进行 Base32 编码
+                                    // 为了生成“查看”按钮，需要对 doi 进行 Base32 编码
                                     $encodedDOI = Base32::encode($paper['doi']);
-                                    // 保留末尾的 '=' 填充
-                                    
+
+                                    // 根据 status 显示不同提示或按钮
                                     switch($paper['status']) {
                                         case 'CL':
                                             // 显示 “删除” 与 “查看”
@@ -373,7 +448,7 @@ if ($selectedCategoryID) {
                                             break;
                                     }
 
-                                    // ====== 新增的两个复制按钮 =======
+                                    // ====== 复制按钮 =======
                                     // “复制DOI” 按钮
                                     echo '<button type="button" onclick="copyDOI(\'' . htmlspecialchars($paper['doi']) . '\')">复制DOI</button>';
                                     // “复制编码DOI” 按钮
@@ -458,7 +533,7 @@ if ($selectedCategoryID) {
                 });
         }
 
-        // 动态渲染分类复选框
+        // 动态渲染分类复选框（5列布局）
         function renderCategoryCheckboxes(allCats, paperCatIDs) {
             const container = document.getElementById('categoryCheckboxes');
             container.innerHTML = '';
@@ -467,7 +542,7 @@ if ($selectedCategoryID) {
             const paperCatIDsStr = paperCatIDs.map(id => String(id));
 
             allCats.forEach(cat => {
-                const catID = String(cat.categoryID); // 转为字符串比较
+                const catID = String(cat.categoryID);
                 const catName = cat.category_name;
                 let checked = false;
                 let disabledAttr = '';
@@ -479,8 +554,8 @@ if ($selectedCategoryID) {
 
                 // 如果是 "0 All papers" (categoryID=1)，不允许用户取消勾选
                 if (catID === '1') {
-                    checked = true;    // 保证始终勾选
-                    disabledAttr = 'disabled'; // 禁止取消
+                    checked = true;    
+                    disabledAttr = 'disabled'; 
                 }
 
                 container.innerHTML += `
@@ -563,8 +638,7 @@ if ($selectedCategoryID) {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    // 更新成功后刷新页面以便看到最新状态
-                    window.location.reload();
+                    window.location.reload(); // 刷新页面
                 } else {
                     alert(data.message || '更新状态失败。');
                 }
@@ -575,7 +649,7 @@ if ($selectedCategoryID) {
             });
         }
 
-        // ====== 新增的复制功能 =======
+        // ====== 复制功能 =======
         // 复制原始DOI
         function copyDOI(doi) {
             navigator.clipboard.writeText(doi)
@@ -597,6 +671,30 @@ if ($selectedCategoryID) {
                     console.error('复制编码DOI失败:', err);
                 });
         }
+
+        // ====== 工具按钮、菜单 ======
+        const toolsBtn = document.getElementById('toolsBtn');
+        const toolsMenu = document.getElementById('toolsMenu');
+        
+        if (toolsBtn) {
+            toolsBtn.addEventListener('click', () => {
+                // 切换菜单的显示/隐藏
+                if (toolsMenu.style.display === 'none' || toolsMenu.style.display === '') {
+                    toolsMenu.style.display = 'block';
+                } else {
+                    toolsMenu.style.display = 'none';
+                }
+            });
+        }
+
+        // 如果用户点击页面其他位置，需要隐藏菜单
+        document.addEventListener('click', (e) => {
+            if (toolsBtn && toolsMenu) {
+                if (!toolsBtn.contains(e.target) && !toolsMenu.contains(e.target)) {
+                    toolsMenu.style.display = 'none';
+                }
+            }
+        });
     </script>
 </body>
 </html>
