@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
 
-// 引入 Base32 编码类（请确保本地存在 08_web_Base32.php 并包含题目中的实现）
+// 引入 Base32 编码类
 require_once '08_web_Base32.php';
 
 // 获取所有分类
@@ -229,7 +229,7 @@ if ($selectedCategoryID) {
             background: rgba(0,0,0,0.5); 
             z-index: 9998;
         }
-        /* 以4列形式显示分类复选框 */
+        /* 以4列形式显示分类复选框 (此处设置成5列也可) */
         #categoryCheckboxes {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -372,6 +372,12 @@ if ($selectedCategoryID) {
                                             // N 或其它未匹配情况，不显示额外按钮/提示
                                             break;
                                     }
+
+                                    // ====== 新增的两个复制按钮 =======
+                                    // “复制DOI” 按钮
+                                    echo '<button type="button" onclick="copyDOI(\'' . htmlspecialchars($paper['doi']) . '\')">复制DOI</button>';
+                                    // “复制编码DOI” 按钮
+                                    echo '<button type="button" onclick="copyEncodedDOI(\'' . $encodedDOI . '\')">复制编码DOI</button>';
                                 ?>
                             </div>
                         </div>
@@ -452,7 +458,7 @@ if ($selectedCategoryID) {
                 });
         }
 
-        // 动态渲染分类复选框（4列布局）
+        // 动态渲染分类复选框
         function renderCategoryCheckboxes(allCats, paperCatIDs) {
             const container = document.getElementById('categoryCheckboxes');
             container.innerHTML = '';
@@ -542,11 +548,7 @@ if ($selectedCategoryID) {
             document.getElementById('overlay').style.display = 'none';
         }
 
-        /**
-         * 更新论文状态
-         * 需要您在后端创建对应的处理接口，例如 08_web_update_paper_status.php
-         * 并在其中调用 updatePaperStatus($mysqli, $paperID, $newStatus) 等逻辑
-         */
+        // 更新论文状态
         function updatePaperStatus(doi, newStatus) {
             fetch('08_web_update_paper_status.php', {
                 method: 'POST',
@@ -571,6 +573,29 @@ if ($selectedCategoryID) {
                 console.error(err);
                 alert('更新状态时出现错误。');
             });
+        }
+
+        // ====== 新增的复制功能 =======
+        // 复制原始DOI
+        function copyDOI(doi) {
+            navigator.clipboard.writeText(doi)
+                .then(() => {
+                    alert('已复制DOI: ' + doi);
+                })
+                .catch((err) => {
+                    console.error('复制DOI失败:', err);
+                });
+        }
+
+        // 复制Base32编码后的DOI
+        function copyEncodedDOI(encodedDOI) {
+            navigator.clipboard.writeText(encodedDOI)
+                .then(() => {
+                    alert('已复制编码DOI: ' + encodedDOI);
+                })
+                .catch((err) => {
+                    console.error('复制编码DOI失败:', err);
+                });
         }
     </script>
 </body>
