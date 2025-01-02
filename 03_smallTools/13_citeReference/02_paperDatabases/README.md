@@ -627,7 +627,7 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 
 
-### 3. 模块、函数和后端接口
+### 2. 模块、函数和后端接口
 
 1. PHP模块
 
@@ -664,7 +664,7 @@ getPapersByCategory($mysqli, $selectedCategoryID, $sort)
 
 
 
-### 4. 环境变量
+### 3. 环境变量
 
 1. `require_once` 语句引入了其他 PHP 模块，确保这些文件在新环境中的路径正确。
 
