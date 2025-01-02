@@ -627,9 +627,44 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 
 
+### 3. 模块、函数和后端接口
+
+1. PHP模块
+
+```php
+08_db_config.php
+08_category_operations.php
+08_web_Base32.php
+```
 
 
-### 3. 环境变量
+2. 后端接口
+
+```php
+08_tm_get_categories.php
+08_tm_get_paper_categories.php
+08_tm_update_paper_categories.php
+08_web_update_paper_status.php
+```
+
+
+3. PHP函数
+
+```php
+getCategories($mysqli)
+addCategory($mysqli, $categoryName)
+deleteCategory($mysqli, $categoryID)
+updateCategoryName($mysqli, $categoryID, $newCategoryName)
+getPaperByDOI($mysqli, $doi)
+insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)
+assignAllPapersCategory($mysqli, $paperID)
+getPapersByCategory($mysqli, $selectedCategoryID, $sort)
+```
+
+
+
+
+### 4. 环境变量
 
 1. `require_once` 语句引入了其他 PHP 模块，确保这些文件在新环境中的路径正确。
 
