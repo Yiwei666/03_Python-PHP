@@ -361,8 +361,8 @@ $dbname = 'paper_db'; // 数据库名称
 ```php
 # 1. 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并分配默认分类
 getPaperByDOI($mysqli, $doi)                                         # 检查数据库中是否已经存在具有指定 DOI 的论文。
-                                                                     # 将新的论文信息插入到数据库中。
 insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)
+                                                                     # 将新的论文信息插入到数据库中。
 assignAllPapersCategory($mysqli, $paperID)                           # 将新插入的论文分配到默认的 "0 All papers" 分类中。
 
 # 2. 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
