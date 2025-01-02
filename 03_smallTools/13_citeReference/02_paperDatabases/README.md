@@ -309,38 +309,49 @@ $dbname = 'paper_db'; // 数据库名称
 
 ### 1. 功能
 
-1. `getCategories($mysqli)`：从数据库中获取所有分类的详细信息
-   - 从 `categories` 表中获取所有分类信息，并按分类名称升序排列返回一个包含分类数据的数组，或在失败时返回错误信息。
+1. `getCategories($mysqli)`
+   - 功能：从数据库中获取所有分类的详细信息
+   - 描述：从 `categories` 表中获取所有分类信息，并按分类名称升序排列返回一个包含分类数据的数组，或在失败时返回错误信息。
 
-2. `addCategory($mysqli, $categoryName)`：新增一个分类
-   - 向 `categories` 表中插入一个新的分类名，返回操作成功的消息或错误信息。
+2. `addCategory($mysqli, $categoryName)`
+   - 功能：新增一个分类
+   - 描述：向 `categories` 表中插入一个新的分类名，返回操作成功的消息或错误信息。
 
-3. `deleteCategory($mysqli, $categoryID)`：删除指定的分类
-   - 根据提供的分类ID删除 `categories` 表中的对应分类，返回成功消息或错误提示。
+3. `deleteCategory($mysqli, $categoryID)`
+   - 功能：删除指定的分类
+   - 描述：根据提供的分类ID删除 `categories` 表中的对应分类，返回成功消息或错误提示。
 
-4. `updateCategoryName($mysqli, $categoryID, $newCategoryName)`：修改分类的名称
-   - 更新指定分类ID对应的分类名称为新的名称，返回成功消息或错误提示。
+4. `updateCategoryName($mysqli, $categoryID, $newCategoryName)`
+   - 功能：修改分类的名称
+   - 描述：更新指定分类ID对应的分类名称为新的名称，返回成功消息或错误提示。
 
-5. `getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc')`：获取特定分类下的所有论文，支持可选的排序方式。
-   - 查询某一分类下的所有论文信息，可通过`$sort`参数指定排序方式，如按`paperID、publication_year、status、journal_name、authors或title`升序或降序排序。
+5. `getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc')`
+   - 功能：获取特定分类下的所有论文，支持可选的排序方式。
+   - 描述：查询某一分类下的所有论文信息，可通过`$sort`参数指定排序方式，如按`paperID、publication_year、status、journal_name、authors或title`升序或降序排序。
 
-6. `getPaperByDOI($mysqli, $doi)`：通过DOI获取特定的论文信息
-   - 根据论文的DOI从 papers 表中获取其完整信息，返回包含论文信息的数组，或在失败时返回 false。
+6. `getPaperByDOI($mysqli, $doi)`
+   - 功能：通过DOI获取特定的论文信息
+   - 描述：根据论文的DOI从 papers 表中获取其完整信息，返回包含论文信息的数组，或在失败时返回 false。
 
-7. `insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)`：插入一篇新的论文记录
-    - 向 `papers` 表中插入新的论文信息，包括标题、作者、出版年份等，返回成功标志和新论文的ID，或在失败时返回错误信息。
+7. `insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)`
+   - 功能：插入一篇新的论文记录
+   - 描述：向 `papers` 表中插入新的论文信息，包括标题、作者、出版年份等，返回成功标志和新论文的ID，或在失败时返回错误信息。
 
-8. `getCategoriesByPaperID($mysqli, $paperID)`：获取指定论文的所有分类ID
-   - 根据`$paperID`从`paperCategories`关联表中查询所有关联的`categoryID`。成功时返回`categoryID`的数组，失败时返回false。
+8. `getCategoriesByPaperID($mysqli, $paperID)`
+   - 功能：获取指定论文的所有分类ID
+   - 描述：根据`$paperID`从`paperCategories`关联表中查询所有关联的`categoryID`。成功时返回`categoryID`的数组，失败时返回false。
 
-9. `updatePaperCategories($mysqli, $paperID, $categoryIDs)`：更新指定论文的分类
-   - 开始一个数据库事务。删除当前论文`$paperID`在`paperCategories`表中的所有现有分类关联。插入新的分类关联，使用提供的`$categoryIDs`数组。
+9. `updatePaperCategories($mysqli, $paperID, $categoryIDs)`
+   - 功能：更新指定论文的分类
+   - 描述：开始一个数据库事务。删除当前论文`$paperID`在`paperCategories`表中的所有现有分类关联。插入新的分类关联，使用提供的`$categoryIDs`数组。
 
-10. `assignAllPapersCategory($mysqli, $paperID)`：为新插入的论文分配`“0 All papers”`分类。
-    - 假设`“0 All papers”`分类的`categoryID`为1（根据代码中设置）。向`paperCategories`表插入一条记录，将论文`$paperID`与`categoryID为1`的分类关联。
+10. `assignAllPapersCategory($mysqli, $paperID)`
+    - 功能：为新插入的论文分配`“0 All papers”`分类。
+    - 描述：假设`“0 All papers”`分类的`categoryID`为1（根据代码中设置）。向`paperCategories`表插入一条记录，将论文`$paperID`与`categoryID为1`的分类关联。
 
-11. `updatePaperStatus($mysqli, $paperID, $newStatus)`：根据论文ID更新论文的状态。
-    - 更新`papers`表中指定`$paperID`的论文记录，将其`status`字段更新为`$newStatus`。
+11. `updatePaperStatus($mysqli, $paperID, $newStatus)`
+    - 功能：根据论文ID更新论文的状态。
+    - 描述：更新`papers`表中指定`$paperID`的论文记录，将其`status`字段更新为`$newStatus`。
 
 
 
