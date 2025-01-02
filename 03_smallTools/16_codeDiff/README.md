@@ -293,7 +293,7 @@ sudo systemctl reload nginx
 
 ### 3. 确保 Node.js 应用正确运行
 
-检查 `server.js`，确保 Node.js 应用正在监听所有网络接口，并且没有错误。
+1. 检查 `server.js`，确保 Node.js 应用正在监听所有网络接口，并且没有错误。
 
 找到以下部分（本地运行）：
 
@@ -312,6 +312,14 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 ```
 
+
+2. 注意修改端口号：
+
+```js
+const PORT = 2000;
+```
+
+云服务器实际部署时，`codeDiff_unified` 视图运行在 2000 端口上，`codeDiff_split` 视图运行在 2001 端口上。注意避免不同应用的端口冲突。
 
 
 ### 4. 问题分析
