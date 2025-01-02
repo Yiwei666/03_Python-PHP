@@ -192,8 +192,8 @@ if ($selectedCategoryID) {
         .paper-categories span {
             cursor: default;
         }
-        /* “工具”按钮单独定义，但样式保持一致 */
-        #toolsBtn {
+        /* “工具”按钮、以及新增的“全部下载”和“全部删除”按钮样式一致 */
+        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -201,6 +201,7 @@ if ($selectedCategoryID) {
             font-size: 13px;
             text-decoration: none;
             padding: 0;
+            margin-left: 10px; /* 让它和前面的文字或按钮稍微隔开 */
             margin-right: 10px;
         }
         /* 弹窗 (modal) 样式 */
@@ -363,9 +364,11 @@ if ($selectedCategoryID) {
                 echo " No. " . $papers->num_rows; 
             } 
             ?>
-            <!-- 工具按钮（右上角） -->
+            <!-- 如果用户已选择分类，则显示“工具”、“全部下载”、“全部删除”按钮 -->
             <?php if ($selectedCategoryID): ?>
                 <button id="toolsBtn" type="button">工具</button>
+                <button id="batchDownloadBtn" type="button">全部下载</button>
+                <button id="batchDeleteBtn" type="button">全部删除</button>
             <?php endif; ?>
         </h2>
 
@@ -388,10 +391,23 @@ if ($selectedCategoryID) {
             </ul>
         </div>
         
+        <?php 
+        // 用于在前端批量操作时，收集论文数据（paperID、doi、status 等）
+        $papersData = [];
+        ?>
+
         <?php if ($selectedCategoryID): ?>
             <?php if ($papers !== null): ?>
                 <?php if ($papers->num_rows > 0): ?>
                     <?php while ($paper = $papers->fetch_assoc()): ?>
+                        <?php 
+                            // 收集信息到 $papersData 数组中
+                            $papersData[] = [
+                                'paperID' => $paper['paperID'],
+                                'doi' => $paper['doi'],
+                                'status' => $paper['status']
+                            ];
+                        ?>
                         <div class="paper">
                             <!-- 论文标题（允许包含 <sub> 和 <sup> 等HTML标签） -->
                             <div class="paper-title">
@@ -485,6 +501,9 @@ if ($selectedCategoryID) {
     <script>
         let currentDOI = null;      // 当前正在修改标签的论文的 DOI
         let allCategories = [];     // 所有分类的缓存
+
+        // 将后端获取到的 $papersData 数组转成 JS 对象
+        const papersData = <?php echo json_encode($papersData, JSON_UNESCAPED_UNICODE); ?>;
 
         // 打开分类选择弹窗
         function openCategoryModal(doi) {
@@ -623,7 +642,7 @@ if ($selectedCategoryID) {
             document.getElementById('overlay').style.display = 'none';
         }
 
-        // 更新论文状态
+        // 更新论文状态（单个）
         function updatePaperStatus(doi, newStatus) {
             fetch('08_web_update_paper_status.php', {
                 method: 'POST',
@@ -695,6 +714,65 @@ if ($selectedCategoryID) {
                 }
             }
         });
+
+        // ====== 全部下载、全部删除功能 ======
+        const batchDownloadBtn = document.getElementById('batchDownloadBtn');
+        const batchDeleteBtn = document.getElementById('batchDeleteBtn');
+
+        if (batchDownloadBtn) {
+            batchDownloadBtn.addEventListener('click', () => {
+                batchUpdateStatus('C', 'DW'); // 把 status=C 的改为 DW
+            });
+        }
+        if (batchDeleteBtn) {
+            batchDeleteBtn.addEventListener('click', () => {
+                batchUpdateStatus('CL', 'DL'); // 把 status=CL 的改为 DL
+            });
+        }
+
+        /**
+         * 批量更新当前分类下所有论文的状态
+         * @param {string} oldStatus 需要被更新的旧状态
+         * @param {string} newStatus 更新成的新状态
+         */
+        function batchUpdateStatus(oldStatus, newStatus) {
+            // 收集所有需要更新的DOI
+            const papersToUpdate = papersData.filter(p => p.status === oldStatus);
+
+            if (papersToUpdate.length === 0) {
+                alert('没有符合条件的论文需要更新。');
+                return;
+            }
+
+            // 依次调用 updatePaperStatus 接口
+            let promises = papersToUpdate.map(p => {
+                return fetch('08_web_update_paper_status.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        doi: p.doi, 
+                        status: newStatus
+                    })
+                }).then(res => res.json());
+            });
+
+            Promise.all(promises)
+                .then(results => {
+                    // 如果都成功，则刷新
+                    let allSuccess = results.every(r => r.success);
+                    if (allSuccess) {
+                        window.location.reload();
+                    } else {
+                        alert('部分论文状态更新失败，请检查。');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('批量更新时出现错误。');
+                });
+        }
     </script>
 </body>
 </html>
