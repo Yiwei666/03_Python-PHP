@@ -340,7 +340,7 @@ insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume
 assignAllPapersCategory($mysqli, $paperID)                           # 将新插入的论文分配到默认的 "0 All papers" 分类中。
 
 # 2. 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
-getCategories
+getCategories($mysqli)                 
 
 # 3. 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
 getPaperByDOI
