@@ -295,6 +295,17 @@ sudo systemctl reload nginx
 
 检查 `server.js`，确保 Node.js 应用正在监听所有网络接口，并且没有错误。
 
+找到以下部分（本地运行）：
+
+```js
+// 启动服务器
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+```
+
+将其修改为（云服务器运行）：
+
 ```js
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${PORT}`);
