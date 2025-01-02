@@ -380,6 +380,9 @@ getPaperByDOI($mysqli, $doi)                                         # 通过提
 updatePaperCategories($mysqli, $paperID, $categoryIDs)               # 更新指定论文的分类。
 
 
+# 5. 08_web_update_paper_status.php            # 通过 DOI 确认论文存在，并获取其唯一标识 paperID。根据提供的 paperID 更新论文的 status 字段。
+getPaperByDOI($mysqli, $doi)                                         # 通过提供的 DOI（数字对象标识符）从数据库中检索对应的论文记录。
+updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论文的 paperID 更新其 status 字段。
 
 ```
 
