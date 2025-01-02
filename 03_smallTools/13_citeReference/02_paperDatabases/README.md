@@ -307,7 +307,7 @@ $dbname = 'paper_db'; // 数据库名称
 
 ## 2. `08_category_operations.php`
 
-### 1. 功能
+### 1. 函数功能
 
 1. `getCategories($mysqli)`
    - 功能：从数据库中获取所有分类的详细信息
@@ -356,7 +356,7 @@ $dbname = 'paper_db'; // 数据库名称
 
 
 
-### 2. 函数调用
+### 2. 后端接口函数调用
 
 ```php
 # 1. 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并分配默认分类
