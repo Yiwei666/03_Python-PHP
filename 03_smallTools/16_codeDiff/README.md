@@ -267,6 +267,8 @@ fetch('api/diff', { // 使用相对路径
 
 - 在绝对路径这种情况下，浏览器会将请求发送到当前域名的根路径下的 `/api/diff`。例如，如果您的网站是 `https://domain.com/codediffu/`，那么绝对路径 `/api/diff` 会被解析为 `https://domain.com/api/diff`。由于 Nginx 没有配置 `/api/diff` 的代理规则，Nginx 会尝试在静态文件目录中查找 `/api/diff`，导致返回 404 错误页面。
 
+- 云服务器 `server.js` 脚本中的 `app.post('/api/diff', (req, res)` 绝对路径不需要修改。
+
 
 ### 2. 确保 Nginx 正确代理 API 请求
 
@@ -320,6 +322,8 @@ const PORT = 2000;
 ```
 
 云服务器实际部署时，`codeDiff_unified` 视图运行在 2000 端口上，`codeDiff_split` 视图运行在 2001 端口上。注意避免不同应用的端口冲突。
+
+
 
 
 ### 4. 问题分析
