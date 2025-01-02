@@ -324,9 +324,45 @@ const PORT = 2000;
 云服务器实际部署时，`codeDiff_unified` 视图运行在 2000 端口上，`codeDiff_split` 视图运行在 2001 端口上。注意避免不同应用的端口冲突。
 
 
+3. `server.js`修改后的完整代码（运行在云服务器上）：
+
+```js
+// server.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const Diff = require('diff');
+const path = require('path');
+
+const app = express();
+const PORT = 2000;
+
+// 中间件
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// API 路由
+app.post('/api/diff', (req, res) => {
+    const { oldText, newText } = req.body;
+
+    if (typeof oldText !== 'string' || typeof newText !== 'string') {
+        return res.status(400).json({ error: 'Invalid input' });
+    }
+
+    // 计算差异
+    const diff = Diff.createTwoFilesPatch('Old Version', 'New Version', oldText, newText, '', '');
+
+    res.json({ diff });
+});
+
+// 启动服务器
+app.listen(PORT,'0.0.0.0', () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
+```
 
 
-### 4. 问题分析
+
+### 4. 问题分析总结
 
 - 如果直接使用上述windows下的`index.html`文件（使用`/api/diff`绝对路径，即`fetch('/api/diff', { /* options */ })`），则会出现以下问题：
     - 浏览器将请求发送到 `https://domain.com/api/diff`，而不是 `https://domain.com/codediffu/api/diff`。
