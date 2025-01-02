@@ -1,5 +1,5 @@
 <?php
-// 08_tm_update_paper_status.php
+// 08_web_update_paper_status.php
 header('Content-Type: application/json');
 
 // 启用错误报告（调试用，生产环境请关闭）
