@@ -261,6 +261,16 @@ ON
 ```
 
 
+4. 修改表中现有记录的值
+
+```sql
+UPDATE papers
+SET title = 'Molecular Dynamics Analysis of the Microstructure of the CaO-P<sub>2</sub>O<sub>5</sub>-SiO<sub>2</sub> Slag System with Varying P<sub>2</sub>O<sub>5</sub>/SiO<sub>2</sub> Ratios'
+WHERE paperID = 345;
+```
+
+
+
 
 ### 2. 别名alias
 
