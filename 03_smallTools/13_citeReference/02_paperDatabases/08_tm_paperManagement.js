@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info (Base32 added)
 // @namespace    http://tampermonkey.net/
-// @version      1.12
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。
+// @version      1.13
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。增加当部分关键信息缺失时弹窗提示的功能。
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
@@ -39,6 +39,9 @@
 
     // 配置您的服务器API基础URL
     const API_BASE_URL = 'https://chaye.one/'; // 确保末尾有斜杠
+
+    // 是否已弹出缺失信息提示（只弹一次）
+    let missingFieldsAlertShown = false;
 
     // ======================
     //    界面元素创建
@@ -174,11 +177,17 @@
                             // 显示 复制base32 按钮
                             copyBase32Button.style.display = 'flex';
                         }
+
+                        // 检查并提示缺失信息
+                        checkMissingData(extractedData);
                     })
                     .catch(err => {
                         console.error('DOI查询或分类获取时出错:', err);
                         // 最后还是让标签按钮显示
                         tagButton.style.display = 'flex';
+
+                        // 检查并提示缺失信息
+                        checkMissingData(extractedData);
                     });
             } catch (e) {
                 console.error("提取时出错:", e);
@@ -928,6 +937,50 @@
             document.body.removeChild(textarea);
             return Promise.resolve();
         }
+    }
+
+    // ======================
+    //  检查并提示缺失信息
+    // ======================
+    function checkMissingData(data) {
+        // 若已弹窗过，则不再重复弹窗
+        if (missingFieldsAlertShown) return;
+
+        // 条件1：期刊名、出版年、作者、出版商，任意一项缺失或为“查询失败”
+        const cond1 =
+            isFieldMissing(data.journal, '未找到期刊名') ||
+            isFieldMissing(data.publicationYear, '未找到出版年') ||
+            isFieldMissing(data.fullAuthors, '未找到作者信息') ||
+            isFieldMissing(data.publisher, '未找到出版商');
+
+        // 条件2：卷号和期号都缺失或为“查询失败”
+        const cond2 =
+            isFieldMissing(data.volume, '未找到卷号') &&
+            isFieldMissing(data.issue, '未找到期号');
+
+        // 条件3：页码和文章号都缺失或为“查询失败”
+        const cond3 =
+            isFieldMissing(data.pages, '未找到页码') &&
+            isFieldMissing(data.articleNumber, '未找到文章号');
+
+        if (cond1 || cond2 || cond3) {
+            missingFieldsAlertShown = true;
+            alert('提示：该论文的部分关键信息缺失，请注意核对或补充！');
+        }
+    }
+
+    /**
+     * 判断字段是否“缺失”或“查询失败”
+     * @param {string} fieldValue 要判断的值
+     * @param {string} notFoundText 对应的“未找到xxx”标志
+     * @returns {boolean} 如果是“查询失败”或者“未找到xxx”，返回 true
+     */
+    function isFieldMissing(fieldValue, notFoundText) {
+        if (!fieldValue) return true;
+        return (
+            fieldValue === '查询失败' ||
+            fieldValue === notFoundText
+        );
     }
 
 })();
