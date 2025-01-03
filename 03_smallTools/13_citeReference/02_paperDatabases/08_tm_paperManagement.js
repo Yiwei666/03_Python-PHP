@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info (Base32 added)
 // @namespace    http://tampermonkey.net/
-// @version      1.13
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。增加当部分关键信息缺失时弹窗提示的功能。
+// @version      1.14
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。增加当部分关键信息缺失时弹窗提示的功能，并在分类窗口中增加关闭和取消按钮。
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
@@ -267,7 +267,7 @@
         abbreviatedAuthors = '查询中...',
         matchResult = '',
         existingCategoryNames = [],
-        doiBase32 = '' // 新增字段，用来显示 DOI 的 Base32
+        doiBase32 = ''
     }) {
         let container = document.getElementById('result-container');
         if (!container) {
@@ -738,7 +738,27 @@
             container.innerHTML = ''; // 清空之前的内容
         }
 
-        container.innerHTML = `<h3>为论文添加分类标签</h3>`;
+        // 在右上角添加一个关闭按钮 (叉符号)
+        const closeButton = document.createElement('button');
+        closeButton.textContent = '×';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '5px';
+        closeButton.style.right = '5px';
+        closeButton.style.border = 'none';
+        closeButton.style.background = 'none';
+        closeButton.style.fontSize = '20px';
+        closeButton.style.cursor = 'pointer';
+        closeButton.addEventListener('click', function () {
+            container.style.display = 'none';
+        });
+
+        container.appendChild(closeButton);
+
+        // 标题
+        const titleElem = document.createElement('h3');
+        titleElem.textContent = '为论文添加分类标签';
+        titleElem.style.marginTop = '0'; // 距离顶部零间距，避免和关闭按钮重叠
+        container.appendChild(titleElem);
 
         categories.forEach(category => {
             const checkbox = document.createElement('input');
@@ -773,23 +793,21 @@
             container.appendChild(div);
         });
 
-        // 添加保存按钮
+        // 底部按钮容器
+        const btnContainer = document.createElement('div');
+        btnContainer.style.display = 'flex';
+        btnContainer.style.justifyContent = 'space-between';
+        btnContainer.style.marginTop = '10px';
+
+        // "保存分类" 按钮
         const saveButton = document.createElement('button');
         saveButton.textContent = '保存分类';
-        saveButton.style.marginTop = '10px';
         saveButton.style.padding = '5px 10px';
         saveButton.style.backgroundColor = '#4CAF50';
         saveButton.style.color = 'white';
         saveButton.style.border = 'none';
         saveButton.style.cursor = 'pointer';
         saveButton.style.borderRadius = '4px'; // 增加圆角效果
-        saveButton.style.display = 'flex';
-        saveButton.style.alignItems = 'center';
-        saveButton.style.justifyContent = 'center';
-        saveButton.style.width = '40%'; // 使按钮宽度填满容器
-        container.appendChild(saveButton);
-
-        // 保存按钮点击事件
         saveButton.addEventListener('click', function () {
             const selectedCategories = [];
             categories.forEach(category => {
@@ -821,6 +839,27 @@
                     alert(error.message);
                 });
         });
+
+        // "取消" 按钮
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = '取消';
+        cancelButton.style.padding = '5px 10px';
+        cancelButton.style.backgroundColor = '#f44336';
+        cancelButton.style.color = 'white';
+        cancelButton.style.border = 'none';
+        cancelButton.style.cursor = 'pointer';
+        cancelButton.style.borderRadius = '4px';
+        cancelButton.addEventListener('click', function () {
+            // 放弃保存分类，直接关闭窗口
+            container.style.display = 'none';
+        });
+
+        // 将按钮添加到容器
+        btnContainer.appendChild(saveButton);
+        btnContainer.appendChild(cancelButton);
+
+        // 将按钮容器添加到分类选择框
+        container.appendChild(btnContainer);
 
         // 显示分类选择界面
         container.style.display = 'block';
