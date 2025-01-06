@@ -40,6 +40,9 @@
     // 配置您的服务器API基础URL
     const API_BASE_URL = 'https://chaye.one/'; // 确保末尾有斜杠
 
+    // [MODIFIED] 在脚本中添加 API_KEY 用于后端认证
+    const API_KEY = 'YOUR_API_KEY_HERE';
+
     // 是否已弹出缺失信息提示（只弹一次）
     let missingFieldsAlertShown = false;
 
@@ -628,7 +631,9 @@
                 method: 'POST',
                 url: API_BASE_URL + '08_tm_add_paper.php',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    // [MODIFIED] 添加 X-Api-Key 头
+                    'X-Api-Key': API_KEY
                 },
                 data: JSON.stringify({
                     title: data.title,
@@ -668,6 +673,10 @@
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: API_BASE_URL + '08_tm_get_categories.php',
+                headers: {
+                    // [MODIFIED] 添加 X-Api-Key 头
+                    'X-Api-Key': API_KEY
+                },
                 onload: (response) => {
                     try {
                         const res = JSON.parse(response.responseText);
@@ -694,6 +703,10 @@
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: API_BASE_URL + `08_tm_get_paper_categories.php?doi=${encodeURIComponent(doi)}`,
+                headers: {
+                    // [MODIFIED] 添加 X-Api-Key 头
+                    'X-Api-Key': API_KEY
+                },
                 onload: (response) => {
                     try {
                         const res = JSON.parse(response.responseText);
@@ -872,7 +885,9 @@
                 method: 'POST',
                 url: API_BASE_URL + '08_tm_update_paper_categories.php',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    // [MODIFIED] 添加 X-Api-Key 头
+                    'X-Api-Key': API_KEY
                 },
                 data: JSON.stringify({
                     doi: doi,
