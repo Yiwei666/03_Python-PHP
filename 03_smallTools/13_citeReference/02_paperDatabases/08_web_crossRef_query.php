@@ -200,15 +200,17 @@ header('Content-Type: text/html; charset=utf-8');
 
 <script>
 /**
- * 本示例与之前的脚本逻辑相似，但新增了搜索模式切换(title / doi)。
- * 若搜索模式是title，则使用原来的查询API（可返回多条items）。
- * 若搜索模式是doi，则使用新的API (/works/{DOI}），只会返回一条数据。
+ * 与原脚本逻辑相同，但新增了对后端 API 的认证头部（X-Api-Key）。
+ * CrossRef 公共接口不需要此密钥。
  */
 
 // ======================
 //   全局配置
 // ======================
 const API_BASE_URL = 'https://chaye.one/'; // 与原油猴脚本保持一致
+
+// [MODIFIED] 定义 API_KEY 常量
+const API_KEY = 'YOUR_API_KEY_HERE'; // 请与后端保持一致的密钥
 
 // 用于暂存每条 item 的完整信息
 let currentItemsData = [];
@@ -268,7 +270,6 @@ function searchCrossRef(query) {
         apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=20`;
     } else {
         // 查询 DOI：只返回单一 data.message
-        // 注意：需对传入的 query 做 URL encode 处理
         apiUrl = `https://api.crossref.org/works/${encodeURIComponent(query)}`;
     }
 
@@ -288,7 +289,6 @@ function searchCrossRef(query) {
                 }
             } else {
                 // 处理单条结果
-                // data.message 就是一个对象，与 items[i] 结构相似
                 if (data.message) {
                     // 包装为数组后可重用 displayResults 逻辑
                     currentItemsData = [ data.message ];
@@ -314,14 +314,14 @@ function displayResults(items) {
 
     items.forEach((item, index) => {
         // 解析并收集信息
-        const doi          = item.DOI || '未找到 DOI';
-        const title        = item.title ? item.title.join(' ') : '未找到标题';
-        const journal      = item['container-title'] ? item['container-title'].join(' ') : '未找到期刊名';
-        const publisher    = item.publisher || '未找到出版商';
-        const volume       = item.volume || '未找到卷号';
-        const issue        = item.issue || '未找到期号';
-        const pages        = item.page || '未找到页码';
-        const articleNumber= item['article-number'] || '未找到文章号';
+        const doi           = item.DOI || '未找到 DOI';
+        const title         = item.title ? item.title.join(' ') : '未找到标题';
+        const journal       = item['container-title'] ? item['container-title'].join(' ') : '未找到期刊名';
+        const publisher     = item.publisher || '未找到出版商';
+        const volume        = item.volume || '未找到卷号';
+        const issue         = item.issue || '未找到期号';
+        const pages         = item.page || '未找到页码';
+        const articleNumber = item['article-number'] || '未找到文章号';
 
         // 出版年
         let publicationYear = '未找到出版年';
@@ -554,7 +554,11 @@ function sendPaperData(data) {
     return new Promise((resolve, reject) => {
         fetch(API_BASE_URL + '08_tm_add_paper.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                // [MODIFIED] 添加 X-Api-Key
+                'X-Api-Key': API_KEY
+            },
             body: JSON.stringify({
                 title: data.title,
                 authors: data.fullAuthors,
@@ -584,32 +588,42 @@ function sendPaperData(data) {
 // 获取所有分类
 function fetchCategories() {
     return new Promise((resolve, reject) => {
-        fetch(API_BASE_URL + '08_tm_get_categories.php')
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    resolve(json.categories);
-                } else {
-                    reject(new Error(json.message || '获取分类失败。'));
-                }
-            })
-            .catch(err => reject(err));
+        fetch(API_BASE_URL + '08_tm_get_categories.php', {
+            headers: {
+                // [MODIFIED] 添加 X-Api-Key
+                'X-Api-Key': API_KEY
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                resolve(json.categories);
+            } else {
+                reject(new Error(json.message || '获取分类失败。'));
+            }
+        })
+        .catch(err => reject(err));
     });
 }
 
 // 获取某论文当前的分类
 function fetchPaperCategories(doi) {
     return new Promise((resolve, reject) => {
-        fetch(API_BASE_URL + `08_tm_get_paper_categories.php?doi=${encodeURIComponent(doi)}`)
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    resolve(json.categoryIDs || []);
-                } else {
-                    reject(new Error(json.message || '获取论文分类失败。'));
-                }
-            })
-            .catch(err => reject(err));
+        fetch(API_BASE_URL + `08_tm_get_paper_categories.php?doi=${encodeURIComponent(doi)}`, {
+            headers: {
+                // [MODIFIED] 添加 X-Api-Key
+                'X-Api-Key': API_KEY
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            if (json.success) {
+                resolve(json.categoryIDs || []);
+            } else {
+                reject(new Error(json.message || '获取论文分类失败。'));
+            }
+        })
+        .catch(err => reject(err));
     });
 }
 
@@ -618,7 +632,11 @@ function updatePaperCategories(doi, categoryIDs) {
     return new Promise((resolve, reject) => {
         fetch(API_BASE_URL + '08_tm_update_paper_categories.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                // [MODIFIED] 添加 X-Api-Key
+                'X-Api-Key': API_KEY
+            },
             body: JSON.stringify({ doi, categoryIDs })
         })
         .then(res => res.json())
