@@ -1192,6 +1192,9 @@ if ($copy_return_var != 0) {
 // 配置您的服务器API基础URL
 const API_BASE_URL = 'https://domain.com/'; // 确保末尾有斜杠
 
+// [MODIFIED] 在脚本中添加 API_KEY 用于后端认证，与后端API中的密钥一致
+const API_KEY = 'YOUR_API_KEY_HERE';
+
 // 使用礼貌池提升查询性能
 const apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(reference)}&mailto=GroovyBib@example.org`;
 
