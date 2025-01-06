@@ -34,7 +34,8 @@ loopAudio.php                 # 循环播放指定链接音频
    - [https://github.com/Yiwei666/03_Python-PHP/tree/main/08_pictureEdit/06_imageHost/04_cookie](https://github.com/Yiwei666/03_Python-PHP/tree/main/08_pictureEdit/06_imageHost/04_cookie)
 
 
-
+2. 电影下载和在线观看：
+   - [https://github.com/Yiwei666/03_Python-PHP/tree/main/13_bitTorrent](https://github.com/Yiwei666/03_Python-PHP/tree/main/13_bitTorrent)
 
 
 
