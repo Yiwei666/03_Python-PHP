@@ -10,6 +10,7 @@
 # 1. 功能模块
 08_db_config.php
 08_category_operations.php
+08_api_auth.php                           # php模块，后端API中调用，用于统一处理 API 密钥认证逻辑
 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并分配默认分类
 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
@@ -313,6 +314,53 @@ if ($mysqli->connect_error) {
 $password = '12345678'; // 数据库密码
 $dbname = 'paper_db'; // 数据库名称
 ```
+
+
+
+## 1. `08_api_auth.php`
+
+1. 功能：
+   - 提供 checkApiKey() 函数，验证请求头 X-Api-Key 是否与服务器预设的密钥一致。
+   - 若认证失败，则直接返回 HTTP 401 并终止后续逻辑。
+
+
+2. 代码实现
+
+```php
+<?php
+// 08_api_auth.php
+
+/**
+ * 检查请求头中的 API Key 是否有效。
+ * 如果无效，则返回 401 并终止执行。
+ */
+function checkApiKey() {
+    // 从请求头获取全部 Header
+    $headers = getallheaders();
+
+    // 这里设置服务器端预设的有效 API Key （生产环境建议更安全的存储方式）
+    $validKey = 'YOUR_API_KEY_HERE';
+
+    // 判断是否存在 X-Api-Key 且是否与预设的 validKey 匹配
+    if (!isset($headers['X-Api-Key']) || $headers['X-Api-Key'] !== $validKey) {
+        header('Content-Type: application/json; charset=utf-8');
+        http_response_code(401); // 未授权
+        echo json_encode(['success' => false, 'message' => 'Invalid or missing API key']);
+        exit();
+    }
+}
+```
+
+
+3. 环境变量
+
+生产环境中请将 `YOUR_API_KEY_HERE` 替换为真正的密钥，并确保不要将其暴露在公共仓库中。
+
+```php
+// 这里设置服务器端预设的有效 API Key （生产环境建议更安全的存储方式）
+$validKey = 'YOUR_API_KEY_HERE';
+```
+
 
 
 ## 2. `08_category_operations.php`
