@@ -499,6 +499,9 @@ if ($selectedCategoryID) {
     </div>
 
     <script>
+        // [MODIFIED] 定义 API_KEY 常量
+        const API_KEY = 'YOUR_API_KEY_HERE'; // 与后端 08_api_auth.php 中保持一致
+
         let currentDOI = null;      // 当前正在修改标签的论文的 DOI
         let allCategories = [];     // 所有分类的缓存
 
@@ -518,38 +521,48 @@ if ($selectedCategoryID) {
 
         // 获取所有分类
         function fetchCategories() {
-            fetch('08_tm_get_categories.php')
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        allCategories = data.categories;
-                        fetchPaperCategories(currentDOI);
-                    } else {
-                        alert('获取分类列表失败。');
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert('获取分类列表时出现错误。');
-                });
+            // [MODIFIED] 在请求头中添加 X-Api-Key
+            fetch('08_tm_get_categories.php', {
+                headers: {
+                    'X-Api-Key': API_KEY
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    allCategories = data.categories;
+                    fetchPaperCategories(currentDOI);
+                } else {
+                    alert('获取分类列表失败。');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('获取分类列表时出现错误。');
+            });
         }
 
         // 获取当前论文已勾选的分类
         function fetchPaperCategories(doi) {
-            fetch('08_tm_get_paper_categories.php?doi=' + encodeURIComponent(doi))
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        // 渲染分类复选框，并根据当前论文的分类勾选
-                        renderCategoryCheckboxes(allCategories, data.categoryIDs);
-                    } else {
-                        alert(data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    alert('获取论文分类时出现错误。');
-                });
+            // [MODIFIED] 在请求头中添加 X-Api-Key
+            fetch('08_tm_get_paper_categories.php?doi=' + encodeURIComponent(doi), {
+                headers: {
+                    'X-Api-Key': API_KEY
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // 渲染分类复选框，并根据当前论文的分类勾选
+                    renderCategoryCheckboxes(allCategories, data.categoryIDs);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('获取论文分类时出现错误。');
+            });
         }
 
         // 动态渲染分类复选框（5列布局）
@@ -609,10 +622,12 @@ if ($selectedCategoryID) {
 
         // 调用后端接口更新论文分类
         function updatePaperCategories(doi, categoryIDs) {
+            // [MODIFIED] 在请求头中添加 X-Api-Key
             fetch('08_tm_update_paper_categories.php', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': API_KEY
                 },
                 body: JSON.stringify({ 
                     doi: doi, 
@@ -644,10 +659,12 @@ if ($selectedCategoryID) {
 
         // 更新论文状态（单个）
         function updatePaperStatus(doi, newStatus) {
+            // [MODIFIED] 在请求头中添加 X-Api-Key
             fetch('08_web_update_paper_status.php', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': API_KEY
                 },
                 body: JSON.stringify({ 
                     doi: doi, 
@@ -749,7 +766,8 @@ if ($selectedCategoryID) {
                 return fetch('08_web_update_paper_status.php', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Api-Key': API_KEY  // [MODIFIED]
                     },
                     body: JSON.stringify({ 
                         doi: p.doi, 
