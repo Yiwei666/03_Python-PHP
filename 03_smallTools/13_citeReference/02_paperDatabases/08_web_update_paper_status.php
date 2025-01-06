@@ -7,6 +7,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// [MODIFIED] 引入 API 认证
+require_once '08_api_auth.php';
+checkApiKey();
+
 // 引入数据库及操作模块
 require_once '08_db_config.php';           // 数据库连接
 require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updatePaperStatus()
