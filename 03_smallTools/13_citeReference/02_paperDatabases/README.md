@@ -1040,6 +1040,9 @@ article-number  "150788"
 ```php
 const API_BASE_URL = 'https://domain.com/'; // 与原油猴脚本保持一致，php模块调用
 
+// [MODIFIED] 定义 API_KEY 常量
+const API_KEY = 'YOUR_API_KEY_HERE'; // 请与后端保持一致的密钥
+
 // 可添加 mailto 参数使用API礼貌池提升查询性能
 // apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&rows=20`;
 apiUrl = `https://api.crossref.org/works?query=${encodeURIComponent(query)}&mailto=your-email@example.com&rows=20`;
