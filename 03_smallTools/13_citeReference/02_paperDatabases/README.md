@@ -285,7 +285,7 @@ alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%
 
 # 4. php功能模块
 
-## 1. `08_db_config.php`
+## 1.1 `08_db_config.php`
 
 1. 功能：创建数据库连接对象
 
@@ -317,7 +317,7 @@ $dbname = 'paper_db'; // 数据库名称
 
 
 
-## 1. `08_api_auth.php`
+## 1.2 `08_api_auth.php`
 
 1. 功能：
    - 提供 checkApiKey() 函数，验证请求头 X-Api-Key 是否与服务器预设的密钥一致。
@@ -446,7 +446,7 @@ updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论
 
 
 
-## 3. `08_tm_add_paper.php`
+## 3.1 `08_tm_add_paper.php`
 
 ### 1. 功能
 
@@ -474,7 +474,7 @@ updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论
 
 
 
-## 4. `08_tm_get_categories.php`
+## 3.2 `08_tm_get_categories.php`
 
 ### 1. 功能
 
@@ -496,7 +496,7 @@ require_once '08_category_operations.php';
 
 
 
-## 5. `08_tm_get_paper_categories.php`
+## 3.3 `08_tm_get_paper_categories.php`
 
 ### 1. 功能
 
@@ -521,7 +521,7 @@ require_once '08_category_operations.php';
 
 
 
-## 6. `08_tm_update_paper_categories.php`
+## 3.4 `08_tm_update_paper_categories.php`
 
 ### 1. 功能
 
@@ -549,7 +549,7 @@ require_once '08_category_operations.php';
 
 
 
-## 7. `08_web_Base32.php`              
+## 4.1 `08_web_Base32.php`              
 
 ### 1. 功能
 
@@ -558,7 +558,7 @@ Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，
 
 
 
-## 8. `08_web_update_paper_status.php`     
+## 4.2 `08_web_update_paper_status.php`     
 
 ### 1. 功能
  
@@ -580,6 +580,7 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 
 ### 2. 环境变量
+
 
 
 
