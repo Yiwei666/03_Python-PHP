@@ -747,6 +747,9 @@ require_once '08_web_Base32.php';
 3. JavaScript 中的 AJAX 请求路径，这些脚本用于获取和更新分类及论文状态。
 
 ```js
+// [MODIFIED] 定义 API_KEY 常量
+const API_KEY = 'YOUR_API_KEY_HERE'; // 与后端 08_api_auth.php 中保持一致
+
 // 获取所有分类
 fetch('08_tm_get_categories.php')
 
