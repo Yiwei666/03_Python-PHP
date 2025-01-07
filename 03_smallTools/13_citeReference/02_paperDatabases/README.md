@@ -93,6 +93,7 @@ CREATE TABLE papers (
 );
 ```
 
+
 2. 在 papers 表中新增一个 `status` 列，并使用 ENUM 类型来限制其取值为您指定的六种状态。以下是具体的 SQL 语句：
 
 ```sql
@@ -111,7 +112,35 @@ ADD COLUMN status ENUM('CL', 'C', 'L', 'N', 'DW', 'DL') NOT NULL DEFAULT 'N';
 注意：status列默认值设置为 N
 
 
-3. 添加status列后的`papers` 表
+
+3. 将 `title` 列的长度从 `VARCHAR(255)` 增加到 `VARCHAR(355)`
+
+```sql
+ALTER TABLE papers MODIFY title VARCHAR(355) NOT NULL;
+```
+
+
+4. 可以将 title 列更改为 TEXT 类型：适用于存储变长且可能非常长的文本数据（本项目未采用）
+
+```sql
+ALTER TABLE papers MODIFY title TEXT NOT NULL;
+```
+
+- 使用 `TEXT` 类型的场景
+  - 当 `VARCHAR` 不足以满足需求时，可以考虑使用 `TEXT` 类型
+  - `TINYTEXT`：最多 `255` 字节。
+  - `TEXT`：最多 `65,535` 字节（约 64 KB）。
+  - `MEDIUMTEXT`：最多 `16,777,215` 字节（约 16 MB）。
+  - `LONGTEXT`：最多 `4,294,967,295` 字节（约 4 GB）。
+
+- 特点：
+  - 不支持默认值：与 VARCHAR 不同，TEXT 类型的列不能有默认值。
+  - 索引限制：只能对 TEXT 列的前缀进行索引，无法对整个列进行索引。
+  - 存储方式：TEXT 类型的列通常存储在表外，访问时可能会有性能开销。
+
+
+
+5. 添加status列后的`papers` 表
 
 ```sql
 mysql> describe papers;
@@ -119,7 +148,7 @@ mysql> describe papers;
 | Field            | Type                             | Null | Key | Default | Extra          |
 +------------------+----------------------------------+------+-----+---------+----------------+
 | paperID          | int                              | NO   | PRI | NULL    | auto_increment |
-| title            | varchar(255)                     | NO   |     | NULL    |                |
+| title            | varchar(355)                     | NO   |     | NULL    |                |
 | authors          | text                             | NO   |     | NULL    |                |
 | journal_name     | varchar(255)                     | NO   |     | NULL    |                |
 | publication_year | int                              | NO   |     | NULL    |                |
@@ -132,7 +161,7 @@ mysql> describe papers;
 | publisher        | varchar(255)                     | YES  |     | NULL    |                |
 | status           | enum('CL','C','L','N','DW','DL') | NO   |     | N       |                |
 +------------------+----------------------------------+------+-----+---------+----------------+
-13 rows in set (0.01 sec)
+13 rows in set (0.00 sec)
 ```
 
 
