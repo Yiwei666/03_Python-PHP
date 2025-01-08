@@ -484,7 +484,14 @@ updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论
 
 - 设置响应头：配置返回类型为JSON，并允许跨域POST请求，确保客户端能够正确调用API。
 
-- **加载模块**：引入数据库配置模块 (`08_db_config.php`) 和分类操作模块 (`08_category_operations.php`)，提供数据库连接和分类管理功能。
+- **加载模块**：引入数据库配置模块 (`08_db_config.php`) 和分类操作模块 (`08_category_operations.php`)，提供数据库连接和分类管理功能。执行 API Key 检查
+
+```php
+// 引入数据库配置、API认证和操作模块
+require_once '08_api_auth.php';
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+```
 
 - 接收请求数据：通过 `php://input` 获取POST请求中的原始JSON数据，并解析为PHP数组，用于后续操作。
 
@@ -503,6 +510,8 @@ updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论
 
 
 
+
+
 ## 3.2 `08_tm_get_categories.php`
 
 ### 1. 功能
@@ -512,9 +521,11 @@ updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论
 
 - 设置响应头信息：配置返回类型为JSON，允许跨域访问和GET请求，以确保客户端能够正确访问API并解析返回数据。
 
-- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块包含获取分类的函数 getCategories。
+- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块包含获取分类的函数 getCategories。执行 API Key 检查
 
 ```php
+// 引入数据库配置、API认证和操作模块
+require_once '08_api_auth.php';
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
 ```
@@ -533,9 +544,11 @@ require_once '08_category_operations.php';
 
 - 设置响应头信息：配置返回数据格式为JSON，允许跨域GET请求，确保客户端能够正确访问API并解析返回的数据。
 
-- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块包含查询论文和分类的函数，如 getPaperByDOI 和 getCategoriesByPaperID。
+- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块包含查询论文和分类的函数，如 getPaperByDOI 和 getCategoriesByPaperID。执行 API Key 检查
 
 ```php
+// 引入数据库配置、API认证和操作模块
+require_once '08_api_auth.php';
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
 ```
@@ -559,9 +572,11 @@ require_once '08_category_operations.php';
 
 - 设置响应头信息：配置API返回的数据格式为JSON，允许跨域POST请求，并确保请求头和方法符合规范，支持接收客户端发送的JSON数据。
 
-- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块用于处理论文的查询和分类更新操作。
+- 加载必要模块：引入数据库配置模块提供数据库连接对象 $mysqli，以及分类操作模块用于处理论文的查询和分类更新操作。执行 API Key 检查
 
 ```php
+// 引入数据库配置、API认证和操作模块
+require_once '08_api_auth.php';
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
 ```
@@ -1166,6 +1181,30 @@ if ($copy_return_var != 0) {
 
 
 ## 1. `08_tm_paperManagement.js`
+
+- 文件结构
+
+```js
+08_tm_paperManagement.js
+    08_tm_add_paper.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+    08_tm_get_categories.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+    08_tm_get_paper_categories.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+    08_tm_update_paper_categories.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+```
+
+
 
 ### 1. 编程思路
 
