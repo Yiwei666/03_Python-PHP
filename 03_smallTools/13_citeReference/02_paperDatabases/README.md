@@ -447,6 +447,7 @@ $validKey = 'YOUR_API_KEY_HERE';
 
 ```php
 # 1. 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并分配默认分类
+checkApiKey()                                                        # 执行 API Key 检查 
 getPaperByDOI($mysqli, $doi)                                         # 检查数据库中是否已经存在具有指定 DOI 的论文。
 insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)
                                                                      # 将新的论文信息插入到数据库中。
@@ -454,20 +455,24 @@ assignAllPapersCategory($mysqli, $paperID)                           # 将新插
 
 
 # 2. 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
+checkApiKey()                                                        # 执行 API Key 检查 
 getCategories($mysqli)                 
 
 
 # 3. 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
+checkApiKey()                                                        # 执行 API Key 检查 
 getPaperByDOI($mysqli, $doi)                                         # 通过提供的 DOI（数字对象标识符）从数据库中检索对应的论文记录。
 getCategoriesByPaperID($mysqli, $paperID)                            # 根据论文的 paperID 获取该论文所属的所有分类 ID。
 
 
 # 4. 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
+checkApiKey()                                                        # 执行 API Key 检查 
 getPaperByDOI($mysqli, $doi)                                         # 通过提供的 DOI（数字对象标识符）从数据库中检索对应的论文记录。
 updatePaperCategories($mysqli, $paperID, $categoryIDs)               # 更新指定论文的分类。
 
 
 # 5. 08_web_update_paper_status.php            # 通过 DOI 确认论文存在，并获取其唯一标识 paperID。根据提供的 paperID 更新论文的 status 字段。
+checkApiKey()                                                        # 执行 API Key 检查 
 getPaperByDOI($mysqli, $doi)                                         # 通过提供的 DOI（数字对象标识符）从数据库中检索对应的论文记录。
 updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论文的 paperID 更新其 status 字段。
 
