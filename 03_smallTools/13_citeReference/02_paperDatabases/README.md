@@ -637,6 +637,35 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 ## 1. `08_webAccessPaper.php`
 
+📁 **文件结构**
+
+```php
+08_webAccessPaper.php
+    # 1. 模块调用
+        08_db_config.php
+        08_category_operations.php
+        08_web_Base32.php
+    # 2. 后端API调用
+        08_tm_get_categories.php
+            08_api_auth.php
+            08_db_config.php
+            08_category_operations.php
+        08_tm_get_paper_categories.php
+            08_api_auth.php
+            08_db_config.php
+            08_category_operations.php
+        08_tm_update_paper_categories.php
+            08_api_auth.php
+            08_db_config.php
+            08_category_operations.php
+        08_web_update_paper_status.php
+            08_api_auth.php
+            08_db_config.php
+            08_category_operations.php
+```
+
+
+
 ### 1. 编程思路
 
 💡 **1. 初始思路**
