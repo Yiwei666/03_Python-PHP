@@ -273,7 +273,6 @@ if ($selectedCategoryID) {
         #toolsMenu li {
             margin: 5px 0;
         }
-        /* 工具菜单内的链接也保持与按钮一致的颜色 */
         #toolsMenu a {
             color: #1a0dab;
             text-decoration: none;
@@ -283,48 +282,56 @@ if ($selectedCategoryID) {
         #toolsMenu a:hover {
             text-decoration: underline;
         }
+
+        /* ========== [NEW CODE] 分类管理弹窗样式 ========== */
+        #manageCategoryModal {
+            display: none;
+            position: fixed;
+            top: 10%; 
+            left: 35%; 
+            width: 30%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            z-index: 9999; 
+            box-sizing: border-box;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+        #manageCategoryModal h2 {
+            margin-top: 0;
+        }
+        /* 可以复用同样的遮罩层 overlay，也可单独再写一个。如果复用同一个，记得调用时注意逻辑 */
+        /* 这里使用与 categoryModal 相同的 overlay */
+        #manageCategoryModal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div id="categories-container">
-        <h2>分类管理</h2>
+
+        <!-- [MODIFIED] 将分类管理表单区域移除，只保留“现有分类”部分 -->
+
+        <!-- 显示分类表格 -->
+        <h2 style="display: inline-block;">现有分类</h2>
+
+        <!-- [NEW CODE] 在“现有分类”旁边增加一个“分类管理”按钮，样式与右侧"工具"等按钮统一 -->
+        <button id="manageCategoryBtn" type="button" style="background-color: transparent; border: none; cursor: pointer; color: #1a0dab; font-size: 13px; text-decoration: none; margin-left: 10px;">
+            分类管理
+        </button>
+
+        <!-- [MODIFIED] 显示后端的消息提示，如果有的话 -->
         <?php if ($message): ?>
             <div class="message"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
-        
-        <!-- 创建分类 -->
-        <div class="form-section">
-            <h4>创建分类</h4>
-            <form method="POST">
-                <input type="hidden" name="action" value="create">
-                <input type="text" name="category_name" placeholder="新分类名称" required>
-                <button type="submit">创建</button>
-            </form>
-        </div>
-        
-        <!-- 删除分类 -->
-        <div class="form-section">
-            <h4>删除分类</h4>
-            <form method="POST">
-                <input type="hidden" name="action" value="delete">
-                <input type="text" name="category_name" placeholder="要删除的分类名称" required>
-                <button type="submit">删除</button>
-            </form>
-        </div>
-        
-        <!-- 修改分类 -->
-        <div class="form-section">
-            <h4>修改分类</h4>
-            <form method="POST">
-                <input type="hidden" name="action" value="modify">
-                <input type="text" name="original_category" placeholder="原分类名称" required>
-                <input type="text" name="new_category" placeholder="新分类名称" required>
-                <button type="submit">修改</button>
-            </form>
-        </div>
-        
-        <!-- 显示分类表格 -->
-        <h3>现有分类</h3>
+
         <table>
             <tr>
                 <?php 
@@ -497,6 +504,44 @@ if ($selectedCategoryID) {
         <button id="saveCategoriesBtn">保存</button>
         <button id="cancelCategoriesBtn">取消</button>
     </div>
+
+    <!-- ========== [NEW CODE] 分类管理弹窗 ========== -->
+    <div id="manageCategoryModal">
+        <button class="close-btn" onclick="closeManageModal()">X</button>
+        <h2>分类管理</h2>
+        
+        <!-- 创建分类 -->
+        <div class="form-section">
+            <h4>创建分类</h4>
+            <form method="POST">
+                <input type="hidden" name="action" value="create">
+                <input type="text" name="category_name" placeholder="新分类名称" required>
+                <button type="submit">创建</button>
+            </form>
+        </div>
+        
+        <!-- 删除分类 -->
+        <div class="form-section">
+            <h4>删除分类</h4>
+            <form method="POST">
+                <input type="hidden" name="action" value="delete">
+                <input type="text" name="category_name" placeholder="要删除的分类名称" required>
+                <button type="submit">删除</button>
+            </form>
+        </div>
+        
+        <!-- 修改分类 -->
+        <div class="form-section">
+            <h4>修改分类</h4>
+            <form method="POST">
+                <input type="hidden" name="action" value="modify">
+                <input type="text" name="original_category" placeholder="原分类名称" required>
+                <input type="text" name="new_category" placeholder="新分类名称" required>
+                <button type="submit">修改</button>
+            </form>
+        </div>
+    </div>
+    <!-- ========== [NEW CODE] 分类管理弹窗结束 ========== -->
 
     <script>
         // [MODIFIED] 定义 API_KEY 常量
@@ -790,6 +835,21 @@ if ($selectedCategoryID) {
                     console.error(err);
                     alert('批量更新时出现错误。');
                 });
+        }
+
+        // ====== [NEW CODE] 分类管理弹窗的打开/关闭 ======
+        const manageCategoryBtn = document.getElementById('manageCategoryBtn');
+        const manageCategoryModal = document.getElementById('manageCategoryModal');
+
+        manageCategoryBtn.addEventListener('click', () => {
+            // 使用与 #categoryModal 同一个遮罩层
+            document.getElementById('overlay').style.display = 'block';
+            manageCategoryModal.style.display = 'block';
+        });
+
+        function closeManageModal() {
+            manageCategoryModal.style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
         }
     </script>
 </body>
