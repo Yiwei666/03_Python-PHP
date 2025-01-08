@@ -3,11 +3,15 @@
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *"); // 生产环境请根据需求调整
 header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, X-Api-Key");
 
-// 引入数据库配置和操作模块
+// 引入数据库配置、API认证和操作模块
+require_once '08_api_auth.php';
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
+
+// 执行 API Key 检查
+checkApiKey();
 
 // 获取POST数据
 $data = json_decode(file_get_contents('php://input'), true);
