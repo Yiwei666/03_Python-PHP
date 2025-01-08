@@ -887,7 +887,7 @@ echo '<button type="button" onclick="window.open(\'https://domain.com/08_paperLo
 
 5. 将论文标题链接到 DOI 页面
 
-```php
+```html
 <a href="https://doi.org/<?= htmlspecialchars($paper['doi']) ?>" target="_blank">
     <?php echo $paper['title']; ?>
 </a>
