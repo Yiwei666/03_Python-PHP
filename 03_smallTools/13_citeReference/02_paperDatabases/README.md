@@ -996,6 +996,31 @@ class Base32
 
 ## 3. `08_web_crossRef_query.php`
 
+
+📁 **文件结构**
+
+```php
+08_web_crossRef_query.php
+    08_tm_add_paper.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+    08_tm_get_categories.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+    08_tm_get_paper_categories.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+    08_tm_update_paper_categories.php
+        08_api_auth.php
+        08_db_config.php
+        08_category_operations.php
+```
+
+
+
 ### 1. 编程思路
 
 💡 **1. 初始思路**
@@ -1187,7 +1212,7 @@ if ($copy_return_var != 0) {
 
 ## 1. `08_tm_paperManagement.js`
 
-- 文件结构
+📁 **文件结构**
 
 ```js
 08_tm_paperManagement.js
