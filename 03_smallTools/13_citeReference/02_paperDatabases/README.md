@@ -617,6 +617,7 @@ Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，
 1. 引入外部文件
 
 ```php
+require_once '08_api_auth.php';            // [MODIFIED] 引入 API 认证
 require_once '08_db_config.php';           // 数据库连接
 require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updatePaperStatus()
 ```
@@ -628,7 +629,6 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 核心流程：前端发送带有 doi 和 status 的 JSON 请求 → 服务器获取这两个参数 → 根据 doi 查找对应论文 → 将论文状态更新为新的状态 → 将更新结果以 JSON 格式返回给前端。
 
 
-### 2. 环境变量
 
 
 
