@@ -85,13 +85,14 @@ header('Content-Type: text/html; charset=utf-8');
         .tag-btn {
             background-color: #2196F3; /* 蓝色 */
         }
+        /* ========== 修改分类弹窗的样式 START ========== */
         .category-selection {
             position: fixed;
             top: 70px;
-            right: 50px;
-            width: 320px;
+            left: 10%;             /* 距离左侧 10% */
+            width: 80%;           /* 设置弹窗宽度为页面的 80% */
             max-height: 600px;
-            overflow-y: auto;
+            overflow-y: auto;     /* 超出部分出现纵向滚动条 */
             background-color: #fff;
             border: 1px solid #ccc;
             padding: 15px;
@@ -102,21 +103,6 @@ header('Content-Type: text/html; charset=utf-8');
         }
         .category-selection h3 {
             margin-top: 0;
-        }
-        .category-selection .cat-item {
-            margin-bottom: 8px;
-        }
-        .category-selection .cat-item input[type="checkbox"] {
-            margin-right: 5px;
-        }
-        .save-categories-btn {
-            margin-top: 10px;
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
         }
         .close-cat-btn {
             float: right;
@@ -130,6 +116,31 @@ header('Content-Type: text/html; charset=utf-8');
         .close-cat-btn:hover {
             color: #333;
         }
+        /* 让分类清单以 5 列网格形式展示 */
+        #category-list {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 列 */
+            gap: 8px; /* 列间距和行间距 */
+        }
+        .cat-item {
+            /* 每一个分类项的样式，可以酌情调整间距或对齐 */
+            display: flex;
+            align-items: center;
+        }
+        .cat-item input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .save-categories-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        /* ========== 修改分类弹窗的样式 END ========== */
+
         /* -------------------------
            加载指示器 (Spinner) 样式
            ------------------------- */
