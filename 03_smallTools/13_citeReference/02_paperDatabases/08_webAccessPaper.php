@@ -337,6 +337,7 @@ if ($selectedCategoryID) {
             <tr>
                 <?php 
                 $colCount = 0;
+                // 遍历所有分类
                 foreach ($categories as $category): 
                     $colCount++;
                     // 判断当前分类是否被选中
@@ -415,9 +416,23 @@ if ($selectedCategoryID) {
                                 'doi' => $paper['doi'],
                                 'status' => $paper['status']
                             ];
+
+                            // ========== [NEW CODE] 获取当前论文所属的分类标签 ========== 
+                            // 先拿到该论文所有的 categoryID
+                            $paperCategoryIDs = getCategoriesByPaperID($mysqli, $paper['paperID']);
+                            // 然后根据 $categories 列表映射出分类名称
+                            $paperCategoryNames = [];
+                            foreach ($paperCategoryIDs as $catID) {
+                                foreach ($categories as $cat) {
+                                    if ($cat['categoryID'] == $catID) {
+                                        $paperCategoryNames[] = $cat['category_name'];
+                                        break;
+                                    }
+                                }
+                            }
                         ?>
                         <div class="paper">
-                            <!-- 论文标题（允许包含 <sub> 和 <sup> 等HTML标签） -->
+                            <!-- 第1行: 论文标题（允许包含 <sub> 和 <sup> 等HTML标签） -->
                             <div class="paper-title">
                                 <a href="https://doi.org/<?= htmlspecialchars($paper['doi']) ?>" target="_blank">
                                     <?php 
@@ -426,13 +441,13 @@ if ($selectedCategoryID) {
                                     ?>
                                 </a>
                             </div>
-                            <!-- 元信息，顺序为：年份, 期刊名, 作者 -->
+                            <!-- 第2行: 元信息，顺序为：年份, 期刊名, 作者 -->
                             <p class="paper-meta">
                                 <?= htmlspecialchars($paper['publication_year']) ?>, 
                                 <span class="journal-name"><?= htmlspecialchars($paper['journal_name'], ENT_QUOTES, 'UTF-8', false) ?></span>,
                                 <?= htmlspecialchars($paper['authors']) ?>
                             </p>
-                            <!-- “标签”按钮行 -->
+                            <!-- 第3行: “标签”按钮行 -->
                             <div class="paper-categories">
                                 <!-- 原有 "标签" 功能 -->
                                 <button type="button" onclick="openCategoryModal('<?= htmlspecialchars($paper['doi']) ?>')">
@@ -479,6 +494,13 @@ if ($selectedCategoryID) {
                                     echo '<button type="button" onclick="copyEncodedDOI(\'' . $encodedDOI . '\')">复制编码DOI</button>';
                                 ?>
                             </div>
+                            
+                            <!-- 第4行: 显示当前论文所属的所有分类标签 -->
+                            <?php if (!empty($paperCategoryNames)): ?>
+                                <div style="color: #777; font-size: 11px; margin-top: 5px;">
+                                    分类标签：<?= implode(', ', $paperCategoryNames) ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -565,7 +587,7 @@ if ($selectedCategoryID) {
             fetchCategories();
         }
 
-        // 获取所有分类
+        // 获取所有分类（通过后端API，如果你有相应的php接口文件）
         function fetchCategories() {
             // [MODIFIED] 在请求头中添加 X-Api-Key
             fetch('08_tm_get_categories.php', {
@@ -588,7 +610,7 @@ if ($selectedCategoryID) {
             });
         }
 
-        // 获取当前论文已勾选的分类
+        // 获取当前论文已勾选的分类（通过后端API，如果你有相应的php接口文件）
         function fetchPaperCategories(doi) {
             // [MODIFIED] 在请求头中添加 X-Api-Key
             fetch('08_tm_get_paper_categories.php?doi=' + encodeURIComponent(doi), {
@@ -632,7 +654,7 @@ if ($selectedCategoryID) {
 
                 // 如果是 "0 All papers" (categoryID=1)，不允许用户取消勾选
                 if (catID === '1') {
-                    checked = true;    
+                    checked = true;
                     disabledAttr = 'disabled'; 
                 }
 
@@ -666,7 +688,7 @@ if ($selectedCategoryID) {
             updatePaperCategories(currentDOI, selected);
         });
 
-        // 调用后端接口更新论文分类
+        // 调用后端接口更新论文分类（通过后端API，如果你有相应的php接口文件）
         function updatePaperCategories(doi, categoryIDs) {
             // [MODIFIED] 在请求头中添加 X-Api-Key
             fetch('08_tm_update_paper_categories.php', {
@@ -685,6 +707,8 @@ if ($selectedCategoryID) {
                 if (data.success) {
                     alert('分类更新成功。');
                     closeModal();
+                    // 刷新页面或按需更新UI
+                    window.location.reload();
                 } else {
                     alert(data.message);
                 }
