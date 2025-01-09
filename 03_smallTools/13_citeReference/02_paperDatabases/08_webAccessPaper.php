@@ -129,6 +129,7 @@ if ($selectedCategoryID) {
         /* 去除左侧“现有分类”下所有分类标签的下划线，默认字体为 #222，选中后变为 #d14836 */
         #categories-container table td a {
             text-decoration: none;
+            font-size: 14px; /* 设置为您需要的字体大小 */
         }
         
         #papers-container { 
