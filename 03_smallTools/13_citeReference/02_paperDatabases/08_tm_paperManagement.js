@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Extract Citation Data with DOI Lookup and Complete Reference Info (Base32 added)
 // @namespace    http://tampermonkey.net/
-// @version      1.14
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。增加当部分关键信息缺失时弹窗提示的功能，并在分类窗口中增加关闭和取消按钮。
+// @version      1.16
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。增加当部分关键信息缺失时弹窗提示的功能，并在分类窗口中增加关闭和取消按钮。现将分类界面设置为 5 列显示，宽度设置为屏幕宽度的 80%，并去除每一分类项的边框、减小间距。
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
@@ -727,7 +727,7 @@
         });
     }
 
-    // 显示分类选择界面
+    // [MODIFIED] 显示分类选择界面：改为 5 列布局，窗口宽度 80%，并去掉边框、减小间距
     function displayCategorySelection(categories, paperCategories, doi) {
         let container = document.getElementById('category-selection-container');
         if (!container) {
@@ -735,8 +735,9 @@
             container.id = 'category-selection-container';
             container.style.position = 'fixed';
             container.style.top = '50px';
-            container.style.right = '400px';
-            container.style.width = '300px';
+            container.style.left = '10%';
+            container.style.right = '10%';
+            container.style.width = '80%'; // 窗口的宽度设置为屏幕宽度的80%
             container.style.maxHeight = '600px';
             container.style.padding = '10px';
             container.style.border = '1px solid #ccc';
@@ -764,7 +765,6 @@
         closeButton.addEventListener('click', function () {
             container.style.display = 'none';
         });
-
         container.appendChild(closeButton);
 
         // 标题
@@ -773,14 +773,28 @@
         titleElem.style.marginTop = '0'; // 距离顶部零间距，避免和关闭按钮重叠
         container.appendChild(titleElem);
 
+        // [NEW] 使用一个网格容器来实现5列布局
+        const categoriesGrid = document.createElement('div');
+        categoriesGrid.style.display = 'grid';
+        categoriesGrid.style.gridTemplateColumns = 'repeat(5, 1fr)'; // 5列
+        categoriesGrid.style.columnGap = '5px'; // 减小列间距
+        categoriesGrid.style.rowGap = '1px';    // 减小行间距
+
+        // 逐个分类添加到网格中
         categories.forEach(category => {
+            const catIDNum = parseInt(category.categoryID, 10);
+
+            // 创建一个格子项
+            const gridItem = document.createElement('div');
+            gridItem.style.padding = '2px';      // 减小内边距
+
+            // 原先的边框去掉
+            // gridItem.style.border = '1px solid #ccc';
+
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = `category-${category.categoryID}`;
-            checkbox.value = category.categoryID;
-
-            // 将 categoryID 也转成数字以便匹配
-            const catIDNum = parseInt(category.categoryID, 10);
+            checkbox.value = catIDNum;
 
             // '0 All papers' 实际是 categoryID = 1；必须始终选中、不可取消
             if (catIDNum === 1) {
@@ -796,15 +810,15 @@
             const label = document.createElement('label');
             label.htmlFor = `category-${category.categoryID}`;
             label.textContent = category.category_name;
-            label.style.marginLeft = '5px';
+            label.style.marginLeft = '5px'; // 减小文字与复选框之间的距离
 
-            const div = document.createElement('div');
-            div.style.marginBottom = '5px';
-            div.appendChild(checkbox);
-            div.appendChild(label);
+            gridItem.appendChild(checkbox);
+            gridItem.appendChild(label);
 
-            container.appendChild(div);
+            categoriesGrid.appendChild(gridItem);
         });
+
+        container.appendChild(categoriesGrid);
 
         // 底部按钮容器
         const btnContainer = document.createElement('div');
