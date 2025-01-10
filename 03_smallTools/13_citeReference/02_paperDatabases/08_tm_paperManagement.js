@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         Extract Citation Data with DOI Lookup and Complete Reference Info (Base32 added)
+// @name         Extract Citation Data with DOI Lookup and Complete Reference Info (Base32 + CopyDOI)
 // @namespace    http://tampermonkey.net/
-// @version      1.16
-// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。增加当部分关键信息缺失时弹窗提示的功能，并在分类窗口中增加关闭和取消按钮。现将分类界面设置为 5 列显示，宽度设置为屏幕宽度的 80%，并去除每一分类项的边框、减小间距。
+// @version      1.17
+// @description  提取 Google Scholar 上 GB/T 7714 和 APA 引用，查询 DOI 并显示详细元数据（含分类标签），并将数据写入云服务器数据库并进行分类。新增Base32显示与复制功能，优化按钮垂直居中。增加当部分关键信息缺失时弹窗提示的功能，并在分类窗口中增加关闭和取消按钮。现将分类界面设置为 5 列显示，宽度设置为屏幕宽度的 80%，并去除每一分类项的边框、减小间距。现再新增一个“复制 DOI”按钮，复制 CrossRef API 返回的未编码 DOI。
 // @author
 // @match        https://scholar.google.com/*
 // @match        https://scholar.google.com.hk/*
@@ -82,6 +82,10 @@
     const copyBase32Button = createButton('复制 Base32', 10, 170, '#FF9800');
     copyBase32Button.style.display = 'none';
 
+    // [NEW] 「复制 DOI」按钮（初始隐藏，只有成功获取 doi 后才显示）
+    const copyDOIButton = createButton('复制 DOI', 10, 288, '#5d33bf');
+    copyDOIButton.style.display = 'none';
+
     // 存储提取的论文数据
     let extractedData = {};
 
@@ -93,6 +97,7 @@
         document.body.appendChild(extractButton);
         document.body.appendChild(tagButton);
         document.body.appendChild(copyBase32Button);
+        document.body.appendChild(copyDOIButton);  // [NEW] 将“复制 DOI”按钮添加到页面
 
         // 点击“提取内容并查询 DOI”按钮事件
         extractButton.addEventListener('click', function () {
@@ -169,7 +174,7 @@
                         }
                     })
                     .then(() => {
-                        // 最后才显示标签按钮 & 如果有合法doi则显示Base32复制按钮
+                        // 最后才显示标签按钮 & 如果有合法doi则显示Base32复制按钮 + 复制DOI按钮
                         tagButton.style.display = 'flex';
 
                         if (
@@ -177,8 +182,9 @@
                             extractedData.doi !== '未找到 DOI' &&
                             extractedData.doi !== '查询失败'
                         ) {
-                            // 显示 复制base32 按钮
+                            // 显示 "复制 Base32" 按钮 和 [NEW] "复制 DOI" 按钮
                             copyBase32Button.style.display = 'flex';
+                            copyDOIButton.style.display = 'flex';
                         }
 
                         // 检查并提示缺失信息
@@ -243,6 +249,16 @@
             }
             copyToClipboard(extractedData.doiBase32);
             alert('Base32 已复制到剪贴板！');
+        });
+
+        // [NEW] 点击“复制 DOI”按钮事件
+        copyDOIButton.addEventListener('click', function () {
+            if (!extractedData.doi || extractedData.doi === '未找到 DOI' || extractedData.doi === '查询失败') {
+                alert('未找到可复制的DOI，请先进行查询。');
+                return;
+            }
+            copyToClipboard(extractedData.doi);
+            alert('DOI 已复制到剪贴板！');
         });
     });
 
@@ -788,9 +804,6 @@
             const gridItem = document.createElement('div');
             gridItem.style.padding = '2px';      // 减小内边距
 
-            // 原先的边框去掉
-            // gridItem.style.border = '1px solid #ccc';
-
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = `category-${category.categoryID}`;
@@ -938,7 +951,6 @@
      */
     function toBase32(input) {
         // 1. 转换为 UTF-8 字节数组（如果 DOI 都是 ASCII，其实可以直接取 charCode）
-        //   以防万一，还是做一个简单的 utf8 转换
         const bytes = stringToUtf8Bytes(input);
 
         // 2. 将字节数组转换为二进制字符串
@@ -948,7 +960,6 @@
         }
 
         // 3. 将二进制按 5 位分割
-        //   若末尾不够 5 位则补 0
         const remainder = bitString.length % 5;
         if (remainder !== 0) {
             bitString = bitString.padEnd(bitString.length + (5 - remainder), '0');
