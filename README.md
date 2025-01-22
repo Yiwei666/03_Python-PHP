@@ -38,6 +38,8 @@ loopAudio.php                 # 循环播放指定链接音频
    - [https://github.com/Yiwei666/03_Python-PHP/tree/main/13_bitTorrent](https://github.com/Yiwei666/03_Python-PHP/tree/main/13_bitTorrent)
 
 
+3. Python虚拟环境创建和管理
+   - [https://github.com/Yiwei666/12_blog/blob/main/888/8-008.md](https://github.com/Yiwei666/12_blog/blob/main/888/8-008.md)
 
 
 
