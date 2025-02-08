@@ -41,8 +41,13 @@ loopAudio.php                 # 循环播放指定链接音频
 3. Python虚拟环境创建和管理
    - [https://github.com/Yiwei666/12_blog/blob/main/888/8-008.md](https://github.com/Yiwei666/12_blog/blob/main/888/8-008.md)
 
+
 4. 记录自己在技术上的点滴成长和进步
    - [https://github.com/aweill/note/blob/master/01_milestone.md](https://github.com/aweill/note/blob/master/01_milestone.md)
+
+
+5. 到期服务器备份与服务器新域名更换
+   - [https://github.com/Yiwei666/10_private_code/blob/main/03_crontab/README.md](https://github.com/Yiwei666/10_private_code/blob/main/03_crontab/README.md)
 
 
 
