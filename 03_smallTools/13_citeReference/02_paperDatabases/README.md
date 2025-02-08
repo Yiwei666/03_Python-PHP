@@ -8,8 +8,8 @@
 
 ```php
 # 1. 功能模块
-08_db_config.php
-08_category_operations.php
+08_db_config.php                          # 创建数据库连接对象
+08_category_operations.php                # php模块，实现了对论文及其分类信息的创建、查询、更新和删除（CRUD）功能，并管理了论文与分类之间的关联关系
 08_api_auth.php                           # php模块，后端API中调用，用于统一处理 API 密钥认证逻辑
 08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并分配默认分类
 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
@@ -393,6 +393,8 @@ $validKey = 'YOUR_API_KEY_HERE';
 
 
 ## 2. `08_category_operations.php`
+
+- 功能概述：实现了对论文及其分类信息的创建、查询、更新和删除（CRUD）功能，并管理了论文与分类之间的关联关系
 
 ### 1. 函数功能
 
