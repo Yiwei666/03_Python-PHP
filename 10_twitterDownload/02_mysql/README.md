@@ -683,6 +683,7 @@ alias lwc='ls -l | grep "^-" | wc -l'
 alias rcv='nohup rclone copy /home/01_html/05_twitter_video/  rc6:az1-1/01_html/05_twitter_video/ --transfers=16 &'
 alias rsv='rclone size "rc6:az1-1/01_html/05_twitter_video/"'
 alias rcrv='nohup rclone copy --ignore-existing rc6:az1-1/01_html/05_twitter_video /home/01_html/05_twitter_video &'
+alias sbv='mysqldump -p video_db > /home/01_html/052_video_backup_$(date +%Y%m%d_%H%M%S).sql'
 
 alias sv='nohup node /home/01_html/05_nodejs_sigURL/05_video_mysql_checkURL.js > /home/01_html/05_nodejs_sigURL/nohup.out &'
 alias kv='kill $(pgrep -f "05_video_mysql_checkURL.js")'
