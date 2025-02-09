@@ -13,7 +13,7 @@
 ├── 05_video_management.php                      # 功能模块：将web页面中点赞/踩的action更新到数据库中
 ├── 05_db_status_size.php                        # 写入视频存在状态和大小到mysql数据库中
 ├── 05_db_video_cover.php                        # 生成视频封面，可在后台使用，或在web脚本中调用
-├── 05_rcloneDown_video.php                      # 下载/删除视频，基于数据库中的operation值来操作
+├── 05_rcloneDown_video.php                      # 下载/删除视频，基于数据库中的operation值来操作，cron定时执行
 ├── 05_video_mysql_orderExist.php                # 按照数据库中likes-dislikes值得大小依次显示视频，每页显示固定数量视频
 ├── 05_video_mysql_orderExist_sigURL.php         # 按照数据库中likes-dislikes值得大小依次显示视频，视频的URL采用签名的统一资源定位符，设置有效期并加密
 ├── 05_video_mysql_random.php                    # 随机显示likes-dislikes值在 top 150 范围内的视频
