@@ -1239,6 +1239,9 @@ fetch(API_BASE_URL + '08_tm_update_paper_categories.php', {
 
 ## 1. `08_server_update_paper_status.php`
 
+功能概述：从数据库中读取论文信息，并将 DOI 转换为 Base32 编码的文件名，再通过扫描本地和远程目录来判断文件是否存在，进而自动执行下载或删除操作，并更新数据库中的状态。
+
+
 ### 1. 编程思路
 
 1. 获取paper_db数据库中papers表格中所有论文的doi和status，
@@ -1287,7 +1290,18 @@ if ($copy_return_var != 0) {
 
 ### 2. 环境变量
 
+```php
+// 配置部分
+$db_host     = 'localhost';          // 数据库主机
+$db_name     = 'paper_db';           // 数据库名称
+$db_user     = 'root';               // 数据库用户名
+$db_password = '123456';           // 数据库密码
 
+// 本地目录(A)
+$local_dir   = '/home/01_html/08_paperLocalStorage';
+// 远程目录(B)
+$remote_dir  = 'rc4:/3图书/13_paperRemoteStorage';
+```
 
 
 
