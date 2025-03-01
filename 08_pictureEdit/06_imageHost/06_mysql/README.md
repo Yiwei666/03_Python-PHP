@@ -501,6 +501,8 @@ include '08_db_config.php';                                      // 包含数据
 
 3. 新功能6：将允许用户选择将特定范围内的 `likes-dislikes` 的图片复制到指定的目录。
 
+4. 新增功能8：统计 likes 在 `[a, b]` 区间内的图片文件，列出文件名并在用户确认后删除这些文件，同时显示删除后的剩余图片数量和与数据库记录的差值。与功能4相对应。
+
 - 该脚本中需要初始化的参数如下所示
 
 ```php
@@ -517,6 +519,9 @@ $project_folder = '/home/01_html/08_x/image/01_imageHost/';      // 替换为项
 # 功能6
 $destination_folder = '/home/01_html/08_x/image/06_picVideo/';
 $source_file = "/home/01_html/08_x/image/01_imageHost/" . $row['image_name'];
+
+# 功能8
+$project_folder = '/home/01_html/08_x/image/01_imageHost/'; // 替换为项目文件夹的路径
 ```
 
 
