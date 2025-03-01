@@ -25,7 +25,8 @@ echo "4. Count images with dislikes between [$a, $b] and delete corresponding fi
 echo "5. Count images with likes and dislikes between [$a, $b] where image_exists is 1\n";
 echo "6. Copy images with likes-dislikes in range [$a, $b] to another directory\n";
 echo "7. Count images with image_exists = 1 and likes in range [$a, $b]\n";
-echo "Enter option (1/2/3/4/5/6/7): ";
+echo "8. Count images with likes between [$a, $b] and delete corresponding files\n";
+echo "Enter option (1/2/3/4/5/6/7/8): ";
 $option = trim(fgets(STDIN));
 
 // 获取图片总数
@@ -166,6 +167,60 @@ elseif ($option == '7') {
         echo "Likes = $i: $count images\n";
     }
     echo "Total images in the database: $total_images\n";
+}
+
+// 功能 8：打印 likes 在 [a, b] 之间的图片数量，删除相关文件
+elseif ($option == '8') {
+    // 获取 likes 在 [a, b] 之间的所有图片文件名称
+    $files_result = $mysqli->query("SELECT image_name FROM images WHERE likes BETWEEN $a AND $b");
+    $project_folder = '/home/01_html/08_x/image/01_imageHost/'; // 替换为项目文件夹的路径
+    $files_to_delete = [];
+    
+    // 检查每个文件是否存在
+    while ($row = $files_result->fetch_assoc()) {
+        $file_path = $project_folder . $row['image_name'];
+        if (file_exists($file_path)) {
+            $files_to_delete[] = $row['image_name'];
+        }
+    }
+
+    // 打印待删除文件的数量和名称
+    $num_files_to_delete = count($files_to_delete);
+    if ($num_files_to_delete > 0) {
+        echo "Number of files to be deleted: $num_files_to_delete\n";
+        echo "Files to be deleted:\n";
+        foreach ($files_to_delete as $file) {
+            echo $file . "\n";
+        }
+
+        // 确认是否删除文件，只输入 y 或 n
+        echo "Do you want to delete these files? (y/n): ";
+        $confirmation = strtolower(trim(fgets(STDIN)));
+
+        if ($confirmation == 'y') {
+            foreach ($files_to_delete as $file) {
+                $file_path = $project_folder . $file;
+
+                // 删除文件
+                if (file_exists($file_path)) {
+                    unlink($file_path);
+                }
+            }
+
+            // 获取删除后的项目文件夹中剩余文件
+            $remaining_files = array_diff(scandir($project_folder), ['..', '.']);
+            $remaining_files_count = count($remaining_files);
+
+            // 打印删除后的文件总数，并计算与数据库记录的差值
+            echo "Remaining images in the project folder: " . $remaining_files_count . "\n";
+            echo "Total images in the database: " . $total_images . "\n";
+            echo "Difference between database and project folder: " . ($total_images - $remaining_files_count) . "\n";
+        } else {
+            echo "Deletion cancelled.\n";
+        }
+    } else {
+        echo "No files to delete with likes between [$a, $b].\n";
+    }
 }
 
 // 无效选项处理
