@@ -310,6 +310,24 @@ WHERE paperID = 345;
 ```
 
 
+5. 查找 `doi` 值相同（重复）的行
+
+```sql
+SELECT * FROM papers  
+WHERE doi IN (  
+    SELECT doi  
+    FROM papers  
+    WHERE doi IS NOT NULL AND doi <> ''  
+    GROUP BY doi  
+    HAVING COUNT(*) > 1  
+)  
+ORDER BY doi;
+```
+
+- `GROUP BY doi`：按 doi 分组。
+- `COUNT(*) > 1`：筛选出 doi 出现次数大于 1 的行，即重复的 doi。
+- `WHERE doi IS NOT NULL AND doi <> ''`：排除 NULL 和空字符串的 doi 值，以免影响结果。
+
 
 
 ### 2. 别名alias
