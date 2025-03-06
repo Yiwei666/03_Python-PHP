@@ -12,14 +12,13 @@
  * 注意：请根据实际环境修改：
  * - 数据库连接参数
  * - Base32 编码函数
- * - rclone 命令获取远程文件列表方式
+ * - rclone 命令获取远程文件列表方式(此处改为递归获取)
  * - rclone copy 命令路径
  * - 错误处理和日志记录方式
  */
 
 /**
- * Base32 编码和解码类
- * 符合 RFC 4648 标准
+ * Base32 编码和解码类 (符合 RFC 4648 标准)
  */
 class Base32
 {
@@ -102,15 +101,16 @@ class Base32
     }
 }
 
-// 配置部分
+// ============ 配置部分 =============
 $db_host     = 'localhost';          // 数据库主机
 $db_name     = 'paper_db';           // 数据库名称
 $db_user     = 'root';               // 数据库用户名
-$db_password = '123456';           // 数据库密码
+$db_password = '123456';             // 数据库密码
 
 // 本地目录(A)
 $local_dir   = '/home/01_html/08_paperLocalStorage';
 // 远程目录(B)
+// 注意：此处的远程目录可能包含若干子目录
 $remote_dir  = 'rc4:/3图书/13_paperRemoteStorage';
 
 // 1. 连接数据库
@@ -126,8 +126,9 @@ try {
 // 2. 获取本地目录(A)下所有PDF文件名（Base32）
 $local_files = getLocalPdfFiles($local_dir); // 返回不含路径的文件名数组，如 ["ABCD....pdf", "XYZ...pdf", ...]
 
-// 3. 获取远程目录(B)下所有PDF文件名（Base32）
-$remote_files = getRemotePdfFiles($remote_dir); // 返回 ["ABCD....pdf", "XYZ...pdf", ...]
+// 3. 获取远程目录(B)及其子目录下所有PDF文件
+//    注意这里返回的是 关联数组：['ABCD.pdf' => 'subdir1/ABCD.pdf', 'XYZ.pdf' => 'subdir2/XYZ.pdf', ...]
+$remote_files = getRemotePdfFiles($remote_dir);
 
 // 4. 从数据库获取所有 paperID, doi, status
 $sql = "SELECT paperID, doi, status FROM papers";
@@ -145,21 +146,27 @@ foreach ($papers as $paper) {
 
     // 判断文件是否存在于本地/远程
     $inLocal  = in_array($base32Filename, $local_files, true);
-    $inRemote = in_array($base32Filename, $remote_files, true);
+    // 注意这里改用 array_key_exists 来判断是否在远程存在
+    $inRemote = array_key_exists($base32Filename, $remote_files);
 
     // 如果状态是 DW => 执行 rclone 下载，然后设置为 CL（若成功）
     if ($status === 'DW') {
         echo "[paperID={$paperID}, doi={$doi}] status=DW => 准备从远程下载\n";
-        $download_ok = rcloneDownload($remote_dir, $local_dir, $base32Filename);
-        if ($download_ok) {
-            updateStatus($pdo, $paperID, 'CL');
-            echo "[paperID={$paperID}, doi={$doi}] 下载成功 => status 改为 CL\n";
-            // 下载成功后，本地也就存在了该文件，可根据需要更新 $local_files 数组
-            $local_files[] = $base32Filename;
+        if ($inRemote) {
+            // 远程文件相对路径
+            $remoteRelativePath = $remote_files[$base32Filename];
+            $download_ok = rcloneDownload($remote_dir, $local_dir, $remoteRelativePath);
+            if ($download_ok) {
+                updateStatus($pdo, $paperID, 'CL');
+                echo "[paperID={$paperID}, doi={$doi}] 下载成功 => status 改为 CL\n";
+                // 下载成功后，本地也就存在了该文件，可根据需要更新 $local_files 数组
+                $local_files[] = $base32Filename;
+            } else {
+                echo "[paperID={$paperID}, doi={$doi}] 下载失败，status 不变\n";
+            }
         } else {
-            echo "[paperID={$paperID}, doi={$doi}] 下载失败，status 不变\n";
+            echo "[paperID={$paperID}, doi={$doi}] 远程不存在该文件，无法下载\n";
         }
-        // 处理完 DW，继续下一条
         continue;
     }
 
@@ -175,7 +182,6 @@ foreach ($papers as $paper) {
         } else {
             echo "[paperID={$paperID}, doi={$doi}] 删除失败，status 不变\n";
         }
-        // 处理完 DL，继续下一条
         continue;
     }
 
@@ -207,7 +213,7 @@ foreach ($papers as $paper) {
     }
 }
 
-// 相关函数定义
+// ============ 相关函数定义 ============
 
 /**
  * 从本地目录获取所有 PDF 文件名（不含子目录）
@@ -226,26 +232,39 @@ function getLocalPdfFiles(string $dir): array
 }
 
 /**
- * 从远程目录获取所有 PDF 文件名，使用 rclone
- * 这里示例使用 `rclone lsf --files-only`, 输出就直接是文件名
+ * 从远程目录获取所有 PDF 文件名（包含子目录），使用 rclone
+ * 这里示例使用 `rclone lsf --recursive --files-only`, 输出就直接是相对于 remote_dir 的子路径
+ * 如 "subdirA/SomeFile.pdf", "subdirB/ABC.pdf" 等
+ *
+ * 返回格式：['SomeFile.pdf' => 'subdirA/SomeFile.pdf', 'ABC.pdf' => 'subdirB/ABC.pdf', ...]
+ *
  * @param string $remote_dir
  * @return array
  */
 function getRemotePdfFiles(string $remote_dir): array
 {
     $files = [];
-    $command = "rclone lsf --files-only \"{$remote_dir}\"";
+    // -R 或 --recursive 可以递归列出子目录
+    $command = "rclone lsf --recursive --files-only \"{$remote_dir}\"";
     exec($command, $output, $return_var);
     if ($return_var !== 0) {
         echo "[Error] 获取远程目录文件列表失败\n";
         return $files; // 空数组
     }
 
-    // $output 数组每行就是一个文件名，比如 "XXXXX.pdf"
+    // $output 数组每行可能是 "subdir/xxxxx.pdf"
     foreach ($output as $line) {
         $line = trim($line);
-        if (strlen($line) > 0 && substr($line, -4) === '.pdf') {
-            $files[] = $line;
+        // 跳过空行
+        if ($line === '') {
+            continue;
+        }
+        $filename = basename($line);
+        // 判断是否是 .pdf 文件
+        if (substr($filename, -4) === '.pdf') {
+            // 将 basename 作为 key，完整子路径作为 value
+            // 若同名文件在多个子目录出现，这里后出现的会覆盖前一个（如有需要可自行处理冲突）
+            $files[$filename] = $line;
         }
     }
 
@@ -254,23 +273,25 @@ function getRemotePdfFiles(string $remote_dir): array
 
 /**
  * 调用 rclone 进行下载
- * @param string $remoteDir     远程目录
- * @param string $localDir      本地目录
- * @param string $fileName      文件名（含 .pdf）
- * @return bool                 是否下载成功
+ * @param string $remoteDir       远程主目录 (如 "rc4:/3图书/13_paperRemoteStorage")
+ * @param string $localDir        本地目录
+ * @param string $remoteSubPath   远程文件相对路径 (如 "subdirA/XXXX.pdf")
+ * @return bool                   是否下载成功
  */
-function rcloneDownload(string $remoteDir, string $localDir, string $fileName): bool
+function rcloneDownload(string $remoteDir, string $localDir, string $remoteSubPath): bool
 {
-    $remoteFilePath = "{$remoteDir}/{$fileName}";
-    // 这里只指定到目录，rclone 会复制到该目录下，文件名不变
+    // 组合出完整的远程文件路径，例如 "rc4:/3图书/13_paperRemoteStorage/subdirA/XXXX.pdf"
+    $remoteFilePath = rtrim($remoteDir, '/') . '/' . $remoteSubPath;
+
+    // 这里只指定到本地目录，rclone 会将文件复制到该目录下，文件名不变
     $copyCommand = "rclone copy \"{$remoteFilePath}\" \"{$localDir}\"";
     exec($copyCommand, $copyOutput, $copyReturnVar);
 
     if ($copyReturnVar !== 0) {
-        echo "[Error] Failed to copy {$fileName} from remote. Error code = {$copyReturnVar}\n";
+        echo "[Error] Failed to copy {$remoteSubPath} from remote. Error code = {$copyReturnVar}\n";
         return false;
     } else {
-        echo "[Info] Copied {$fileName} successfully\n";
+        echo "[Info] Copied {$remoteSubPath} successfully\n";
         return true;
     }
 }
