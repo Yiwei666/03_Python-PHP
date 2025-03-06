@@ -1309,7 +1309,7 @@ if ($copy_return_var != 0) {
 
 💡 **2. 新增思路**
 
-1. 初始代码适用于所有远程pdf文件均位于 `$remote_dir  = 'rc4:/3图书/13_paperRemoteStorage';`  目录下，
+1. 初始代码适用于所有远程pdf文件均位于 `$remote_dir  = 'rc4:/3图书/13_paperRemoteStorage';`  目录下
 2. 假如 `'rc4:/3图书/13_paperRemoteStorage'` 目录下新增若干子目录，pdf 文件均分散位于这些子目录中，上述代码在获取远程存储的 PDF 文件时如何获取到所有这些子目录中的文件呢？使用 rclone copy 将远程 PDF 下载到本地时，如何确定相应pdf文件位于哪个对应子目录呢？
 3. 由于现在我想要将 `'rc4:/3图书/13_paperRemoteStorage'` 目录下的所有pdf文件均分散存储到该路径下的子目录中，需要考虑上面这些问题。
 
