@@ -32,6 +32,8 @@
 # 4. 服务器端脚本
 08_server_update_paper_status.php         # 更新数据库中论文状态码、基于论文状态码执行下载、删除等操作，可用于cron定时执行
 
+# 5. 客户端脚本
+08_client_doi_base32_scidownl.py          # 在windows客户端上输入doi号，下载对应pdf论文，使用doi号的base32编码进行命名
 ```
 
 ### 2. 项目思路
