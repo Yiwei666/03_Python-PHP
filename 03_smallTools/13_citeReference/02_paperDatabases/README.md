@@ -1519,6 +1519,48 @@ url: API_BASE_URL + '08_tm_update_paper_categories.php',
 1. `@connect` 指令用于声明脚本可以进行跨域请求的目标域。这是 Tampermonkey 的安全机制，确保脚本只能与指定的域进行通信。
 
 
+# 8. 客户端脚本
+
+### 1. 编程思路
+
+1. 请编写一个python脚本，提示用户输入一个论文doi号，例如：`"10.1063/1.446740"`，然后使用scidownl的如下下载命令下载论文至  `"C:\Users\sun78\下载_chrome"` 路径下。注意，下载的pdf 命名使用 doi 号的base32编码，例如 `"10.1063/1.446740"` base32 编码后是`"GEYC4MJQGYZS6MJOGQ2DMNZUGA======"`，下载命令如下：
+
+```py
+scidownl download --doi 10.1063/1.446740 --out "C:\Users\sun78\下载_chrome\GEYC4MJQGYZS6MJOGQ2DMNZUGA======.pdf"
+```
+
+2. base32编码的实现规则请参考如下php代码（需要使用python来实现），输出修改后的完整代码。
+
+
+
+### 2. 环境变量
+
+```py
+# 拼接出最终的保存路径（Windows 环境下注意转义反斜杠）
+# save_path = f"C:\\Users\\sun78\\下载_chrome\\{encoded_doi}.pdf"
+save_path = f"C:\\Users\\sun78\\Desktop\\Al_rdf\\{encoded_doi}.pdf"
+```
+
+### 3. scidownl模块
+
+- scidownl 文档：https://pypi.org/project/scidownl/
+
+- Quick usage
+
+```py
+# Download with a DOI and filenmae is the paper's title.
+$ scidownl download --doi https://doi.org/10.1145/3375633
+
+# Download with a PMID and a user-defined filepath
+$ scidownl download --pmid 31395057 --out ./paper/paper-1.pdf
+
+# Download with a title
+$ scidownl download --title "ImageNet Classification with Deep Convolutional Neural Networks" --out ./paper/paper-1.pdf
+
+# Download with a proxy: SCHEME=PROXY_ADDRESS 
+$ scidownl download --pmid 31395057 --out ./paper/paper-1.pdf --proxy http=socks5://127.0.0.1:7890
+```
+
 
 
 
