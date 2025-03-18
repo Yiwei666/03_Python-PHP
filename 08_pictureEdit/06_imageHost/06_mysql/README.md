@@ -80,9 +80,9 @@ mysql> describe images;
 - images 表存储每张图片的基本信息。
 - Categories 表存储所有可能的分类。
 - PicCategories 表实现 images 与 Categories 之间的多对多关系，每条记录表示一张图片属于一个分类。
-- Categories和PicCategories的操作不能够影响images表中的数据。
+- Categories 和 PicCategories 的操作不能够影响 images 表中的数据。
 
-现在需要创建Categories和PicCategories表，请给出mysql操作命令。
+现在需要创建 Categories 和 PicCategories 表，请给出mysql操作命令。
 
 ```mysql
 USE image_db;
