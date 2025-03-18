@@ -114,6 +114,27 @@ CREATE TABLE PicCategories (
 ```
 
 
+- `Categories` 和 `PicCategories` 表结构
+
+```
+mysql> describe Categories;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id            | int          | NO   | PRI | NULL    | auto_increment |
+| category_name | varchar(255) | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+
+mysql> describe PicCategories;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| image_id    | int  | NO   | PRI | NULL    |       |
+| category_id | int  | NO   | PRI | NULL    |       |
++-------------+------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+```
 
 
 # 3. php功能模块
