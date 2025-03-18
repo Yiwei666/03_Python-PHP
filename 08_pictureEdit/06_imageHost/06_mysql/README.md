@@ -71,7 +71,7 @@ mysql> describe images;
 6 rows in set (0.04 sec)
 ```
 
-### 2. `Categories`和`PicCategories`表
+### 2. `Categories`父表和`PicCategories`子表
 
 ```mysql
 USE image_db;
