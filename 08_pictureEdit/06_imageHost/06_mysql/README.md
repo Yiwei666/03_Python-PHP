@@ -7,6 +7,9 @@
 
 # 2. 文件结构
 
+## 1. 文件结构
+
+
 ```bash
 # 1. 功能模块
 08_db_config.php                               # 通常包含数据库连接信息如服务器地址、用户名、密码等
@@ -48,6 +51,59 @@
 
 08_image_rclone_top30.php                          # 从图片数据库中随机选取150张点赞数大于等于29的图片，进行下载
 ```
+
+## 2. 数据库和表
+
+### 1. `images`父表
+
+```
+mysql> describe images;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int          | NO   | PRI | NULL    | auto_increment |
+| image_name   | varchar(255) | NO   |     | NULL    |                |
+| likes        | int          | YES  |     | 0       |                |
+| dislikes     | int          | YES  |     | 0       |                |
+| image_exists | tinyint      | YES  |     | 0       |                |
+| star         | tinyint(1)   | YES  |     | 0       |                |
++--------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.04 sec)
+```
+
+### 2. `Categories`和`PicCategories`表
+
+```mysql
+USE image_db;
+
+
+-- 创建 Categories 表
+CREATE TABLE Categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  category_name VARCHAR(255) NOT NULL
+) ENGINE=InnoDB;
+
+
+-- 创建 PicCategories 表，实现 images 和 Categories 的多对多关系，
+-- 并在外键约束后加 ON DELETE CASCADE ON UPDATE CASCADE
+-- 当父表记录被删除/更新时，子表自动执行相应操作
+CREATE TABLE PicCategories (
+  image_id INT NOT NULL,
+  category_id INT NOT NULL,
+  PRIMARY KEY (image_id, category_id),
+  FOREIGN KEY (image_id) 
+    REFERENCES images(id)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE,
+  FOREIGN KEY (category_id) 
+    REFERENCES Categories(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+```
+
+
+
 
 # 3. php功能模块
 
