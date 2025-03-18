@@ -54,7 +54,7 @@
 
 ## 2. 数据库和表
 
-### 1. `images`父表
+### 1. `images` 父表
 
 ```
 mysql> describe images;
@@ -71,7 +71,18 @@ mysql> describe images;
 6 rows in set (0.04 sec)
 ```
 
-### 2. `Categories`父表和`PicCategories`子表
+### 2. `Categories` 父表和`PicCategories` 子表
+
+💡 **数据库构建思路**
+
+如上所示，`image_db`图片数据库中有一个`images`表，里面存储了多张图片的元数据，包括每一张图片的id， 图片名，点赞数，点踩数，状态，受否被收藏等信息。每条数据在mysql数据库中占据一行，大概有几万条数据。现在需要对每张图片进行分类管理。下面是我的初步方案
+- 方案：使用三个表来规范化数据，images表存储图片信息（已经创建并存有数据），Categories 表存储分类信息（未创建），PicCategories 表存储图片与分类的关联（未创建）。
+- images 表存储每张图片的基本信息。
+- Categories 表存储所有可能的分类。
+- PicCategories 表实现 images 与 Categories 之间的多对多关系，每条记录表示一张图片属于一个分类。
+- Categories和PicCategories的操作不能够影响images表中的数据。
+
+现在需要创建Categories和PicCategories表，请给出mysql操作命令。
 
 ```mysql
 USE image_db;
