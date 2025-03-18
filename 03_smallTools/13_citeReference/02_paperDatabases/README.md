@@ -1521,6 +1521,8 @@ url: API_BASE_URL + '08_tm_update_paper_categories.php',
 
 # 8. 客户端脚本
 
+## 1. `08_client_doi_base32_scidownl.py`
+
 ### 1. 编程思路
 
 1. 请编写一个python脚本，提示用户输入一个论文doi号，例如：`"10.1063/1.446740"`，然后使用scidownl的如下下载命令下载论文至  `"C:\Users\sun78\下载_chrome"` 路径下。注意，下载的pdf 命名使用 doi 号的base32编码，例如 `"10.1063/1.446740"` base32 编码后是`"GEYC4MJQGYZS6MJOGQ2DMNZUGA======"`，下载命令如下：
