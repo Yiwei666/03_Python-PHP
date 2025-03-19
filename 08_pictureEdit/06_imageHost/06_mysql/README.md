@@ -836,7 +836,9 @@ fetch('08_image_management.php', {
    - 只显示图片目录中实际存在的图片，页面中没有图片空白缺失
 
 
-### 4. `08_picDisplay_mysql_orderExistTab.php`
+## 4. `08_picDisplay_mysql_orderExistTab.php`
+
+### 1. 功能
 
 -  在`08_picDisplay_mysql_orderExist.php`基础上进行改进，保留了原有功能，新增在新标签页打开图片的按钮。
 
@@ -848,7 +850,7 @@ fetch('08_image_management.php', {
    - 新增收藏或取消图标，调用 `08_db_toggle_star.php` 模块
 
 
-2. 环境变量
+### 2. 环境变量
 
 ```php
 $key = 'singin-key-1'; // 应与加密时使用的密钥相同
@@ -890,13 +892,17 @@ fetch('08_db_toggle_star.php', {
 - 没有在web脚本调用`08_db_image_status.php`模块，主要是考虑到尽量减少页面加载时间。理论上来说，`08_db_image_status.php`模块应当仅在后台手动运行的脚本中调用，避免错误上传的图片污染mysql数据库。
 
 
-3. 新增在新标签页打开图片的代码仅一行
+### 3. 模块调用方法
+
+1. 新增在新标签页打开图片的代码仅一行
 
 ```js
 <button onclick="window.open('<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>', '_blank')">🔗</button>
 ```
 
-4. 点击🔁按钮，在新标签页打开图片，并实现图片顺序切换。该功能在本脚本的相关代码仅一行。
+2. `08_db_toggle_star.php` 模块调用较复杂，参考上面相应小节。
+
+3. `08_image_leftRight_navigation.php` 模块调用：点击🔁按钮，在新标签页打开图片，并实现图片顺序切换。该功能在本脚本的相关代码仅一行。
     - 点击🔁按钮，传递`id和sort`参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。`08_image_leftRight_navigation.php`模块名需要根据实际情况调整。
 
 ```html
@@ -904,7 +910,10 @@ fetch('08_db_toggle_star.php', {
 ```
 
 
-### 5. `08_picDisplay_mysql_galleryExistTab.php`
+
+
+
+## 5. `08_picDisplay_mysql_galleryExistTab.php`
 
 -  在`08_picDisplay_mysql_galleryExist.php`基础上进行改进，保留了原有功能，新增在新标签页打开图片的按钮。
 
