@@ -566,6 +566,28 @@ fetch('08_db_toggle_star.php', {
 
 
 
+4. **08_image_leftRight_navigation_voteStar.php系列脚本主要区别**
+
+```php
+// 从数据库中获取所有本地存在的图片
+// 08_image_leftRight_navigation.php
+$query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
+
+// 从数据库中获取所有本地存在的图片以及star值
+// 08_image_leftRight_navigation_voteStar.php
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1";
+
+// 从数据库中获取所有本地存在且star为1的图片
+// 08_image_leftRight_navigation_starT.php
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1";
+
+// 从数据库中获取所有本地存在且star为0的图片
+// 08_image_leftRight_navigation_starF.php
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 0";
+```
+
+
+
 # 4. 后台管理脚本
 
 
