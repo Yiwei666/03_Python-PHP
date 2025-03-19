@@ -520,7 +520,7 @@ function toggleStar(imageId) {
 
 ### 7. `08_image_leftRight_navigation_voteStar.php` 点赞+收藏
 
-1. 功能：图片左右切换+点赞/踩+收藏，是 `08_image_leftRight_navigation.php` 升级版本
+1. 功能：图片左右切换+点赞/踩+收藏，是 `08_image_leftRight_navigation.php` 升级版本。相比于 `08_image_leftRight_navigation.php` 代码，新增了点赞/点踩、收藏图标以及相应模块的调用；针对不同客户端（电脑/手机），新增了图标尺寸的优化。
 
 2. 环境变量
 
