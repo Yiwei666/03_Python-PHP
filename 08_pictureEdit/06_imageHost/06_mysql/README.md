@@ -566,7 +566,7 @@ fetch('08_db_toggle_star.php', {
 
 
 
-4. **08_image_leftRight_navigation_voteStar.php系列脚本主要区别**
+4. **`08_image_leftRight_navigation_voteStar.php` 系列脚本主要区别**
 
 ```php
 // 从数据库中获取所有本地存在的图片
