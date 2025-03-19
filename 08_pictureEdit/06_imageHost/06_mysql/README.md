@@ -559,11 +559,10 @@ fetch('08_db_toggle_star.php', {
 通常在 `08_picDisplay_mysql_galleryExistTab.php ` 、 `08_picDisplay_mysql_orderExistTab.php`等脚本中调用本模块，点击🔁按钮，传递 `id` 和 `sort` 参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
 
 ```html
-<button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
+<button onclick="window.open('08_image_leftRight_navigation_voteStar.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
 ```
 
-注意：该模块 `08_image_leftRight_navigation_voteStar.php` 与 `08_image_leftRight_navigation.php` 模块的调用方式相同。
-
+注意：该模块 `08_image_leftRight_navigation_voteStar.php` 与 `08_image_leftRight_navigation.php` 模块的调用方式相同。排序1（sort=1）：按照 (likes - dislikes) 的差值进行降序排序。排序2（sort=2）：保持数据库中的默认排序（不做额外排序处理）。
 
 
 
