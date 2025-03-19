@@ -24,6 +24,7 @@
 08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
 08_image_dislikes_delete.php               # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
 08_image_rclone_replace.php                # 随机替换目录下的图片，确保目录下的总图片数为5000
+08_server_manage_categories.php            # 在后台中通过命令行对图片分类进行增删查改
 
 # 3. web交互
 08_picDisplay_mysql.php                    # 点赞图标位于图片外右侧居中，能够写入图片名到数据库，随机显示数据库中的 n 张图片
@@ -667,6 +668,22 @@ alias pmd='pm2 delete /home/01_html/08_x_nodejs/08_pic_url_check.js'
 alias pml='pm2 list'
 alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 ```
+
+
+### 4. `08_server_manage_categories.php` 图片分类管理
+
+💡 **1. 初始编程思路**
+
+现在需要编写一个php脚本，在终端运行该脚本时，通过调用 `08_db_config.php` 模块连接到数据库，然后显示如下三个选项，用户通过输入序号进行选择：
+1. 在 Categories 表中创建一个新的图片分类，创建时需要检查表中是否已经存在同名的图片分类，如果不存在则创建
+2. 修改 Categories 表中的图片分类名，分别提示用户输入待修改的分类名，以及新的分类名，同样需要检测分类名（待修改的分类名，以及新的分类名）是否存在再进行后续操作
+3. 删除 Categories 表中的图片分类名，删除前需要确认图片名是否存在
+表中上述增删查改最后实施前，还需要提示用户确认，输入y表示确认执行。执行完成后，在页面打印出  Categories 表的内容。
+
+
+
+
+
 
 
 # 5. web交互脚本
