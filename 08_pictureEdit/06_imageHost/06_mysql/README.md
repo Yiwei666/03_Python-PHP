@@ -915,6 +915,8 @@ fetch('08_db_toggle_star.php', {
 
 ## 5. `08_picDisplay_mysql_galleryExistTab.php`
 
+### 1. 功能特性
+
 -  在`08_picDisplay_mysql_galleryExist.php`基础上进行改进，保留了原有功能，新增在新标签页打开图片的按钮。
 
 1. 新增特性如下：
@@ -924,7 +926,7 @@ fetch('08_db_toggle_star.php', {
    - 新增收藏或取消图标，调用 `08_db_toggle_star.php` 模块
 
 
-2. 环境变量
+### 2. 环境变量
 
 ```php
 $key = 'signin-key-1'; // 应与加密时使用的密钥相同
@@ -956,6 +958,26 @@ fetch('08_db_toggle_star.php', {
 // 指定跳转脚本08_image_leftRight_navigation.php和排序算法sort=2：动态排序和左右切换功能的图片浏览页面
 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
 ```
+
+
+### 3. 系列脚本主要区别
+
+1. `获取数据库中标记为存在的所有图片的记录`
+
+```php
+//  08_picDisplay_mysql_galleryExistTab.php 添加收藏功能前
+$query = "SELECT id, image_name, likes, dislikes FROM images WHERE image_exists = 1";
+
+// 08_picDisplay_mysql_galleryExistTab.php
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1";
+
+// 08_picDisplay_mysql_galleryExistTab_starF.php
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 0";
+
+// 08_picDisplay_mysql_galleryExistTab_starT.php
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1";
+```
+
 
 
 
