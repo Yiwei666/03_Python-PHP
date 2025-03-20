@@ -35,6 +35,9 @@ if (isset($_GET['logout'])) {
 // 引入数据库配置
 include '08_db_config.php';
 
+// ★ 新增：引入分类操作文件，以便使用 getCategoriesOfImage() 函数
+include '08_image_web_category.php';
+
 // 获取传递的图片 ID 和排序算法
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $sortType = isset($_GET['sort']) ? (int)$_GET['sort'] : 1; // 默认为排序1
@@ -74,6 +77,13 @@ $nextIndex = $currentIndex < count($validImages) - 1 ? $currentIndex + 1 : -1;
 $currentImage = $validImages[$currentIndex];
 $domain = "https://19640810.xyz";
 $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost");
+
+// ★ 新增：获取当前图片所属的所有分类，然后拼接成字符串
+$imageCategories = getCategoriesOfImage($currentImage['id']);
+$imageCategoryNames = array_map(function($cat) {
+    return $cat['category_name'];
+}, $imageCategories);
+$categoriesText = implode(", ", $imageCategoryNames);
 
 ?>
 <!DOCTYPE html>
@@ -179,6 +189,16 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
             margin-top: 20px;
             text-align: center;
         }
+
+        /* ★ 新增：右上角显示当前图片所属分类的样式 */
+        .image-categories {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: black;
+        }
     </style>
     <script>
         // 点赞和点踩功能
@@ -283,6 +303,8 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
                 if (data.success) {
                     alert('分类更新成功！');
                     closeCategoryWindow();
+                    // 刷新页面，或者自行刷新右上角分类显示
+                    // location.reload();
                 } else {
                     alert('分类更新失败: ' + (data.error || '未知错误'));
                 }
@@ -301,6 +323,11 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
         
         <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($currentImage['image_name']); ?>" class="image" alt="Image">
         
+        <!-- ★ 新增：右上角显示当前图片所属分类 -->
+        <div class="image-categories">
+            <?php echo htmlspecialchars($categoriesText, ENT_QUOTES, 'UTF-8'); ?>
+        </div>
+
         <div class="interaction-container">
             <!-- 分类按钮：🎨 -->
             <button class="interaction-btn" onclick="openCategoryWindow(<?php echo $currentImage['id']; ?>)">🎨</button>
