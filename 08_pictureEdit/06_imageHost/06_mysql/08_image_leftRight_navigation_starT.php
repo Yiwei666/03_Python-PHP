@@ -39,7 +39,7 @@ include '08_db_config.php';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $sortType = isset($_GET['sort']) ? (int)$_GET['sort'] : 1; // 默认为排序1
 
-// 从数据库中获取所有图片
+// 从数据库中获取所有图片（只查询 image_exists=1 AND star=1 的）
 $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1";
 $result = $mysqli->query($query);
 
@@ -105,19 +105,22 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
             background-color: rgba(0,0,0,0.5);
             color: white;
             border: none;
-            font-size: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '64px' : '30px'; ?>;
-            padding: 10px;
             cursor: pointer;
         }
         .arrow-left {
             left: 0;
+            font-size: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '64px' : '30px'; ?>;
+            padding: 10px;
         }
         .arrow-right {
             right: 0;
+            font-size: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '64px' : '30px'; ?>;
+            padding: 10px;
         }
         .interaction-container {
             position: absolute;
             right: 0;
+            /* 在移动端/PC端分别调整大概在右侧中下方的位置 */
             top: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? 'calc(50% + 150px)' : '60%'; ?>;
             display: flex;
             flex-direction: column;
@@ -135,6 +138,46 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
             color: white;
             font-size: <?php echo preg_match('/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i', $_SERVER['HTTP_USER_AGENT']) ? '40px' : '20px'; ?>;
             margin-top: -5px; /* 数字与图标的间距 */
+        }
+
+        /* 弹窗相关样式 */
+        #category-popup {
+            display: none;
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 70%;
+            background-color: white;
+            color: black;
+            overflow-y: auto;
+            z-index: 999;
+            border: 2px solid gray;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        #category-popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 20px;
+        }
+        #category-list {
+            display: flex;
+            flex-wrap: wrap;
+            /* 五列，每列 20% 宽度 */
+        }
+        #category-list div {
+            width: 20%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        #category-buttons {
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
     <script>
@@ -165,17 +208,103 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
                 starBtn.style.color = data.star == 1 ? 'green' : 'red';
             });
         }
+
+        // 打开分类弹窗：获取所有分类 + 当前图片所属分类
+        function openCategoryWindow(imageId) {
+            fetch('08_image_web_category.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'action=getCategoriesForImage&imageId=' + imageId
+            })
+            .then(response => response.json())
+            .then(data => {
+                // data.allCategories: 所有分类
+                // data.imageCategories: 当前图片已关联的分类
+                const categoryContainer = document.getElementById('category-list');
+                categoryContainer.innerHTML = '';
+
+                // 把当前图片所属的分类ID记录成一个数组, 方便判断是否勾选
+                const imageCatIds = data.imageCategories.map(item => item.id);
+
+                data.allCategories.forEach(cat => {
+                    // 创建 checkbox
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = cat.category_name;
+                    // 如果该分类在 imageCatIds 里则设为已选中
+                    checkbox.checked = imageCatIds.includes(cat.id);
+
+                    const label = document.createElement('label');
+                    label.style.marginLeft = '5px';
+                    label.textContent = cat.category_name;
+
+                    const divItem = document.createElement('div');
+                    divItem.appendChild(checkbox);
+                    divItem.appendChild(label);
+
+                    categoryContainer.appendChild(divItem);
+                });
+
+                // 记录当前操作的 imageId，后续保存时要用
+                document.getElementById('save-category-btn').setAttribute('data-image-id', imageId);
+
+                // 显示弹窗
+                document.getElementById('category-popup').style.display = 'block';
+            });
+        }
+
+        // 关闭分类弹窗
+        function closeCategoryWindow() {
+            document.getElementById('category-popup').style.display = 'none';
+        }
+
+        // 保存当前图片的勾选分类
+        function saveCategories() {
+            const imageId = document.getElementById('save-category-btn').getAttribute('data-image-id');
+            // 收集所有勾选的分类名
+            const checkboxes = document.querySelectorAll('#category-list input[type="checkbox"]');
+            const selected = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    selected.push(cb.value);
+                }
+            });
+
+            // 发送到后端
+            fetch('08_image_web_category.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'action=setImageCategories'
+                    + '&imageId=' + imageId
+                    + '&categories=' + encodeURIComponent(JSON.stringify(selected))
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('分类更新成功！');
+                    closeCategoryWindow();
+                } else {
+                    alert('分类更新失败: ' + (data.error || '未知错误'));
+                }
+            });
+        }
     </script>
 </head>
 <body>
     <div class="image-container">
         <?php if ($prevIndex >= 0): ?>
-            <button class="arrow arrow-left" onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">←</button>
+            <button class="arrow arrow-left"
+                    onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">
+                ←
+            </button>
         <?php endif; ?>
         
         <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($currentImage['image_name']); ?>" class="image" alt="Image">
         
         <div class="interaction-container">
+            <!-- 分类按钮：🎨 -->
+            <button class="interaction-btn" onclick="openCategoryWindow(<?php echo $currentImage['id']; ?>)">🎨</button>
+
             <!-- 点赞按钮 -->
             <button class="interaction-btn" onclick="updateLikes(<?php echo $currentImage['id']; ?>, 'like')">👍</button>
             <span id="like-count" class="interaction-count"><?php echo $currentImage['likes']; ?></span>
@@ -185,12 +314,35 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
             <span id="dislike-count" class="interaction-count"><?php echo $currentImage['dislikes']; ?></span>
 
             <!-- 收藏按钮 -->
-            <button id="star-btn" class="interaction-btn" onclick="toggleStar(<?php echo $currentImage['id']; ?>)" style="color: <?php echo ($currentImage['star'] == 1) ? 'green' : 'red'; ?>;">★</button>
+            <button id="star-btn"
+                    class="interaction-btn"
+                    onclick="toggleStar(<?php echo $currentImage['id']; ?>)"
+                    style="color: <?php echo ($currentImage['star'] == 1) ? 'green' : 'red'; ?>;">
+                ★
+            </button>
         </div>
 
         <?php if ($nextIndex >= 0): ?>
-            <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
+            <button class="arrow arrow-right"
+                    onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">
+                →
+            </button>
         <?php endif; ?>
+    </div>
+
+    <!-- 分类弹窗 -->
+    <div id="category-popup">
+        <button class="close-btn" onclick="closeCategoryWindow()">✖</button>
+
+        <h3>图片分类管理</h3>
+        <div id="category-list">
+            <!-- 这里通过 JS 动态生成分类 checkbox 列表 -->
+        </div>
+
+        <div id="category-buttons">
+            <button id="save-category-btn" onclick="saveCategories()">保存</button>
+            <button onclick="closeCategoryWindow()">取消</button>
+        </div>
     </div>
 </body>
 </html>
