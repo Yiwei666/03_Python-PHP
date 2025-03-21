@@ -379,9 +379,18 @@ $dbname = 'paper_db'; // 数据库名称
 
 ## 1.2 `08_api_auth.php`
 
+### 1. 编程思路
+
+1. 编写一个API认证php模块（08_api_auth.php），确保只有拥有有效API密钥的请求才能访问和操作您的后端API。该模块在相应的后端api中进行调用。
+2. 为了配合后端的API密钥验证，前端油猴脚本需要在所有向后端API发送的请求中添加正确的头部。
+
+
+### 2. 功能和环境变量
+
+
 1. 功能：
-   - 提供 checkApiKey() 函数，验证请求头 X-Api-Key 是否与服务器预设的密钥一致。
-   - 若认证失败，则直接返回 HTTP 401 并终止后续逻辑。
+   - 提供 `checkApiKey()` 函数，验证请求头 `X-Api-Key` 是否与服务器预设的密钥一致。
+   - 若认证失败，则直接返回 `HTTP 401` 并终止后续逻辑。
 
 
 2. 代码实现
@@ -419,6 +428,63 @@ function checkApiKey() {
 ```php
 // 这里设置服务器端预设的有效 API Key （生产环境建议更安全的存储方式）
 $validKey = 'YOUR_API_KEY_HERE';
+```
+
+
+### 3. 模块调用
+
+1. 后端被调用的api脚本中使用如下代码进行验证：
+
+```php
+// [MODIFIED] 引入 API 认证
+require_once '08_api_auth.php';
+checkApiKey();
+```
+
+2. 本项目中调用 `08_api_auth.php` 的后端脚本如下
+
+```php
+08_tm_add_paper.php                       # 基于油猴脚本传递的论文元数据，检查数据库中是否存在相同doi，插入论文数据，并分配默认分类
+08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
+08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
+08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
+
+08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
+```
+
+3. 本项目中以下前端脚本在调用api时，需要在所有向后端API发送的请求中添加正确的头部（包含`API_KEY`，后端进行验证）。
+
+```
+08_webAccessPaper.php
+08_web_crossRef_query.php
+08_tm_paperManagement.js 
+```
+
+- 下面是 `08_webAccessPaper.php` 前端脚本中包含 `API_KEY` 的后端api请求示例
+
+```js
+        // 获取当前论文已勾选的分类（通过后端API，如果你有相应的php接口文件）
+        function fetchPaperCategories(doi) {
+            // [MODIFIED] 在请求头中添加 X-Api-Key
+            fetch('08_tm_get_paper_categories.php?doi=' + encodeURIComponent(doi), {
+                headers: {
+                    'X-Api-Key': API_KEY
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // 渲染分类复选框，并根据当前论文的分类勾选
+                    renderCategoryCheckboxes(allCategories, data.categoryIDs);
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('获取论文分类时出现错误。');
+            });
+        }
 ```
 
 
