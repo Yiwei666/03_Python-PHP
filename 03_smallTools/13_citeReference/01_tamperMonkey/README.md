@@ -8,6 +8,8 @@
 
 # 2. 文件结构
 
+### 1. 文件结构
+
 ```bash
 01_GBT_APA.js              # 仅从页面上获取GBT和APA格式的参考文献，未合成新格式文献
 01_GBT_APA_doi.js          # 在01_GBT_APA.js基础上通过CrossRef API新增doi和title查询
@@ -25,6 +27,16 @@
 05_MMTB_doi.js             # 适用于MMTB期刊格式的参考文献生成，在04_api_cros_doi.js基础上修改，修改部分包括：使用and替代&，删除论文title，调整卷、年、页码/文章号顺序等
 05_MMTB_api_author.js      # 使用 CrossRef API 返回的作者信息，来构建新格式参考文献的作者部分，解决 apa格式中的 and替代&、省略号"..."、given名中可能存在空格、作者不全等问题。
 ```
+
+### 2. 顶刊ISSN
+
+```
+science: 0036-8075
+nature: 0028-0836
+Nature Materials: 1476-1122
+```
+
+
 
 # 3. 参考文献查询API
 
