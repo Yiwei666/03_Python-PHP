@@ -31,7 +31,7 @@
 
 # 4. 服务器端脚本
 08_server_update_paper_status.php         # 更新数据库中论文状态码、基于论文状态码执行下载、删除等操作，可用于cron定时执行
-08_server_paper_management.php            # 
+08_server_paper_management.php            # 对 papers 表进行管理操作，包括查询、筛选、统计、展示表结构以及修改记录或表结构等多种功能
 
 # 5. 客户端脚本
 08_client_doi_base32_scidownl.py          # 在windows客户端上输入doi号，下载对应pdf论文，使用doi号的base32编码进行命名
@@ -1339,7 +1339,7 @@ $remote_dir  = 'rc4:/3图书/13_paperRemoteStorage';
 
 ## 2. `08_server_paper_management.php` 
 
-功能概述：
+功能概述：在终端交互界面下对 papers 表进行管理操作，包括查询、筛选、统计、展示表结构以及修改记录或表结构等多种功能。它允许用户通过输入不同的功能编号来选择执行具体的数据库操作，例如打印所有数据、检测重复的 doi、更新字段内容等。
 
 ### 1. 编程思路
 
