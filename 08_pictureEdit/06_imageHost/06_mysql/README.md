@@ -849,6 +849,66 @@ function saveCategories() {
 
 ### 2. 环境变量
 
+```php
+$key = 'signin-key-1'; // 应与加密时使用的密钥相同
+
+// 引入数据库配置
+include '08_db_config.php';
+
+// 引入分类操作文件，以便使用 getImagesOfCategory()、getCategoriesOfImage() 等
+include '08_image_web_category.php';
+
+$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1";
+
+// 当前图片信息
+$currentImage = $validImages[$currentIndex];
+$domain = "https://domain.com";
+$dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost");
+```
+
+```js
+// 点赞和点踩功能
+fetch('08_image_management.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}&action=${action}`
+})
+
+// 收藏和取消收藏功能
+fetch('08_db_toggle_star.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}`
+})
+
+// 打开分类弹窗：获取所有分类 + 当前图片所属分类
+fetch('08_image_web_category.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'action=getCategoriesForImage&imageId=' + imageId
+})
+
+// 发送到后端
+fetch('08_image_web_category.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'action=setImageCategories'
+        + '&imageId=' + imageId
+        + '&categories=' + encodeURIComponent(JSON.stringify(selected))
+})
+
+
+<button class="arrow arrow-left"
+        onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>&cat=<?php echo $catId; ?>'">
+    ←
+</button>
+
+
+<button class="arrow arrow-right"
+        onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>&cat=<?php echo $catId; ?>'">
+    →
+</button>
+```
 
 
 ### 3. 模块调用
