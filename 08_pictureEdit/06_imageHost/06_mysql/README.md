@@ -833,7 +833,7 @@ function saveCategories() {
 
 
 
-## 9. `08_image_leftRight_navigation_starT.php` 新增图片分类按钮分类导航
+## 9. `08_image_leftRight_navigation_starT.php` 新增分类按钮和分类导航
 
 
 ### 1. 功能
