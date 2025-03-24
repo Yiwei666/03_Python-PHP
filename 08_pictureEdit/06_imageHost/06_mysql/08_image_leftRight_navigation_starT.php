@@ -35,14 +35,17 @@ if (isset($_GET['logout'])) {
 // 引入数据库配置
 include '08_db_config.php';
 
-// ★ 新增：引入分类操作文件，以便使用 getCategoriesOfImage() 函数
+// 引入分类操作文件，以便使用 getImagesOfCategory()、getCategoriesOfImage() 等
 include '08_image_web_category.php';
 
 // 获取传递的图片 ID 和排序算法
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id       = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $sortType = isset($_GET['sort']) ? (int)$_GET['sort'] : 1; // 默认为排序1
 
-// 从数据库中获取所有图片（只查询 image_exists=1 AND star=1 的）
+// ★ 新增：获取传递的分类ID（若存在，则只在该分类内导航）
+$catId    = isset($_GET['cat']) ? (int)$_GET['cat'] : 0;
+
+// 先获取所有满足 image_exists=1 AND star=1 的图片
 $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1";
 $result = $mysqli->query($query);
 
@@ -50,6 +53,16 @@ $result = $mysqli->query($query);
 $validImages = [];
 while ($row = $result->fetch_assoc()) {
     $validImages[] = $row;
+}
+
+// ★ 若 catId > 0，则仅保留属于该分类的图片ID
+if ($catId > 0) {
+    $imageIdsInCat = getImagesOfCategory($catId);
+    $validImages = array_filter($validImages, function($img) use ($imageIdsInCat) {
+        return in_array($img['id'], $imageIdsInCat);
+    });
+    // 重新索引
+    $validImages = array_values($validImages);
 }
 
 // 根据传递的排序算法选择排序方式
@@ -69,6 +82,12 @@ foreach ($validImages as $index => $image) {
     }
 }
 
+// 若没找到或数组为空，可能说明该分类下没有这张图
+if ($currentIndex === -1) {
+    // 可以做一个简单处理，比如退出或显示错误
+    die("No image found in this category.");
+}
+
 // 计算上一张和下一张图片的索引
 $prevIndex = $currentIndex > 0 ? $currentIndex - 1 : -1;
 $nextIndex = $currentIndex < count($validImages) - 1 ? $currentIndex + 1 : -1;
@@ -78,10 +97,10 @@ $currentImage = $validImages[$currentIndex];
 $domain = "https://19640810.xyz";
 $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost");
 
-// ★ 新增：获取当前图片所属的所有分类，然后拼接成字符串
-$imageCategories = getCategoriesOfImage($currentImage['id']);
-$imageCategoryNames = array_map(function($cat) {
-    return $cat['category_name'];
+// 获取当前图片所属的所有分类，然后拼接成字符串
+$imageCategories   = getCategoriesOfImage($currentImage['id']);
+$imageCategoryNames = array_map(function($c) {
+    return $c['category_name'];
 }, $imageCategories);
 $categoriesText = implode(", ", $imageCategoryNames);
 
@@ -190,14 +209,14 @@ $categoriesText = implode(", ", $imageCategoryNames);
             text-align: center;
         }
 
-        /* ★ 新增：右上角显示当前图片所属分类的样式 */
+        /* 右上角显示当前图片所属分类的样式 */
         .image-categories {
             position: absolute;
             top: 10px;
             right: 10px;
             font-family: Arial, sans-serif;
-            font-size: 13px;
-            color: black;
+            font-size: 14px;
+            color: blue;
         }
     </style>
     <script>
@@ -303,8 +322,7 @@ $categoriesText = implode(", ", $imageCategoryNames);
                 if (data.success) {
                     alert('分类更新成功！');
                     closeCategoryWindow();
-                    // 刷新页面，或者自行刷新右上角分类显示
-                    // location.reload();
+                    // location.reload(); // 可根据需要刷新页面
                 } else {
                     alert('分类更新失败: ' + (data.error || '未知错误'));
                 }
@@ -315,15 +333,16 @@ $categoriesText = implode(", ", $imageCategoryNames);
 <body>
     <div class="image-container">
         <?php if ($prevIndex >= 0): ?>
+            <!-- ★ 修改：左右导航箭头也要带上 cat 参数 -->
             <button class="arrow arrow-left"
-                    onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">
+                    onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>&cat=<?php echo $catId; ?>'">
                 ←
             </button>
         <?php endif; ?>
         
         <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($currentImage['image_name']); ?>" class="image" alt="Image">
         
-        <!-- ★ 新增：右上角显示当前图片所属分类 -->
+        <!-- 右上角显示当前图片所属分类 -->
         <div class="image-categories">
             <?php echo htmlspecialchars($categoriesText, ENT_QUOTES, 'UTF-8'); ?>
         </div>
@@ -350,8 +369,9 @@ $categoriesText = implode(", ", $imageCategoryNames);
         </div>
 
         <?php if ($nextIndex >= 0): ?>
+            <!-- ★ 修改：左右导航箭头也要带上 cat 参数 -->
             <button class="arrow arrow-right"
-                    onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">
+                    onclick="window.location.href='08_image_leftRight_navigation_starT.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>&cat=<?php echo $catId; ?>'">
                 →
             </button>
         <?php endif; ?>
