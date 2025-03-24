@@ -141,7 +141,7 @@ mysql> describe PicCategories;
 
 # 3. php功能模块
 
-### 1. `08_db_config.php` 数据库连接
+## 1. `08_db_config.php` 数据库连接
 
 通过mysqli对象实现与数据库的连接，并检查连接是否成功。
 
@@ -170,7 +170,8 @@ $password = '123456789'; // 数据库密码
 $dbname = 'image_db'; // 数据库名称
 ```
 
-### 2. `08_db_sync_images.php` 数据库同步图片信息
+
+## 2. `08_db_sync_images.php` 数据库同步图片信息
 
 1. 将图片目录与数据库同步的功能独立成一个可重用的 PHP 脚本模块。
 2. 图片目录与数据库同步：代码首先从指定目录中读取所有 PNG 格式的图片，然后检查这些图片是否已经存储在数据库中。未记录在数据库的图片将被添加到数据库。
@@ -217,7 +218,7 @@ syncImages("/home/01_html/08_x/image/01_imageHost"); // 调用函数并提供图
 ```
 
 
-### 3. `08_image_management.php` 图像点赞/反对
+## 3. `08_image_management.php` 图像点赞/反对
 
 1. 功能分析：
 
@@ -315,7 +316,8 @@ alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_
 ```
 
 
-### 4. `08_db_image_status.php` 判断图片是否删除
+
+## 4. `08_db_image_status.php` 判断图片是否删除
 
 1. 该功能模块将项目文件夹下已删除的图片在数据库中`image_exists`赋值为0，存在则赋值为1，注意项目文件夹中图片信息是数据库图片信息的子集
 2. 运行该脚本前需要在数据库`images`表中新增`image_exists`一列
@@ -358,7 +360,8 @@ include '08_db_image_status.php';                    // 判断数据库中所有
 ```
 
 
-### 5. `08_image_leftRight_navigation.php` 图片顺序切换（已弃用）
+
+## 5. `08_image_leftRight_navigation.php` 图片顺序切换（已弃用）
 
 1. 功能：上述代码实现了一个图片浏览与切换功能的网页，其中包括图片的排序与导航。以下是具体功能概述：
 
@@ -402,7 +405,9 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 
 
 
-### 6. `08_db_toggle_star.php` 图片收藏或取消
+## 6. `08_db_toggle_star.php` 图片收藏或取消
+
+### 1. `images`表格新增列
 
 1. 新增 star 列
 
@@ -413,7 +418,7 @@ ALTER TABLE images
 ADD COLUMN star TINYINT(1) DEFAULT 0;
 ```
 
-- 新的完整表格如下
+2. 新的完整表格如下
 
 ```
 mysql> describe images;
@@ -430,7 +435,7 @@ mysql> describe images;
 6 rows in set (0.00 sec)
 ```
 
-2. `08_db_toggle_star.php` 功能
+### 2. `08_db_toggle_star.php` 功能
 
 上述代码实现了一个用于切换数据库中某一图片的 "star" 状态的功能，具体描述如下：
 
@@ -457,7 +462,7 @@ mysql> describe images;
 总结：该代码的功能是根据图片的ID，查询该图片是否已被标记为“星标”（star），并在每次请求时切换其状态（从“标记”到“未标记”或反之），然后将新的状态更新到数据库并返回给前端。
 
 
-3. 环境配置
+### 3. 环境配置
 
 ```php
 include '08_db_config.php';
@@ -466,9 +471,9 @@ include '08_db_config.php';
 注意：只需要引入了包含数据库连接信息的配置文件即可
 
 
-4. **模块调用**
+### 4. 模块调用
 
-通常在 `08_picDisplay_mysql_galleryExistTab.php ` 和 `08_picDisplay_mysql_orderExistTab.php`中调用本模块。调用该模块，实现图片收藏与取消，需要修改和添加以下代码部分。
+通常在 `08_picDisplay_mysql_galleryExistTab.php ` 和 `08_picDisplay_mysql_orderExistTab.php`中调用本模块，在`08_image_leftRight_navigation_voteStar.php`等后续系列脚本中也被调用。调用该模块，实现图片收藏与取消，需要修改和添加以下代码部分。
 
 - 确保数据库查询正确获取 star 值：
 
@@ -517,6 +522,7 @@ function toggleStar(imageId) {
     ★
 </button>
 ```
+
 
 
 ## 7. `08_image_leftRight_navigation_voteStar.php` 点赞+收藏
