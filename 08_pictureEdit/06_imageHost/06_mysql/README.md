@@ -519,11 +519,17 @@ function toggleStar(imageId) {
 ```
 
 
-### 7. `08_image_leftRight_navigation_voteStar.php` 点赞+收藏
+## 7. `08_image_leftRight_navigation_voteStar.php` 点赞+收藏
 
-1. 功能：图片左右切换+点赞/踩+收藏，是 `08_image_leftRight_navigation.php` 升级版本。相比于 `08_image_leftRight_navigation.php` 代码，新增了点赞/点踩、收藏图标以及相应模块的调用；针对不同客户端（电脑/手机），新增了图标尺寸的优化。
 
-2. 环境变量
+### 1. 功能
+
+1. 图片左右切换+点赞/踩+收藏，是 `08_image_leftRight_navigation.php` 升级版本。
+2. 相比于 `08_image_leftRight_navigation.php` 代码，新增了点赞/点踩、收藏图标以及相应模块的调用；
+3. 针对不同客户端（电脑/手机），新增了图标尺寸的优化。
+
+
+### 2. 环境变量
 
 相比于 `08_image_leftRight_navigation.php`，多了`08_image_management.php`和`08_db_toggle_star.php`两个模块调用。
 
@@ -555,7 +561,7 @@ fetch('08_db_toggle_star.php', {
 <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation_voteStar.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
 ```
 
-3. **模块调用**
+### 3. 模块调用
 
 通常在 `08_picDisplay_mysql_galleryExistTab.php ` 、 `08_picDisplay_mysql_orderExistTab.php`等脚本中调用本模块，点击🔁按钮，传递 `id` 和 `sort` 参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
 
@@ -567,7 +573,9 @@ fetch('08_db_toggle_star.php', {
 
 
 
-4. **`08_image_leftRight_navigation_voteStar.php` 系列脚本主要区别**
+### 4. 衍生脚本
+
+💡 **`08_image_leftRight_navigation_voteStar.php` 系列脚本主要区别**
 
 ```php
 // 从数据库中获取所有本地存在的图片
@@ -586,6 +594,7 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 // 08_image_leftRight_navigation_starF.php
 $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 0";
 ```
+
 
 
 
