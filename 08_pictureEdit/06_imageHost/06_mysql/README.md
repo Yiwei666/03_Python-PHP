@@ -644,7 +644,7 @@ CREATE TABLE PicCategories (
 
 - 创建后的所有表格
 
-```
+```sql
 mysql> describe images;
 +--------------+--------------+------+-----+---------+----------------+
 | Field        | Type         | Null | Key | Default | Extra          |
