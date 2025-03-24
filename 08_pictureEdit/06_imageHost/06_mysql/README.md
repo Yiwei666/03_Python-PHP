@@ -20,7 +20,7 @@
 08_image_leftRight_navigation_voteStar.php     # 新增点赞/踩以及收藏功能，是 08_image_leftRight_navigation.php 升级版本
 08_db_toggle_star.php                          # 根据图片的ID，查询该图片是否已被标记为“星标”（star），并在每次请求时切换其状态（从“标记”到“未标记”或反之），然后将新的状态更新到数据库并返回给前端。
 08_image_web_category.php                      # 通过 AJAX 接口对图片的分类进行动态管理，包括获取所有分类、查询图片所属分类、更新图片的分类关联等，在 08_image_leftRight_navigation_starT.php 系列脚本中调用
-08_image_leftRight_navigation_starT.php        # 相比于 08_image_leftRight_navigation_starF.php，新增图片分类按钮，在图片右上角显示当前图片所属分类，支持对于所选某一具体分类或者所有图片的分类导航
+08_image_leftRight_navigation_starT.php        # 相比于 08_image_leftRight_navigation_starF.php，新增图片分类按钮，在图片右上角显示当前图片所属分类，支持对于所选某一具体分类或者所有图片的且换导航
 
 
 # 2. 后台管理
@@ -365,7 +365,9 @@ include '08_db_image_status.php';                    // 判断数据库中所有
 
 ## 5. `08_image_leftRight_navigation.php` 图片顺序切换（已弃用）
 
-1. 功能：上述代码实现了一个图片浏览与切换功能的网页，其中包括图片的排序与导航。以下是具体功能概述：
+### 1. 功能
+
+功能：上述代码实现了一个图片浏览与切换功能的网页，其中包括图片的排序与导航。以下是具体功能概述：
 
 - 图片排序：根据传递的 sort 参数，图片可以按照两种方式排序：
     - 排序1（sort=1）：按照 (likes - dislikes) 的差值进行降序排序。
@@ -379,7 +381,7 @@ include '08_db_image_status.php';                    // 判断数据库中所有
 - 传递参数：用户点击左右箭头时，页面会刷新，并传递当前图片的 `id` 和排序算法 `sort` 参数，保证图片切换时依然按照相应的排序方式进行。
 
 
-2. 环境变量
+### 2. 环境变量
 
 ```php
 $key = 'signin-key-1'; // 应与加密时使用的密钥相同
@@ -395,7 +397,8 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
 ```
 
-3. **模块调用**
+
+### 3. 模块调用
 
 通常在 `08_picDisplay_mysql_galleryExistTab.php ` 和 `08_picDisplay_mysql_orderExistTab.php`中调用本模块，点击🔁按钮，传递`id和sort`参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
 
@@ -404,6 +407,8 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 ```
 
 注意：该模块`08_image_leftRight_navigation.php`在实际生产中已弃用，由升级版本`08_image_leftRight_navigation_voteStar.php`取代。
+
+
 
 
 
