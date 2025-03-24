@@ -602,6 +602,34 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 ```
 
 
+## 8. `08_image_web_category.php` 图片分类
+
+功能：通过与 MySQL 数据库交互，提供了一组函数和 AJAX 接口，用于管理图片及其分类信息，包括查询图片详情、获取所有分类、查询图片所属分类、获取分类下的图片 ID，以及更新图片的分类关联。
+
+### 1. 编程思路
+
+现在我想要编写一个 `08_image_web_category.php` 模块，其中包含多个php函数，以便在其他脚本中调用，需求如下：
+1. 能够根据图片id在 `images` 表格中查询该图片的相关信息
+2. 能够查询 `Categories` 中的所有分类
+3. 能够输入图片id返回 `PicCategories` 中该图片所属的所有分类
+4. 能够查询 `PicCategories` 中某一分类下的所有图片id
+5. 能够根据输入的图片id和分类名在 `PicCategories` 中更新该图片的所属分类
+
+注意，数据库连接可以通过调用 `08_db_config.php` 模块来实现
+
+
+
+### 2. 环境变量
+
+
+
+
+### 3. 模块调用
+
+
+
+
+
 
 
 # 4. 后台管理脚本
