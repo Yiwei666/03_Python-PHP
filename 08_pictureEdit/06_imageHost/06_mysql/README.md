@@ -606,7 +606,79 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 
 功能：通过与 MySQL 数据库交互，提供了一组函数和 AJAX 接口，用于管理图片及其分类信息，包括查询图片详情、获取所有分类、查询图片所属分类、获取分类下的图片 ID，以及更新图片的分类关联。
 
-### 1. 编程思路
+### 1. 创建数据库表格
+
+```mysql
+USE image_db;
+
+
+-- 创建 Categories 表
+CREATE TABLE Categories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  category_name VARCHAR(255) NOT NULL
+) ENGINE=InnoDB;
+
+
+-- 创建 PicCategories 表，实现 images 和 Categories 的多对多关系，
+-- 并在外键约束后加 ON DELETE CASCADE ON UPDATE CASCADE
+-- 当父表记录被删除/更新时，子表自动执行相应操作
+CREATE TABLE PicCategories (
+  image_id INT NOT NULL,
+  category_id INT NOT NULL,
+  PRIMARY KEY (image_id, category_id),
+  FOREIGN KEY (image_id) 
+    REFERENCES images(id)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE,
+  FOREIGN KEY (category_id) 
+    REFERENCES Categories(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+```
+
+1. 这段 SQL 代码在名为 `image_db` 的数据库中创建了两个表：`Categories` 和 `PicCategories`，用于管理图片分类。
+2. `Categories` 表存储分类信息，包含自增主键 `id` 和分类名称 `category_name`。
+3. `PicCategories` 表通过 `image_id` 和 `category_id` 建立图片与分类的多对多关系，并设置外键约束，带有 `ON DELETE CASCADE` 和 `ON UPDATE CASCADE`，确保父表记录删除或更新时子表自动同步。
+
+
+- 创建后的所有表格
+
+```
+mysql> describe images;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int          | NO   | PRI | NULL    | auto_increment |
+| image_name   | varchar(255) | NO   |     | NULL    |                |
+| likes        | int          | YES  |     | 0       |                |
+| dislikes     | int          | YES  |     | 0       |                |
+| image_exists | tinyint      | YES  |     | 0       |                |
+| star         | tinyint(1)   | YES  |     | 0       |                |
++--------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.04 sec)
+
+mysql> describe Categories;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id            | int          | NO   | PRI | NULL    | auto_increment |
+| category_name | varchar(255) | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.01 sec)
+
+mysql> describe PicCategories;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| image_id    | int  | NO   | PRI | NULL    |       |
+| category_id | int  | NO   | PRI | NULL    |       |
++-------------+------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+```
+
+
+### 2. 编程思路
 
 现在我想要编写一个 `08_image_web_category.php` 模块，其中包含多个php函数，以便在其他脚本中调用，需求如下：
 1. 能够根据图片id在 `images` 表格中查询该图片的相关信息
@@ -619,12 +691,18 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 
 
 
-### 2. 环境变量
+### 3. 环境变量
+
+```php
+// 引入数据库配置
+include '08_db_config.php';
+```
+
+注意：数据库 `image_db` 中应包含以下 `images`、`Categories` 和 `PicCategories` 表格
 
 
 
-
-### 3. 模块调用
+### 4. 模块调用
 
 
 
