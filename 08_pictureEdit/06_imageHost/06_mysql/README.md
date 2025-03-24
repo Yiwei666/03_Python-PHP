@@ -704,9 +704,102 @@ include '08_db_config.php';
 
 ### 4. 模块调用
 
+- 要调用这个脚本：
+1. 使用 POST 请求。
+2. 提供 `action` 参数（`getCategoriesForImage` 或 `setImageCategories`）。
+3. 根据 `action` 提供额外的参数（`imageId` 和/或 `categories`）。
+4. 通过前端工具（如 fetch 或 jQuery）发送请求并处理返回的 JSON 数据。
+
+通常在 `08_image_leftRight_navigation_starT.php` 脚本中调用，部分调用示例如下
 
 
+```php
+// 引入分类操作文件，以便使用 getImagesOfCategory()、getCategoriesOfImage() 等
+include '08_image_web_category.php';
+```
 
+```js
+// 打开分类弹窗：获取所有分类 + 当前图片所属分类
+function openCategoryWindow(imageId) {
+    fetch('08_image_web_category.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=getCategoriesForImage&imageId=' + imageId
+    })
+    .then(response => response.json())
+    .then(data => {
+        // data.allCategories: 所有分类
+        // data.imageCategories: 当前图片已关联的分类
+        const categoryContainer = document.getElementById('category-list');
+        categoryContainer.innerHTML = '';
+
+        // 把当前图片所属的分类ID记录成一个数组, 方便判断是否勾选
+        const imageCatIds = data.imageCategories.map(item => item.id);
+
+        data.allCategories.forEach(cat => {
+            // 创建 checkbox
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = cat.category_name;
+            // 如果该分类在 imageCatIds 里则设为已选中
+            checkbox.checked = imageCatIds.includes(cat.id);
+
+            const label = document.createElement('label');
+            label.style.marginLeft = '5px';
+            label.textContent = cat.category_name;
+
+            const divItem = document.createElement('div');
+            divItem.appendChild(checkbox);
+            divItem.appendChild(label);
+
+            categoryContainer.appendChild(divItem);
+        });
+
+        // 记录当前操作的 imageId，后续保存时要用
+        document.getElementById('save-category-btn').setAttribute('data-image-id', imageId);
+
+        // 显示弹窗
+        document.getElementById('category-popup').style.display = 'block';
+    });
+}
+
+// 关闭分类弹窗
+function closeCategoryWindow() {
+    document.getElementById('category-popup').style.display = 'none';
+}
+
+// 保存当前图片的勾选分类
+function saveCategories() {
+    const imageId = document.getElementById('save-category-btn').getAttribute('data-image-id');
+    // 收集所有勾选的分类名
+    const checkboxes = document.querySelectorAll('#category-list input[type="checkbox"]');
+    const selected = [];
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            selected.push(cb.value);
+        }
+    });
+
+    // 发送到后端
+    fetch('08_image_web_category.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=setImageCategories'
+            + '&imageId=' + imageId
+            + '&categories=' + encodeURIComponent(JSON.stringify(selected))
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('分类更新成功！');
+            closeCategoryWindow();
+            location.reload(); // 可根据需要刷新页面
+        } else {
+            alert('分类更新失败: ' + (data.error || '未知错误'));
+        }
+    });
+}
+```
 
 
 
