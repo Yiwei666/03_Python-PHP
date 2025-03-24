@@ -227,6 +227,18 @@ download_dir = "/home/01_html/02_douyVideo/"
 ```
 
 
+### 8. ffmpeg
+
+```bash
+# 查看视频编码方式
+ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 '/home/01_html/02_douyVideo/20250323-230647.mp4'
+
+# 视频转码
+ffmpeg -i '/home/01_html/02_douyVideo/20250323-230647.mp4' -c:v libx264 -preset fast -crf 23 -c:a copy '/home/01_html/02_douyVideo/20250323-230647_h264.mp4'
+```
+
+
+
 
 
 # 参考资料
