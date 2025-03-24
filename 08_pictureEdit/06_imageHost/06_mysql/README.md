@@ -766,7 +766,7 @@ function openCategoryWindow(imageId) {
 }
 ```
 
-流程：
+- 流程：
     - 通过 `fetch` 向 `08_image_web_category.php` 发送 POST 请求，`action=getCategoriesForImage` 和 `imageId` 参数。
     - 后端返回：
         - `data.allCategories`：所有分类数据。
