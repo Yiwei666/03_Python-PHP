@@ -469,7 +469,7 @@ mysql> describe images;
 总结：该代码的功能是根据图片的ID，查询该图片是否已被标记为“星标”（star），并在每次请求时切换其状态（从“标记”到“未标记”或反之），然后将新的状态更新到数据库并返回给前端。
 
 
-### 3. 环境配置
+### 3. 环境变量
 
 ```php
 include '08_db_config.php';
@@ -609,7 +609,8 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 ```
 
 
-## 8. `08_image_web_category.php` 图片分类
+
+## 8. `08_image_web_category.php` 图片分类模块
 
 功能：通过与 MySQL 数据库交互，提供了一组函数和 AJAX 接口，用于管理图片及其分类信息，包括查询图片详情、获取所有分类、查询图片所属分类、获取分类下的图片 ID，以及更新图片的分类关联。
 
@@ -828,6 +829,33 @@ function saveCategories() {
     - 后端返回 `data.success` 判断是否更新成功：
         - 更新成功：提示`“分类更新成功”`，关闭弹窗，并刷新页面（`location.reload()`）。
         - 更新失败：提示失败信息。
+
+
+
+
+## 9. `08_image_leftRight_navigation_starT.php` 新增图片分类按钮分类导航
+
+
+### 1. 功能
+
+相比于 `08_image_leftRight_navigation_starF.php` 脚本，新增功能如下
+
+1. 分类筛选与导航：支持按分类 (`cat` 参数) 进行图片筛选和切换，仅在指定分类内浏览符合 `image_exists = 1 AND star = 1` 条件的图片。
+2. 分类管理功能：新增 分类管理按钮 🎨，可打开弹窗查看和修改图片分类，支持动态更新数据库中的分类信息。
+3. 导航增强：左右切换按钮 (`← →`) 现在会携带 `cat` 参数，确保分类内的图片切换，而不是全局图片列表。
+4. 分类弹窗交互：新增分类选择弹窗，列出所有分类并标记当前图片所属的分类，用户可勾选或取消后提交更新。
+5. 如果 `cat = 0`，则默认在 所有 `image_exists = 1 AND star = 1` 的图片 中进行切换。
+
+
+### 2. 环境变量
+
+
+
+### 3. 模块调用
+
+
+
+
 
 
 
