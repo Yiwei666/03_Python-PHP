@@ -718,6 +718,8 @@ include '08_db_config.php';
 include '08_image_web_category.php';
 ```
 
+- 功能：获取所有分类以及当前图片所属的分类，并显示分类弹窗。
+
 ```js
 // 打开分类弹窗：获取所有分类 + 当前图片所属分类
 function openCategoryWindow(imageId) {
@@ -762,12 +764,23 @@ function openCategoryWindow(imageId) {
         document.getElementById('category-popup').style.display = 'block';
     });
 }
+```
 
-// 关闭分类弹窗
-function closeCategoryWindow() {
-    document.getElementById('category-popup').style.display = 'none';
-}
+流程：
+    - 通过 `fetch` 向 `08_image_web_category.php` 发送 POST 请求，`action=getCategoriesForImage` 和 `imageId` 参数。
+    - 后端返回：
+        - `data.allCategories`：所有分类数据。
+        - `data.imageCategories`：当前图片已经关联的分类。
+    - 遍历 `allCategories` 并创建对应的复选框 (checkbox)，如果当前图片包含该分类 (imageCatIds 里有该分类 id)，则将该分类默认勾选。
+    - 将所有复选框添加到 `#category-list` 容器中。
+    - 记录当前操作的 `imageId` 以便后续保存。
+    - 显示 `#category-popup` 弹窗。
 
+
+
+- 功能：将勾选的分类数据提交到后端并更新。
+
+```js
 // 保存当前图片的勾选分类
 function saveCategories() {
     const imageId = document.getElementById('save-category-btn').getAttribute('data-image-id');
@@ -800,6 +813,14 @@ function saveCategories() {
     });
 }
 ```
+
+- 流程：
+    - 读取 `#save-category-btn` 上的 `data-image-id` 获取当前图片的 `imageId`。
+    - 遍历 `#category-list` 里所有 checkbox，将已勾选的分类名称存入 selected 数组。
+    - 通过 `fetch` 发送 POST 请求至 `08_image_web_category.php`，`action=setImageCategories`，并将 `imageId` 和 `categories` 作为参数。
+    - 后端返回 `data.success` 判断是否更新成功：
+        - 更新成功：提示`“分类更新成功”`，关闭弹窗，并刷新页面（`location.reload()`）。
+        - 更新失败：提示失败信息。
 
 
 
