@@ -848,7 +848,28 @@ function saveCategories() {
 5. 如果 `cat = 0`，则默认在 所有 `image_exists = 1 AND star = 1` 的图片 中进行切换。
 
 
-### 2. 环境变量
+### 2. 编程思路
+
+`08_image_leftRight_navigation_starT.php`脚本代码如下，该代码实现了图片展示与左右导航（通过前后图片 ID 跳转）、互动功能（点赞、点踩、收藏），并根据移动端/PC 端自动调整界面样式。该脚本在调用时需要传入图片id和排序类型sort参数。现在我需要新增一些功能，通过调用 `08_image_web_category.php` 模块中的函数来实现，需求如下：
+
+1. 在页面右侧箭头上方合适的高度处添加一个分类图标🎨（注意与点赞、收藏等图标竖直对齐），点击该分类图标时，会查询 Categories 中的所有图片分类名称，并根据当前页面中的图片id查询PicCategories表中该图片所属的所有分类（这些查询调用`08_image_web_category.php` 模块相关函数实现），并弹出一个小窗口。在窗口中展示返回的所有分类名称，以及当前图片所属的分类（窗口中）。
+
+2. 窗口中所有分类名称可以显示为5列，按照Categories中名称id顺序从左到右，从上到下显示为5列，显示的行数根据分类名称的数量来确定，当分类的行数很多，并超过了窗口的高度时，则出现纵向滚动轴。可以将窗口的宽度设置为页面宽度的80%，在页面中水平居中。
+
+3. 如果当前图片在PicCategories中已有大于等于1个分类时，小窗口中应当在相应图片分类名称前的小方框中进行对号勾选标记。用户也可以取消勾选当前分类，或者勾选其他分类，PicCategories表中分类信息在用户点击保存按钮后应当相应更新，且窗口中的勾选符号应同步显示数据库中的该图片分类状态。（更新图片分类可以调用 `08_image_web_category.php` 模块相关函数实现）
+
+4. 小窗口下方显示“保存”和“取消”两个按钮，点击后使得用户的勾选操作在数据库中生效/取消。小窗口右上角还应显示关闭该窗口的叉图标。注意小窗口UI界面美观
+
+`08_image_leftRight_navigation_starT.php` 代码中原有的代码逻辑、样式、功能不要改变，只需要针对上述需求进行修改。输出 `08_image_web_category.php` 代码和修改后的 `08_image_leftRight_navigation_starT.php` 脚本代码
+
+
+运行上述代码，点击 🎨 图标显示的窗口中，正确显示了 Categories中的所有图片分类名称，但是并没有当前图片所属的分类名称前的方框中勾选对号，以显示当前图片所属的分类。请针对该问题进行修改
+
+上述 `08_image_web_category.php` 代码修改后可以正常工作。我现在有一个新的需求，请继续修改 `08_image_leftRight_navigation_starT.php` 代码，在图片的右上角显示当前图片所属的所有分类名称，字体、字号和颜色分别为
+`font-family: Arial, sans-serif;  灰色 (#777)，11px`。针对上述需求进行修改，输出修改后的完整代码，原有的代码逻辑、样式、功能不要改变。
+
+
+### 3. 环境变量
 
 ```php
 $key = 'signin-key-1'; // 应与加密时使用的密钥相同
@@ -912,9 +933,11 @@ fetch('08_image_web_category.php', {
 ```
 
 
-### 3. 模块调用
 
-该模块通常在 `08_picDisplay_mysql_orderExistTab_starT.php`、`08_picDisplay_mysql_galleryExistTab_starT.php`等web脚本中调用，调用方式接近，如下所示是
+### 4. 模块调用
+
+该模块通常在 `08_picDisplay_mysql_orderExistTab_starT.php`、`08_picDisplay_mysql_galleryExistTab_starT.php`等web脚本中调用，调用方式接近。
+
 
 1. 在`08_picDisplay_mysql_orderExistTab_starT.php`中的调用
 
@@ -935,6 +958,7 @@ fetch('08_image_web_category.php', {
 ```
 
 若不传 cat 参数，`08_picDisplay_mysql_galleryExistTab_starT.php` 保持原先逻辑显示所有(满足 `star=1, image_exists=1`)的图片。
+
 
 
 
@@ -1341,7 +1365,28 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 3. 若不传 cat 参数，`08_image_leftRight_navigation_starT.php` 保持原先逻辑显示所有(满足 `star=1, image_exists=1`)的图片。
 
 
-### 2. 环境变量
+### 2. 编程思路
+
+
+上述修改后的 `08_image_leftRight_navigation_starT.php` 脚本 和 `08_image_web_category.php` 模块都是正常工作的。
+
+`08_picDisplay_mysql_orderExistTab_starT.php` 脚本如下所示，其调用了 `08_image_leftRight_navigation_starT.php` 脚本（调用时将图片id和排序类型sort参数传给 `08_image_leftRight_navigation_starT.php` 脚本），也是正常工作的。
+
+下面的 `08_picDisplay_mysql_orderExistTab_starT.php` 脚本 显示的是满足 `$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1";` 条件的图片，即 `image_exists = 1 AND star = 1` 的图片。被调用的`08_image_leftRight_navigation_starT.php`脚本为了与`08_picDisplay_mysql_orderExistTab_starT.php`保持一致，也是使用了相同的查询条件 `$query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1"`。但是我现在有一个新的需求，如下所示:
+
+1. 在 `08_picDisplay_mysql_orderExistTab_starT.php` 页面左上角显示一个小按钮，点击该按钮会显示 Categories 表中的所有分类（可能需要调用 `08_image_web_category.php` 模块中的函数来实现）。
+
+2. 点击其中任意一个分类，页面显示的便是该分类下的所有图片（可能需要在原有的$query查询设置基础上新增对该分类的查询限制）。用户在点击切换不同页码时，对于用户选择的分类筛选需要始终有效。其余功能仍保持不变（点赞、点踩、收藏等）。
+
+3. 与此同时，当用户点击 🔁 按钮时，除了将图片id和排序类型sort参数传给`08_image_leftRight_navigation_starT.php`脚本，也需要将用户选择的分类作为一个参数传递给`08_image_leftRight_navigation_starT.php`脚本，以便用户且换图片时仍是该分类下的图片。因此，`08_image_leftRight_navigation_starT.php`脚本可能需要进行进一步修改，尤其是在$query查询时增加分类限制。其余功能仍保持不变（如点赞、点踩、收藏、左右导航、分类弹窗等）。
+
+请在如下的 `08_picDisplay_mysql_orderExistTab_starT.php`，`08_image_leftRight_navigation_starT.php`代码基础上进行修改，除非必要，`08_image_web_category.php` 代码尽量不要改动。
+
+针对上述需求进行修改，输出修改后的完整代码，原有的代码逻辑、样式、功能不要改变。
+
+
+
+### 3. 环境变量
 
 ```php
 $key = 'signin-key-1'; // 应与加密时使用的密钥相同
