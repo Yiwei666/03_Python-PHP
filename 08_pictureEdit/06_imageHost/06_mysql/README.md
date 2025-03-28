@@ -1167,6 +1167,7 @@ fetch('08_image_management.php', {
    - 只显示图片目录中实际存在的图片，页面中没有图片空白缺失
 
 
+
 ## 4. `08_picDisplay_mysql_orderExistTab.php`
 
 ### 1. 功能
@@ -1308,6 +1309,21 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 // 08_picDisplay_mysql_galleryExistTab_starT.php
 $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_exists = 1 AND star = 1";
 ```
+
+
+
+## 6. `08_picDisplay_mysql_orderExistTab_starT.php`
+
+### 1. 功能
+
+
+
+
+### 2. 环境变量
+
+
+
+
 
 
 
