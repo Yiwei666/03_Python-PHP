@@ -1324,7 +1324,7 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 
 ### 2. 环境变量
 
-```
+```php
 $key = 'signin-key-1'; // 应与加密时使用的密钥相同
 
 include '08_db_config.php';
@@ -1338,6 +1338,9 @@ include '08_image_web_category.php';
 $dir4 = "/home/01_html/08_x/image/01_imageHost";
 $dir5 = str_replace("/home/01_html", "", $dir4);
 $domain = "https://19640810.xyz";
+
+// 设置每页显示的图片数量
+$imagesPerPage = 20;
 
 
 fetch('08_image_management.php', {
