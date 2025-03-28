@@ -914,8 +914,27 @@ fetch('08_image_web_category.php', {
 
 ### 3. 模块调用
 
+该模块通常在 `08_picDisplay_mysql_orderExistTab_starT.php`、`08_picDisplay_mysql_galleryExistTab_starT.php`等web脚本中调用，调用方式接近，如下所示是
+
+1. 在`08_picDisplay_mysql_orderExistTab_starT.php`中的调用
+
+```js
+<button onclick="window.open('08_image_leftRight_navigation_starT.php?id=<?php echo $image['id']; ?>&sort=1&cat=<?php echo $selectedCategory; ?>', '_blank')">
+    🔁
+</button>
+```
+
+点击“🔁”按钮进入 `08_image_leftRight_navigation_starT.php` 时会带上 cat 参数，使左右导航只在该分类下循环。
 
 
+
+2. 在`08_picDisplay_mysql_galleryExistTab_starT.php`中的调用，不传入 cat 参数也是可以的。
+
+```js
+<button onclick="window.open('08_image_leftRight_navigation_starT.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
+```
+
+若不传 cat 参数，`08_picDisplay_mysql_galleryExistTab_starT.php` 保持原先逻辑显示所有(满足 `star=1, image_exists=1`)的图片。
 
 
 
