@@ -40,8 +40,9 @@
 
 08_picDisplay_mysql_orderExist.php         # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，不显示已删除图片导致的空白页
 08_picDisplay_mysql_galleryExist.php       # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，不显示已删除图片导致的空白页，按照文件名默认排序
-08_picDisplay_mysql_orderExistTab.php      # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，显示在新标签页打开图片的图标
-08_picDisplay_mysql_galleryExistTab.php    # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，按照文件名默认排序，显示在新标签页打开图片的图标
+08_picDisplay_mysql_orderExistTab.php          # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，显示在新标签页打开图片的图标（含左右切换导航），新增收藏/取消按钮等
+08_picDisplay_mysql_galleryExistTab.php        # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，按照文件名默认排序，显示在新标签页打开图片的图标
+08_picDisplay_mysql_orderExistTab_starT.php    # 显示收藏的图片，增加了分类选择弹窗，用户可点击按钮选择分类，并在分页、图片导航时保持筛选状态。
 
 
 # 4. 衍生脚本
@@ -1316,15 +1317,47 @@ $query = "SELECT id, image_name, likes, dislikes, star FROM images WHERE image_e
 
 ### 1. 功能
 
-
+1. 在 `08_picDisplay_mysql_orderExistTab_starT.php` 中，你可以点击左上角的“分类”按钮，在弹出层中选择某分类，页面即可只显示该分类下的图片，并保留原有分页、点赞、收藏等功能。
+2. 点击“🔁”按钮进入 `08_image_leftRight_navigation_starT.php` 时会带上 `cat` 参数，使左右导航只在该分类下循环。
+3. 若不传 cat 参数，`08_image_leftRight_navigation_starT.php` 保持原先逻辑显示所有(满足 `star=1, image_exists=1`)的图片。
 
 
 ### 2. 环境变量
 
+```
+$key = 'signin-key-1'; // 应与加密时使用的密钥相同
+
+include '08_db_config.php';
+include '08_db_sync_images.php';
+syncImages("/home/01_html/08_x/image/01_imageHost"); // 调用函数并提供图片存储目录
+
+// ★ 新增：引入分类操作文件，以便使用 getAllCategories() / getImagesOfCategory()
+include '08_image_web_category.php';
+
+// 设置图片所在的文件夹
+$dir4 = "/home/01_html/08_x/image/01_imageHost";
+$dir5 = str_replace("/home/01_html", "", $dir4);
+$domain = "https://19640810.xyz";
 
 
+fetch('08_image_management.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}&action=${action}`
+})
 
 
+fetch('08_db_toggle_star.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: `imageId=${imageId}`
+})
+
+
+<button onclick="window.open('08_image_leftRight_navigation_starT.php?id=<?php echo $image['id']; ?>&sort=1&cat=<?php echo $selectedCategory; ?>', '_blank')">
+    🔁
+</button>
+```
 
 
 
