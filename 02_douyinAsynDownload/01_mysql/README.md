@@ -332,7 +332,15 @@ ffmpeg -i '/home/01_html/02_douyVideo/20250323-230647.mp4' -c:v libx264 -preset 
 rsync -avz /home/01_html/18_temp_video/1_hevc/ 108.88.266.6:/home/01_html/18_temp_video/1_hevc/
 ```
 
+## 4. alias
 
+```
+# 1_hevc: cc1-2 -> rn1-1
+alias rhevc='rsync -avz /home/01_html/18_temp_video/1_hevc/ ip:/home/01_html/18_temp_video/1_hevc/'
+
+# 2_h264: rn1-1 -> cc1-2
+alias rh264='rsync -avz /home/01_html/18_temp_video/2_h264/ ip:/home/01_html/18_temp_video/2_h264/'
+```
 
 
 # 参考资料
