@@ -14,7 +14,13 @@
 ├── 02_douyVideo            # 存储视频的文件夹
 │   ├── 20240513-204331.mp4
 │   ├── ...
+
+18_server_hevc_to_h264.php     # 在终端中批量管理 MP4 视频文件：检测 HEVC（H.265）编码的视频并移动到指定目录，转换为 H.264 编码，统计文件数量，并支持文件的回迁和删除操作
+
+
 ```
+
+
 
 
 # 3. 数据库创建
@@ -234,6 +240,34 @@ download_dir = "/home/01_html/02_douyVideo/"
 ```
 
 
+## 2. `18_server_hevc_to_h264.php`
+
+功能：在终端中批量管理 MP4 视频文件：检测 HEVC（H.265）编码的视频并移动到指定目录，转换为 H.264 编码，统计文件数量，并支持文件的回迁和删除操作。
+
+### 1. 编程思路
+
+在 `/home/01_html/02_douyVideo` 目录下有很多mp4短视频，其中部分视频编码方式是 hevc 格式，在部分浏览器的网页中无法正常播放。现在我需要编写一个php脚本，运行在ubuntu的终端上，实现以下几个功能，用户通过序号选择需要执行的功能：
+
+1. 判断 `/home/01_html/02_douyVideo` 目录下每一个mp4视频的编码方式，如果是hevc方式，则将该mp4剪切到 `/home/01_html/18_temp_video/1_hevc` 目录下。
+2. 使用ffmpeg（已安装）将 `/home/01_html/18_temp_video/1_hevc` 目录下的所有mp4视频转换成 h264 方式编码，转换后的视频保存到 `/home/01_html/18_temp_video/2_h264` 目录下，转换前后mp4文件名保持不变
+3. 打印出 `/home/01_html/02_douyVideo`、`/home/01_html/18_temp_video/1_hevc`和`/home/01_html/18_temp_video/2_h264` 各个目录下的mp4视频数量
+4. 将 `/home/01_html/18_temp_video/2_h264` 目录下的mp4视频剪切到 `/home/01_html/02_douyVideo` 目录下，剪切前提示用户输入y确认。
+5. 删除掉 `/home/01_html/18_temp_video/1_hevc` 目录下的所有 mp4 视频，剪切前提示用户输入y确认。
+
+请编写代码实现以上需求。
+
+### 2. 环境变量
+
+```php
+// 目录定义
+$dirSource = '/home/01_html/02_douyVideo';
+$dirHevc   = '/home/01_html/18_temp_video/1_hevc';
+$dirH264   = '/home/01_html/18_temp_video/2_h264';
+```
+
+注意：需要提前创建 `/home/01_html/18_temp_video/1_hevc` 和 `/home/01_html/18_temp_video/2_h264` 两个目录
+
+经测试：使用该脚本的功能2进行编码方式转换时，在1c2G和2c1G的服务器上均异常，可能是内存不够导致。
 
 
 
