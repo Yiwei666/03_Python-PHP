@@ -271,7 +271,27 @@ $dirH264   = '/home/01_html/18_temp_video/2_h264';
 
 
 
-## 3. 
+## 3. `18_server_random_hevc_to_h264.sh`
+
+功能：在指定目录中查找尚未转换为 H.264 编码的 HEVC（H.265）MP4 文件，随机选择一个进行转换，并将其存储到目标目录中。
+
+
+### 1. 编程思路
+
+编写一个bash 定时脚本，实现以下功能：
+1. `/home/01_html/18_temp_video/1_hevc` 目录下有多个hevc编码的mp4视频，现在需要将其转换成h264编码视频，保存到 `/home/01_html/18_temp_video/2_h264` 目录下，转换前后mp4文件名保持不变。
+2. 比较 `dir1 = /home/01_html/18_temp_video/1_hevc` 目录和 `dir2 = /home/01_html/18_temp_video/2_h264` 目录下的文件名，随机选取一个存在于 dir1 但不存在于 dir2 的 mp4 进行转换。
+3. 转换参数可以参考 `'ffmpeg -y -i "%s" -c:v libx264 -threads 1 -c:a copy "%s"'` 
+
+
+### 2. 环境变量
+
+```php
+dir1="/home/01_html/18_temp_video/1_hevc"   # 存放 HEVC 编码的 MP4 文件
+dir2="/home/01_html/18_temp_video/2_h264"  # 存放 H264 编码的 MP4 文件
+
+ffmpeg -y -i "$input_file" -c:v libx264 -preset fast -crf 28 -c:a copy "$output_file"
+```
 
 
 
