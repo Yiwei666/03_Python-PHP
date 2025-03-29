@@ -81,6 +81,10 @@ $dbname = 'douyin_db'; // 数据库名称
 
 ## 2. `18_tm_url_api.php`
 
+搭配 `18_tm_webGetURL.js` 油猴脚本使用
+
+### 1. 功能
+
 - 后端脚本功能：
 
 1. 接收前端 POST 提交的文本 (`clipboardContent`)。
@@ -91,7 +95,7 @@ $dbname = 'douyin_db'; // 数据库名称
 注意：此脚本依赖 `18_db_config.php` 来连接数据库，你需要确保 `18_db_config.php` 中的数据库名称、用户和密码是正确的。也要保证数据库中存在 `douyin_videos` 表，表结构与之前展示的相匹配。
 
 
-- 环境变量
+### 2. 环境变量
 
 ```php
 // 引入数据库配置文件
@@ -114,7 +118,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 # 5. web交互脚本
 
-## 1. `18_url_get.php`
+## 1. `18_url_get.php` 提交视频链接到数据库
 
 将web页面上提交的抖音链接保存到数据库中，忽略已存在的链接
 
@@ -135,7 +139,7 @@ include '18_db_config.php';   // 引入数据库配置文件，建立 $mysqli �
 ```
 
 
-## 2. `18_view_log.php`
+## 2. `18_view_log.php` 查看视频链接日志
 
 在web页面上显示最后两次提交的抖音视频链接
 
@@ -150,8 +154,7 @@ include '18_db_config.php';  // 引入数据库配置文件，建立 $mysqli 数
 
 # 6. 油猴脚本
 
-
-## 1. `18_tm_webGetURL.js`
+## 1. `18_tm_webGetURL.js` 获取视频链接
 
 1. 编程思路
 
@@ -169,11 +172,27 @@ const postUrl = 'https://domain.com/18_tm_url_api.php'; // 这里替换成你的
 
 
 
+
 # 7. 后台管理脚本
 
-## 6. `18_douyinDown.py`
+## 1. `18_douyinDown.py` 定时下载视频
 
 下载抖音视频的爬虫脚本
+
+### 1. 功能
+
+这段代码实现了以下功能：
+
+- 连接到名为 `douyin_db` 的 MySQL 数据库，使用表 `douyin_videos`。
+- 查询所有未下载（`download_status` 为 0）的视频链接。
+- 随机选择一个视频链接，并构造一个新的 URL 来通过第三方服务 `dlpanda.com` 获取真实的视频下载链接。
+- 解析返回的 HTML，获取视频源 URL，并下载视频。
+- 下载的视频以当前时间命名，并保存在指定目录 `/home/01_html/02_douyVideo/` 下。
+- 更新数据库中的视频记录，标记为已下载（`download_status` 设为 1），并记录下载的视频名称和下载时间。
+- 关闭数据库连接。
+
+
+### 2. 环境变量
 
 1. python第三方模块安装
 
@@ -205,25 +224,16 @@ db_config = {
 download_dir = "/home/01_html/02_douyVideo/"
 ```
 
-3. 功能
 
-这段代码实现了以下功能：
-
-- 连接到名为 `douyin_db` 的 MySQL 数据库，使用表 `douyin_videos`。
-- 查询所有未下载（`download_status` 为 0）的视频链接。
-- 随机选择一个视频链接，并构造一个新的 URL 来通过第三方服务 `dlpanda.com` 获取真实的视频下载链接。
-- 解析返回的 HTML，获取视频源 URL，并下载视频。
-- 下载的视频以当前时间命名，并保存在指定目录 `/home/01_html/02_douyVideo/` 下。
-- 更新数据库中的视频记录，标记为已下载（`download_status` 设为 1），并记录下载的视频名称和下载时间。
-- 关闭数据库连接。
-
-4. cron 定时
+3. cron 定时
 
 - 每两分钟执行一次 `18_douyinDown.py`
 
 ```bash
 */2 * * * * /home/00_software/01_Anaconda/bin/python /home/01_html/18_douyinDown.py
 ```
+
+
 
 
 
