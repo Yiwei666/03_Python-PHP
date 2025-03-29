@@ -324,6 +324,13 @@ ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default
 ffmpeg -i '/home/01_html/02_douyVideo/20250323-230647.mp4' -c:v libx264 -preset fast -crf 23 -c:a copy '/home/01_html/02_douyVideo/20250323-230647_h264.mp4'
 ```
 
+## 3. rsync
+
+```
+# 同步文件夹
+# rsync -avz /home/01_html/18_temp_video/1_hevc/ ip:/home/01_html/18_temp_video/1_hevc/
+rsync -avz /home/01_html/18_temp_video/1_hevc/ 108.88.266.6:/home/01_html/18_temp_video/1_hevc/
+```
 
 
 
