@@ -283,6 +283,7 @@ $dirH264   = '/home/01_html/18_temp_video/2_h264';
 3. 转换参数可以参考 `'ffmpeg -y -i "%s" -c:v libx264 -threads 1 -c:a copy "%s"'` 
 
 
+
 ### 2. 环境变量
 
 ```php
@@ -292,6 +293,12 @@ dir2="/home/01_html/18_temp_video/2_h264"  # 存放 H264 编码的 MP4 文件
 ffmpeg -y -i "$input_file" -c:v libx264 -preset fast -crf 28 -c:a copy "$output_file"
 ```
 
+- cron定时脚本
+
+```sh
+# 每30分钟执行一次基于ffmpeg的hevc转h264视频编码
+*/30 * * * * /usr/bin/bash /home/01_html/18_server_random_hevc_to_h264.sh
+```
 
 
 
