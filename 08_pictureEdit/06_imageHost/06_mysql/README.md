@@ -1092,7 +1092,7 @@ alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 表中上述增删查改最后实施前，还需要提示用户确认，输入y表示确认执行。执行完成后，在页面打印出  Categories 表的内容。
 
 
-- 环境变量
+💎 **环境变量：**
 
 ```php
 // 引入数据库配置文件（确保 08_db_config.php 与本脚本在同一目录下）
@@ -1117,7 +1117,7 @@ require_once '08_db_config.php';
 请编写脚本实现上述需求（需要调用08_db_config.php创建数据库连接），注意该脚本运行在ubuntu终端
 
 
-- 环境变量
+💎 **环境变量：**
 
 ```php
 require_once '08_db_config.php';  // 引用数据库连接配置
