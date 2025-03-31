@@ -24,10 +24,14 @@
 
 
 # 2. 后台管理
-08_image_likes_manager.php                 # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
-08_image_dislikes_delete.php               # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
-08_image_rclone_replace.php                # 随机替换目录下的图片，确保目录下的总图片数为5000
-08_server_manage_categories.php            # 在后台中通过命令行对图片分类进行增删查改
+08_image_likes_manager.php                          # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
+08_image_dislikes_delete.php                        # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
+08_image_rclone_replace.php                         # 随机替换目录下的图片，确保目录下的总图片数为5000
+08_server_manage_categories.php                     # 在后台中通过命令行对图片分类进行增删查改
+08_server_update_unknowImage_picCategories.php      # 在后台中更新 "0.0 未知" 分类下的图片id
+
+
+
 
 # 3. web交互
 08_picDisplay_mysql.php                    # 点赞图标位于图片外右侧居中，能够写入图片名到数据库，随机显示数据库中的 n 张图片
@@ -1088,8 +1092,39 @@ alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 表中上述增删查改最后实施前，还需要提示用户确认，输入y表示确认执行。执行完成后，在页面打印出  Categories 表的内容。
 
 
+- 环境变量
+
+```php
+// 引入数据库配置文件（确保 08_db_config.php 与本脚本在同一目录下）
+require_once '08_db_config.php';
+```
 
 
+### 5. `08_server_update_unknowImage_picCategories.php` 
+
+功能：更新 `"0.0 未知"` 分类下的图片id
+
+💡 **1. 初始编程思路**
+
+基于上述信息，现在我需要编写一个php脚本，
+1. 查询"0.0 未知"分类在Categories表中是否提前创建，没有创建则提示并结束脚本运行
+2. 筛选 images 表中所有 image_exists=1并且star=1 的图片id，后续操作对象是基于这一部分筛选出来的图片id
+3. 判断上述每一个图片id在 PicCategories 表中是否有关联的图片分类，如果没有关联分类，则在 PicCategories 表中将其关联到分类名称"0.0 未知"下。
+4. 如果上述图片id在 PicCategories 表中有且仅有一个关联图片分类，则跳过该图片id操作。
+5. 如果上述图片id在 PicCategories 表中有大于等于2个的关联图片分类，并且其中一个图片分类是 "0.0 未知"，则需要删掉PicCategories表中该图片id关联的 "0.0 未知" 图片分类（因为该图片的分类并不是未知），保留其他关联图片分类；如果关联的图片分类均不是"0.0 未知"，则跳过该图片id操作。
+6. 打印出PicCategories表中 "0.0 未知" 分类下的图片数量。
+
+请编写脚本实现上述需求（需要调用08_db_config.php创建数据库连接），注意该脚本运行在ubuntu终端
+
+
+- 环境变量
+
+```php
+require_once '08_db_config.php';  // 引用数据库连接配置
+
+// 1. 查询 "0.0 未知" 分类是否已经存在
+$unknownCategoryName = "0.0 未知";
+```
 
 
 
