@@ -28,9 +28,7 @@
 08_image_dislikes_delete.php                        # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
 08_image_rclone_replace.php                         # 随机替换目录下的图片，确保目录下的总图片数为5000
 08_server_manage_categories.php                     # 在后台中通过命令行对图片分类进行增删查改
-08_server_update_unknowImage_picCategories.php      # 在后台中更新 "0.0 未知" 分类下的图片id
-
-
+08_server_update_unknowImage_picCategories.php      # 在后台中更新 "0.0 未知" 分类下的图片id，推荐cron定时更新
 
 
 # 3. web交互
