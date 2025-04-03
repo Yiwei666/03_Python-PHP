@@ -158,25 +158,32 @@ if (strtolower($confirm) !== 'y') {
 // 5. 进行下载(rclone copy)
 //    远程目录 $remote_dir
 //    本地目录 $local_dir
-$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 请根据实际情况修改
+// 将需要下载的文件名提取成一个数组(去掉 id，只保留文件名)
+$fileList = array_values($diffBD);
+
+// 生成一个临时文件，列出所有要下载的文件名（每行一个）
+$tmpFile = '/tmp/files_to_download.txt';
+file_put_contents($tmpFile, implode("\n", $fileList));
+
+// 准备 rclone 命令
+// 注意：使用 --files-from 时，rclone 从 $remote_dir 下的这些文件名一并下载到 $local_dir
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 根据实际情况修改
 $local_dir  = '/home/01_html/08_x/image/01_imageHost';
 
-foreach ($diffBD as $filename) {
-    // 构造源与目标路径
-    $remote_file_path = $remote_dir . '/' . $filename;
-    $local_file_path  = $local_dir;
+$copy_command = "rclone copy '$remote_dir' '$local_dir' --files-from '$tmpFile' --transfers=16";
 
-    // 运行 rclone copy 命令
-    $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=16";
+// 执行批量下载
+exec($copy_command, $copy_output, $copy_return_var);
 
-    exec($copy_command, $copy_output, $copy_return_var);
-
-    if ($copy_return_var !== 0) {
-        echo "Failed to copy {$filename}\n";
-    } else {
-        echo "Copied {$filename} successfully\n";
-    }
+if ($copy_return_var !== 0) {
+    echo "Failed to copy files.\n";
+} else {
+    echo "Copied all files successfully.\n";
 }
+
+// 如果临时文件无需保留，可以在这里删除
+unlink($tmpFile);
+
 
 // 关闭数据库连接
 $mysqli->close();
