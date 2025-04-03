@@ -1147,19 +1147,19 @@ syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供
 5. 用户确认后，使用rclone从远程路径 `$remote_dir` 下载上述筛选出来的图片到 `$local_dir` 目录下，相关具体路径和下载实现请参考如下代码块：
 
 ```php
-    $remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 请替换为远程目录路径
-    $local_dir = '/home/01_html/08_x/image/01_imageHost';
-    foreach ($diffBD as $filename) {
-        $remote_file_path = $remote_dir . '/' . $filename;
-        $local_file_path = $local_dir;
-        $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=16";
-        exec($copy_command, $copy_output, $copy_return_var);
-        if ($copy_return_var != 0) {
-            echo "Failed to copy " . $filename . "\n";
-        } else {
-            echo "Copied " . $filename . " successfully\n";
-        }
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 请替换为远程目录路径
+$local_dir = '/home/01_html/08_x/image/01_imageHost';
+foreach ($diffBD as $filename) {
+    $remote_file_path = $remote_dir . '/' . $filename;
+    $local_file_path = $local_dir;
+    $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=16";
+    exec($copy_command, $copy_output, $copy_return_var);
+    if ($copy_return_var != 0) {
+        echo "Failed to copy " . $filename . "\n";
+    } else {
+        echo "Copied " . $filename . " successfully\n";
     }
+}
 ```
 
 6. 完成上述下载后，给出提示。然后再运行以下代码块。
@@ -1173,12 +1173,25 @@ echo "Process completed.\n";
 请针对上述需求，编写php代码实现。
 
 
-
 💎 **2. 环境变量：**
 
+```php
+// 1. 引入数据库配置和同步模块
+include '08_db_config.php';               // 数据库连接
+include '08_db_sync_images.php';          // 用于将新下载的图片名写入数据库
 
+// 2. 同步更新数据库(确保数据库是最新的)
+syncImages("/home/01_html/08_x/image/01_imageHost");
 
+// 注意：使用 --files-from 时，rclone 从 $remote_dir 下的这些文件名一并下载到 $local_dir
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 根据实际情况修改
+$local_dir  = '/home/01_html/08_x/image/01_imageHost';
+$copy_command = "rclone copy '$remote_dir' '$local_dir' --files-from '$tmpFile' --transfers=16";
 
+// 6. 完成后执行后续脚本，更新数据库图片状态，重启 Node 服务等
+exec('php /home/01_html/08_db_image_status.php');
+exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
+```
 
 
 
