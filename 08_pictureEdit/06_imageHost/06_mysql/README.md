@@ -29,6 +29,7 @@
 08_image_rclone_replace.php                         # 随机替换目录下的图片，确保目录下的总图片数为5000
 08_server_manage_categories.php                     # 在后台中通过命令行对图片分类进行增删查改
 08_server_update_unknowImage_picCategories.php      # 在后台中更新 "0.0 未知" 分类下的图片id，推荐cron定时更新
+08_server_image_rclone_likesRange.php               # 后台下载指定likes值或范围内的图片（根据 image_exists=0来筛选）
 
 
 # 3. web交互
@@ -1090,7 +1091,7 @@ alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 表中上述增删查改最后实施前，还需要提示用户确认，输入y表示确认执行。执行完成后，在页面打印出  Categories 表的内容。
 
 
-💎 **环境变量：**
+💎 **2. 环境变量：**
 
 ```php
 // 引入数据库配置文件（确保 08_db_config.php 与本脚本在同一目录下）
@@ -1115,7 +1116,7 @@ require_once '08_db_config.php';
 请编写脚本实现上述需求（需要调用08_db_config.php创建数据库连接），注意该脚本运行在ubuntu终端
 
 
-💎 **环境变量：**
+💎 **2. 环境变量：**
 
 ```php
 require_once '08_db_config.php';  // 引用数据库连接配置
@@ -1123,6 +1124,61 @@ require_once '08_db_config.php';  // 引用数据库连接配置
 // 1. 查询 "0.0 未知" 分类是否已经存在
 $unknownCategoryName = "0.0 未知";
 ```
+
+
+
+### 6. `08_server_image_rclone_likesRange.php`
+
+功能：后台下载指定likes值或范围内的图片（根据 image_exists=0来筛选）
+
+💡 **1. 初始编程思路**
+
+请编写一个php脚本实现以下图片下载需求，根据用户输入 likes 数范围筛选并下载相应的图片到指定目录：
+1. 如上所示，image_db图片数据库中有一个images表，里面存储了多张图片的元数据，包括每一张图片的id， 图片名，点赞数，点踩数，状态，受否被收藏等信息。每条数据在mysql数据库中占据一行，大概有几万条数据。
+2. 首先调用以下模块和函数，同步更新图片数据库中的数据，确保数据库中的数据是最新的。
+
+```php
+include '08_db_sync_images.php';                     // 新下载的图片名写入到数据库中
+syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
+```
+
+3. 提示用户输入 likes 数范围或者具体值。例如：3-5（数字之间使用连字符，核查确保第一个数字小于第二个数字，均为整数），代表likes数从3到5，包含3，4和5；如果输入的是 3 或者 3,5 （只有一个数字代表一个确定的likes；若输入多个数字使用英文逗号分隔，代表多个 likes 值，需确保多个值不同，均为整型）。
+4. 初步筛选数据库中满足上述 likes 值的图片 id，再从其中筛选出 `image_exists = 0` 的图片id，确定这些图片id对应的 image_name。打印出符合要求的图片数量。提示用户核查要下载的 likes 值范围以及图片数量，输入 y 确认。
+5. 用户确认后，使用rclone从远程路径 `$remote_dir` 下载上述筛选出来的图片到 `$local_dir` 目录下，相关具体路径和下载实现请参考如下代码块：
+
+```php
+    $remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 请替换为远程目录路径
+    $local_dir = '/home/01_html/08_x/image/01_imageHost';
+    foreach ($diffBD as $filename) {
+        $remote_file_path = $remote_dir . '/' . $filename;
+        $local_file_path = $local_dir;
+        $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=16";
+        exec($copy_command, $copy_output, $copy_return_var);
+        if ($copy_return_var != 0) {
+            echo "Failed to copy " . $filename . "\n";
+        } else {
+            echo "Copied " . $filename . " successfully\n";
+        }
+    }
+```
+
+6. 完成上述下载后，给出提示。然后再运行以下代码块。
+
+```php
+exec('php /home/01_html/08_db_image_status.php');
+exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
+echo "Process completed.\n";
+```
+
+请针对上述需求，编写php代码实现。
+
+
+
+💎 **2. 环境变量：**
+
+
+
+
 
 
 
