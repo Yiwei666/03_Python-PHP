@@ -1194,6 +1194,87 @@ exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
 ```
 
 
+**3. rclone并行批量下载**
+
+```php
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 请根据实际情况修改
+$local_dir  = '/home/01_html/08_x/image/01_imageHost';
+
+foreach ($diffBD as $filename) {
+    // 构造源与目标路径
+    $remote_file_path = $remote_dir . '/' . $filename;
+    $local_file_path  = $local_dir;
+
+    // 运行 rclone copy 命令
+    $copy_command = "rclone copy '$remote_file_path' '$local_file_path' --transfers=16";
+
+    exec($copy_command, $copy_output, $copy_return_var);
+
+    if ($copy_return_var !== 0) {
+        echo "Failed to copy {$filename}\n";
+    } else {
+        echo "Copied {$filename} successfully\n";
+    }
+}
+
+```
+
+注意：上述代码中，每次只调用一次 rclone 命令，仅针对单个文件，所以并没有达到并行下载多张图片的效果（`--transfers=16`未有效利用）。
+
+```php
+// 将需要下载的文件名提取成一个数组(去掉 id，只保留文件名)
+$fileList = array_values($diffBD);
+
+// 生成一个临时文件，列出所有要下载的文件名（每行一个）
+$tmpFile = '/tmp/files_to_download.txt';
+file_put_contents($tmpFile, implode("\n", $fileList));
+
+// 准备 rclone 命令
+// 注意：使用 --files-from 时，rclone 从 $remote_dir 下的这些文件名一并下载到 $local_dir
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 根据实际情况修改
+$local_dir  = '/home/01_html/08_x/image/01_imageHost';
+
+$copy_command = "rclone copy '$remote_dir' '$local_dir' --files-from '$tmpFile' --transfers=16";
+
+// 执行批量下载
+exec($copy_command, $copy_output, $copy_return_var);
+
+if ($copy_return_var !== 0) {
+    echo "Failed to copy files.\n";
+} else {
+    echo "Copied all files successfully.\n";
+}
+
+// 如果临时文件无需保留，可以在这里删除
+unlink($tmpFile);
+```
+
+1. 构造文件列表 fileList
+
+   - 由于 $diffBD 里存储了需要下载的所有文件名（以 id 为键），我们使用 array_values($diffBD) 获取到一个纯文件名的索引数组。
+
+2. 写入文件
+
+   - 将所有文件名写入一个临时文件（如 /tmp/files_to_download.txt），每行一个文件名。
+
+3. rclone 命令
+
+   - 使用 `rclone copy <remote> <local> --files-from <file>` 即可让 rclone 根据文件列表一次性下载所有文件。
+
+   - `--transfers=16` 告知 rclone 可以并行下载最多 16 个文件。
+
+   - 这种方式下，rclone 自身会并行处理所有文件（而不是在 PHP 中一个个循环下载），能够更有效地利用带宽和系统资源。
+
+4. 执行并检查结果
+
+   - 用 `exec($copy_command, $copy_output, $copy_return_var);` 执行命令后，通过 `$copy_return_var` 判断成功(0)或失败(非 0)。
+
+5. 清理临时文件
+
+   - 如果无需保留文件列表，可用 `unlink($tmpFile)` 删除临时文件。
+
+
+
 
 # 5. web交互脚本
 
