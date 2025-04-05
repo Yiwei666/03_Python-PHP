@@ -31,6 +31,7 @@
 08_server_update_unknowImage_picCategories.php      # 在后台中更新 "0.0 未知" 分类下的图片id，推荐cron定时更新
 08_server_image_rclone_likesRange.php               # 后台下载指定likes值或范围内的图片（根据 image_exists=0来筛选）
 08_server_filter_delete_images.php                  # 在后台中允许用户根据图片的多种条件（如 star、ID 范围、分类、likes、dislikes 等）从数据库中筛选图片，并选择性地删除指定目录下的对应图片文件，同时更新数据库状态
+08_server_batch_categorize_images.php               # 基于图片命中的kindID字符串，在后台中批量给图片进行分类
 
 
 # 3. web交互
@@ -104,6 +105,12 @@ CREATE TABLE Categories (
 ) ENGINE=InnoDB;
 
 
+-- 在 Categories 表中新增 kindID 列
+ALTER TABLE Categories
+ADD COLUMN kindID VARCHAR(255) DEFAULT NULL AFTER category_name,
+ADD UNIQUE (kindID);
+
+
 -- 创建 PicCategories 表，实现 images 和 Categories 的多对多关系，
 -- 并在外键约束后加 ON DELETE CASCADE ON UPDATE CASCADE
 -- 当父表记录被删除/更新时，子表自动执行相应操作
@@ -132,8 +139,10 @@ mysql> describe Categories;
 +---------------+--------------+------+-----+---------+----------------+
 | id            | int          | NO   | PRI | NULL    | auto_increment |
 | category_name | varchar(255) | NO   |     | NULL    |                |
+| kindID        | varchar(255) | YES  | UNI | NULL    |                |
 +---------------+--------------+------+-----+---------+----------------+
-2 rows in set (0.01 sec)
+3 rows in set (0.01 sec)
+
 
 mysql> describe PicCategories;
 +-------------+------+------+-----+---------+-------+
@@ -1092,12 +1101,30 @@ alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 表中上述增删查改最后实施前，还需要提示用户确认，输入y表示确认执行。执行完成后，在页面打印出  Categories 表的内容。
 
 
-💎 **2. 环境变量：**
+
+💡 **2. 新增编程思路**
+
+现在我有新的需求，如下：
+- 在 Categories 表中新添加一列 kindID 列，即每一个分类名称都有一个 kindID，是一个独特的字符串，默认值可以设置为空，给出相应在Categories表中创建列的mysql语句。
+
+上述创建好 kindID 列后，现在需要帮我修改 08_server_manage_categories.php 脚本。新增如下功能：
+1. 新增功能4：给指定已有分类名添加或修改 kindID。提示用户输入分类名（核查该分类名是否存在，如果不存在则给出提示并结束程序），然后再提示用户输入对应 kindID（注意核查输入的 kindID 与其他分类名对应的 kindID 是否重复，如果重复则提示并结束程序）。修改前提示用户输入y进行确认。然后打印 Categories 表中所有的分类名以及对应的 kindID。
+2. 新增功能5：添加新的分类名和对应kindID。提示用户输入新分类名（核查该分类名是否存在，如果已存在则给出提示并结束程序），然后再提示用户输入对应 kindID（注意核查输入的 kindID 与其他分类名对应的 kindID 是否重复，如果重复则提示并结束程序）。修改前提示用户输入y进行确认。然后打印 Categories 表中所有的分类名以及对应的 kindID。
+3. 新增功能6：打印 Categories 表中所有的分类名以及对应的 kindID。
+
+针对上述需求进行修改，08_server_manage_categories.php 脚本中其余代码部分不要变，输出修改后的完整代码。
+
+
+
+💎 **3. 环境变量：**
 
 ```php
 // 引入数据库配置文件（确保 08_db_config.php 与本脚本在同一目录下）
 require_once '08_db_config.php';
 ```
+
+
+
 
 
 ### 5. `08_server_update_unknowImage_picCategories.php` 
@@ -1128,7 +1155,7 @@ $unknownCategoryName = "0.0 未知";
 
 
 
-### 6. `08_server_image_rclone_likesRange.php`
+### 6. `08_server_image_rclone_likesRange.php` 图片下载
 
 功能：后台下载指定likes值或范围内的图片（根据 image_exists=0来筛选）
 
@@ -1270,7 +1297,7 @@ unlink($tmpFile);
 
 
 
-### 7. `08_server_filter_delete_images.php`
+### 7. `08_server_filter_delete_images.php` 图片删除
 
 功能：该脚本实现了一个交互式的图片筛选和删除工具，允许用户根据图片的多种条件（如 star、ID 范围、分类、likes、dislikes 等）从数据库中筛选图片，并选择性地删除指定目录下的对应图片文件，同时更新数据库状态。
 
@@ -1341,6 +1368,8 @@ exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
 ```
 
 
+
+### 8. `08_server_batch_categorize_images.php` 图片分类
 
 
 
