@@ -48,6 +48,7 @@
 08_picDisplay_mysql_orderExistTab.php          # 基于数据库中的图片信息显示图片文件夹中所有图片，按照图片数据库中 likes-dislikes 的值降序显示，不显示数据库中已删除的图片，显示在新标签页打开图片的图标（含左右切换导航），新增收藏/取消按钮等
 08_picDisplay_mysql_galleryExistTab.php        # 基于数据库中的图片信息显示图片文件夹中所有图片，不显示数据库中已删除的图片，按照文件名默认排序，显示在新标签页打开图片的图标
 08_picDisplay_mysql_orderExistTab_starT.php    # 显示收藏的图片，增加了分类选择弹窗，用户可点击按钮选择分类，并在分页、图片导航时保持筛选状态。
+08_picDisplay_mysql_galleryExistTab_starT.php  # 功能与 08_picDisplay_mysql_orderExistTab_starT.php 几乎一样，是在其基础上进行修改的，唯一的区别是图片的排列顺序，按照默认顺序排列
 
 
 # 4. 衍生脚本
