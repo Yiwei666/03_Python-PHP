@@ -181,6 +181,30 @@ foreach ($matchedImages as $info) {
        . " | image_name: " . $info['image_name'] . "\n";
 }
 
+// =======================================
+// 只修改以下打印部分
+// =======================================
+
+// 打印需要新插入的匹配关系对应的图片名称
+echo "\n需要新插入匹配关系的图片名单：\n";
+
+// 收集要插入的 image_id（去重）
+$imgIdsNeedInsert = [];
+foreach ($newRelations as $rel) {
+    $imgIdsNeedInsert[] = $rel['image_id'];
+}
+$imgIdsNeedInsert = array_unique($imgIdsNeedInsert);
+
+// 打印这些图片
+foreach ($imgIdsNeedInsert as $imgId) {
+    echo "image_id: " . $imgId 
+       . " | image_name: " . $matchedImages[$imgId]['image_name'] . "\n";
+}
+
+// =======================================
+// 以下保持原逻辑不变
+// =======================================
+
 echo "\n总共有 {$matchedImageCount} 张图片与至少一个 kindID 匹配。\n";
 echo "总匹配次数(图片×匹配分类)为 {$checkCount} 次。\n";
 echo "其中已存在于 PicCategories 的匹配关系有 {$existCount} 条。\n";
