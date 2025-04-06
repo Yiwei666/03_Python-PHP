@@ -1125,6 +1125,15 @@ require_once '08_db_config.php';
 ```
 
 
+- 注意：功能 4、5和6 需要提前在 Categories 表中新增 kindID 列，mysql语句如下所示：
+
+```sql
+-- 在 Categories 表中新增 kindID 列
+ALTER TABLE Categories
+ADD COLUMN kindID VARCHAR(255) DEFAULT NULL AFTER category_name,
+ADD UNIQUE (kindID);
+```
+
 
 
 
