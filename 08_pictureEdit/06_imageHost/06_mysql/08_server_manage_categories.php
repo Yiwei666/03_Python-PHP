@@ -11,19 +11,77 @@
 require_once '08_db_config.php';
 
 /**
- * 显示当前 Categories 表的所有记录（在原有基础上增加 kindID 字段的输出）
+ * 自定义函数：以 mb_strwidth 计算宽度来右侧填充空格
+ */
+function mb_str_pad($input, $pad_length, $pad_string = " ", $pad_type = STR_PAD_RIGHT) {
+    // 计算原始字符串的“终端等宽”宽度（包含中文全角字符）
+    $input_width = mb_strwidth($input, "UTF-8");
+    if ($input_width >= $pad_length) {
+        return $input;
+    }
+    // 需要填充的宽度
+    $pad_needed = $pad_length - $input_width;
+    switch($pad_type) {
+        case STR_PAD_LEFT:
+            return str_repeat($pad_string, $pad_needed) . $input;
+        case STR_PAD_BOTH:
+            $left  = floor($pad_needed / 2);
+            $right = $pad_needed - $left;
+            return str_repeat($pad_string, $left) . $input . str_repeat($pad_string, $right);
+        default:
+            // STR_PAD_RIGHT
+            return $input . str_repeat($pad_string, $pad_needed);
+    }
+}
+
+/**
+ * 显示当前 Categories 表的所有记录（在原有基础上增加 kindID 字段的输出，
+ * 并使用三列分别对齐: "ID: X"、"Category Name: XXX"、"kindID: XXX"）
  */
 function showAllCategories($mysqli) {
     echo "\n当前 Categories 表内容如下：\n";
     $result = $mysqli->query("SELECT * FROM Categories");
     if ($result) {
+        // 先一次性取出所有行
+        $rows = [];
         while ($row = $result->fetch_assoc()) {
-            echo "ID: " . $row['id'] 
-                . " | Category Name: " . $row['category_name']
-                . " | kindID: " . ($row['kindID'] ?? '') // 若数据库里是NULL则输出空字符串
-                . "\n";
+            $rows[] = $row;
         }
         $result->free();
+
+        // 计算每一列(字符串)的最大宽度
+        $maxWidthID   = 0;  // 用于 "ID: X"
+        $maxWidthCat  = 0;  // 用于 "Category Name: XXX"
+        $maxWidthKind = 0;  // 用于 "kindID: XXX"
+
+        // 先把要显示的字符串提前构造出来
+        $outputRows = [];
+        foreach ($rows as $r) {
+            $idStr  = "ID: " . $r['id'];
+            $catStr = "Category Name: " . ($r['category_name'] ?? '');
+            $kidStr = "kindID: " . ($r['kindID'] ?? '');
+
+            // 计算各列字符串的“终端等宽”宽度
+            $wID   = mb_strwidth($idStr,  "UTF-8");
+            $wCat  = mb_strwidth($catStr, "UTF-8");
+            $wKind = mb_strwidth($kidStr, "UTF-8");
+
+            if ($wID   > $maxWidthID)   $maxWidthID   = $wID;
+            if ($wCat  > $maxWidthCat)  $maxWidthCat  = $wCat;
+            if ($wKind > $maxWidthKind) $maxWidthKind = $wKind;
+
+            // 先临时存起来
+            $outputRows[] = [$idStr, $catStr, $kidStr];
+        }
+
+        // 逐行输出，并对每列进行填充
+        foreach ($outputRows as [$idStr, $catStr, $kidStr]) {
+            $idStr  = mb_str_pad($idStr,  $maxWidthID);
+            $catStr = mb_str_pad($catStr, $maxWidthCat);
+            $kidStr = mb_str_pad($kidStr, $maxWidthKind);
+
+            echo "$idStr | $catStr | $kidStr\n";
+        }
     } else {
         echo "查询 Categories 表失败: " . $mysqli->error . "\n";
     }
