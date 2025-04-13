@@ -3,7 +3,7 @@
 /**
  * 此脚本用于：
  * 1. 确认 "0.0 未知" 分类是否已经在 Categories 表中存在，如不存在则提示并退出。
- * 2. 筛选出 images 表中所有 image_exists=1 并且 star=1 的图片 id 。
+ * 2. 筛选出 images 表中所有 image_exists=1 的图片 id 。
  * 3. 对于每个图片 id：
  *    - 如果在 PicCategories 表中没有任何分类关联，则将其关联到 "0.0 未知" 分类；
  *    - 如果在 PicCategories 表中正好只有一个关联分类，则跳过；
@@ -33,8 +33,8 @@ if ($resultCheckCategory->num_rows === 0) {
 $categoryRow = $resultCheckCategory->fetch_assoc();
 $unknownCategoryId = $categoryRow['id'];
 
-// 2. 筛选 images 表中所有 image_exists=1 并且 star=1 的图片 id
-$sqlSelectImages = "SELECT id FROM images WHERE image_exists = 1 AND star = 1";
+// 2. 筛选 images 表中所有 image_exists=1 的图片 id
+$sqlSelectImages = "SELECT id FROM images WHERE image_exists = 1";
 $resultImages = $mysqli->query($sqlSelectImages);
 
 if (!$resultImages) {
