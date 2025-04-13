@@ -26,7 +26,8 @@ echo "5. Count images with likes and dislikes between [$a, $b] where image_exist
 echo "6. Copy images with likes-dislikes in range [$a, $b] to another directory\n";
 echo "7. Count images with image_exists = 1 and likes in range [$a, $b]\n";
 echo "8. Count images with likes between [$a, $b] and delete corresponding files\n";
-echo "Enter option (1/2/3/4/5/6/7/8): ";
+echo "9. Count images with likes in range [$a, $b] (ignore image_exists)\n";
+echo "Enter option (1/2/3/4/5/6/7/8/9): ";
 $option = trim(fgets(STDIN));
 
 // 获取图片总数
@@ -221,6 +222,17 @@ elseif ($option == '8') {
     } else {
         echo "No files to delete with likes between [$a, $b].\n";
     }
+}
+
+// 功能 9：统计 likes 在 [a, b] 范围内的每一个值的图片数量（忽略 image_exists）
+elseif ($option == '9') {
+    echo "Counting images (regardless of image_exists) with likes in range [$a, $b]:\n";
+    for ($i = $a; $i <= $b; $i++) {
+        $count_result = $mysqli->query("SELECT COUNT(*) AS count FROM images WHERE likes = $i");
+        $count = $count_result->fetch_assoc()['count'];
+        echo "Likes = $i: $count images\n";
+    }
+    echo "Total images in the database: $total_images\n";
 }
 
 // 无效选项处理
