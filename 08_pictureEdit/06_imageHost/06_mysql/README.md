@@ -156,6 +156,38 @@ mysql> describe PicCategories;
 2 rows in set (0.01 sec)
 ```
 
+## 3. mysql语句
+
+### 1. 写入mysql表格到txt文本
+
+1. 检查 MySQL 服务器的 secure_file_priv 配置，即 MySQL 允许进行数据导出（以及导入）的唯一目录
+
+```
+SHOW VARIABLES LIKE 'secure_file_priv';
+```
+
+- 默认输出如下：
+
+```
+mysql> SHOW VARIABLES LIKE 'secure_file_priv';
++------------------+-----------------------+
+| Variable_name    | Value                 |
++------------------+-----------------------+
+| secure_file_priv | /var/lib/mysql-files/ |
++------------------+-----------------------+
+1 row in set (2.08 sec)
+```
+
+默认导出目录为 `/var/lib/mysql-files/`
+
+
+
+
+
+
+
+
+
 
 # 3. php功能模块
 
