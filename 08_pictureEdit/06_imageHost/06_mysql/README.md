@@ -32,6 +32,7 @@
 08_server_image_rclone_likesRange.php               # 后台下载指定likes值或范围内的图片（根据 image_exists=0来筛选）
 08_server_filter_delete_images.php                  # 在后台中允许用户根据图片的多种条件（如 star、ID 范围、分类、likes、dislikes 等）从数据库中筛选图片，并选择性地删除指定目录下的对应图片文件，同时更新数据库状态
 08_server_batch_categorize_images.php               # 基于图片命中的kindID字符串，在后台中批量给图片进行分类
+08_server_image_rclone_multiCondition.php           # 允许用户根据多种条件（如ID、分类、点赞数等）筛选数据库中的图片，检查本地文件存在情况，支持使用rclone下载缺失图片
 
 
 # 3. web交互
@@ -1404,6 +1405,129 @@ exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
 require_once '08_db_config.php';
 ```
 
+
+
+### 9. `08_server_image_rclone_multiCondition.php` 图片下载
+
+功能：该脚本通过命令行交互，允许用户根据多种条件（如ID、分类、点赞数等）筛选数据库中的图片，检查本地文件存在情况，支持使用rclone下载缺失图片，并执行后续维护命令。
+
+💡 **1. 初始编程思路**
+
+基于上述信息，现在需要编写一个php脚本，基于数据库多个筛选条件实现对指定范围内的图片管理，具体思路如下：
+
+1. 首先调用以下模块和函数，同步更新图片数据库中的数据，确保数据库中的数据是最新的。
+
+```php
+include '08_db_sync_images.php';                     // 新下载的图片名写入到数据库中
+syncImages("/home/01_html/08_x/image/01_imageHost");    // 调用函数并提供图片存储目录
+```
+
+2. 查询 image_db 图片数据库中的 images 表，询问用户是否需要基于 images 表中的 image_exists 值进行筛选，如果不基于，则输入 n。如果需要考虑，则输入 y，然后进一步提示用户输入 image_exists 的值（注意 image_exists 值只能为0或者1，其他数值是非法值）。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。如果用户输入了y，然后输入了合法的的 image_exists 值，例如0，则需要基于 image_exists = 0 筛选图片id。后续筛选和操作是基于这部分筛选的结果。
+
+3. 询问用户是否需要进一步基于 images 表中的 star 值进行筛选，如果不基于，则输入 n。如果需要考虑，则输入 y，然后进一步提示用户输入 star 的值（注意 star 值只能为0或者1，其他数值是非法值）。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。如果用户输入了y，然后输入了合法的的star值，例如0，则需要基于 star = 0 进一步筛选图片id。
+
+4. 询问用户是否需要进一步选取 images 表中的 id 范围，如果不需要则输入n（即 id 项不作为筛选依据）。如果需要，则输入y，然后提示用户输入 id 范围，支持的输入格式如：31-101，使用连字符代表范围，包含范围边界，且连字符后的数字必须大于其前的数字；如果需要输入多个范围或者确定的 id 值，则使用英文逗号分隔，例如：1-10,12-15,18,20 （注意检查多个范围或者确定值是否有重叠，输入值是否为整数，不支持负数）。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。
+
+5. 询问用户是否需要基于 PicCategories 表中图片的分类进行筛选，如果不需要，则输入n。如果需要则输入y，然后提示用户输入 Categories 表中的类别（对应Categories表中的 category_name 列值），由于类别中可能出现空格，因此用户输入类别时需使用引号""，例如："1.1 林希威"，如果输入多个类别，则需要用英文逗号分隔，如："1.1 林希威","1.1 IES"。注意核查这些类别在 Categories 表的 category_name 列中是否存在以及用户输入的多个类别是否有重复，如果类别不存在则给出提示，并提示重新输入。对于输入的多个类别，只要图片的分类满足其中任意一个类别（即图片id和输入的任意一个分类名的id在PicCategories表中存在对应关系），就视为满足筛选要求。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。
+
+6. 如果用户不需要基于 PicCategories 表中图片的分类进行筛选，则询问是否需要进一步筛选没有被分类过的图片（图片 id 在 PicCategories 表中的 image_id 列没有出现过，即PicCategories表中不存在图片id和任意图片分类名id的对应关系）。如果不需要，则输入n；如果需要则输入y；输入q代表结束程序运行。
+
+7. 询问用户是否需要基于images 表中的 likes 进行筛选，如果不需要，则输入n。如果需要则输入y，然后提示用户输入 likes 的具体值或者范围，例如：1-5,10,20-50,51 （注意检查多个范围或者确定值是否有重叠），多个值和范围之间使用英文逗号分隔。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。
+
+8. 询问用户是否需要基于images 表中的 dislikes 进行筛选，如果不需要，则输入n。如果需要则输入y，然后提示用户输入 dislikes 的具体值或者范围，例如：1-5,10,20-50,51 （注意检查多个范围或者确定值是否有重叠），多个值和范围之间使用英文逗号分隔。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。
+
+9. 询问用户是否需要基于images 表中的 (likes-dislikes) 的差值进行筛选，如果不需要，则输入n。如果需要则输入y，然后提示用户输入 (likes-dislikes) 的具体值或者范围，例如：1-5,10,20-50,51 （注意检查多个范围或者确定值是否有重叠），多个值和范围之间使用英文逗号分隔。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。
+
+10. 询问用户是否需要基于 images 表中的 image_name 进行筛选，如果不需要，则输入n。如果需要则输入y，然后提示用户输入字符串，例如： "vegoro1"，注意用户不需要输入引号，因为字符串不含空格；如果输入多个字符串，则需要用英文逗号分隔，例如："vegoro1,GXYMRico"。进一步筛选 image_name 中包含其中任意一个字符串的图片id，例如 "20250301-174729-vegoro1-g2w2w4" 这个图片名包含上述"vegoro1"字符串。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。
+
+11. 总结并打印出上述所有筛选项用户的选择以及输入的具体值，供用户进行核对。基于上述所有筛选条件，筛选出数据库中符合要求的图片id，并打印出数量。如果筛选出来的图片数量不为0，询问用户是否需要打印出这些图片的id和图片名？如果需要输入y，不需要输入n，输入q代表结束程序运行。
+
+12. 如果筛选出来的图片数量不为0，核对所选id的图片在目录下 `$local_dir` 是否存在（通过是否存在相同图片名的图片来判断），如果有同名图片存在则给出提示，并询问用户是否需要打印出这部分已存在的图片id、图片名和数量？如果需要输入y，不需要输入n，输入q代表结束程序运行。
+
+```php
+$local_dir  = '/home/01_html/08_x/image/01_imageHost';
+```
+
+13. 如果筛选出来的图片数量不为0，则询问用户是否需要使用rclone下载上述筛选出来id的图片，如果需要输入y，不需要输入n。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。参考如下代码块进行rclone批量下载。
+
+```php
+// 将需要下载的文件名提取成一个数组(去掉 id，只保留文件名)
+$fileList = array_values($diffBD);
+
+// 生成一个临时文件，列出所有要下载的文件名（每行一个）
+$tmpFile = '/tmp/files_to_download.txt';
+file_put_contents($tmpFile, implode("\n", $fileList));
+
+// 准备 rclone 命令
+// 注意：使用 --files-from 时，rclone 从 $remote_dir 下的这些文件名一并下载到 $local_dir
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost'; // 根据实际情况修改
+$local_dir  = '/home/01_html/08_x/image/01_imageHost';
+
+$copy_command = "rclone copy --ignore-existing '$remote_dir' '$local_dir' --files-from '$tmpFile' --transfers=16";
+
+// 执行批量下载
+exec($copy_command, $copy_output, $copy_return_var);
+
+if ($copy_return_var !== 0) {
+    echo "Failed to copy files.\n";
+} else {
+    echo "Copied all files successfully.\n";
+}
+
+// 如果临时文件无需保留，可以在这里删除
+unlink($tmpFile);
+```
+
+14. 完成上述筛选和下载后，给出提示。然后再运行以下代码块，对于每一个exec命令执行是否成功，需要给出相关提示。
+
+```php
+exec('php /home/01_html/08_db_image_status.php');
+exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
+echo "Process completed.\n";
+```
+
+请编写脚本实现上述需求（需要调用08_db_config.php创建数据库连接）。
+
+
+
+💎 **2. 环境变量：**
+
+```php
+// 1. 首先引入数据库连接配置，以及需要的同步函数
+include '08_db_config.php';         // 创建 $mysqli 数据库连接对象
+include '08_db_sync_images.php';    // syncImages() 函数
+
+
+// 在脚本执行的开头先调用同步函数，确保数据库中已经包含最新的图片信息
+// 请根据你的图片存储目录实际路径修改
+$local_dir = '/home/01_html/08_x/image/01_imageHost';
+syncImages($local_dir);
+
+
+$sql = "SELECT id, image_name, likes, dislikes, star, image_exists FROM images";
+
+
+// 准备 rclone 命令（根据实际情况修改 remote_dir）
+$remote_dir = 'rc6:cc1-1/01_html/08_x/image/01_imageHost';
+$copy_command = "rclone copy --ignore-existing '$remote_dir' '$local_dir' --files-from '$tmpFile' --transfers=16";
+
+
+// 14. 执行后续命令
+//    需要说明：这些命令的可执行路径、pm2 的配置等需要与你的实际部署环境相匹配。
+exec('php /home/01_html/08_db_image_status.php', $out1, $ret1);
+if ($ret1 !== 0) {
+    echo "执行 08_db_image_status.php 时出现错误。\n";
+} else {
+    echo "已执行 08_db_image_status.php。\n";
+}
+
+exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js', $out2, $ret2);
+if ($ret2 !== 0) {
+    echo "执行 pm2 restart 时出现错误。\n";
+} else {
+    echo "已重启 /home/01_html/08_x_nodejs/08_pic_url_check.js。\n";
+}
+```
 
 
 
