@@ -1485,12 +1485,14 @@ exec('pm2 restart /home/01_html/08_x_nodejs/08_pic_url_check.js');
 💡 **1. 初始编程思路**
 
 现在我还需要再编写一个新的php脚本，完成以下需求：
-1. 查询 image_db 图片数据库中的 images 表，筛选出 `image_exists = 1` 的图片，后续筛选和操作是基于这部分筛选的结果。
+1. ~~查询 image_db 图片数据库中的 images 表，筛选出 `image_exists = 1` 的图片，后续筛选和操作是基于这部分筛选的结果~~。
 2. 询问用户是否需要进一步基于 images 表中的 star 值进行筛选，如果不基于，则输入 n。如果需要考虑，则输入 y，然后进一步提示用户输入 star 的值（注意 star 值只能为0或者1，其他数值是非法值）。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。如果用户输入了y，然后输入了合法的的star值，例如0，则需要基于 star = 0 进一步筛选图片id。
 3. 针对上述筛选后的每一张图片（如果图片数量不为0），查询其 image_name 字符串中是否包含 Categories 表中某一个或者某几个分类名的 kindID 字符串（对比的kindID字符串不能为空），如果包含（即kindID字符串是 image_name 字符串的一部分），则在 PicCategories 表中添加该图片和相应分类之间的对应关系（如果该分类对应关系在PicCategories中已存在，则忽略，以避免覆盖或者重复写入；写入的必须是新的对应关系）。例如：假设分类名"1.0 vegoro"的 kindID 是"vegoro1"，然后 "20250301-174819-vegoro1-ap5lc4.png" 图片名中有该kindID字符串"vegoro1"，则需要将该图片的 image_id 和分类名"1.0 vegoro"对应的 category_id 写入到 PicCategories 表中。
 4. 打印出上述符合要求的图片image_name。打印出筛选出来的具有对应分类关系图片总数量（不考虑PicCategories表中是否已经存在），打印出其中对应关系还未写入到PicCategories表中图片数量，打印出符合要求但是PicCategories表中已经存在相应对应关系的图片数量。提示用户输入y确认将新的对应关系写入 PicCategories 表中。
 
 针对上述需求，输出新的php脚本。
+
+注意：新版的代码中删除了 `image_exists = 1` 筛选条件，即不考虑图片的存在状态。
 
 
 💎 **2. 环境变量：**
