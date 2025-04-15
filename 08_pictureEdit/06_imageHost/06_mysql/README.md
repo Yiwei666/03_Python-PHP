@@ -162,13 +162,13 @@ mysql> describe PicCategories;
 
 1. 检查 MySQL 服务器的 secure_file_priv 配置，即 MySQL 允许进行数据导出（以及导入）的唯一目录
 
-```
+```sql
 SHOW VARIABLES LIKE 'secure_file_priv';
 ```
 
 - 默认输出如下：
 
-```
+```sql
 mysql> SHOW VARIABLES LIKE 'secure_file_priv';
 +------------------+-----------------------+
 | Variable_name    | Value                 |
@@ -182,9 +182,71 @@ mysql> SHOW VARIABLES LIKE 'secure_file_priv';
 
 
 
+2. 显示images表中指定id范围内（1000到1200）的图片编号，图片名和分类名（`i.id, i.image_name, c.category_name`）
+
+```sql
+SELECT i.id, i.image_name, c.category_name
+FROM images AS i
+LEFT JOIN PicCategories AS pc ON i.id = pc.image_id
+LEFT JOIN Categories AS c ON pc.category_id = c.id
+WHERE i.id BETWEEN 1000 AND 1200;
+```
+
+- 显示images表中指定id范围内编号，图片名、分类名、点赞/踩数、存在状态、收藏状态等
+
+```sql
+SELECT i.id, i.image_name, i.likes, i.dislikes, i.image_exists, i.star, c.category_name
+FROM images AS i
+LEFT JOIN PicCategories AS pc ON i.id = pc.image_id
+LEFT JOIN Categories AS c ON pc.category_id = c.id
+WHERE i.id BETWEEN 1000 AND 1200;
+```
+
+3. 显示images表中指定id范围内编号，图片名、分类名、点赞/踩数、存在状态、收藏状态以及分类名的id，分类名和kindID等
+
+```sql
+SELECT 
+  i.id, 
+  i.image_name, 
+  i.likes, 
+  i.dislikes, 
+  i.image_exists, 
+  i.star, 
+  c.id AS category_id,
+  c.category_name,
+  c.kindID
+FROM images AS i
+LEFT JOIN PicCategories AS pc ON i.id = pc.image_id
+LEFT JOIN Categories AS c ON pc.category_id = c.id
+WHERE i.id BETWEEN 1 AND 100;
+```
 
 
+4. 将中指定id范围内编号，图片名、分类名、点赞/踩数、存在状态、收藏状态以及分类名的id，分类名和kindID等信息导出到txt文本。
 
+```sql
+-- 生成带有当前时间戳的文件名
+SET @filename = CONCAT('/var/lib/mysql-files/08_export_', DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'), '.txt');
+
+-- 构造动态 SQL 查询语句
+SET @sql = CONCAT(
+  'SELECT i.id, i.image_name, i.likes, i.dislikes, i.image_exists, i.star, c.kindID, c.id AS category_id, c.category_name ',
+  'INTO OUTFILE "', @filename, '" ',
+  'FIELDS TERMINATED BY "\t" ',
+  'LINES TERMINATED BY "\n" ',
+  'FROM images AS i ',
+  'LEFT JOIN PicCategories AS pc ON i.id = pc.image_id ',
+  'LEFT JOIN Categories AS c ON pc.category_id = c.id ',
+  'WHERE i.id BETWEEN 1 AND 17409'
+);
+
+-- 预处理、执行以及释放预处理语句
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+```
+
+注意：上述导出的txt文本位于 `/var/lib/mysql-files/` 目录下，文本名中带有时间戳。
 
 
 
