@@ -158,7 +158,7 @@ mysql> describe PicCategories;
 
 ## 3. mysql语句
 
-### 1. mysql表格导出txt文本
+### 1. mysql导出txt文本
 
 1. 检查 MySQL 服务器的 secure_file_priv 配置，即 MySQL 允许进行数据导出（以及导入）的唯一目录
 
