@@ -24,7 +24,8 @@ function readlineCLI($prompt = "") {
 }
 
 // 1) 先查询 image_exists = 1 的图片
-$baseQuery = "SELECT id, image_name, star FROM images WHERE image_exists = 1";
+// $baseQuery = "SELECT id, image_name, star FROM images WHERE image_exists = 1";
+$baseQuery = "SELECT id, image_name, star FROM images";
 // 用于记录最后的筛选条件（star 的可选条件）
 $starFilter = false;
 $starValue = null;
