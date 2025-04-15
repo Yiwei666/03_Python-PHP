@@ -27,13 +27,13 @@
 08_image_likes_manager.php                          # 后台控制（增加或减少）数据库中的likes和dislikes数量变化
 08_image_dislikes_delete.php                        # 后台控制（增加或减少）数据库中的likes和dislikes数量变化，功能4能够删除图片文件夹中dislikes数在某个范围内的图片，删除前需rclone备份至onedrive
 08_image_rclone_replace.php                         # 随机替换目录下的图片，确保目录下的总图片数为5000
-08_server_manage_categories.php                     # 在后台中通过命令行对图片分类进行增删查改
-08_server_update_unknowImage_picCategories.php      # 在后台中更新 "0.0 未知" 分类下的图片id，推荐cron定时更新
-08_server_image_rclone_likesRange.php               # 后台下载指定likes值或范围内的图片（根据 image_exists=0来筛选）
-08_server_filter_delete_images.php                  # 在后台中允许用户根据图片的多种条件（如 star、ID 范围、分类、likes、dislikes 等）从数据库中筛选图片，并选择性地删除指定目录下的对应图片文件，同时更新数据库状态
-08_server_batch_categorize_images.php               # 基于图片命中的kindID字符串，在后台中批量给图片进行分类
-08_server_image_rclone_multiCondition.php           # 允许用户根据多种条件（如ID、分类、点赞数等）筛选数据库中的图片，检查本地文件存在情况，支持使用rclone下载缺失图片
-08_server_insert_PicCateID_picCategories.php        # 通过脚本给指定id范围图片进行分类。提示输入图片id范围和图片分类名id，然后在数据库picCategories表中添加相应新的图片分类映射关系
+08_server_manage_categories.php                     # 分类管理，在后台中通过命令行对图片分类进行增删查改
+08_server_update_unknowImage_picCategories.php      # “未知”分类，在后台中更新 "0.0 未知" 分类下的图片id，推荐cron定时更新
+08_server_image_rclone_likesRange.php               # 图片下载，后台下载指定likes值或范围内的图片（根据 image_exists=0来筛选）
+08_server_filter_delete_images.php                  # 图片删除，在后台中允许用户根据图片的多种条件（如 star、ID 范围、分类、likes、dislikes 等）从数据库中筛选图片，并选择性地删除指定目录下的对应图片文件，同时更新数据库状态
+08_server_batch_categorize_images.php               # 图片分类，基于图片命中的kindID字符串，在后台中批量给图片进行分类
+08_server_image_rclone_multiCondition.php           # 图片下载，允许用户根据多种条件（如ID、分类、点赞数等）筛选数据库中的图片，检查本地文件存在情况，支持使用rclone下载缺失图片
+08_server_insert_PicCateID_picCategories.php        # 图片分类，提示输入图片id范围和图片分类名id，然后在数据库picCategories表中添加相应新的图片分类映射关系
 
 
 # 3. web交互
