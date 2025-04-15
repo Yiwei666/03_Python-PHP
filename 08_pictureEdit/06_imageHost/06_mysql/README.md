@@ -183,7 +183,7 @@ mysql> SHOW VARIABLES LIKE 'secure_file_priv';
 
 
 
-2. 显示images表中指定id范围内（1000到1200）的图片编号，图片名和分类名（`i.id, i.image_name, c.category_name`）
+2. 显示images表中指定id范围内（1000到1200）的图片编号，图片名和分类名（`i.id, i.image_name, c.category_name`）。注意修改images表中的id查询范围。
 
 ```sql
 SELECT i.id, i.image_name, c.category_name
@@ -203,7 +203,7 @@ LEFT JOIN Categories AS c ON pc.category_id = c.id
 WHERE i.id BETWEEN 1000 AND 1200;
 ```
 
-3. 显示images表中指定id范围内编号，图片名、分类名、点赞/踩数、存在状态、收藏状态以及分类名的id，分类名和kindID等
+3. 显示images表中指定id范围内编号，图片名、分类名、点赞/踩数、存在状态、收藏状态以及分类名的id，分类名和kindID等。注意修改images表中的id查询范围。
 
 ```sql
 SELECT 
@@ -223,7 +223,7 @@ WHERE i.id BETWEEN 1 AND 100;
 ```
 
 
-4. 将中指定id范围内编号，图片名、分类名、点赞/踩数、存在状态、收藏状态以及分类名的id，分类名和kindID等信息导出到txt文本。
+4. 将中指定id范围内编号，图片名、分类名、点赞/踩数、存在状态、收藏状态以及分类名的id，分类名和kindID等信息导出到txt文本。注意修改images表中的id查询范围。
 
 ```sql
 -- 生成带有当前时间戳的文件名
