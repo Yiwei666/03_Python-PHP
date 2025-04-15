@@ -33,6 +33,7 @@
 08_server_filter_delete_images.php                  # 在后台中允许用户根据图片的多种条件（如 star、ID 范围、分类、likes、dislikes 等）从数据库中筛选图片，并选择性地删除指定目录下的对应图片文件，同时更新数据库状态
 08_server_batch_categorize_images.php               # 基于图片命中的kindID字符串，在后台中批量给图片进行分类
 08_server_image_rclone_multiCondition.php           # 允许用户根据多种条件（如ID、分类、点赞数等）筛选数据库中的图片，检查本地文件存在情况，支持使用rclone下载缺失图片
+08_server_insert_PicCateID_picCategories.php        # 通过脚本给指定id范围图片进行分类。提示输入图片id范围和图片分类名id，然后在数据库picCategories表中添加相应新的图片分类映射关系
 
 
 # 3. web交互
@@ -1188,7 +1189,7 @@ alias pre='nohup php /home/01_html/08_image_rclone_replace.php &'
 ```
 
 
-### 4. `08_server_manage_categories.php` 图片分类管理
+### 4. `08_server_manage_categories.php` 分类管理
 
 💡 **1. 初始编程思路**
 
@@ -1234,7 +1235,7 @@ ADD UNIQUE (kindID);
 
 
 
-### 5. `08_server_update_unknowImage_picCategories.php` 
+### 5. `08_server_update_unknowImage_picCategories.php` 未知分类
 
 功能：更新 `"0.0 未知"` 分类下的图片id
 
@@ -1624,6 +1625,29 @@ if ($ret2 !== 0) {
     echo "已重启 /home/01_html/08_x_nodejs/08_pic_url_check.js。\n";
 }
 ```
+
+
+### 10. `08_server_insert_PicCateID_picCategories.php` 图片分类
+
+功能：提示输入图片id范围和图片分类名id，然后在数据库picCategories表中添加相应新的图片分类映射关系
+
+💡 **1. 初始编程思路**
+
+基于上述信息，现在需要编写一个php脚本，实现对图片分类对应关系的新增。
+
+1. 首先连接mysql数据库，读取images表格，提示用户输入图片的 id 范围，支持的输入格式如：31-101，使用连字符代表范围，包含范围边界；如果需要输入多个范围或者确定的 id 值，则使用英文逗号分隔，例如：1-10,12-15,18,20 （注意检查多个范围或者确定值是否有重叠，输入值是否为整数，不支持负数）。后续操作是基于这部分id图片。
+2. 读取 Categories 表格，提示用户输入一个分类名所对应的id，然后打印出Categories 表中该id对应的category_name和kindID，如果不存在该id，则给出提示并提示重新输入，输入q结束程序运行。
+3. 判断上述1中输入id范围内的每一张图片和上述2中输入的图片分类名id是否在 PicCategories 表中存在关联关系？（即图片是否属于该分类）如果不存在，则在 PicCategories 表中添加该关系。注意，仅添加新关联关系，已有关联关系不变，不要重复写入相同的关联关系。
+4. 在 PicCategories 表中写入新的分类关联关系前，请打印出相关图片的图片id，图片名，以及对应分类id，分类名，kindID等信息，还有待写入的图片数和关联关系数，以便用户进行核对。然后询问用户是否需要写入新的关联关系，如果需要输入y，不需要输入n。输入q代表结束程序运行，除了n、y和q之外的其他值均为非法值，提示重新输入。
+
+请编写脚本实现上述需求（需要调用08_db_config.php创建数据库连接）。
+
+💎 **2. 环境变量：**
+
+```php
+require_once '08_db_config.php'; // 包含数据库连接配置
+```
+
 
 
 
