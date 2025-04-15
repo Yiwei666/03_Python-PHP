@@ -1654,7 +1654,7 @@ require_once '08_db_config.php'; // 包含数据库连接配置
 
 # 5. web交互脚本
 
-### 1. `08_picDisplay_mysql.php` 随机显示数据库中 n 张图片
+## 1. `08_picDisplay_mysql.php` 随机显示数据库中 n 张图片
 
 1. 用户认证：检查用户是否已经登录，如果未登录则重定向到登录页面。
 2. 图片管理：从特定目录获取所有PNG格式的图片，检查这些图片是否已经存入数据库中。如果没有，则将其添加到数据库。
@@ -1703,7 +1703,7 @@ $result = $mysqli->query("SELECT id, image_name, likes, dislikes FROM images WHE
 ```
 
 
-### 2. `08_picDisplay_order.php` 按总点赞数递减显示数据库中 n 张图片
+## 2. `08_picDisplay_order.php` 按总点赞数递减显示数据库中 n 张图片
 
 1. 用户验证：检查用户是否登录，若未登录，则重定向到登录页面。
 2. 登出操作：若用户点击了登出链接，注销用户会话并重定向到登录页面。
@@ -1743,7 +1743,7 @@ $picnumber = 50; // 设置需要显示的图片数量
 
 
 
-### 3. `08_picDisplay_mysql_orderExist.php`
+## 3. `08_picDisplay_mysql_orderExist.php`
 
 1. 环境变量
 
@@ -1984,6 +1984,53 @@ fetch('08_db_toggle_star.php', {
     🔁
 </button>
 ```
+
+
+### 4. 后续衍生脚本
+
+```php
+最早的时候先编写了 08_image_leftRight_navigation.php 这个脚本，该脚本在
+08_picDisplay_mysql_orderExistTab.php 和 
+08_picDisplay_mysql_galleryExistTab.php 调用，
+注意这两个脚本是有一定区别的，不要将gallery系列和order系列的脚本放在一起对比；
+gallery系列需要放在一起对比，order系列放在一起对比，navigation系列也需要放在一起对比。
+
+然后修改这些脚本，根据star状态进行限制，依次编写了如下的6个衍生脚本。
+// mysql查询时star状态为F
+08_picDisplay_mysql_galleryExistTab_starF.php      # 只显示服务器中star为0的图片，图片按照数据库默认排序显示
+08_picDisplay_mysql_orderExistTab_starF.php        # 只显示服务器中star为0的图片，图片按照点赞数排序显示
+08_image_leftRight_navigation_starF.php            # 对服务器中star为0的图片，支持两种切换算法：点赞数排序和默认排序
+// mysql查询时star状态为T
+08_picDisplay_mysql_galleryExistTab_starT.php      # 只显示服务器中star为1的图片，图片按照数据库默认排序显示
+08_picDisplay_mysql_orderExistTab_starT.php        # 只显示服务器中star为1的图片，图片按照点赞数排序显示
+08_image_leftRight_navigation_starT.php            # 对服务器中star为1的图片，支持两种切换算法：点赞数排序和默认排序
+
+后来对 08_image_leftRight_navigation_starT.php 脚本进行了更新，然后又编写了 08_picDisplay_mysql_orderExistTab_starT.php 这个脚本，
+
+然后参考旧版本的08_picDisplay_mysql_orderExistTab_starT.php 和 08_picDisplay_mysql_galleryExistTab_starT.php 两个脚本的代码区别
+（主要是两个，一个是删除了排序代码，一个是修改了传递的排序参数），
+在 08_picDisplay_mysql_orderExistTab_starT.php 基础上更新了starT系列的 08_picDisplay_mysql_galleryExistTab_starT.php 脚本代码。
+
+
+接下来通过对比之前如下gallery，order和navigation系列的代码，在starT相关的三个脚本基础上
+08_picDisplay_mysql_galleryExistTab.php
+08_picDisplay_mysql_galleryExistTab_starT.php
+08_picDisplay_mysql_galleryExistTab_starF.php
+
+和
+08_picDisplay_mysql_orderExistTab.php
+08_picDisplay_mysql_orderExistTab_starT.php （基础代码）
+08_picDisplay_mysql_orderExistTab_starF.php
+
+以及
+08_image_leftRight_navigation.php
+08_image_leftRight_navigation_starT.php （基础代码）
+08_image_leftRight_navigation_starF.php
+
+进行了starF相关的三个脚本，以及不区分star状态的三个脚本代码的更新（github仓库代码已同步提交更新）
+```
+
+
 
 
 
