@@ -21,6 +21,7 @@
 │    ├── douyin_log.txt
 │    └── douyin_url.txt
 ├── douyVideo_AutoCenter_Pad.php
+├── douyinVideo_random_preload.php         # 当当前视频播放结束时，直接切换到已经预加载好的视频源，再为下一条视频继续预加载
 ├── lsDouyin.php
 ├── 02_douyVideo                           # drwxrwxr-x  3 nginx nginx      保存视频的文件夹
 │   ├── 20220618-001533.mp4
@@ -32,11 +33,21 @@
 
 # 3. 环境配置
 
-### 1. 25_douyinVideo_page.php
+## 1. 视频下载和播放
 
-- 针对如下php脚本，更改视频路径、每行显示的视频数量、视频尺寸大小时，需要更改如下代码
 
-`douyVideo.php/douyVideo_AutoCenter_Pad.php/douyVideo_AutoCenter.php` 等
+### 1. `25_douyinVideo_page.php`
+
+1. 针对如下php脚本，更改视频路径、每行显示的视频数量、视频尺寸大小时，需要更改如下代码
+
+```php
+douyVideo.php
+douyVideo_AutoCenter_Pad.php
+douyVideo_AutoCenter.php
+```
+
+
+2. 环境变量
 
 ```php
 $videosPerRow = 3;                                      // 可以根据需要更改每行显示的视频数量
@@ -46,22 +57,28 @@ echo '<video controls width="300" height="400" onended="playNextVideo(this)">'; 
 ```
 
 
-- 下面三个php脚本需要位于同一目录
 
-```
+
+### 2. `04_douyin_PHP_download.php`
+
+
+1. 下面三个php脚本需要位于同一目录
+
+```php
 04_douyin_PHP_download.php       // 在web上提示用户输入抖音视频分享链接，提取url，覆盖写入到txt文件
 run_python_script.php            // 执行python脚本，下载视频
 print_log_file.php               // 打印日志内容到web页面
 ```
 
-- 如下视频下载脚本可以位于其他目录，推荐与txt文件位于同一目录，便于管理
 
-```
+2. 如下视频下载脚本可以位于其他目录，推荐与txt文件位于同一目录，便于管理
+
+```py
 01_douyinDown.py                 // 读取txt文件的url，下载抖音视频，将日志内容覆盖写入日志文件
 01_douyinDown_api.py             // 与上述脚本功能类似，基于自己部署的抖音视频下载api
 ```
 
-上述两个脚本的主要区别
+- 上述两个脚本的主要区别
 
 ```python
 # Script 1
@@ -100,7 +117,7 @@ headers = {
 ```
 
 
-- **注意在相应路径下创建这两个文件并进行权限设置**
+3. 注意在相应路径下创建这两个文件并进行权限设置
 
 ```
 /home/01_html/05_douyinDownload/douyin_url.txt          // 保存抖音url
@@ -108,11 +125,35 @@ headers = {
 /home/01_html/05_douyinDownload/douyin_log.txt          // 保存python脚本的日志信息
 ```
 
-- **01_douyinDown.py** 脚本将会从douyin_url.txt读取下载链接，然后将脚本中的print信息写入到douyin_log.txt，将mp4视频下载到指定目录。txt文件中的url和日志都是覆盖写入。
+- `01_douyinDown.py` 脚本将会从 `douyin_url.txt` 读取下载链接，然后将脚本中的print信息写入到 `douyin_log.txt` ，将mp4视频下载到指定目录。txt文件中的url和日志都是覆盖写入。
 
 
 
-# 2. 权限设置
+### 3. `douyinVideo_random_preload.php`
+
+1. 在每次选定当前要播放的视频后，同时随机选定并预加载下一条视频（使用一个隐藏的 <video> 元素）。
+
+2. 当当前视频播放结束时，直接切换到已经预加载好的视频源，再为下一条视频继续预加载。
+
+这样可以最大程度地避免因带宽或网络延迟导致的缓冲停顿。
+
+
+- 环境变量
+
+```php
+<link rel="shortcut icon" href="https://mctea.one/00_logo/douyin.png">
+
+$videoDirectory = '/home/01_html/03_douyVideoLocal/';
+
+// 根据文件名构造完整 URL
+function videoUrl(name) {
+    return `http://domain.com/03_douyVideoLocal/${encodeURIComponent(name)}`;
+}
+```
+
+
+
+## 2. 权限设置
 
 - 浏览器运行php脚本，该php脚本在vps上实现对txt文件的读取和写入，对php脚本的调用，python脚本的调用，然后python脚本执行对txt文件的读取和写入，以及下载视频文件到其他文件夹中  
 - 涉及到的所有txt文件需要更改组和读写权限，尤其是python进行读写的txt文件
@@ -144,7 +185,7 @@ headers = {
 
 **示例**
 
-- 您需要确保目标目录 /home/01_html/02_douyVideo 具有适当的权限和所有者，以便 Python 脚本可以下载和写入 MP4 视频文件。
+- 您需要确保目标目录 `/home/01_html/02_douyVideo` 具有适当的权限和所有者，以便 Python 脚本可以下载和写入 MP4 视频文件。
 
 您可以使用以下命令为目录设置权限和所有者：
 
@@ -172,7 +213,7 @@ sudo chmod +x /path/to/your/script.php
 sudo chown www-data:www-data /path/to/your/script.php
 ```
 
-请将 /path/to/your/script.php 替换为实际的 PHP 脚本路径。
+请将 `/path/to/your/script.php` 替换为实际的 PHP 脚本路径。
 
 **注意：使用默认组用户和读写执行权限-rw-r--r--  1 root  root似乎也没问题**
 
@@ -193,7 +234,7 @@ sudo chown www-data:www-data /path/to/your/script.py
 sudo chmod 664 /path/to/your/file.txt
 ```
 
-请将 /path/to/your/file.txt 替换为实际的 TXT 文件路径。
+请将 `/path/to/your/file.txt` 替换为实际的 TXT 文件路径。
 
 **注意：至少满足-rw-rw-rw- 1 nginx nginx**
 
@@ -216,6 +257,8 @@ sudo chmod 664 /path/to/your/file.txt
 ```
 
 将这段代码添加到 <style> 标签内，然后保存并刷新页面，即可将页面的背景色设置为黑色。
+
+
 
 # 4. 其他部署方式
 
