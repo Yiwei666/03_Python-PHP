@@ -328,6 +328,32 @@ $categoriesText = implode(", ", $imageCategoryNames);
                 }
             });
         }
+
+        // —— 新增：页面加载完后预加载前后两张图片 —— 
+        document.addEventListener('DOMContentLoaded', function() {
+            // 构建当前分类/排序下所有有效图片的 URL 列表
+            var images = <?php echo json_encode(array_map(function($img) use ($domain, $dir5) {
+                return $domain . $dir5 . '/' . $img['image_name'];
+            }, $validImages)); ?>;
+            // 当前图片索引
+            var currentIndex = <?php echo $currentIndex; ?>;
+            var loaded = {};
+
+            function preloadIndex(idx) {
+                if (idx >= 0 && idx < images.length && !loaded[idx]) {
+                    var img = new Image();
+                    img.src = images[idx];
+                    loaded[idx] = true;
+                }
+            }
+
+            // 预加载前后两张
+            preloadIndex(currentIndex - 2);
+            preloadIndex(currentIndex - 1);
+            preloadIndex(currentIndex + 1);
+            preloadIndex(currentIndex + 2);
+        });
+        // —— 预加载逻辑结束 —— 
     </script>
 </head>
 <body>
