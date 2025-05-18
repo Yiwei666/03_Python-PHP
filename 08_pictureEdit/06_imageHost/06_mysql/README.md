@@ -516,8 +516,35 @@ include '08_db_image_status.php';                    // 判断数据库中所有
 请修改上述 `08_image_leftRight_navigation.php` 代码，仅针对上述新增需求进行修改，其余的代码和功能不要改变。输出修改后的完整代码。
 
 
+- 实现上述预加载功能，只需要添加如下部分代码片段即可
 
+```js
+        // —— 新增：页面加载完后预加载前后两张图片 —— 
+        document.addEventListener('DOMContentLoaded', function() {
+            // 构建当前分类/排序下所有有效图片的 URL 列表
+            var images = <?php echo json_encode(array_map(function($img) use ($domain, $dir5) {
+                return $domain . $dir5 . '/' . $img['image_name'];
+            }, $validImages)); ?>;
+            // 当前图片索引
+            var currentIndex = <?php echo $currentIndex; ?>;
+            var loaded = {};
 
+            function preloadIndex(idx) {
+                if (idx >= 0 && idx < images.length && !loaded[idx]) {
+                    var img = new Image();
+                    img.src = images[idx];
+                    loaded[idx] = true;
+                }
+            }
+
+            // 预加载前后两张
+            preloadIndex(currentIndex - 2);
+            preloadIndex(currentIndex - 1);
+            preloadIndex(currentIndex + 1);
+            preloadIndex(currentIndex + 2);
+        });
+        // —— 预加载逻辑结束 —— 
+```
 
 
 ### 3. 环境变量
