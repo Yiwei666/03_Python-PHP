@@ -519,6 +519,7 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 08_picDisplay_mysql_orderExistTab.php
 ```
 
+
 2. 调用方式：点击🔁按钮，传递`id和sort`参数给本脚本。调用示例如下所示，注意`sort`为1或者2，代表不同的排序算法。
 
 ```html
@@ -527,6 +528,14 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 
 ~~注意：该模块`08_image_leftRight_navigation.php`在实际生产中已弃用，由升级版本`08_image_leftRight_navigation_voteStar.php`取代。~~
 
+
+
+3. 后续基于对star值的区分，又衍生出如下两个模块
+
+```php
+08_image_leftRight_navigation_starF.php
+08_image_leftRight_navigation_starF.php
+```
 
 
 
