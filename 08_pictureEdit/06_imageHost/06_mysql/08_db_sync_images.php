@@ -7,9 +7,9 @@ function syncImages($directory) {
     // $imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
     // 同时匹配 png、jpg、jpeg
     $imagesInDirectory = array_merge(
-        glob($directory . "/*.png"),
-        glob($directory . "/*.jpg"),
-        glob($directory . "/*.jpeg")
+        glob($directory . "/*.png")  ?: [],
+        glob($directory . "/*.jpg")  ?: [],
+        glob($directory . "/*.jpeg") ?: []
     );
     
     $existingImages = [];
