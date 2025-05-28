@@ -20,7 +20,12 @@ if (isset($_GET['logout'])) {
 
 // 初始化图片数据库
 $directory = $dir4;
-$imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
+// $imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
+$imagesInDirectory = array_merge(
+    glob($directory . "/*.png")  ?: [],
+    glob($directory . "/*.jpg")  ?: [],
+    glob($directory . "/*.jpeg") ?: []
+);
 $existingImages = [];
 
 // 获取数据库中已存在的图片
