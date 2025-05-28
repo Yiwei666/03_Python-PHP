@@ -124,7 +124,13 @@ if (file_exists($transferFile)) {
 }
 
 // 获取所有 PNG 图片
-$allImages = glob($imagesDirectory . '*.png');
+// $allImages = glob($imagesDirectory . '*.png');
+// 同时匹配 png、jpg、jpeg
+$allImages = array_merge(
+    glob($imagesDirectory . '*.png')  ?: [],
+    glob($imagesDirectory . '*.jpg')  ?: [],
+    glob($imagesDirectory . '*.jpeg')?: []
+);
 
 // 获取未转移的图片（差集）
 $remainingImages = array_diff($allImages, $transferredImages);
