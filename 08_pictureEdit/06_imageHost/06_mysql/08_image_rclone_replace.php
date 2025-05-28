@@ -20,7 +20,12 @@ if (count($arrayA) > 5000) {
 
 // 获取目录下的所有png图片名，存到数组C中
 $directory = '/home/01_html/08_x/image/01_imageHost';
-$arrayC = glob($directory . '/*.png');
+// $arrayC = glob($directory . '/*.png');
+$arrayC = array_merge(
+    glob($directory . "/*.png") ?: [],
+    glob($directory . "/*.jpg") ?: [],
+    glob($directory . "/*.jpeg") ?: []
+);
 $arrayC = array_map('basename', $arrayC);
 
 // 数组B和数组C的交集称为数组D
