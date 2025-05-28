@@ -39,7 +39,12 @@ $domain = "https://19640810.xyz"; // 域名网址
 $picnumber = 1; // 设置需要显示的图片数量
 
 // 读取目录中的所有 png 图片
-$images = glob($dir4 . '/*.png');
+// $images = glob($dir4 . '/*.png');
+$images = array_merge(
+    glob($dir4 . '/*.png')   ?: [],
+    glob($dir4 . '/*.jpg')   ?: [],
+    glob($dir4 . '/*.jpeg')  ?: []
+);
 
 // 从图片数组中随机选取指定数量的图片
 $selectedImages = [];
