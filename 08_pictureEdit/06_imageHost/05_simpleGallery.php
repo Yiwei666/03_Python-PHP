@@ -91,7 +91,13 @@ $imagesDirectory = '/home/01_html/02_LAS1109/35_imageTransfer/';
 $imagesPerPage = 60;
 
 // Get all PNG images in the directory
-$images = glob($imagesDirectory . '*.png');
+// $images = glob($imagesDirectory . '*.png');
+$images = array_merge(
+    glob($imagesDirectory . '*.png')   ?: [],
+    glob($imagesDirectory . '*.jpg')   ?: [],
+    glob($imagesDirectory . '*.jpeg')  ?: []
+);
+
 $totalImages = count($images);
 
 // Calculate total pages
