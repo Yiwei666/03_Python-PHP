@@ -4,7 +4,14 @@ include '08_db_config.php'; // 包含数据库连接信息
 function syncImages($directory) {
     global $mysqli;
 
-    $imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
+    // $imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
+    // 同时匹配 png、jpg、jpeg
+    $imagesInDirectory = array_merge(
+        glob($directory . "/*.png"),
+        glob($directory . "/*.jpg"),
+        glob($directory . "/*.jpeg")
+    );
+    
     $existingImages = [];
 
     // 获取数据库中已存在的图片
