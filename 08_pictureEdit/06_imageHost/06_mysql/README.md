@@ -9,6 +9,7 @@
 
 ## 1. 文件结构
 
+### 1. 功能模块、后台管理和web交互
 
 ```bash
 # 1. 功能模块
@@ -65,6 +66,42 @@
 
 08_image_rclone_top30.php                          # 从图片数据库中随机选取150张点赞数大于等于29的图片，进行下载
 ```
+
+
+### 2. 图片格式限制程序文件
+
+- 以下脚本对于图片格式存在限制，目前支持png，jpg和jpeg三种格式。
+
+```php
+// github和本地对图片格式限制的脚本
+// 08_pictureEdit/06_imageHost/06_mysql/ 目录
+08_pictureEdit/06_imageHost/06_mysql/08_db_sync_images.php
+08_pictureEdit/06_imageHost/06_mysql/08_image_rclone_replace.php
+08_pictureEdit/06_imageHost/06_mysql/08_picDisplay_mysql.php
+08_pictureEdit/06_imageHost/06_mysql/08_picDisplay_mysql_inRigTra.php
+08_pictureEdit/06_imageHost/06_mysql/08_picDisplay_mysql_inRight.php
+
+
+// github和本地对图片格式限制的脚本
+// 08_pictureEdit/06_imageHost/ 目录
+08_pictureEdit/06_imageHost/05_imageGallery.php
+08_pictureEdit/06_imageHost/05_simpleGallery.php
+08_pictureEdit/06_imageHost/08_picDisplay.php
+08_pictureEdit/06_imageHost/08_picDisplay_one.php
+
+
+// 本地对图片格式限制的脚本
+05_imageGalleryOverflow.php
+08_picDisplay_onlyCookie.php
+08_picDisplay_onlySession.php
+08_image_rclone_top30.php
+08_x_imageGallery.php
+08_x_imageGallery.php
+```
+
+
+
+
 
 ## 2. 数据库和表
 
