@@ -15,7 +15,7 @@
 
 ### 1. 创建/激活虚拟环境
 
-```sh
+```cmd
 conda env list
 conda activate iopaint_env
 ```
@@ -25,7 +25,7 @@ conda activate iopaint_env
 
 `gallery-dl` 是一个命令行工具，用于从各种图像托管网站（如 Pixiv、DeviantArt、Danbooru、Twitter、Instagram 等）下载图像及其相关元数据。它支持大量站点，能够自动解析网页内容、按作者、标签、专辑等结构化方式批量下载资源。
 
-```sh
+```cmd
 python -m pip install -U gallery-dl
 python -m pip install PySocks
 ```
