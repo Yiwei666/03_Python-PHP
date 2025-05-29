@@ -5,6 +5,9 @@
 
 # 2. 文件结构
 
+```
+01_rename_twitter_imgs_gallery-dl.py         # 图片重命名，按照 新名称: YYYYMMDD-HHmmss-<子文件夹名/x账号>-<6位随机数字/小写字母>.jpg
+```
 
 
 
@@ -92,9 +95,6 @@ gallery-dl   --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt"   --
 
 ```sh
 gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2025, 4, 12) and date < datetime(2025, 5, 29)"   https://twitter.com/Japantravelco/media
-
-
-
 ```
 
 
