@@ -68,7 +68,7 @@ python -m pip install PySocks
 
 ## 2. 导出 x 账号 cookie
 
-Get cookies.txt LOCALLY 0.7.0 是一款开源的浏览器插件，专注于将 Cookie 导出为 Netscape 或 JSON 格式，适用于 Chrome 和 Firefox 等浏览器。
+`Get cookies.txt LOCALLY` 0.7.0 是一款开源的浏览器插件，专注于将 Cookie 导出为 Netscape 或 JSON 格式，适用于 Chrome 和 Firefox 等浏览器。
 
 
 
