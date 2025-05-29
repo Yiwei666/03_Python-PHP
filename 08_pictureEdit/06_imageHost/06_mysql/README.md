@@ -99,7 +99,13 @@
 08_x_imageGallery.php
 ```
 
+注意：
 
+- 当目录中没有匹配的文件时，`glob()` 会返回 false，而不是空数组。
+
+- array_merge() 要求传入的参数必须是数组，否则会抛出 警告`（Warning: array_merge(): Expected parameter 1 to be an array）`。
+
+- 使用 `?: []` 可确保即使 `glob() `返回 false，也能转为一个空数组，避免报错。
 
 
 
