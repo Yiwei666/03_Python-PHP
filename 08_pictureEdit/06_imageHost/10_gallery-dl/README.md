@@ -73,7 +73,7 @@ python -m pip install PySocks
 
 `Get cookies.txt LOCALLY` 0.7.0 是一款开源的浏览器插件，专注于将 Cookie 导出为 Netscape 或 JSON 格式，适用于 Chrome 和 Firefox 等浏览器。
 
-
+注意：限制该插件在指定网站使用，使用后应关闭，避免 cookies 等敏感信息泄露
 
 
 
@@ -105,6 +105,22 @@ gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --prox
 ```
 
 
+
+## 4. 图片重命名
+
+### 1. 编程思路
+
+`D:\software\27_nodejs\gallery-dl\gallery-dl\twitter`  目录下有多个子文件夹，每个子文件中有多张 jpg 图片，请编写一个python脚本，对子文件夹中的图片进行重命名，命名方式为 `YYYYMMDD-HHmmss-对应子文件夹的名字-6位数字字母随机字符串.jpg`   其中 `YYYYMMDD-HHmmss` 指的是图片创建的具体时间`年月日-时分秒`，6位数字字母随机字符串是由阿拉伯数字和26个英文小写字母随机组成。如果文件夹中的图片已经采用该格式命名了，则跳过对图片的重命名。一个命名的参考示例为：`20250518-135453-supperrocky-i908rd.jpg` 
+
+
+### 2. `01_rename_twitter_imgs_gallery-dl.py`
+
+- 环境变量
+
+```py
+# === 1. 修改为你的 twitter 根目录 ===
+ROOT = Path(r"D:\software\27_nodejs\gallery-dl\gallery-dl\twitter")
+```
 
 
 
