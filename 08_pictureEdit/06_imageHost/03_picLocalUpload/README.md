@@ -11,7 +11,7 @@ index.html                 # 浏览器中打开，打开网址 http://localhost:
 move_duplicates.py         # 查找指定文件夹下的所有相同PNG图片，并移动到子文件夹中
 
 01_scp_proxy.py                   # 使用本地socks5代理上传文件到云服务器指定目录
-02_scp_proxy_threadPool.py        # 创建多个ssh连接进行传输，提高效率，缩短时间
+02_scp_proxy_threadPool.py        # 创建多个ssh连接进行传输，提高效率，缩短时间，图片传输前进行图片命名格式校验
 03_local_remote_compare.py        # 比较本地目录与远程服务器上对应目录的文件，判断两者是否存在文件缺失或文件大小不一致的情况
 04_scp_proxy_check_Reupload.py    # 将本地目录下的文件并行传输到远程服务器的指定目录，在上传前检查远程文件是否已存在且大小相同，避免重复传输。
 ```
