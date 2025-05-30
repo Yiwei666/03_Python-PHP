@@ -1,9 +1,46 @@
 import os
+import re
+import sys
 import paramiko
 import socks
 import socket
 from paramiko import SSHClient, AutoAddPolicy
 import concurrent.futures
+
+# ---------- 新增：文件名校验函数 ----------
+def validate_image_filenames(local_path):
+    """
+    校验 local_path 目录下所有文件名，判断是否符合：
+        YYYYMMDD-HHMMSS-Account-XXXXXX.jpg
+    其中：
+      - 必含 3 个 '-'
+      - 前 8 位为年月日数字
+      - 第 10~15 位为时分秒数字
+      - 最后 6 位为数字或小写字母组合
+    返回一个列表：不合规文件名（若全部合规则为空 list）
+    """
+    pattern = re.compile(
+        r"""^                 # 开头
+        (\d{8})               # 8 位年月日
+        -                     # 第 1 个 -
+        (\d{6})               # 6 位时分秒
+        -                     # 第 2 个 -
+        ([A-Za-z0-9]+)        # 任意长度英文/数字账号
+        -                     # 第 3 个 -
+        ([0-9a-z]{6})         # 6 位随机数字或小写字母
+        \.(jpg|jpeg|png)$     # 扩展名
+        """,
+        re.VERBOSE,
+    )
+    invalid_files = []
+    for fname in os.listdir(local_path):
+        fpath = os.path.join(local_path, fname)
+        if not os.path.isfile(fpath):
+            continue
+        if not pattern.match(fname):
+            invalid_files.append(fname)
+    return invalid_files
+# ------------------------------------------------
 
 def setup_socks5_proxy():
     # 设置 SOCKS5 代理
@@ -80,5 +117,18 @@ if __name__ == "__main__":
     remote_port = 22  # 远程服务器SSH端口
     username = "root"  # SSH用户名
     password = "your_password"  # SSH密码
+    # ---------- 先进行文件名校验 ----------
+    invalid_files = validate_image_filenames(local_path)
 
+    if invalid_files:
+        print("以下文件名不符合命名规则，请修正后再次运行：")
+        for f in invalid_files:
+            print("  -", f)
+        sys.exit(1)
+
+    confirm = input("全部文件名已通过校验，确认开始传输？ (y/n): ").strip().lower()
+    if confirm != 'y':
+        print("已取消传输。")
+        sys.exit(0)
+    # --------------------------------------
     scp_transfer_parallel(local_path, remote_path, remote_host, remote_port, username, password, m=5)
