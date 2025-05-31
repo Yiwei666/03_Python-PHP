@@ -5,7 +5,9 @@
 # 2. 文件结构
 
 ```
-01_picLinkDisplay.js                     # X图片下载的油猴脚本
+01_picLinkDisplay.js                     # X图片下载的油猴脚本，保存为png格式，分辨率不变，图片变大
+01_picURL_x-format.js                    # X图片下载的油猴脚本，保存为jpg格式，分辨率不变，图片大小与鼠标右键保存一致
+ 
 02_picURL_xchina.js
 
 03_picURL_everiaclub.js
