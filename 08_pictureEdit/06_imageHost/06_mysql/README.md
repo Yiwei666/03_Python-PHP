@@ -296,6 +296,45 @@ DEALLOCATE PREPARE stmt;
 
 
 
+### 2. 查询没有分类的图片id
+
+
+查询 images 表格中不属于 Categories 表中任何分类的图片数量以及相应图片id
+
+
+1. 查询不属于任何分类的图片数量
+
+```sql
+-- 1. 查询不属于任何分类的图片数量
+SELECT
+  COUNT(*) AS unclassified_count
+FROM
+  images AS i
+  LEFT JOIN PicCategories AS pc
+    ON i.id = pc.image_id
+WHERE
+  pc.image_id IS NULL;
+```
+
+
+2. 查询所有不属于任何分类的图片 id
+
+```sql
+-- 2. 查询所有不属于任何分类的图片 id
+SELECT
+  i.id
+FROM
+  images AS i
+  LEFT JOIN PicCategories AS pc
+    ON i.id = pc.image_id
+WHERE
+  pc.image_id IS NULL;
+```
+
+
+
+
+
 # 3. php功能模块
 
 ## 1. `08_db_config.php` 数据库连接
