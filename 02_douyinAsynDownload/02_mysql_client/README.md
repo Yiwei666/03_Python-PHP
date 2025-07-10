@@ -32,8 +32,9 @@ mysql> describe tk_videos;
 | video_name   | varchar(255) | NO   |     | NULL    |                |
 | create_time  | datetime     | NO   |     | NULL    |                |
 | exist_status | tinyint      | NO   |     | NULL    |                |
+| likes        | int unsigned | NO   |     | 0       |                |
 +--------------+--------------+------+-----+---------+----------------+
-4 rows in set (0.00 sec)
+5 rows in set (0.01 sec)
 ```
 
 2. 环境变量
