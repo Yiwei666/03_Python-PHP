@@ -7,6 +7,8 @@
 
 # 2. 文件结构
 
+### 1. 客户端视频定时更新
+
 ```
 ├── 03_mysql_douyin
 │   ├── 03_db_config.php                 // 连接到数据库，创建 $mysql 连接对象
@@ -15,7 +17,27 @@
 │   └── 03_random_replace_video.php      // 从服务器中删除部分视频，从onedrive中下载部分视频，实现视频更新
 ```
 
+
+### 2. 客户端视频播放
+
+```php
+25_douyinVideo_page.php
+
+25_douyin_likes_operation.php
+25_douyinVideo_page_likes_orderDate.php
+25_douyinVideo_page_likesOrder.php
+
+25_douyinVideo_random.php
+25_douyinVideo_random_preload.php
+25_douyinVideo_random_preload_likes.php
+```
+
+
+
+
 # 3. 环境配置
+
+## 1. 客户端视频定时更新
 
 ### 1. `03_db_config.php`
 
@@ -145,6 +167,84 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 ```bash
 30 * * * * /usr/bin/php /home/01_html/03_mysql_douyin/03_random_replace_video.php
 ```
+
+
+## 2. 客户端视频播放
+
+
+### 1. 25_douyinVideo_page.php
+
+2. 环境变量
+
+```php
+    $domain = 'http://domain.com';
+    $videoPath = '/home/01_html/03_douyVideoLocal/';
+
+    $videosPerRow = 2;
+    $videosPerPage = 60;
+
+    $videoUrl = $domain . '/03_douyVideoLocal/' . $videoName;
+```
+
+
+### 2. 25_douyin_likes_operation.php
+
+2. 环境变量
+
+```php
+
+```
+
+
+### 3. 25_douyinVideo_page_likes_orderDate.php
+
+2. 环境变量
+
+```php
+
+```
+
+
+
+### 4. 25_douyinVideo_page_likesOrder.php
+
+2. 环境变量
+
+```php
+
+```
+
+
+
+### 5. 25_douyinVideo_random.php
+
+2. 环境变量
+
+```php
+
+```
+
+
+### 6. 25_douyinVideo_random_preload.php
+
+2. 环境变量
+
+```php
+
+```
+
+
+
+### 7. 25_douyinVideo_random_preload_likes.php
+
+2. 环境变量
+
+```php
+
+```
+
+
+
 
 
 # 参考资料
