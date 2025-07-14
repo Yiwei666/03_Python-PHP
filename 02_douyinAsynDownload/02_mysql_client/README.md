@@ -203,7 +203,11 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 2. 环境变量
 
 ```php
+// 引入数据库配置文件
+require_once '/home/01_html/03_mysql_douyin/03_db_config.php';
 
+// 更新成功后，获取最新的 likes 值
+$select_stmt = $mysqli->prepare("SELECT likes FROM tk_videos WHERE video_name = ?");
 ```
 
 
