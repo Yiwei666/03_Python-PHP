@@ -21,15 +21,15 @@
 ### 2. 客户端视频播放
 
 ```php
-25_douyinVideo_page.php
+25_douyinVideo_page.php                        // 分页展示视频，按照数据库的默认顺序显示
 
-25_douyin_likes_operation.php
-25_douyinVideo_page_likes_orderDate.php
-25_douyinVideo_page_likesOrder.php
+25_douyin_likes_operation.php                  // 功能模块，获取数据库中每条视频的likes数，对likes数进行加减操作
+25_douyinVideo_page_likes_orderDate.php        // 分页展示视频，按照数据库的默认顺序显示，支持对每条视频的likes数进行加减操作，调用 25_douyin_likes_operation.php 模块
+25_douyinVideo_page_likesOrder.php             // 分页展示视频，按照likes数降低的顺序显示，支持对每条视频的likes数进行加减操作，调用 25_douyin_likes_operation.php 模块
 
-25_douyinVideo_random.php
-25_douyinVideo_random_preload.php
-25_douyinVideo_random_preload_likes.php
+25_douyinVideo_random.php                      // 随机播放视频
+25_douyinVideo_random_preload.php              // 随机播放视频并预加载下一条视频
+25_douyinVideo_random_preload_likes.php        // 随机播放likes数大于0的视频并预加载下一条视频
 ```
 
 
