@@ -182,14 +182,14 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 2. 环境变量
 
 ```php
-    $domain = 'http://domain.com';                       // 替换成对应ip或者域名
-    $videoPath = '/home/01_html/03_douyVideoLocal/';     // 存放视频的路径
+$domain = 'http://domain.com';                       // 替换成对应ip或者域名
+$videoPath = '/home/01_html/03_douyVideoLocal/';     // 存放视频的路径
 
-    $videosPerRow = 2;                                   // 每行显示的视频数
-    $videosPerPage = 60;                                 // 每页显示的视频数
+$videosPerRow = 2;                                   // 每行显示的视频数
+$videosPerPage = 60;                                 // 每页显示的视频数
 
-    // 构造视频播放链接
-    $videoUrl = $domain . '/03_douyVideoLocal/' . $videoName;
+// 构造视频播放链接
+$videoUrl = $domain . '/03_douyVideoLocal/' . $videoName;
 ```
 
 
@@ -221,7 +221,22 @@ $select_stmt = $mysqli->prepare("SELECT likes FROM tk_videos WHERE video_name = 
 2. 环境变量
 
 ```php
+// 引入数据库配置
+require_once '/home/01_html/03_mysql_douyin/03_db_config.php';
 
+$domain = 'http://domain.com';                                  // 替换成对应ip或者域名
+$videoPath = '/home/01_html/03_douyVideoLocal/';
+
+$videosPerRow = 2;
+$videosPerPage = 20;
+
+$videoUrl = $domain . '/03_douyVideoLocal/' . $videoName;
+
+// 调用模块
+fetch('25_douyin_likes_operation.php', {
+    method: 'POST',
+    body: formData
+})
 ```
 
 
