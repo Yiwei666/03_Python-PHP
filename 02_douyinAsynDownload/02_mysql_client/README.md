@@ -320,7 +320,18 @@ function videoUrl(name) {
 2. 环境变量
 
 ```php
+// 1. 引入数据库配置
+require_once '/home/01_html/03_mysql_douyin/03_db_config.php';
 
+$videoDirectory = '/home/01_html/03_douyVideoLocal/';
+
+// 2. 准备 SQL 查询语句，只选择 likes 大于 0 的视频
+$sql = "SELECT video_name FROM tk_videos WHERE likes > 0";
+
+// 根据文件名构造完整 URL
+function videoUrl(name) {
+    return `http://domain.com/03_douyVideoLocal/${encodeURIComponent(name)}`;
+}
 ```
 
 
