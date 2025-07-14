@@ -174,6 +174,11 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 ### 1. 25_douyinVideo_page.php
 
+1. 功能
+
+分页展示视频，按照数据库的默认顺序显示
+
+
 2. 环境变量
 
 ```php
@@ -187,7 +192,12 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 ```
 
 
-### 2. 25_douyin_likes_operation.php
+### 2. 25_douyin_likes_operation.php  功能模块
+
+1. 功能
+
+功能模块，获取数据库中每条视频的likes数，对likes数进行加减操作
+
 
 2. 环境变量
 
@@ -197,6 +207,11 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 
 ### 3. 25_douyinVideo_page_likes_orderDate.php
+
+1. 功能
+
+分页展示视频，按照数据库的默认顺序显示，支持对每条视频的likes数进行加减操作，调用 `25_douyin_likes_operation.php` 模块
+
 
 2. 环境变量
 
@@ -208,6 +223,11 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 ### 4. 25_douyinVideo_page_likesOrder.php
 
+1. 功能
+
+分页展示视频，按照likes数降低的顺序显示，支持对每条视频的likes数进行加减操作，调用 `25_douyin_likes_operation.php` 模块
+
+
 2. 环境变量
 
 ```php
@@ -218,6 +238,11 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 ### 5. 25_douyinVideo_random.php
 
+1. 功能
+
+随机播放视频
+
+
 2. 环境变量
 
 ```php
@@ -226,6 +251,11 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 
 ### 6. 25_douyinVideo_random_preload.php
+
+1. 功能
+
+随机播放视频并预加载下一条视频
+
 
 2. 环境变量
 
@@ -236,6 +266,12 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 
 
 ### 7. 25_douyinVideo_random_preload_likes.php
+
+1. 功能
+
+随机播放likes数大于0的视频并预加载下一条视频
+
+
 
 2. 环境变量
 
