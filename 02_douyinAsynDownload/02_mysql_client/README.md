@@ -298,7 +298,13 @@ $videoDirectory = '/home/01_html/03_douyVideoLocal/';                           
 2. 环境变量
 
 ```php
+// 视频存放路径
+$videoDirectory = '/home/01_html/03_douyVideoLocal/';
 
+// 根据文件名构造完整 URL
+function videoUrl(name) {
+    return `http://domain.com/03_douyVideoLocal/${encodeURIComponent(name)}`;
+}
 ```
 
 
