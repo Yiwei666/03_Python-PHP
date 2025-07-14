@@ -182,12 +182,13 @@ exec('php /home/01_html/03_mysql_douyin/03_tk_video_check.php');
 2. 环境变量
 
 ```php
-    $domain = 'http://domain.com';
-    $videoPath = '/home/01_html/03_douyVideoLocal/';
+    $domain = 'http://domain.com';                       // 替换成对应ip或者域名
+    $videoPath = '/home/01_html/03_douyVideoLocal/';     // 存放视频的路径
 
-    $videosPerRow = 2;
-    $videosPerPage = 60;
+    $videosPerRow = 2;                                   // 每行显示的视频数
+    $videosPerPage = 60;                                 // 每页显示的视频数
 
+    // 构造视频播放链接
     $videoUrl = $domain . '/03_douyVideoLocal/' . $videoName;
 ```
 
