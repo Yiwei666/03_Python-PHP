@@ -251,7 +251,21 @@ fetch('25_douyin_likes_operation.php', {
 2. 环境变量
 
 ```php
+// 引入数据库配置
+require_once '/home/01_html/03_mysql_douyin/03_db_config.php';
 
+$domain = 'http://domain.com';                                  // 替换成对应ip或者域名
+$videoPath = '/home/01_html/03_douyVideoLocal/';
+
+$videosPerRow = 2;
+$videosPerPage = 36;
+
+$videoUrl = $domain . '/03_douyVideoLocal/' . $videoName;
+
+fetch('25_douyin_likes_operation.php', {
+    method: 'POST',
+    body: formData
+})
 ```
 
 
