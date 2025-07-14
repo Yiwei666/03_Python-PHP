@@ -280,8 +280,12 @@ fetch('25_douyin_likes_operation.php', {
 2. 环境变量
 
 ```php
+// Build the video URL
+const videoUrl = `http://domain.com/03_douyVideoLocal/${randomVideoName}`;           // 更新域名
 
+$videoDirectory = '/home/01_html/03_douyVideoLocal/';                                // 视频存放目录
 ```
+
 
 
 ### 6. 25_douyinVideo_random_preload.php
