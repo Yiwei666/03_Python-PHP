@@ -489,9 +489,9 @@ if ($selectedCategoryID) {
 
                                     // ====== 复制按钮 =======
                                     // “复制DOI” 按钮
-                                    echo '<button type="button" onclick="copyDOI(\'' . htmlspecialchars($paper['doi']) . '\')">复制DOI</button>';
+                                    echo '<button type="button" class="copy-doi-btn" onclick="copyDOI(\'' . htmlspecialchars($paper['doi']) . '\')">复制DOI</button>';
                                     // “复制编码DOI” 按钮
-                                    echo '<button type="button" onclick="copyEncodedDOI(\'' . $encodedDOI . '\')">复制编码DOI</button>';
+                                    echo '<button type="button" class="copy-encoded-doi-btn" onclick="copyEncodedDOI(\'' . $encodedDOI . '\')">复制编码DOI</button>';
                                 ?>
                             </div>
                             
@@ -876,6 +876,19 @@ if ($selectedCategoryID) {
             manageCategoryModal.style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
+    </script>
+
+    <!-- ====== [NEW CODE] 点击后改变颜色 ====== -->
+    <script>
+        document.addEventListener('click', function(e){
+            var anchor = e.target.closest('.paper-title a');
+            if (anchor) {
+                anchor.style.color = '#c58af9';
+            }
+            if (e.target.classList.contains('copy-doi-btn') || e.target.classList.contains('copy-encoded-doi-btn')) {
+                e.target.style.color = '#c58af9';
+            }
+        });
     </script>
 </body>
 </html>
