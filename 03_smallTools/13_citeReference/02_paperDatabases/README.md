@@ -43,6 +43,12 @@
 2. 在油猴脚本中基于crossRef API检索论文标题，查找相应文献，获取相应的元数据，包括doi
 3. 如果基于论文标题检索的论文标题不准确，则需要在web脚本 `08_web_crossRef_query.php` 基于doi号进行检索
 4. 下载相应的pdf论文，使用base32编码后的doi号进行命名，放到onedrive相应文件夹下；使用 rclone 可以将 onedrive 中的论文同步到 google drive 中，以便在 gemini 中导入。
+
+```sh
+# 将onedrive中的论文数据库同步到google drive中 
+*/5 * * * * /usr/bin/rclone sync 'rc4:/3图书/13_paperRemoteStorage/' 'gd1:/13_paperRemoteStorage/' --transfers=16
+```
+
 5. 通过 `08_webAccessPaper.php` 在线访问论文数据库，包括创建/更改论文分类，在线查看pdf论文等。点击论文标题可以跳转到相关的论文网页（通过doi链接）。
 
 
