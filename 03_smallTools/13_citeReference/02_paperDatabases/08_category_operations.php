@@ -112,6 +112,12 @@ function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
         case 'title_desc':
             $orderBy = 'ORDER BY p.title DESC';
             break;
+        case 'rating_asc': // [NEW CODE]
+            $orderBy = 'ORDER BY p.rating ASC, p.paperID DESC';
+            break;
+        case 'rating_desc': // [NEW CODE]
+            $orderBy = 'ORDER BY p.rating DESC, p.paperID DESC';
+            break;
         default:
             // 默认使用 paperID 降序
             $orderBy = 'ORDER BY p.paperID DESC';
