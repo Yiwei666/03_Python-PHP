@@ -313,6 +313,81 @@ if ($selectedCategoryID) {
             font-size: 18px;
             cursor: pointer;
         }
+
+        /* ========== [NEW CODE] 评分弹窗样式 ========== */
+        #ratingModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 8cm;
+            height: 6cm;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 20px 20px 60px 20px;
+            z-index: 10001;
+            box-sizing: border-box;
+        }
+        #ratingModal h2 {
+            margin: 0 0 15px 0;
+        }
+        #ratingModal .rating-actions {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+        }
+        #ratingModal .rating-actions button {
+            margin-left: 10px;
+        }
+        #ratingInput {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        /* ========== [NEW CODE] 评分星星样式 ========== */
+        .paper-rating {
+            margin-top: 5px;
+            font-family: Helvetica,Arial,sans-serif;
+            font-size: 12px;
+            line-height: 12px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .rating-stars {
+            display: inline-flex;
+            align-items: center;
+            height: 12px;
+        }
+        .rating-stars .star {
+            font-size: 12px;
+            line-height: 12px;
+            display: inline-block;
+            color: #999; /* 灰色 */
+        }
+        .rating-stars .star.full {
+            color: #f90; /* 橙色 */
+        }
+        .rating-stars .star.half {
+            position: relative;
+            color: #999;
+        }
+        .rating-stars .star.half::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+            overflow: hidden;
+            color: #f90;
+        }
+        .rating-number {
+            color: #eca334;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -453,6 +528,10 @@ if ($selectedCategoryID) {
                                 <button type="button" onclick="openCategoryModal('<?= htmlspecialchars($paper['doi']) ?>')">
                                     标签
                                 </button>
+                                <!-- [NEW CODE] 评分按钮 -->
+                                <button type="button" onclick="openRatingModal('<?= htmlspecialchars($paper['doi']) ?>')">
+                                    评分
+                                </button>
                                 
                                 <?php 
                                     // 为了生成“查看”按钮，需要对 doi 进行 Base32 编码
@@ -501,6 +580,12 @@ if ($selectedCategoryID) {
                                     分类标签：<?= implode(', ', $paperCategoryNames) ?>
                                 </div>
                             <?php endif; ?>
+
+                            <!-- ========== [NEW CODE] 第5行：显示评分（星星 + 数字），由前端 AJAX 填充 ========== -->
+                            <div class="paper-rating" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
+                                <div class="rating-stars"></div>
+                                <span class="rating-number"></span>
+                            </div>
                         </div>
                     <?php endwhile; ?>
                 <?php else: ?>
@@ -566,12 +651,26 @@ if ($selectedCategoryID) {
     </div>
     <!-- ========== [NEW CODE] 分类管理弹窗结束 ========== -->
 
+    <!-- ========== [NEW CODE] 评分弹窗 ========== -->
+    <div id="ratingModal">
+        <button class="close-btn" onclick="closeRatingModal()">X</button>
+        <h2>设置评分 (0-10 的整数)</h2>
+        <input type="number" id="ratingInput" min="0" max="10" step="1" placeholder="请输入 0-10 的整数">
+        <div class="rating-actions">
+            <button id="saveRatingBtn" type="button">保存</button>
+            <button id="cancelRatingBtn" type="button" onclick="closeRatingModal()">取消</button>
+        </div>
+    </div>
+
     <script>
         // [MODIFIED] 定义 API_KEY 常量
         const API_KEY = 'YOUR_API_KEY_HERE'; // 与后端 08_api_auth.php 中保持一致
 
         let currentDOI = null;      // 当前正在修改标签的论文的 DOI
         let allCategories = [];     // 所有分类的缓存
+
+        // [NEW CODE] 评分相关的全局变量
+        let currentRatingDOI = null;
 
         // 将后端获取到的 $papersData 数组转成 JS 对象
         const papersData = <?php echo json_encode($papersData, JSON_UNESCAPED_UNICODE); ?>;
@@ -876,6 +975,119 @@ if ($selectedCategoryID) {
             manageCategoryModal.style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
+
+        // ====== [NEW CODE] 评分：打开/关闭弹窗 ======
+        function openRatingModal(doi) {
+            currentRatingDOI = doi;
+            document.getElementById('ratingInput').value = '';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('ratingModal').style.display = 'block';
+        }
+        function closeRatingModal() {
+            currentRatingDOI = null;
+            document.getElementById('ratingModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // ====== [NEW CODE] 评分：保存 ======
+        document.getElementById('saveRatingBtn').addEventListener('click', function() {
+            const val = document.getElementById('ratingInput').value.trim();
+            if (val === '') {
+                alert('请输入 0-10 的整数');
+                return;
+            }
+            const num = Number(val);
+            if (!Number.isInteger(num) || num < 0 || num > 10) {
+                alert('rating 必须是 0-10 的整数');
+                return;
+            }
+
+            fetch('08_web_update_rating.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Api-Key': API_KEY
+                },
+                body: JSON.stringify({
+                    doi: currentRatingDOI,
+                    rating: num
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    // 同步更新页面对应论文的评分展示
+                    const container = document.querySelector('.paper-rating[data-doi="' + currentRatingDOI + '"]');
+                    if (container) {
+                        renderRating(container, data.rating);
+                    }
+                    closeRatingModal();
+                } else {
+                    alert(data.message || '评分更新失败');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('评分更新时出现错误。');
+            });
+        });
+
+        // ====== [NEW CODE] 页面加载后，为每篇论文拉取评分并渲染 ======
+        window.addEventListener('DOMContentLoaded', function() {
+            const ratingDivs = document.querySelectorAll('.paper-rating');
+            ratingDivs.forEach(div => {
+                const doi = div.getAttribute('data-doi');
+                fetch('08_web_update_rating.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Api-Key': API_KEY
+                    },
+                    body: JSON.stringify({ doi })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        renderRating(div, data.rating);
+                    } else {
+                        // 若获取失败则显示 0
+                        renderRating(div, 0);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    renderRating(div, 0);
+                });
+            });
+        });
+
+        // ====== [NEW CODE] 把 rating 渲染为 5 颗星（支持半星）+ 数值 ======
+        function renderRating(container, ratingInt) {
+            const starsWrap = container.querySelector('.rating-stars');
+            const numberSpan = container.querySelector('.rating-number');
+            if (!starsWrap || !numberSpan) return;
+
+            // ratingInt 为 0-10 的整数
+            const filled = Math.floor(ratingInt / 2); // 完整星星数
+            const hasHalf = (ratingInt % 2) === 1;   // 是否半星
+            const total = 5;
+
+            starsWrap.innerHTML = '';
+            for (let i = 0; i < total; i++) {
+                const span = document.createElement('span');
+                span.className = 'star';
+                span.textContent = '★';
+                if (i < filled) {
+                    span.classList.add('full');
+                } else if (i === filled && hasHalf) {
+                    span.classList.add('half');
+                }
+                starsWrap.appendChild(span);
+            }
+
+            numberSpan.textContent = (ratingInt).toFixed(1); // 按要求显示 1 位小数
+        }
+
     </script>
 
     <!-- ====== [NEW CODE] 点击后改变颜色 ====== -->
