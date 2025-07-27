@@ -95,29 +95,7 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'paperID_desc';
 // 获取选中分类的论文（带排序）
 $papers = null;
 if ($selectedCategoryID) {
-    if ($sort === 'rating_asc' || $sort === 'rating_desc') {
-        $order = ($sort === 'rating_asc') ? 'ASC' : 'DESC';
-        $query = "
-        SELECT 
-            p.paperID, p.title, p.authors, p.publication_year, 
-            p.journal_name, p.doi, p.status
-        FROM papers p
-        JOIN paperCategories pc ON p.paperID = pc.paperID
-        WHERE pc.categoryID = ?
-        ORDER BY p.rating $order, p.paperID DESC
-        ";
-        $stmt = $mysqli->prepare($query);
-        if ($stmt) {
-            $stmt->bind_param('i', $selectedCategoryID);
-            $stmt->execute();
-            $papers = $stmt->get_result();
-            $stmt->close();
-        } else {
-            $papers = null;
-        }
-    } else {
-        $papers = getPapersByCategory($mysqli, $selectedCategoryID, $sort);
-    }
+    $papers = getPapersByCategory($mysqli, $selectedCategoryID, $sort);
 }
 ?>
 <!DOCTYPE html>
