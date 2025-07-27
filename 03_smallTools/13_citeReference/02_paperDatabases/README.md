@@ -20,6 +20,7 @@
 
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
 08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
+08_web_update_rating.php           # 根据 DOI 查询论文当前的评分（rating），也能在收到合法的 0–10 整数评分时将其写入数据库。
 
 # 2. web交互
 08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
@@ -743,6 +744,73 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 
 
+## 5. `08_web_update_rating.php`
+
+### 1. 功能
+
+一个带 API Key 鉴权的 JSON 接口，能根据 DOI 查询或更新 0–10 整数评分，并统一返回 `{success,message?,rating?}`。
+
+
+1. CORS 与预检
+
+- 允许跨域请求（`Access-Control-Allow-Origin: *`）。
+- 对 OPTIONS 预检请求直接返回 204，不做后续处理。
+
+
+2. API Key 鉴权
+
+- 引入 `08_api_auth.php` 并调用 `checkApiKey()`，确保每次请求都带有有效的 `X-Api-Key`。
+
+
+3. 统一响应格式
+
+定义了 respond($success, $message, $rating) 函数，统一以 JSON 返回：
+
+```json
+{
+  "success": true|false,
+  "message": "...",     // 可选
+  "rating": 0–10        // 可选
+}
+```
+
+
+4. 参数读取与校验
+
+- 从请求体中解析 JSON，必须包含非空的 doi 字段。
+- 可选地包含 rating 字段，区分“仅查询”与“更新”两种流程。
+
+5. 查询现有评分
+
+- 若没有显式传入 rating，脚本立即返回该 DOI 对应论文的当前 rating（若未设置则默认为 0）。
+
+
+6. 更新评分
+
+- 若提交了 rating，先验证它是 0–10 范围内的整数。
+- 然后执行 `UPDATE papers SET rating = ? WHERE paperID = ?`，并返回更新后的新值。
+
+
+7. 错误处理
+
+- 对缺少参数、找不到论文、验证失败、数据库预处理或执行错误，都通过 `respond(false, "...")` 返回对应错误信息。
+
+
+
+
+### 2. 环境变量
+
+```php
+// 引入 API 认证、数据库与操作模块
+require_once '08_api_auth.php';
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+
+// 执行 API Key 检查
+checkApiKey();
+```
+
+
 
 
 # 5. web交互脚本
@@ -919,6 +987,34 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 
 
+💡 **10. 新增思路**
+
+
+运行上述 `08_webAccessPaper.php` 代码，网页右侧显示左侧相应分类标签下的所有论文（包含标题、作者、期刊名等信息），每篇论文下方还会显示"标签 删除 查看 复制DOI 复制编码DOI"等按钮；最下面的一行是 "分类标签："，包含该论文所属的分类。现在我的需求如下：
+
+1. 编写一个新的模块 `08_web_update_rating.php`，接收前端发送的 DOI（论文唯一标识）和新的`rating`数值这两个参数（rating参数可选，非必需，通过用户输入，如果该参数没有赋值，即代表仅从数据库中查询该doi论文的rating值，不涉及更新），然后根据这两个参数去数据库Papers表更新/查询对应论文的rating值，并将更新/查询结果以 JSON 格式返回给前端。尽量把该模块设计的标准化一些，后续可能还会在其他地方调用。
+
+2. 修改 `08_webAccessPaper.php` 代码，在每篇论文的"标签 删除 查看 复制DOI 复制编码DOI"等按钮所在行新增一个按钮 "评分"，大小、字体等格式与其他按钮保持一致即可。点击该按钮，会弹出一个小窗口，小窗口中有一个输入框，提示用户输入具体的 rating 值，取值在0-10，必须是整数（确保没有非法输入）。用户输入rating值并选择保存(或者取消)后，该rating值会被模块 `08_web_update_rating.php` 更新到数据库的Papers表中。同时页面中关于rating的显示信息也同步更新。小窗口显示在页面中心，高度6cm，宽度8cm左右，窗口右上角需包含窗口关闭图标×。保存或者取消按钮之间需要有适当间距，位于窗口中的下方。
+
+3. 修改 `08_webAccessPaper.php` 代码，在每篇论文的 "分类标签："行下方新增一行，该行显示相应论文的 rating 信息。具体包括：首先显示5个小五角星，最后一个五角星间隔适当空格后是一个具体的rating数值（包含1位小数，取值在0-10，均为整数，与最后一个星星有一个空格间隔，通过数据库的Papers表获取）。星星的填充颜色包括两种橙色 `#f90` 和灰色`#999`。假如数据库中的rating值是10，则5个星星全是橙色；如果rating值是5，则前2.5个星星是橙色，后2.5个星星是灰色，即第3个星星左半边是橙色，右半边是灰色；如果rating是8，则前4个星星是橙色，最后1个星星是灰色；如果rating是0，则所有星星均为灰色；即填充橙色星星的数量为 `rating/2`，填充灰色星星的数量为 `5-rating/2`。rating数字字体颜色为`#eca334`，字号为12px，字体为 `Helvetica,Arial,sans-serif`。rating的数值通过模块 `08_web_update_rating.php`从数据库的Papers表中获取。星星的高度和rating字体高度须保持一致。星星的实现和样式可以参考豆瓣网站（douban.com）中评分星星的设计。注意：用户在2中保存rating值时，页面中的rating数值和五角星填充需要同步更新。
+
+
+结合上述需求，请输出完整的 `08_web_update_rating.php` 模块，并同步修改  `08_webAccessPaper.php` 代码，然后完整输出。对于 `08_webAccessPaper.php` 代码修改，尽量通过增加/调整少量代码行来实现，其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。
+
+
+
+
+💡 **11. 新增思路**
+
+上述新输出的模块 `08_web_update_rating.php` 以及修改后的 `08_webAccessPaper.php` 代码很好的实现了关于评分写入和显示的需求。现在还还有一个额外的新需求，如下：
+
+1. 在 `08_web_update_rating.php` 显示的右侧页面顶部，点击"工具"按钮，目前支持按照 论文ID、发表年、状态码、期刊名、作者名、标题等对相应分类下的论文进行升序/降序排序。现在需要新增按照 rating 值对论文升序和降序排序两个选项。rating值可以基于 `08_web_update_rating.php` 从数据库的 papers 表中获取。
+
+2. 上述排序须仅通过修改上述 `08_webAccessPaper.php` 代码来实现，可以调用但不要改变 模块 `08_web_update_rating.php` 代码。对于 `08_webAccessPaper.php` 代码修改，尽量通过增加/调整少量代码行来实现，其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。
+
+
+
+
 
 
 
@@ -940,6 +1036,7 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 08_tm_get_paper_categories.php
 08_tm_update_paper_categories.php
 08_web_update_paper_status.php
+08_web_update_rating.php
 ```
 
 
@@ -1041,6 +1138,36 @@ echo '<button type="button" onclick="window.open(\'https://domain.com/08_paperLo
 header("Location: 08_webAccessPaper.php?message=" . urlencode($message));
 exit();
 ```
+
+
+7. 更新/查询数据库中论文 rating 数值
+
+```js
+// ====== [NEW CODE] 评分：保存 ======
+fetch('08_web_update_rating.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': API_KEY
+    },
+    body: JSON.stringify({
+        doi: currentRatingDOI,
+        rating: num
+    })
+})
+
+
+// ====== [NEW CODE] 页面加载后，为每篇论文拉取评分并渲染 ======
+fetch('08_web_update_rating.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': API_KEY
+    },
+    body: JSON.stringify({ doi })
+})
+```
+
 
 
 
