@@ -540,6 +540,7 @@ checkApiKey();
 8. `getCategoriesByPaperID($mysqli, $paperID)`
    - 功能：获取指定论文的所有分类ID
    - 描述：根据`$paperID`从`paperCategories`关联表中查询所有关联的`categoryID`。成功时返回`categoryID`的数组，失败时返回false。
+   - 新增：在 `getPapersByCategory()` 的 `switch` 中新增 `rating_asc` 与 `rating_desc` 两个分支，使用 `ORDER BY p.rating ASC|DESC, p.paperID DESC`。
 
 9. `updatePaperCategories($mysqli, $paperID, $categoryIDs)`
    - 功能：更新指定论文的分类
@@ -589,6 +590,9 @@ checkApiKey()                                                        # 执行 AP
 getPaperByDOI($mysqli, $doi)                                         # 通过提供的 DOI（数字对象标识符）从数据库中检索对应的论文记录。
 updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论文的 paperID 更新其 status 字段。
 
+# 6. 08_web_update_rating.php                  # 基于doi查询/更新rating值
+checkApiKey()
+getPaperByDOI($mysqli, $doi)
 ```
 
 
@@ -779,6 +783,7 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 - 从请求体中解析 JSON，必须包含非空的 doi 字段。
 - 可选地包含 rating 字段，区分“仅查询”与“更新”两种流程。
+
 
 5. 查询现有评分
 
@@ -1011,6 +1016,43 @@ checkApiKey();
 1. 在 `08_web_update_rating.php` 显示的右侧页面顶部，点击"工具"按钮，目前支持按照 论文ID、发表年、状态码、期刊名、作者名、标题等对相应分类下的论文进行升序/降序排序。现在需要新增按照 rating 值对论文升序和降序排序两个选项。rating值可以基于 `08_web_update_rating.php` 从数据库的 papers 表中获取。
 
 2. 上述排序须仅通过修改上述 `08_webAccessPaper.php` 代码来实现，可以调用但不要改变 模块 `08_web_update_rating.php` 代码。对于 `08_webAccessPaper.php` 代码修改，尽量通过增加/调整少量代码行来实现，其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。
+
+
+
+
+
+💡 **12. 新增思路**
+
+
+上述修改后的 `08_webAccessPaper.php` 代码很好的满足了在工具选项下新增按照评分升序和降序的需求。但是注意到你提到可以将“评分排序”也纳入 `getPapersByCategory()` 的 switch 中，我认为这是一个非常好的提议，不仅可以减少 `08_webAccessPaper.php` 代码篇幅，还可以实现代码的模块化和功能化。
+
+```php
+if ($sort === 'rating_asc' || $sort === 'rating_desc') {
+    $order = ($sort === 'rating_asc') ? 'ASC' : 'DESC';
+    $query = "
+    SELECT 
+        p.paperID, p.title, p.authors, p.publication_year, 
+        p.journal_name, p.doi, p.status
+    FROM papers p
+    JOIN paperCategories pc ON p.paperID = pc.paperID
+    WHERE pc.categoryID = ?
+    ORDER BY p.rating $order, p.paperID DESC
+    ";
+    $stmt = $mysqli->prepare($query);
+    if ($stmt) {
+        $stmt->bind_param('i', $selectedCategoryID);
+        $stmt->execute();
+        $papers = $stmt->get_result();
+        $stmt->close();
+    } else {
+        $papers = null;
+    }
+} else {
+    $papers = getPapersByCategory($mysqli, $selectedCategoryID, $sort);
+}
+```
+
+现在请将上述 `08_webAccessPaper.php` 中关于 rating 查询的代码放到 `getPapersByCategory()` 的 switch 中，输出修改后的完整  `08_webAccessPaper.php，08_category_operations.php，08_web_update_rating.php`，其中 `08_webAccessPaper.php` 尽量只删减代码行，`08_category_operations.php` 中仅新增相关代码行，`08_web_update_rating.php` 中如果没有必要可以不同修改。其余代码行不要改动，方便后续review。
 
 
 
