@@ -748,7 +748,7 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 ### 1. 功能
 
-一个带 API Key 鉴权的 JSON 接口，能根据 DOI 查询或更新 0–10 整数评分，并统一返回 `{success,message?,rating?}`。
+一个带 API Key 鉴权的 JSON 接口，能根据 DOI 查询或更新 0–10 整数评分，并统一返回 `{success,message?,rating?}`。该模块在 `08_webAccessPaper.php` 中被调用。
 
 
 1. CORS 与预检
