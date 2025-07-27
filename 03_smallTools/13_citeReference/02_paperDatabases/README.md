@@ -158,16 +158,23 @@ ALTER TABLE papers MODIFY title TEXT NOT NULL;
   - 存储方式：TEXT 类型的列通常存储在表外，访问时可能会有性能开销。
 
 
-
-5. 添加status列后的`papers` 表
+5. 新增 `rating` 列，取值为大于等于0的整数，默认值为0。
 
 ```sql
+ALTER TABLE papers
+ADD COLUMN rating INT UNSIGNED NOT NULL DEFAULT 0;
+```
+
+
+6. 添加 `status`, `rating` 列后的`papers` 表
+
+```
 mysql> describe papers;
 +------------------+----------------------------------+------+-----+---------+----------------+
 | Field            | Type                             | Null | Key | Default | Extra          |
 +------------------+----------------------------------+------+-----+---------+----------------+
 | paperID          | int                              | NO   | PRI | NULL    | auto_increment |
-| title            | varchar(355)                     | NO   |     | NULL    |                |
+| title            | varchar(355)                     | YES  |     | NULL    |                |
 | authors          | text                             | NO   |     | NULL    |                |
 | journal_name     | varchar(255)                     | NO   |     | NULL    |                |
 | publication_year | int                              | NO   |     | NULL    |                |
@@ -179,10 +186,10 @@ mysql> describe papers;
 | issn             | varchar(50)                      | YES  |     | NULL    |                |
 | publisher        | varchar(255)                     | YES  |     | NULL    |                |
 | status           | enum('CL','C','L','N','DW','DL') | NO   |     | N       |                |
+| rating           | int unsigned                     | NO   |     | 0       |                |
 +------------------+----------------------------------+------+-----+---------+----------------+
-13 rows in set (0.00 sec)
+14 rows in set (0.00 sec)
 ```
-
 
 
 ### 3. 创建 categories 表
