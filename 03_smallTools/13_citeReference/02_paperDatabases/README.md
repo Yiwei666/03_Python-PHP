@@ -1627,12 +1627,28 @@ $remote_dir  = 'rc4:/3图书/13_paperRemoteStorage';
 上述代码的功能7是否支持用户输入多个序号进行多个field选择？多个序号之间是否支持使用空格分隔？如果不支持，请修改对应部分代码，其余部分代码不要变。
 
 
+💡 **2. 新增思路**
+
+`papers`表结构，数据库连接脚本 `08_db_config.php`，以及 `08_server_paper_management.php` 脚本如上所示，现在需要修改 `08_server_paper_management.php` 脚本，新增功能11，需求如下：
+
+1. 提示用户输入doi，然后打印出对应该doi的 `journal_name` 值，提示用户输入新的 `journal_name` 值，然后打印出输入的新的 `journal_name` 值，询问用户是否需要用新的 `journal_name` 值替换旧值？输入y确认，输入n或其他值表示取消。类似功能10，区别在于将 `title` 更新换成 `journal_name` 。
+
+2. 对于 `08_server_paper_management.php` 代码修改，尽量通过增加/调整少量代码行来实现，其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。
+
+输出修改后的完整 `08_server_paper_management.php` 代码。
+
+
+
+
 ### 2. 环境变量
 
 
 ```
 require_once '08_db_config.php'; // 引入数据库连接配置
 ```
+
+
+
 
 
 
