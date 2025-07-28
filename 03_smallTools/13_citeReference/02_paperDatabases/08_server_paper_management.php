@@ -15,6 +15,7 @@ echo "7. 列出所有字段名称，用户通过输入字段序号（可输入�
 echo "8. 打印出 papers 的表结构 (DESCRIBE papers)\n";
 echo "9. 修改表中 title 的 varchar 最大存储长度\n";
 echo "10. 根据指定 doi 更新 title 的值\n";
+echo "11. 根据指定 doi 更新 journal_name 的值\n";
 echo "请输入序号并回车：";
 
 $choice = trim(fgets(STDIN));
@@ -343,6 +344,47 @@ switch ($choice) {
             $sqlUpdate = "UPDATE papers SET title = '$titleEsc' WHERE doi = '$doiEsc'";
             if ($mysqli->query($sqlUpdate)) {
                 echo "成功更新。新的 title 值为：{$newTitle}\n";
+            } else {
+                echo "更新失败，错误信息：{$mysqli->error}\n";
+            }
+        } else {
+            echo "已取消更新操作。\n";
+        }
+        break;
+
+    case '11':
+        // 11. 根据指定 doi 更新 journal_name 的值
+        echo "请输入要更新的 doi: ";
+        $updateDoi = trim(fgets(STDIN));
+        if ($updateDoi === '') {
+            echo "未输入 doi。\n";
+            break;
+        }
+
+        // 查询原有 journal_name
+        $doiEsc = $mysqli->real_escape_string($updateDoi);
+        $sqlFind = "SELECT journal_name FROM papers WHERE doi = '$doiEsc' LIMIT 1";
+        $resFind = $mysqli->query($sqlFind);
+        $oldJournal = null;
+        if ($resFind && $resFind->num_rows > 0) {
+            $row = $resFind->fetch_assoc();
+            $oldJournal = $row['journal_name'];
+            echo "当前数据库中，该 doi = '{$updateDoi}' 的 journal_name 为：{$oldJournal}\n";
+        } else {
+            echo "未找到该 doi 对应的记录。\n";
+        }
+
+        echo "请输入新的 journal_name: ";
+        $newJournal = trim(fgets(STDIN));
+        echo "你输入的新 journal_name 为：{$newJournal}\n";
+        echo "确认是否将其更新到数据库？输入 y 确认，n 或其它表示取消：";
+        $confirmJournal = trim(fgets(STDIN));
+
+        if (strtolower($confirmJournal) === 'y') {
+            $journalEsc = $mysqli->real_escape_string($newJournal);
+            $sqlUpdate = "UPDATE papers SET journal_name = '$journalEsc' WHERE doi = '$doiEsc'";
+            if ($mysqli->query($sqlUpdate)) {
+                echo "成功更新。新的 journal_name 值为：{$newJournal}\n";
             } else {
                 echo "更新失败，错误信息：{$mysqli->error}\n";
             }
