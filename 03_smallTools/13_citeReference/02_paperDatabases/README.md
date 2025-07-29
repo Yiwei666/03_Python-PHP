@@ -1519,6 +1519,15 @@ fetch(API_BASE_URL + '08_tm_update_paper_categories.php', {
 ```
 
 
+3. 注意doi号查询时如何使用礼貌池
+
+```
+# 使用礼貌池
+https://api.crossref.org/works/{DOI}?mailto=your-email@example.com
+https://api.crossref.org/works/10.1038/nature12373?mailto=xiaoming@example.com
+```
+
+
 
 # 6. 服务器端脚本
 
