@@ -433,8 +433,8 @@ switch ($choice) {
             }
             $idx = intval($inp) - 1;
             $fieldToUpdate = $fieldNames[$idx];
-            if ($fieldToUpdate === 'paperID') {
-                echo "不允许修改 paperID 字段。\n";
+            if ($fieldToUpdate === 'paperID' || $fieldToUpdate === 'doi') {
+                echo "不允许修改 {$fieldToUpdate} 字段。\n";
                 continue;
             }
             echo "请输入新的 {$fieldToUpdate} 值：";
