@@ -76,6 +76,10 @@ https://api.crossref.org/works?query=${encodeURIComponent(gbText)}
 
 ```
 https://api.crossref.org/works/{DOI}
+
+# 使用礼貌池
+https://api.crossref.org/works/{DOI}?mailto=your-email@example.com
+https://api.crossref.org/works/10.1038/nature12373?mailto=xiaoming@example.com
 ```
 
 
