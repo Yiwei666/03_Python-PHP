@@ -16,6 +16,7 @@ echo "8. 打印出 papers 的表结构 (DESCRIBE papers)\n";
 echo "9. 修改表中 title 的 varchar 最大存储长度\n";
 echo "10. 根据指定 doi 更新 title 的值\n";
 echo "11. 根据指定 doi 更新 journal_name 的值\n";
+echo "12. 根据指定 doi 查看并可修改任意列的值\n";
 echo "请输入序号并回车：";
 
 $choice = trim(fgets(STDIN));
@@ -390,6 +391,78 @@ switch ($choice) {
             }
         } else {
             echo "已取消更新操作。\n";
+        }
+        break;
+
+    case '12':
+        // 12. 根据指定 doi 查看并可修改任意列的值
+        echo "请输入要查找的 DOI: ";
+        $searchDoi = trim(fgets(STDIN));
+        if ($searchDoi === '') {
+            echo "未输入 doi。\n";
+            break;
+        }
+        $doiEsc = $mysqli->real_escape_string($searchDoi);
+        $sql = "SELECT * FROM papers WHERE doi = '$doiEsc' LIMIT 1";
+        $res = $mysqli->query($sql);
+        if (!$res || $res->num_rows == 0) {
+            echo "未找到该 doi 对应的记录。\n";
+            break;
+        }
+        $row = $res->fetch_assoc();
+        echo "==== 该 doi 对应的论文信息 ====\n";
+        echo json_encode($row, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+
+        // 列出字段
+        $fieldNames = array_keys($row);
+        echo "\n==== papers 表字段列表 ====\n";
+        foreach ($fieldNames as $idx => $fname) {
+            echo ($idx + 1) . ". " . $fname . "\n";
+        }
+
+        while (true) {
+            echo "\n是否需要修改该 doi 行的某列值？输入字段序号或 q 退出：";
+            $inp = trim(fgets(STDIN));
+            if (strtolower($inp) === 'q') {
+                echo "已退出。\n";
+                break;
+            }
+            if (!ctype_digit($inp) || intval($inp) < 1 || intval($inp) > count($fieldNames)) {
+                echo "非法输入，请重新输入。\n";
+                continue;
+            }
+            $idx = intval($inp) - 1;
+            $fieldToUpdate = $fieldNames[$idx];
+            if ($fieldToUpdate === 'paperID') {
+                echo "不允许修改 paperID 字段。\n";
+                continue;
+            }
+            echo "请输入新的 {$fieldToUpdate} 值：";
+            $newVal = trim(fgets(STDIN));
+            $oldVal = $row[$fieldToUpdate];
+            echo "旧值: {$oldVal}\n新值: {$newVal}\n";
+            while (true) {
+                echo "确认更新？(y/n/q): ";
+                $conf = strtolower(trim(fgets(STDIN)));
+                if ($conf === 'q') {
+                    echo "已退出。\n";
+                    break 3;
+                } elseif ($conf === 'n') {
+                    echo "已取消更新。\n";
+                    break 2;
+                } elseif ($conf === 'y') {
+                    $valEsc = $mysqli->real_escape_string($newVal);
+                    $sqlU = "UPDATE papers SET `$fieldToUpdate` = '$valEsc' WHERE doi = '$doiEsc'";
+                    if ($mysqli->query($sqlU)) {
+                        echo "更新成功。\n";
+                    } else {
+                        echo "更新失败，错误信息：{$mysqli->error}\n";
+                    }
+                    break 3;
+                } else {
+                    echo "非法输入，请重新输入。\n";
+                }
+            }
         }
         break;
 
