@@ -167,7 +167,21 @@ ADD COLUMN rating INT UNSIGNED NOT NULL DEFAULT 0;
 ```
 
 
-6. 添加 `status`, `rating` 列后的`papers` 表
+6. 新增 `doi_type` 列和 `citation_count` 列
+   - 新增 `doi_type` 列， 默认值为 NULL，取值为 T 和 F，分别代表标准类型的doi和非标准类型的doi。
+   - 新增 `citation_count` 列，默认值为 0，取值为大于等于0的整数。
+
+```sql
+ALTER TABLE papers
+ADD COLUMN doi_type ENUM('T', 'F') DEFAULT NULL;
+
+ALTER TABLE papers
+ADD COLUMN citation_count INT UNSIGNED DEFAULT 0;
+```
+
+
+
+7. 添加 `status`, `rating`, `doi_type` 和 `citation_count` 列后的`papers` 表结构
 
 ```
 mysql> describe papers;
@@ -188,8 +202,10 @@ mysql> describe papers;
 | publisher        | varchar(255)                     | YES  |     | NULL    |                |
 | status           | enum('CL','C','L','N','DW','DL') | NO   |     | N       |                |
 | rating           | int unsigned                     | NO   |     | 0       |                |
+| doi_type         | enum('T','F')                    | YES  |     | NULL    |                |
+| citation_count   | int unsigned                     | YES  |     | 0       |                |
 +------------------+----------------------------------+------+-----+---------+----------------+
-14 rows in set (0.00 sec)
+16 rows in set (0.01 sec)
 ```
 
 
