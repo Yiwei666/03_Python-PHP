@@ -35,7 +35,7 @@
 08_server_paper_management.php                   # 对 papers 表进行管理操作，包括查询、筛选、统计、展示表结构以及修改记录或表结构等多种功能
 08_server_update_citation_all_random.php         # 更新论文引用数，从所有具有标准doi值的行中，随机选取一行更新引用数，不限制引用数是否为0。适合不断更新论文的引用情况，需较长时间。
 08_server_update_citation_topN_random.php        # 更新论文引用数，按照paperID降序，从引用数为0的前N行中随机选取一行更新引用数，注意前N行引用数均为0的情况。适合更新最新导入数据库的论文。
-08_server_insert_paper_doi_defined.php           # 手动插入论文信息到数据库中，支持 json 格式输入 
+08_server_insert_paper_doi_defined.php           # 手动插入论文信息到数据库中，支持 json 格式输入，尤其是没有 doi 号的论文 
 
 # 5. 客户端脚本
 08_client_doi_base32_scidownl.py          # 在windows客户端上输入doi号，下载对应pdf论文，使用doi号的base32编码进行命名
@@ -1860,6 +1860,9 @@ PHP Fatal error: Uncaught Error: Call to undefined function curl_init()
 
 
 ## 5. `08_server_insert_paper_doi_defined.php`
+
+功能：针对没有 doi 号的论文，手动插入论文信息到数据库中，支持 json 格式输入
+
 
 ### 1. 编程思路
 
