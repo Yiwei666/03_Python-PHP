@@ -118,6 +118,12 @@ function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
         case 'rating_desc': // [NEW CODE]
             $orderBy = 'ORDER BY p.rating DESC, p.paperID DESC';
             break;
+        case 'citation_asc': // [NEW CODE]
+            $orderBy = 'ORDER BY p.citation_count ASC, p.paperID DESC';
+            break;
+        case 'citation_desc': // [NEW CODE]
+            $orderBy = 'ORDER BY p.citation_count DESC, p.paperID DESC';
+            break;
         default:
             // 默认使用 paperID 降序
             $orderBy = 'ORDER BY p.paperID DESC';
@@ -127,7 +133,7 @@ function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
     $query = "
         SELECT 
             p.paperID, p.title, p.authors, p.publication_year, 
-            p.journal_name, p.doi, p.status
+            p.journal_name, p.doi, p.status, p.citation_count
         FROM papers p
         JOIN paperCategories pc ON p.paperID = pc.paperID
         WHERE pc.categoryID = ?
