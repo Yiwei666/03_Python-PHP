@@ -388,6 +388,13 @@ if ($selectedCategoryID) {
             color: #eca334;
             font-size: 12px;
         }
+        /* ======== [NEW CODE] citation 样式 ======== */
+        .citation-count {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #777;
+            margin-left: 12px;
+        }
     </style>
 </head>
 <body>
@@ -474,6 +481,9 @@ if ($selectedCategoryID) {
                 <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=title_desc">标题降序</a></li>
                 <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=rating_asc">评分升序</a></li>
                 <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=rating_desc">评分降序</a></li>
+                <!-- ======== [NEW CODE] citation 排序 ======== -->
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=citation_asc">被引数升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=citation_desc">被引数降序</a></li>
             </ul>
         </div>
         
@@ -583,10 +593,11 @@ if ($selectedCategoryID) {
                                 </div>
                             <?php endif; ?>
 
-                            <!-- ========== [NEW CODE] 第5行：显示评分（星星 + 数字），由前端 AJAX 填充 ========== -->
+                            <!-- ========== [NEW CODE] 第5行：显示评分（星星 + 数字）+ 被引数 ========== -->
                             <div class="paper-rating" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
                                 <div class="rating-stars"></div>
                                 <span class="rating-number"></span>
+                                <span class="citation-count">被引数：<?= htmlspecialchars($paper['citation_count']) ?></span>
                             </div>
                         </div>
                     <?php endwhile; ?>
