@@ -901,6 +901,15 @@ checkApiKey();
 
 保持上述 `08_webAccessPaper.php` 代码的界面UI设计、代码逻辑和功能不变，仅对上述提到的需求进行修改。
 
+```
+B           A
+onedrive    服务器      status
+1           1           CL   DL (to C)
+1           0           C    DW (to CL)
+0           1           L
+0           0           N
+```
+
 
 
 💡 **3. 新增思路**
