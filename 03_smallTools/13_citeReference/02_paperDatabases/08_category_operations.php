@@ -133,7 +133,8 @@ function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
     $query = "
         SELECT 
             p.paperID, p.title, p.authors, p.publication_year, 
-            p.journal_name, p.doi, p.status, p.citation_count
+            p.journal_name, p.doi, p.status, 
+            p.citation_count, p.rating  /* 直接取回 rating 值 */
         FROM papers p
         JOIN paperCategories pc ON p.paperID = pc.paperID
         WHERE pc.categoryID = ?
