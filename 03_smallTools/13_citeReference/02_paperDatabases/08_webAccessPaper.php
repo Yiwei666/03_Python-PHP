@@ -13,6 +13,23 @@ require_once '08_category_operations.php';
 // 引入 Base32 编码类（请确保本地存在 08_web_Base32.php 并包含题目中的实现）
 require_once '08_web_Base32.php';
 
+// —— 新增：服务器端渲染评分星星（0–10 转 5 颗星，支持半星）
+function renderStars($rating) {
+    $filled = floor($rating / 2);
+    $half   = $rating % 2;
+    $html   = '';
+    for ($i = 0; $i < 5; $i++) {
+        if ($i < $filled) {
+            $html .= '<span class="star full">★</span>';
+        } elseif ($i == $filled && $half) {
+            $html .= '<span class="star half">★</span>';
+        } else {
+            $html .= '<span class="star">★</span>';
+        }
+    }
+    return $html;
+}
+
 // 获取所有分类
 $categories = getCategories($mysqli);
 
@@ -594,9 +611,12 @@ if ($selectedCategoryID) {
                             <?php endif; ?>
 
                             <!-- ========== [NEW CODE] 第5行：显示评分（星星 + 数字）+ 被引数 ========== -->
-                            <div class="paper-rating" data-doi="<?= htmlspecialchars($paper['doi']) ?>" data-rating="<?= htmlspecialchars($paper['rating']) ?>">
-                                <div class="rating-stars"></div>
-                                <span class="rating-number"></span>
+                            <!-- 修改：后端 PHP 直接渲染星星和数值 -->
+                            <div class="paper-rating" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
+                                <div class="rating-stars">
+                                    <?= renderStars($paper['rating']) ?>
+                                </div>
+                                <span class="rating-number"><?= number_format($paper['rating'], 1) ?></span>
                                 <span class="citation-count">被引数：<?= htmlspecialchars($paper['citation_count']) ?></span>
                             </div>
                         </div>
@@ -1029,12 +1049,8 @@ if ($selectedCategoryID) {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    // 同步更新页面对应论文的评分展示
-                    const container = document.querySelector('.paper-rating[data-doi="' + currentRatingDOI + '"]');
-                    if (container) {
-                        renderRating(container, data.rating);
-                    }
-                    closeRatingModal();
+                    // 保存成功后，刷新页面，由后端把最新评分星星和数值一起渲染
+                    window.location.reload();
                 } else {
                     alert(data.message || '评分更新失败');
                 }
@@ -1044,42 +1060,6 @@ if ($selectedCategoryID) {
                 alert('评分更新时出现错误。');
             });
         });
-
-        // ====== 评分展示初始化（直接读取 data-rating 即时渲染） ======
-        window.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.paper-rating').forEach(div => {
-                const val = parseInt(div.getAttribute('data-rating')) || 0;
-                renderRating(div, val);
-            });
-        });
-
-        // ====== [NEW CODE] 把 rating 渲染为 5 颗星（支持半星）+ 数值 ======
-        function renderRating(container, ratingInt) {
-            const starsWrap = container.querySelector('.rating-stars');
-            const numberSpan = container.querySelector('.rating-number');
-            if (!starsWrap || !numberSpan) return;
-
-            // ratingInt 为 0-10 的整数
-            const filled = Math.floor(ratingInt / 2); // 完整星星数
-            const hasHalf = (ratingInt % 2) === 1;   // 是否半星
-            const total = 5;
-
-            starsWrap.innerHTML = '';
-            for (let i = 0; i < total; i++) {
-                const span = document.createElement('span');
-                span.className = 'star';
-                span.textContent = '★';
-                if (i < filled) {
-                    span.classList.add('full');
-                } else if (i === filled && hasHalf) {
-                    span.classList.add('half');
-                }
-                starsWrap.appendChild(span);
-            }
-
-            numberSpan.textContent = (ratingInt).toFixed(1); // 按要求显示 1 位小数
-        }
-
     </script>
 
     <!-- ====== [NEW CODE] 点击后改变颜色 ====== -->
