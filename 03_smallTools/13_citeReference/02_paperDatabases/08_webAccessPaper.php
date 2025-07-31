@@ -594,7 +594,7 @@ if ($selectedCategoryID) {
                             <?php endif; ?>
 
                             <!-- ========== [NEW CODE] 第5行：显示评分（星星 + 数字）+ 被引数 ========== -->
-                            <div class="paper-rating" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
+                            <div class="paper-rating" data-doi="<?= htmlspecialchars($paper['doi']) ?>" data-rating="<?= htmlspecialchars($paper['rating']) ?>">
                                 <div class="rating-stars"></div>
                                 <span class="rating-number"></span>
                                 <span class="citation-count">被引数：<?= htmlspecialchars($paper['citation_count']) ?></span>
@@ -1045,32 +1045,11 @@ if ($selectedCategoryID) {
             });
         });
 
-        // ====== [NEW CODE] 页面加载后，为每篇论文拉取评分并渲染 ======
+        // ====== 评分展示初始化（直接读取 data-rating 即时渲染） ======
         window.addEventListener('DOMContentLoaded', function() {
-            const ratingDivs = document.querySelectorAll('.paper-rating');
-            ratingDivs.forEach(div => {
-                const doi = div.getAttribute('data-doi');
-                fetch('08_web_update_rating.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Api-Key': API_KEY
-                    },
-                    body: JSON.stringify({ doi })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        renderRating(div, data.rating);
-                    } else {
-                        // 若获取失败则显示 0
-                        renderRating(div, 0);
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    renderRating(div, 0);
-                });
+            document.querySelectorAll('.paper-rating').forEach(div => {
+                const val = parseInt(div.getAttribute('data-rating')) || 0;
+                renderRating(div, val);
             });
         });
 
