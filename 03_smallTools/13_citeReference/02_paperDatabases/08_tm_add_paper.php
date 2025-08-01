@@ -29,9 +29,18 @@ if (empty($doi)) {
     exit();
 }
 
+$citation_count = isset($data['citation_count']) ? intval($data['citation_count']) : 0;
+
 // 检查DOI是否存在
 $existingPaper = getPaperByDOI($mysqli, $doi);
 if ($existingPaper) {
+    /* 始终刷新被引数；其余字段保留原值 */
+    $upd = $mysqli->prepare("UPDATE papers SET citation_count = ? WHERE paperID = ?");
+    if ($upd) {
+        $upd->bind_param('ii', $citation_count, $existingPaper['paperID']);
+        $upd->execute();
+        $upd->close();
+    }
     echo json_encode(['success' => true, 'paperID' => $existingPaper['paperID']]);
     exit();
 }
@@ -49,7 +58,8 @@ $issn = isset($data['issn']) ? $data['issn'] : null;
 $publisher = isset($data['publisher']) ? $data['publisher'] : null;
 
 // 插入论文
-$insertResult = insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher);
+$insertResult = insertPaper($mysqli, $title, $authors, $journal_name, $publication_year,
+                            $volume, $issue, $pages, $article_number, $doi, $issn, $publisher, $citation_count);
 
 if ($insertResult['success']) {
     $paperID = $insertResult['paperID'];
