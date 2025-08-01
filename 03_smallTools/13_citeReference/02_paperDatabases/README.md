@@ -1975,7 +1975,9 @@ PHP Fatal error: Uncaught Error: Call to undefined function curl_init()
   "volume": "10",
   "issue": "15",
   "article_number": "5293",
-  "doi": "10.1051/jcp/1975720083"
+  "doi": "10.1051/jcp/1975720083",
+  "doi_type":"F",
+  "citation_count":"100"
 }
 ```
 
