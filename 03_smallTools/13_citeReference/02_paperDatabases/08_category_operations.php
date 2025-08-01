@@ -171,17 +171,19 @@ function getPaperByDOI($mysqli, $doi) {
 }
 
 // 插入新的论文
-function insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher) {
-    $query = "INSERT INTO papers 
-        (title, authors, journal_name, publication_year, volume, issue, pages, article_number, doi, issn, publisher) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+function insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages,
+                     $article_number, $doi, $issn, $publisher, $citation_count) {
+    $query = "INSERT INTO papers
+        (title, authors, journal_name, publication_year, volume, issue, pages, article_number,
+         doi, issn, publisher, citation_count)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($query);
 
     if ($stmt) {
-        $stmt->bind_param('sssisssssss', 
+        $stmt->bind_param('sssisssssssi',
             $title, $authors, $journal_name, $publication_year, 
             $volume, $issue, $pages, $article_number, 
-            $doi, $issn, $publisher
+            $doi, $issn, $publisher, $citation_count
         );
         if ($stmt->execute()) {
             $paperID = $stmt->insert_id;
