@@ -174,7 +174,7 @@ header('Content-Type: text/html; charset=utf-8');
 </head>
 <body>
 
-<h1>CrossRef 查询示例</h1>
+<h1>CrossRef 谷歌学术检索</h1>
 
 <div class="search-container">
     <h2>输入查询信息</h2>
@@ -330,6 +330,9 @@ function displayResults(items) {
         const journal       = item['container-title'] ? item['container-title'].join(' ') : '未找到期刊名';
         const publisher     = item.publisher || '未找到出版商';
         const volume        = item.volume || '未找到卷号';
+        const citationCount = (typeof item['is-referenced-by-count'] === 'number')
+                              ? item['is-referenced-by-count']
+                              : 0;
         const issue         = item.issue || '未找到期号';
         const pages         = item.page || '未找到页码';
         const articleNumber = item['article-number'] || '未找到文章号';
@@ -387,6 +390,7 @@ function displayResults(items) {
             <p><strong>期号:</strong> ${issue}</p>
             <p><strong>页码:</strong> ${pages}</p>
             <p><strong>文章号:</strong> ${articleNumber}</p>
+            <p><strong>被引数:</strong> ${citationCount}</p>
             <p><strong>出版商:</strong> ${publisher}</p>
             <p><strong>ISSN (印刷版):</strong> ${issnPrint}</p>
             <p><strong>ISSN (电子版):</strong> ${issnOnline}</p>
@@ -441,7 +445,8 @@ function displayResults(items) {
                 issnPrint,
                 issnOnline,
                 fullAuthors,
-                abbreviatedAuthors
+                abbreviatedAuthors,
+                citationCount
             };
             // 调用标签操作
             handleTagButtonClick();
@@ -581,7 +586,10 @@ function sendPaperData(data) {
                 article_number: data.articleNumber,
                 doi: data.doi,
                 issn: data.issnPrint,  // 仅写入印刷版 ISSN
-                publisher: data.publisher
+                publisher: data.publisher,
+                citation_count: (typeof data.citationCount === 'number' && !isNaN(data.citationCount))
+                                ? data.citationCount
+                                : 0
             })
         })
         .then(res => res.json())
