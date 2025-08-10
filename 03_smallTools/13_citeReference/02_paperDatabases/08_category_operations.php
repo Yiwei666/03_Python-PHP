@@ -217,6 +217,27 @@ function getCategoriesByPaperID($mysqli, $paperID) {
     }
 }
 
+/* ===================== [NEW] 批量获取多篇论文的分类映射（paperID => [categoryID,...]） ===================== */
+function getCategoriesMapByPaperIDs($mysqli, $paperIDs) {
+    if (!is_array($paperIDs) || empty($paperIDs)) return [];
+    $ids = array_values(array_unique(array_map('intval', $paperIDs)));
+    if (empty($ids)) return [];
+    $in = implode(',', $ids);
+    $map = [];
+    $sql = "SELECT paperID, categoryID FROM paperCategories WHERE paperID IN ($in)";
+    $res = $mysqli->query($sql);
+    if ($res) {
+        while ($row = $res->fetch_assoc()) {
+            $pid = (int)$row['paperID'];
+            $cid = (int)$row['categoryID'];
+            if (!isset($map[$pid])) $map[$pid] = [];
+            $map[$pid][] = $cid;
+        }
+        $res->close();
+    }
+    return $map;
+}
+
 // 更新论文的分类
 function updatePaperCategories($mysqli, $paperID, $categoryIDs) {
     // 开始事务
