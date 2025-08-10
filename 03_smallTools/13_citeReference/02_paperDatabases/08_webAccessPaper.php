@@ -509,10 +509,23 @@ if ($selectedCategoryID) {
         $papersData = [];
         ?>
 
+        <?php
+        /* ===================== [NEW] 预取当前分类下所有论文行与分类映射，避免 N+1 ===================== */
+        $paperRows = [];
+        $paperIDsForMap = [];
+        if ($selectedCategoryID && $papers !== null && $papers->num_rows > 0) {
+            while ($row = $papers->fetch_assoc()) {
+                $paperRows[] = $row;
+                $paperIDsForMap[] = (int)$row['paperID'];
+            }
+            $paperCategoriesMap = getCategoriesMapByPaperIDs($mysqli, $paperIDsForMap);
+        }
+        ?>
+
         <?php if ($selectedCategoryID): ?>
             <?php if ($papers !== null): ?>
-                <?php if ($papers->num_rows > 0): ?>
-                    <?php while ($paper = $papers->fetch_assoc()): ?>
+                <?php if (!empty($paperRows)): ?>
+                    <?php foreach ($paperRows as $paper): ?>
                         <?php 
                             // 收集信息到 $papersData 数组中
                             $papersData[] = [
@@ -521,9 +534,9 @@ if ($selectedCategoryID) {
                                 'status' => $paper['status']
                             ];
 
-                            // ========== [NEW CODE] 获取当前论文所属的分类标签 ========== 
-                            // 先拿到该论文所有的 categoryID
-                            $paperCategoryIDs = getCategoriesByPaperID($mysqli, $paper['paperID']);
+                            // ========== [MODIFIED] 使用批量映射替代逐条查询 ==========
+                            $paperCategoryIDs = isset($paperCategoriesMap[$paper['paperID']]) ? $paperCategoriesMap[$paper['paperID']] : [];
+
                             // 然后根据 $categories 列表映射出分类名称
                             $paperCategoryNames = [];
                             foreach ($paperCategoryIDs as $catID) {
@@ -622,7 +635,7 @@ if ($selectedCategoryID) {
                                 <span class="citation-count">被引数：<?= htmlspecialchars($paper['citation_count']) ?></span>
                             </div>
                         </div>
-                    <?php endwhile; ?>
+                    <?php endforeach; ?>
                 <?php else: ?>
                     <p>所选分类下没有论文。</p>
                 <?php endif; ?>
