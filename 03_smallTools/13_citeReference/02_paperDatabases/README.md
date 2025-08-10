@@ -747,7 +747,7 @@ require_once '08_category_operations.php';
 
 ### 1. 功能
 
-- 这是一个轻量型 API 接口，用于按给定 `DOI` 从数据库 `papers` 表里获取该论文的完整元信息（所有字段），并以 JSON 格式返回。
+- 这是一个轻量型 API 接口，用于按给定 `DOI` 从数据库 `papers` 表里获取该论文的完整元信息（所有字段），并以 JSON 格式返回（调用`08_category_operations.php`模块的`getPaperByDOI()` 查询函数实现）。
 
 - 访问接口需要提供有效的 `API Key` 进行认证。
 
