@@ -301,4 +301,18 @@ function updatePaperStatus($mysqli, $paperID, $newStatus) {
         return ['success' => false, 'message' => $mysqli->error];
     }
 }
+
+/* ===================== [NEW] 获取数据库中所有非空 DOI ===================== */
+function getAllDois($mysqli) {
+    $dois = [];
+    $sql = "SELECT doi FROM papers WHERE doi IS NOT NULL AND doi <> ''";
+    $res = $mysqli->query($sql);
+    if ($res) {
+        while ($row = $res->fetch_assoc()) {
+            $dois[] = $row['doi'];
+        }
+        $res->close();
+    }
+    return $dois;
+}
 ?>
