@@ -482,7 +482,9 @@ checkApiKey();
 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
+08_tm_get_paper_metaInfo.php              # 基于doi查找论文在papers表中所有字段的值，以json格式返回，用于前端 `复制元信息` 按钮显示
 
+08_web_update_rating.php           # 根据 DOI 查询论文当前的评分（rating），也能在收到合法的 0–10 整数评分时将其写入数据库。
 08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
 ```
 
@@ -574,6 +576,9 @@ checkApiKey();
     - 功能：根据论文ID更新论文的状态。
     - 描述：更新`papers`表中指定`$paperID`的论文记录，将其`status`字段更新为`$newStatus`。
 
+12. `getAllDois($mysqli)`
+    - 功能：获取papers表格中的所有非空 doi 号，
+    - 描述：用于前端 `08_web_crossRef_query.php` 基于 doi 检索时判断数据库中是否已存在该论文doi，以便给出提示。
 
 
 
@@ -844,18 +849,18 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 1. CORS 与预检
 
-- 允许跨域请求（`Access-Control-Allow-Origin: *`）。
-- 对 OPTIONS 预检请求直接返回 204，不做后续处理。
+    - 允许跨域请求（`Access-Control-Allow-Origin: *`）。
+    - 对 OPTIONS 预检请求直接返回 204，不做后续处理。
 
 
 2. API Key 鉴权
 
-- 引入 `08_api_auth.php` 并调用 `checkApiKey()`，确保每次请求都带有有效的 `X-Api-Key`。
+    - 引入 `08_api_auth.php` 并调用 `checkApiKey()`，确保每次请求都带有有效的 `X-Api-Key`。
 
 
 3. 统一响应格式
 
-定义了 respond($success, $message, $rating) 函数，统一以 JSON 返回：
+    - 定义了 `respond($success, $message, $rating)` 函数，统一以 JSON 返回：
 
 ```json
 {
@@ -868,24 +873,24 @@ require_once '08_category_operations.php'; // 内含 getPaperByDOI() 和 updateP
 
 4. 参数读取与校验
 
-- 从请求体中解析 JSON，必须包含非空的 doi 字段。
-- 可选地包含 rating 字段，区分“仅查询”与“更新”两种流程。
+    - 从请求体中解析 JSON，必须包含非空的 doi 字段。
+    - 可选地包含 rating 字段，区分“仅查询”与“更新”两种流程。
 
 
 5. 查询现有评分
 
-- 若没有显式传入 rating，脚本立即返回该 DOI 对应论文的当前 rating（若未设置则默认为 0）。
+    - 若没有显式传入 rating，脚本立即返回该 DOI 对应论文的当前 rating（若未设置则默认为 0）。
 
 
 6. 更新评分
 
-- 若提交了 rating，先验证它是 0–10 范围内的整数。
-- 然后执行 `UPDATE papers SET rating = ? WHERE paperID = ?`，并返回更新后的新值。
+    - 若提交了 rating，先验证它是 0–10 范围内的整数。
+    - 然后执行 `UPDATE papers SET rating = ? WHERE paperID = ?`，并返回更新后的新值。
 
 
 7. 错误处理
 
-- 对缺少参数、找不到论文、验证失败、数据库预处理或执行错误，都通过 `respond(false, "...")` 返回对应错误信息。
+    - 对缺少参数、找不到论文、验证失败、数据库预处理或执行错误，都通过 `respond(false, "...")` 返回对应错误信息。
 
 
 
