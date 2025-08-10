@@ -17,6 +17,7 @@
 08_tm_get_categories.php                  # 返回数据库中的所有`categoryID` 和 `categoryName` 分类ID及分类名
 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
+08_tm_get_paper_metaInfo.php              # 基于doi查找论文在papers表中所有字段的值，以json格式返回，用于前端 `复制元信息` 按钮显示
 
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
 08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
@@ -604,12 +605,17 @@ getPaperByDOI($mysqli, $doi)                                         # 通过提
 updatePaperCategories($mysqli, $paperID, $categoryIDs)               # 更新指定论文的分类。
 
 
-# 5. 08_web_update_paper_status.php            # 通过 DOI 确认论文存在，并获取其唯一标识 paperID。根据提供的 paperID 更新论文的 status 字段。
+# 5. 08_tm_get_paper_metaInfo.php              # 基于doi查找论文在 papers 表中所有字段的值
+checkApiKey()                                                        # 执行 API Key 检查 
+getPaperByDOI($mysqli, $doi)                                         # 通过提供的 DOI（数字对象标识符）从数据库中检索对应的论文记录。
+
+
+# 6. 08_web_update_paper_status.php            # 通过 DOI 确认论文存在，并获取其唯一标识 paperID。根据提供的 paperID 更新论文的 status 字段。
 checkApiKey()                                                        # 执行 API Key 检查 
 getPaperByDOI($mysqli, $doi)                                         # 通过提供的 DOI（数字对象标识符）从数据库中检索对应的论文记录。
 updatePaperStatus($mysqli, $paperID, $newStatus)                     # 根据论文的 paperID 更新其 status 字段。
 
-# 6. 08_web_update_rating.php                  # 基于doi查询/更新rating值
+# 7. 08_web_update_rating.php                  # 基于doi查询/更新rating值
 checkApiKey()
 getPaperByDOI($mysqli, $doi)
 ```
@@ -677,6 +683,7 @@ require_once '08_category_operations.php';
 
 
 
+
 ## 3.3 `08_tm_get_paper_categories.php`
 
 ### 1. 功能
@@ -701,6 +708,7 @@ require_once '08_category_operations.php';
 - **查询分类信息**：调用 `getCategoriesByPaperID` 函数，通过 `paperID` 查询论文所属分类的ID列表，若查询成功则返回分类数组，失败则返回错误信息 "获取分类失败"。
 
 - 返回响应结果：根据查询结果生成JSON响应，包含成功标志、分类ID数组或错误信息，确保客户端能清晰了解操作结果。
+
 
 
 
@@ -731,6 +739,66 @@ require_once '08_category_operations.php';
 - **更新论文分类**：调用 `updatePaperCategories` 函数，删除论文的旧分类并插入新的分类列表，若更新成功返回成功消息，若失败则返回具体的错误信息。
 
 - 返回JSON响应：根据操作结果返回明确的JSON响应，包括操作成功与否的标志、成功消息或错误提示，确保客户端能够清晰了解执行结果。
+
+
+
+
+## 3.5 `08_tm_get_paper_metaInfo.php`
+
+### 1. 功能
+
+- 这是一个轻量型 API 接口，用于按给定 `DOI` 从数据库 `papers` 表里获取该论文的完整元信息（所有字段），并以 JSON 格式返回。
+
+- 访问接口需要提供有效的 `API Key` 进行认证。
+
+
+
+### 2. 环境变量
+
+```php
+// 引入 API 认证、数据库与操作模块
+require_once '08_api_auth.php';
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+```
+
+
+1. HTTP 头设置
+
+    - 返回内容类型为 `JSON (Content-Type: application/json; charset=utf-8)`。
+    
+    - 允许跨域`（Access-Control-Allow-Origin: *）`和指定的请求方法、请求头。
+    
+    - 处理 OPTIONS 预检请求（CORS 预检时直接返回 204）。
+
+2. 引入依赖文件
+
+    - `08_api_auth.php` → 提供 `checkApiKey()` 检查 `API Key` 是否有效。
+    
+    - `08_db_config.php` → 创建数据库连接 `$mysqli`。
+    
+    - `08_category_operations.php` → 提供 `getPaperByDOI()` 查询函数。
+
+3. `API Key` 验证
+
+    - 调用 `checkApiKey()` 从请求头读取 `X-Api-Key`，如果无效则返回 401 并终止。
+
+4. 读取请求参数
+
+    - 从 `$_GET` 获取 `doi` 参数，去除首尾空格。
+    
+    - 如果缺少或为空，返回 `success=false` 与错误提示。
+
+5. 数据库查询
+
+    - 调用 `getPaperByDOI($mysqli, $doi)` 在 papers 表中查找对应记录。
+    
+    - 如果查到，返回 `success=true` 和完整 `$paper` 数据（数组转 JSON）。
+    
+    - 如果查不到，返回 `success=false` 与 `“未找到该论文的元信息”` 提示。
+
+
+
 
 
 
