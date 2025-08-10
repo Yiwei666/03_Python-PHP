@@ -866,6 +866,10 @@ checkApiKey();
             08_api_auth.php
             08_db_config.php
             08_category_operations.php
+        08_web_update_rating.php                # 将用户输入的评分值传递给后端api
+            08_api_auth.php
+            08_db_config.php
+            08_category_operations.php
 ```
 
 
