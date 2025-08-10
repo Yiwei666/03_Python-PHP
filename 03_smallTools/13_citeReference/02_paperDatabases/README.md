@@ -943,6 +943,10 @@ checkApiKey();
             08_api_auth.php
             08_db_config.php
             08_category_operations.php
+        08_tm_get_paper_metaInfo.php            # 后端api结口，基于doi查询papers表中所有字段的值，json格式返回
+            08_api_auth.php
+            08_db_config.php
+            08_category_operations.php
 ```
 
 
@@ -1237,6 +1241,22 @@ b. 解决方案
 
 
 
+💡 **16. 新增思路**
+
+运行上述 `08_webAccessPaper.php` 代码，网页右侧显示左侧相应分类标签下的所有论文（包含标题、作者、期刊名等信息），每篇论文下方还会显示`"标签 删除 查看 复制DOI 复制编码DOI"`等按钮；再下面的一行是 `"分类标签："`，包含该论文所属的分类；最下面一行是论文的 `rating` 显示（包括星星填充显示和具体的 `rating` 值）和被引数显示。现在我有一个新的需求，如下：
+
+1. 在 “复制DOI” 、“复制编码DOI”等按钮所在行中 “复制编码DOI” 按钮后面适当间距新增一个按钮 "复制元信息"，点击该按钮，能够复制数据库 `papers` 表中该论文所有字段的信息，复制格式为 json 格式（alert 弹窗中需要同步显示元信息的json格式），以便我在其他地方可以粘贴。"复制元信息" 按钮的字体大小、字号、颜色等样式均与 “复制DOI” 、“复制编码DOI” 等按钮样式保持一致即可。注意：点击 "复制元信息" 按钮后，其字体颜色也需要变成 `#c58af9`，实现可以参考 “复制DOI” 、“复制编码DOI” 等按钮。
+
+2. 编写一个轻量接口 `08_tm_get_paper_metaInfo.php`，前端 `08_webAccessPaper.php` 在点击 "复制元信息" 按钮时才会去调用这个接口获取数据，而不是在页面加载时就查所有论文的元信息。该接口脚本接收前端传来的 doi，调用 `08_category_operations.php` 模块中已经有的 `getPaperByDOI($mysqli, $doi)`函数，把查询结果以 JSON 格式返回给前端，然后前端再显示。
+
+3. 注意不是页面加载时对当前分类下的每篇论文都调用 `getPaperByDOI()`函数查询，这会导致页面加载时间过久，服务器占用资源高。建议点击"复制元信息"按钮时，通过一个 AJAX 请求去调用一个后端接口（传 DOI，然后后端用 `getPaperByDOI()` 查询并返回 JSON）。这样页面初始加载就不会做额外查询了，页面响应速度会快，服务器查询占用低。
+
+4. 目前代码已经实现：点击 `标签` 按钮会弹出一个小窗，并显示数据库中所有的分类标签，每个分类标签前都有一个勾选框，通过对号勾选的方式显示当前doi所属的分类标签。用户可以通过勾选或者取消勾选框来实现对论文所属分类的调整。这部分功能不需要改变，只需要在显示的样式上做一些微调。现在我的需求是，对于已经勾选的分类标签，其字体颜色调整为 `#1a0dab`，没有勾选的分类标签其字体颜色不变，方便用户快速分辨和定位哪些分类标签已被勾选。被 勾选的分类标签通常分为两类，一类是数据库中该论文原有所属的分类，弹窗时被加载显示出来的，还有一类是用户新勾选的，这两类都需要显示 `#1a0dab`；当用户在弹窗中取消勾选后，字体的颜色也要相应变为默认的颜色。
+
+5. 上述需求的实现可能涉及到对`08_webAccessPaper.php`代码的修改以及`08_tm_get_paper_metaInfo.php`接口的编写。对于上述相关代码修改，尽量通过增加/删减/调整少量代码行来实现。其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。输出修改后的完整`08_webAccessPaper.php`、`08_tm_get_paper_metaInfo.php`代码。
+
+
+
 
 
 
@@ -1258,6 +1278,7 @@ b. 解决方案
 08_tm_get_categories.php
 08_tm_get_paper_categories.php
 08_tm_update_paper_categories.php
+08_tm_get_paper_metaInfo.php
 08_web_update_paper_status.php
 08_web_update_rating.php
 ```
@@ -1378,16 +1399,14 @@ fetch('08_web_update_rating.php', {
         rating: num
     })
 })
+```
 
 
-// ====== [NEW CODE] 页面加载后，为每篇论文拉取评分并渲染 ======
-fetch('08_web_update_rating.php', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-Api-Key': API_KEY
-    },
-    body: JSON.stringify({ doi })
+8. 调用后端接口基于 doi 查询其在数据库 papers 表中所有字段的值，用于 `复制元信息` 按钮显示
+
+```js
+fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
+    headers: { 'X-Api-Key': API_KEY }
 })
 ```
 
