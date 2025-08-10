@@ -600,6 +600,8 @@ if ($selectedCategoryID) {
                                     echo '<button type="button" class="copy-doi-btn" onclick="copyDOI(\'' . htmlspecialchars($paper['doi']) . '\')">复制DOI</button>';
                                     // “复制编码DOI” 按钮
                                     echo '<button type="button" class="copy-encoded-doi-btn" onclick="copyEncodedDOI(\'' . $encodedDOI . '\')">复制编码DOI</button>';
+                                    // ====== [NEW CODE] “复制元信息” 按钮（仅点击时请求接口） ======
+                                    echo '<button type="button" class="copy-meta-btn" onclick="copyMeta(\'' . htmlspecialchars($paper['doi']) . '\')">复制元信息</button>';
                                 ?>
                             </div>
                             
@@ -800,12 +802,22 @@ if ($selectedCategoryID) {
                                 ${checked ? 'checked' : ''} 
                                 ${disabledAttr}
                             >
-                            ${catName}
+                            <span class="cat-name" style="color:${checked ? '#1a0dab' : ''}">${catName}</span>
                         </label>
                     </div>
                 `;
             });
         }
+
+        // [NEW CODE] 勾选变化时，动态调整分类名的字体颜色
+        document.getElementById('categoryCheckboxes').addEventListener('change', (e) => {
+            if (e.target && e.target.name === 'category') {
+                const span = e.target.parentElement.querySelector('.cat-name');
+                if (span) {
+                    span.style.color = e.target.checked ? '#1a0dab' : '';
+                }
+            }
+        });
 
         // 点击“保存”按钮，更新分类
         document.getElementById('saveCategoriesBtn').addEventListener('click', () => {
@@ -908,6 +920,33 @@ if ($selectedCategoryID) {
                 .catch((err) => {
                     console.error('复制编码DOI失败:', err);
                 });
+        }
+
+        // ====== [NEW CODE] 复制元信息（点击时才请求接口） ======
+        function copyMeta(doi) {
+            fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
+                headers: { 'X-Api-Key': API_KEY }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.paper) {
+                    const jsonText = JSON.stringify(data.paper, null, 2);
+                    navigator.clipboard.writeText(jsonText)
+                        .then(() => {
+                            alert('已复制json信息: ' + jsonText);
+                        })
+                        .catch((err) => {
+                            console.error('复制元信息失败:', err);
+                            alert('复制失败');
+                        });
+                } else {
+                    alert(data.message || '未找到该论文的元信息。');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('请求元信息失败。');
+            });
         }
 
         // ====== 工具按钮、菜单 ======
@@ -1069,7 +1108,11 @@ if ($selectedCategoryID) {
             if (anchor) {
                 anchor.style.color = '#c58af9';
             }
-            if (e.target.classList.contains('copy-doi-btn') || e.target.classList.contains('copy-encoded-doi-btn')) {
+            if (
+                e.target.classList.contains('copy-doi-btn') || 
+                e.target.classList.contains('copy-encoded-doi-btn') ||
+                e.target.classList.contains('copy-meta-btn') /* [NEW CODE] 元信息按钮也变色 */
+            ) {
                 e.target.style.color = '#c58af9';
             }
         });
