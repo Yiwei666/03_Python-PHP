@@ -1260,6 +1260,18 @@ b. 解决方案
 
 
 
+💡 **17. 新增思路**
+
+上述 `08_webAccessPaper.php` 页面在某个分类标签下的加载响应时间高达2.5秒（该分类下有约2000条论文信息），目前认为性能的最大瓶颈=N+1 查询：在循环中对每篇论文调用 `getCategoriesByPaperID($paperID)`（≈2000 次）。为了解决该问题，采取优化方案：将 N+1 查询合并为 2 次查询。具体需求如下：
+
+1. 获取当前分类下的所有论文。在获取的同时，将所有论文的 `paperID` 收集到一个数组中。
+
+2. 在 `08_category_operations.php` 中添加一个新函数，它接收一个 `paperID` 数组，然后返回这些论文的所有分类。基于上一步收集到的 paperID 数组，通过 `WHERE paperID IN (...)` 子句，一次性查询出所有这些论文的所有分类信息。将查询的结果处理成一个以 `paperID` 为键的映射表（或称为字典、哈希表），方便在后续渲染时快速查找。
+
+3. 在 `08_webAccessPaper.php` 脚本中直接调用 `08_category_operations.php` 模块中的上述新函数，避免二次查询，提高代码性能。
+
+上述需求的实现可能涉及到对`08_category_operations.php`和`08_webAccessPaper.php`代码的修改。对于上述相关代码修改，尽量通过增加/删减/调整少量代码行来实现。其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。输出修改后的完整`08_category_operations.php`和`08_webAccessPaper.php`代码。
+
 
 
 
@@ -1297,7 +1309,8 @@ updateCategoryName($mysqli, $categoryID, $newCategoryName)
 getPaperByDOI($mysqli, $doi)
 insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)
 assignAllPapersCategory($mysqli, $paperID)
-getPapersByCategory($mysqli, $selectedCategoryID, $sort)
+# getPapersByCategory($mysqli, $selectedCategoryID, $sort)         # 该函数在本脚本中已被 getCategoriesMapByPaperIDs($mysqli, $paperIDs) 函数取代
+getCategoriesMapByPaperIDs($mysqli, $paperIDs)     
 ```
 
 
