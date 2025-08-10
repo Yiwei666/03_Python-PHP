@@ -580,7 +580,10 @@ checkApiKey();
     - 功能：获取papers表格中的所有非空 doi 号，
     - 描述：用于前端 `08_web_crossRef_query.php` 基于 doi 检索时判断数据库中是否已存在该论文doi，以便给出提示。
 
-
+13. `getCategoriesMapByPaperIDs($mysqli, $paperIDs)`
+    - 功能：基于paperID数组批量获取多篇论文的分类映射
+    - 描述：首次在 `08_webAccessPaper.php` 脚本中调用，取代 `getCategoriesByPaperID($mysqli, $paperID)` 函数的多次循环查询，提到查询速度、优化页面加载时间。
+ 
 
 ### 2. 后端接口函数调用
 
