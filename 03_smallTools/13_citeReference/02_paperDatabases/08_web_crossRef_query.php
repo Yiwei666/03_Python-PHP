@@ -1,6 +1,11 @@
 <?php
 // 输出页面并指定编码
 header('Content-Type: text/html; charset=utf-8');
+
+/* ========== [NEW] 引入 DB 与函数，并在服务器端读取所有 DOI 注入到页面 ========== */
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+$__ALL_DOIS = getAllDois($mysqli);
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -170,6 +175,16 @@ header('Content-Type: text/html; charset=utf-8');
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* ========== [NEW] 使“复制 Base32”和“标签”按钮同一水平高度 + 文案竖排在复制按钮下 ========== */
+        .item-buttons { display: flex; align-items: flex-start; gap: 8px; }
+        .copy-col { display: flex; flex-direction: column; }
+        .doi-presence-msg { font-weight: bold; font-size: 24px; margin-top: 6px; }
+        .doi-presence-msg.exist { color: #ff0000; }
+        .doi-presence-msg.not-exist { color: #2ecc71; }
+
+        /* ========== [NEW] 已勾选分类标签字体颜色（#1a0dab），纯 CSS 联动复选框状态 ========== */
+        .cat-item input[type="checkbox"]:checked + label { color: #1a0dab; }
     </style>
 </head>
 <body>
@@ -209,6 +224,11 @@ header('Content-Type: text/html; charset=utf-8');
     <div class="spinner"></div>
 </div>
 
+<!-- ========== [NEW] 注入服务器端读取的全部 DOI 列表到前端全局变量 ========== -->
+<script>
+const ALL_DOIS = <?php echo json_encode($__ALL_DOIS, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
+</script>
+
 <script>
 /**
  * 与原脚本逻辑相同，但新增了对后端 API 的认证头部（X-Api-Key）。
@@ -237,6 +257,10 @@ const saveCatBtn = document.getElementById('save-categories-btn');
 
 // loading overlay
 const loadingOverlay = document.getElementById('loading-overlay');
+
+// [NEW] 当前检索模式与原始查询字符串（用于 DOI 存在性判断）
+let CURRENT_SEARCH_MODE = 'title';
+let CURRENT_QUERY = '';
 
 // 关闭分类弹窗
 closeCatBtn.addEventListener('click', () => {
@@ -274,6 +298,8 @@ function searchCrossRef(query) {
 
     // 获取当前的搜索模式
     const searchMode = document.querySelector('input[name="search-mode"]:checked').value;
+    CURRENT_SEARCH_MODE = searchMode;           // [NEW]
+    CURRENT_QUERY = query;                      // [NEW]
     let apiUrl = '';
 
     if (searchMode === 'title') {
@@ -403,6 +429,10 @@ function displayResults(items) {
         const buttonsDiv = document.createElement('div');
         buttonsDiv.className = 'item-buttons';
 
+        // 复制 Base32 列（按钮 + 状态文案）
+        const copyCol = document.createElement('div');
+        copyCol.className = 'copy-col';
+
         // 复制 Base32 按钮
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-base32-btn';
@@ -420,7 +450,16 @@ function displayResults(items) {
                 .then(() => alert('Base32 已复制到剪贴板！'))
                 .catch(e => console.error('复制失败:', e));
         });
-        buttonsDiv.appendChild(copyBtn);
+        copyCol.appendChild(copyBtn);
+
+        // [NEW] 显示“是否已存在 DOI”提示（仅在 DOI 检索模式下）
+        if (CURRENT_SEARCH_MODE === 'doi') {
+            const exist = checkDOIExistence(CURRENT_QUERY);
+            const msg = document.createElement('div');
+            msg.className = 'doi-presence-msg ' + (exist ? 'exist' : 'not-exist');
+            msg.textContent = exist ? '！！！已存在doi号' : '不存在doi，待写入';
+            copyCol.appendChild(msg);
+        }
 
         // 标签 按钮
         const tagBtn = document.createElement('button');
@@ -451,6 +490,9 @@ function displayResults(items) {
             // 调用标签操作
             handleTagButtonClick();
         });
+
+        // 按顺序加入：复制列 + 标签按钮
+        buttonsDiv.appendChild(copyCol);
         buttonsDiv.appendChild(tagBtn);
 
         card.appendChild(buttonsDiv);
@@ -673,6 +715,18 @@ function updatePaperCategories(doi, categoryIDs) {
 // ======================
 //  工具函数
 // ======================
+
+// [NEW] 判断用户输入的 DOI 字符串里是否“包含”数据库中的任一 DOI
+function checkDOIExistence(rawUserInput) {
+    const u = String(rawUserInput || '').toLowerCase();
+    if (!u) return false;
+    for (const d of (ALL_DOIS || [])) {
+        const dd = String(d || '').toLowerCase();
+        if (!dd) continue;
+        if (u.includes(dd)) return true; // 数据库 DOI 是用户输入 DOI 的子串或相等
+    }
+    return false;
+}
 
 // 格式化完整作者信息
 function formatFullAuthors(authorsArray) {
