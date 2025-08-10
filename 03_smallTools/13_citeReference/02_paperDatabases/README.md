@@ -1284,7 +1284,7 @@ b. 解决方案
 ```
 
 
-3. PHP函数
+3. PHP函数（包括后端api接口从php模块中调用的函数）
 
 ```php
 getCategories($mysqli)
