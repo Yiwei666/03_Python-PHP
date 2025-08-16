@@ -6,7 +6,7 @@
 # 2. 文件结构
 
 ```js  
-01_hathitrust_pdf_download.js              # 完成 hathitrust 网站上多页 pdf 的自动下载
+01_hathitrust_pdf_download.js              // 完成 hathitrust 网站上多页 pdf 的自动下载
 ```
 
 
