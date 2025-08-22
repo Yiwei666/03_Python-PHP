@@ -70,6 +70,8 @@
 
 
 
+
+
 ## 2. 创建数据库和表
 
 ### 1. 创建名为 paper_db 的数据库
@@ -280,6 +282,40 @@ mysql> describe paperCategories;
 +------------+------+------+-----+---------+-------+
 2 rows in set (0.00 sec)
 ```
+
+
+
+### 5. 创建 `select_paper` 表
+
+1. 创建语句
+
+```sql
+CREATE TABLE `select_paper` (
+  `paperID` INT NOT NULL,
+  `doi` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`paperID`),
+  UNIQUE KEY `uniq_doi` (`doi`)
+);
+```
+
+表格 `select_paper`，包含2列（`paperID，doi`），这个表格用来记录用户选择的论文。这个表格的数据最多只有几十行，经常会被插入、删除，可以不用设置自增的主键。
+
+
+
+2. `select_paper` 表
+
+```
+mysql> describe select_paper;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| paperID | int          | NO   | PRI | NULL    |       |
+| doi     | varchar(100) | NO   | UNI | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+2 rows in set (0.03 sec)
+```
+
+
 
 
 
