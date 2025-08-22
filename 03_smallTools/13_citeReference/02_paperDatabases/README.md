@@ -991,10 +991,16 @@ checkApiKey();
 
 
 
+
 ### 2. 环境变量
 
+```
+require_once '08_api_auth.php';
+require_once '08_db_config.php';
 
-
+// 认证
+checkApiKey();
+```
 
 
 
