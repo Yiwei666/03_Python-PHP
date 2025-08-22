@@ -1370,7 +1370,7 @@ b. 解决方案
 
 
 
-💡 **18. 新增思路**
+💡 **18.1 新增思路**
 
 运行上述 `08_webAccessPaper.php` 代码，网页右侧显示左侧相应分类标签下的所有论文（包含标题、作者、期刊名等信息），每篇论文下方还会显示`"标签 删除 查看 复制DOI 复制编码DOI 复制元信息"`等按钮；再下面的一行是 `"分类标签："`，包含该论文所属的分类；最下面一行是论文的 `rating` 显示（包括星星填充显示和具体的 `rating` 值）和被引数显示。现在我有一个新的需求，如下：
 
@@ -1390,6 +1390,23 @@ b. 解决方案
 
 
 上述需求的实现可能涉及到对 `08_webAccessPaper.php` 代码的修改 和 `08_web_user_select_tmp.php` 脚本的编写 。对于上述相关代码修改，尽量通过增加/调整少量代码行来实现。其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。输出修改后的完整 `08_webAccessPaper.php`  和 `08_web_user_select_tmp.php` 代码，以及  `select_paper`  表创建的 mysql 语句。
+
+
+
+
+💡 **18.2 新增思路**
+
+
+上述脚本是正常工作，只是关于 圆形复选框的位置需要做一点点改动。圆形复选框 位于 rating 数值以及被引数所在行，且均在它们后面。由于不同论文的 rating 数值（0.0-10.0） 以及 被引数 （0-230000） 的位数不一样，会导致圆形复选框在竖直方向上不是对的特别齐（水平位置和样式已经很满意了，不需要改动），现在需要改动上述代码中关于 圆形复选框 的位置，需要保证其在竖直方向对齐。我的思路如下：
+
+1. 计算每篇论文中 rating 数值的位数（要么是3个字符，如 0.0 ，要么是 4个字符，如 10.0 ，含1个小数点和2-3位数字），再计算被引数的数值位数 （1到6个字符不等），rating 和 被引数数值字符加起来在 4-10 个字符之间（含1个小数点）。
+
+2. 给 rating 和 被引数数值字符加起来设计为 13 位数值的宽度（含一个小数点），不足 13 位宽度的使用占位符或者空格来填充，例如 rating 数值为 0.0，被引数 0，共4个字符（含一个小数点），则需要填充的位数 是 9，因此需要在 圆形复选框 和 被引数之间 填充9个占位符（相当于 9 个数字的宽度）。基于此来确保所有圆形复选框在竖直方向对齐。
+
+3. 如果有其他可能更简单、高效的方法来实现，可以采用其他方法。
+
+4. 上述需求的实现可能涉及到对 `08_webAccessPaper.php` 代码的修改。对于上述相关代码修改，尽量通过增加/调整少量代码行来实现。其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。输出修改后的完整 `08_webAccessPaper.php`  代码。
+
 
 
 
@@ -1419,6 +1436,7 @@ b. 解决方案
 08_tm_get_paper_metaInfo.php
 08_web_update_paper_status.php
 08_web_update_rating.php
+08_web_user_select_tmp.php
 ```
 
 
@@ -1548,6 +1566,44 @@ fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
     headers: { 'X-Api-Key': API_KEY }
 })
 ```
+
+
+9. 调用后端接口，支持往数据库 `select_paper` 选择表中 插入去重数据、清空表、以及 导出表中已有数据
+
+```js
+fetch('08_web_user_select_tmp.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': API_KEY
+    },
+    body: JSON.stringify({ action: 'insert', items })
+})
+
+
+
+fetch('08_web_user_select_tmp.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': API_KEY
+    },
+    body: JSON.stringify({ action: 'clear' })
+})
+
+
+
+fetch('08_web_user_select_tmp.php', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': API_KEY
+    },
+    body: JSON.stringify({ action: 'copy' })
+})
+```
+
+
 
 
 
