@@ -373,6 +373,7 @@ if ($selectedCategoryID) {
             display: flex;
             align-items: center;
             gap: 6px;
+            font-variant-numeric: tabular-nums; /* [NEW CODE] 等宽数字，便于按 ch 计算占位 */
         }
         .rating-stars {
             display: inline-flex;
@@ -430,6 +431,11 @@ if ($selectedCategoryID) {
         .select-circle:checked {
             background: #f90;
             border-color: #f90;
+        }
+        /* ======== [NEW CODE] 占位符：用于把勾选框“顶”到同一列 ======== */
+        .rc-pad {
+            display: inline-block;
+            height: 12px; /* 与星星高度一致，仅为视觉齐平 */
         }
     </style>
 </head>
@@ -655,6 +661,7 @@ if ($selectedCategoryID) {
                                 </div>
                                 <span class="rating-number"><?= number_format($paper['rating'], 1) ?></span>
                                 <span class="citation-count">被引数：<?= htmlspecialchars($paper['citation_count']) ?></span>
+                                <span class="rc-pad"></span>
                                 <input type="checkbox" class="select-circle" data-paperid="<?= (int)$paper['paperID'] ?>" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
                             </div>
                         </div>
@@ -1261,6 +1268,27 @@ if ($selectedCategoryID) {
                 });
             });
         }
+    </script>
+
+    <!-- ====== [NEW CODE] 计算 rc-pad 宽度以对齐复选框（rating+被引数数字合计 13 位） ====== -->
+    <script>
+        (function alignCheckboxColumn(){
+            const TOTAL_CH = 13; // 目标总“位数”（含 rating 的小数点以及被引数的数字位）
+            const rows = document.querySelectorAll('.paper-rating');
+            rows.forEach(row => {
+                const ratingEl = row.querySelector('.rating-number');
+                const citEl = row.querySelector('.citation-count');
+                const padEl = row.querySelector('.rc-pad');
+                if (!ratingEl || !citEl || !padEl) return;
+                const ratingText = (ratingEl.textContent || '').trim(); // 例如 "0.0" / "10.0"
+                const citText = (citEl.textContent || '').trim();       // "被引数：12345"
+                const m = citText.match(/(\d+)/);
+                const citDigits = m ? m[1] : '';
+                const used = ratingText.length + citDigits.length;
+                const pad = Math.max(0, TOTAL_CH - used);
+                padEl.style.width = pad + 'ch';
+            });
+        })();
     </script>
 
     <!-- ====== [NEW CODE] 点击后改变颜色 ====== -->
