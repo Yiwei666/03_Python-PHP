@@ -22,6 +22,7 @@
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
 08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
 08_web_update_rating.php           # 根据 DOI 查询论文当前的评分（rating），也能在收到合法的 0–10 整数评分时将其写入数据库。
+08_web_user_select_tmp.php         # 支持往数据库 `select_paper` 选择表中 插入去重数据（paperID 和 doi）、清空表、以及 导出表中已有数据，主要用于管理用户在前端勾选或临时保存的论文列表
 
 # 2. web交互
 08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
@@ -945,6 +946,57 @@ require_once '08_category_operations.php';
 // 执行 API Key 检查
 checkApiKey();
 ```
+
+
+
+## 6. `08_web_user_select_tmp.php`
+
+### 1. 功能
+
+功能：支持往数据库 `select_paper` 选择表中 插入去重数据（`paperID 和 doi`）、清空表、以及 导出表中已有数据，主要用于管理用户在前端勾选或临时保存的论文列表
+
+1. 接口基础功能
+
+    - 使用 JSON 格式 进行输入输出。
+    - 支持 跨域请求 (CORS)，允许 POST 和 OPTIONS。
+    - 通过 `08_api_auth.php` 验证 API Key。
+    - 使用 MySQL 数据库连接配置 `08_db_config.php`。
+
+2. 支持的操作（action 参数决定）
+
+    - insert
+        - 接收一个 items 数组，每个元素包含 `paperID 和 doi`。
+        - 在内存中先按 `paperID` 去重，再按 `doi` 去重。
+        - 使用 `INSERT IGNORE` 插入到 `select_paper` 表，依赖主键和唯一索引自动避免重复。
+        - 返回插入成功条数和因重复跳过的条数。
+
+    - clear
+        - 执行 `TRUNCATE TABLE select_paper`，清空选择表。
+        - 返回是否清空成功。
+    
+    - copy
+        - 查询 `select_paper` 表中所有数据，按 `paperID` 升序返回。
+        - 输出为 JSON 数组。
+
+
+
+3. 错误与异常处理
+
+    - 如果 action 缺失或不支持，返回错误信息。
+    
+    - SQL 执行失败时，会返回数据库错误信息。
+    
+    - JSON 解析失败或数据无效时，返回错误提示。
+
+
+
+
+### 2. 环境变量
+
+
+
+
+
 
 
 
