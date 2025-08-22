@@ -211,7 +211,7 @@ if ($selectedCategoryID) {
             cursor: default;
         }
         /* “工具”按钮、以及新增的“全部下载”和“全部删除”按钮样式一致 */
-        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn {
+        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -412,6 +412,25 @@ if ($selectedCategoryID) {
             color: #777;
             margin-left: 12px;
         }
+
+        /* ======== [NEW CODE] 圆形复选框样式（与星星同高 12px） ======== */
+        .select-circle {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #999;
+            border-radius: 50%;
+            background: #fff;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+            cursor: pointer;
+        }
+        .select-circle:checked {
+            background: #f90;
+            border-color: #f90;
+        }
     </style>
 </head>
 <body>
@@ -477,6 +496,10 @@ if ($selectedCategoryID) {
                 <button id="toolsBtn" type="button">工具</button>
                 <button id="batchDownloadBtn" type="button">全部下载</button>
                 <button id="batchDeleteBtn" type="button">全部删除</button>
+                <!-- ======== [NEW CODE] 追加三个按钮 ======== -->
+                <button id="insertTmpBtn" type="button">插入临表</button>
+                <button id="clearTmpBtn" type="button">清除临表</button>
+                <button id="copyTmpBtn" type="button">复制临表</button>
             <?php endif; ?>
         </h2>
 
@@ -625,14 +648,14 @@ if ($selectedCategoryID) {
                                 </div>
                             <?php endif; ?>
 
-                            <!-- ========== [NEW CODE] 第5行：显示评分（星星 + 数字）+ 被引数 ========== -->
-                            <!-- 修改：后端 PHP 直接渲染星星和数值 -->
+                            <!-- ========== [NEW CODE] 第5行：显示评分（星星 + 数字）+ 被引数 + 圆形复选框 ========== -->
                             <div class="paper-rating" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
                                 <div class="rating-stars">
                                     <?= renderStars($paper['rating']) ?>
                                 </div>
                                 <span class="rating-number"><?= number_format($paper['rating'], 1) ?></span>
                                 <span class="citation-count">被引数：<?= htmlspecialchars($paper['citation_count']) ?></span>
+                                <input type="checkbox" class="select-circle" data-paperid="<?= (int)$paper['paperID'] ?>" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -722,6 +745,15 @@ if ($selectedCategoryID) {
 
         // 将后端获取到的 $papersData 数组转成 JS 对象
         const papersData = <?php echo json_encode($papersData, JSON_UNESCAPED_UNICODE); ?>;
+
+        // ====== [NEW CODE] 暂存用户勾选的 paperID 列表 ======
+        let user_select_tmp = [];
+        // 便于从 paperID 获取 doi
+        const idToDoi = (() => {
+            const map = {};
+            (papersData || []).forEach(p => { map[String(p.paperID)] = p.doi; });
+            return map;
+        })();
 
         // 打开分类选择弹窗
         function openCategoryModal(doi) {
@@ -1112,6 +1144,123 @@ if ($selectedCategoryID) {
                 alert('评分更新时出现错误。');
             });
         });
+
+        /* ====== [NEW CODE] 勾选圆形复选框：维护 user_select_tmp（仅存 paperID） ====== */
+        document.addEventListener('change', function(e) {
+            const el = e.target;
+            if (el && el.classList && el.classList.contains('select-circle')) {
+                const pid = String(el.getAttribute('data-paperid'));
+                if (!pid) return;
+                if (el.checked) {
+                    if (!user_select_tmp.includes(pid)) user_select_tmp.push(pid);
+                } else {
+                    user_select_tmp = user_select_tmp.filter(x => x !== pid);
+                }
+            }
+        });
+
+        /* ====== [NEW CODE] 三个顶部按钮：插入临表 / 清除临表 / 复制临表 ====== */
+        const insertTmpBtn = document.getElementById('insertTmpBtn');
+        const clearTmpBtn  = document.getElementById('clearTmpBtn');
+        const copyTmpBtn   = document.getElementById('copyTmpBtn');
+
+        if (insertTmpBtn) {
+            insertTmpBtn.addEventListener('click', () => {
+                // 去重 paperID
+                const uniqueIDs = Array.from(new Set(user_select_tmp));
+                if (uniqueIDs.length === 0) {
+                    alert('请先勾选至少一篇论文。');
+                    return;
+                }
+                // 依据 doi 去重（同一 doi 只保留一个 paperID）
+                const seenDois = new Set();
+                const items = [];
+                uniqueIDs.forEach(id => {
+                    const doi = idToDoi[String(id)];
+                    if (!doi) return;
+                    if (seenDois.has(doi)) return;
+                    seenDois.add(doi);
+                    items.push({ paperID: parseInt(id, 10), doi: doi });
+                });
+
+                fetch('08_web_user_select_tmp.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Api-Key': API_KEY
+                    },
+                    body: JSON.stringify({ action: 'insert', items })
+                })
+                .then(r => r.json())
+                .then(resp => {
+                    if (resp.success) {
+                        alert('插入完成：新增 ' + (resp.inserted || 0) + ' 条，跳过 ' + (resp.skipped || 0) + ' 条。');
+                    } else {
+                        alert(resp.message || '插入失败');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('插入时出现错误。');
+                });
+            });
+        }
+
+        if (clearTmpBtn) {
+            clearTmpBtn.addEventListener('click', () => {
+                fetch('08_web_user_select_tmp.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Api-Key': API_KEY
+                    },
+                    body: JSON.stringify({ action: 'clear' })
+                })
+                .then(r => r.json())
+                .then(resp => {
+                    if (resp.success) {
+                        alert('已清空临表。');
+                    } else {
+                        alert(resp.message || '清空失败');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('清空时出现错误。');
+                });
+            });
+        }
+
+        if (copyTmpBtn) {
+            copyTmpBtn.addEventListener('click', () => {
+                fetch('08_web_user_select_tmp.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Api-Key': API_KEY
+                    },
+                    body: JSON.stringify({ action: 'copy' })
+                })
+                .then(r => r.json())
+                .then(resp => {
+                    if (resp.success && Array.isArray(resp.data)) {
+                        const txt = JSON.stringify(resp.data, null, 2);
+                        navigator.clipboard.writeText(txt).then(() => {
+                            alert(txt);
+                        }).catch(err => {
+                            console.error(err);
+                            alert(txt);
+                        });
+                    } else {
+                        alert(resp.message || '无可复制的数据');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('复制时出现错误。');
+                });
+            });
+        }
     </script>
 
     <!-- ====== [NEW CODE] 点击后改变颜色 ====== -->
