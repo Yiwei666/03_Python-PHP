@@ -43,7 +43,7 @@
 08_server_update_citation_topN_random.php        # 更新论文引用数，按照paperID降序，从引用数为0的前N行中随机选取一行更新引用数，注意前N行引用数均为0的情况。适合更新最新导入数据库的论文。
 08_server_insert_paper_doi_defined.php           # 手动插入论文信息到数据库中，支持 json 格式输入，尤其是没有 doi 号的论文 ，默认分类到 categoryID = 1，可选分类到 123。
 08_server_update_paper_selection.php             # 根据数据库中用户在网页选择的论文doi，在谷歌云盘的不同目录下进行复制、删除、同步操作，使得用户选择的论文出现在云盘指定目录
-
+08_server_sups_scheduler.sh                      # 调度脚本，确保 `08_server_update_paper_selection.php` 上次执行结束和下次开始执行时间间隔为 8 秒 
 
 # 5. 客户端脚本
 08_client_doi_base32_scidownl.py          # 在windows客户端上输入doi号，下载对应pdf论文，使用doi号的base32编码进行命名
@@ -2050,6 +2050,8 @@ if ($copy_return_var != 0) {
 
 ### 2. 环境变量
 
+1. 参数初始化
+
 ```php
 // 配置部分
 $db_host     = 'localhost';          // 数据库主机
@@ -2062,6 +2064,15 @@ $local_dir   = '/home/01_html/08_paperLocalStorage';
 // 远程目录(B)
 $remote_dir  = 'rc4:/3图书/13_paperRemoteStorage';
 ```
+
+
+2. cron定时
+
+```sh
+# 更新论文状态码并执行论文下载删除等操作
+*/2 * * * * php /home/01_html/08_server_update_paper_status.php
+```
+
 
 
 
@@ -2432,26 +2443,64 @@ require_once __DIR__ . '/08_web_Base32.php';  // 提供 Base32::encode()
 
 
 
-
 ## 6.2 `08_server_sups_scheduler.sh`
+
+功能：调度脚本，确保 `08_server_update_paper_selection.php` 上次执行结束和下次开始执行时间间隔为 8 秒 
+
 
 ### 1. 编程思路
 
 💡 **1. 初始思路**
 
+假如 `/usr/bin/php /home/01_html/08_server_update_paper_selection.php` 运行脚本单次执行时长在 0.1-600 秒之间，我想要周期性执行该脚本，即上次脚本结束和下次开始执行间隔约 8 秒，避免阻塞。现编写一个 `08_server_sups_scheduler.sh` 调度脚本来实现该任务（间隔时长 t = 8 秒），然后使用 cron 定时执行改调度脚本来实现上述需求。
 
 
 
 ### 2. 环境变量
 
+1. 初始化参数
+
+```sh
+PHP_BIN="/usr/bin/php"
+TASK="/home/01_html/08_server_update_paper_selection.php"
+COOLDOWN="${COOLDOWN_SECONDS:-8}"
+
+FLOCK="/usr/bin/flock"
+LOCKDIR="/tmp/08_sups_locks"                # 可改成 /home/01_html/.locks
+mkdir -p "$LOCKDIR"
+
+SCHED_LOCK="$LOCKDIR/08_server_sups_scheduler.lock"
+RUN_LOCK="$LOCKDIR/08_server_sups_worker.lock"
+```
+
+
+2. cron定时命令
+
+```sh
+# 调度器，上次结束-下次开始 等待间隔8秒执行 `08_server_update_paper_selection.php` 脚本
+* * * * * /usr/bin/bash /home/01_html/08_server_sups_scheduler.sh >/dev/null 2>&1
+* * * * * /usr/bin/bash /home/01_html/08_server_sups_scheduler.sh >>/home/01_html/08_sups_scheduler.log 2>&1
+```
 
 
 
+3. 运维和调试命令
 
+```
+# 查找进程
+ps aux | grep '08_server_update_paper_selection.php'
 
+# 查找进程
+ps aux | grep '08_server_sups_scheduler.sh'
 
+# 杀掉进程
+pkill -f '08_server_sups_scheduler.sh'
 
-
+# alias别名
+alias pagss="ps aux | grep '08_server_sups_scheduler.sh'"
+alias kilsss="pkill -f '08_server_sups_scheduler.sh'"
+alias pagsups="ps aux | grep '08_server_update_paper_selection.php'"
+```
 
 
 
