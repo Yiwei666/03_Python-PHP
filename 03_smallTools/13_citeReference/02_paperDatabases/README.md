@@ -22,7 +22,7 @@
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
 08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
 08_web_update_rating.php           # 根据 DOI 查询论文当前的评分（rating），也能在收到合法的 0–10 整数评分时将其写入数据库。
-08_web_user_select_tmp.php         # 支持往数据库 `select_paper` 选择表中 插入去重数据（paperID 和 doi）、清空表、以及 导出表中已有数据，主要用于管理用户在前端勾选或临时保存的论文列表
+08_web_user_select_tmp.php         # 管理用户在前端勾选或临时保存的论文列表，支持往数据库 `select_paper` 选择表中 插入去重数据（paperID 和 doi）、清空表、以及 导出表中已有数据
 
 # 2. web交互
 08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
