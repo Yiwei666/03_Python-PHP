@@ -960,7 +960,10 @@ checkApiKey();
 
 ### 1. 功能
 
-功能：支持往数据库 `select_paper` 选择表中 插入去重数据（`paperID 和 doi`）、清空表、以及 导出表中已有数据，主要用于管理用户在前端勾选或临时保存的论文列表
+功能：
+   - 后端api接口，支持将网页上 `插入临表 清除临表 复制临表` 三个按钮对应的数据操作写入到 数据库的 `select_paper` 表中。
+   - 支持往数据库 `select_paper` 选择表中 插入去重数据（`paperID 和 doi`）、清空表、以及 导出表中已有数据，主要用于管理用户在前端勾选或临时保存的论文列表
+
 
 1. 接口基础功能
 
@@ -1001,7 +1004,7 @@ checkApiKey();
 
 ### 2. 环境变量
 
-```
+```php
 require_once '08_api_auth.php';
 require_once '08_db_config.php';
 
@@ -1035,11 +1038,11 @@ checkApiKey();
             08_api_auth.php
             08_db_config.php
             08_category_operations.php
-        08_tm_update_paper_categories.php
+        08_tm_update_paper_categories.php       
             08_api_auth.php
             08_db_config.php
             08_category_operations.php
-        08_web_update_paper_status.php
+        08_web_update_paper_status.php          # 接收前端发送的 DOI（论文唯一标识）和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
             08_api_auth.php
             08_db_config.php
             08_category_operations.php
@@ -1051,6 +1054,9 @@ checkApiKey();
             08_api_auth.php
             08_db_config.php
             08_category_operations.php
+        08_web_user_select_tmp.php              # 后端api接口，支持将网页上 `插入临表 清除临表 复制临表` 三个按钮对应的数据操作写入到服务器数据库的 `select_paper` 表中
+            08_api_auth.php
+            08_db_config.php
 ```
 
 
