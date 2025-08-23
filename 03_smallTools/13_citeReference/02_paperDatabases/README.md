@@ -19,18 +19,22 @@
 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
 08_tm_get_paper_metaInfo.php              # 基于doi查找论文在papers表中所有字段的值，以json格式返回，用于前端 `复制元信息` 按钮显示
 
+
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
 08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
 08_web_update_rating.php           # 根据 DOI 查询论文当前的评分（rating），也能在收到合法的 0–10 整数评分时将其写入数据库。
 08_web_user_select_tmp.php         # 管理用户在前端勾选或临时保存的论文列表，支持往数据库 `select_paper` 选择表中 插入去重数据（paperID 和 doi）、清空表、以及 导出表中已有数据
+
 
 # 2. web交互
 08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
 08_base32_tool.php                 # base32在线编码和解码，主要用于doi编码
 08_web_crossRef_query.php          # 在web页面上查询显示论文的元数据（展示crossRef API返回的多条结果），能够将元数据写入到数据库并进行分类，功能类似 08_tm_paperManagement.js
 
+
 # 3. 油猴脚本
 08_tm_paperManagement.js           # 油猴脚本（基于01_GBT_api_items.js扩展），通过在谷歌学术页面提取参考文献，结合crossRef API查询论文的元数据，并将论文元数据写入到mysql数据库中（可选），还能够给论文进行在线新增/取消/更改分类（可选），能够复制doi的base32编码。
+
 
 # 4. 服务器端脚本
 08_server_update_paper_status.php                # 更新数据库中论文状态码、基于论文状态码执行下载、删除等操作，可用于cron定时执行
@@ -38,9 +42,12 @@
 08_server_update_citation_all_random.php         # 更新论文引用数，从所有具有标准doi值的行中，随机选取一行更新引用数，不限制引用数是否为0。适合不断更新论文的引用情况，需较长时间。
 08_server_update_citation_topN_random.php        # 更新论文引用数，按照paperID降序，从引用数为0的前N行中随机选取一行更新引用数，注意前N行引用数均为0的情况。适合更新最新导入数据库的论文。
 08_server_insert_paper_doi_defined.php           # 手动插入论文信息到数据库中，支持 json 格式输入，尤其是没有 doi 号的论文 ，默认分类到 categoryID = 1，可选分类到 123。
+08_server_update_paper_selection.php             # 根据数据库中用户在网页选择的论文doi，在谷歌云盘的不同目录下进行复制、删除、同步操作，使得用户选择的论文出现在云盘指定目录
+
 
 # 5. 客户端脚本
 08_client_doi_base32_scidownl.py          # 在windows客户端上输入doi号，下载对应pdf论文，使用doi号的base32编码进行命名
+
 ```
 
 ### 2. 项目思路
@@ -2367,6 +2374,84 @@ if ($row123) {
     echo "分类 123 不存在，程序结束。\n";
 }
 ```
+
+
+## 6.1 `08_server_update_paper_selection.php`
+
+功能：根据数据库中用户在网页选择的论文doi，在谷歌云盘的不同目录下进行复制、删除、同步操作，使得用户选择的论文出现在云盘指定目录
+
+### 1. 编程思路
+
+💡 **1. 初始思路**
+
+创建好的 `select_paper` 表格如下：
+
+```
+mysql> describe select_paper;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| paperID | int          | NO   | PRI | NULL    |       |
+| doi     | varchar(100) | NO   | UNI | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+```
+
+
+现在我需要编写一个 `08_server_update_paper_selection.php` 脚本，在ubuntu后台cron定时执行，需求如下
+
+1. 读取 `paper_db` 数据库中的 `select_paper` 表，判断表中是否为空，如果为空，则基于 rclone 判断远程目录  `gd1:/13_paperUserSelect/`下是否有文件（注意该目录下没有子文件夹），如果有，则删除该目录下的所有文件；如果远程目录 `gd1:/13_paperUserSelect/` 目录下没有 文件，则结束程序运行（rclone远程连接已配置好，云端硬盘中该目录已存在）。
+
+2. 如果 `select_paper` 表不为空，在获取该表中所有不重复的 doi 号，调用 `08_web_Base32.php` 模块对这些 doi 号进行 base32 编码，例如 `10.1038/nature14539` 编码后是 `GEYC4MJQGM4C63TBOR2XEZJRGQ2TGOI=`，然后判断这些使用 base32 编码 doi 作为文件名的pdf文件是否存在于 `gd1:/13_paperUserSelect/` 目录下，例如： 判断 `GEYC4MJQGM4C63TBOR2XEZJRGQ2TGOI=.pdf` 文件是否存在于 `gd1:/13_paperUserSelect/` 目录下。
+
+3. 如果上述 `select_paper` 表中base32编码doi命名的pdf文件有不存在于 `gd1:/13_paperUserSelect/` 目录下的，则使用 rclone 将该文件从 `gd1:/13_paperRemoteStorage/` 目录下复制到 `gd1:/13_paperUserSelect/` 目录下。注意，`gd1:/13_paperRemoteStorage/` 目录下存在多个子文件夹，子文件夹中包含多个pdf文件，这些文件均是使用 base32编码 doi 命名的pdf文件，在复制文件前需要确定相应pdf文件在 `gd1:/13_paperRemoteStorage/` 目录下的具体路径。如果 `gd1:/13_paperRemoteStorage/` 目录下也不存在相应的 pdf 文件，则跳过该文件的复制。
+
+4. 如果`select_paper` 表中base32编码doi命名的pdf文件均存在于 `gd1:/13_paperUserSelect/` 目录下，则结束程序运行。
+
+5. rclone的远程复制、删除等命令中可以设置 `--transfers=8`，以实现批量操作。
+
+请编写 `08_server_update_paper_selection.php` 代码，实现上述需求。
+
+
+
+
+### 2. 环境变量
+
+```php
+// ---- 路径/常量（如 rclone 路径有差异，自行调整）----
+$RCLONE_BIN = '/usr/bin/rclone';     // 若系统 PATH 中已配置，可改成 'rclone'
+$REMOTE_USER_SELECT   = 'gd1:/13_paperUserSelect';
+$REMOTE_STORAGE_ROOT  = 'gd1:/13_paperRemoteStorage';
+
+// ---- 引入已有模块 ----
+require_once __DIR__ . '/08_db_config.php';   // 提供 $mysqli
+require_once __DIR__ . '/08_web_Base32.php';  // 提供 Base32::encode()
+```
+
+
+
+
+
+
+## 6.2 `08_server_sups_scheduler.sh`
+
+### 1. 编程思路
+
+💡 **1. 初始思路**
+
+
+
+
+### 2. 环境变量
+
+
+
+
+
+
+
+
+
 
 
 
