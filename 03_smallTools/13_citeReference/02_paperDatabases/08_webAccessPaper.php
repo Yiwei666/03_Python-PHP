@@ -554,6 +554,7 @@ if ($selectedCategoryID) {
         <?php if ($selectedCategoryID): ?>
             <?php if ($papers !== null): ?>
                 <?php if (!empty($paperRows)): ?>
+                    <?php $rowSeq = 0; ?>
                     <?php foreach ($paperRows as $paper): ?>
                         <?php 
                             // 收集信息到 $papersData 数组中
@@ -663,6 +664,8 @@ if ($selectedCategoryID) {
                                 <span class="citation-count">被引数：<?= htmlspecialchars($paper['citation_count']) ?></span>
                                 <span class="rc-pad"></span>
                                 <input type="checkbox" class="select-circle" data-paperid="<?= (int)$paper['paperID'] ?>" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
+                                <span class="citation-count selected-count">已选数：0</span>
+                                <span class="citation-count seq-index">序号：<?= ++$rowSeq ?></span>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -1163,6 +1166,7 @@ if ($selectedCategoryID) {
                 } else {
                     user_select_tmp = user_select_tmp.filter(x => x !== pid);
                 }
+                updateSelectedCountDisplay();
             }
         });
 
@@ -1268,6 +1272,15 @@ if ($selectedCategoryID) {
                 });
             });
         }
+
+        // ====== [NEW CODE] 已选数：根据 user_select_tmp 实时更新 ======
+        function updateSelectedCountDisplay() {
+            const n = user_select_tmp.length;
+            document.querySelectorAll('.selected-count').forEach(el => {
+                el.textContent = '已选数：' + n;
+            });
+        }
+        updateSelectedCountDisplay();
     </script>
 
     <!-- ====== [NEW CODE] 计算 rc-pad 宽度以对齐复选框（rating+被引数数字合计 13 位） ====== -->
