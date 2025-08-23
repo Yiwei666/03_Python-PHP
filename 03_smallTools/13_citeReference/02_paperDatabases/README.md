@@ -1571,6 +1571,8 @@ fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
 9. 调用后端接口，支持往数据库 `select_paper` 选择表中 插入去重数据、清空表、以及 导出表中已有数据
 
 ```js
+
+//  插入去重数据
 fetch('08_web_user_select_tmp.php', {
     method: 'POST',
     headers: {
@@ -1581,7 +1583,7 @@ fetch('08_web_user_select_tmp.php', {
 })
 
 
-
+//  清空表
 fetch('08_web_user_select_tmp.php', {
     method: 'POST',
     headers: {
@@ -1592,7 +1594,7 @@ fetch('08_web_user_select_tmp.php', {
 })
 
 
-
+//  导出表中已有数据
 fetch('08_web_user_select_tmp.php', {
     method: 'POST',
     headers: {
@@ -1602,7 +1604,6 @@ fetch('08_web_user_select_tmp.php', {
     body: JSON.stringify({ action: 'copy' })
 })
 ```
-
 
 
 
