@@ -1462,6 +1462,25 @@ b. 解决方案
 
 
 
+💡 **19 新增思路**
+
+
+上述 `08_webAccessPaper.php` 代码中，用户点击 `插入临表` 时，会将用户通过复选框勾选的论文 `paperID` 和 `doi` 插入到 `paper_db` 数据库的 `select_paper` 表中。用户点击 `清除临表` 按钮时，`select_paper` 表中的所有行数据都会被清空。点击 `复制临表` 时，将 `select_paper` 表中的数据以 json 格式复制，并且 在 alert 窗口中显示复制的内容。现在我的需求如下：
+
+1. 用户点击 `插入临表` 时，除了插入 `paperID` 和 `doi` 之外，将每条论文对应的 `title` 值也插入到 数据库的 `select_paper` 表中。
+
+2. 点击 `复制临表` 时，将 `select_paper` 表中的数据以 json 格式复制，并且 在 alert 窗口中显示复制的内容。此时复制的内容应该包含 `title` 值。
+
+3. 上述需求的实现可能涉及到对 `08_webAccessPaper.php` 代码的修改 和 `08_web_user_select_tmp.php` 接口的修改。对于上述相关代码修改，尽量通过增加/调整少量代码行来实现。其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。输出修改后的完整 `08_webAccessPaper.php` 和 `08_web_user_select_tmp.php` 代码。
+
+
+
+
+
+
+
+
+
 ### 2. 模块、函数和后端接口
 
 1. PHP模块
