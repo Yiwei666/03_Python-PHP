@@ -310,7 +310,18 @@ CREATE TABLE `select_paper` (
 
 
 
-2. `select_paper` 表
+2. 新增 `title` 列
+
+新增 `title` 列，类型为 `varchar(500)`，可以为 Null，默认值为 NULL。新增该列的mysql语句如下：
+
+```
+ALTER TABLE select_paper
+ADD COLUMN title VARCHAR(500) NULL DEFAULT NULL;
+```
+
+
+
+3. `select_paper` 表
 
 ```
 mysql> describe select_paper;
@@ -319,8 +330,9 @@ mysql> describe select_paper;
 +---------+--------------+------+-----+---------+-------+
 | paperID | int          | NO   | PRI | NULL    |       |
 | doi     | varchar(100) | NO   | UNI | NULL    |       |
+| title   | varchar(500) | YES  |     | NULL    |       |
 +---------+--------------+------+-----+---------+-------+
-2 rows in set (0.03 sec)
+3 rows in set (0.01 sec)
 ```
 
 
