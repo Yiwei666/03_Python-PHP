@@ -314,7 +314,7 @@ CREATE TABLE `select_paper` (
 
 新增 `title` 列，类型为 `varchar(500)`，可以为 Null，默认值为 NULL。新增该列的mysql语句如下：
 
-```
+```sql
 ALTER TABLE select_paper
 ADD COLUMN title VARCHAR(500) NULL DEFAULT NULL;
 ```
