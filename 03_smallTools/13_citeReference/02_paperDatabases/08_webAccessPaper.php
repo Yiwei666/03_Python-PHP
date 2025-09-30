@@ -561,7 +561,8 @@ if ($selectedCategoryID) {
                             $papersData[] = [
                                 'paperID' => $paper['paperID'],
                                 'doi' => $paper['doi'],
-                                'status' => $paper['status']
+                                'status' => $paper['status'],
+                                'title' => $paper['title']  // [NEW] 前端批量提交时需要携带 title
                             ];
 
                             // ========== [MODIFIED] 使用批量映射替代逐条查询 ==========
@@ -762,6 +763,12 @@ if ($selectedCategoryID) {
         const idToDoi = (() => {
             const map = {};
             (papersData || []).forEach(p => { map[String(p.paperID)] = p.doi; });
+            return map;
+        })();
+        // [NEW] 便于从 paperID 获取 title
+        const idToTitle = (() => {
+            const map = {};
+            (papersData || []).forEach(p => { map[String(p.paperID)] = p.title; });
             return map;
         })();
 
@@ -1191,7 +1198,8 @@ if ($selectedCategoryID) {
                     if (!doi) return;
                     if (seenDois.has(doi)) return;
                     seenDois.add(doi);
-                    items.push({ paperID: parseInt(id, 10), doi: doi });
+                    const title = idToTitle[String(id)]; // [NEW]
+                    items.push({ paperID: parseInt(id, 10), doi: doi, title: (title ?? null) }); // [NEW]
                 });
 
                 fetch('08_web_user_select_tmp.php', {
