@@ -614,7 +614,7 @@ if ($selectedCategoryID) {
                                         case 'CL':
                                             // 显示 “删除” 与 “查看”
                                             echo '<button type="button" onclick="updatePaperStatus(\'' . htmlspecialchars($paper['doi']) . '\', \'DL\')">删除</button>';
-                                            echo '<button type="button" onclick="window.open(\'https://chaye.one/08_paperLocalStorage/' . urlencode($encodedDOI) . '.pdf\', \'_blank\')">查看</button>';
+                                            echo '<button type="button" class="view-btn" onclick="window.open(\'https://chaye.one/08_paperLocalStorage/' . urlencode($encodedDOI) . '.pdf\', \'_blank\')">查看</button>';
                                             break;
                                         case 'DL':
                                             // 显示 “删除中”
@@ -630,7 +630,7 @@ if ($selectedCategoryID) {
                                             break;
                                         case 'L':
                                             // 显示 “查看”
-                                            echo '<button type="button" onclick="window.open(\'https://chaye.one/08_paperLocalStorage/' . urlencode($encodedDOI) . '.pdf\', \'_blank\')">查看</button>';
+                                            echo '<button type="button" class="view-btn" onclick="window.open(\'https://chaye.one/08_paperLocalStorage/' . urlencode($encodedDOI) . '.pdf\', \'_blank\')">查看</button>';
                                             break;
                                         case 'N':
                                         default:
@@ -1314,7 +1314,8 @@ if ($selectedCategoryID) {
             if (
                 e.target.classList.contains('copy-doi-btn') || 
                 e.target.classList.contains('copy-encoded-doi-btn') ||
-                e.target.classList.contains('copy-meta-btn') /* [NEW CODE] 元信息按钮也变色 */
+                e.target.classList.contains('copy-meta-btn') ||
+                e.target.classList.contains('view-btn')
             ) {
                 e.target.style.color = '#c58af9';
             }
