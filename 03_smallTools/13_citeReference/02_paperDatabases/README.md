@@ -18,6 +18,7 @@
 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
 08_tm_get_paper_metaInfo.php              # 基于doi查找论文在papers表中所有字段的值，以json格式返回，用于前端 `复制元信息` 按钮显示
+08_tm_get_gdfile_id.php                   # 基于 paperID 或 doi 查询 gdfile 表，返回对应论文在 Google Drive 中的 fileID，用于前端“预览”功能跳转云端 PDF 文件
 
 
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
@@ -43,7 +44,9 @@
 08_server_update_citation_topN_random.php        # 更新论文引用数，按照paperID降序，从引用数为0的前N行中随机选取一行更新引用数，注意前N行引用数均为0的情况。适合更新最新导入数据库的论文。
 08_server_insert_paper_doi_defined.php           # 手动插入论文信息到数据库中，支持 json 格式输入，尤其是没有 doi 号的论文 ，默认分类到 categoryID = 1，可选分类到 123。
 08_server_update_paper_selection.php             # 根据数据库中用户在网页选择的论文doi，在谷歌云盘的不同目录下进行复制、删除、同步操作，使得用户选择的论文出现在云盘指定目录
-08_server_sups_scheduler.sh                      # 调度脚本，确保 `08_server_update_paper_selection.php` 上次执行结束和下次开始执行时间间隔为 8 秒 
+08_server_sups_scheduler.sh                      # 调度脚本，确保 `08_server_update_paper_selection.php` 上次执行结束和下次开始执行时间间隔为 8 秒
+08_server_update_gdrive_fileID.php               # 结合rclone扫描`Google Drive`论文目录，解码pdf文件名中的doi并获取papers表中的paperID，并将云端fileID与论文文件名同步更新至gdfile表
+
 
 # 5. 客户端脚本
 08_client_doi_base32_scidownl.py          # 在windows客户端上输入doi号，下载对应pdf论文，使用doi号的base32编码进行命名
@@ -99,10 +102,12 @@ mysql> show tables;
 | Tables_in_paper_db |
 +--------------------+
 | categories         |
+| gdfile             |
 | paperCategories    |
 | papers             |
+| select_paper       |
 +--------------------+
-3 rows in set (0.00 sec)
+5 rows in set (0.01 sec)
 ```
 
 
@@ -278,7 +283,7 @@ paperID 和 categoryID：
   - `ON DELETE CASCADE`：当 papers 或 categories 表中的相关记录被删除时，paperCategories 表中的对应记录会自动删除。
 
 
-3. `paperCategories` 表
+2. `paperCategories` 表
 
 ```sql
 mysql> describe paperCategories;
@@ -333,6 +338,44 @@ mysql> describe select_paper;
 | title   | varchar(500) | YES  |     | NULL    |       |
 +---------+--------------+------+-----+---------+-------+
 3 rows in set (0.01 sec)
+```
+
+
+### 6. 创建 `gdfile` 表
+
+1. 创建语句
+
+```sql
+CREATE TABLE gdfile (
+  ID INT NOT NULL AUTO_INCREMENT,
+  filename VARCHAR(512) NOT NULL,
+  fileID VARCHAR(128) NOT NULL,
+  paperID INT NOT NULL,
+  doi VARCHAR(100) NULL,
+  PRIMARY KEY (ID),
+  KEY idx_paperID (paperID),
+  KEY idx_doi (doi),
+  UNIQUE KEY uk_fileID (fileID)
+);
+```
+
+注释：在 `paper_db` 中新建一个表格 `gdfile`，仅包含5列，`ID，filename，fileID，paperID 和 doi`，其中 `filename` 和 `fileID`分别对应 google drive 中文件的名字和ID。
+
+
+2. `gdfile`表结构
+
+```
+mysql> describe gdfile;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| ID       | int          | NO   | PRI | NULL    | auto_increment |
+| filename | varchar(512) | NO   |     | NULL    |                |
+| fileID   | varchar(128) | NO   | UNI | NULL    |                |
+| paperID  | int          | NO   | MUL | NULL    |                |
+| doi      | varchar(100) | YES  | MUL | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
 ```
 
 
