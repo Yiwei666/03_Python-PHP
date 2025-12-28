@@ -18,7 +18,7 @@
 08_tm_get_paper_categories.php            # 基于doi查找论文的paperID，基于paperID查找论文所属分类
 08_tm_update_paper_categories.php         # 基于doi查找论文的paperID，基于paperID更新论文所属分类
 08_tm_get_paper_metaInfo.php              # 基于doi查找论文在papers表中所有字段的值，以json格式返回，用于前端 `复制元信息` 按钮显示
-08_tm_get_gdfile_id.php                   # 基于 paperID 或 doi 查询 gdfile 表，返回对应论文在 Google Drive 中的 fileID，用于前端“预览”功能跳转云端 PDF 文件
+08_tm_get_gdfile_id.php                   # 后端接口，基于paperID或doi查询gdfile表，返回对应论文在Google Drive中的fileID，用于前端“预览”功能跳转云端pdf文件
 
 
 08_web_Base32.php                  # Base32类，模块，在 08_webAccessPaper.php 中调用，用于doi号编码，构建论文查看链接
@@ -2587,7 +2587,7 @@ RUN_LOCK="$LOCKDIR/08_server_sups_worker.lock"
 
 3. 运维和调试命令
 
-```
+```sh
 # 查找进程
 ps aux | grep '08_server_update_paper_selection.php'
 
@@ -2649,7 +2649,7 @@ $remote = 'gd1:/13_paperRemoteStorage';
 
 3. 运维和调试命令
 
-```
+```sh
 # 递归列出目录下所有文件和子目录，并以 JSON 格式输出每个对象的元信息
 rclone lsjson gd1:/13_paperUserSelect --recursive
 
