@@ -2606,6 +2606,62 @@ alias pagsups="ps aux | grep '08_server_update_paper_selection.php'"
 
 
 
+## 7. `08_server_update_gdrive_fileID.php`
+
+功能：通过 rclone 递归扫描 Google Drive 中以 Base32(doi).pdf 命名的文件，解码得到 doi，与 papers 表匹配获取最小 paperID，在去重校验后将文件名、fileID、paperID 和 doi 写入 gdfile 表，并输出同步统计信息
+
+
+### 1. 编程思路
+
+💡 **1. 初始思路**
+
+rclone已经连接到 google drive，在 google drive 远程目录 `gd1:/13_paperRemoteStorage` 这个文件夹下有多个子文件夹，每个子文件夹中有多个pdf文件，每个pdf文件的命名均是由doi进行base32编码构造的。编写php脚本`08_server_update_gdrive_fileID.php`实现以下需求：
+
+1. 通过调用 `08_db_config.php` 模块连接到 `paper_db` 数据库，然后读取 `papers` 和 `gdfile` 表格。
+
+2. 使用rclone获取远程目录 `gd1:/13_paperRemoteStorage`下每个pdf文件的 `ID` 和文件名（`Name`）。由于 `gd1:/13_paperRemoteStorage` 路径下的pdf文件名均是由论文对应的doi号进行base32编码命名的，因此对每个文件名进行解码获取`doi`，并查询`papers`表即可获取对应的`paperID`。调用 `08_web_Base32.php` 模块可进行base32编码和解码。
+
+3. 判断远程目录 `gd1:/13_paperRemoteStorage`下的文件在 `papers` 中是否有对应的 doi，如果存在且`gdfile`表中不存在相关信息（确保filename不重复，也就是doi不重复即可），则将该文件的 `ID`、`Name`、`paperID`和`doi`均写入到`gdfile`表中。注意papers表中可能有极少量重复的doi，这种情况下paperID选用较小的那一个即可。
+
+4. 打印出 `gdfile` 表数据行数，`papers`表数据行数，`gd1:/13_paperRemoteStorage`路径下pdf文件数量，`gdfile` 表本次运行新增的数据行数
+
+
+
+### 2. 环境变量
+
+1. 初始化参数
+
+```php
+require_once __DIR__ . '/08_db_config.php';
+require_once __DIR__ . '/08_web_Base32.php';
+
+$remote = 'gd1:/13_paperRemoteStorage';
+```
+
+
+2. cron定时命令
+
+```sh
+# 将google drive中pdf文件的 id 写入到数据库 gdfile 表格中
+*/8 * * * * php /home/01_html/08_server_update_gdrive_fileID.php
+```
+
+
+3. 运维和调试命令
+
+```
+# 递归列出目录下所有文件和子目录，并以 JSON 格式输出每个对象的元信息
+rclone lsjson gd1:/13_paperUserSelect --recursive
+
+# 递归统计 Google Drive 指定远程目录下 PDF 文件的总数量
+rclone lsf gd1:/13_paperRemoteStorage --recursive --files-only --include "*.pdf" | wc -l
+```
+
+
+
+
+
+
 # 7. tampermonkey 脚本
 
 
