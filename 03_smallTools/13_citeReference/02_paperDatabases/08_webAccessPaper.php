@@ -646,6 +646,7 @@ if ($selectedCategoryID) {
                                     echo '<button type="button" class="copy-encoded-doi-btn" onclick="copyEncodedDOI(\'' . $encodedDOI . '\')">复制编码DOI</button>';
                                     // ====== [NEW CODE] “复制元信息” 按钮（仅点击时请求接口） ======
                                     echo '<button type="button" class="copy-meta-btn" onclick="copyMeta(\'' . htmlspecialchars($paper['doi']) . '\')">复制元信息</button>';
+                                    echo '<button type="button" class="preview-btn" onclick="previewGdfile(\'' . htmlspecialchars($paper['doi']) . '\',' . (int)$paper['paperID'] . ')">预览</button>';
                                 ?>
                             </div>
                             
@@ -1011,6 +1012,24 @@ if ($selectedCategoryID) {
             });
         }
 
+        function previewGdfile(doi, paperID) {
+            fetch('08_tm_get_gdfile_id.php?paperID=' + encodeURIComponent(paperID) + '&doi=' + encodeURIComponent(doi), {
+                headers: { 'X-Api-Key': API_KEY }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.fileID) {
+                    window.open('https://drive.google.com/file/d/' + encodeURIComponent(data.fileID) + '/view', '_blank');
+                } else {
+                    alert(data.message || '未找到该论文对应的 fileID。');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('请求 fileID 失败。');
+            });
+        }
+
         // ====== 工具按钮、菜单 ======
         const toolsBtn = document.getElementById('toolsBtn');
         const toolsMenu = document.getElementById('toolsMenu');
@@ -1323,6 +1342,7 @@ if ($selectedCategoryID) {
                 e.target.classList.contains('copy-doi-btn') || 
                 e.target.classList.contains('copy-encoded-doi-btn') ||
                 e.target.classList.contains('copy-meta-btn') ||
+                e.target.classList.contains('preview-btn') ||
                 e.target.classList.contains('view-btn')
             ) {
                 e.target.style.color = '#c58af9';
