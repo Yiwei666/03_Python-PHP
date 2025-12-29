@@ -907,6 +907,40 @@ require_once '08_category_operations.php';
 
 
 
+## 3.6 `08_tm_get_gdfile_id.php`
+
+### 1. 功能
+
+带 API Key 认证的查询接口，用于根据 `paperID 或 doi` 从数据库表 `gdfile` 中获取对应的 Google Drive 文件 `fileID`
+
+
+### 2. 环境变量
+
+```php
+require_once '08_api_auth.php';
+require_once '08_db_config.php';
+require_once '08_category_operations.php';
+
+checkApiKey();
+```
+
+
+**核心逻辑**
+
+1. 校验 API Key（`checkApiKey()`）
+
+2. 从 GET 参数读取 `paperID / doi`（至少提供一个）
+
+3. 优先使用 `paperID` 查询 `gdfile`
+
+4. 若未查到且提供了 `doi`，则 再用 `doi` 查询
+
+5. 返回 JSON：
+   - 成功：`{ success: true, fileID }`
+   - 失败：返回未找到或参数错误信息
+
+
+
 
 
 ## 4.1 `08_web_Base32.php`              
