@@ -2698,6 +2698,21 @@ rclone已经连接到 google drive，在 google drive 远程目录 `gd1:/13_pape
 
 
 
+💡 **2. 新增思路**
+
+现需要对上述 `08_server_update_gdrive_fileID.php` 代码进行修改，需求如下：
+
+1. 上述代码在插入表格前，会去重检查：只要 `doi 或 filename` 任意一个在 `gdfile` 里已存在，就 continue，避免重复插入。这保证了 `doi 或 filename` 的唯一性。
+
+2. 现在新增的需求是，当发现 `doi 或 filename` 任意一个在 `gdfile` 里已存在时，先别急着 continue 跳过，而是去检查 `fileID` 是否相同，如果不相同的话则进行 `fileID` 更新（注意不是新插入，而是对当前的fileID进行更新）；如果 `fileID` 也相同，则再 continue。
+
+3. 脚本"输出汇总"部分，新增打印 "本次更新 `fileID` 数据行数"。
+
+4. 上述需求的实现可能涉及到对 `08_server_update_gdrive_fileID.php` 代码的修改。对于上述相关代码修改，尽量通过增加/删减/调整少量代码行来实现。其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。输出修改后的完整 `08_server_update_gdrive_fileID.php`。
+
+
+
+
 ### 2. 环境变量
 
 1. 初始化参数
@@ -2727,7 +2742,6 @@ rclone lsjson gd1:/13_paperUserSelect --recursive
 # 递归统计 Google Drive 指定远程目录下 PDF 文件的总数量
 rclone lsf gd1:/13_paperRemoteStorage --recursive --files-only --include "*.pdf" | wc -l
 ```
-
 
 
 
