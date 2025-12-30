@@ -63,8 +63,9 @@ try {
     $stmtFindPaperIDExact = $mysqli->prepare("SELECT MIN(paperID) AS paperID FROM papers WHERE doi = ?");
     $stmtFindPaperIDLower = $mysqli->prepare("SELECT MIN(paperID) AS paperID FROM papers WHERE LOWER(doi) = ?");
 
-    $stmtExistsDoiInGdfile = $mysqli->prepare("SELECT 1 FROM gdfile WHERE doi = ? LIMIT 1");
-    $stmtExistsFilenameInGdfile = $mysqli->prepare("SELECT 1 FROM gdfile WHERE filename = ? LIMIT 1");
+    $stmtExistsDoiInGdfile = $mysqli->prepare("SELECT ID, fileID FROM gdfile WHERE doi = ? LIMIT 1");
+    $stmtExistsFilenameInGdfile = $mysqli->prepare("SELECT ID, fileID FROM gdfile WHERE filename = ? LIMIT 1");
+    $stmtUpdateFileID = $mysqli->prepare("UPDATE gdfile SET fileID = ? WHERE ID = ?");
 
     $stmtInsert = $mysqli->prepare("INSERT INTO gdfile (filename, fileID, paperID, doi) VALUES (?, ?, ?, ?)");
 
@@ -73,6 +74,7 @@ try {
 
     $pdfCount = 0;
     $inserted = 0;
+    $updated = 0;
 
     foreach ($items as $it) {
         // 跳过目录
@@ -138,21 +140,37 @@ try {
         // 你要求“确保 filename 不重复，也就是 doi 不重复即可”
         // 这里同时检查 doi 和 filename，任一存在都跳过（更稳）
         // ------------------------
-        $exists = false;
+        $foundID = 0;
+        $oldFileID = '';
 
         $stmtExistsDoiInGdfile->bind_param('s', $doi);
         $stmtExistsDoiInGdfile->execute();
         $r1 = $stmtExistsDoiInGdfile->get_result();
-        if ($r1 && $r1->num_rows > 0) $exists = true;
+        if ($r1 && ($rowExist = $r1->fetch_assoc())) {
+            $foundID = (int)$rowExist['ID'];
+            $oldFileID = (string)$rowExist['fileID'];
+        }
 
-        if (!$exists) {
+        if ($foundID === 0) {
             $stmtExistsFilenameInGdfile->bind_param('s', $name);
             $stmtExistsFilenameInGdfile->execute();
             $r2 = $stmtExistsFilenameInGdfile->get_result();
-            if ($r2 && $r2->num_rows > 0) $exists = true;
+            if ($r2 && ($rowExist2 = $r2->fetch_assoc())) {
+                $foundID = (int)$rowExist2['ID'];
+                $oldFileID = (string)$rowExist2['fileID'];
+            }
         }
 
-        if ($exists) continue;
+        if ($foundID > 0) {
+            if ($oldFileID !== $fileID) {
+                $stmtUpdateFileID->bind_param('si', $fileID, $foundID);
+                $stmtUpdateFileID->execute();
+                if ($stmtUpdateFileID->affected_rows === 1) {
+                    $updated++;
+                }
+            }
+            continue;
+        }
 
         // ------------------------
         // 插入 gdfile
@@ -178,6 +196,7 @@ try {
     echo "gdfile 表数据行数(运行后):         {$gdfileCountAfter}\n";
     echo "gd1:/13_paperRemoteStorage PDF数:   {$pdfCount}\n";
     echo "gdfile 本次新增数据行数:           {$inserted}\n";
+    echo "gdfile 本次更新fileID数据行数:     {$updated}\n";
     echo "====================================================\n";
 
     // 释放资源
@@ -185,6 +204,7 @@ try {
     $stmtFindPaperIDLower->close();
     $stmtExistsDoiInGdfile->close();
     $stmtExistsFilenameInGdfile->close();
+    $stmtUpdateFileID->close();
     $stmtInsert->close();
     $mysqli->close();
 
