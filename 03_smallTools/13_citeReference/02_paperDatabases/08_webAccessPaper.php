@@ -668,6 +668,7 @@ if ($selectedCategoryID) {
                                 <input type="checkbox" class="select-circle" data-paperid="<?= (int)$paper['paperID'] ?>" data-doi="<?= htmlspecialchars($paper['doi']) ?>">
                                 <span class="citation-count selected-count">已选数：0</span>
                                 <span class="citation-count seq-index">序号：<?= ++$rowSeq ?></span>
+                                <span class="citation-count paperid-index">paperID：<?= (int)$paper['paperID'] ?></span>
                             </div>
                         </div>
                     <?php endforeach; ?>
