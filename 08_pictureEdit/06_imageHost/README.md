@@ -195,6 +195,8 @@ grep  upload_max_filesize  /etc/php/8.1/fpm/php.ini
 
 # grep  post_max_size  /etc/php/7.4/fpm/php.ini
 grep  post_max_size  /etc/php/8.1/fpm/php.ini
+
+grep  memory_limit  /etc/php/8.1/fpm/php.ini
 ```
 
 `upload_max_filesize`和`post_max_size`默认值分别 2M 和 8M
