@@ -190,9 +190,11 @@ client_max_body_size 30M;                                                     # 
 - ubuntu查看`upload_max_filesize`和`post_max_size`参数命令
 
 ```sh
-grep  upload_max_filesize  /etc/php/7.4/fpm/php.ini
+# grep  upload_max_filesize  /etc/php/7.4/fpm/php.ini
+grep  upload_max_filesize  /etc/php/8.1/fpm/php.ini
 
-grep  post_max_size  /etc/php/7.4/fpm/php.ini
+# grep  post_max_size  /etc/php/7.4/fpm/php.ini
+grep  post_max_size  /etc/php/8.1/fpm/php.ini
 ```
 
 `upload_max_filesize`和`post_max_size`默认值分别 2M 和 8M
@@ -209,13 +211,15 @@ upload_max_filesize = 2M
 推荐顺便把php会话的生命周期给改掉
 
 ```sh
-grep  session.gc_maxlifetime  /etc/php/7.4/fpm/php.ini
+# grep  session.gc_maxlifetime  /etc/php/7.4/fpm/php.ini
+grep  session.gc_maxlifetime  /etc/php/8.1/fpm/php.ini
 ```
 
 - **重启 PHP-FPM 服务才能够使上述 `php.ini` 的修改生效**
 
 ```sh
-service php7.4-fpm restart
+# service php7.4-fpm restart
+service php8.1-fpm restart
 ```
 
 🔹 仅重启nginx的web服务是不能够使其生效的
