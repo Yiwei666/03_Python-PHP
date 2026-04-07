@@ -578,6 +578,10 @@ if (!empty($imageName)) {
 
 ## 4. `05_mvImageServer.sh`
 
+1. `inputFile` 指向一个文本文件（`/home/01_html/05_imageTransferName.txt`），其中记录了需要处理的图片文件名列表；
+2. `sourceDirectory` 表示图片当前所在的源目录（`/home/01_html/05_image/01_imageHost/`）；
+3. `destinationDirectory` 表示图片需要被移动到的目标目录（`/home/01_html/05_image/02_imageTransfer/`），脚本后续会依据这些路径完成批量文件迁移操作。
+
 - 环境变量
 
 ```php
