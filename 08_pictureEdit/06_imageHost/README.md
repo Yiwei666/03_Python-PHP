@@ -335,6 +335,16 @@ chown www-data:www-data 05_imageTransferName.txt
 ```
 
 
+3. 文本`05_imageTransferName.txt`内容示例
+
+```
+20231224-213827.png,2023-12-24 22:21:11
+20231226-220526.png,2023-12-29 11:10:50
+20240103-101758.png,2024-01-03 10:54:15
+```
+
+
+
 
 ## 2. `05_imageGallery.php`
 
