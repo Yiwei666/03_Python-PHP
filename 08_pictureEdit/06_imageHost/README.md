@@ -147,7 +147,8 @@ drwxrwxrwx 2 root     root     4096 Dec 29 11:11  02_imageTransfer
 - 权限设置命令
 
 ```
-chmod 777 /home/01_html/02_LAS1109/35_imageHost/
+# chmod 777 /home/01_html/02_LAS1109/35_imageHost/
+chmod 777 /home/01_html/05_image/01_imageHost
 ```
 
 - 图床文件夹相应权限
