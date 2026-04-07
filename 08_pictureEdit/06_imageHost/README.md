@@ -199,15 +199,20 @@ grep  post_max_size  /etc/php/8.1/fpm/php.ini
 grep  memory_limit  /etc/php/8.1/fpm/php.ini
 ```
 
-`upload_max_filesize`和`post_max_size`默认值分别 2M 和 8M
+`upload_max_filesize`和`post_max_size`默认值分别 2M 和 8M，`memory_limit` 默认值为 256M；可以调整为 64，128和256M。
 
 ```ini
 ; Maximum size of POST data that PHP will accept.
 ; http://php.net/post-max-size
 post_max_size = 8M
+
 ; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
 upload_max_filesize = 2M
+
+; Maximum amount of memory a script may consume
+; https://php.net/memory-limit
+memory_limit = 128M
 ```
 
 推荐顺便把php会话的生命周期给改掉
@@ -225,6 +230,7 @@ service php8.1-fpm restart
 ```
 
 🔹 仅重启nginx的web服务是不能够使其生效的
+
 
 ### 5. 上传成功图片预览
 
