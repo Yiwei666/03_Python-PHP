@@ -65,6 +65,11 @@
 08_image_leftRight_navigation_starT.php            # 对服务器中star为1的图片，支持两种切换算法：点赞数排序和默认排序
 
 08_image_rclone_top30.php                          # 从图片数据库中随机选取150张点赞数大于等于29的图片，进行下载
+
+
+# 5. 特殊功能脚本
+08_use-once_update_category_name.php               # 批量规范化并更新 Categories 表中的 category_name 字段，将其前缀统一修改为该记录对应的 id
+
 ```
 
 
