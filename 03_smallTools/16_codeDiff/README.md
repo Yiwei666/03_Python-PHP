@@ -403,6 +403,23 @@ app.listen(PORT,'0.0.0.0', () => {
 
 
 
+### 5. alias
+
+alias 主要涉及 `node.js` 脚本管理
+
+```sh
+alias sv='nohup node /home/01_html/05_nodejs_sigURL/05_video_mysql_checkURL.js > /home/01_html/05_nodejs_sigURL/nohup.out &'
+alias kv='kill $(pgrep -f "05_video_mysql_checkURL.js")'
+alias pmvm='pm2 start  /home/01_html/05_nodejs_sigURL/05_video_mysql_checkURL.js'
+alias pmsp='pm2 start  /home/01_html/06_codeDiff_split/code-diff-app/server.js'
+alias pmun=' pm2 start  /home/01_html/06_codeDiff_unified/code-diff-app/server.js'
+alias pml='pm2 list'
+alias pmt='pm2 monit'
+
+alias scs='nohup node /home/01_html/06_codeDiff_split/code-diff-app/server.js > /home/01_html/06_codeDiff_split/nohup.out &'
+alias scu='nohup node /home/01_html/06_codeDiff_unified/code-diff-app/server.js > /home/01_html/06_codeDiff_unified/nohup.out &'
+```
+
 
 
 
