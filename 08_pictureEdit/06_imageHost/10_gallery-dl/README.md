@@ -18,11 +18,19 @@
 
 ### 1. 创建/激活虚拟环境
 
+- 如果之前创建过 [iopaint_env](https://github.com/Yiwei666/12_blog/blob/main/888/8-008.md) 虚拟环境，可以使用该环境。
+
 ```cmd
 conda env list
 conda activate iopaint_env
 ```
 
+- 也可以重新创建一个虚拟环境 `gallery_env`
+
+```cmd
+conda create -n gallery_env python=3.11 -y
+conda activate gallery_env
+```
 
 ### 2. gallery-dl 安装
 
