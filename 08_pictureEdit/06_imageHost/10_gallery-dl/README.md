@@ -99,7 +99,7 @@ gallery-dl   --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt"   --
 
 
 
-- 指定时间范围（（推荐使用该命令））
+- 指定时间范围（推荐使用该命令）
 
 ```sh
 gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2025, 4, 12) and date < datetime(2025, 5, 29)"   https://twitter.com/username/media
