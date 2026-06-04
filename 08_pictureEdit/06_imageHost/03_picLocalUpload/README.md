@@ -355,6 +355,14 @@ alias lwc='ls -l | grep "^-" | wc -l'
 # rc6_onedrive = 
 alias rsp='rclone size "rc6:cc1-1/01_html/08_x/image/01_imageHost/"'
 alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/  rc6:cc1-1/01_html/08_x/image/01_imageHost/ --transfers=16 &'
+# 追加日志，忽略已存在的文件
+alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/ rc6:cc1-1/01_html/08_x/image/01_imageHost/ --ignore-existing --transfers=16 -P &'
+# 覆盖日志，忽略已存在的文件
+alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/ rc6:cc1-1/01_html/08_x/image/01_imageHost/ --ignore-existing --transfers=16 -P > nohup.out 2>&1 &'
+
+# --one-way 的含义是：只检查源目录中的文件，在目标目录中是否存在并且一致；不检查目标目录里多出来的文件
+alias rck8='rclone check -P /home/01_html/08_x/image/01_imageHost/ rc6:cc1-1/01_html/08_x/image/01_imageHost/ --checkers=8 --one-way'
+
 alias clg='cat  /var/log/nginx/access.log'
 alias tgn='tail -n 50 /var/log/nginx/access.log'
 alias gn='ps aux | grep node'
