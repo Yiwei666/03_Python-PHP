@@ -374,6 +374,10 @@ alias kn='kill $(pgrep -f "08_pic_url_check.js")'
 alias sn='nohup node /home/01_html/08_x_nodejs/08_pic_url_check.js > /home/01_html/08_x_nodejs/nohup.out &'
 alias phd='php /home/01_html/08_image_dislikes_delete.php'
 alias sbp='mysqldump -p image_db > /home/01_html/08_image_backup_$(date +%Y%m%d_%H%M%S).sql'
+alias sbp='mysqldump -p image_db > /home/01_html/08_image_db_backup/08_image_backup_$(date +%Y%m%d_%H%M%S).sql && ls -1 /home/01_html/08_image_db_backup/'
+alias cpbash='cp ~/.bashrc /home/01_html/00_backup/bashrc_backup_$(date +%Y%m%d_%H%M%S) && ls -1 /home/01_html/00_backup'
+alias cpcron='crontab -l > /home/01_html/00_backup/cron_backup_$(date +%Y%m%d_%H%M%S) && ls -1 /home/01_html/00_backup'
+
 ```
 
 
