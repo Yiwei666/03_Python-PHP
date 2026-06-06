@@ -122,6 +122,13 @@ $filePath = '/home/01_html/05_twitter_bigfile/01_url.txt';
 ```
 
 
+# 4. 服务器alias
+
+- rc6:
+
+```sh
+
+```
 
 
 
