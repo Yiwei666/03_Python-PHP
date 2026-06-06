@@ -127,7 +127,52 @@ $filePath = '/home/01_html/05_twitter_bigfile/01_url.txt';
 - rc6:
 
 ```sh
+alias clg='cat  /var/log/nginx/access.log'
+alias tgn='tail -n 50 /var/log/nginx/access.log'
+alias tge='tail -n 50 /var/log/nginx/error.log'
+alias gn='ps aux | grep node'
+alias vb='vi ~/.bashrc'
+alias sb='source ~/.bashrc'
+alias cb='cat ~/.bashrc'
+alias cdh='cd /home/01_html; ls -l'
+alias cjn='cat /usr/local/etc/v2ray/config.json'
+alias cng='cat /etc/nginx/nginx.conf'
+alias tva='tail -n 50  /var/log/v2ray/access.log'
+alias tve='tail -n 50  /var/log/v2ray/error.log'
+alias grcrn='grep CRON /var/log/syslog | tail -n 50'
+alias crip='curl ipinfo.io'
 
+alias lwc='ls -l | grep "^-" | wc -l'
+alias rcv='nohup rclone copy /home/01_html/05_twitter_video/  rc6:az1-1/01_html/05_twitter_video/ --transfers=16 &'
+alias rckv8='rclone check -P /home/01_html/05_twitter_video/  rc6:az1-1/01_html/05_twitter_video/ --checkers=8 --one-way'
+alias rls50='rclone lsf rc6:az1-1/01_html/05_twitter_video/ --files-only --recursive --format "tp" --separator "|" -P 2>/dev/tty | sort -r | head -n 50 | cut -d"|" -f2-'
+alias rsv='rclone size "rc6:az1-1/01_html/05_twitter_video/"'
+alias rcrv='nohup rclone copy --ignore-existing rc6:az1-1/01_html/05_twitter_video /home/01_html/05_twitter_video &'
+alias sbv='mysqldump -p video_db > /home/01_html/052_video_backup_$(date +%Y%m%d_%H%M%S).sql'
+alias phv='php /home/01_html/05_video_dislikes_delete.php'
+
+
+alias sv='nohup node /home/01_html/05_nodejs_sigURL/05_video_mysql_checkURL.js > /home/01_html/05_nodejs_sigURL/nohup.out &'
+alias pmvd=' pm2 start  /home/01_html/05_nodejs_sigURL/05_video_mysql_checkURL.js'
+alias kv='kill $(pgrep -f "05_video_mysql_checkURL.js")'
+alias pmvm='pm2 start  /home/01_html/05_nodejs_sigURL/05_video_mysql_checkURL.js'
+alias pmsp='pm2 start  /home/01_html/06_codeDiff_split/code-diff-app/server.js'
+alias pmun=' pm2 start  /home/01_html/06_codeDiff_unified/code-diff-app/server.js'
+alias pml='pm2 list'
+alias pmt='pm2 monit'
+
+
+# alias phv='php /home/01_html/05_video_dislikes_delete.php'
+alias lwv='echo $(($(ls -l /home/01_html/05_twitter_video/ | wc -l) - 1))'
+alias ffg='bash /home/01_html/05_ffmpeg_tool.sh'
+alias pgf='ps aux | grep 052_ffmpeg_merge.sh'
+alias cdf='cd /home/01_html/05_temp_ffmpeg'
+
+alias scs='nohup node /home/01_html/06_codeDiff_split/code-diff-app/server.js > /home/01_html/06_codeDiff_split/nohup.out &'
+alias scu='nohup node /home/01_html/06_codeDiff_unified/code-diff-app/server.js > /home/01_html/06_codeDiff_unified/nohup.out &'
+
+alias crln='cat ~/.config/rclone/rclone.conf'
+alias vrln='vi ~/.config/rclone/rclone.conf'
 ```
 
 
