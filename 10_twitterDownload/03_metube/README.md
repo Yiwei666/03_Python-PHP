@@ -19,7 +19,11 @@
 
 ```bash
 # docker run -d -p 8081:8081 -v /path/to/downloads:/downloads ghcr.io/alexta69/metube
+# 方式一：访问方式 http://服务器IP:8081，适合临时测试
 docker run -d -p 8081:8081 -v /home/01_html/05_temp_ffmpeg:/downloads ghcr.io/alexta69/metube
+
+# 方式二：仅本机监听，适合结合本地nginx反向代理使用，推荐使用
+docker run -d -p 127.0.0.1:8081:8081 -v /home/01_html/05_temp_ffmpeg:/downloads ghcr.io/alexta69/metube
 ```
 
 :star: 项目地址`metube`：https://github.com/alexta69/metube  
@@ -63,11 +67,13 @@ docker stop <container_name>           # 命令停止正在运行的容器。
 
 2. 使用更新的端口映射重新启动容器：
 
-```bash
+```sh
 docker run -d -p 127.0.0.1:8081:8081 -v /home/01_html/05_temp_ffmpeg:/downloads ghcr.io/alexta69/metube
 ```
 
-这条命令将容器的 8081 端口仅映射到本地环境，外部无法访问。
+> 后台启动一个 MeTube Docker 容器，将容器内的 8081 服务映射到服务器本机 `127.0.0.1:8081`，并将服务器目录 `/home/01_html/05_temp_ffmpeg` 挂载为容器内的 `/downloads` 下载目录。
+> 
+> 这条命令将容器的 8081 端口仅映射到本地环境，外部无法访问。
 
 
 3. nginx反向代理
