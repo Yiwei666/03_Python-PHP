@@ -1053,6 +1053,10 @@ checkApiKey();
    - 后端api接口，支持将网页上 `插入临表 清除临表 复制临表` 三个按钮对应的数据操作写入到 数据库的 `select_paper` 表中。
    - 支持往数据库 `select_paper` 选择表中 插入去重数据（`paperID 和 doi`）、清空表、以及 导出表中已有数据，主要用于管理用户在前端勾选或临时保存的论文列表
 
+新增功能：
+   - `复制临表`功能在原有返回 `paperID、doi、title` 的基础上，新增返回 `encodedDOI` 字段，用于显示和复制 DOI 的 Base32 编码结果。
+   - 该改动仅在复制输出时临时计算编码值，不会修改数据库中的任何数据。
+
 
 1. 接口基础功能
 
@@ -1078,17 +1082,10 @@ checkApiKey();
         - 输出为 JSON 数组。
 
 
-
 3. 错误与异常处理
-
     - 如果 action 缺失或不支持，返回错误信息。
-    
     - SQL 执行失败时，会返回数据库错误信息。
-    
     - JSON 解析失败或数据无效时，返回错误提示。
-
-
-
 
 
 ### 2. 环境变量
@@ -1096,13 +1093,11 @@ checkApiKey();
 ```php
 require_once '08_api_auth.php';
 require_once '08_db_config.php';
+require_once '08_web_Base32.php';
 
 // 认证
 checkApiKey();
 ```
-
-
-
 
 
 
