@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once '08_api_auth.php';
 require_once '08_db_config.php';
+require_once '08_web_Base32.php';
 
 // 认证
 checkApiKey();
@@ -110,7 +111,12 @@ if ($action === 'copy') {
     }
     $rows = [];
     while ($row = $res->fetch_assoc()) {
-        $rows[] = ['paperID' => (int)$row['paperID'], 'doi' => $row['doi'], 'title' => $row['title']]; // [MODIFIED]
+        $rows[] = [
+            'paperID' => (int)$row['paperID'],
+            'doi' => $row['doi'],
+            'title' => $row['title'],
+            'encodedDOI' => Base32::encode($row['doi'])
+        ];
     }
     $res->close();
     echo json_encode(['success' => true, 'data' => $rows], JSON_UNESCAPED_UNICODE);
