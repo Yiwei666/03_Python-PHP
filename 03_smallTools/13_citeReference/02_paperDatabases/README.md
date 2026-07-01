@@ -1574,6 +1574,42 @@ b. 解决方案
 2. 上述需求的实现可能涉及到对 `08_webAccessPaper.php` 代码的修改。对于上述相关代码修改，尽量通过增加/删减/调整少量代码行来实现。其余部分代码行不要变动，哪怕是增加空格或者修改注释都不行，确保所有的代码修改均与上述需求的实现有关，因为无关的改动会增加我review代码的工作量。输出修改后的完整 `08_webAccessPaper.php`。
 
 
+💡 **21 新增思路**
+
+`08_webAccessPaper.php` 页面左侧显示的分类名，右侧是相应分类名下显示的所有论文信息，右侧上面显示了 `工具 全部下载 全部删除 插入临表 清除临表 复制临表` 这些按钮，现在需要新增如下功能：
+
+1. 现在需要新增一个按钮`复制类表`，样式和间距需要与这些按钮一致，点击该按钮时，能够将属于当前分类下的所有论文的 paperID、doi、title以及对doi号进行base32编码后的字符串进行显示和复制，功能有点类似`复制临表`按钮，但是针对的论文对象有所区别。示例如下：
+
+```jsonc
+[
+  {
+    "paperID": 4026,
+    "doi": "10.1021/cr050979c",
+    "title": "Lanthanides and Actinides in Ionic Liquids",
+    "encodedDOI": "GEYC4MJQGIYS6Y3SGA2TAOJXHFRQ===="
+  },
+  {
+    "paperID": 4027,
+    "doi": "10.1007/s00216-010-4478-x",
+    "title": "Liquid–liquid extraction of actinides, lanthanides, and fission products by use of ionic liquids: from discovery to understanding",
+    "encodedDOI": "GEYC4MJQGA3S64ZQGAZDCNRNGAYTALJUGQ3TQLLY"
+  },
+  {
+    "paperID": 4028,
+    "doi": "10.1016/b978-1-78242-212-9.00011-3",
+    "title": "Minor actinide separation in the reprocessing of spent nuclear fuels",
+    "encodedDOI": "GEYC4MJQGE3C6YRZG44C2MJNG44DENBSFUZDCMRNHEXDAMBQGEYS2MY="
+  },
+  ......
+]
+```
+
+2. 请使用尽可能少的代码改动来实现上述功能，同时兼顾一定的性能。只需要告诉我怎么修改代码即可。
+
+输出显示修改后的完整 `08_webAccessPaper.php` 代码，尽量不要改动其他与本功能实现无关的代码，哪怕是注释，以便减少我审查代码的工作量
+
+新增功能特性概括：新增“复制类表”按钮，可一键复制当前分类下全部论文的 `paperID、doi、title 和 Base32 编码后的 encodedDOI`。该功能复用页面已加载的论文数据，避免额外数据库请求，并保持按钮样式与现有工具按钮一致。
+
 
 ### 2. 模块、函数和后端接口
 
