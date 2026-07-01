@@ -46,6 +46,7 @@
 08_server_update_paper_selection.php             # 根据数据库中用户在网页选择的论文doi，在谷歌云盘的不同目录下进行复制、删除、同步操作，使得用户选择的论文出现在云盘指定目录
 08_server_sups_scheduler.sh                      # 调度脚本，确保 `08_server_update_paper_selection.php` 上次执行结束和下次开始执行时间间隔为 8 秒
 08_server_update_gdrive_fileID.php               # 结合rclone扫描`Google Drive`论文目录，解码pdf文件名中的doi并获取papers表中的paperID，并将云端fileID与论文文件名同步更新至gdfile表
+08_server_update_latestN.php                     # 用于定时维护 `0 latestN` 分类标签，使其始终只包含 paperID 最新的 N 篇论文
 
 
 # 5. 客户端脚本
@@ -2745,12 +2746,68 @@ rclone lsjson gd1:/13_paperUserSelect --recursive
 rclone lsf gd1:/13_paperRemoteStorage --recursive --files-only --include "*.pdf" | wc -l
 ```
 
+## 8. `08_server_update_latestN.php`
 
+功能：用于定时维护 `0 latestN` 分类标签，使其始终只包含 `paperID` 最新的 N 篇论文。
+
+
+### 1. 编程思路
+
+💡 **1. 初始思路**
+
+编写一个 `08_server_update_latestN.php` 脚本实现如下功能：
+
+1. 首先判断数据 `Categories` 表中是否存在 `0 latestN` 分类标签，如果不存在，给出提示并结束程序。
+2. 如果存在，则将最新写入的N条论文分类到该分类标签下，对N采用变量赋值管理，例如设置为200。对这N篇论文新增分类属性过程不改变其原有的各种分类所属。
+3. 注意，上述分类写入过程，`0 latestN`分类标签下仅允许有最新写入的N条论文，不允许有其他的论文。
+4. 给出满足上述需求的 `08_server_update_latestN.php` 代码，显示代码即可，不需要生成脚本文件。
+
+我会在服务器中设置一个cron定时任务，每分钟执行一次下述脚本，使得上述分类下能够动态更新
+
+```sh
+/usr/bin/php  /home/01_html/08_server_update_latestN.php
+```
+
+
+### 2. 环境变量
+
+1. 初始化参数
+
+```php
+require_once __DIR__ . '/08_db_config.php';
+
+$latestN = 200;
+$targetCategoryName = '0 latestN';
+```
+注意：通过修改`$latestN`可以调整`0 latestN`标签下的文献数量，默认是200条；另外，`0 latestN`标签名是硬编码写死的，标签名对应的ID可以随部署环境的变化改变。
+
+
+2. 定时脚本
+
+```sh
+# 每分钟更新一次“0 latestN”分类，使其仅包含 paperID 最新的 N 篇论文
+* * * * * /usr/bin/php /home/01_html/08_server_update_latestN.php >/dev/null 2>&1
+```
+
+
+**3. 总结**
+
+这个任务一般不会干扰其他分类或论文数据，前提是脚本逻辑只操作 `paperCategories` 表中 `0 latestN` 对应的那个 `categoryID`。它做的事情是：
+
+1. 查找 `categories.category_name = '0 latestN'` 对应的 `categoryID`。
+2. 找出 `papers` 表里 `paperID` 最大的最新 N 条论文。
+3. 只删除 `paperCategories` 中属于 `0 latestN` 但不在最新 N 条里的关联。
+4. 给最新 N 条论文补上 `0 latestN` 分类。
+5. 不修改 `papers` 表。
+6. 不删除论文。
+7. 不删除其他分类。
+8. 不改变论文原有的其他分类。
+
+所以它和 `0 All papers`、人工添加的主题分类、评分、状态码、PDF 文件同步等功能原则上没有交叉影响。
 
 
 
 # 7. tampermonkey 脚本
-
 
 ## 1. `08_tm_paperManagement.js`
 
