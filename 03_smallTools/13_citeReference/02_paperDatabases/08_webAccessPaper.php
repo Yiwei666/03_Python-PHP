@@ -211,7 +211,7 @@ if ($selectedCategoryID) {
             cursor: default;
         }
         /* “工具”按钮、以及新增的“全部下载”和“全部删除”按钮样式一致 */
-        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn {
+        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -506,6 +506,7 @@ if ($selectedCategoryID) {
                 <button id="insertTmpBtn" type="button">插入临表</button>
                 <button id="clearTmpBtn" type="button">清除临表</button>
                 <button id="copyTmpBtn" type="button">复制临表</button>
+                <button id="copyCatBtn" type="button">复制类表</button>
             <?php endif; ?>
         </h2>
 
@@ -558,11 +559,14 @@ if ($selectedCategoryID) {
                     <?php foreach ($paperRows as $paper): ?>
                         <?php 
                             // 收集信息到 $papersData 数组中
+                            // 为了生成“查看”按钮和“复制类表”，需要对 doi 进行 Base32 编码
+                            $encodedDOI = Base32::encode($paper['doi']);
                             $papersData[] = [
                                 'paperID' => $paper['paperID'],
                                 'doi' => $paper['doi'],
                                 'status' => $paper['status'],
-                                'title' => $paper['title']  // [NEW] 前端批量提交时需要携带 title
+                                'title' => $paper['title'],  // [NEW] 前端批量提交时需要携带 title
+                                'encodedDOI' => $encodedDOI
                             ];
 
                             // ========== [MODIFIED] 使用批量映射替代逐条查询 ==========
@@ -607,9 +611,6 @@ if ($selectedCategoryID) {
                                 </button>
                                 
                                 <?php 
-                                    // 为了生成“查看”按钮，需要对 doi 进行 Base32 编码
-                                    $encodedDOI = Base32::encode($paper['doi']);
-
                                     // 根据 status 显示不同提示或按钮
                                     switch($paper['status']) {
                                         case 'CL':
@@ -1201,6 +1202,7 @@ if ($selectedCategoryID) {
         const insertTmpBtn = document.getElementById('insertTmpBtn');
         const clearTmpBtn  = document.getElementById('clearTmpBtn');
         const copyTmpBtn   = document.getElementById('copyTmpBtn');
+        const copyCatBtn   = document.getElementById('copyCatBtn');
 
         if (insertTmpBtn) {
             insertTmpBtn.addEventListener('click', () => {
@@ -1297,6 +1299,32 @@ if ($selectedCategoryID) {
                 .catch(err => {
                     console.error(err);
                     alert('复制时出现错误。');
+                });
+            });
+        }
+
+        if (copyCatBtn) {
+            copyCatBtn.addEventListener('click', () => {
+                const items = (papersData || [])
+                    .filter(p => p && p.doi)
+                    .map(p => ({
+                        paperID: parseInt(p.paperID, 10),
+                        doi: p.doi,
+                        title: p.title ?? null,
+                        encodedDOI: p.encodedDOI ?? ''
+                    }));
+
+                if (!items.length) {
+                    alert('当前分类下没有可复制的论文数据');
+                    return;
+                }
+
+                const txt = JSON.stringify(items, null, 2);
+                navigator.clipboard.writeText(txt).then(() => {
+                    alert(txt);
+                }).catch(err => {
+                    console.error(err);
+                    alert(txt);
                 });
             });
         }
