@@ -211,7 +211,7 @@ if ($selectedCategoryID) {
             cursor: default;
         }
         /* “工具”按钮、以及新增的“全部下载”和“全部删除”按钮样式一致 */
-        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn {
+        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn, #copySelectedBtn {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -507,6 +507,7 @@ if ($selectedCategoryID) {
                 <button id="clearTmpBtn" type="button">清除临表</button>
                 <button id="copyTmpBtn" type="button">复制临表</button>
                 <button id="copyCatBtn" type="button">复制类表</button>
+                <button id="copySelectedBtn" type="button">复制已选</button>
             <?php endif; ?>
         </h2>
 
@@ -772,6 +773,11 @@ if ($selectedCategoryID) {
         const idToTitle = (() => {
             const map = {};
             (papersData || []).forEach(p => { map[String(p.paperID)] = p.title; });
+            return map;
+        })();
+        const idToPaper = (() => {
+            const map = {};
+            (papersData || []).forEach(p => { map[String(p.paperID)] = p; });
             return map;
         })();
 
@@ -1203,6 +1209,7 @@ if ($selectedCategoryID) {
         const clearTmpBtn  = document.getElementById('clearTmpBtn');
         const copyTmpBtn   = document.getElementById('copyTmpBtn');
         const copyCatBtn   = document.getElementById('copyCatBtn');
+        const copySelectedBtn = document.getElementById('copySelectedBtn');
 
         if (insertTmpBtn) {
             insertTmpBtn.addEventListener('click', () => {
@@ -1316,6 +1323,34 @@ if ($selectedCategoryID) {
 
                 if (!items.length) {
                     alert('当前分类下没有可复制的论文数据');
+                    return;
+                }
+
+                const txt = JSON.stringify(items, null, 2);
+                navigator.clipboard.writeText(txt).then(() => {
+                    alert(txt);
+                }).catch(err => {
+                    console.error(err);
+                    alert(txt);
+                });
+            });
+        }
+
+        if (copySelectedBtn) {
+            copySelectedBtn.addEventListener('click', () => {
+                const uniqueIDs = Array.from(new Set(user_select_tmp));
+                const items = uniqueIDs
+                    .map(id => idToPaper[String(id)])
+                    .filter(p => p && p.doi)
+                    .map(p => ({
+                        paperID: parseInt(p.paperID, 10),
+                        doi: p.doi,
+                        title: p.title ?? null,
+                        encodedDOI: p.encodedDOI ?? ''
+                    }));
+
+                if (!items.length) {
+                    alert('请先勾选至少一篇论文。');
                     return;
                 }
 
