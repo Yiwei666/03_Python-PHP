@@ -90,6 +90,9 @@ $__ALL_DOIS = getAllDois($mysqli);
         .tag-btn {
             background-color: #2196F3; /* 蓝色 */
         }
+        .go-paper-btn {
+            background-color: #607D8B;
+        }
         /* ========== 修改分类弹窗的样式 START ========== */
         .category-selection {
             position: fixed;
@@ -490,10 +493,21 @@ function displayResults(items) {
             // 调用标签操作
             handleTagButtonClick();
         });
+        const goPaperBtn = document.createElement('button');
+        goPaperBtn.className = 'go-paper-btn';
+        goPaperBtn.textContent = '前往论文';
+        goPaperBtn.addEventListener('click', () => {
+            if (!doi || doi === '未找到 DOI') {
+                alert('当前 DOI 不可用，无法前往论文页面。');
+                return;
+            }
+            window.open(`https://doi.org/${doi}`, '_blank');
+        });
 
         // 按顺序加入：复制列 + 标签按钮
         buttonsDiv.appendChild(copyCol);
         buttonsDiv.appendChild(tagBtn);
+        buttonsDiv.appendChild(goPaperBtn);
 
         card.appendChild(buttonsDiv);
         container.appendChild(card);
