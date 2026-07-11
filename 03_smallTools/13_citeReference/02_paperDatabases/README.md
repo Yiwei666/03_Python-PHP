@@ -2007,6 +2007,69 @@ class Base32
 
 
 
+✨ **功能概述**
+
+
+`08_web_crossRef_query.php` 这个脚本实现的是一个 **网页版 CrossRef 论文检索、结果展示、DOI 编码、论文入库和分类管理页面**。
+
+它的核心功能如下：
+
+1. **支持两种 CrossRef 检索方式**
+
+   - `Title` 模式：调用 `https://api.crossref.org/works?query=...&rows=20`，返回最多 20 条候选论文。
+
+   - `DOI` 模式：调用 `https://api.crossref.org/works/{DOI}`，返回单条 DOI 对应论文。
+
+2. **展示 CrossRef 返回的论文元数据**
+
+   每条结果会显示 DOI、DOI Base32、标题、期刊名、出版年、卷号、期号、页码、文章号、被引数、出版商、ISSN、完整作者、缩写作者等信息。
+
+3. **生成并复制 DOI 的 Base32 编码**
+
+   页面中每条结果下方有 `复制 Base32` 按钮，使用脚本内的 `toBase32()` 函数把 DOI 转成 RFC 4648 Base32 编码，方便用作 PDF 文件名。
+
+4. **检测 DOI 是否已存在于数据库**
+
+   脚本开头直接引入：
+
+   - `08_db_config.php`（line 1）
+   - `08_category_operations.php`（line 1）
+
+   然后通过 `getAllDois($mysqli)` 获取数据库已有 DOI，注入到前端 `ALL_DOIS`。
+
+   在 DOI 检索模式下，会判断用户输入的 DOI 字符串是否包含数据库中的某个 DOI，并显示：
+
+   - 红色 `！！！已存在doi号`
+   - 或绿色 `不存在doi，待写入`
+
+5. **点击“标签”按钮时写入论文并管理分类**
+
+   点击某条结果的 `标签` 按钮后，会先把该条论文元数据提交给后端：
+
+   - `08_tm_add_paper.php`
+
+   然后获取所有分类：
+
+   - `08_tm_get_categories.php`
+
+   再获取当前论文已有分类：
+
+   - `08_tm_get_paper_categories.php`
+
+   最后弹出分类选择窗口，用户勾选分类并保存时，调用：
+
+   - `08_tm_update_paper_categories.php`
+
+6. **分类弹窗支持 5 列显示**
+
+   分类列表用 CSS Grid 显示为 5 列，弹窗宽度是页面的 80%，高度超出时可以纵向滚动。
+
+7. **已勾选分类标签变蓝**
+
+   CSS 里有规则：勾选的 checkbox 后面的 label 字体颜色变成 `#1a0dab`，方便区分已有分类和新勾选分类。
+
+
+   
 ### 1. 编程思路
 
 💡 **1. 初始思路**
