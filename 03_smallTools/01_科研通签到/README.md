@@ -11,11 +11,31 @@
 
 # 3. 环境配置
 
-```py
+1. 服务器安装miniconda，使其具备运行python脚本的环境。
 
+2. 从浏览器中获取相应网站的cookies信息。
+
+3. 并转换成json格式，转换脚本可参考 `03_smallTools/02_v2ex签到/14_cookies_json.php`。
+
+4. 修改 `01_ablesci_spyder.py` 脚本中的cookie部分。
+
+```py
+cookies = {
+    'Hm_lvt_21ea3daf4a17e94a98a483d3d810f41a': '1687245271',
+    'advanced-frontend': '3fmk52h030e4g1tv1cqu8chbau'
+    ...
+}
+```
+
+5. 设置定时脚本
+
+```sh
+59 7 * * * /home/00_software/01_Anaconda/bin/python /home/01_html/01_ablesci_spyder.py
 ```
 
 
+
+# 其他
 
 ### 注意事项
 
@@ -29,6 +49,7 @@
 
 
 ### 设置定时任务
+
 如果你想在每天的6:00至8:00之间的随机某一时刻执行指定的命令，你可以使用一些额外的脚本和命令来实现。下面是一个示例的解决方案：
 
 创建一个用于生成随机时间的脚本文件。在终端中执行以下命令创建一个名为random_time.sh的脚本文件：
