@@ -4,7 +4,7 @@
 
 # 2. 文件结构
 
-```py
+```sh
 01_ablesci_spyder.py            # 定时签到脚本
 ```
 
