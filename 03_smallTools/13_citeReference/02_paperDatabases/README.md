@@ -2222,7 +2222,19 @@ article-number  "150788"
 2. 注意，使用尽量少的代码修改实现上述需求，以便减少我review代码的工作量。输出修改后的代码。不要修改与这个功能无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
 
 
+💡 **7.2 新增思路**
 
+修改 `08_web_crossRef_query.php` 代码，实现以下功能：
+
+1. 无论是 title 检索模式还是 doi 检索模式，每条论文检索结果下面都新增一个 `复制doi` 按钮，样式和布局需要与其他按钮一致。
+2. title 检索模式的每条检索结果也新增支持 `检测 DOI 是否已存在于数据库`，如果存在，当条论文的检索结果字体均呈现红色（使用一种美观的红色），不需要显示`！！！已存在doi号`和`不存在doi，待写入`这些，因为字体颜色足以区分是否存在于数据库。
+3. doi 检索模式结果中如果存在于数据库， 当条论文的检索结果字体也需要呈现红色。
+4. 无论是 title 检索模式还是 doi 检索模式，如果doi已经存在于数据库中，则 `复制doi` 按钮旁边还需要新增显示一个 `预览` 按钮，其功能类似于 `08_webAccessPaper.php` 脚本中的 `预览` 按钮，点击后会在新标签页打开谷歌云盘中的pdf文件预览链接，如`https://drive.google.com/file/d/1dw3JAzYahB64tghoF-aILdkGL7u80zdF/view`，可以参考`08_webAccessPaper.php` 脚本中的相关实现。`预览` 按钮要和  `复制base32按钮` 、 `标签` 、`前往论文` 、`复制doi` 等按钮风格一致。
+5. 无论是 title 检索模式还是 doi 检索模式结果中，用户点击任意的 `复制base32按钮` 、 `标签` 、`前往论文` 、`复制doi`、`预览`等按钮（适用于设计的所有按钮，注意兼容未来可能还会新增的其他按钮），按钮中的字体颜色均需要改变（改变后的颜色要美观、具有一定对比度），分辨用户识别点击了哪些按钮。
+
+注意，使用尽量少的代码修改实现上述需求，以便减少我review代码的工作量。输出修改后的代码。
+
+不要修改与这个功能无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
 
 
 
@@ -2280,6 +2292,28 @@ https://api.crossref.org/works/{DOI}?mailto=your-email@example.com
 https://api.crossref.org/works/10.1038/nature12373?mailto=xiaoming@example.com
 ```
 
+
+4. `预览`按钮需要调用的函数接口`08_tm_get_gdfile_id.php`以及要打开的谷歌云盘链接
+
+```js
+function previewGdfile(doi) {
+    fetch('08_tm_get_gdfile_id.php?doi=' + encodeURIComponent(doi), {
+        headers: { 'X-Api-Key': API_KEY }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success && data.fileID) {
+            window.open('https://drive.google.com/file/d/' + encodeURIComponent(data.fileID) + '/view', '_blank');
+        } else {
+            alert(data.message || '未找到该论文对应的 fileID。');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('请求 fileID 失败。');
+    });
+}
+```
 
 
 # 6. 服务器端脚本
