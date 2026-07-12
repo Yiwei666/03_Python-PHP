@@ -93,6 +93,18 @@ $__ALL_DOIS = getAllDois($mysqli);
         .go-paper-btn {
             background-color: #607D8B;
         }
+        .copy-doi-btn {
+            background-color: #9C27B0;
+        }
+        .preview-btn {
+            background-color: #795548;
+        }
+        .item-card.doi-exists, .item-card.doi-exists .item-header {
+            color: #c62828;
+        }
+        .item-buttons button.clicked-btn {
+            color: #fff59d;
+        }
         /* ========== 修改分类弹窗的样式 START ========== */
         .category-selection {
             position: fixed;
@@ -395,10 +407,12 @@ function displayResults(items) {
         if (doi && doi !== '未找到 DOI') {
             doiBase32 = toBase32(doi);
         }
+        const exist = checkDOIExistence(doi);
 
         // 构造 item-card
         const card = document.createElement('div');
         card.className = 'item-card';
+        if (exist) card.classList.add('doi-exists');
 
         // 标题区域
         const headerDiv = document.createElement('div');
@@ -455,15 +469,6 @@ function displayResults(items) {
         });
         copyCol.appendChild(copyBtn);
 
-        // [NEW] 显示“是否已存在 DOI”提示（仅在 DOI 检索模式下）
-        if (CURRENT_SEARCH_MODE === 'doi') {
-            const exist = checkDOIExistence(CURRENT_QUERY);
-            const msg = document.createElement('div');
-            msg.className = 'doi-presence-msg ' + (exist ? 'exist' : 'not-exist');
-            msg.textContent = exist ? '！！！已存在doi号' : '不存在doi，待写入';
-            copyCol.appendChild(msg);
-        }
-
         // 标签 按钮
         const tagBtn = document.createElement('button');
         tagBtn.className = 'tag-btn';
@@ -503,11 +508,29 @@ function displayResults(items) {
             }
             window.open(`https://doi.org/${doi}`, '_blank');
         });
+        const copyDoiBtn = document.createElement('button');
+        copyDoiBtn.className = 'copy-doi-btn';
+        copyDoiBtn.textContent = '复制 DOI';
+        copyDoiBtn.addEventListener('click', () => {
+            if (!doi || doi === '未找到 DOI') {
+                alert('当前 DOI 不可用，无法复制 DOI。');
+                return;
+            }
+            copyToClipboard(doi)
+                .then(() => alert('DOI 已复制到剪贴板！'))
+                .catch(e => console.error('复制失败:', e));
+        });
+        const previewBtn = document.createElement('button');
+        previewBtn.className = 'preview-btn';
+        previewBtn.textContent = '预览';
+        previewBtn.addEventListener('click', () => previewGdfile(doi));
 
         // 按顺序加入：复制列 + 标签按钮
         buttonsDiv.appendChild(copyCol);
         buttonsDiv.appendChild(tagBtn);
         buttonsDiv.appendChild(goPaperBtn);
+        buttonsDiv.appendChild(copyDoiBtn);
+        if (exist) buttonsDiv.appendChild(previewBtn);
 
         card.appendChild(buttonsDiv);
         container.appendChild(card);
@@ -723,6 +746,29 @@ function updatePaperCategories(doi, categoryIDs) {
             }
         })
         .catch(err => reject(err));
+    });
+}
+
+document.getElementById('results-container').addEventListener('click', function(e) {
+    const btn = e.target.closest('.item-buttons button');
+    if (btn) btn.classList.add('clicked-btn');
+});
+
+function previewGdfile(doi) {
+    fetch('08_tm_get_gdfile_id.php?doi=' + encodeURIComponent(doi), {
+        headers: { 'X-Api-Key': API_KEY }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success && data.fileID) {
+            window.open('https://drive.google.com/file/d/' + encodeURIComponent(data.fileID) + '/view', '_blank');
+        } else {
+            alert(data.message || '未找到该论文对应的 fileID。');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('请求 fileID 失败。');
     });
 }
 
