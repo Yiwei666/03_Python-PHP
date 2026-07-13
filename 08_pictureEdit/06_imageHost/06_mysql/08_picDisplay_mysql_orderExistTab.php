@@ -112,6 +112,7 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             max-width: 1700px;
         }
         .image-container {
+            position: relative;
             width: 400px;
             height: 400px;
             display: flex;
@@ -126,6 +127,14 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             max-width: 100%;
             max-height: 80%;
             margin-bottom: 10px;
+        }
+        .image-categories {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: blue;
         }
         .interaction-container {
             display: flex;
@@ -295,6 +304,9 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
     <?php foreach ($imagesToDisplay as $image): ?>
         <div class="image-container">
             <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>" class="image" alt="Image" loading="lazy">
+            <div class="image-categories">
+                <?php echo htmlspecialchars(implode(", ", array_map(function($c) { return $c['category_name']; }, getCategoriesOfImage($image['id']))), ENT_QUOTES, 'UTF-8'); ?>
+            </div>
             <div class="interaction-container">
                 <button onclick="updateLikes(<?php echo $image['id']; ?>, 'like')">👍</button>
                 <span id="like-<?php echo $image['id']; ?>"><?php echo $image['likes']; ?></span>
