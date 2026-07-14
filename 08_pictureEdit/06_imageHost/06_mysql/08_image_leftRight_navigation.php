@@ -370,7 +370,9 @@ $categoriesText = implode(", ", $imageCategoryNames);
         
         <!-- 右上角显示当前图片所属分类 -->
         <div class="image-categories">
-            <?php echo htmlspecialchars($categoriesText, ENT_QUOTES, 'UTF-8'); ?>
+            <?php foreach ($imageCategories as $cat): ?>
+                <a href="08_picDisplay_mysql_orderExistTab.php?page=1&category=<?php echo $cat['id']; ?>" target="_blank"><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></a>
+            <?php endforeach; ?>
         </div>
 
         <div class="interaction-container">
