@@ -1964,9 +1964,21 @@ fetch('08_image_management.php', {
 不要修改与这个功能无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
 
 
+💡**2. 新增思路**
+
+访问 `08_picDisplay_mysql_orderExistTab.php` 这个页面时，点击左侧`分类`按钮，会显示所有的分类标签，点击相应分类标签，右侧会显示当前分类下的图片。图片分为若干页，每页显示固定数量的图片（每张图片右上角会显示图片所属的分类，图片下方会显示5个图标，对应5种操作），点击 🔁 图标，会跳转`08_image_leftRight_navigation.php`显示相应的图片，图片的右上角会显示当前图片所属的分类。现在我的需求如下：
+1. 无论是`08_picDisplay_mysql_orderExistTab.php`，还是`08_image_leftRight_navigation.php`这个脚本显示的图片，点击图片右上角的分类标签时，在新的标签页打开打开相应标签下的图片，效果等同于在`08_picDisplay_mysql_orderExistTab.php` 这个页面点击左侧`分类`按钮下相应分类标签所加载的页面，目的是为了用户能够快速访问到相应分类标签下的图片。
+2. `08_picDisplay_mysql_orderExistTab.php` 这个页面显示的每张图片下面，新增一个分类管理按钮 🎨，类似于 `08_image_leftRight_navigation.php` 页面中的 🎨 这个按钮功能，点击后用户可以给相应图片添加分类，不用每次都在 `08_image_leftRight_navigation.php` 页面下添加或者修改图片所属分类，提高效率。相关实现可以参考已有的相关功能代码。
+
+注意，使用尽量少的代码修改实现上述需求，以便减少我review代码的工作量。输出修改后的代码。
+
+不要修改与这个功能无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
+
 
 
 ### 3. 环境变量
+
+1. 基本模块和参数设置
 
 ```php
 $key = 'singin-key-1'; // 应与加密时使用的密钥相同
@@ -2002,10 +2014,37 @@ fetch('08_db_toggle_star.php', {
 ```
 
 注意：
-
 - 虽然本脚本中调用了`08_db_sync_images.php`模块将新图片信息插入到数据库中，但没有调用`08_db_image_status.php`模块，因此新插入图片的`image_exists`默认值仍然为0，页面上不会显示新插入的图片。
 - 需要在后台手动运行 `08_image_dislikes_delete.php` 脚本完成新图片状态写入，该脚本调用了`08_db_image_status.php`模块。
 - 没有在web脚本调用`08_db_image_status.php`模块，主要是考虑到尽量减少页面加载时间。理论上来说，`08_db_image_status.php`模块应当仅在后台手动运行的脚本中调用，避免错误上传的图片污染mysql数据库。
+
+
+
+2. 调用`08_image_web_category.php`和`08_picDisplay_mysql_orderExistTab.php`，实现导航页面进行分类，以及点击分类标签跳转相应分类页面
+
+```js
+function openCategoryWindow(imageId) {
+    fetch('08_image_web_category.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=getCategoriesForImage&imageId=' + imageId
+    })
+
+
+fetch('08_image_web_category.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'action=setImageCategories'
+        + '&imageId=' + imageId
+        + '&categories=' + encodeURIComponent(JSON.stringify(selected))
+})
+
+
+<?php foreach (getCategoriesOfImage($image['id']) as $cat): ?>
+    <a href="08_picDisplay_mysql_orderExistTab.php?page=1&category=<?php echo $cat['id']; ?>" target="_blank"><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></a>
+<?php endforeach; ?>
+```
+
 
 
 ### 4. 模块调用方法
