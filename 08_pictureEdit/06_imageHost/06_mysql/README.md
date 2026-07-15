@@ -648,6 +648,11 @@ $dir5 = str_replace("/home/01_html", "", "/home/01_html/08_x/image/01_imageHost"
 // 更换脚本名 08_image_leftRight_navigation.php
 <button class="arrow arrow-left" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$prevIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">←</button>
 <button class="arrow arrow-right" onclick="window.location.href='08_image_leftRight_navigation.php?id=<?php echo $validImages[$nextIndex]['id']; ?>&sort=<?php echo $sortType; ?>'">→</button>
+
+// 点击图片右上角分类标签，实现相应分类页面的跳转
+<?php foreach ($imageCategories as $cat): ?>
+    <a href="08_picDisplay_mysql_orderExistTab.php?page=1&category=<?php echo $cat['id']; ?>" target="_blank"><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></a>
+<?php endforeach; ?>
 ```
 
 
