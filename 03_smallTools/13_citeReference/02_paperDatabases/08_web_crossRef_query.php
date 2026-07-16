@@ -90,6 +90,9 @@ $__ALL_DOIS = getAllDois($mysqli);
         .tag-btn {
             background-color: #2196F3; /* 蓝色 */
         }
+        .category-btn {
+            background-color: #2196F3;
+        }
         .go-paper-btn {
             background-color: #607D8B;
         }
@@ -276,6 +279,7 @@ const loadingOverlay = document.getElementById('loading-overlay');
 // [NEW] 当前检索模式与原始查询字符串（用于 DOI 存在性判断）
 let CURRENT_SEARCH_MODE = 'title';
 let CURRENT_QUERY = '';
+let CATEGORY_ORDER_MODE = '';
 
 // 关闭分类弹窗
 closeCatBtn.addEventListener('click', () => {
@@ -496,7 +500,15 @@ function displayResults(items) {
                 citationCount
             };
             // 调用标签操作
-            handleTagButtonClick();
+            handleTagButtonClick(CATEGORY_ORDER_MODE);
+        });
+        const categoryBtn = document.createElement('button');
+        categoryBtn.className = 'category-btn';
+        categoryBtn.textContent = '分类';
+        categoryBtn.addEventListener('click', () => {
+            CATEGORY_ORDER_MODE = 'paperID_desc';
+            tagBtn.click();
+            CATEGORY_ORDER_MODE = '';
         });
         const goPaperBtn = document.createElement('button');
         goPaperBtn.className = 'go-paper-btn';
@@ -528,6 +540,7 @@ function displayResults(items) {
         // 按顺序加入：复制列 + 标签按钮
         buttonsDiv.appendChild(copyCol);
         buttonsDiv.appendChild(tagBtn);
+        buttonsDiv.appendChild(categoryBtn);
         buttonsDiv.appendChild(goPaperBtn);
         buttonsDiv.appendChild(copyDoiBtn);
         if (exist) buttonsDiv.appendChild(previewBtn);
@@ -540,13 +553,13 @@ function displayResults(items) {
 // ======================
 //   标签按钮的逻辑
 // ======================
-function handleTagButtonClick() {
+function handleTagButtonClick(categoryOrder = '') {
     // 先将论文信息写入数据库
     sendPaperData(activeItemData)
         .then(response => {
             if (response.success) {
                 // 获取所有分类
-                return fetchCategories();
+                return fetchCategories(categoryOrder);
             } else {
                 throw new Error(response.message || '添加论文失败。');
             }
@@ -684,9 +697,9 @@ function sendPaperData(data) {
 }
 
 // 获取所有分类
-function fetchCategories() {
+function fetchCategories(categoryOrder = '') {
     return new Promise((resolve, reject) => {
-        fetch(API_BASE_URL + '08_tm_get_categories.php', {
+        fetch(API_BASE_URL + '08_tm_get_categories.php' + (categoryOrder ? `?order=${encodeURIComponent(categoryOrder)}` : ''), {
             headers: {
                 // [MODIFIED] 添加 X-Api-Key
                 'X-Api-Key': API_KEY
