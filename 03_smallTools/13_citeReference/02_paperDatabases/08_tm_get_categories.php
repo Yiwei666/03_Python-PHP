@@ -14,7 +14,7 @@ require_once '08_category_operations.php';
 checkApiKey();
 
 // 获取所有分类
-$categories = getCategories($mysqli);
+$categories = (isset($_GET['order']) && $_GET['order'] === 'paperID_desc') ? getCategoriesByRecentPaperUsage($mysqli) : getCategories($mysqli);
 
 if (is_array($categories)) {
     echo json_encode(['success' => true, 'categories' => $categories]);
