@@ -15,6 +15,21 @@ function getCategories($mysqli) {
     }
 }
 
+function getCategoriesByRecentPaperUsage($mysqli) {
+    $query = "SELECT c.* FROM categories c LEFT JOIN (SELECT categoryID, MAX(paperID) AS maxPaperID FROM paperCategories GROUP BY categoryID) x ON c.categoryID = x.categoryID ORDER BY x.maxPaperID IS NULL ASC, x.maxPaperID DESC, c.categoryID DESC";
+    $result = $mysqli->query($query);
+
+    if ($result) {
+        $categories = [];
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = $row;
+        }
+        return $categories;
+    } else {
+        return "Error: " . $mysqli->error;
+    }
+}
+
 // 新增分类
 function addCategory($mysqli, $categoryName) {
     $query = "INSERT INTO categories (category_name) VALUES (?)";
