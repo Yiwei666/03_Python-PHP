@@ -31,6 +31,30 @@ if (empty($doi)) {
 
 $citation_count = isset($data['citation_count']) ? intval($data['citation_count']) : 0;
 
+$doiLockName = 'paper_doi_' . sha1(strtolower($doi));
+$doiLockStmt = $mysqli->prepare("SELECT GET_LOCK(?, 10)");
+if (!$doiLockStmt) {
+    echo json_encode(['success' => false, 'message' => $mysqli->error]);
+    exit();
+}
+$doiLockStmt->bind_param('s', $doiLockName);
+$doiLockStmt->execute();
+$doiLockStmt->bind_result($doiLockAcquired);
+$doiLockStmt->fetch();
+$doiLockStmt->close();
+if (intval($doiLockAcquired) !== 1) {
+    echo json_encode(['success' => false, 'message' => 'DOI写入锁获取失败，请稍后重试。']);
+    exit();
+}
+register_shutdown_function(function() use ($mysqli, $doiLockName) {
+    $stmt = $mysqli->prepare("SELECT RELEASE_LOCK(?)");
+    if ($stmt) {
+        $stmt->bind_param('s', $doiLockName);
+        $stmt->execute();
+        $stmt->close();
+    }
+});
+
 // 检查DOI是否存在
 $existingPaper = getPaperByDOI($mysqli, $doi);
 if ($existingPaper) {
