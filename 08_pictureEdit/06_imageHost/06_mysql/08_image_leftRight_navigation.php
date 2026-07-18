@@ -371,7 +371,7 @@ $categoriesText = implode(", ", $imageCategoryNames);
         <!-- 右上角显示当前图片所属分类 -->
         <div class="image-categories">
             <?php foreach ($imageCategories as $cat): ?>
-                <a href="08_picDisplay_mysql_orderExistTab.php?page=1&category=<?php echo $cat['id']; ?>" target="_blank"><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></a>
+                <a href="<?php echo ($sortType === 1) ? '08_picDisplay_mysql_orderExistTab.php' : '08_picDisplay_mysql_galleryExistTab.php'; ?>?page=1&category=<?php echo $cat['id']; ?>" target="_blank"><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></a>
             <?php endforeach; ?>
         </div>
 
