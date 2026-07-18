@@ -216,6 +216,43 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             color: blue;
             text-decoration: none;
         }
+        #category-manage-popup {
+            display: none;
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 70%;
+            background-color: white;
+            color: black;
+            overflow-y: auto;
+            z-index: 999;
+            border: 2px solid gray;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        #category-manage-popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 20px;
+        }
+        #category-manage-list {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #category-manage-list div {
+            width: 20%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        #category-manage-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
     <script>
     function updateLikes(imageId, action) {
@@ -272,6 +309,66 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
     function closeCategoryPopup() {
         document.getElementById('category-popup').style.display = 'none';
     }
+
+    function openCategoryWindow(imageId) {
+        fetch('08_image_web_category.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=getCategoriesForImage&imageId=' + imageId
+        })
+        .then(response => response.json())
+        .then(data => {
+            const categoryContainer = document.getElementById('category-manage-list');
+            categoryContainer.innerHTML = '';
+            const imageCatIds = data.imageCategories.map(item => item.id);
+            data.allCategories.forEach(cat => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = cat.category_name;
+                checkbox.checked = imageCatIds.includes(cat.id);
+                const label = document.createElement('label');
+                label.style.marginLeft = '5px';
+                label.textContent = cat.category_name;
+                const divItem = document.createElement('div');
+                divItem.appendChild(checkbox);
+                divItem.appendChild(label);
+                categoryContainer.appendChild(divItem);
+            });
+            document.getElementById('save-category-manage-btn').setAttribute('data-image-id', imageId);
+            document.getElementById('category-manage-popup').style.display = 'block';
+        });
+    }
+
+    function closeCategoryWindow() {
+        document.getElementById('category-manage-popup').style.display = 'none';
+    }
+
+    function saveCategories() {
+        const imageId = document.getElementById('save-category-manage-btn').getAttribute('data-image-id');
+        const checkboxes = document.querySelectorAll('#category-manage-list input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                selected.push(cb.value);
+            }
+        });
+        fetch('08_image_web_category.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=setImageCategories'
+                + '&imageId=' + imageId
+                + '&categories=' + encodeURIComponent(JSON.stringify(selected))
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('分类更新成功！');
+                closeCategoryWindow();
+            } else {
+                alert('分类更新失败: ' + (data.error || '未知错误'));
+            }
+        });
+    }
     </script>
 </head>
 <body>
@@ -299,7 +396,9 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
         <div class="image-container">
             <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>" class="image" alt="Image" loading="lazy">
             <div class="image-categories">
-                <?php echo htmlspecialchars(implode(", ", array_map(function($c) { return $c['category_name']; }, getCategoriesOfImage($image['id']))), ENT_QUOTES, 'UTF-8'); ?>
+                <?php foreach (getCategoriesOfImage($image['id']) as $cat): ?>
+                    <a href="08_picDisplay_mysql_galleryExistTab.php?page=1&category=<?php echo $cat['id']; ?>" target="_blank"><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></a>
+                <?php endforeach; ?>
             </div>
             <div class="interaction-container">
                 <button onclick="updateLikes(<?php echo $image['id']; ?>, 'like')">👍</button>
@@ -318,6 +417,8 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
                     🔁
                 </button>
 
+                <button onclick="openCategoryWindow(<?php echo $image['id']; ?>)">🎨</button>
+
                 <!-- 五角星收藏按钮，颜色根据数据库中的 star 值动态设置 -->
                 <button id="star-<?php echo $image['id']; ?>" class="star-btn" 
                     onclick="toggleStar(<?php echo $image['id']; ?>)" 
@@ -327,6 +428,20 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             </div>
         </div>
     <?php endforeach; ?>
+</div>
+
+<div id="category-manage-popup">
+    <button class="close-btn" onclick="closeCategoryWindow()">✖</button>
+
+    <h3>图片分类管理</h3>
+    <div id="category-manage-list">
+        <!-- 这里通过 JS 动态生成分类 checkbox 列表 -->
+    </div>
+
+    <div id="category-manage-buttons">
+        <button id="save-category-manage-btn" onclick="saveCategories()">保存</button>
+        <button onclick="closeCategoryWindow()">取消</button>
+    </div>
 </div>
 
 <!-- 分页导航（保留既有逻辑），也要带上 category 参数 -->
