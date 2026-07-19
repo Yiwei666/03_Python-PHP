@@ -2086,7 +2086,24 @@ fetch('08_image_web_category.php', {
    - 新增收藏或取消图标，调用 `08_db_toggle_star.php` 模块
 
 
-### 2. 环境变量
+### 2. 编程思路
+
+💡 **1. 新增思路**
+
+访问 `08_picDisplay_mysql_galleryExistTab.php` 这个页面时，点击左侧`分类`按钮，会显示所有的分类标签，点击相应分类标签，右侧会显示当前分类下的图片。图片分为若干页，每页显示固定数量的图片（每张图片右上角会显示图片所属的分类，图片下方会显示5个图标，对应5种操作），点击 🔁 图标，会跳转`08_image_leftRight_navigation.php`显示相应的图片，图片的右上角会显示当前图片所属的分类。现在我的需求如下：
+1. 无论是`08_picDisplay_mysql_galleryExistTab.php`，还是`08_image_leftRight_navigation.php`这个脚本显示的图片，点击图片右上角的分类标签时，在新的标签页打开打开相应标签下的图片，效果等同于在`08_picDisplay_mysql_galleryExistTab.php` 这个页面点击左侧`分类`按钮下相应分类标签所加载的页面，目的是为了用户能够快速访问到相应分类标签下的图片。
+2. `08_picDisplay_mysql_galleryExistTab.php` 这个页面显示的每张图片下面，新增一个分类管理按钮 🎨，类似于 `08_image_leftRight_navigation.php` 页面中的 🎨 这个按钮功能，点击后用户可以给相应图片添加分类，不用每次都在 `08_image_leftRight_navigation.php` 页面下添加或者修改图片所属分类，提高效率。相关实现可以参考已有的相关功能代码。
+3. 注意项目文件夹中的`08_picDisplay_mysql_orderExistTab.php`脚本已经实现类似功能，可以参考其代码实现。不要影响 `08_picDisplay_mysql_orderExistTab.php` 现有调用 `08_image_leftRight_navigation.php` 的行为；如果导航页需要改分类链接，请根据来源页面区分跳转目标。
+4. 正式修改前，请先说明你对需求、影响范围、不会改动的部分、以及最小实现方案；涉及共享脚本时，等我确认后再改。
+
+注意，使用尽量少的代码修改实现上述需求，以便减少我review代码的工作量。输出修改后的代码。
+
+不要修改与这个功能无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
+
+
+### 3. 环境变量
+
+1. 基础设置
 
 ```php
 $key = 'signin-key-1'; // 应与加密时使用的密钥相同
@@ -2119,8 +2136,40 @@ fetch('08_db_toggle_star.php', {
 <button onclick="window.open('08_image_leftRight_navigation.php?id=<?php echo $image['id']; ?>&sort=2', '_blank')">🔁</button>
 ```
 
+2. 新增分类功能和页面跳转
 
-### 3. 系列脚本主要区别
+  gallery 页面图片右上角分类标签现在会在新标签页打开 `08_picDisplay_mysql_galleryExistTab.php?page=1&category=分类ID`
+
+  gallery 页面每张图片下方新增 🎨 按钮，可直接弹出分类管理窗口并保存分类
+
+
+```js
+function openCategoryWindow(imageId) {
+    fetch('08_image_web_category.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'action=getCategoriesForImage&imageId=' + imageId
+    })
+
+
+fetch('08_image_web_category.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'action=setImageCategories'
+        + '&imageId=' + imageId
+        + '&categories=' + encodeURIComponent(JSON.stringify(selected))
+})
+
+
+<?php foreach (getCategoriesOfImage($image['id']) as $cat): ?>
+    <a href="08_picDisplay_mysql_galleryExistTab.php?page=1&category=<?php echo $cat['id']; ?>" target="_blank"><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></a>
+<?php endforeach; ?>
+
+```
+
+
+
+### 4. 系列脚本主要区别
 
 1. `获取数据库中标记为存在的所有图片的记录`
 
