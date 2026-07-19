@@ -53,6 +53,7 @@
 08_picDisplay_mysql_orderExistTab_starT.php    # 显示收藏的图片，增加了分类选择弹窗，用户可点击按钮选择分类，并在分页、图片导航时保持筛选状态。
 08_picDisplay_mysql_galleryExistTab_starT.php  # 功能与 08_picDisplay_mysql_orderExistTab_starT.php 几乎一样，是在其基础上进行修改的，唯一的区别是图片的排列顺序，按照默认顺序排列
 08_web_image_table_statics.php                 # 通过报表显示图片在各个likes区段的数量、占比以及存在率。
+08_web_image_categorylink.php                  # 该页面按分类展示 Categories 表中的分类名，并支持在 Twitter、Gallery、Order、Archive 四种链接模式间切换后点击分类跳转到对应网址。
 
 
 # 4. 衍生脚本
@@ -2354,6 +2355,44 @@ require_once __DIR__ . '/08_db_config.php';
 ```
 
 在浏览器中直接访问该脚本即可
+
+
+## 8. `08_web_image_categorylink.php`
+
+### 1. 功能
+
+该页面从 `Categories` 表读取所有分类，并按 5 列网格展示分类名。用户可在 `Twitter、Gallery、Order、Archive` 四个标签间切换，点击分类名会在新标签页打开对应平台或站内页面链接。
+
+
+### 2. 编程思路
+
+💡 **1. 初始思路**
+
+新编写一个页面 `08_web_image_categorylink.php`，展示 Categories 表中的分类名，即`category_name`列，可以一行展示5列，分多行展示，按照从左到右，从上到下 id 递增。页面要简约美观。页面上方展示4个文字标签：`Twitter`、`Gallery`、`Order`、`Archive` （样式也要美观，标签之间有适当距离，位置靠近页面左上角）点击不同的文字标签时，切换到不同的页面（切换过程不是打开新页面），页面中的分类名对应不同的网站的跳转链接（不要有下划线），即点击页面中的分类名，会在浏览器跳转新的标签页中打开相应的网址，下面是具体的要求。
+
+1. 点击`Twitter`页面对应的分类名时，会跳转打开 `https://x.com/$kindID/media`，其中 `$kindID` 是 Categories 表中分类名对应的 `kindID` 列值，注意表中少数的 `kindID` 列值可能为空。
+2. 点击`Gallery`页面对应的分类名时，会跳转打开 `https://$domain/08_picDisplay_mysql_galleryExistTab.php?page=1&category=$id`，注意，这个链接中`$id`是变量值，对应 Categories 表中的id列，`page=1`是固定的。`$domain`变量需要放在脚本开头统一管理进行赋值，编写代码时先假设`$domain`为`example.com`。
+3. 点击`Order`页面对应的分类名时，会跳转打开 `https://$domain/08_picDisplay_mysql_orderExistTab.php?page=1&category=$id`，注意，这个链接中`$id`是变量值，对应 Categories 表中的id列，`page=1`是固定的。`$domain`变量需要放在脚本开头统一管理进行赋值，编写代码时先假设`$domain`为`example.com`。
+4. 点击`Archive`页面对应的分类名时，会跳转打开 `https://web.archive.org/web/*/https://twitter.com/$kindID*`，注意，这个链接中只有`$kindID`是变量值，注意表中少数的 `kindID` 列值可能为空。
+5. 注意，改代码需要调用其他模块，根据需求进行调用。该脚本的访问仍然需要用户进行身份验证，可以参考项目文件夹中其他脚本关于身份验证的实现。
+
+请编写代码完成上述需求。
+
+
+### 3. 环境变量
+
+```php
+// 修改网站对应的域名
+$domain = 'example.com';
+
+// 修改key值，避免session失效后无法访问
+$key = 'signin-key-1';
+
+// 调用模块，访问数据库
+include '08_db_config.php';
+```
+
+
 
 
 
