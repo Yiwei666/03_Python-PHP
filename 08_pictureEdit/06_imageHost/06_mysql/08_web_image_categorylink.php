@@ -64,6 +64,8 @@ function buildCategoryUrl($tab, $category, $domain) {
     switch ($tab) {
         case 'twitter':
             return $kindID === '' ? '' : 'https://x.com/' . rawurlencode($kindID) . '/media';
+        case 'sotwe':
+            return $kindID === '' ? '' : 'https://www.sotwe.com/' . rawurlencode($kindID);
         case 'gallery':
             return 'https://' . $domain . '/08_picDisplay_mysql_galleryExistTab.php?page=1&category=' . $id;
         case 'order':
@@ -78,6 +80,7 @@ function buildCategoryUrl($tab, $category, $domain) {
 $categories = getAllCategoryLinks();
 $tabs = [
     'twitter' => 'Twitter',
+    'sotwe' => 'Sotwe',
     'gallery' => 'Gallery',
     'order' => 'Order',
     'archive' => 'Archive'
