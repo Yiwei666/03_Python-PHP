@@ -582,6 +582,13 @@ include '08_db_image_status.php';                    // 判断数据库中所有
 - 始终预加载当前索引前后两张，切换到新索引后也会在新页面自动预加载它的前后两张
 
 
+🎶 **注意事项：**
+从 `08_picDisplay_mysql_orderExistTab.php` 或 `08_picDisplay_mysql_galleryExistTab.php` 点击 🔁 打开 `08_image_leftRight_navigation.php` 时，只要同一个浏览器会话还有效，导航页就直接通过 session 放行。但 $key 仍然有用。它主要影响的是：
+- session 过期后，是否能通过 `user_auth cookie` 自动恢复登录；
+- 直接访问 `08_image_leftRight_navigation.php` 时，如果没有有效 session，是否能通过 cookie 验证；
+- 换浏览器、清 session、服务端 session 文件丢失后，是否还能免登录进入。
+
+
 ### 2. 编程思路
 
 💡 **1. 新增编程思路**
