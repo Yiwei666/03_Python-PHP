@@ -184,6 +184,22 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             border: 1px solid #999;
             border-radius: 4px;
         }
+        .batch-write-button {
+            top: 50px;
+        }
+        .image-select-checkbox {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 22px;
+            height: 22px;
+            z-index: 2;
+            accent-color: #1e88e5;
+            cursor: pointer;
+        }
+        #batch-category-list input[type="checkbox"] {
+            accent-color: #1e88e5;
+        }
         #category-popup {
             display: none;
             position: fixed;
@@ -216,7 +232,8 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             color: blue;
             text-decoration: none;
         }
-        #category-manage-popup {
+        #category-manage-popup,
+        #batch-category-popup {
             display: none;
             position: fixed;
             top: 10%;
@@ -231,7 +248,8 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             border-radius: 10px;
             padding: 20px;
         }
-        #category-manage-popup .close-btn {
+        #category-manage-popup .close-btn,
+        #batch-category-popup .close-btn {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -240,16 +258,19 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
             background: none;
             font-size: 20px;
         }
-        #category-manage-list {
+        #category-manage-list,
+        #batch-category-list {
             display: flex;
             flex-wrap: wrap;
         }
-        #category-manage-list div {
+        #category-manage-list div,
+        #batch-category-list div {
             width: 20%;
             box-sizing: border-box;
             margin-bottom: 10px;
         }
-        #category-manage-buttons {
+        #category-manage-buttons,
+        #batch-category-buttons {
             margin-top: 20px;
             text-align: center;
         }
@@ -308,6 +329,66 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
     // ★ 新增：关闭弹窗
     function closeCategoryPopup() {
         document.getElementById('category-popup').style.display = 'none';
+    }
+
+    function getSelectedImageIds() {
+        return Array.from(document.querySelectorAll('.image-select-checkbox:checked')).map(cb => cb.value);
+    }
+
+    function updateBatchButton() {
+        const count = getSelectedImageIds().length;
+        document.getElementById('batch-write-btn').textContent = count > 0 ? `批量写入(${count})` : '批量写入';
+    }
+
+    function openBatchCategoryWindow() {
+        const imageIds = getSelectedImageIds();
+        if (imageIds.length === 0) {
+            alert('请先选择图片');
+            return;
+        }
+        document.querySelectorAll('#batch-category-list input[type="checkbox"]').forEach(cb => cb.checked = false);
+        document.getElementById('batch-category-popup').style.display = 'block';
+    }
+
+    function closeBatchCategoryWindow() {
+        document.getElementById('batch-category-popup').style.display = 'none';
+    }
+
+    function saveBatchCategories() {
+        const imageIds = getSelectedImageIds();
+        const checkboxes = document.querySelectorAll('#batch-category-list input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                selected.push(cb.value);
+            }
+        });
+
+        if (imageIds.length === 0) {
+            alert('请先选择图片');
+            return;
+        }
+        if (selected.length === 0) {
+            alert('请先选择分类');
+            return;
+        }
+
+        fetch('08_image_web_category.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'action=batchAddImageCategories'
+                + '&imageIds=' + encodeURIComponent(JSON.stringify(imageIds))
+                + '&categories=' + encodeURIComponent(JSON.stringify(selected))
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('批量写入成功！写入了 ' + data.inserted + ' 条新关系，跳过了 ' + data.skipped + ' 条已存在关系。');
+                location.reload();
+            } else {
+                alert('批量写入失败: ' + (data.error || '未知错误'));
+            }
+        });
     }
 
     function openCategoryWindow(imageId) {
@@ -374,6 +455,7 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
 <body>
 <!-- ★ 新增：左上角分类按钮 -->
 <button class="top-left-button" onclick="toggleCategoryPopup()">分类</button>
+<button id="batch-write-btn" class="top-left-button batch-write-button" onclick="openBatchCategoryWindow()">批量写入</button>
 
 <!-- ★ 新增：分类弹窗 -->
 <div id="category-popup">
@@ -394,6 +476,7 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
 <div class="container">
     <?php foreach ($imagesToDisplay as $image): ?>
         <div class="image-container">
+            <input type="checkbox" class="image-select-checkbox" value="<?php echo $image['id']; ?>" onchange="updateBatchButton()">
             <img src="<?php echo $domain . $dir5 . '/' . htmlspecialchars($image['image_name']); ?>" class="image" alt="Image" loading="lazy">
             <div class="image-categories">
                 <?php foreach (getCategoriesOfImage($image['id']) as $cat): ?>
@@ -441,6 +524,25 @@ $imagesToDisplay = array_slice($validImages, $offset, $imagesPerPage);
     <div id="category-manage-buttons">
         <button id="save-category-manage-btn" onclick="saveCategories()">保存</button>
         <button onclick="closeCategoryWindow()">取消</button>
+    </div>
+</div>
+
+<div id="batch-category-popup">
+    <button class="close-btn" onclick="closeBatchCategoryWindow()">✖</button>
+
+    <h3>批量写入分类</h3>
+    <div id="batch-category-list">
+        <?php foreach ($allCategories as $cat): ?>
+            <div>
+                <input type="checkbox" value="<?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?>">
+                <label><?php echo htmlspecialchars($cat['category_name'], ENT_QUOTES, 'UTF-8'); ?></label>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div id="batch-category-buttons">
+        <button onclick="saveBatchCategories()">保存</button>
+        <button onclick="closeBatchCategoryWindow()">取消</button>
     </div>
 </div>
 
