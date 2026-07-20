@@ -141,6 +141,56 @@ function setImageCategories($imageId, $categoryNames) {
     }
 }
 
+function batchAddImageCategories($imageIds, $categoryNames) {
+    global $mysqli;
+
+    $imageIds = array_values(array_unique(array_map('intval', $imageIds)));
+    $categoryNames = array_values(array_unique(array_filter($categoryNames, function($name) {
+        return is_string($name) && $name !== '';
+    })));
+    $categoryIds = [];
+    $inserted = 0;
+    $skipped = 0;
+
+    foreach ($categoryNames as $catName) {
+        $stmt = $mysqli->prepare("SELECT id FROM Categories WHERE category_name = ?");
+        $stmt->bind_param("s", $catName);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $categoryIds[] = (int)$row['id'];
+        }
+        $stmt->close();
+    }
+
+    $checkStmt = $mysqli->prepare("SELECT 1 FROM PicCategories WHERE image_id = ? AND category_id = ? LIMIT 1");
+    $insertStmt = $mysqli->prepare("INSERT INTO PicCategories (image_id, category_id) VALUES (?, ?)");
+
+    foreach ($imageIds as $imageId) {
+        if ($imageId <= 0) {
+            continue;
+        }
+        foreach ($categoryIds as $catId) {
+            $checkStmt->bind_param("ii", $imageId, $catId);
+            $checkStmt->execute();
+            $exists = $checkStmt->get_result()->fetch_assoc();
+            if ($exists) {
+                $skipped++;
+                continue;
+            }
+
+            $insertStmt->bind_param("ii", $imageId, $catId);
+            $insertStmt->execute();
+            $inserted++;
+        }
+    }
+
+    $checkStmt->close();
+    $insertStmt->close();
+
+    return ['inserted' => $inserted, 'skipped' => $skipped];
+}
+
 // -------------------------------------------------------------------------
 // 下面是简易 AJAX 接口，根据 POST 的 action 来调用不同函数并返回 JSON
 // -------------------------------------------------------------------------
@@ -175,6 +225,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             setImageCategories($imageId, $catArr);
             echo json_encode(['success' => true]);
+            break;
+
+        case 'batchAddImageCategories':
+            $rawImageIds = $_POST['imageIds'] ?? '[]';
+            $rawCategories = $_POST['categories'] ?? '[]';
+            $imageIds = json_decode($rawImageIds, true);
+            $catArr = json_decode($rawCategories, true);
+
+            if (!is_array($imageIds) || !is_array($catArr)) {
+                echo json_encode(['success' => false, 'error' => 'Invalid batch format']);
+                break;
+            }
+
+            $result = batchAddImageCategories($imageIds, $catArr);
+            echo json_encode([
+                'success' => true,
+                'inserted' => $result['inserted'],
+                'skipped' => $result['skipped']
+            ]);
             break;
 
         default:
