@@ -22,12 +22,18 @@ $__ALL_DOIS = getAllDois($mysqli);
         h1, h2, h3 {
             color: #333;
         }
+        h1 {
+            margin-bottom: 8px;
+        }
         .search-container {
             background-color: #fff;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 8px 15px;
+            margin-bottom: 10px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .search-container h2 {
+            margin: 0 0 8px 0;
         }
         .search-container input[type="text"] {
             width: 70%;
@@ -108,6 +114,10 @@ $__ALL_DOIS = getAllDois($mysqli);
         .item-buttons button.clicked-btn {
             color: #fff59d;
         }
+        .sci-hub-links { margin-top: 10px; }
+        .sci-hub-links a { margin-right: 16px; font-size: 13px; font-weight: 600; color: #546e7a; text-decoration: none; }
+        .sci-hub-links a:visited { color: #ad1457; }
+        .sci-hub-links a:hover { color: #263238; text-decoration: underline; }
         /* ========== 修改分类弹窗的样式 START ========== */
         .category-selection {
             position: fixed;
@@ -445,6 +455,18 @@ function displayResults(items) {
             <p><strong>缩写作者信息:</strong> ${abbreviatedAuthors}</p>
         `;
         card.appendChild(contentDiv);
+
+        const sciHubLinksDiv = document.createElement('div');
+        sciHubLinksDiv.className = 'sci-hub-links';
+        ['sci-hub.st', 'sci-hub.su', 'sci-hub.red', 'sci-hub.box', 'sci-hub.ru', 'sci-hub.ren'].forEach(domain => {
+            const a = document.createElement('a');
+            a.href = `https://${domain}/${doi}`;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = domain;
+            sciHubLinksDiv.appendChild(a);
+        });
+        card.appendChild(sciHubLinksDiv);
 
         // 按钮区域
         const buttonsDiv = document.createElement('div');
