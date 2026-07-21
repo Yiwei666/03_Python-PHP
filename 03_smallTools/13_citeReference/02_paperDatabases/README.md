@@ -2310,6 +2310,26 @@ article-number  "150788"
 不要修改与这个功能无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
 
 
+💡 **9. 新增思路**
+
+修改 `08_web_crossRef_query.php` 代码，实现以下功能：
+
+1. 无论是 title 检索模式还是 doi 检索模式结果中，在每条论文信息的 `复制base32按钮` 、 `标签` 、`分类` 、`前往论文` 、`复制doi`、`预览`等按钮上边新增一行文字标签，分别为`sci-hub.st`、`sci-hub.su`、`sci-hub.red`、`sci-hub.box`、`sci-hub.ru`、`sci-hub.ren`，标签之间要有适当距离，点击任意标签，在新的标签页中打开如下相应网址，同时文字标签的字体颜色要有改变，方便用户区分哪些标签被点击过。
+```
+https://sci-hub.st/+$doi
+https://sci-hub.su/+$doi
+https://sci-hub.red/+$doi
+https://sci-hub.box/+$doi
+https://sci-hub.ru/+$doi
+https://sci-hub.ren/+$doi
+```
+2. 文字标签的大小、颜色和样式要美观、简约。之所以让文字标签放在按钮上边，是因为按钮这一行已经比较长了。
+3. 注意，使用尽量少的代码修改实现上述需求，以便减少我review代码的工作量。输出修改后的代码。不要修改与这个需求无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
+
+在正式编码前，和你确认你是否理解了我的需求，如果有不明确的，或者你认为又可以优化的地方，请先提出来以便我重新修改prompt方案。没有的话，可以直接编码。
+
+
+
 
 ### 3. 环境变量
 
@@ -2387,6 +2407,29 @@ function previewGdfile(doi) {
     });
 }
 ```
+
+5. 添加sci-hub文字标签，跳转打开pdf论文的链接
+
+```js
+
+// ['sci-hub.st', 'sci-hub.su', 'sci-hub.red', 'sci-hub.box', 'sci-hub.ru', 'sci-hub.ren']
+// 如果想要新增、减少或者替换页面显示以及跳转的scihub链接，只需要改这个列表
+// 相关代码如下：
+
+const sciHubLinksDiv = document.createElement('div');
+sciHubLinksDiv.className = 'sci-hub-links';
+['sci-hub.st', 'sci-hub.su', 'sci-hub.red', 'sci-hub.box', 'sci-hub.ru', 'sci-hub.ren'].forEach(domain => {
+    const a = document.createElement('a');
+    a.href = `https://${domain}/${doi}`;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = domain;
+    sciHubLinksDiv.appendChild(a);
+});
+card.appendChild(sciHubLinksDiv);
+```
+
+
 
 
 # 6. 服务器端脚本
