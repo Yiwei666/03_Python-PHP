@@ -54,6 +54,7 @@
 08_picDisplay_mysql_galleryExistTab_starT.php  # 功能与 08_picDisplay_mysql_orderExistTab_starT.php 几乎一样，是在其基础上进行修改的，唯一的区别是图片的排列顺序，按照默认顺序排列
 08_web_image_table_statics.php                 # 通过报表显示图片在各个likes区段的数量、占比以及存在率。
 08_web_image_categorylink.php                  # 该页面按分类展示 Categories 表中的分类名，并支持在 Twitter、Gallery、Order、Archive 四种链接模式间切换后点击分类跳转到对应网址。
+08_web_manage_categories.php                   # 在线添加或者修改 Categories 表中的分类名以及对应的kindID
 
 
 # 4. 衍生脚本
@@ -2446,6 +2447,50 @@ include '08_db_config.php';
 
 
 
+## 8. `08_web_manage_categories.php`
+
+### 1. 功能
+
+在线添加或者修改 Categories 表中的分类名以及对应的 kindID
+
+
+### 2. 编程思路
+
+💡 **1. 初始思路**
+
+现在我想要参考 `08_server_manage_categories.php` 脚本功能，重新编写一个脚本 `08_web_manage_categories.php` 基于图形化界面用来管理 `Categories` 中的表分类，这个脚本在web页面通过图形化界面来对 `Categories` 表中的 `category_name` 和 `kindID` 进行增删查改，重点复现下面5条功能。`08_server_manage_categories.php` 脚本在终端界面通过命令行输入来管理，略微有些麻烦和门槛，对用户不友好。
+```
+2. 修改已有分类名
+3. 删除已有分类名
+4. 给指定已有分类名添加或修改 kindID
+5. 添加新的分类名和对应kindID
+6. 打印所有分类名以及对应kindID
+```
+我的初步想法如下：
+1. 在页面左侧显示5个文字标签，对应上述5个功能，点击每个文字标签，切换到相应页面。
+2. 每个页面中有相应的输入框以及相关的确认按钮，以实现相应的操作。
+3. 页面样式要美观简约，但是前端代码不要过于复杂。
+4. 注意，新脚本可能需要调用其他模块，根据需求进行调用。该脚本的访问仍然需要用户进行身份验证，可以参考项目文件夹中其他脚本关于身份验证的实现。
+5. 注意，对于非空的`kindID`值，不能够重复，确保其唯一性，在写入新的`kindID`时，`08_server_manage_categories.php` 脚本中针对这个点应该也有相关的规避。
+
+- 该功能的实现不要影响到其他已经实现的功能。
+
+注意，使用尽量少的代码修改实现上述需求，以便减少我review代码的工作量。输出修改后的代码。
+
+不要修改与这个功能无关的代码部分，包括注释、换行这些，任何无关的都不要改，哪怕加一个空格。使用最小的代码改动实现上述需求。输出修改后的完整代码，以便我能进行复制粘贴和审查
+
+你还有哪些疑问，或者不确定的地方，在编码前我们可以先讨论。
+
+
+### 3. 环境变量
+
+```php
+// 修改key值，避免session失效后无法访问
+$key = 'signin-key-1';
+
+// 调用模块，访问数据库
+include '08_db_config.php';
+```
 
 
 
