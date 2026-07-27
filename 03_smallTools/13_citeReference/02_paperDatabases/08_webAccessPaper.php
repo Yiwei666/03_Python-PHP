@@ -240,6 +240,16 @@ if ($selectedCategoryID) {
         #categoryModal h2 {
             margin-top: 0;
         }
+        .category-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-right: 30px;
+        }
+        .category-modal-header h2 {
+            margin: 0;
+        }
         #categoryModal button {
             margin: 5px;
         }
@@ -606,6 +616,9 @@ if ($selectedCategoryID) {
                                 <button type="button" onclick="openCategoryModal('<?= htmlspecialchars($paper['doi']) ?>')">
                                     标签
                                 </button>
+                                <button type="button" onclick="openCategoryModal('<?= htmlspecialchars($paper['doi']) ?>', 'paperID_desc')">
+                                    分类
+                                </button>
                                 <!-- [NEW CODE] 评分按钮 -->
                                 <button type="button" onclick="openRatingModal('<?= htmlspecialchars($paper['doi']) ?>')">
                                     评分
@@ -693,7 +706,11 @@ if ($selectedCategoryID) {
         <!-- 右上角关闭按钮 -->
         <button class="close-btn" onclick="closeModal()">X</button>
         
-        <h2>更改标签</h2>
+        <div class="category-modal-header">
+            <h2>更改标签</h2>
+            <button id="saveCategoriesTopBtn">保存</button>
+            <button id="cancelCategoriesTopBtn">取消</button>
+        </div>
         <div id="categoryCheckboxes"></div>
         <button id="saveCategoriesBtn">保存</button>
         <button id="cancelCategoriesBtn">取消</button>
@@ -782,20 +799,23 @@ if ($selectedCategoryID) {
         })();
 
         // 打开分类选择弹窗
-        function openCategoryModal(doi) {
+        function openCategoryModal(doi, categoryOrder = '') {
             currentDOI = doi;
             // 显示遮罩层
             document.getElementById('overlay').style.display = 'block';
             // 显示弹窗
             document.getElementById('categoryModal').style.display = 'block';
             
-            fetchCategories();
+            fetchCategories(categoryOrder);
         }
 
         // 获取所有分类（通过后端API，如果你有相应的php接口文件）
-        function fetchCategories() {
+        function fetchCategories(categoryOrder = '') {
+            const categoriesUrl = categoryOrder
+                ? '08_tm_get_categories.php?order=' + encodeURIComponent(categoryOrder)
+                : '08_tm_get_categories.php';
             // [MODIFIED] 在请求头中添加 X-Api-Key
-            fetch('08_tm_get_categories.php', {
+            fetch(categoriesUrl, {
                 headers: {
                     'X-Api-Key': API_KEY
                 }
@@ -891,7 +911,7 @@ if ($selectedCategoryID) {
         });
 
         // 点击“保存”按钮，更新分类
-        document.getElementById('saveCategoriesBtn').addEventListener('click', () => {
+        function saveCurrentPaperCategories() {
             const checkboxes = document.querySelectorAll('#categoryCheckboxes input[type="checkbox"]');
             const selected = [];
             checkboxes.forEach(checkbox => {
@@ -901,7 +921,10 @@ if ($selectedCategoryID) {
                 }
             });
             updatePaperCategories(currentDOI, selected);
-        });
+        }
+
+        document.getElementById('saveCategoriesTopBtn').addEventListener('click', saveCurrentPaperCategories);
+        document.getElementById('saveCategoriesBtn').addEventListener('click', saveCurrentPaperCategories);
 
         // 调用后端接口更新论文分类（通过后端API，如果你有相应的php接口文件）
         function updatePaperCategories(doi, categoryIDs) {
@@ -935,6 +958,7 @@ if ($selectedCategoryID) {
         }
 
         // 点击“取消”或更新完成后关闭弹窗
+        document.getElementById('cancelCategoriesTopBtn').addEventListener('click', closeModal);
         document.getElementById('cancelCategoriesBtn').addEventListener('click', closeModal);
 
         function closeModal() {
