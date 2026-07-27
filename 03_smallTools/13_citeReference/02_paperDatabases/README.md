@@ -1641,6 +1641,34 @@ b. 解决方案
 
 
 
+💡 **22 新增思路**
+
+请修改 `08_webAccessPaper.php` 及必要的相关 PHP 接口/函数，实现以下功能：
+
+1. 在 `08_webAccessPaper.php` 每篇论文操作区中，现有“标签”按钮旁边新增一个 `分类` 按钮，按钮样式、字号、颜色、间距与“标签”按钮保持一致。
+
+2. `分类` 按钮触发的功能与现有“标签”按钮基本一致：点击后打开同一个“更改标签”弹窗；弹窗中显示分类复选框；自动勾选当前论文已有分类；`categoryID = 1` 的 `0 All papers` 必须强制勾选且不可取消；用户点击“保存”后，将当前勾选的分类 ID 提交到后端，更新该论文在 `paperCategories` 表中的分类关系；保存成功后关闭弹窗并刷新页面。原有“标签”按钮功能不要改变。
+
+3. `分类` 按钮与“标签”按钮的唯一功能区别是：弹窗中分类列表的排序方式不同。“标签”按钮继续使用现有默认排序方式；`分类` 按钮打开弹窗时，分类列表需要按最近关联论文的 `paperID` 排序，越新论文使用过的分类越靠前，未被任何论文使用过的分类排在最后。
+
+4. 排序逻辑建议为：对 `paperCategories` 表按 `categoryID` 分组，计算每个分类关联过的最大 `paperID`，记为 `maxPaperID`；查询 `categories` 表时左连接该结果，并按 `maxPaperID IS NULL ASC, maxPaperID DESC, categoryID DESC` 排序。这样最近出现在较大 `paperID` 论文中的分类会排在前面，没有使用记录的分类会排在最后。
+
+5. 如果已有 `08_tm_get_categories.php` 支持类似 `?order=paperID_desc` 的参数，优先复用该接口；否则请在 `08_category_operations.php` 中新增/复用 `getCategoriesByRecentPaperUsage($mysqli)`，并让 `08_tm_get_categories.php?order=paperID_desc` 返回按上述逻辑排序后的分类列表。
+
+6. 前端实现上，可以让 `openCategoryModal(doi)` 保持默认排序；新增类似 `openCategoryModal(doi, categoryOrder = '')` 的可选参数，或新增包装函数，使“标签”调用默认分类接口，“分类”调用 `08_tm_get_categories.php?order=paperID_desc`。除新增“分类”按钮和排序参数外，不要改变现有弹窗样式、保存逻辑、关闭/取消逻辑、已勾选分类字体颜色逻辑。
+
+7. 优化“更改标签”弹窗的操作按钮布局：目前“保存”和“取消”按钮只在弹窗底部，分类很多时用户需要滚动到底部才能操作。请在弹窗顶部标题附近的适当位置也新增一组“保存”和“取消”按钮，顶部按钮与底部按钮执行完全相同的逻辑：顶部“保存”应提交当前勾选分类并更新数据库，顶部“取消”应直接关闭弹窗且不保存。底部原有“保存”和“取消”按钮保留不变。
+
+8. 顶部新增按钮的样式应与底部按钮保持一致，布局简洁，不遮挡标题、关闭按钮或分类复选框；不要改变分类复选框的 5 列布局和滚动逻辑。
+
+9. 请尽量少改动代码，只修改与该需求直接相关的行，避免无关格式化、空格、注释或重构。完成后请列出修改了哪些文件，以及关键改动点。
+
+
+关于上述编码prompt是否有需要和我确认、讨论或者建议的吗？或者你认为不合理或者需要优化的地方？没有的话直接编码
+
+
+
+
 
 ### 2. 模块、函数和后端接口
 
@@ -1759,7 +1787,7 @@ echo '<button type="button" onclick="window.open(\'https://domain.com/08_paperLo
 ```
 
 
-6. Header 重定向 URL，根据实际修改脚本名 `08_webAccessPaper.php`
+6. Header 重定向 URL，根据实际修改脚本名 `08_webAccessPaper.php`。
 
 ```php
 // 处理完 POST 请求后刷新页面并显示消息
@@ -1768,7 +1796,7 @@ exit();
 ```
 
 
-7. 更新/查询数据库中论文 rating 数值
+7. 更新/查询数据库中论文 rating 数值。
 
 ```js
 // ====== [NEW CODE] 评分：保存 ======
@@ -1786,7 +1814,7 @@ fetch('08_web_update_rating.php', {
 ```
 
 
-8. 调用后端接口基于 doi 查询其在数据库 papers 表中所有字段的值，用于 `复制元信息` 按钮显示
+8. 调用后端接口基于 doi 查询其在数据库 papers 表中所有字段的值，用于 `复制元信息` 按钮显示。
 
 ```js
 fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
@@ -1795,7 +1823,7 @@ fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
 ```
 
 
-9. 调用后端接口，支持往数据库 `select_paper` 选择表中插入去重数据、清空表、以及 导出表中已有数据
+9. 调用后端接口，支持往数据库 `select_paper` 选择表中插入去重数据、清空表、以及 导出表中已有数据。
 
 ```js
 
@@ -1833,7 +1861,7 @@ fetch('08_web_user_select_tmp.php', {
 ```
 
 
-10. 调用后端接口`08_tm_get_gdfile_id.php`，基于doi或者paperID查询pdf论文的fileID，构造预览链接，在新的标签页打开
+10. 调用后端接口`08_tm_get_gdfile_id.php`，基于doi或者paperID查询pdf论文的fileID，构造预览链接，在新的标签页打开。
 
 ```js
 // 查询 fileID，构造预览链接
@@ -1853,8 +1881,15 @@ function previewGdfile(doi, paperID) {
 ```
 
 
+11. 根据`标签`和`分类`入口按钮不同，加载不同排序方式的分类列表。
 
-
+```js
+// 获取所有分类（通过后端API，如果你有相应的php接口文件）
+function fetchCategories(categoryOrder = '') {
+    const categoriesUrl = categoryOrder
+        ? '08_tm_get_categories.php?order=' + encodeURIComponent(categoryOrder)
+        : '08_tm_get_categories.php';
+```
 
 
 
