@@ -13,6 +13,23 @@ require_once '08_category_operations.php';
 // 引入 Base32 编码类（请确保本地存在 08_web_Base32.php 并包含题目中的实现）
 require_once '08_web_Base32.php';
 
+$catSortOptions = [
+    'categoryID_asc' => 'ID增序',
+    'categoryID_desc' => 'ID降序',
+    'category_name_asc' => '名称A-Z',
+    'category_name_desc' => '名称Z-A',
+    'recent_paper_desc' => '最近使用',
+    'recent_paper_asc' => '最久未用'
+];
+$catSort = (isset($_GET['cat_sort']) && is_string($_GET['cat_sort']) && array_key_exists($_GET['cat_sort'], $catSortOptions)) ? $_GET['cat_sort'] : 'category_name_asc';
+$catSortQuery = '&cat_sort=' . urlencode($catSort);
+
+// 获取当前选中的分类
+$selectedCategoryID = isset($_GET['categoryID']) ? intval($_GET['categoryID']) : null;
+
+// 获取排序参数，默认 paperID_desc
+$sort = isset($_GET['sort']) ? $_GET['sort'] : 'paperID_desc';
+
 // —— 新增：服务器端渲染评分星星（0–10 转 5 颗星，支持半星）
 function renderStars($rating) {
     $filled = floor($rating / 2);
@@ -31,7 +48,7 @@ function renderStars($rating) {
 }
 
 // 获取所有分类
-$categories = getCategories($mysqli);
+$categories = getCategories($mysqli, $catSort);
 
 // 处理 POST 请求（创建、删除、修改分类）
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -48,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $message = addCategory($mysqli, $categoryName);
                 // 重新获取分类列表
-                $categories = getCategories($mysqli);
+                $categories = getCategories($mysqli, $catSort);
             }
         } elseif ($action === 'delete') {
             $categoryName = trim($_POST['category_name']);
@@ -65,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $message = deleteCategory($mysqli, $categoryID);
                 // 重新获取分类列表
-                $categories = getCategories($mysqli);
+                $categories = getCategories($mysqli, $catSort);
             }
         } elseif ($action === 'modify') {
             $original = trim($_POST['original_category']);
@@ -90,24 +107,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     $message = updateCategoryName($mysqli, $categoryID, $newName);
                     // 重新获取分类列表
-                    $categories = getCategories($mysqli);
+                    $categories = getCategories($mysqli, $catSort);
                 }
             }
         }
         // 处理完 POST 请求后刷新页面并显示消息
-        header("Location: 08_webAccessPaper.php?message=" . urlencode($message));
+        $redirectParams = ['message' => $message];
+        if ($selectedCategoryID) $redirectParams['categoryID'] = $selectedCategoryID;
+        if (isset($_GET['sort'])) $redirectParams['sort'] = $sort;
+        if (isset($_GET['cat_sort'])) $redirectParams['cat_sort'] = $catSort;
+        header("Location: 08_webAccessPaper.php?" . http_build_query($redirectParams));
         exit();
     }
 }
 
 // 处理 GET 请求中的消息
 $message = isset($_GET['message']) ? $_GET['message'] : '';
-
-// 获取当前选中的分类
-$selectedCategoryID = isset($_GET['categoryID']) ? intval($_GET['categoryID']) : null;
-
-// 获取排序参数，默认 paperID_desc
-$sort = isset($_GET['sort']) ? $_GET['sort'] : 'paperID_desc';
 
 // 获取选中分类的论文（带排序）
 $papers = null;
@@ -310,6 +325,34 @@ if ($selectedCategoryID) {
         #toolsMenu a:hover {
             text-decoration: underline;
         }
+        #catSortMenu {
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            padding: 8px 10px;
+            z-index: 10000;
+            white-space: nowrap;
+        }
+        #catSortMenu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        #catSortMenu li {
+            margin: 5px 0;
+        }
+        #catSortMenu a {
+            text-decoration: none;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        #catSortMenu a:hover {
+            text-decoration: underline;
+        }
 
         /* ========== [NEW CODE] 分类管理弹窗样式 ========== */
         #manageCategoryModal {
@@ -461,6 +504,23 @@ if ($selectedCategoryID) {
         <button id="manageCategoryBtn" type="button" style="background-color: transparent; border: none; cursor: pointer; color: #1a0dab; font-size: 13px; text-decoration: none; margin-left: 10px;">
             分类管理
         </button>
+        <span style="position: relative; display: inline-block;">
+            <button id="catSortBtn" type="button" style="background-color: transparent; border: none; cursor: pointer; color: #1a0dab; font-size: 13px; text-decoration: none; margin-left: 10px;">
+                分类排序
+            </button>
+            <div id="catSortMenu">
+                <ul>
+                    <?php foreach ($catSortOptions as $catSortValue => $catSortLabel): ?>
+                        <?php
+                            $catSortParams = ['cat_sort' => $catSortValue];
+                            if ($selectedCategoryID) $catSortParams['categoryID'] = $selectedCategoryID;
+                            if ($sort) $catSortParams['sort'] = $sort;
+                        ?>
+                        <li><a href="?<?= htmlspecialchars(http_build_query($catSortParams)) ?>" style="color: <?= $catSort === $catSortValue ? '#d14836' : '#1a0dab' ?>;"><?= htmlspecialchars($catSortLabel) ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </span>
 
         <!-- [MODIFIED] 显示后端的消息提示，如果有的话 -->
         <?php if ($message): ?>
@@ -482,7 +542,7 @@ if ($selectedCategoryID) {
                     }
                 ?>
                     <td>
-                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>&sort=<?= urlencode($sort) ?>" style="color: <?= $catColor ?>;">
+                        <a href="?categoryID=<?= htmlspecialchars($category['categoryID']) ?>&sort=<?= urlencode($sort) ?><?= $catSortQuery ?>" style="color: <?= $catColor ?>;">
                             <?= htmlspecialchars($category['category_name']) ?>
                         </a>
                     </td>
@@ -525,23 +585,23 @@ if ($selectedCategoryID) {
         <div id="toolsMenu">
             <ul>
                 <!-- 这部分通过 sort=xxx 的方式控制排序 -->
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=paperID_asc">论文ID升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=paperID_desc">论文ID降序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=year_desc">发表年降序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=year_asc">发表年升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=status_desc">状态码降序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=status_asc">状态码升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=journal_asc">期刊名升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=journal_desc">期刊名降序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=authors_asc">作者名升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=authors_desc">作者名降序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=title_asc">标题升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=title_desc">标题降序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=rating_asc">评分升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=rating_desc">评分降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=paperID_asc<?= $catSortQuery ?>">论文ID升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=paperID_desc<?= $catSortQuery ?>">论文ID降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=year_desc<?= $catSortQuery ?>">发表年降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=year_asc<?= $catSortQuery ?>">发表年升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=status_desc<?= $catSortQuery ?>">状态码降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=status_asc<?= $catSortQuery ?>">状态码升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=journal_asc<?= $catSortQuery ?>">期刊名升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=journal_desc<?= $catSortQuery ?>">期刊名降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=authors_asc<?= $catSortQuery ?>">作者名升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=authors_desc<?= $catSortQuery ?>">作者名降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=title_asc<?= $catSortQuery ?>">标题升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=title_desc<?= $catSortQuery ?>">标题降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=rating_asc<?= $catSortQuery ?>">评分升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=rating_desc<?= $catSortQuery ?>">评分降序</a></li>
                 <!-- ======== [NEW CODE] citation 排序 ======== -->
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=citation_asc">被引数升序</a></li>
-                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=citation_desc">被引数降序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=citation_asc<?= $catSortQuery ?>">被引数升序</a></li>
+                <li><a href="?categoryID=<?= $selectedCategoryID ?>&sort=citation_desc<?= $catSortQuery ?>">被引数降序</a></li>
             </ul>
         </div>
         
@@ -1065,6 +1125,8 @@ if ($selectedCategoryID) {
         // ====== 工具按钮、菜单 ======
         const toolsBtn = document.getElementById('toolsBtn');
         const toolsMenu = document.getElementById('toolsMenu');
+        const catSortBtn = document.getElementById('catSortBtn');
+        const catSortMenu = document.getElementById('catSortMenu');
         
         if (toolsBtn) {
             toolsBtn.addEventListener('click', () => {
@@ -1077,11 +1139,26 @@ if ($selectedCategoryID) {
             });
         }
 
+        if (catSortBtn) {
+            catSortBtn.addEventListener('click', () => {
+                if (catSortMenu.style.display === 'none' || catSortMenu.style.display === '') {
+                    catSortMenu.style.display = 'block';
+                } else {
+                    catSortMenu.style.display = 'none';
+                }
+            });
+        }
+
         // 如果用户点击页面其他位置，需要隐藏菜单
         document.addEventListener('click', (e) => {
             if (toolsBtn && toolsMenu) {
                 if (!toolsBtn.contains(e.target) && !toolsMenu.contains(e.target)) {
                     toolsMenu.style.display = 'none';
+                }
+            }
+            if (catSortBtn && catSortMenu) {
+                if (!catSortBtn.contains(e.target) && !catSortMenu.contains(e.target)) {
+                    catSortMenu.style.display = 'none';
                 }
             }
         });
