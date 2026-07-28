@@ -1,7 +1,27 @@
 <?php
 // 获取所有分类名称
-function getCategories($mysqli) {
-    $query = "SELECT * FROM categories ORDER BY category_name ASC";
+function getCategories($mysqli, $catSort = 'category_name_asc') {
+    switch ($catSort) {
+        case 'categoryID_asc':
+            $query = "SELECT * FROM categories ORDER BY categories.categoryID ASC";
+            break;
+        case 'categoryID_desc':
+            $query = "SELECT * FROM categories ORDER BY categories.categoryID DESC";
+            break;
+        case 'category_name_desc':
+            $query = "SELECT * FROM categories ORDER BY categories.category_name DESC";
+            break;
+        case 'recent_paper_desc':
+            $query = "SELECT c.* FROM categories c LEFT JOIN (SELECT categoryID, MAX(paperID) AS maxPaperID FROM paperCategories GROUP BY categoryID) x ON c.categoryID = x.categoryID ORDER BY x.maxPaperID IS NULL ASC, x.maxPaperID DESC, c.categoryID DESC";
+            break;
+        case 'recent_paper_asc':
+            $query = "SELECT c.* FROM categories c LEFT JOIN (SELECT categoryID, MAX(paperID) AS maxPaperID FROM paperCategories GROUP BY categoryID) x ON c.categoryID = x.categoryID ORDER BY x.maxPaperID IS NULL ASC, x.maxPaperID ASC, c.categoryID ASC";
+            break;
+        case 'category_name_asc':
+        default:
+            $query = "SELECT * FROM categories ORDER BY categories.category_name ASC";
+            break;
+    }
     $result = $mysqli->query($query);
 
     if ($result) {
@@ -16,18 +36,7 @@ function getCategories($mysqli) {
 }
 
 function getCategoriesByRecentPaperUsage($mysqli) {
-    $query = "SELECT c.* FROM categories c LEFT JOIN (SELECT categoryID, MAX(paperID) AS maxPaperID FROM paperCategories GROUP BY categoryID) x ON c.categoryID = x.categoryID ORDER BY x.maxPaperID IS NULL ASC, x.maxPaperID DESC, c.categoryID DESC";
-    $result = $mysqli->query($query);
-
-    if ($result) {
-        $categories = [];
-        while ($row = $result->fetch_assoc()) {
-            $categories[] = $row;
-        }
-        return $categories;
-    } else {
-        return "Error: " . $mysqli->error;
-    }
+    return getCategories($mysqli, 'recent_paper_desc');
 }
 
 // 新增分类
