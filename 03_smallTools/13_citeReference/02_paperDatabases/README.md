@@ -1641,7 +1641,7 @@ b. 解决方案
 
 
 
-💡 **22 新增思路**
+💡 **22.1 新增思路**
 
 请修改 `08_webAccessPaper.php` 及必要的相关 PHP 接口/函数，实现以下功能：
 
@@ -1666,6 +1666,88 @@ b. 解决方案
 
 关于上述编码prompt是否有需要和我确认、讨论或者建议的吗？或者你认为不合理或者需要优化的地方？没有的话直接编码
 
+
+
+💡 **22.2 新增思路**
+
+请修改 `08_webAccessPaper.php` 左侧“现有分类”的排序方式，使用户可以通过点击“分类排序”选择分类标签的排序方式。请尽量少改动代码，只修改与该需求直接相关的行，避免无关格式化、空格、注释或重构，不要影响现有功能。
+
+需求如下：
+
+1. 页面默认仍按 `categories.category_name ASC` 显示分类，也就是当前默认行为不变。
+
+2. 新增一个 GET 参数 `cat_sort` 专门控制左侧分类排序，不要复用现有的 `sort` 参数。现有 `sort` 参数继续只用于右侧论文列表排序。
+
+3. 支持以下 6 种分类排序方式：
+
+   - `categoryID_asc`：按 `categories.categoryID ASC`
+   - `categoryID_desc`：按 `categories.categoryID DESC`
+   - `category_name_asc`：按 `categories.category_name ASC`
+   - `category_name_desc`：按 `categories.category_name DESC`
+   - `recent_paper_desc`：按最近使用排序，逻辑为对 `paperCategories` 表按 `categoryID` 分组，计算每个分类关联过的最大 `paperID`，记为 `maxPaperID`；查询 `categories` 表时左连接该结果，并按 `maxPaperID IS NULL ASC, maxPaperID DESC, categoryID DESC` 排序
+   - `recent_paper_asc`：按最久未用排序，逻辑为同样计算 `maxPaperID`，然后按 `maxPaperID IS NULL ASC, maxPaperID ASC, categoryID ASC` 排序
+
+4. `cat_sort` 必须使用白名单处理。不要把用户传入的 GET 参数直接拼进 SQL。非法值一律回退到默认值 `category_name_asc`。
+
+5. 建议修改 `08_category_operations.php` 中的 `getCategories()`，让它接收可选参数，例如：
+   ```php
+   function getCategories($mysqli, $catSort = 'category_name_asc')
+   ```
+   并在函数内部根据白名单选择 SQL。
+
+6. 可以保留或复用现有的 `getCategoriesByRecentPaperUsage()` 逻辑，但最终 `08_webAccessPaper.php` 应统一通过 `getCategories($mysqli, $catSort)` 获取左侧分类，方便以后继续扩展排序方式。
+
+7. 在 `08_webAccessPaper.php` 的“分类管理”按钮旁边新增一个文字按钮 `分类排序`，样式与现有 `分类管理` 按钮保持一致。
+
+8. 点击 `分类排序` 后，在它相邻的下方显示一个小型下拉菜单，而不是页面右上角的大弹窗。菜单靠近 `分类排序`，方便用户快速定位和点击。
+
+9. 下拉菜单显示以下 6 个选项，文案必须简洁：
+
+   - `ID增序`
+   - `ID降序`
+   - `名称A-Z`
+   - `名称Z-A`
+   - `最近使用`
+   - `最久未用`
+
+   对应关系为：
+
+   - `ID增序` -> `categoryID_asc`
+   - `ID降序` -> `categoryID_desc`
+   - `名称A-Z` -> `category_name_asc`
+   - `名称Z-A` -> `category_name_desc`
+   - `最近使用` -> `recent_paper_desc`
+   - `最久未用` -> `recent_paper_asc`
+
+10. 当前正在使用的分类排序选项在菜单中显示为红色，颜色可以沿用当前选中分类使用的 `#d14836`。不要使用勾号或箭头符号。
+
+11. 下拉菜单中的每个选项使用普通链接实现，点击后刷新当前页面，并通过 URL 参数设置新的 `cat_sort`。
+
+12. 刷新页面时必须保持当前排序方式。这里采用纯 URL 参数方案，不使用 cookie、不使用 session、不修改数据库、不创建新文件。
+
+13. 页面内已有链接需要保留当前 `cat_sort`，避免用户操作后分类排序丢失。至少包括：
+
+   - 左侧分类标签链接：切换分类时保留当前 `cat_sort`
+   - 右侧论文排序链接：切换论文排序时保留当前 `cat_sort`
+   - 分类排序菜单链接：切换 `cat_sort` 时保留当前 `categoryID` 和右侧论文 `sort`
+   - 分类创建、删除、修改后的重定向：如果当前 URL 中有 `cat_sort`，POST 后重定向也应保留它
+
+14. 不要让这个新功能影响右侧每条论文下面点击 `分类` 后弹出的分类管理/分类复选框弹窗。该弹窗里的分类排序不需要跟随左侧 `cat_sort` 改变。
+
+15. 不要修改 `08_tm_get_categories.php`，除非发现不修改会导致当前页面报错。该接口现有行为应尽量保持不变。
+
+16. 不要影响已有脚本和功能的正常运行，不要引入明显增加响应延迟的逻辑。最近使用排序只需要在用户选择对应排序时使用左连接和分组查询；默认名称排序仍保持简单查询。
+
+17. 修改完成后，请检查以下场景：
+
+   - 直接打开 `08_webAccessPaper.php` 时默认是 `名称A-Z`
+   - 点击 `分类排序` 能在按钮下方展开菜单
+   - 当前排序项显示为红色
+   - 点击 6 个菜单项后，左侧分类顺序正确变化
+   - 点击左侧某个分类后，`cat_sort` 没有丢失
+   - 切换右侧论文排序后，`cat_sort` 没有丢失
+   - 刷新当前 URL 后，分类排序保持不变
+   - 右侧论文下方的 `分类` 弹窗排序不受影响
 
 
 
