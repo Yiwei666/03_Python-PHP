@@ -125,26 +125,38 @@ $__ALL_DOIS = getAllDois($mysqli);
             left: 10%;             /* 距离左侧 10% */
             width: 80%;           /* 设置弹窗宽度为页面的 80% */
             max-height: 600px;
-            overflow-y: auto;     /* 超出部分出现纵向滚动条 */
+            overflow: hidden;     /* 分类列表单独滚动，顶部操作区保持可见 */
             background-color: #fff;
             border: 1px solid #ccc;
-            padding: 15px;
+            padding: 0;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 9999;
             display: none; /* 默认隐藏 */
+            flex-direction: column;
+        }
+        .category-selection-header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
         }
         .category-selection h3 {
-            margin-top: 0;
+            flex: 1;
+            margin: 0;
         }
         .close-cat-btn {
-            float: right;
             background: none;
             border: none;
             font-size: 18px;
             color: #666;
             cursor: pointer;
-            margin-top: -8px;
+            padding: 4px 8px;
         }
         .close-cat-btn:hover {
             color: #333;
@@ -154,6 +166,10 @@ $__ALL_DOIS = getAllDois($mysqli);
             display: grid;
             grid-template-columns: repeat(5, 1fr); /* 5 列 */
             gap: 8px; /* 列间距和行间距 */
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 15px;
         }
         .cat-item {
             /* 每一个分类项的样式，可以酌情调整间距或对齐 */
@@ -164,13 +180,19 @@ $__ALL_DOIS = getAllDois($mysqli);
             margin-right: 5px;
         }
         .save-categories-btn {
-            margin-top: 10px;
-            padding: 8px 16px;
-            background-color: #4CAF50;
+            margin: 0;
+            padding: 5px 14px;
+            background-color: #607D8B;
             color: white;
             border: none;
             cursor: pointer;
             border-radius: 4px;
+        }
+        .save-categories-btn:hover {
+            background-color: #546E7A;
+        }
+        .category-selection-header .save-categories-btn {
+            margin: 0;
         }
         /* ========== 修改分类弹窗的样式 END ========== */
 
@@ -241,10 +263,12 @@ $__ALL_DOIS = getAllDois($mysqli);
 
 <!-- 分类选择的弹窗容器 -->
 <div class="category-selection" id="category-selection-container">
-    <button class="close-cat-btn" id="close-cat-btn">&times;</button>
-    <h3>为论文添加分类标签</h3>
+    <div class="category-selection-header">
+        <h3>为论文添加分类标签</h3>
+        <button class="save-categories-btn" id="save-categories-top-btn">保存</button>
+        <button class="close-cat-btn" id="close-cat-btn">&times;</button>
+    </div>
     <div id="category-list"></div>
-    <button class="save-categories-btn" id="save-categories-btn">保存分类</button>
 </div>
 
 <!-- 加载指示器 (Spinner) -->
@@ -281,7 +305,7 @@ let activeItemData = null;
 const categorySelectionContainer = document.getElementById('category-selection-container');
 const categoryListContainer = document.getElementById('category-list');
 const closeCatBtn = document.getElementById('close-cat-btn');
-const saveCatBtn = document.getElementById('save-categories-btn');
+const saveCatBtn = document.getElementById('save-categories-top-btn');
 
 // loading overlay
 const loadingOverlay = document.getElementById('loading-overlay');
@@ -606,7 +630,7 @@ function handleTagButtonClick(categoryOrder = '') {
 // 显示分类选择界面
 function displayCategorySelection(categories, paperCategories) {
     categoryListContainer.innerHTML = '';
-    categorySelectionContainer.style.display = 'block';
+    categorySelectionContainer.style.display = 'flex';
 
     // paperCategories 可能是字符串，需要转成数字再比较
     const numericPaperCategories = paperCategories.map(x => parseInt(x, 10));
@@ -644,7 +668,7 @@ function displayCategorySelection(categories, paperCategories) {
     });
 }
 
-// 点击「保存分类」按钮
+// 点击「保存」按钮
 saveCatBtn.addEventListener('click', () => {
     // 收集所有选中的分类
     const checkboxes = categoryListContainer.querySelectorAll('input[type="checkbox"]');
