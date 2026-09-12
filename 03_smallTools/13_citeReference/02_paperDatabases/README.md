@@ -3498,7 +3498,42 @@ $ scidownl download --pmid 31395057 --out ./paper/paper-1.pdf --proxy http=socks
 
 
 
-# 参考资料
+# 9. alias和cron定时
+
+## 1. alias
+
+
+
+
+## 2. cron定时任务
+
+
+```sh
+# 更新论文状态码并执行论文下载删除等操作
+*/2 * * * * php /home/01_html/08_server_update_paper_status.php
+
+# 将onedrive中的论文数据库同步到google drive中 
+*/5 * * * * /usr/bin/rclone sync 'rc4:/3图书/13_paperRemoteStorage/' 'gd1:/13_paperRemoteStorage/' --transfers=16
+
+# 备份论文数据库到rc4
+0 3 * * * rclone copy --ignore-existing /home/01_html/08_paper_db_backup  rc4:/cloudServer_backup/rn1-1/08_paper_db_backup  --transfers=16
+
+# 从所有具有标准doi值的行中，随机选取一行更新引用数，不限制引用数是否为0。适合不断更新论文的引用情况，需较长时间。
+*/5 * * * * /usr/bin/php /home/01_html/08_server_update_citation_all_random.php > /dev/null 2>&1
+
+# 按照paperID降序，从引用数为0的前N行中随机选取一行更新引用数，注意前N行引用数均为0的情况。适合更新最新导入数据库的论文。
+*/2 * * * * /usr/bin/php /home/01_html/08_server_update_citation_topN_random.php > /dev/null 2>&1
+
+# 调度器，上次结束-下次开始 等待间隔8秒执行 `08_server_update_paper_selection.php` 脚本
+# * * * * * /usr/bin/bash /home/01_html/08_server_sups_scheduler.sh >>/home/01_html/08_sups_scheduler.log 2>&1
+* * * * * /usr/bin/bash /home/01_html/08_server_sups_scheduler.sh >/dev/null 2>&1
+
+# 将google drive中pdf文件的 id 写入到数据库 gdfile 表格中，在线预览
+*/8 * * * * php /home/01_html/08_server_update_gdrive_fileID.php
+
+# 每分钟更新一次“0 latestN”分类，使其仅包含 paperID 最新的 N 篇论文
+* * * * * /usr/bin/php /home/01_html/08_server_update_latestN.php >/dev/null 2>&1
+```
 
 
 
