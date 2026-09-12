@@ -3502,11 +3502,25 @@ $ scidownl download --pmid 31395057 --out ./paper/paper-1.pdf --proxy http=socks
 
 ## 1. alias
 
+```
+# 备份数据库、bash以及cron文件
+alias ltree='tree -pugsh -L 2'
+# alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup_$(date +%Y%m%d_%H%M%S).sql'
+alias dpaper='mysqldump -p paper_db > /home/01_html/08_paper_db_backup/paper_backup/08_paper_db_backup_$(date +%Y%m%d_%H%M%S).sql && ls -1 /home/01_html/08_paper_db_backup/paper_backup/'
 
+alias cpbash='cp ~/.bashrc /home/01_html/08_paper_db_backup/bashrc_backup/bashrc_backup_$(date +%Y%m%d_%H%M%S) && ls -1 /home/01_html/08_paper_db_backup/bashrc_backup'
+alias cpcron='crontab -l > /home/01_html/08_paper_db_backup/cron_backup/cron_backup_$(date +%Y%m%d_%H%M%S) && ls -1 /home/01_html/08_paper_db_backup/cron_backup/'
+alias lspaper='ls -1 /home/01_html/08_paper_db_backup/paper_backup/'
+
+alias spm='php /home/01_html/08_server_paper_management.php'
+alias sipdd='/usr/bin/php /home/01_html/08_server_insert_paper_doi_defined.php'
+alias pagss="ps aux | grep '08_server_sups_scheduler.sh'"
+alias kilsss="pkill -f '08_server_sups_scheduler.sh'"
+alias pagsups="ps aux | grep '08_server_update_paper_selection.php'"
+```
 
 
 ## 2. cron定时任务
-
 
 ```sh
 # 更新论文状态码并执行论文下载删除等操作
