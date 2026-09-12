@@ -2975,6 +2975,55 @@ if ($row123) {
 ```
 
 
+### 3. LLM生成参考文献
+
+复制如下提示词粘贴到LLM窗口中即可。
+
+
+````
+```
+mysql> describe papers;
++------------------+----------------------------------+------+-----+---------+----------------+
+| Field            | Type                             | Null | Key | Default | Extra          |
++------------------+----------------------------------+------+-----+---------+----------------+
+| paperID          | int                              | NO   | PRI | NULL    | auto_increment |
+| title            | varchar(355)                     | YES  |     | NULL    |                |
+| authors          | text                             | NO   |     | NULL    |                |
+| journal_name     | varchar(255)                     | NO   |     | NULL    |                |
+| publication_year | int                              | NO   |     | NULL    |                |
+| volume           | varchar(50)                      | YES  |     | NULL    |                |
+| issue            | varchar(50)                      | YES  |     | NULL    |                |
+| pages            | varchar(50)                      | YES  |     | NULL    |                |
+| article_number   | varchar(50)                      | YES  |     | NULL    |                |
+| doi              | varchar(100)                     | YES  |     | NULL    |                |
+| issn             | varchar(50)                      | YES  |     | NULL    |                |
+| publisher        | varchar(255)                     | YES  |     | NULL    |                |
+| status           | enum('CL','C','L','N','DW','DL') | NO   |     | N       |                |
+| rating           | int unsigned                     | NO   |     | 0       |                |
+| doi_type         | enum('T','F')                    | YES  |     | F       |                |
+| citation_count   | int unsigned                     | YES  |     | 0       |                |
++------------------+----------------------------------+------+-----+---------+----------------+
+16 rows in set (0.01 sec)
+
+```
+
+针对给出的参考文献，能否提取如上列的值，对于不存在的值使用其默认值，以json格式输出。标题、出版年、期刊名、作者、doi、doi_type、引用数 这7列的值需要排在最上面。然后下面是使用非默认值的列，其余使用默认值得列放在最后。
+
+对于doi不存在的，需要按照一定规则构造一个伪doi。首先使用 `10.fake/`作为前缀，后加`j.`期刊标识，再加期刊首字母缩写，例如`The Chinese Journal of Process Engineering`期刊首字母缩写为`cjpe`，再加出版年、卷和起始页，如`1990.02.100`，完整的就是 `10.fake/j.cjpe.1990.02.100`。如果不存在出版年、卷和起始页，则使用此刻的`年月日时分秒`时间戳来替代，例如 `10.fake/j.cjpe.20260911221601`，从而最大程度确保伪doi的唯一性。
+
+如果最终的json格式中包含以下键值对，则下面的键值对可以不用输出。
+
+```json
+  "article_number": null,
+  "issn": null,
+  "publisher": null,
+  "status": "N",
+  "rating": 0
+```
+````
+
+
+
 ## 6.1 `08_server_update_paper_selection.php`
 
 功能：根据数据库中用户在网页选择的论文doi，在谷歌云盘的不同目录下进行复制、删除、同步操作，使得用户选择的论文出现在云盘指定目录
