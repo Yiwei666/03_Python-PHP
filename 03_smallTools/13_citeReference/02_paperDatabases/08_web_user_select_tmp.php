@@ -104,7 +104,15 @@ if ($action === 'clear') {
 }
 
 if ($action === 'copy') {
-    $res = $mysqli->query("SELECT paperID, doi, title FROM select_paper ORDER BY paperID ASC"); // [MODIFIED]
+    $res = $mysqli->query("
+        SELECT sp.paperID, sp.doi, sp.title,
+            COALESCE(
+                (SELECT g1.fileID FROM gdfile g1 WHERE g1.paperID = sp.paperID LIMIT 1),
+                (SELECT g2.fileID FROM gdfile g2 WHERE g2.doi = sp.doi LIMIT 1)
+            ) AS gdFileID
+        FROM select_paper sp
+        ORDER BY sp.paperID ASC
+    "); // [MODIFIED]
     if (!$res) {
         echo json_encode(['success' => false, 'message' => $mysqli->error], JSON_UNESCAPED_UNICODE);
         exit();
@@ -115,7 +123,8 @@ if ($action === 'copy') {
             'paperID' => (int)$row['paperID'],
             'doi' => $row['doi'],
             'title' => $row['title'],
-            'encodedDOI' => Base32::encode($row['doi'])
+            'encodedDOI' => Base32::encode($row['doi']),
+            'gdURL' => !empty($row['gdFileID']) ? 'https://drive.google.com/file/d/' . rawurlencode($row['gdFileID']) . '/view' : null
         ];
     }
     $res->close();
