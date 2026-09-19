@@ -158,7 +158,11 @@ function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
         SELECT 
             p.paperID, p.title, p.authors, p.publication_year, 
             p.journal_name, p.doi, p.status, 
-            p.citation_count, p.rating  /* 直接取回 rating 值 */
+            p.citation_count, p.rating,  /* 直接取回 rating 值 */
+            COALESCE(
+                (SELECT g1.fileID FROM gdfile g1 WHERE g1.paperID = p.paperID LIMIT 1),
+                (SELECT g2.fileID FROM gdfile g2 WHERE g2.doi = p.doi LIMIT 1)
+            ) AS gdFileID
         FROM papers p
         JOIN paperCategories pc ON p.paperID = pc.paperID
         WHERE pc.categoryID = ?
