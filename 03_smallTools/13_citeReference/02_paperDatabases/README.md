@@ -1750,6 +1750,70 @@ b. 解决方案
    - 右侧论文下方的 `分类` 弹窗排序不受影响
 
 
+💡 **22.3 新增思路**
+
+请基于当前项目代码实现以下需求。
+
+目标：
+
+在 `08_webAccessPaper.php` 页面中，“复制临表”“复制类表”“复制已选”三个按钮复制的每条论文 JSON 数据中，在现有字段：
+
+- `paperID`
+- `doi`
+- `title`
+- `encodedDOI`
+
+之后新增：
+
+- `gdURL`
+
+`gdURL` 必须与该论文“预览”按钮实际打开的 Google Drive 链接保持一致，格式为：
+
+```text
+https://drive.google.com/file/d/{fileID}/view
+```
+
+`fileID` 来自数据库的 `gdfile` 表。查询规则必须与现有 `08_tm_get_gdfile_id.php` 一致：
+
+1. 优先根据 `paperID` 查询 `gdfile.fileID`；
+2. 如果根据 `paperID` 未找到，再根据 `doi` 查询；
+3. 如果仍未找到，输出 `"gdURL": null`，不得生成无效链接。
+
+请采用尽量小且高效的改动，预计只修改以下三个文件：
+
+1. `08_category_operations.php`
+
+在 `getPapersByCategory()` 的现有查询中增加 `fileID` 查询。建议使用相关子查询和 `COALESCE` 实现“paperID 优先、doi 回退”的规则，并分别使用 `LIMIT 1`。不要使用可能造成论文结果重复的普通 `JOIN`。
+
+2. `08_webAccessPaper.php`
+
+- 在现有 `$papersData` 每条数据中增加 `gdURL`；
+- 在“复制类表”的输出对象中增加 `gdURL`；
+- 在“复制已选”的输出对象中增加 `gdURL`；
+- 保留字段顺序为 `paperID、doi、title、encodedDOI、gdURL`；
+- 不要修改现有预览按钮及 `previewGdfile()` 的行为；
+- 不要在点击复制时逐篇调用 `08_tm_get_gdfile_id.php`。
+
+3. `08_web_user_select_tmp.php`
+
+- 在 `action === 'copy'` 的查询中，同时根据 `select_paper.paperID` 和 `select_paper.doi` 获取 `fileID`；
+- 查询规则同样是 `paperID` 优先、`doi` 回退；
+- 返回的每条数据增加 `gdURL`；
+- 找不到 `fileID` 时返回 `null`。
+
+约束：
+
+- 不修改数据库表结构；
+- 不修改 `08_tm_get_gdfile_id.php`；
+- 不改变三个按钮目前各自的数据范围、排序、去重和复制行为；
+- 不改变预览按钮现有行为；
+- 不进行无关重构；
+- 不进行全文件格式化；
+- 不修改与本需求无关的空格、缩进、注释或代码；
+- 保持现有编码和换行格式；
+- 修改完成后运行 PHP 语法检查，并展示精简 diff；
+- 特别检查 SQL 查询不会因为 `gdfile` 中存在多条匹配记录而产生重复论文。
+
 
 
 ### 2. 模块、函数和后端接口
