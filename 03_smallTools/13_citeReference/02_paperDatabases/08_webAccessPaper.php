@@ -637,7 +637,8 @@ if ($selectedCategoryID) {
                                 'doi' => $paper['doi'],
                                 'status' => $paper['status'],
                                 'title' => $paper['title'],  // [NEW] 前端批量提交时需要携带 title
-                                'encodedDOI' => $encodedDOI
+                                'encodedDOI' => $encodedDOI,
+                                'gdURL' => !empty($paper['gdFileID']) ? 'https://drive.google.com/file/d/' . rawurlencode($paper['gdFileID']) . '/view' : null
                             ];
 
                             // ========== [MODIFIED] 使用批量映射替代逐条查询 ==========
@@ -1419,7 +1420,8 @@ if ($selectedCategoryID) {
                         paperID: parseInt(p.paperID, 10),
                         doi: p.doi,
                         title: p.title ?? null,
-                        encodedDOI: p.encodedDOI ?? ''
+                        encodedDOI: p.encodedDOI ?? '',
+                        gdURL: p.gdURL ?? null
                     }));
 
                 if (!items.length) {
@@ -1447,7 +1449,8 @@ if ($selectedCategoryID) {
                         paperID: parseInt(p.paperID, 10),
                         doi: p.doi,
                         title: p.title ?? null,
-                        encodedDOI: p.encodedDOI ?? ''
+                        encodedDOI: p.encodedDOI ?? '',
+                        gdURL: p.gdURL ?? null
                     }));
 
                 if (!items.length) {
