@@ -249,11 +249,11 @@ $__ALL_DOIS = getAllDois($mysqli);
     <!-- 新增：单选按钮组，用于选择搜索模式 -->
     <div class="radio-group">
         <label>
-            <input type="radio" name="search-mode" value="title" checked>
+            <input type="radio" name="search-mode" value="title">
             Title
         </label>
         <label>
-            <input type="radio" name="search-mode" value="doi">
+            <input type="radio" name="search-mode" value="doi" checked>
             DOI
         </label>
     </div>
