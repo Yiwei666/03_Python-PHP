@@ -1856,6 +1856,23 @@ getCategoriesMapByPaperIDs($mysqli, $paperIDs)
 ```
 
 
+💡 **22.4 新增思路**
+
+修改 `08_webAccessPaper.php` 代码，实现以下功能：
+
+1. 在每条论文信息的 `标签 分类 评分 下载 复制DOI 复制编码DOI 复制元信息 预览`等按钮后边新增一个按钮`Sci-Hub`，点击后能够在按钮右边挨着显示一个小窗口（不要挨得太近），小窗口中从上到下依次显示一列文字标签 `sci-hub.st`、`sci-hub.su`、`sci-hub.red`、`sci-hub.box`、`sci-hub.ru`、`sci-hub.ren`，文字标签下面不要有下划线（这个窗口以及标签的排版尽量美观、但是代码不要太复杂，用尽量简单的代码实现）。点击任意标签，在新的标签页中打开如下相应网址，同时文字标签的字体颜色要有改变，方便用户区分哪些标签被点击过。
+```
+https://sci-hub.st/+$doi
+https://sci-hub.su/+$doi
+https://sci-hub.red/+$doi
+https://sci-hub.box/+$doi
+https://sci-hub.ru/+$doi
+https://sci-hub.ren/+$doi
+```
+2. 文字标签的大小、颜色和样式要美观、简约。
+3. 请尽量少改动代码，只修改与该需求直接相关的行，避免无关格式化、空格、注释或重构，不要影响现有功能。
+
+在正式编码前，和你确认你是否理解了我的需求，如果有不明确的，或者你认为又可以优化的地方，请先提出来以便我重新修改prompt方案。没有的话，可以直接编码。
 
 
 ### 3. 环境变量
