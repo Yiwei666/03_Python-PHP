@@ -225,6 +225,42 @@ if ($selectedCategoryID) {
         .paper-categories span {
             cursor: default;
         }
+        .scihub-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .paper-categories .scihub-btn {
+            margin-right: 0;
+        }
+        .scihub-menu {
+            display: none;
+            position: absolute;
+            top: -10px;
+            left: calc(100% + 10px);
+            z-index: 1000;
+            min-width: 105px;
+            padding: 7px 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+        }
+        .scihub-menu a {
+            display: block;
+            padding: 4px 2px;
+            color: #1a0dab;
+            font-size: 13px;
+            line-height: 1.25;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .scihub-menu a:hover {
+            color: #174ea6;
+            background: #f5f7fa;
+        }
+        .scihub-menu a.clicked {
+            color: #c58af9;
+        }
         /* “工具”按钮、以及新增的“全部下载”和“全部删除”按钮样式一致 */
         #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn, #copySelectedBtn {
             background-color: transparent;
@@ -724,6 +760,14 @@ if ($selectedCategoryID) {
                                     echo '<button type="button" class="copy-meta-btn" onclick="copyMeta(\'' . htmlspecialchars($paper['doi']) . '\')">复制元信息</button>';
                                     echo '<button type="button" class="preview-btn" onclick="previewGdfile(\'' . htmlspecialchars($paper['doi']) . '\',' . (int)$paper['paperID'] . ')">预览</button>';
                                 ?>
+                                <div class="scihub-wrapper">
+                                    <button type="button" class="scihub-btn" onclick="toggleSciHubMenu(this)">Sci-Hub</button>
+                                    <div class="scihub-menu">
+                                        <?php foreach (['sci-hub.st', 'sci-hub.su', 'sci-hub.red', 'sci-hub.box', 'sci-hub.ru', 'sci-hub.ren'] as $sciHubDomain): ?>
+                                            <a href="https://<?= $sciHubDomain ?>/<?= htmlspecialchars($paper['doi'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" onclick="markSciHubClicked(this)"><?= $sciHubDomain ?></a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
                             </div>
                             
                             <!-- 第4行: 显示当前论文所属的所有分类标签 -->
@@ -1122,6 +1166,24 @@ if ($selectedCategoryID) {
                 alert('请求 fileID 失败。');
             });
         }
+
+        function toggleSciHubMenu(button) {
+            const menu = button.nextElementSibling;
+            document.querySelectorAll('.scihub-menu').forEach(item => {
+                if (item !== menu) item.style.display = 'none';
+            });
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function markSciHubClicked(link) {
+            link.classList.add('clicked');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.scihub-wrapper')) {
+                document.querySelectorAll('.scihub-menu').forEach(item => item.style.display = 'none');
+            }
+        });
 
         // ====== 工具按钮、菜单 ======
         const toolsBtn = document.getElementById('toolsBtn');
