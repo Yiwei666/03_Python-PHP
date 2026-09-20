@@ -1815,47 +1815,6 @@ https://drive.google.com/file/d/{fileID}/view
 - 特别检查 SQL 查询不会因为 `gdfile` 中存在多条匹配记录而产生重复论文。
 
 
-
-### 2. 模块、函数和后端接口
-
-1. PHP模块
-
-```php
-08_db_config.php
-08_category_operations.php
-08_web_Base32.php
-```
-
-
-2. 后端接口
-
-```php
-08_tm_get_categories.php
-08_tm_get_paper_categories.php
-08_tm_update_paper_categories.php
-08_tm_get_paper_metaInfo.php
-08_web_update_paper_status.php
-08_web_update_rating.php
-08_web_user_select_tmp.php
-08_tm_get_gdfile_id.php
-```
-
-
-3. PHP函数（包括后端api接口从php模块中调用的函数）
-
-```php
-getCategories($mysqli)
-addCategory($mysqli, $categoryName)
-deleteCategory($mysqli, $categoryID)
-updateCategoryName($mysqli, $categoryID, $newCategoryName)
-getPaperByDOI($mysqli, $doi)
-insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)
-assignAllPapersCategory($mysqli, $paperID)
-# getPapersByCategory($mysqli, $selectedCategoryID, $sort)         # 该函数在本脚本中已被 getCategoriesMapByPaperIDs($mysqli, $paperIDs) 函数取代
-getCategoriesMapByPaperIDs($mysqli, $paperIDs)     
-```
-
-
 💡 **22.4 新增思路**
 
 修改 `08_webAccessPaper.php` 代码，实现以下功能：
@@ -1873,6 +1832,48 @@ https://sci-hub.ren/+$doi
 3. 请尽量少改动代码，只修改与该需求直接相关的行，避免无关格式化、空格、注释或重构，不要影响现有功能。
 
 在正式编码前，和你确认你是否理解了我的需求，如果有不明确的，或者你认为又可以优化的地方，请先提出来以便我重新修改prompt方案。没有的话，可以直接编码。
+
+
+
+
+
+### 2. 模块、函数和后端接口
+
+1. PHP模块
+
+```php
+08_db_config.php
+08_category_operations.php
+08_web_Base32.php
+```
+
+2. 后端接口
+
+```php
+08_tm_get_categories.php
+08_tm_get_paper_categories.php
+08_tm_update_paper_categories.php
+08_tm_get_paper_metaInfo.php
+08_web_update_paper_status.php
+08_web_update_rating.php
+08_web_user_select_tmp.php
+08_tm_get_gdfile_id.php
+```
+
+3. PHP函数（包括后端api接口从php模块中调用的函数）
+
+```php
+getCategories($mysqli)
+addCategory($mysqli, $categoryName)
+deleteCategory($mysqli, $categoryID)
+updateCategoryName($mysqli, $categoryID, $newCategoryName)
+getPaperByDOI($mysqli, $doi)
+insertPaper($mysqli, $title, $authors, $journal_name, $publication_year, $volume, $issue, $pages, $article_number, $doi, $issn, $publisher)
+assignAllPapersCategory($mysqli, $paperID)
+# getPapersByCategory($mysqli, $selectedCategoryID, $sort)         # 该函数在本脚本中已被 getCategoriesMapByPaperIDs($mysqli, $paperIDs) 函数取代
+getCategoriesMapByPaperIDs($mysqli, $paperIDs)     
+```
+
 
 
 ### 3. 环境变量
