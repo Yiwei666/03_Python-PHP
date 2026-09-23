@@ -3625,7 +3625,9 @@ alias pagsups="ps aux | grep '08_server_update_paper_selection.php'"
 * * * * * /usr/bin/bash /home/01_html/08_server_sups_scheduler.sh >/dev/null 2>&1
 
 # 将google drive中pdf文件的 id 写入到数据库 gdfile 表格中，在线预览
-*/8 * * * * php /home/01_html/08_server_update_gdrive_fileID.php
+# */8 * * * * php /home/01_html/08_server_update_gdrive_fileID.php
+# 每4分钟执行一次 Google Drive 论文文件ID同步脚本；使用 flock 防止上一轮未结束时重复运行
+*/4 * * * * flock -n /tmp/update_gdrive_fileID.lock php /home/01_html/08_server_update_gdrive_fileID.php
 
 # 每分钟更新一次“0 latestN”分类，使其仅包含 paperID 最新的 N 篇论文
 * * * * * /usr/bin/php /home/01_html/08_server_update_latestN.php >/dev/null 2>&1
