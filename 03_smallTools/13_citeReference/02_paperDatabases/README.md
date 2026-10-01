@@ -875,51 +875,72 @@ require_once '08_category_operations.php';
 - 访问接口需要提供有效的 `API Key` 进行认证。
 
 
+### 2. 编程思路
 
-### 2. 环境变量
+💡 **1. 新增思路**
 
-```php
-// 引入 API 认证、数据库与操作模块
-require_once '08_api_auth.php';
-require_once '08_db_config.php';
-require_once '08_category_operations.php';
-```
+请以最小改动实现以下需求：
 
+当前 `08_webAccessPaper.php` 中，“复制元信息”复制的 JSON 缺少 `encodedDOI` 和 `gdURL`。请让其与“复制临表”“复制类表”“复制已选”保持一致，增加这两个字段。
+
+要求：
+
+1. 优先修改现有接口 `08_tm_get_paper_metaInfo.php`，保留全部原有元信息。
+2. 复用 `08_web_Base32.php` 的 `Base32::encode()` 生成 `encodedDOI`。
+3. `gdURL` 格式为：
+   `https://drive.google.com/file/d/fileID/view`
+4. `fileID` 优先按 `paperID` 查询，找不到再按 `doi` 查询；仍找不到则 `gdURL` 为 `null`。
+5. 如果前端 `copyMeta()` 已复制完整的 `paper` 对象，则不要修改前端。
+6. 不新增接口，不修改数据库结构，不进行无关重构、格式化、注释或空格调整，不影响现有功能。
+7. 完成后检查 PHP 语法，并说明修改的文件和验证结果。
+
+编码前先确认是否理解需求；如无歧义，可直接编码。
+
+
+### 3. 环境变量
 
 1. HTTP 头设置
 
-    - 返回内容类型为 `JSON (Content-Type: application/json; charset=utf-8)`。
-    
-    - 允许跨域`（Access-Control-Allow-Origin: *）`和指定的请求方法、请求头。
-    
-    - 处理 OPTIONS 预检请求（CORS 预检时直接返回 204）。
+   - 返回内容类型为 `JSON`（`Content-Type: application/json; charset=utf-8`）。
+   - 允许跨域请求，并允许指定的请求方法和请求头。
+   - 收到 `OPTIONS` 预检请求时直接返回 HTTP 204。
 
 2. 引入依赖文件
 
-    - `08_api_auth.php` → 提供 `checkApiKey()` 检查 `API Key` 是否有效。
-    
-    - `08_db_config.php` → 创建数据库连接 `$mysqli`。
-    
-    - `08_category_operations.php` → 提供 `getPaperByDOI()` 查询函数。
+   - `08_api_auth.php`：提供 `checkApiKey()`，用于验证 API Key。
+   - `08_db_config.php`：创建数据库连接 `$mysqli`。
+   - `08_category_operations.php`：提供 `getPaperByDOI()`，用于查询论文元信息。
+   - `08_web_Base32.php`：提供 `Base32::encode()`，用于生成 `encodedDOI`。
 
-3. `API Key` 验证
+3. API Key 验证
 
-    - 调用 `checkApiKey()` 从请求头读取 `X-Api-Key`，如果无效则返回 401 并终止。
+   - 调用 `checkApiKey()` 从请求头读取 `X-Api-Key`。
+   - 如果 API Key 无效，则返回 HTTP 401 并终止执行。
 
 4. 读取请求参数
 
-    - 从 `$_GET` 获取 `doi` 参数，去除首尾空格。
-    
-    - 如果缺少或为空，返回 `success=false` 与错误提示。
+   - 从 `$_GET` 中读取 `doi` 参数并去除首尾空格。
+   - 如果 `doi` 缺失或为空，则返回 `success=false` 和相应错误提示。
 
-5. 数据库查询
+5. 查询论文元信息
 
-    - 调用 `getPaperByDOI($mysqli, $doi)` 在 papers 表中查找对应记录。
-    
-    - 如果查到，返回 `success=true` 和完整 `$paper` 数据（数组转 JSON）。
-    
-    - 如果查不到，返回 `success=false` 与 `“未找到该论文的元信息”` 提示。
+   - 调用 `getPaperByDOI($mysqli, $doi)`，在 `papers` 表中查找对应论文。
+   - 如果没有找到论文，则返回 `success=false` 和“未找到该论文的元信息”提示。
 
+6. 生成附加字段
+
+   - 使用 `Base32::encode($paper['doi'])` 生成 `encodedDOI`。
+   - 在 `gdfile` 表中查询 Google Drive 的 `fileID`：
+     - 优先按照 `paperID` 查询。
+     - 如果未找到，再按照 `doi` 查询。
+   - 找到 `fileID` 时，将其转换为：
+     `https://drive.google.com/file/d/fileID/view`
+   - 如果未找到 `fileID`，则将 `gdURL` 设置为 `null`。
+
+7. 返回查询结果
+
+   - 在原有完整论文元信息中追加 `encodedDOI` 和 `gdURL`。
+   - 最终返回 `success=true` 和扩展后的 `$paper` JSON 数据。
 
 
 
