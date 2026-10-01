@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once '08_api_auth.php';
 require_once '08_db_config.php';
 require_once '08_category_operations.php';
+require_once '08_web_Base32.php';
 
 // 执行 API Key 检查
 checkApiKey();
@@ -27,6 +28,20 @@ if ($doi === '') {
 // 查询
 $paper = getPaperByDOI($mysqli, $doi);
 if ($paper) {
+    $fileID = null;
+    $stmt = $mysqli->prepare("SELECT COALESCE(
+        (SELECT g1.fileID FROM gdfile g1 WHERE g1.paperID = ? LIMIT 1),
+        (SELECT g2.fileID FROM gdfile g2 WHERE g2.doi = ? LIMIT 1)
+    )");
+    if ($stmt) {
+        $stmt->bind_param('is', $paper['paperID'], $paper['doi']);
+        $stmt->execute();
+        $stmt->bind_result($fileID);
+        $stmt->fetch();
+        $stmt->close();
+    }
+    $paper['encodedDOI'] = Base32::encode($paper['doi']);
+    $paper['gdURL'] = !empty($fileID) ? 'https://drive.google.com/file/d/' . rawurlencode($fileID) . '/view' : null;
     echo json_encode(['success' => true, 'paper' => $paper], JSON_UNESCAPED_UNICODE);
 } else {
     echo json_encode(['success' => false, 'message' => '未找到该论文的元信息。'], JSON_UNESCAPED_UNICODE);
