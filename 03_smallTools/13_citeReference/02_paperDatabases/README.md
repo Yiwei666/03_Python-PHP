@@ -2745,6 +2745,25 @@ sciHubLinksDiv.className = 'sci-hub-links';
 card.appendChild(sciHubLinksDiv);
 ```
 
+6. “复制元信息”按钮调用 `08_tm_get_paper_metaInfo.php`
+
+该按钮仅对数据库中已存在的论文显示，并复用 `08_webAccessPaper.php` 的元信息接口：
+
+```js
+fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
+    headers: { 'X-Api-Key': API_KEY }
+});
+```
+
+接口成功返回 `data.paper` 后，按以下方式生成并复制 JSON：
+
+```js
+const jsonText = JSON.stringify(data.paper, null, 2);
+copyToClipboard(jsonText);
+```
+
+复制字段和格式应与 `08_webAccessPaper.php` 中的“复制元信息”功能保持一致。
+
 
 
 
