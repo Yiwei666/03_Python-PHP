@@ -108,6 +108,9 @@ $__ALL_DOIS = getAllDois($mysqli);
         .preview-btn {
             background-color: #795548;
         }
+        .copy-meta-btn {
+            background-color: #00897B;
+        }
         .item-card.doi-exists, .item-card.doi-exists .item-header {
             color: #c62828;
         }
@@ -582,6 +585,10 @@ function displayResults(items) {
         previewBtn.className = 'preview-btn';
         previewBtn.textContent = '预览';
         previewBtn.addEventListener('click', () => previewGdfile(doi));
+        const copyMetaBtn = document.createElement('button');
+        copyMetaBtn.className = 'copy-meta-btn';
+        copyMetaBtn.textContent = '复制元信息';
+        copyMetaBtn.addEventListener('click', () => copyMeta(doi));
 
         // 按顺序加入：复制列 + 标签按钮
         buttonsDiv.appendChild(copyCol);
@@ -589,7 +596,10 @@ function displayResults(items) {
         buttonsDiv.appendChild(categoryBtn);
         buttonsDiv.appendChild(goPaperBtn);
         buttonsDiv.appendChild(copyDoiBtn);
-        if (exist) buttonsDiv.appendChild(previewBtn);
+        if (exist) {
+            buttonsDiv.appendChild(previewBtn);
+            buttonsDiv.appendChild(copyMetaBtn);
+        }
 
         card.appendChild(buttonsDiv);
         container.appendChild(card);
@@ -828,6 +838,32 @@ function previewGdfile(doi) {
     .catch(err => {
         console.error(err);
         alert('请求 fileID 失败。');
+    });
+}
+
+function copyMeta(doi) {
+    fetch('08_tm_get_paper_metaInfo.php?doi=' + encodeURIComponent(doi), {
+        headers: { 'X-Api-Key': API_KEY }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success && data.paper) {
+            const jsonText = JSON.stringify(data.paper, null, 2);
+            copyToClipboard(jsonText)
+                .then(() => {
+                    alert('已复制json信息: ' + jsonText);
+                })
+                .catch((err) => {
+                    console.error('复制元信息失败:', err);
+                    alert('复制失败');
+                });
+        } else {
+            alert(data.message || '未找到该论文的元信息。');
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert('请求元信息失败。');
     });
 }
 
