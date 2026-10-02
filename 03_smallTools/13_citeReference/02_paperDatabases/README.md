@@ -2573,6 +2573,79 @@ https://sci-hub.ren/+$doi
 12. 修改后检查分类项较多、需要滚动时，顶部保存按钮、分类勾选、弹窗关闭、`标签` 入口和 `分类` 入口都能正常工作。
 
 
+💡 **11. 新增思路**
+
+请修改 `08_web_crossRef_query.php`，实现以下功能：
+
+在 DOI 和 Title 两种检索模式下，当某条检索结果对应的论文已存在于数据库中时，该结果目前会以红色显示并出现“预览”按钮。请在“预览”按钮右侧新增一个“复制元信息”按钮。
+
+具体要求：
+
+1. 显示条件  
+   “复制元信息”按钮仅在论文已存在于数据库、即当前会显示“预览”按钮时出现。DOI 和 Title 两种检索模式都必须支持。
+
+2. 按钮位置与样式  
+   - 按钮放在“预览”按钮右侧。
+   - 字体、字号、内边距、圆角、按钮间距等样式与该结果区域中的其他按钮保持一致。
+   - 使用与其他按钮不同但与现有页面配色协调的填充颜色。
+   - 点击按钮后，字体颜色应像其他按钮一样发生变化。
+   - 页面中其他结果按钮共同具备的通用交互效果，也应自动应用于该按钮。
+
+3. 复制内容  
+   `08_webAccessPaper.php` 中已经存在“复制元信息”按钮。新按钮复制的 JSON 内容、字段、字段顺序和缩进格式应与该按钮完全一致，例如：
+
+```json
+{
+  "paperID": 4785,
+  "title": "Relative Income, Happiness, and Utility: An Explanation for the Easterlin Paradox and Other Puzzles",
+  "authors": "Andrew E Clark, Paul Frijters, Michael A Shields",
+  "journal_name": "Journal of Economic Literature",
+  "publication_year": 2008,
+  "volume": "46",
+  "issue": "1",
+  "pages": "95-144",
+  "article_number": "未找到文章号",
+  "doi": "10.1257/jel.46.1.95",
+  "issn": "0022-0515",
+  "publisher": "American Economic Association",
+  "status": "C",
+  "rating": 0,
+  "doi_type": null,
+  "citation_count": 2246,
+  "encodedDOI": "GEYC4MJSGU3S62TFNQXDINROGEXDSNI=",
+  "gdURL": "https://drive.google.com/file/d/16DZ_OrkfkGfB8Z2X0DhVmNFgFIXjNmtY/view"
+}
+```
+
+4. 复用现有实现  
+   - 优先检查并复用 `08_webAccessPaper.php` 中“复制元信息”按钮使用的接口和处理逻辑。
+   - 应直接调用现有的 `08_tm_get_paper_metaInfo.php` 接口获取数据库中的论文元信息，避免重新编写后端查询逻辑。
+   - 请求应沿用项目现有的 API Key 请求头。
+   - 使用 `JSON.stringify(data.paper, null, 2)` 生成待复制内容。
+   - 成功、失败、未找到元信息及接口请求失败时，应提供与现有实现一致的反馈。
+
+5. 兼容性  
+   复制操作应尽量复用 `08_web_crossRef_query.php` 已有的剪贴板辅助函数，以保留当前页面的剪贴板兼容处理。
+
+6. 改动限制  
+   - 尽量少改动代码，只修改与本需求直接相关的行。
+   - 不进行无关重构。
+   - 不修改无关的格式、缩进、空格、注释或代码顺序。
+   - 不影响现有查询、标签、分类、跳转、复制 DOI、复制 Base32 和预览功能。
+   - 除非确有必要，不修改 `08_webAccessPaper.php` 和 `08_tm_get_paper_metaInfo.php`。
+
+完成后请检查：
+
+- DOI 模式下，已存在的论文会同时显示“预览”和“复制元信息”按钮。
+- Title 模式下，已存在的论文会同时显示这两个按钮。
+- 不存在于数据库中的论文不会显示“复制元信息”按钮。
+- 按钮位置、间距和视觉样式正确。
+- 点击后字体颜色发生变化。
+- 复制得到的 JSON 与 `08_webAccessPaper.php` 的复制结果一致。
+- JavaScript/PHP 不存在语法错误。
+- 最后简要说明修改了哪些位置以及完成了哪些验证。
+
+
 
 ### 3. 环境变量
 
