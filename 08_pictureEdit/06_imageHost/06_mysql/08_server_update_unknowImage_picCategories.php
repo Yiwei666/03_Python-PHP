@@ -2,20 +2,20 @@
 <?php
 /**
  * 此脚本用于：
- * 1. 确认 "0.0 未知" 分类是否已经在 Categories 表中存在，如不存在则提示并退出。
+ * 1. 确认 "53 未知" 分类是否已经在 Categories 表中存在，如不存在则提示并退出。
  * 2. 筛选出 images 表中所有 image_exists=1 的图片 id 。
  * 3. 对于每个图片 id：
- *    - 如果在 PicCategories 表中没有任何分类关联，则将其关联到 "0.0 未知" 分类；
+ *    - 如果在 PicCategories 表中没有任何分类关联，则将其关联到 "53 未知" 分类；
  *    - 如果在 PicCategories 表中正好只有一个关联分类，则跳过；
- *    - 如果在 PicCategories 表中有 2 个及以上的关联分类，并且其中一个分类是 "0.0 未知"，则删除该图片 id 与 "0.0 未知" 的关联；
- *      如果不存在 "0.0 未知" 关联，则跳过。
- * 4. 最后打印出在 "0.0 未知" 分类下的图片数量。
+ *    - 如果在 PicCategories 表中有 2 个及以上的关联分类，并且其中一个分类是 "53 未知"，则删除该图片 id 与 "53 未知" 的关联；
+ *      如果不存在 "53 未知" 关联，则跳过。
+ * 4. 最后打印出在 "53 未知" 分类下的图片数量。
  */
 
 require_once '08_db_config.php';  // 引用数据库连接配置
 
-// 1. 查询 "0.0 未知" 分类是否已经存在
-$unknownCategoryName = "0.0 未知";
+// 1. 查询 "53 未知" 分类是否已经存在
+$unknownCategoryName = "53 未知";
 $sqlCheckCategory = "SELECT id FROM Categories WHERE category_name = '$unknownCategoryName' LIMIT 1";
 $resultCheckCategory = $mysqli->query($sqlCheckCategory);
 
@@ -60,13 +60,13 @@ while ($row = $resultImages->fetch_assoc()) {
 
     // 根据分类数进行不同的处理
     if ($categoryCount === 0) {
-        // 如果没有任何分类关联，则插入一条关联到 "0.0 未知"
+        // 如果没有任何分类关联，则插入一条关联到 "53 未知"
         $sqlInsert = "INSERT INTO PicCategories (image_id, category_id) VALUES ({$imageId}, {$unknownCategoryId})";
         if (!$mysqli->query($sqlInsert)) {
             echo "插入关联失败：Image ID = {$imageId}, Error = " . $mysqli->error . PHP_EOL;
         }
     } elseif ($categoryCount >= 2) {
-        // 如果该图片关联了 2 个及以上分类，检查其中是否存在 "0.0 未知"
+        // 如果该图片关联了 2 个及以上分类，检查其中是否存在 "53 未知"
         $sqlCheckUnknown = "
             SELECT COUNT(*) AS c 
             FROM PicCategories 
@@ -75,28 +75,28 @@ while ($row = $resultImages->fetch_assoc()) {
         ";
         $resultCheckUnknown = $mysqli->query($sqlCheckUnknown);
         if (!$resultCheckUnknown) {
-            echo "查询是否存在 '0.0 未知' 分类失败：" . $mysqli->error . PHP_EOL;
+            echo "查询是否存在 '53 未知' 分类失败：" . $mysqli->error . PHP_EOL;
             continue;
         }
 
         $checkRow = $resultCheckUnknown->fetch_assoc();
         if ((int)$checkRow['c'] > 0) {
-            // 如果其中一个分类是 "0.0 未知"，则删除该关联
+            // 如果其中一个分类是 "53 未知"，则删除该关联
             $sqlDeleteUnknown = "
                 DELETE FROM PicCategories 
                 WHERE image_id = {$imageId} 
                   AND category_id = {$unknownCategoryId}
             ";
             if (!$mysqli->query($sqlDeleteUnknown)) {
-                echo "删除 '0.0 未知' 分类关联失败：Image ID = {$imageId}, Error = " . $mysqli->error . PHP_EOL;
+                echo "删除 '53 未知' 分类关联失败：Image ID = {$imageId}, Error = " . $mysqli->error . PHP_EOL;
             }
         }
-        // 如果不存在 "0.0 未知" 关联，则跳过不处理
+        // 如果不存在 "53 未知" 关联，则跳过不处理
     }
     // 如果是 1 条关联分类，则跳过不处理
 }
 
-// 6. 最后打印出在 "0.0 未知" 分类下的图片数量
+// 6. 最后打印出在 "53 未知" 分类下的图片数量
 $sqlCountUnknown = "
     SELECT COUNT(DISTINCT image_id) AS total 
     FROM PicCategories 
@@ -105,14 +105,14 @@ $sqlCountUnknown = "
 $resultCountUnknown = $mysqli->query($sqlCountUnknown);
 
 if (!$resultCountUnknown) {
-    echo "统计 '0.0 未知' 分类下的图片数量失败：" . $mysqli->error . PHP_EOL;
+    echo "统计 '53 未知' 分类下的图片数量失败：" . $mysqli->error . PHP_EOL;
     exit;
 }
 
 $countUnknownRow = $resultCountUnknown->fetch_assoc();
 $unknownCount = $countUnknownRow['total'];
 
-echo "在 '0.0 未知' 分类下的图片数量为：{$unknownCount}" . PHP_EOL;
+echo "在 '53 未知' 分类下的图片数量为：{$unknownCount}" . PHP_EOL;
 
 // 关闭数据库连接
 $mysqli->close();
