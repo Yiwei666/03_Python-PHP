@@ -2739,6 +2739,31 @@ alias 参考：
 - https://github.com/Yiwei666/03_Python-PHP/blob/main/08_pictureEdit/06_imageHost/03_picLocalUpload/README.md
 - https://github.com/Yiwei666/03_Python-PHP/blob/main/08_pictureEdit/06_imageHost/07_imageLimit/README.md
 
+```sh
+# alias lwp='find /home/01_html/08_x/image/01_imageHost -maxdepth 1 -type f | wc -l'
+alias mvp='mv /home/01_html/08_x/image/03_picTemp/海外风景/* /home/01_html/08_x/image/01_imageHost/'
+alias lwp='echo $(($(ls -l /home/01_html/08_x/image/01_imageHost/ | wc -l) - 1))'
+alias lwt='echo $(($(ls -l /home/01_html/08_x/image/03_picTemp/海外风景/ | wc -l) - 1))'
+alias dsp='du -sh /home/01_html/08_x/image/01_imageHost/'
+alias cdp='cd /home/01_html/08_x/image/03_picTemp/海外风景/'
+alias rsp='rclone size rc6:cc1-1/01_html/08_x/image/01_imageHost -P --fast-list'
+# alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/ rc6:cc1-1/01_html/08_x/image/01_imageHost/ --transfers=16 -P &'
+# alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/ rc6:cc1-1/01_html/08_x/image/01_imageHost/ --ignore-existing --transfers=16 -P &'
+alias rcp='nohup rclone copy /home/01_html/08_x/image/01_imageHost/ rc6:cc1-1/01_html/08_x/image/01_imageHost/ --ignore-existing --transfers=16 -P > nohup.out 2>&1 &'
+alias rck8='rclone check -P /home/01_html/08_x/image/01_imageHost/ rc6:cc1-1/01_html/08_x/image/01_imageHost/ --checkers=8 --one-way'
+
+
+alias phd='/usr/bin/php /home/01_html/08_image_dislikes_delete.php'
+alias smc='/usr/bin/php /home/01_html/08_server_manage_categories.php'
+alias sbci='/usr/bin/php /home/01_html/08_server_batch_categorize_images.php'
+alias suup='/usr/bin/php /home/01_html/08_server_update_unknowImage_picCategories.php'
+
+alias sbp='mysqldump -p image_db > /home/01_html/08_image_db_backup/08_image_backup_$(date +%Y%m%d_%H%M%S).sql && ls -1 /home/01_html/08_image_db_backup/'
+alias cpbash='cp ~/.bashrc /home/01_html/00_backup/bashrc_backup_$(date +%Y%m%d_%H%M%S) && ls -1 /home/01_html/00_backup'
+alias cpcron='crontab -l > /home/01_html/00_backup/cron_backup_$(date +%Y%m%d_%H%M%S) && ls -1 /home/01_html/00_backup'
+```
+
+
 
 # 6. to do list
 
