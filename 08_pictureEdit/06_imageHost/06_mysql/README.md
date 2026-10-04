@@ -1886,6 +1886,46 @@ require_once __DIR__ . '/08_db_config.php';
 请输出完整、可直接运行的代码，不要修改项目中的其他文件。
 
 
+💎 **2. 环境变量：**
+
+1. `08_server_update_model_icon.php` 脚本依赖同目录下的`08_db_config.php`：
+
+```php
+require_once __DIR__ . '/08_db_config.php';
+```
+
+因此两个文件必须放在同一目录。由于使用了 `__DIR__`，从其他工作目录执行脚本不会影响配置文件定位。
+
+
+2. Categories 表中必须提前存在且只能存在一个精确名称为：`181 模特头像`
+
+```php
+$targetCategoryName = '181 模特头像';
+```
+
+3. 脚本依赖以下表名和字段名，名称必须保持一致（脚本中无需特意改动）：
+
+```sh
+images
+├── id
+├── likes
+└── image_exists
+
+Categories
+├── id
+└── category_name
+
+PicCategories
+├── image_id
+└── category_id
+```
+
+4. 定时命令
+
+```sh
+# 每4分钟更新模特头像；已有实例运行时跳过本次任务
+*/4 * * * * /usr/bin/flock -n /tmp/update_model_icon.lock /usr/bin/php /home/01_html/08_server_update_model_icon.php >/dev/null 2>&1
+```
 
 
 # 5. web交互脚本
