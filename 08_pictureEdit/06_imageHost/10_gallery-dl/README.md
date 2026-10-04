@@ -244,19 +244,19 @@ Windows 客户端为了兼容只能使用普通 SOCKS5、会先在本地解析�
 使用普通 SOCKS5；适合客户端已经设置 `routeOnly: false`，或者能够保证 Windows 本地 DNS 正确的情况：
 
 ```powershell
-gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/Immortal_047/media"
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/OpenAI/media"
 ```
 
 使用 SOCKS5H；直接把域名交给 Xray，最适合绕过本地 DNS 问题：
 
 ```powershell
-gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5h://127.0.0.1:1080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/Immortal_047/media"
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5h://127.0.0.1:1080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/OpenAI/media"
 ```
 
 使用 HTTP 代理；HTTPS 的 `CONNECT` 请求会直接携带域名：
 
 ```powershell
-gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "http://127.0.0.1:8080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/Immortal_047/media"
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "http://127.0.0.1:8080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/OpenAI/media"
 ```
 
 综合可靠性和兼容性，支持远程域名解析的程序优先使用 SOCKS5H 或 HTTP 代理；普通 SOCKS5 则由客户端 `routeOnly: false` 作为兼容补救。服务器端只有在需要为配置不统一的客户端提供二次 DNS 纠正时，才考虑使用 `routeOnly: false`，因为它可能影响 Hosts、内网 DNS、固定 CDN 节点以及目标 IP 与 SNI 有意不一致的连接。
