@@ -131,6 +131,139 @@ ROOT = Path(r"D:\software\27_nodejs\gallery-dl\gallery-dl\twitter")
 ```
 
 
+# 4. SOCKS代理、DNS解析与`routeOnly`排障小结
+
+## 1. 问题现象与结论
+
+Windows 使用 `gallery-dl` 通过 Xray VLESS 下载 Twitter/X 图片时，普通 SOCKS5 代理曾反复出现如下错误：
+
+```text
+SSLError: UNEXPECTED_EOF_WHILE_READING
+```
+
+测试结果如下：
+
+- 客户端采用 `socks5://127.0.0.1:1080` 且 `routeOnly: true` 时下载失败；
+- 改用 `socks5h://127.0.0.1:1080` 或 `http://127.0.0.1:8080` 后下载正常；
+- 普通 SOCKS5 保持不变，但将xray客户端改为 `routeOnly: false` 后下载正常；
+- 服务器是否保留 `geosite:twitter` 到 WARP 的分流不影响上述结果。
+
+由此可知，问题的关键不是 VLESS、REALITY 或 WARP 本身，而是普通 SOCKS5 先使用 Windows 本地 DNS 得到 IP，而该 IP 可能受到 DNS 污染，也可能只是 CDN 返回了不适合 VPS 出口的节点。`routeOnly` 也不直接指定使用哪个 DNS，它决定的是：嗅探到 HTTP Host 或 TLS SNI 域名后，是否用该域名替换当前连接目标。
+
+## 2. DNS解析和流量路径
+
+三种代理写法的主要区别如下：
+
+| 代理写法 | 域名解析位置 | Xray最初收到的目标 |
+|---|---|---|
+| `socks5://` | Windows 本地 | IP 地址 |
+| `socks5h://` | Xray代理链路/服务器端 | 原始域名 |
+| `http://` | HTTPS 通过 `CONNECT 域名:443` 提交 | 原始域名 |
+
+旧 V2Ray 客户端配置没有列出 `routeOnly`，其默认值相当于 `false`，因此普通 SOCKS5 可以通过 TLS SNI 将 IP 恢复为域名：
+
+```text
+旧 V2Ray + socks5
+    ↓
+Windows 本地 DNS 将域名解析成 IP
+    ↓
+V2Ray 从 TLS SNI 嗅探出原始域名
+    ↓
+routeOnly=false：用域名替换 IP
+    ↓
+VMess 将域名传给服务器重新解析
+    ↓
+正常下载
+```
+
+当前 Xray 客户端显式使用 `routeOnly: true` 时，嗅探域名只用于路由，不能修正本地 DNS 结果：
+
+```text
+Xray VLESS + socks5 + routeOnly=true
+    ↓
+Windows 本地 DNS 将域名解析成 IP
+    ↓
+Xray 从 TLS SNI 嗅探出原始域名
+    ↓
+域名只参与路由，实际目标仍为原 IP
+    ↓
+服务器继续连接该 IP
+    ↓
+TLS EOF，图片下载失败
+```
+
+改用 SOCKS5H 后，域名从一开始就进入代理链路，不再依赖嗅探重写：
+
+```text
+Xray VLESS + socks5h
+    ↓
+SOCKS 请求直接携带原始域名
+    ↓
+VLESS 将域名传给服务器
+    ↓
+服务器端 DNS 解析并选择目标 IP
+    ↓
+正常下载
+```
+
+HTTP 代理的原理与 SOCKS5H 类似。HTTPS 使用 `CONNECT 域名:443`，所以 Xray 最初得到的就是域名，`routeOnly: true` 也不会造成这次问题。
+
+假设程序使用普通 SOCKS5，Windows 已经将域名解析为 IP，同时 TLS SNI 中仍包含正确域名，客户端与服务器端的四种组合如下：
+
+| 客户端 | 服务器端 | 实际结果 |
+|---|---|---|
+| `false` | `true` | 客户端把 IP 重写为域名并通过 VLESS 发送；服务器尊重该域名并重新解析。推荐组合。 |
+| `false` | `false` | 客户端已经发送域名，服务器通常不需要再次改写；嗅探结果不一致时可能覆盖客户端目标。 |
+| `true` | `true` | 两端都只将嗅探域名用于路由，最终仍连接 Windows 解析的 IP，无法修复本地 DNS 或 CDN 节点问题。 |
+| `true` | `false` | 客户端保留 IP，服务器再次嗅探并重写为域名，属于服务端兜底方案。 |
+
+服务器端使用 `routeOnly: true` 仍有独立意义：即使客户端提交的是 IP，服务器也可以根据嗅探域名匹配 `geosite` 规则，选择直连、WARP 或 Tor 出站，同时尊重客户端明确提交的目标地址。因此推荐采用“客户端 `false`、服务器端 `true`”的职责分工。
+
+## 3. 配置调整与下载命令
+
+Windows 客户端为了兼容只能使用普通 SOCKS5、会先在本地解析域名的程序，可以将 SOCKS 入站调整为：
+
+```jsonc
+"sniffing": {
+  "enabled": true,
+  "destOverride": ["http", "tls"],
+  "routeOnly": false
+}
+```
+
+服务器端建议保留：
+
+```jsonc
+"sniffing": {
+  "enabled": true,
+  "destOverride": ["http", "tls", "quic"],
+  "routeOnly": true
+}
+```
+
+使用普通 SOCKS5；适合客户端已经设置 `routeOnly: false`，或者能够保证 Windows 本地 DNS 正确的情况：
+
+```powershell
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/Immortal_047/media"
+```
+
+使用 SOCKS5H；直接把域名交给 Xray，最适合绕过本地 DNS 问题：
+
+```powershell
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5h://127.0.0.1:1080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/Immortal_047/media"
+```
+
+使用 HTTP 代理；HTTPS 的 `CONNECT` 请求会直接携带域名：
+
+```powershell
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "http://127.0.0.1:8080" --filter "date >= datetime(2026, 6, 1 + 1) and date <= datetime(2026, 10, 2 + 1)" "https://twitter.com/Immortal_047/media"
+```
+
+综合可靠性和兼容性，支持远程域名解析的程序优先使用 SOCKS5H 或 HTTP 代理；普通 SOCKS5 则由客户端 `routeOnly: false` 作为兼容补救。服务器端只有在需要为配置不统一的客户端提供二次 DNS 纠正时，才考虑使用 `routeOnly: false`，因为它可能影响 Hosts、内网 DNS、固定 CDN 节点以及目标 IP 与 SNI 有意不一致的连接。
+
+需要注意，`routeOnly: false` 依赖 HTTP/TLS 等流量嗅探，不能完全替代代理 DNS；ECH、非 TLS 协议或无法识别的流量仍可能保留原始 IP。
+
+
 
 
 # 参考资料
