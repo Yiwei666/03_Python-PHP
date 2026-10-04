@@ -1443,6 +1443,7 @@ require_once '08_db_config.php';  // 引用数据库连接配置
 $unknownCategoryName = "0.0 未知";
 ```
 
+注意：在本地化的最新部署中，已将 `"0.0 未知"`改为`"53 未知"`，脚本中的多处该硬编码分类名需要更改。
 
 
 ### 6. `08_server_image_rclone_likesRange.php` 图片下载
