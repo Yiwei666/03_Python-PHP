@@ -221,7 +221,7 @@ function getCategoryOverlap($mysqli, $categoryId) {
     return $rows;
 }
 
-function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $perNode, $maxEdges, $focusId = null) {
+function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $perNode, $maxEdges, $focusId = null, $imageScope = 'all') {
     $categoryId = (int)$category['id'];
     $focusId = $focusId === null ? $categoryId : (int)$focusId;
     $selectedIds = [$categoryId => true];
@@ -232,6 +232,21 @@ function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $p
     }
     $frontier = [$focusId];
     $backbone = [];
+    $filterImages = in_array($imageScope, ['local', 'cloud'], true);
+    $imageExistsValue = $imageScope === 'local' ? 1 : 0;
+    // Apply the same image scope to discovery, node sizes, shared counts and edges.
+    $imageJoin = function ($linkAlias) use ($filterImages, $imageExistsValue) {
+        return $filterImages
+            ? "INNER JOIN images AS graph_image ON graph_image.id = $linkAlias.image_id AND graph_image.image_exists = $imageExistsValue"
+            : '';
+    };
+    $neighborImageJoin = $imageJoin('source_link');
+    $sharedImageJoin = $imageJoin('selected_link');
+    $edgeImageJoin = $imageJoin('first_link');
+    $nodeImageJoin = $filterImages
+        ? "LEFT JOIN images AS graph_image ON graph_image.id = pc.image_id AND graph_image.image_exists = $imageExistsValue"
+        : '';
+    $nodeCountColumn = $filterImages ? 'graph_image.id' : 'pc.image_id';
 
     for ($level = 1; $level <= $depth && !empty($frontier) && count($selectedIds) < $nodeLimit; $level++) {
         $frontierList = implode(',', array_map('intval', $frontier));
@@ -244,6 +259,7 @@ function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $p
             INNER JOIN PicCategories AS target_link
                 ON target_link.image_id = source_link.image_id
                 AND target_link.category_id <> source_link.category_id
+            $neighborImageJoin
             WHERE source_link.category_id IN ($frontierList)
             GROUP BY source_link.category_id, target_link.category_id
             HAVING shared_count >= " . (int)$minWeight . "
@@ -286,9 +302,10 @@ function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $p
     $nodeIds = array_map('intval', array_keys($selectedIds));
     $idList = implode(',', $nodeIds);
     $nodeSql = "
-        SELECT c.id, c.category_name, c.kindID, COUNT(pc.image_id) AS image_count
+        SELECT c.id, c.category_name, c.kindID, COUNT($nodeCountColumn) AS image_count
         FROM Categories AS c
         LEFT JOIN PicCategories AS pc ON pc.category_id = c.id
+        $nodeImageJoin
         WHERE c.id IN ($idList)
         GROUP BY c.id, c.category_name, c.kindID
     ";
@@ -305,6 +322,7 @@ function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $p
             INNER JOIN PicCategories AS other_link
                 ON other_link.image_id = selected_link.image_id
                 AND other_link.category_id <> selected_link.category_id
+            $sharedImageJoin
             WHERE selected_link.category_id = $categoryId
               AND other_link.category_id IN ($idList)
             GROUP BY other_link.category_id
@@ -355,6 +373,7 @@ function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $p
         INNER JOIN PicCategories AS second_link
             ON second_link.image_id = first_link.image_id
             AND first_link.category_id < second_link.category_id
+        $edgeImageJoin
         WHERE first_link.category_id IN ($idList)
           AND second_link.category_id IN ($idList)
         GROUP BY first_link.category_id, second_link.category_id
@@ -418,13 +437,15 @@ try {
         $requestedDepth = filter_input(INPUT_GET, 'depth', FILTER_VALIDATE_INT);
         $requestedPerNode = filter_input(INPUT_GET, 'per_node', FILTER_VALIDATE_INT);
         $requestedMaxEdges = filter_input(INPUT_GET, 'max_edges', FILTER_VALIDATE_INT);
-        $nodeLimit = in_array($requestedLimit, [40, 100, 200, 500], true) ? $requestedLimit : 100;
-        $minWeight = ($requestedWeight !== false && $requestedWeight >= 1 && $requestedWeight <= 100)
+        $requestedImageScope = filter_input(INPUT_GET, 'image_scope');
+        $imageScope = in_array($requestedImageScope, ['all', 'local', 'cloud'], true) ? $requestedImageScope : 'all';
+        $nodeLimit = in_array($requestedLimit, [40, 100, 200, 500, 800, 1000, 1500, 2000], true) ? $requestedLimit : 100;
+        $minWeight = ($requestedWeight !== false && $requestedWeight >= 1 && $requestedWeight <= 500)
             ? $requestedWeight
             : 2;
-        $depth = in_array($requestedDepth, [1, 2, 3], true) ? $requestedDepth : 2;
-        $perNode = in_array($requestedPerNode, [5, 10, 20], true) ? $requestedPerNode : 10;
-        $maxEdges = in_array($requestedMaxEdges, [500, 2000, 5000], true) ? $requestedMaxEdges : 2000;
+        $depth = in_array($requestedDepth, [1, 2, 3, 4, 5, 6, 8], true) ? $requestedDepth : 2;
+        $perNode = in_array($requestedPerNode, [5, 10, 20, 30, 50, 80, 100], true) ? $requestedPerNode : 10;
+        $maxEdges = in_array($requestedMaxEdges, [500, 2000, 5000, 10000, 20000, 30000], true) ? $requestedMaxEdges : 2000;
 
         if (!$categoryId || $categoryId < 1) {
             jsonResponse(['ok' => false, 'message' => '分类 ID 无效。'], 400);
@@ -436,10 +457,11 @@ try {
         $focusCategory = $requestedFocusId ? getSelectedCategory($categories, (int)$requestedFocusId) : $category;
         $focusId = $focusCategory === null ? (int)$categoryId : (int)$focusCategory['id'];
 
-        $graph = getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $perNode, $maxEdges, $focusId);
+        $graph = getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $perNode, $maxEdges, $focusId, $imageScope);
         jsonResponse([
             'ok' => true,
             'category' => $category,
+            'image_scope' => $imageScope,
             'node_limit' => $nodeLimit,
             'min_weight' => $minWeight,
             'depth' => $depth,
@@ -679,23 +701,30 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         .overlap-stack { display: grid; gap: 16px; }
         .overlap-scroll { max-height: 660px; overflow-y: auto; padding-right: 5px; }
         .overlap-chart-shell { position: relative; min-height: 300px; }
-        .network-toolbar { align-items: flex-end; }
+        .network-toolbar { align-items: flex-end; flex-wrap: wrap; }
         .network-settings { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
         .network-setting { display: grid; gap: 5px; color: var(--muted); font-size: 11px; font-weight: 700; }
-        .network-select { min-width: 112px; border: 1px solid var(--line); border-radius: 8px; padding: 7px 28px 7px 9px; color: #46536a; background: #fff; outline: none; }
-        .network-mode-buttons { display: flex; gap: 6px; }
+        .network-select { min-width: 112px; border: 1px solid var(--line); border-radius: 10px; padding: 8px 28px 8px 10px; color: #46536a; background: #fff; outline: none; box-shadow: 0 2px 5px rgba(45, 65, 100, 0.035); }
+        .network-select:focus-visible { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.14); }
+        .network-mode-buttons { display: flex; gap: 6px; margin-left: auto; flex-shrink: 0; }
         .network-mode-button { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; color: #5e6a80; background: #fff; cursor: pointer; font-size: 12px; font-weight: 750; }
         .network-mode-button.active { color: #fff; border-color: var(--primary); background: var(--primary); }
         .network-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 14px; }
-        .network-stage { position: relative; height: 640px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #f8fbff; }
-        .network-stage.mode-3d { background: #07101d; }
+        .network-stage { position: relative; height: 640px; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: radial-gradient(ellipse at 35% 25%, #fff 0%, #f2f6ff 60%, #edf2fa 100%); }
+        .network-stage.mode-3d { background: radial-gradient(ellipse at 35% 25%, #192d47 0%, #101e33 50%, #081120 100%); }
         .network-stage:fullscreen { width: 100vw; height: 100vh; border: 0; border-radius: 0; }
         .network-stage canvas { display: block; }
         .network-dom-label-layer { position: absolute; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
-        .network-dom-label { position: absolute; max-width: 170px; overflow: hidden; border-radius: 5px; padding: 3px 6px; color: #e8f1ff; background: rgba(8, 20, 36, 0.76); font-size: 11px; font-weight: 750; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; transform: translate(-50%, -50%); }
-        .network-dom-label.selected { color: #ffd29a; background: rgba(111, 45, 7, 0.84); }
+        .network-dom-label { position: absolute; max-width: 190px; overflow: hidden; border: 1px solid rgba(214, 230, 255, 0.16); border-radius: 999px; padding: 4px 9px; color: #e8f1ff; background: rgba(25, 43, 65, 0.82); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.06); font-size: 11px; font-weight: 650; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; transform: translate(-50%, -100%); }
+        .network-dom-label.selected { color: #ffdfba; border-color: rgba(255, 184, 112, 0.38); background: rgba(101, 55, 28, 0.9); }
+        .network-dom-label.highlighted { border-color: rgba(220, 237, 255, 0.5); background: rgba(42, 65, 92, 0.94); }
+        .network-dom-label.dimmed { opacity: 0.3; }
+        .network-stage:not(.network-dense) .network-dom-label { backdrop-filter: blur(8px); }
+        .network-dense .network-dom-label { box-shadow: none; }
         .network-actions { position: absolute; top: 12px; right: 12px; z-index: 6; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: calc(100% - 24px); }
-        .network-action { border: 1px solid rgba(207, 216, 232, 0.9); border-radius: 8px; padding: 7px 9px; color: #44526a; background: rgba(255, 255, 255, 0.9); box-shadow: 0 5px 16px rgba(30, 45, 75, 0.08); cursor: pointer; font-size: 11px; font-weight: 750; backdrop-filter: blur(8px); }
+        .network-action { border: 1px solid rgba(207, 216, 232, 0.9); border-radius: 11px; padding: 8px 11px; color: #44526a; background: rgba(255, 255, 255, 0.9); box-shadow: 0 5px 16px rgba(30, 45, 75, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.75); cursor: pointer; font-size: 11px; font-weight: 750; backdrop-filter: blur(8px); }
+        .network-action:hover { border-color: #99abdd; }
+        .network-action:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
         .mode-3d .network-action { color: #dce7f8; border-color: rgba(148, 163, 184, 0.28); background: rgba(15, 28, 47, 0.82); }
         .network-status { min-height: 18px; margin: 9px 0 0; color: var(--muted); font-size: 11px; }
         .network-loading { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; color: var(--muted); background: rgba(248, 251, 255, 0.9); }
@@ -817,6 +846,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         let networkDepth = 2;
         let networkPerNode = 10;
         let networkMaxEdges = 2000;
+        let networkImageScope = 'all';
         let networkMode = '2d';
         let networkShowAllLabels = false;
         let network3DLabelMode = 'core';
@@ -826,6 +856,11 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         let networkLabelFrame = null;
         let networkLabelRefresh = null;
         let networkRenderVersion = 0;
+        let networkRequestVersion = 0;
+        let networkHoverNodeId = null;
+        let networkHoverNeighbors = new Set();
+        let networkStyleRefresh = null;
+        let networkStageCleanup = null;
         let lastRenderedNetworkMode = null;
         let lastNetworkNodeClick = { id: null, time: 0 };
         const cache = new Map();
@@ -881,7 +916,10 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         }
 
         function destroyNetworkGraph(invalidateRender = true) {
-            if (invalidateRender) networkRenderVersion++;
+            if (invalidateRender) {
+                networkRenderVersion++;
+                networkRequestVersion++;
+            }
             if (networkRequestController) {
                 networkRequestController.abort();
                 networkRequestController = null;
@@ -890,11 +928,19 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 networkResizeObserver.disconnect();
                 networkResizeObserver = null;
             }
+            if (networkStageCleanup) {
+                networkStageCleanup();
+                networkStageCleanup = null;
+            }
             if (networkLabelFrame) {
                 cancelAnimationFrame(networkLabelFrame);
                 networkLabelFrame = null;
             }
             networkLabelRefresh = null;
+            networkStyleRefresh = null;
+            networkHoverNodeId = null;
+            networkHoverNeighbors.clear();
+            lastNetworkNodeClick = { id: null, time: 0 };
             if (currentNetworkGraph && typeof currentNetworkGraph._destructor === 'function') {
                 currentNetworkGraph._destructor();
             }
@@ -1237,33 +1283,42 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             createOverlapChart('overlapCloudChart', cloudRows, 'cloud_count', stats.totals.cloud, colors.orange, colors.orangeSoft);
         }
 
+        function networkScopeLabel(scope = networkImageScope) {
+            return { all: '全部图片', local: '仅本地', cloud: '仅云端' }[scope] || '全部图片';
+        }
+
         function networkToolbarHtml() {
             return `
                 <div class="toolbar network-toolbar">
                     <div class="network-settings">
+                        <label class="network-setting">图片范围
+                            <select id="networkImageScope" class="network-select">
+                                ${['all', 'local', 'cloud'].map((value) => `<option value="${value}"${networkImageScope === value ? ' selected' : ''}>${networkScopeLabel(value)}</option>`).join('')}
+                            </select>
+                        </label>
                         <label class="network-setting">节点上限
                             <select id="networkNodeLimit" class="network-select">
-                                ${[40, 100, 200, 500].map((value) => `<option value="${value}"${networkNodeLimit === value ? ' selected' : ''}>${value}${value === 500 ? '（实验）' : ''}</option>`).join('')}
+                                ${[40, 100, 200, 500, 800, 1000, 1500, 2000].map((value) => `<option value="${value}"${networkNodeLimit === value ? ' selected' : ''}>${formatNumber(value)}</option>`).join('')}
                             </select>
                         </label>
                         <label class="network-setting">探索深度
                             <select id="networkDepth" class="network-select">
-                                ${[1, 2, 3].map((value) => `<option value="${value}"${networkDepth === value ? ' selected' : ''}>${value} 阶关系</option>`).join('')}
+                                ${[1, 2, 3, 4, 5, 6, 8].map((value) => `<option value="${value}"${networkDepth === value ? ' selected' : ''}>${value} 阶关系</option>`).join('')}
                             </select>
                         </label>
                         <label class="network-setting">每节点扩展
                             <select id="networkPerNode" class="network-select">
-                                ${[5, 10, 20].map((value) => `<option value="${value}"${networkPerNode === value ? ' selected' : ''}>${value} 个邻居</option>`).join('')}
+                                ${[5, 10, 20, 30, 50, 80, 100].map((value) => `<option value="${value}"${networkPerNode === value ? ' selected' : ''}>${value} 个邻居</option>`).join('')}
                             </select>
                         </label>
                         <label class="network-setting">最少共享图片
                             <select id="networkMinWeight" class="network-select">
-                                ${[1, 2, 3, 5, 10].map((value) => `<option value="${value}"${networkMinWeight === value ? ' selected' : ''}>≥ ${value} 张</option>`).join('')}
+                                ${[1, 2, 3, 5, 10, 20, 50, 100, 200, 500].map((value) => `<option value="${value}"${networkMinWeight === value ? ' selected' : ''}>≥ ${value} 张</option>`).join('')}
                             </select>
                         </label>
                         <label class="network-setting">最大边数
                             <select id="networkMaxEdges" class="network-select">
-                                ${[500, 2000, 5000].map((value) => `<option value="${value}"${networkMaxEdges === value ? ' selected' : ''}>${formatNumber(value)} 条</option>`).join('')}
+                                ${[500, 2000, 5000, 10000, 20000, 30000].map((value) => `<option value="${value}"${networkMaxEdges === value ? ' selected' : ''}>${formatNumber(value)} 条</option>`).join('')}
                             </select>
                         </label>
                     </div>
@@ -1284,7 +1339,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                         ${metricHtml('显示节点', '—', `${networkDepth} 阶 · 最多 ${networkNodeLimit} 个`)}
                         ${metricHtml('关联连线', '—', `最多 ${formatNumber(networkMaxEdges)} 条`)}
                         ${metricHtml('最大边权重', '—', '两分类共享图片数')}
-                        ${metricHtml('当前分类图片', formatNumber(stats.totals.all), '节点大小按图片数计算')}
+                        ${metricHtml('当前分类图片', '—', `${networkScopeLabel()} · 节点大小按图片数计算`)}
                     </div>
                     ${networkToolbarHtml()}
                     <div class="network-layout">
@@ -1294,7 +1349,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                         <aside class="network-details">
                             <h3>节点详情</h3>
                             <div id="nodeDetailsBody"><p class="chart-subtitle">点击任意节点查看具体信息。</p></div>
-                            <p class="network-help">节点越大，分类图片越多；连线越粗、颜色越深，共享图片越多。单击节点聚焦，双击节点会在当前网络上继续展开一层。</p>
+                            <p class="network-help">统计范围：${networkScopeLabel()}。节点越大，范围内图片越多；连线越粗、颜色越深，共享图片越多。悬停节点突出相关连接。单击节点聚焦，双击节点会在当前网络上继续展开一层。</p>
                             <p id="networkStatus" class="network-status">双击任意节点可继续探索局部关系。</p>
                         </aside>
                     </div>
@@ -1304,7 +1359,9 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
 
         async function loadNetworkData() {
             const categoryId = selectedCategoryId;
-            const cacheKey = `${categoryId}:${networkNodeLimit}:${networkMinWeight}:${networkDepth}:${networkPerNode}:${networkMaxEdges}`;
+            const imageScope = networkImageScope;
+            const requestVersion = ++networkRequestVersion;
+            const cacheKey = `${categoryId}:${imageScope}:${networkNodeLimit}:${networkMinWeight}:${networkDepth}:${networkPerNode}:${networkMaxEdges}`;
             if (networkCache.has(cacheKey)) {
                 currentNetworkData = networkCache.get(cacheKey);
                 updateNetworkSummary(currentNetworkData);
@@ -1312,12 +1369,14 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 return;
             }
 
-            networkRequestController = new AbortController();
+            const controller = new AbortController();
+            networkRequestController = controller;
             try {
                 const url = new URL(window.location.href);
                 url.search = '';
                 url.searchParams.set('ajax', 'category_graph');
                 url.searchParams.set('category_id', categoryId);
+                url.searchParams.set('image_scope', imageScope);
                 url.searchParams.set('node_limit', networkNodeLimit);
                 url.searchParams.set('min_weight', networkMinWeight);
                 url.searchParams.set('depth', networkDepth);
@@ -1325,7 +1384,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 url.searchParams.set('max_edges', networkMaxEdges);
                 const response = await fetch(url, {
                     headers: { 'Accept': 'application/json' },
-                    signal: networkRequestController.signal
+                    signal: controller.signal
                 });
                 const contentType = response.headers.get('content-type') || '';
                 if (!contentType.includes('application/json')) {
@@ -1335,16 +1394,19 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 if (!response.ok || !data.ok) {
                     throw new Error(data.message || '关系图谱加载失败。');
                 }
-                if (activeView !== 'network' || selectedCategoryId !== categoryId) return;
+                if (activeView !== 'network' || selectedCategoryId !== categoryId
+                    || networkImageScope !== imageScope || networkRequestVersion !== requestVersion) return;
                 networkRequestController = null;
                 networkCache.set(cacheKey, data);
                 currentNetworkData = data;
                 updateNetworkSummary(data);
                 renderNetworkGraph(data);
             } catch (error) {
-                if (error.name !== 'AbortError') {
+                if (error.name !== 'AbortError' && networkRequestVersion === requestVersion) {
                     showNetworkError(error.message || '关系图谱加载失败。');
                 }
+            } finally {
+                if (networkRequestController === controller) networkRequestController = null;
             }
         }
 
@@ -1359,6 +1421,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             values[0].textContent = formatNumber(data.nodes.length);
             values[1].textContent = formatNumber(data.links.length);
             values[2].textContent = formatNumber(Math.max(0, ...data.links.map((link) => link.weight)));
+            values[3].textContent = formatNumber(data.nodes.find((node) => node.selected)?.image_count || 0);
         }
 
         function prepareNetworkData(data) {
@@ -1408,13 +1471,164 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         }
 
         function networkNodeColor(node) {
-            if (node.selected) return '#f97316';
-            const palette = ['#4f6ef7', '#20b7c9', '#8b6fe8', '#37b979', '#e65fa1', '#e0a12b', '#508fc9'];
+            if (node.selected) return '#f69a4b';
+            const palette = ['#6488f3', '#42b8c4', '#a18ae5', '#57bb94', '#df87b2', '#d5ad61', '#73a4d4'];
             return palette[node.community % palette.length];
         }
 
+        function networkColorRgba(hex, alpha) {
+            const value = Number.parseInt(hex.slice(1), 16);
+            return `rgba(${value >> 16}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`;
+        }
+
+        function networkNodeEmphasized(node) {
+            return networkHoverNodeId === null || node.selected || networkHoverNeighbors.has(node.id);
+        }
+
+        function networkLinkEmphasized(link) {
+            if (networkHoverNodeId === null) return true;
+            const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+            const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+            return sourceId === networkHoverNodeId || targetId === networkHoverNodeId;
+        }
+
+        function updateNetworkHover(node, graphData) {
+            const nextId = node?.id ?? null;
+            if (networkHoverNodeId === nextId) return;
+            networkHoverNodeId = nextId;
+            networkHoverNeighbors.clear();
+            if (node) {
+                networkHoverNeighbors.add(node.id);
+                graphData.links.forEach((link) => {
+                    const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+                    const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+                    if (sourceId === node.id) networkHoverNeighbors.add(targetId);
+                    if (targetId === node.id) networkHoverNeighbors.add(sourceId);
+                });
+            }
+            if (networkStyleRefresh) networkStyleRefresh();
+            if (networkLabelRefresh) networkLabelRefresh();
+        }
+
+        function drawNetworkRoundedRect(context, x, y, width, height, radius) {
+            context.beginPath();
+            context.moveTo(x + radius, y);
+            context.arcTo(x + width, y, x + width, y + height, radius);
+            context.arcTo(x + width, y + height, x, y + height, radius);
+            context.arcTo(x, y + height, x, y, radius);
+            context.arcTo(x, y, x + width, y, radius);
+            context.closePath();
+        }
+
+        function drawNetworkNode2D(node, context, globalScale, dense) {
+            // The first canvas frame can arrive before the asynchronous layout initializes.
+            if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
+            const scale = Math.max(0.1, globalScale);
+            const radius = Math.sqrt(networkNodeValue(node)) * 4;
+            const color = networkNodeColor(node);
+            const hovered = node.id === networkHoverNodeId;
+            context.save();
+            context.globalAlpha = networkNodeEmphasized(node) ? 1 : 0.25;
+
+            if (node.selected || hovered) {
+                context.beginPath();
+                context.arc(node.x, node.y, radius + 4 / scale, 0, 2 * Math.PI);
+                context.strokeStyle = networkColorRgba(color, hovered ? 0.65 : 0.35);
+                context.lineWidth = 1.6 / scale;
+                context.stroke();
+            }
+            const gradient = context.createRadialGradient(
+                node.x - radius * 0.35, node.y - radius * 0.4, radius * 0.03,
+                node.x, node.y, radius * 1.15
+            );
+            gradient.addColorStop(0, '#f8fcff');
+            gradient.addColorStop(0.24, networkColorRgba(color, 0.65));
+            gradient.addColorStop(0.72, color);
+            gradient.addColorStop(1, networkColorRgba(color, 0.85));
+            if (!dense || node.selected || hovered) {
+                context.shadowColor = networkColorRgba(color, 0.3);
+                context.shadowBlur = hovered ? 14 : 8;
+                context.shadowOffsetY = 2;
+            }
+            context.beginPath();
+            context.arc(node.x, node.y, radius, 0, 2 * Math.PI);
+            context.fillStyle = gradient;
+            context.fill();
+            context.shadowBlur = 0;
+            context.shadowOffsetY = 0;
+            context.strokeStyle = 'rgba(255,255,255,0.85)';
+            context.lineWidth = 1 / scale;
+            context.stroke();
+
+            const showLabel = networkShowAllLabels || node.selected || hovered || node.labelRank < 20 || globalScale >= 1.45;
+            if (showLabel) {
+                const fontSize = 11 / scale;
+                context.font = `${node.selected || hovered ? 700 : 600} ${fontSize}px "Microsoft YaHei", Arial`;
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                const label = node.category_name;
+                const width = context.measureText(label).width + 16 / scale;
+                const height = fontSize + 10 / scale;
+                const y = node.y + radius + 15 / scale;
+                drawNetworkRoundedRect(context, node.x - width / 2, y - height / 2, width, height, height / 2);
+                context.fillStyle = node.selected ? 'rgba(255,245,232,0.96)' : 'rgba(255,255,255,0.94)';
+                context.fill();
+                context.strokeStyle = node.selected ? 'rgba(246,154,75,0.38)' : 'rgba(153,174,205,0.25)';
+                context.lineWidth = 0.8 / scale;
+                context.stroke();
+                context.fillStyle = node.selected ? '#9e5521' : '#344967';
+                context.fillText(label, node.x, y);
+            }
+            context.restore();
+        }
+
+        function styleNetworkNode3D(object, node, records, detailed) {
+            if (!records.has(node.id)) {
+                // Use the graph's own mesh/material classes, avoiding another THREE runtime.
+                object.material = object.material.clone();
+                object.material.emissive.copy(object.material.color).multiplyScalar(0.1);
+                const record = { object, node, halo: null, sheen: null };
+                if (detailed || node.selected || node.labelRank < 8) {
+                    const halo = object.clone(false);
+                    halo.geometry = object.geometry.clone();
+                    halo.material = object.material.clone();
+                    halo.position.set(0, 0, 0);
+                    halo.scale.setScalar(node.selected ? 1.32 : 1.2);
+                    halo.material.depthWrite = false;
+                    halo.material.opacity = node.selected ? 0.12 : 0.045;
+                    halo.material.emissive.copy(halo.material.color).multiplyScalar(0.4);
+                    object.add(halo);
+                    record.halo = halo;
+
+                    const radius = object.geometry.parameters.radius;
+                    const sheen = object.clone(false);
+                    sheen.geometry = object.geometry.clone();
+                    sheen.material = object.material.clone();
+                    sheen.position.set(-radius * 0.25, radius * 0.35, radius * 0.9);
+                    sheen.scale.set(0.28, 0.12, 0.055);
+                    sheen.rotation.z = -0.5;
+                    sheen.material.color.set('#ffffff');
+                    sheen.material.emissive.set('#ffffff');
+                    sheen.material.opacity = 0.32;
+                    sheen.material.depthWrite = false;
+                    object.add(sheen);
+                    record.sheen = sheen;
+                }
+                records.set(node.id, record);
+            }
+            const record = records.get(node.id);
+            const emphasized = networkNodeEmphasized(node);
+            record.object.material.opacity = emphasized ? 0.96 : 0.22;
+            record.object.material.emissiveIntensity = node.id === networkHoverNodeId ? 2 : 1;
+            if (record.halo) {
+                record.halo.visible = emphasized;
+                record.halo.material.opacity = node.id === networkHoverNodeId ? 0.16 : (node.selected ? 0.12 : 0.045);
+            }
+            if (record.sheen) record.sheen.material.opacity = emphasized ? 0.32 : 0.04;
+        }
+
         function networkNodeValue(node) {
-            return Math.max(3, Math.log10(Number(node.image_count) + 10) * (node.selected ? 6 : 4.5));
+            return Math.max(3, Math.log10(Math.max(0, Number(node.image_count) || 0) + 10) * (node.selected ? 6 : 4.5));
         }
 
         function nodeTooltipHtml(node) {
@@ -1435,7 +1649,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 <p class="node-detail-name">${escapeHtml(node.category_name)}</p>
                 <p class="node-detail-kind">${node.kindID ? `kindID：${escapeHtml(node.kindID)}` : 'kindID：未设置'} · ID ${node.id}</p>
                 <dl class="node-detail-list">
-                    <div class="node-detail-row"><dt>分类图片</dt><dd>${formatNumber(node.image_count)} 张</dd></div>
+                    <div class="node-detail-row"><dt>范围内图片</dt><dd>${formatNumber(node.image_count)} 张</dd></div>
                     <div class="node-detail-row"><dt>与当前分类共享</dt><dd>${node.selected ? '当前分类' : `${formatNumber(node.shared_with_selected)} 张`}</dd></div>
                     <div class="node-detail-row"><dt>探索层级</dt><dd>${formatNumber(node.level || 0)} 阶</dd></div>
                     <div class="node-detail-row"><dt>直接连接</dt><dd>${formatNumber(node.degree)} 个</dd></div>
@@ -1507,7 +1721,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 if (nodeMap.has(node.id) || merged.nodes.length >= networkNodeLimit) return;
                 node.selected = node.id === selectedCategoryId;
                 node.focus = false;
-                node.level = Math.min(3, Number(expandedNode.level || 0) + 1);
+                node.level = Number(expandedNode.level || 0) + 1;
                 merged.nodes.push(node);
                 nodeMap.set(node.id, node);
             });
@@ -1545,42 +1759,50 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 return;
             }
             if (networkRequestController) return;
+            const categoryId = selectedCategoryId;
+            const imageScope = networkImageScope;
+            const previousData = currentNetworkData;
+            const requestVersion = ++networkRequestVersion;
             setNetworkStatus(`正在展开“${node.category_name}”的一阶邻居…`);
-            networkRequestController = new AbortController();
+            const controller = new AbortController();
+            networkRequestController = controller;
             try {
                 const url = new URL(window.location.href);
                 url.search = '';
                 url.searchParams.set('ajax', 'category_graph');
-                url.searchParams.set('category_id', selectedCategoryId);
+                url.searchParams.set('category_id', categoryId);
+                url.searchParams.set('image_scope', imageScope);
                 url.searchParams.set('focus_id', node.id);
-                url.searchParams.set('node_limit', 40);
+                url.searchParams.set('node_limit', networkNodeLimit);
                 url.searchParams.set('min_weight', networkMinWeight);
                 url.searchParams.set('depth', 1);
                 url.searchParams.set('per_node', networkPerNode);
-                url.searchParams.set('max_edges', 500);
+                url.searchParams.set('max_edges', networkMaxEdges);
                 const response = await fetch(url, {
                     headers: { 'Accept': 'application/json' },
-                    signal: networkRequestController.signal
+                    signal: controller.signal
                 });
                 const data = await response.json();
                 if (!response.ok || !data.ok) throw new Error(data.message || '节点展开失败。');
+                if (activeView !== 'network' || selectedCategoryId !== categoryId || networkImageScope !== imageScope
+                    || networkRequestVersion !== requestVersion || currentNetworkData !== previousData) return;
                 networkRequestController = null;
-                if (activeView !== 'network') return;
                 const previousCount = currentNetworkData.nodes.length;
                 currentNetworkData = mergeExpandedNetwork(data, node);
                 updateNetworkSummary(currentNetworkData);
                 renderNetworkGraph(currentNetworkData);
                 setNetworkStatus(`已新增 ${currentNetworkData.nodes.length - previousCount} 个节点；双击其他节点可继续展开。`);
             } catch (error) {
-                if (error.name !== 'AbortError') setNetworkStatus(error.message || '节点展开失败。');
-                networkRequestController = null;
+                if (error.name !== 'AbortError' && networkRequestVersion === requestVersion) setNetworkStatus(error.message || '节点展开失败。');
+            } finally {
+                if (networkRequestController === controller) networkRequestController = null;
             }
         }
 
         function shouldShow3DLabel(node) {
             if (network3DLabelMode === 'all') return true;
             if (network3DLabelMode === 'hidden') return false;
-            return node.selected || node.labelRank < 8;
+            return node.selected || node.labelRank < 8 || node.id === networkHoverNodeId;
         }
 
         function networkLabelActionText() {
@@ -1650,29 +1872,43 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 labels.set(node.id, label);
             });
             stage.appendChild(layer);
+            const dense = stage.classList.contains('network-dense');
 
             const renderLabels = () => {
                 if (currentNetworkGraph !== graph || networkMode !== '3d') return;
+                const camera = graph.camera();
+                const direction = camera.getWorldDirection(camera.position.clone());
+                const offset = camera.position.clone();
                 graphData.nodes.forEach((node) => {
                     const label = labels.get(node.id);
                     const shouldShow = shouldShow3DLabel(node);
                     if (!shouldShow || !Number.isFinite(node.x) || !Number.isFinite(node.y) || !Number.isFinite(node.z)) {
-                        label.style.display = 'none';
+                        if (label.style.display !== 'none') label.style.display = 'none';
                         return;
                     }
+                    label.classList.toggle('highlighted', networkHoverNodeId !== null && networkHoverNeighbors.has(node.id));
+                    label.classList.toggle('dimmed', !networkNodeEmphasized(node));
                     const position = graph.graph2ScreenCoords(node.x, node.y, node.z);
+                    const radius = Math.cbrt(networkNodeValue(node)) * 7;
+                    const above = graph.graph2ScreenCoords(node.x, node.y + radius, node.z);
+                    offset.set(node.x, node.y, node.z).sub(camera.position);
+                    const inFront = offset.dot(direction) > 0;
                     const inView = position.x >= -80 && position.x <= stage.clientWidth + 80
-                        && position.y >= -30 && position.y <= stage.clientHeight + 30;
+                        && position.y >= -30 && position.y <= stage.clientHeight + 30 && inFront;
                     label.style.display = inView ? 'block' : 'none';
                     if (inView) {
                         label.style.left = `${position.x}px`;
-                        label.style.top = `${position.y - 12}px`;
+                        label.style.top = `${position.y - Math.max(8, Math.abs(position.y - above.y)) - 6}px`;
                     }
                 });
             };
-            const update = () => {
+            let lastUpdate = 0;
+            const update = (time = 0) => {
                 if (currentNetworkGraph !== graph || networkMode !== '3d') return;
-                renderLabels();
+                if (!dense || time - lastUpdate >= 32) {
+                    renderLabels();
+                    lastUpdate = time;
+                }
                 networkLabelFrame = requestAnimationFrame(update);
             };
             networkLabelRefresh = renderLabels;
@@ -1694,7 +1930,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             if (renderVersion !== networkRenderVersion
                 || networkMode !== requestedMode
                 || activeView !== 'network'
-                || selectedCategoryId !== Number(data.category.id)) return;
+                || selectedCategoryId !== Number(data.category.id)
+                || networkImageScope !== (data.image_scope || 'all')) return;
             destroyNetworkGraph(false);
             const stage = document.getElementById('networkStage');
             if (!stage) return;
@@ -1708,6 +1945,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             }
 
             const graphData = prepareNetworkData(data);
+            const dense = graphData.nodes.length > 500 || graphData.links.length > 5000;
+            stage.classList.toggle('network-dense', dense);
             [...graphData.nodes]
                 .sort((a, b) => b.weighted_degree - a.weighted_degree)
                 .forEach((node, index) => { node.labelRank = index; });
@@ -1728,29 +1967,46 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             const normalizedWeight = (link) => Math.max(0, Math.min(1,
                 (Math.log1p(link.weight) - lowerWeight) / Math.max(0.001, upperWeight - lowerWeight)
             ));
-            const linkWidth = (link) => 0.6 + Math.sqrt(link.weight / maximumWeight) * (networkMode === '3d' ? 2.4 : 4.2);
-            const linkColor = (link) => `rgba(79, 110, 247, ${0.18 + Math.sqrt(link.weight / maximumWeight) * 0.62})`;
+            const linkWidth = (link) => 0.55 + Math.sqrt(link.weight / maximumWeight) * (requestedMode === '3d' ? 2.1 : 3.2);
+            const linkColor = (link) => {
+                const emphasized = networkLinkEmphasized(link);
+                const hovering = networkHoverNodeId !== null;
+                const alpha = hovering ? (emphasized ? 0.85 : 0.055) : 0.16 + Math.sqrt(link.weight / maximumWeight) * 0.48;
+                return networkColorRgba(hovering && emphasized ? '#88abf5' : (requestedMode === '3d' ? '#7698c7' : '#7c94bd'), alpha);
+            };
             let fitted = false;
 
             if (networkMode === '3d') {
+                const visualRecords = new Map();
+                const detailedNodes = graphData.nodes.length <= 250 && graphData.links.length <= 2000;
                 const graph3D = new ForceGraph3D(stage, { controlType: 'trackball' })
                     .width(stage.clientWidth)
                     .height(stage.clientHeight)
-                    .backgroundColor('#07101d')
+                    .backgroundColor('rgba(0,0,0,0)')
                     .showNavInfo(false)
                     .nodeVal(networkNodeValue)
+                    .nodeRelSize(7)
                     .nodeColor(networkNodeColor)
                     .nodeOpacity(0.92)
-                    .nodeResolution(18)
+                    .nodeResolution(dense ? 10 : 24)
+                    .nodePositionUpdate((object, position, node) => {
+                        styleNetworkNode3D(object, node, visualRecords, detailedNodes);
+                        // Let the graph update positions and node dragging as usual.
+                        return false;
+                    })
                     .nodeLabel(nodeTooltipHtml)
                     .linkWidth(linkWidth)
                     .linkColor(linkColor)
                     .linkOpacity(0.72)
+                    .linkResolution(dense ? 4 : 8)
                     .linkLabel(linkTooltipHtml)
                     .d3AlphaDecay(0.018)
                     .d3VelocityDecay(0.35)
                     .cooldownTicks(280)
                     .onNodeClick(handleNetworkNodeClick)
+                    .onNodeHover((node) => {
+                        if (currentNetworkGraph === graph3D) updateNetworkHover(stage.matches(':hover') ? node : null, graphData);
+                    })
                     .onEngineStop(() => {
                         if (currentNetworkGraph === graph3D && !fitted) {
                             fitted = true;
@@ -1758,6 +2014,22 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                         }
                     });
                 currentNetworkGraph = graph3D;
+                const [ambient, keyLight] = graph3D.lights();
+                if (ambient && keyLight) {
+                    ambient.intensity = Math.PI * 0.8;
+                    keyLight.intensity = Math.PI * 1.1;
+                    keyLight.position.set(150, 200, 350);
+                    const rimLight = keyLight.clone();
+                    rimLight.color.set('#a9ccff');
+                    rimLight.intensity = Math.PI * 0.55;
+                    rimLight.position.set(-200, 100, -300);
+                    graph3D.lights([ambient, keyLight, rimLight]);
+                }
+                networkStyleRefresh = () => {
+                    if (currentNetworkGraph !== graph3D) return;
+                    visualRecords.forEach(({ object, node }) => styleNetworkNode3D(object, node, visualRecords, detailedNodes));
+                    graph3D.linkColor((link) => linkColor(link));
+                };
 
                 // Keep labels independent of the WebGL meshes and an external THREE global.
                 startNetwork3DLabels(stage, graphData, graph3D);
@@ -1776,8 +2048,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 }
                 if (typeof window.forceCollide3D === 'function') {
                     const collisionForce = window.forceCollide3D((node) => {
-                        const size = Math.min(9, Math.log10(Number(node.image_count) + 10) * 2.2);
-                        return (node.selected ? 19 : 14) + size;
+                        return Math.cbrt(networkNodeValue(node)) * 7 + (node.selected ? 12 : 8);
                     }).strength(0.9).iterations(2);
                     graph3D.d3Force('collision', collisionForce);
                 }
@@ -1786,42 +2057,57 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 // Reheating here can run an animation frame before the layout exists,
                 // throwing in tickFrame and permanently stopping the WebGL render loop.
             } else {
-                currentNetworkGraph = new ForceGraph(stage)
+                const graph2D = new ForceGraph(stage)
                     .width(stage.clientWidth)
                     .height(stage.clientHeight)
-                    .backgroundColor('#f8fbff')
+                    .backgroundColor('rgba(0,0,0,0)')
                     .graphData(graphData)
                     .nodeVal(networkNodeValue)
                     .nodeColor(networkNodeColor)
                     .nodeLabel(nodeTooltipHtml)
-                    .nodeCanvasObjectMode(() => 'after')
-                    .nodeCanvasObject((node, context, globalScale) => {
-                        if (!networkShowAllLabels && !node.selected && node.labelRank >= 20 && globalScale < 1.45) return;
-                        const fontSize = 11 / globalScale;
-                        context.font = `700 ${fontSize}px "Microsoft YaHei", Arial`;
-                        context.textAlign = 'center';
-                        context.textBaseline = 'middle';
-                        const label = node.category_name;
-                        const width = context.measureText(label).width + 6 / globalScale;
-                        const height = fontSize + 4 / globalScale;
-                        const y = node.y + 10 / globalScale;
-                        context.fillStyle = 'rgba(255,255,255,0.88)';
-                        context.fillRect(node.x - width / 2, y - height / 2, width, height);
-                        context.fillStyle = node.selected ? '#b84b0a' : '#263650';
-                        context.fillText(label, node.x, y);
+                    .nodeCanvasObjectMode(() => 'replace')
+                    .nodeCanvasObject((node, context, globalScale) => drawNetworkNode2D(node, context, globalScale, dense))
+                    .nodePointerAreaPaint((node, color, context) => {
+                        if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
+                        context.fillStyle = color;
+                        context.beginPath();
+                        context.arc(node.x, node.y, Math.sqrt(networkNodeValue(node)) * 4, 0, 2 * Math.PI);
+                        context.fill();
                     })
                     .linkWidth(linkWidth)
                     .linkColor(linkColor)
                     .linkLabel(linkTooltipHtml)
                     .cooldownTicks(150)
                     .onNodeClick(handleNetworkNodeClick)
+                    .onNodeHover((node) => {
+                        if (currentNetworkGraph === graph2D) updateNetworkHover(node, graphData);
+                    })
                     .onEngineStop(() => {
-                        if (!fitted) {
+                        if (currentNetworkGraph === graph2D && !fitted) {
                             fitted = true;
-                            currentNetworkGraph.zoomToFit(700, 60);
+                            graph2D.zoomToFit(700, 60);
                         }
                     });
+                currentNetworkGraph = graph2D;
+                networkStyleRefresh = () => {
+                    if (currentNetworkGraph === graph2D) graph2D.linkColor((link) => linkColor(link));
+                };
             }
+
+            const renderedGraph = currentNetworkGraph;
+            const clearHover = (event) => {
+                if (currentNetworkGraph !== renderedGraph) return;
+                updateNetworkHover(null, graphData);
+                if (requestedMode === '3d') {
+                    // Forward the real exit coordinates so the renderer clears its own hit target.
+                    renderedGraph.renderer().domElement.dispatchEvent(new PointerEvent('pointermove', {
+                        bubbles: true, clientX: event.clientX, clientY: event.clientY,
+                        pointerType: event.pointerType || 'mouse'
+                    }));
+                }
+            };
+            stage.addEventListener('pointerleave', clearHover);
+            networkStageCleanup = () => stage.removeEventListener('pointerleave', clearHover);
 
             if (networkMode !== '3d') {
                 const linkForce = currentNetworkGraph.d3Force('link');
@@ -1947,7 +2233,9 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         });
 
         document.getElementById('resultArea').addEventListener('change', (event) => {
-            if (event.target.id === 'networkNodeLimit') {
+            if (event.target.id === 'networkImageScope') {
+                networkImageScope = event.target.value;
+            } else if (event.target.id === 'networkNodeLimit') {
                 networkNodeLimit = Number(event.target.value);
             } else if (event.target.id === 'networkDepth') {
                 networkDepth = Number(event.target.value);
