@@ -221,61 +221,131 @@ function getCategoryOverlap($mysqli, $categoryId) {
     return $rows;
 }
 
-function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight) {
-    $relatedLimit = max(1, $nodeLimit - 1);
-    $sql = "
-        SELECT
-            other_category.id,
-            other_category.category_name,
-            other_category.kindID,
-            COUNT(DISTINCT other_link.image_id) AS shared_with_selected,
-            (SELECT COUNT(*) FROM PicCategories AS all_links WHERE all_links.category_id = other_category.id) AS image_count
-        FROM PicCategories AS selected_link
-        INNER JOIN PicCategories AS other_link
-            ON other_link.image_id = selected_link.image_id
-            AND other_link.category_id <> ?
-        INNER JOIN Categories AS other_category ON other_category.id = other_link.category_id
-        WHERE selected_link.category_id = ?
-        GROUP BY other_category.id, other_category.category_name, other_category.kindID
-        HAVING shared_with_selected >= ?
-        ORDER BY shared_with_selected DESC, other_category.id ASC
-        LIMIT ?
-    ";
-    $stmt = $mysqli->prepare($sql);
-    if (!$stmt) {
-        throw new RuntimeException('无法准备关系图谱节点查询：' . $mysqli->error);
-    }
+function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $perNode, $maxEdges, $focusId = null) {
     $categoryId = (int)$category['id'];
-    $stmt->bind_param('iiii', $categoryId, $categoryId, $minWeight, $relatedLimit);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $focusId = $focusId === null ? $categoryId : (int)$focusId;
+    $selectedIds = [$categoryId => true];
+    $levels = [$categoryId => 0];
+    if ($focusId !== $categoryId) {
+        $selectedIds[$focusId] = true;
+        $levels[$focusId] = 0;
+    }
+    $frontier = [$focusId];
+    $backbone = [];
 
-    $nodes = [[
-        'id' => $categoryId,
-        'category_name' => $category['category_name'],
-        'kindID' => $category['kindID'],
-        'image_count' => (int)$category['image_count'],
-        'shared_with_selected' => (int)$category['image_count'],
-        'selected' => true,
-        'degree' => 0,
-        'weighted_degree' => 0
-    ]];
-    while ($row = $result->fetch_assoc()) {
+    for ($level = 1; $level <= $depth && !empty($frontier) && count($selectedIds) < $nodeLimit; $level++) {
+        $frontierList = implode(',', array_map('intval', $frontier));
+        $neighborSql = "
+            SELECT
+                source_link.category_id AS source_id,
+                target_link.category_id AS target_id,
+                COUNT(DISTINCT source_link.image_id) AS shared_count
+            FROM PicCategories AS source_link
+            INNER JOIN PicCategories AS target_link
+                ON target_link.image_id = source_link.image_id
+                AND target_link.category_id <> source_link.category_id
+            WHERE source_link.category_id IN ($frontierList)
+            GROUP BY source_link.category_id, target_link.category_id
+            HAVING shared_count >= " . (int)$minWeight . "
+            ORDER BY source_id ASC, shared_count DESC, target_id ASC
+        ";
+        $neighborResult = $mysqli->query($neighborSql);
+        if (!$neighborResult) {
+            throw new RuntimeException('无法读取分层邻居：' . $mysqli->error);
+        }
+
+        $addedPerSource = [];
+        $nextFrontier = [];
+        while ($row = $neighborResult->fetch_assoc()) {
+            $source = (int)$row['source_id'];
+            $target = (int)$row['target_id'];
+            $weight = (int)$row['shared_count'];
+            if (isset($selectedIds[$target]) || ($addedPerSource[$source] ?? 0) >= $perNode) {
+                continue;
+            }
+            if (count($selectedIds) >= $nodeLimit) {
+                break;
+            }
+
+            $selectedIds[$target] = true;
+            $levels[$target] = $level;
+            $nextFrontier[$target] = true;
+            $addedPerSource[$source] = ($addedPerSource[$source] ?? 0) + 1;
+            $edgeSource = min($source, $target);
+            $edgeTarget = max($source, $target);
+            $backbone[$edgeSource . ':' . $edgeTarget] = [
+                'source' => $edgeSource,
+                'target' => $edgeTarget,
+                'weight' => $weight,
+                'backbone' => true
+            ];
+        }
+        $frontier = array_map('intval', array_keys($nextFrontier));
+    }
+
+    $nodeIds = array_map('intval', array_keys($selectedIds));
+    $idList = implode(',', $nodeIds);
+    $nodeSql = "
+        SELECT c.id, c.category_name, c.kindID, COUNT(pc.image_id) AS image_count
+        FROM Categories AS c
+        LEFT JOIN PicCategories AS pc ON pc.category_id = c.id
+        WHERE c.id IN ($idList)
+        GROUP BY c.id, c.category_name, c.kindID
+    ";
+    $nodeResult = $mysqli->query($nodeSql);
+    if (!$nodeResult) {
+        throw new RuntimeException('无法读取图谱节点信息：' . $mysqli->error);
+    }
+
+    $sharedWithSelected = [];
+    if (count($nodeIds) > 1) {
+        $sharedSql = "
+            SELECT other_link.category_id, COUNT(DISTINCT selected_link.image_id) AS shared_count
+            FROM PicCategories AS selected_link
+            INNER JOIN PicCategories AS other_link
+                ON other_link.image_id = selected_link.image_id
+                AND other_link.category_id <> selected_link.category_id
+            WHERE selected_link.category_id = $categoryId
+              AND other_link.category_id IN ($idList)
+            GROUP BY other_link.category_id
+        ";
+        $sharedResult = $mysqli->query($sharedSql);
+        if (!$sharedResult) {
+            throw new RuntimeException('无法读取中心分类共享数量：' . $mysqli->error);
+        }
+        while ($row = $sharedResult->fetch_assoc()) {
+            $sharedWithSelected[(int)$row['category_id']] = (int)$row['shared_count'];
+        }
+    }
+
+    $nodes = [];
+    while ($row = $nodeResult->fetch_assoc()) {
+        $id = (int)$row['id'];
         $nodes[] = [
-            'id' => (int)$row['id'],
+            'id' => $id,
             'category_name' => (string)$row['category_name'],
             'kindID' => $row['kindID'] === null ? '' : (string)$row['kindID'],
             'image_count' => (int)$row['image_count'],
-            'shared_with_selected' => (int)$row['shared_with_selected'],
-            'selected' => false,
+            'shared_with_selected' => $id === $categoryId
+                ? (int)$row['image_count']
+                : ($sharedWithSelected[$id] ?? 0),
+            'selected' => $id === $categoryId,
+            'focus' => $id === $focusId,
+            'level' => $levels[$id] ?? $depth,
             'degree' => 0,
             'weighted_degree' => 0
         ];
     }
-    $stmt->close();
+    usort($nodes, function ($a, $b) {
+        if ($a['selected'] !== $b['selected']) {
+            return $a['selected'] ? -1 : 1;
+        }
+        if ($a['level'] !== $b['level']) {
+            return $a['level'] <=> $b['level'];
+        }
+        return $b['image_count'] <=> $a['image_count'];
+    });
 
-    $nodeIds = array_column($nodes, 'id');
-    $idList = implode(',', array_map('intval', $nodeIds));
     $edgeSql = "
         SELECT
             first_link.category_id AS source_id,
@@ -290,22 +360,44 @@ function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight) {
         GROUP BY first_link.category_id, second_link.category_id
         HAVING shared_count >= " . (int)$minWeight . "
         ORDER BY shared_count DESC, source_id ASC, target_id ASC
+        LIMIT " . (int)$maxEdges . "
     ";
     $edgeResult = $mysqli->query($edgeSql);
     if (!$edgeResult) {
         throw new RuntimeException('无法读取关系图谱连线：' . $mysqli->error);
     }
 
-    $links = [];
+    $linkMap = $backbone;
+    while ($row = $edgeResult->fetch_assoc()) {
+        $source = (int)$row['source_id'];
+        $target = (int)$row['target_id'];
+        $key = $source . ':' . $target;
+        $linkMap[$key] = [
+            'source' => $source,
+            'target' => $target,
+            'weight' => (int)$row['shared_count'],
+            'backbone' => isset($backbone[$key])
+        ];
+    }
+    $links = array_values($linkMap);
+    usort($links, function ($a, $b) {
+        if ($a['backbone'] !== $b['backbone']) {
+            return $a['backbone'] ? -1 : 1;
+        }
+        return $b['weight'] <=> $a['weight'];
+    });
+    if (count($links) > $maxEdges) {
+        $links = array_slice($links, 0, $maxEdges);
+    }
+
     $nodeIndex = [];
     foreach ($nodes as $index => $node) {
         $nodeIndex[$node['id']] = $index;
     }
-    while ($row = $edgeResult->fetch_assoc()) {
-        $source = (int)$row['source_id'];
-        $target = (int)$row['target_id'];
-        $weight = (int)$row['shared_count'];
-        $links[] = ['source' => $source, 'target' => $target, 'weight' => $weight];
+    foreach ($links as $link) {
+        $source = $link['source'];
+        $target = $link['target'];
+        $weight = $link['weight'];
         $nodes[$nodeIndex[$source]]['degree']++;
         $nodes[$nodeIndex[$target]]['degree']++;
         $nodes[$nodeIndex[$source]]['weighted_degree'] += $weight;
@@ -320,12 +412,19 @@ try {
 
     if (isset($_GET['ajax']) && $_GET['ajax'] === 'category_graph') {
         $categoryId = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
+        $requestedFocusId = filter_input(INPUT_GET, 'focus_id', FILTER_VALIDATE_INT);
         $requestedLimit = filter_input(INPUT_GET, 'node_limit', FILTER_VALIDATE_INT);
         $requestedWeight = filter_input(INPUT_GET, 'min_weight', FILTER_VALIDATE_INT);
-        $nodeLimit = in_array($requestedLimit, [20, 40, 60], true) ? $requestedLimit : 40;
+        $requestedDepth = filter_input(INPUT_GET, 'depth', FILTER_VALIDATE_INT);
+        $requestedPerNode = filter_input(INPUT_GET, 'per_node', FILTER_VALIDATE_INT);
+        $requestedMaxEdges = filter_input(INPUT_GET, 'max_edges', FILTER_VALIDATE_INT);
+        $nodeLimit = in_array($requestedLimit, [40, 100, 200, 500], true) ? $requestedLimit : 100;
         $minWeight = ($requestedWeight !== false && $requestedWeight >= 1 && $requestedWeight <= 100)
             ? $requestedWeight
             : 2;
+        $depth = in_array($requestedDepth, [1, 2, 3], true) ? $requestedDepth : 2;
+        $perNode = in_array($requestedPerNode, [5, 10, 20], true) ? $requestedPerNode : 10;
+        $maxEdges = in_array($requestedMaxEdges, [500, 2000, 5000], true) ? $requestedMaxEdges : 2000;
 
         if (!$categoryId || $categoryId < 1) {
             jsonResponse(['ok' => false, 'message' => '分类 ID 无效。'], 400);
@@ -334,13 +433,19 @@ try {
         if ($category === null) {
             jsonResponse(['ok' => false, 'message' => '未找到该分类。'], 404);
         }
+        $focusCategory = $requestedFocusId ? getSelectedCategory($categories, (int)$requestedFocusId) : $category;
+        $focusId = $focusCategory === null ? (int)$categoryId : (int)$focusCategory['id'];
 
-        $graph = getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight);
+        $graph = getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight, $depth, $perNode, $maxEdges, $focusId);
         jsonResponse([
             'ok' => true,
             'category' => $category,
             'node_limit' => $nodeLimit,
             'min_weight' => $minWeight,
+            'depth' => $depth,
+            'per_node' => $perNode,
+            'max_edges' => $maxEdges,
+            'focus_id' => $focusId,
             'nodes' => $graph['nodes'],
             'links' => $graph['links']
         ]);
@@ -394,8 +499,13 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>图片数据分析</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/force-graph"></script>
-    <script src="https://cdn.jsdelivr.net/npm/3d-force-graph"></script>
+    <script src="https://cdn.jsdelivr.net/npm/force-graph@1.50.1/dist/force-graph.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/3d-force-graph@1.80.0/dist/3d-force-graph.min.js"></script>
+    <script>
+        window.forceCollide3DReady = import('https://cdn.jsdelivr.net/npm/d3-force-3d@3.0.6/+esm')
+            .then((module) => { window.forceCollide3D = module.forceCollide; })
+            .catch(() => null);
+    </script>
     <style>
         :root {
             --bg: #f4f7fb;
@@ -579,7 +689,15 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         .network-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 14px; }
         .network-stage { position: relative; height: 640px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #f8fbff; }
         .network-stage.mode-3d { background: #07101d; }
+        .network-stage:fullscreen { width: 100vw; height: 100vh; border: 0; border-radius: 0; }
         .network-stage canvas { display: block; }
+        .network-dom-label-layer { position: absolute; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
+        .network-dom-label { position: absolute; max-width: 170px; overflow: hidden; border-radius: 5px; padding: 3px 6px; color: #e8f1ff; background: rgba(8, 20, 36, 0.76); font-size: 11px; font-weight: 750; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; transform: translate(-50%, -50%); }
+        .network-dom-label.selected { color: #ffd29a; background: rgba(111, 45, 7, 0.84); }
+        .network-actions { position: absolute; top: 12px; right: 12px; z-index: 6; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: calc(100% - 24px); }
+        .network-action { border: 1px solid rgba(207, 216, 232, 0.9); border-radius: 8px; padding: 7px 9px; color: #44526a; background: rgba(255, 255, 255, 0.9); box-shadow: 0 5px 16px rgba(30, 45, 75, 0.08); cursor: pointer; font-size: 11px; font-weight: 750; backdrop-filter: blur(8px); }
+        .mode-3d .network-action { color: #dce7f8; border-color: rgba(148, 163, 184, 0.28); background: rgba(15, 28, 47, 0.82); }
+        .network-status { min-height: 18px; margin: 9px 0 0; color: var(--muted); font-size: 11px; }
         .network-loading { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; color: var(--muted); background: rgba(248, 251, 255, 0.9); }
         .network-details { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #fbfcff; }
         .network-details h3 { margin: 0 0 14px; font-size: 15px; }
@@ -694,12 +812,22 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         let currentStats = null;
         let requestController = null;
         let networkRequestController = null;
-        let networkNodeLimit = 40;
+        let networkNodeLimit = 100;
         let networkMinWeight = 2;
+        let networkDepth = 2;
+        let networkPerNode = 10;
+        let networkMaxEdges = 2000;
         let networkMode = '2d';
+        let networkShowAllLabels = false;
+        let network3DLabelMode = 'core';
         let currentNetworkData = null;
         let currentNetworkGraph = null;
         let networkResizeObserver = null;
+        let networkLabelFrame = null;
+        let networkLabelRefresh = null;
+        let networkRenderVersion = 0;
+        let lastRenderedNetworkMode = null;
+        let lastNetworkNodeClick = { id: null, time: 0 };
         const cache = new Map();
         const networkCache = new Map();
         const charts = [];
@@ -727,7 +855,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         };
 
         const chartLibraryAvailable = typeof Chart !== 'undefined';
-        const networkLibrariesAvailable = typeof ForceGraph !== 'undefined' && typeof ForceGraph3D !== 'undefined';
+        const forceGraph2DAvailable = typeof ForceGraph !== 'undefined';
+        const forceGraph3DAvailable = typeof ForceGraph3D !== 'undefined';
         if (chartLibraryAvailable) {
             Chart.defaults.font.family = 'Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif';
             Chart.defaults.color = colors.text;
@@ -751,7 +880,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             return total > 0 ? Number((part * 100 / total).toFixed(1)) : 0;
         }
 
-        function destroyNetworkGraph() {
+        function destroyNetworkGraph(invalidateRender = true) {
+            if (invalidateRender) networkRenderVersion++;
             if (networkRequestController) {
                 networkRequestController.abort();
                 networkRequestController = null;
@@ -760,6 +890,11 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 networkResizeObserver.disconnect();
                 networkResizeObserver = null;
             }
+            if (networkLabelFrame) {
+                cancelAnimationFrame(networkLabelFrame);
+                networkLabelFrame = null;
+            }
+            networkLabelRefresh = null;
             if (currentNetworkGraph && typeof currentNetworkGraph._destructor === 'function') {
                 currentNetworkGraph._destructor();
             }
@@ -1108,12 +1243,27 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                     <div class="network-settings">
                         <label class="network-setting">节点上限
                             <select id="networkNodeLimit" class="network-select">
-                                ${[20, 40, 60].map((value) => `<option value="${value}"${networkNodeLimit === value ? ' selected' : ''}>${value} 个节点</option>`).join('')}
+                                ${[40, 100, 200, 500].map((value) => `<option value="${value}"${networkNodeLimit === value ? ' selected' : ''}>${value}${value === 500 ? '（实验）' : ''}</option>`).join('')}
+                            </select>
+                        </label>
+                        <label class="network-setting">探索深度
+                            <select id="networkDepth" class="network-select">
+                                ${[1, 2, 3].map((value) => `<option value="${value}"${networkDepth === value ? ' selected' : ''}>${value} 阶关系</option>`).join('')}
+                            </select>
+                        </label>
+                        <label class="network-setting">每节点扩展
+                            <select id="networkPerNode" class="network-select">
+                                ${[5, 10, 20].map((value) => `<option value="${value}"${networkPerNode === value ? ' selected' : ''}>${value} 个邻居</option>`).join('')}
                             </select>
                         </label>
                         <label class="network-setting">最少共享图片
                             <select id="networkMinWeight" class="network-select">
                                 ${[1, 2, 3, 5, 10].map((value) => `<option value="${value}"${networkMinWeight === value ? ' selected' : ''}>≥ ${value} 张</option>`).join('')}
+                            </select>
+                        </label>
+                        <label class="network-setting">最大边数
+                            <select id="networkMaxEdges" class="network-select">
+                                ${[500, 2000, 5000].map((value) => `<option value="${value}"${networkMaxEdges === value ? ' selected' : ''}>${formatNumber(value)} 条</option>`).join('')}
                             </select>
                         </label>
                     </div>
@@ -1131,8 +1281,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 <div class="content-card">
                     ${headerHtml(stats, '分类之间的二维网络与三维空间关系')}
                     <div class="metric-grid">
-                        ${metricHtml('显示节点', '—', `最多 ${networkNodeLimit} 个`)}
-                        ${metricHtml('关联连线', '—', `共享图片 ≥ ${networkMinWeight}`)}
+                        ${metricHtml('显示节点', '—', `${networkDepth} 阶 · 最多 ${networkNodeLimit} 个`)}
+                        ${metricHtml('关联连线', '—', `最多 ${formatNumber(networkMaxEdges)} 条`)}
                         ${metricHtml('最大边权重', '—', '两分类共享图片数')}
                         ${metricHtml('当前分类图片', formatNumber(stats.totals.all), '节点大小按图片数计算')}
                     </div>
@@ -1144,7 +1294,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                         <aside class="network-details">
                             <h3>节点详情</h3>
                             <div id="nodeDetailsBody"><p class="chart-subtitle">点击任意节点查看具体信息。</p></div>
-                            <p class="network-help">节点越大，分类图片越多；连线越粗、颜色越深，共享图片越多。二维图可拖动节点和缩放，三维图可旋转、平移并用滚轮缩放。</p>
+                            <p class="network-help">节点越大，分类图片越多；连线越粗、颜色越深，共享图片越多。单击节点聚焦，双击节点会在当前网络上继续展开一层。</p>
+                            <p id="networkStatus" class="network-status">双击任意节点可继续探索局部关系。</p>
                         </aside>
                     </div>
                 </div>`;
@@ -1152,13 +1303,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         }
 
         async function loadNetworkData() {
-            if (!networkLibrariesAvailable) {
-                showNetworkError('关系图谱组件加载失败，请检查网络连接后刷新页面。');
-                return;
-            }
-
             const categoryId = selectedCategoryId;
-            const cacheKey = `${categoryId}:${networkNodeLimit}:${networkMinWeight}`;
+            const cacheKey = `${categoryId}:${networkNodeLimit}:${networkMinWeight}:${networkDepth}:${networkPerNode}:${networkMaxEdges}`;
             if (networkCache.has(cacheKey)) {
                 currentNetworkData = networkCache.get(cacheKey);
                 updateNetworkSummary(currentNetworkData);
@@ -1174,6 +1320,9 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 url.searchParams.set('category_id', categoryId);
                 url.searchParams.set('node_limit', networkNodeLimit);
                 url.searchParams.set('min_weight', networkMinWeight);
+                url.searchParams.set('depth', networkDepth);
+                url.searchParams.set('per_node', networkPerNode);
+                url.searchParams.set('max_edges', networkMaxEdges);
                 const response = await fetch(url, {
                     headers: { 'Accept': 'application/json' },
                     signal: networkRequestController.signal
@@ -1288,31 +1437,307 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 <dl class="node-detail-list">
                     <div class="node-detail-row"><dt>分类图片</dt><dd>${formatNumber(node.image_count)} 张</dd></div>
                     <div class="node-detail-row"><dt>与当前分类共享</dt><dd>${node.selected ? '当前分类' : `${formatNumber(node.shared_with_selected)} 张`}</dd></div>
+                    <div class="node-detail-row"><dt>探索层级</dt><dd>${formatNumber(node.level || 0)} 阶</dd></div>
                     <div class="node-detail-row"><dt>直接连接</dt><dd>${formatNumber(node.degree)} 个</dd></div>
                     <div class="node-detail-row"><dt>累计边权重</dt><dd>${formatNumber(node.weighted_degree)}</dd></div>
                 </dl>`;
         }
 
-        function renderNetworkGraph(data) {
-            destroyNetworkGraph();
+        function setNetworkStatus(message) {
+            const target = document.getElementById('networkStatus');
+            if (target) target.textContent = message;
+        }
+
+        function focusNetworkNode(node) {
+            if (!currentNetworkGraph || !node) return;
+            if (networkMode === '3d') {
+                const distance = Math.hypot(node.x || 0, node.y || 0, node.z || 0);
+                const ratio = distance > 1 ? 1 + 90 / distance : 1;
+                const position = distance > 1
+                    ? { x: node.x * ratio, y: node.y * ratio, z: node.z * ratio }
+                    : { x: 0, y: 0, z: 90 };
+                currentNetworkGraph.cameraPosition(position, node, 900);
+            } else {
+                currentNetworkGraph.centerAt(node.x, node.y, 500);
+                currentNetworkGraph.zoom(4, 500);
+            }
+        }
+
+        function handleNetworkNodeClick(node) {
+            updateNodeDetails(node);
+            focusNetworkNode(node);
+            const now = Date.now();
+            if (lastNetworkNodeClick.id === node.id && now - lastNetworkNodeClick.time < 360) {
+                lastNetworkNodeClick = { id: null, time: 0 };
+                expandNetworkNode(node);
+            } else {
+                lastNetworkNodeClick = { id: node.id, time: now };
+            }
+        }
+
+        function recomputeNetworkDegrees(data) {
+            const nodeMap = new Map(data.nodes.map((node) => {
+                node.degree = 0;
+                node.weighted_degree = 0;
+                return [node.id, node];
+            }));
+            data.links.forEach((link) => {
+                const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+                const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+                const source = nodeMap.get(sourceId);
+                const target = nodeMap.get(targetId);
+                if (!source || !target) return;
+                source.degree++;
+                target.degree++;
+                source.weighted_degree += link.weight;
+                target.weighted_degree += link.weight;
+                link.source = sourceId;
+                link.target = targetId;
+            });
+        }
+
+        function mergeExpandedNetwork(incoming, expandedNode) {
+            const merged = JSON.parse(JSON.stringify({
+                ...currentNetworkData,
+                nodes: currentNetworkData.nodes,
+                links: currentNetworkData.links
+            }));
+            const nodeMap = new Map(merged.nodes.map((node) => [node.id, node]));
+            incoming.nodes.forEach((node) => {
+                if (nodeMap.has(node.id) || merged.nodes.length >= networkNodeLimit) return;
+                node.selected = node.id === selectedCategoryId;
+                node.focus = false;
+                node.level = Math.min(3, Number(expandedNode.level || 0) + 1);
+                merged.nodes.push(node);
+                nodeMap.set(node.id, node);
+            });
+
+            const linkMap = new Map();
+            merged.links.forEach((link) => {
+                const source = typeof link.source === 'object' ? link.source.id : link.source;
+                const target = typeof link.target === 'object' ? link.target.id : link.target;
+                link.source = Math.min(source, target);
+                link.target = Math.max(source, target);
+                linkMap.set(`${link.source}:${link.target}`, link);
+            });
+            incoming.links.forEach((link) => {
+                const source = typeof link.source === 'object' ? link.source.id : link.source;
+                const target = typeof link.target === 'object' ? link.target.id : link.target;
+                if (!nodeMap.has(source) || !nodeMap.has(target)) return;
+                const low = Math.min(source, target);
+                const high = Math.max(source, target);
+                const key = `${low}:${high}`;
+                const existing = linkMap.get(key);
+                if (!existing || link.weight > existing.weight) {
+                    linkMap.set(key, { source: low, target: high, weight: link.weight, backbone: Boolean(link.backbone) });
+                }
+            });
+            merged.links = [...linkMap.values()]
+                .sort((a, b) => Number(b.backbone) - Number(a.backbone) || b.weight - a.weight)
+                .slice(0, networkMaxEdges);
+            recomputeNetworkDegrees(merged);
+            return merged;
+        }
+
+        async function expandNetworkNode(node) {
+            if (currentNetworkData.nodes.length >= networkNodeLimit) {
+                setNetworkStatus(`已达到 ${networkNodeLimit} 个节点上限，请提高节点上限后再展开。`);
+                return;
+            }
+            if (networkRequestController) return;
+            setNetworkStatus(`正在展开“${node.category_name}”的一阶邻居…`);
+            networkRequestController = new AbortController();
+            try {
+                const url = new URL(window.location.href);
+                url.search = '';
+                url.searchParams.set('ajax', 'category_graph');
+                url.searchParams.set('category_id', selectedCategoryId);
+                url.searchParams.set('focus_id', node.id);
+                url.searchParams.set('node_limit', 40);
+                url.searchParams.set('min_weight', networkMinWeight);
+                url.searchParams.set('depth', 1);
+                url.searchParams.set('per_node', networkPerNode);
+                url.searchParams.set('max_edges', 500);
+                const response = await fetch(url, {
+                    headers: { 'Accept': 'application/json' },
+                    signal: networkRequestController.signal
+                });
+                const data = await response.json();
+                if (!response.ok || !data.ok) throw new Error(data.message || '节点展开失败。');
+                networkRequestController = null;
+                if (activeView !== 'network') return;
+                const previousCount = currentNetworkData.nodes.length;
+                currentNetworkData = mergeExpandedNetwork(data, node);
+                updateNetworkSummary(currentNetworkData);
+                renderNetworkGraph(currentNetworkData);
+                setNetworkStatus(`已新增 ${currentNetworkData.nodes.length - previousCount} 个节点；双击其他节点可继续展开。`);
+            } catch (error) {
+                if (error.name !== 'AbortError') setNetworkStatus(error.message || '节点展开失败。');
+                networkRequestController = null;
+            }
+        }
+
+        function shouldShow3DLabel(node) {
+            if (network3DLabelMode === 'all') return true;
+            if (network3DLabelMode === 'hidden') return false;
+            return node.selected || node.labelRank < 8;
+        }
+
+        function networkLabelActionText() {
+            if (networkMode !== '3d') return networkShowAllLabels ? '精简名称' : '显示全部名称';
+            const labels = { core: '名称：核心', all: '名称：全部', hidden: '名称：隐藏' };
+            return labels[network3DLabelMode];
+        }
+
+        function applyStable3DPositions(graphData, previousPositions) {
+            const nodes = [...graphData.nodes].sort((a, b) => Number(a.id) - Number(b.id));
+            const nodeMap = new Map(nodes.map((node) => [node.id, node]));
+            const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+            const baseRadius = Math.max(170, Math.cbrt(Math.max(1, nodes.length)) * 82);
+
+            nodes.forEach((node, index) => {
+                const previous = previousPositions.get(node.id);
+                if (previous && Number.isFinite(previous.x) && Number.isFinite(previous.y) && Number.isFinite(previous.z)) {
+                    node.x = previous.x;
+                    node.y = previous.y;
+                    node.z = previous.z;
+                } else if (node.selected) {
+                    node.x = 0;
+                    node.y = 0;
+                    node.z = 0;
+                } else {
+                    const offsetIndex = index + 1;
+                    const y = 1 - 2 * ((offsetIndex - 0.5) / Math.max(1, nodes.length));
+                    const horizontalRadius = Math.sqrt(Math.max(0, 1 - y * y));
+                    const angle = goldenAngle * offsetIndex + (Number(node.id) % 101) * 0.013;
+                    const levelRadius = baseRadius + Math.min(3, Number(node.level || 0)) * 35;
+                    node.x = Math.cos(angle) * horizontalRadius * levelRadius;
+                    node.y = y * levelRadius;
+                    node.z = Math.sin(angle) * horizontalRadius * levelRadius;
+                }
+                node.vx = 0;
+                node.vy = 0;
+                node.vz = 0;
+            });
+
+            if (previousPositions.size > 0) {
+                graphData.links.forEach((link) => {
+                    const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+                    const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+                    const source = nodeMap.get(sourceId);
+                    const target = nodeMap.get(targetId);
+                    const newNode = previousPositions.has(sourceId) ? target : source;
+                    const anchor = newNode === source ? target : source;
+                    if (!newNode || !anchor || previousPositions.has(newNode.id) || !previousPositions.has(anchor.id)) return;
+                    const angle = goldenAngle * (Number(newNode.id) + 1);
+                    newNode.x = anchor.x + Math.cos(angle) * 120;
+                    newNode.y = anchor.y + Math.sin(angle * 0.7) * 90;
+                    newNode.z = anchor.z + Math.sin(angle) * 120;
+                });
+            }
+        }
+
+        function startNetwork3DLabels(stage, graphData, graph) {
+            const layer = document.createElement('div');
+            layer.className = 'network-dom-label-layer';
+            const labels = new Map();
+            graphData.nodes.forEach((node) => {
+                const label = document.createElement('span');
+                label.className = `network-dom-label${node.selected ? ' selected' : ''}`;
+                label.textContent = node.category_name;
+                label.title = node.category_name;
+                layer.appendChild(label);
+                labels.set(node.id, label);
+            });
+            stage.appendChild(layer);
+
+            const renderLabels = () => {
+                if (currentNetworkGraph !== graph || networkMode !== '3d') return;
+                graphData.nodes.forEach((node) => {
+                    const label = labels.get(node.id);
+                    const shouldShow = shouldShow3DLabel(node);
+                    if (!shouldShow || !Number.isFinite(node.x) || !Number.isFinite(node.y) || !Number.isFinite(node.z)) {
+                        label.style.display = 'none';
+                        return;
+                    }
+                    const position = graph.graph2ScreenCoords(node.x, node.y, node.z);
+                    const inView = position.x >= -80 && position.x <= stage.clientWidth + 80
+                        && position.y >= -30 && position.y <= stage.clientHeight + 30;
+                    label.style.display = inView ? 'block' : 'none';
+                    if (inView) {
+                        label.style.left = `${position.x}px`;
+                        label.style.top = `${position.y - 12}px`;
+                    }
+                });
+            };
+            const update = () => {
+                if (currentNetworkGraph !== graph || networkMode !== '3d') return;
+                renderLabels();
+                networkLabelFrame = requestAnimationFrame(update);
+            };
+            networkLabelRefresh = renderLabels;
+            update();
+        }
+
+        async function renderNetworkGraph(data) {
+            const requestedMode = networkMode;
+            const renderVersion = ++networkRenderVersion;
+            const previousPositions = new Map();
+            if (currentNetworkGraph && lastRenderedNetworkMode === requestedMode && typeof currentNetworkGraph.graphData === 'function') {
+                currentNetworkGraph.graphData().nodes.forEach((node) => {
+                    previousPositions.set(node.id, { x: node.x, y: node.y, z: node.z });
+                });
+            }
+            if (requestedMode === '3d' && window.forceCollide3DReady) {
+                await window.forceCollide3DReady;
+            }
+            if (renderVersion !== networkRenderVersion
+                || networkMode !== requestedMode
+                || activeView !== 'network'
+                || selectedCategoryId !== Number(data.category.id)) return;
+            destroyNetworkGraph(false);
             const stage = document.getElementById('networkStage');
             if (!stage) return;
             stage.replaceChildren();
             stage.classList.toggle('mode-3d', networkMode === '3d');
+            const requiredLibraryAvailable = networkMode === '3d' ? forceGraph3DAvailable : forceGraph2DAvailable;
+            if (!requiredLibraryAvailable) {
+                const libraryName = networkMode === '3d' ? '3D Force Graph' : 'Force Graph';
+                stage.innerHTML = `<div class="no-data">${libraryName} 未能加载。请检查浏览器是否拦截 cdn.jsdelivr.net，然后刷新页面。</div>`;
+                return;
+            }
 
             const graphData = prepareNetworkData(data);
+            [...graphData.nodes]
+                .sort((a, b) => b.weighted_degree - a.weighted_degree)
+                .forEach((node, index) => { node.labelRank = index; });
+            if (networkMode === '3d') {
+                applyStable3DPositions(graphData, previousPositions);
+            } else {
+                graphData.nodes.forEach((node) => {
+                    const position = previousPositions.get(node.id);
+                    if (!position) return;
+                    if (Number.isFinite(position.x)) node.x = position.x;
+                    if (Number.isFinite(position.y)) node.y = position.y;
+                });
+            }
             const maximumWeight = Math.max(1, ...graphData.links.map((link) => link.weight));
+            const logarithmicWeights = graphData.links.map((link) => Math.log1p(link.weight)).sort((a, b) => a - b);
+            const lowerWeight = logarithmicWeights[Math.floor((logarithmicWeights.length - 1) * 0.1)] || 0;
+            const upperWeight = logarithmicWeights[Math.floor((logarithmicWeights.length - 1) * 0.9)] || lowerWeight + 1;
+            const normalizedWeight = (link) => Math.max(0, Math.min(1,
+                (Math.log1p(link.weight) - lowerWeight) / Math.max(0.001, upperWeight - lowerWeight)
+            ));
             const linkWidth = (link) => 0.6 + Math.sqrt(link.weight / maximumWeight) * (networkMode === '3d' ? 2.4 : 4.2);
             const linkColor = (link) => `rgba(79, 110, 247, ${0.18 + Math.sqrt(link.weight / maximumWeight) * 0.62})`;
             let fitted = false;
 
             if (networkMode === '3d') {
-                currentNetworkGraph = new ForceGraph3D(stage, { controlType: 'trackball' })
+                const graph3D = new ForceGraph3D(stage, { controlType: 'trackball' })
                     .width(stage.clientWidth)
                     .height(stage.clientHeight)
                     .backgroundColor('#07101d')
                     .showNavInfo(false)
-                    .graphData(graphData)
                     .nodeVal(networkNodeValue)
                     .nodeColor(networkNodeColor)
                     .nodeOpacity(0.92)
@@ -1322,22 +1747,44 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                     .linkColor(linkColor)
                     .linkOpacity(0.72)
                     .linkLabel(linkTooltipHtml)
-                    .cooldownTicks(150)
-                    .onNodeClick((node) => {
-                        updateNodeDetails(node);
-                        const distance = Math.hypot(node.x || 0, node.y || 0, node.z || 0);
-                        const ratio = distance > 1 ? 1 + 90 / distance : 1;
-                        const position = distance > 1
-                            ? { x: node.x * ratio, y: node.y * ratio, z: node.z * ratio }
-                            : { x: 0, y: 0, z: 90 };
-                        currentNetworkGraph.cameraPosition(position, node, 900);
-                    })
+                    .d3AlphaDecay(0.018)
+                    .d3VelocityDecay(0.35)
+                    .cooldownTicks(280)
+                    .onNodeClick(handleNetworkNodeClick)
                     .onEngineStop(() => {
-                        if (!fitted) {
+                        if (currentNetworkGraph === graph3D && !fitted) {
                             fitted = true;
-                            currentNetworkGraph.zoomToFit(700, 80);
+                            graph3D.zoomToFit(900, 160);
                         }
                     });
+                currentNetworkGraph = graph3D;
+
+                // Keep labels independent of the WebGL meshes and an external THREE global.
+                startNetwork3DLabels(stage, graphData, graph3D);
+
+                const linkForce = graph3D.d3Force('link');
+                if (linkForce) {
+                    linkForce
+                        .distance((link) => 190 - normalizedWeight(link) * 90)
+                        .strength((link) => 0.08 + normalizedWeight(link) * 0.22);
+                }
+                const chargeForce = graph3D.d3Force('charge');
+                if (chargeForce && typeof chargeForce.strength === 'function') {
+                    const nodeCount = graphData.nodes.length;
+                    const chargeStrength = nodeCount <= 20 ? -520 : (nodeCount <= 100 ? -380 : (nodeCount <= 200 ? -280 : -210));
+                    chargeForce.strength(chargeStrength);
+                }
+                if (typeof window.forceCollide3D === 'function') {
+                    const collisionForce = window.forceCollide3D((node) => {
+                        const size = Math.min(9, Math.log10(Number(node.image_count) + 10) * 2.2);
+                        return (node.selected ? 19 : 14) + size;
+                    }).strength(0.9).iterations(2);
+                    graph3D.d3Force('collision', collisionForce);
+                }
+                graph3D.graphData(graphData);
+                // graphData initializes the layout asynchronously and starts the simulation.
+                // Reheating here can run an animation frame before the layout exists,
+                // throwing in tickFrame and permanently stopping the WebGL render loop.
             } else {
                 currentNetworkGraph = new ForceGraph(stage)
                     .width(stage.clientWidth)
@@ -1349,7 +1796,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                     .nodeLabel(nodeTooltipHtml)
                     .nodeCanvasObjectMode(() => 'after')
                     .nodeCanvasObject((node, context, globalScale) => {
-                        if (!node.selected && globalScale < 1.45) return;
+                        if (!networkShowAllLabels && !node.selected && node.labelRank >= 20 && globalScale < 1.45) return;
                         const fontSize = 11 / globalScale;
                         context.font = `700 ${fontSize}px "Microsoft YaHei", Arial`;
                         context.textAlign = 'center';
@@ -1367,11 +1814,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                     .linkColor(linkColor)
                     .linkLabel(linkTooltipHtml)
                     .cooldownTicks(150)
-                    .onNodeClick((node) => {
-                        updateNodeDetails(node);
-                        currentNetworkGraph.centerAt(node.x, node.y, 500);
-                        currentNetworkGraph.zoom(4, 500);
-                    })
+                    .onNodeClick(handleNetworkNodeClick)
                     .onEngineStop(() => {
                         if (!fitted) {
                             fitted = true;
@@ -1380,17 +1823,29 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                     });
             }
 
-            const linkForce = currentNetworkGraph.d3Force('link');
-            if (linkForce) {
-                linkForce
-                    .distance((link) => Math.max(34, 125 - Math.log1p(link.weight) * 20))
-                    .strength((link) => Math.min(0.95, 0.18 + Math.log1p(link.weight) * 0.14));
+            if (networkMode !== '3d') {
+                const linkForce = currentNetworkGraph.d3Force('link');
+                if (linkForce) {
+                    linkForce
+                        .distance((link) => Math.max(34, 125 - Math.log1p(link.weight) * 20))
+                        .strength((link) => Math.min(0.95, 0.18 + Math.log1p(link.weight) * 0.14));
+                }
+                const chargeForce = currentNetworkGraph.d3Force('charge');
+                if (chargeForce && typeof chargeForce.strength === 'function') {
+                    chargeForce.strength(-145);
+                }
+                currentNetworkGraph.d3ReheatSimulation();
             }
-            const chargeForce = currentNetworkGraph.d3Force('charge');
-            if (chargeForce && typeof chargeForce.strength === 'function') {
-                chargeForce.strength(networkMode === '3d' ? -110 : -145);
-            }
-            currentNetworkGraph.d3ReheatSimulation();
+
+            const actionBar = document.createElement('div');
+            actionBar.className = 'network-actions';
+            actionBar.innerHTML = `
+                <button type="button" class="network-action" data-network-action="fit">适应全图</button>
+                <button type="button" class="network-action" data-network-action="center">聚焦中心</button>
+                <button type="button" class="network-action" data-network-action="reset">重置视角</button>
+                <button type="button" class="network-action" data-network-action="labels">${networkLabelActionText()}</button>
+                <button type="button" class="network-action" data-network-action="fullscreen">全屏</button>`;
+            stage.appendChild(actionBar);
 
             const selectedNode = graphData.nodes.find((node) => node.selected) || graphData.nodes[0];
             updateNodeDetails(selectedNode);
@@ -1402,6 +1857,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 });
                 networkResizeObserver.observe(stage);
             }
+            lastRenderedNetworkMode = networkMode;
         }
 
         function renderActiveView() {
@@ -1447,6 +1903,39 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
                 return;
             }
 
+            const actionButton = event.target.closest('[data-network-action]');
+            if (actionButton && currentNetworkGraph) {
+                const action = actionButton.dataset.networkAction;
+                if (action === 'fit') {
+                    currentNetworkGraph.zoomToFit(900, networkMode === '3d' ? 160 : 60);
+                } else if (action === 'center') {
+                    const centerNode = currentNetworkGraph.graphData().nodes.find((node) => node.selected);
+                    focusNetworkNode(centerNode);
+                } else if (action === 'reset') {
+                    if (networkMode === '3d') {
+                        currentNetworkGraph.cameraPosition({ x: 0, y: 0, z: 350 }, { x: 0, y: 0, z: 0 }, 800);
+                    } else {
+                        currentNetworkGraph.centerAt(0, 0, 500);
+                        currentNetworkGraph.zoom(1, 500);
+                    }
+                } else if (action === 'labels') {
+                    if (networkMode === '3d') {
+                        const modes = ['core', 'all', 'hidden'];
+                        network3DLabelMode = modes[(modes.indexOf(network3DLabelMode) + 1) % modes.length];
+                        actionButton.textContent = networkLabelActionText();
+                        if (networkLabelRefresh) networkLabelRefresh();
+                    } else {
+                        networkShowAllLabels = !networkShowAllLabels;
+                        renderNetworkGraph(currentNetworkData);
+                    }
+                } else if (action === 'fullscreen') {
+                    const stage = document.getElementById('networkStage');
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    else if (stage?.requestFullscreen) stage.requestFullscreen();
+                }
+                return;
+            }
+
             const modeButton = event.target.closest('[data-network-mode]');
             if (modeButton && currentNetworkData) {
                 networkMode = modeButton.dataset.networkMode;
@@ -1460,8 +1949,14 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         document.getElementById('resultArea').addEventListener('change', (event) => {
             if (event.target.id === 'networkNodeLimit') {
                 networkNodeLimit = Number(event.target.value);
+            } else if (event.target.id === 'networkDepth') {
+                networkDepth = Number(event.target.value);
+            } else if (event.target.id === 'networkPerNode') {
+                networkPerNode = Number(event.target.value);
             } else if (event.target.id === 'networkMinWeight') {
                 networkMinWeight = Number(event.target.value);
+            } else if (event.target.id === 'networkMaxEdges') {
+                networkMaxEdges = Number(event.target.value);
             } else {
                 return;
             }
