@@ -221,8 +221,130 @@ function getCategoryOverlap($mysqli, $categoryId) {
     return $rows;
 }
 
+function getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight) {
+    $relatedLimit = max(1, $nodeLimit - 1);
+    $sql = "
+        SELECT
+            other_category.id,
+            other_category.category_name,
+            other_category.kindID,
+            COUNT(DISTINCT other_link.image_id) AS shared_with_selected,
+            (SELECT COUNT(*) FROM PicCategories AS all_links WHERE all_links.category_id = other_category.id) AS image_count
+        FROM PicCategories AS selected_link
+        INNER JOIN PicCategories AS other_link
+            ON other_link.image_id = selected_link.image_id
+            AND other_link.category_id <> ?
+        INNER JOIN Categories AS other_category ON other_category.id = other_link.category_id
+        WHERE selected_link.category_id = ?
+        GROUP BY other_category.id, other_category.category_name, other_category.kindID
+        HAVING shared_with_selected >= ?
+        ORDER BY shared_with_selected DESC, other_category.id ASC
+        LIMIT ?
+    ";
+    $stmt = $mysqli->prepare($sql);
+    if (!$stmt) {
+        throw new RuntimeException('无法准备关系图谱节点查询：' . $mysqli->error);
+    }
+    $categoryId = (int)$category['id'];
+    $stmt->bind_param('iiii', $categoryId, $categoryId, $minWeight, $relatedLimit);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $nodes = [[
+        'id' => $categoryId,
+        'category_name' => $category['category_name'],
+        'kindID' => $category['kindID'],
+        'image_count' => (int)$category['image_count'],
+        'shared_with_selected' => (int)$category['image_count'],
+        'selected' => true,
+        'degree' => 0,
+        'weighted_degree' => 0
+    ]];
+    while ($row = $result->fetch_assoc()) {
+        $nodes[] = [
+            'id' => (int)$row['id'],
+            'category_name' => (string)$row['category_name'],
+            'kindID' => $row['kindID'] === null ? '' : (string)$row['kindID'],
+            'image_count' => (int)$row['image_count'],
+            'shared_with_selected' => (int)$row['shared_with_selected'],
+            'selected' => false,
+            'degree' => 0,
+            'weighted_degree' => 0
+        ];
+    }
+    $stmt->close();
+
+    $nodeIds = array_column($nodes, 'id');
+    $idList = implode(',', array_map('intval', $nodeIds));
+    $edgeSql = "
+        SELECT
+            first_link.category_id AS source_id,
+            second_link.category_id AS target_id,
+            COUNT(DISTINCT first_link.image_id) AS shared_count
+        FROM PicCategories AS first_link
+        INNER JOIN PicCategories AS second_link
+            ON second_link.image_id = first_link.image_id
+            AND first_link.category_id < second_link.category_id
+        WHERE first_link.category_id IN ($idList)
+          AND second_link.category_id IN ($idList)
+        GROUP BY first_link.category_id, second_link.category_id
+        HAVING shared_count >= " . (int)$minWeight . "
+        ORDER BY shared_count DESC, source_id ASC, target_id ASC
+    ";
+    $edgeResult = $mysqli->query($edgeSql);
+    if (!$edgeResult) {
+        throw new RuntimeException('无法读取关系图谱连线：' . $mysqli->error);
+    }
+
+    $links = [];
+    $nodeIndex = [];
+    foreach ($nodes as $index => $node) {
+        $nodeIndex[$node['id']] = $index;
+    }
+    while ($row = $edgeResult->fetch_assoc()) {
+        $source = (int)$row['source_id'];
+        $target = (int)$row['target_id'];
+        $weight = (int)$row['shared_count'];
+        $links[] = ['source' => $source, 'target' => $target, 'weight' => $weight];
+        $nodes[$nodeIndex[$source]]['degree']++;
+        $nodes[$nodeIndex[$target]]['degree']++;
+        $nodes[$nodeIndex[$source]]['weighted_degree'] += $weight;
+        $nodes[$nodeIndex[$target]]['weighted_degree'] += $weight;
+    }
+
+    return ['nodes' => $nodes, 'links' => $links];
+}
+
 try {
     $categories = getCategoryRows($mysqli);
+
+    if (isset($_GET['ajax']) && $_GET['ajax'] === 'category_graph') {
+        $categoryId = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
+        $requestedLimit = filter_input(INPUT_GET, 'node_limit', FILTER_VALIDATE_INT);
+        $requestedWeight = filter_input(INPUT_GET, 'min_weight', FILTER_VALIDATE_INT);
+        $nodeLimit = in_array($requestedLimit, [20, 40, 60], true) ? $requestedLimit : 40;
+        $minWeight = ($requestedWeight !== false && $requestedWeight >= 1 && $requestedWeight <= 100)
+            ? $requestedWeight
+            : 2;
+
+        if (!$categoryId || $categoryId < 1) {
+            jsonResponse(['ok' => false, 'message' => '分类 ID 无效。'], 400);
+        }
+        $category = getSelectedCategory($categories, (int)$categoryId);
+        if ($category === null) {
+            jsonResponse(['ok' => false, 'message' => '未找到该分类。'], 404);
+        }
+
+        $graph = getCategoryGraph($mysqli, $category, $nodeLimit, $minWeight);
+        jsonResponse([
+            'ok' => true,
+            'category' => $category,
+            'node_limit' => $nodeLimit,
+            'min_weight' => $minWeight,
+            'nodes' => $graph['nodes'],
+            'links' => $graph['links']
+        ]);
+    }
 
     if (isset($_GET['ajax']) && $_GET['ajax'] === 'category_stats') {
         $categoryId = filter_input(INPUT_GET, 'category_id', FILTER_VALIDATE_INT);
@@ -260,7 +382,7 @@ try {
 }
 
 $initialCategoryId = filter_input(INPUT_GET, 'category', FILTER_VALIDATE_INT);
-$allowedViews = ['overview', 'frequency_all', 'frequency_local', 'frequency_cloud', 'overlap'];
+$allowedViews = ['overview', 'frequency_all', 'frequency_local', 'frequency_cloud', 'overlap', 'network'];
 $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, true)
     ? $_GET['view']
     : 'overview';
@@ -272,6 +394,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>图片数据分析</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/force-graph"></script>
+    <script src="https://cdn.jsdelivr.net/npm/3d-force-graph"></script>
     <style>
         :root {
             --bg: #f4f7fb;
@@ -445,6 +569,28 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         .overlap-stack { display: grid; gap: 16px; }
         .overlap-scroll { max-height: 660px; overflow-y: auto; padding-right: 5px; }
         .overlap-chart-shell { position: relative; min-height: 300px; }
+        .network-toolbar { align-items: flex-end; }
+        .network-settings { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+        .network-setting { display: grid; gap: 5px; color: var(--muted); font-size: 11px; font-weight: 700; }
+        .network-select { min-width: 112px; border: 1px solid var(--line); border-radius: 8px; padding: 7px 28px 7px 9px; color: #46536a; background: #fff; outline: none; }
+        .network-mode-buttons { display: flex; gap: 6px; }
+        .network-mode-button { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; color: #5e6a80; background: #fff; cursor: pointer; font-size: 12px; font-weight: 750; }
+        .network-mode-button.active { color: #fff; border-color: var(--primary); background: var(--primary); }
+        .network-layout { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 14px; }
+        .network-stage { position: relative; height: 640px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #f8fbff; }
+        .network-stage.mode-3d { background: #07101d; }
+        .network-stage canvas { display: block; }
+        .network-loading { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; color: var(--muted); background: rgba(248, 251, 255, 0.9); }
+        .network-details { border: 1px solid var(--line); border-radius: 14px; padding: 17px; background: #fbfcff; }
+        .network-details h3 { margin: 0 0 14px; font-size: 15px; }
+        .node-detail-name { margin: 0 0 5px; color: var(--text); font-size: 17px; font-weight: 850; overflow-wrap: anywhere; }
+        .node-detail-kind { margin: 0 0 16px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+        .node-detail-list { display: grid; gap: 10px; margin: 0; }
+        .node-detail-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 9px; border-bottom: 1px solid var(--line); font-size: 12px; }
+        .node-detail-row:last-child { border-bottom: 0; }
+        .node-detail-row dt { color: var(--muted); }
+        .node-detail-row dd { margin: 0; color: var(--text); font-weight: 800; text-align: right; }
+        .network-help { margin: 16px 0 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
         .notice { border: 1px solid #f2d5d8; border-radius: 13px; padding: 15px; color: #9f3541; background: #fff6f7; line-height: 1.6; }
         .no-data { display: grid; place-items: center; min-height: 220px; color: var(--muted); text-align: center; }
 
@@ -459,6 +605,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .chart-grid { grid-template-columns: 1fr; }
             .chart-card.wide { grid-column: auto; }
+            .network-layout { grid-template-columns: 1fr; }
+            .network-stage { height: 540px; }
         }
         @media (max-width: 560px) {
             .top-nav { gap: 3px; }
@@ -471,6 +619,9 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             .metric-card { padding: 13px; }
             .metric-value { font-size: 22px; }
             .toolbar { align-items: flex-start; flex-direction: column; }
+            .network-settings { align-items: stretch; width: 100%; }
+            .network-setting { flex: 1; }
+            .network-select { width: 100%; }
             .result-header { flex-direction: column; }
         }
     </style>
@@ -487,6 +638,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             <button class="nav-button<?php echo $initialView === 'frequency_local' ? ' active' : ''; ?>" type="button" data-view="frequency_local">本地频率</button>
             <button class="nav-button<?php echo $initialView === 'frequency_cloud' ? ' active' : ''; ?>" type="button" data-view="frequency_cloud">云端频率</button>
             <button class="nav-button<?php echo $initialView === 'overlap' ? ' active' : ''; ?>" type="button" data-view="overlap">分类关联</button>
+            <button class="nav-button<?php echo $initialView === 'network' ? ' active' : ''; ?>" type="button" data-view="network">关系图谱</button>
         </nav>
     </header>
 
@@ -541,7 +693,15 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         let frequencyStep = 5;
         let currentStats = null;
         let requestController = null;
+        let networkRequestController = null;
+        let networkNodeLimit = 40;
+        let networkMinWeight = 2;
+        let networkMode = '2d';
+        let currentNetworkData = null;
+        let currentNetworkGraph = null;
+        let networkResizeObserver = null;
         const cache = new Map();
+        const networkCache = new Map();
         const charts = [];
 
         const viewNames = {
@@ -549,7 +709,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             frequency_all: '全部频率',
             frequency_local: '本地频率',
             frequency_cloud: '云端频率',
-            overlap: '分类关联'
+            overlap: '分类关联',
+            network: '关系图谱'
         };
 
         const colors = {
@@ -566,6 +727,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         };
 
         const chartLibraryAvailable = typeof Chart !== 'undefined';
+        const networkLibrariesAvailable = typeof ForceGraph !== 'undefined' && typeof ForceGraph3D !== 'undefined';
         if (chartLibraryAvailable) {
             Chart.defaults.font.family = 'Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif';
             Chart.defaults.color = colors.text;
@@ -589,7 +751,23 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             return total > 0 ? Number((part * 100 / total).toFixed(1)) : 0;
         }
 
+        function destroyNetworkGraph() {
+            if (networkRequestController) {
+                networkRequestController.abort();
+                networkRequestController = null;
+            }
+            if (networkResizeObserver) {
+                networkResizeObserver.disconnect();
+                networkResizeObserver = null;
+            }
+            if (currentNetworkGraph && typeof currentNetworkGraph._destructor === 'function') {
+                currentNetworkGraph._destructor();
+            }
+            currentNetworkGraph = null;
+        }
+
         function destroyCharts() {
+            destroyNetworkGraph();
             while (charts.length) {
                 charts.pop().destroy();
             }
@@ -924,9 +1102,311 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             createOverlapChart('overlapCloudChart', cloudRows, 'cloud_count', stats.totals.cloud, colors.orange, colors.orangeSoft);
         }
 
+        function networkToolbarHtml() {
+            return `
+                <div class="toolbar network-toolbar">
+                    <div class="network-settings">
+                        <label class="network-setting">节点上限
+                            <select id="networkNodeLimit" class="network-select">
+                                ${[20, 40, 60].map((value) => `<option value="${value}"${networkNodeLimit === value ? ' selected' : ''}>${value} 个节点</option>`).join('')}
+                            </select>
+                        </label>
+                        <label class="network-setting">最少共享图片
+                            <select id="networkMinWeight" class="network-select">
+                                ${[1, 2, 3, 5, 10].map((value) => `<option value="${value}"${networkMinWeight === value ? ' selected' : ''}>≥ ${value} 张</option>`).join('')}
+                            </select>
+                        </label>
+                    </div>
+                    <div class="network-mode-buttons" aria-label="图谱显示模式">
+                        <button type="button" class="network-mode-button${networkMode === '2d' ? ' active' : ''}" data-network-mode="2d">二维网络</button>
+                        <button type="button" class="network-mode-button${networkMode === '3d' ? ' active' : ''}" data-network-mode="3d">三维空间</button>
+                    </div>
+                </div>`;
+        }
+
+        function renderNetworkView() {
+            const stats = currentStats;
+            currentNetworkData = null;
+            document.getElementById('resultArea').innerHTML = `
+                <div class="content-card">
+                    ${headerHtml(stats, '分类之间的二维网络与三维空间关系')}
+                    <div class="metric-grid">
+                        ${metricHtml('显示节点', '—', `最多 ${networkNodeLimit} 个`)}
+                        ${metricHtml('关联连线', '—', `共享图片 ≥ ${networkMinWeight}`)}
+                        ${metricHtml('最大边权重', '—', '两分类共享图片数')}
+                        ${metricHtml('当前分类图片', formatNumber(stats.totals.all), '节点大小按图片数计算')}
+                    </div>
+                    ${networkToolbarHtml()}
+                    <div class="network-layout">
+                        <div id="networkStage" class="network-stage${networkMode === '3d' ? ' mode-3d' : ''}">
+                            <div class="network-loading"><div><div class="spinner"></div><div>正在构建关系图谱…</div></div></div>
+                        </div>
+                        <aside class="network-details">
+                            <h3>节点详情</h3>
+                            <div id="nodeDetailsBody"><p class="chart-subtitle">点击任意节点查看具体信息。</p></div>
+                            <p class="network-help">节点越大，分类图片越多；连线越粗、颜色越深，共享图片越多。二维图可拖动节点和缩放，三维图可旋转、平移并用滚轮缩放。</p>
+                        </aside>
+                    </div>
+                </div>`;
+            loadNetworkData();
+        }
+
+        async function loadNetworkData() {
+            if (!networkLibrariesAvailable) {
+                showNetworkError('关系图谱组件加载失败，请检查网络连接后刷新页面。');
+                return;
+            }
+
+            const categoryId = selectedCategoryId;
+            const cacheKey = `${categoryId}:${networkNodeLimit}:${networkMinWeight}`;
+            if (networkCache.has(cacheKey)) {
+                currentNetworkData = networkCache.get(cacheKey);
+                updateNetworkSummary(currentNetworkData);
+                renderNetworkGraph(currentNetworkData);
+                return;
+            }
+
+            networkRequestController = new AbortController();
+            try {
+                const url = new URL(window.location.href);
+                url.search = '';
+                url.searchParams.set('ajax', 'category_graph');
+                url.searchParams.set('category_id', categoryId);
+                url.searchParams.set('node_limit', networkNodeLimit);
+                url.searchParams.set('min_weight', networkMinWeight);
+                const response = await fetch(url, {
+                    headers: { 'Accept': 'application/json' },
+                    signal: networkRequestController.signal
+                });
+                const contentType = response.headers.get('content-type') || '';
+                if (!contentType.includes('application/json')) {
+                    throw new Error('登录状态可能已失效，请刷新页面后重新登录。');
+                }
+                const data = await response.json();
+                if (!response.ok || !data.ok) {
+                    throw new Error(data.message || '关系图谱加载失败。');
+                }
+                if (activeView !== 'network' || selectedCategoryId !== categoryId) return;
+                networkRequestController = null;
+                networkCache.set(cacheKey, data);
+                currentNetworkData = data;
+                updateNetworkSummary(data);
+                renderNetworkGraph(data);
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    showNetworkError(error.message || '关系图谱加载失败。');
+                }
+            }
+        }
+
+        function showNetworkError(message) {
+            const stage = document.getElementById('networkStage');
+            if (stage) stage.innerHTML = `<div class="no-data">${escapeHtml(message)}</div>`;
+        }
+
+        function updateNetworkSummary(data) {
+            const values = document.querySelectorAll('.metric-grid .metric-value');
+            if (values.length < 4) return;
+            values[0].textContent = formatNumber(data.nodes.length);
+            values[1].textContent = formatNumber(data.links.length);
+            values[2].textContent = formatNumber(Math.max(0, ...data.links.map((link) => link.weight)));
+        }
+
+        function prepareNetworkData(data) {
+            const graphData = JSON.parse(JSON.stringify({ nodes: data.nodes, links: data.links }));
+            const selectedId = data.category.id;
+            const labels = new Map();
+            const adjacency = new Map();
+            graphData.nodes.forEach((node) => {
+                labels.set(node.id, node.id);
+                adjacency.set(node.id, []);
+            });
+            graphData.links.forEach((link) => {
+                if (link.source === selectedId || link.target === selectedId) return;
+                adjacency.get(link.source)?.push({ id: link.target, weight: link.weight });
+                adjacency.get(link.target)?.push({ id: link.source, weight: link.weight });
+            });
+            const candidates = graphData.nodes.filter((node) => !node.selected).sort((a, b) => b.weighted_degree - a.weighted_degree);
+            for (let iteration = 0; iteration < 8; iteration++) {
+                candidates.forEach((node) => {
+                    const scores = new Map();
+                    adjacency.get(node.id).forEach((neighbor) => {
+                        const label = labels.get(neighbor.id);
+                        scores.set(label, (scores.get(label) || 0) + neighbor.weight);
+                    });
+                    let bestLabel = labels.get(node.id);
+                    let bestScore = -1;
+                    scores.forEach((score, label) => {
+                        if (score > bestScore || (score === bestScore && label < bestLabel)) {
+                            bestLabel = label;
+                            bestScore = score;
+                        }
+                    });
+                    labels.set(node.id, bestLabel);
+                });
+            }
+            const communityNumbers = new Map();
+            graphData.nodes.forEach((node) => {
+                if (node.selected) {
+                    node.community = -1;
+                    return;
+                }
+                const label = labels.get(node.id);
+                if (!communityNumbers.has(label)) communityNumbers.set(label, communityNumbers.size);
+                node.community = communityNumbers.get(label);
+            });
+            return graphData;
+        }
+
+        function networkNodeColor(node) {
+            if (node.selected) return '#f97316';
+            const palette = ['#4f6ef7', '#20b7c9', '#8b6fe8', '#37b979', '#e65fa1', '#e0a12b', '#508fc9'];
+            return palette[node.community % palette.length];
+        }
+
+        function networkNodeValue(node) {
+            return Math.max(3, Math.log10(Number(node.image_count) + 10) * (node.selected ? 6 : 4.5));
+        }
+
+        function nodeTooltipHtml(node) {
+            const shared = node.selected ? '当前选定分类' : `与当前分类共享 ${formatNumber(node.shared_with_selected)} 张`;
+            return `<strong>${escapeHtml(node.category_name)}</strong><br>图片 ${formatNumber(node.image_count)} 张<br>${shared}<br>连接 ${formatNumber(node.degree)} 个分类`;
+        }
+
+        function linkTooltipHtml(link) {
+            const sourceName = typeof link.source === 'object' ? link.source.category_name : link.source;
+            const targetName = typeof link.target === 'object' ? link.target.category_name : link.target;
+            return `${escapeHtml(sourceName)} ↔ ${escapeHtml(targetName)}<br>共享 ${formatNumber(link.weight)} 张图片`;
+        }
+
+        function updateNodeDetails(node) {
+            const target = document.getElementById('nodeDetailsBody');
+            if (!target || !node) return;
+            target.innerHTML = `
+                <p class="node-detail-name">${escapeHtml(node.category_name)}</p>
+                <p class="node-detail-kind">${node.kindID ? `kindID：${escapeHtml(node.kindID)}` : 'kindID：未设置'} · ID ${node.id}</p>
+                <dl class="node-detail-list">
+                    <div class="node-detail-row"><dt>分类图片</dt><dd>${formatNumber(node.image_count)} 张</dd></div>
+                    <div class="node-detail-row"><dt>与当前分类共享</dt><dd>${node.selected ? '当前分类' : `${formatNumber(node.shared_with_selected)} 张`}</dd></div>
+                    <div class="node-detail-row"><dt>直接连接</dt><dd>${formatNumber(node.degree)} 个</dd></div>
+                    <div class="node-detail-row"><dt>累计边权重</dt><dd>${formatNumber(node.weighted_degree)}</dd></div>
+                </dl>`;
+        }
+
+        function renderNetworkGraph(data) {
+            destroyNetworkGraph();
+            const stage = document.getElementById('networkStage');
+            if (!stage) return;
+            stage.replaceChildren();
+            stage.classList.toggle('mode-3d', networkMode === '3d');
+
+            const graphData = prepareNetworkData(data);
+            const maximumWeight = Math.max(1, ...graphData.links.map((link) => link.weight));
+            const linkWidth = (link) => 0.6 + Math.sqrt(link.weight / maximumWeight) * (networkMode === '3d' ? 2.4 : 4.2);
+            const linkColor = (link) => `rgba(79, 110, 247, ${0.18 + Math.sqrt(link.weight / maximumWeight) * 0.62})`;
+            let fitted = false;
+
+            if (networkMode === '3d') {
+                currentNetworkGraph = new ForceGraph3D(stage, { controlType: 'trackball' })
+                    .width(stage.clientWidth)
+                    .height(stage.clientHeight)
+                    .backgroundColor('#07101d')
+                    .showNavInfo(false)
+                    .graphData(graphData)
+                    .nodeVal(networkNodeValue)
+                    .nodeColor(networkNodeColor)
+                    .nodeOpacity(0.92)
+                    .nodeResolution(18)
+                    .nodeLabel(nodeTooltipHtml)
+                    .linkWidth(linkWidth)
+                    .linkColor(linkColor)
+                    .linkOpacity(0.72)
+                    .linkLabel(linkTooltipHtml)
+                    .cooldownTicks(150)
+                    .onNodeClick((node) => {
+                        updateNodeDetails(node);
+                        const distance = Math.hypot(node.x || 0, node.y || 0, node.z || 0);
+                        const ratio = distance > 1 ? 1 + 90 / distance : 1;
+                        const position = distance > 1
+                            ? { x: node.x * ratio, y: node.y * ratio, z: node.z * ratio }
+                            : { x: 0, y: 0, z: 90 };
+                        currentNetworkGraph.cameraPosition(position, node, 900);
+                    })
+                    .onEngineStop(() => {
+                        if (!fitted) {
+                            fitted = true;
+                            currentNetworkGraph.zoomToFit(700, 80);
+                        }
+                    });
+            } else {
+                currentNetworkGraph = new ForceGraph(stage)
+                    .width(stage.clientWidth)
+                    .height(stage.clientHeight)
+                    .backgroundColor('#f8fbff')
+                    .graphData(graphData)
+                    .nodeVal(networkNodeValue)
+                    .nodeColor(networkNodeColor)
+                    .nodeLabel(nodeTooltipHtml)
+                    .nodeCanvasObjectMode(() => 'after')
+                    .nodeCanvasObject((node, context, globalScale) => {
+                        if (!node.selected && globalScale < 1.45) return;
+                        const fontSize = 11 / globalScale;
+                        context.font = `700 ${fontSize}px "Microsoft YaHei", Arial`;
+                        context.textAlign = 'center';
+                        context.textBaseline = 'middle';
+                        const label = node.category_name;
+                        const width = context.measureText(label).width + 6 / globalScale;
+                        const height = fontSize + 4 / globalScale;
+                        const y = node.y + 10 / globalScale;
+                        context.fillStyle = 'rgba(255,255,255,0.88)';
+                        context.fillRect(node.x - width / 2, y - height / 2, width, height);
+                        context.fillStyle = node.selected ? '#b84b0a' : '#263650';
+                        context.fillText(label, node.x, y);
+                    })
+                    .linkWidth(linkWidth)
+                    .linkColor(linkColor)
+                    .linkLabel(linkTooltipHtml)
+                    .cooldownTicks(150)
+                    .onNodeClick((node) => {
+                        updateNodeDetails(node);
+                        currentNetworkGraph.centerAt(node.x, node.y, 500);
+                        currentNetworkGraph.zoom(4, 500);
+                    })
+                    .onEngineStop(() => {
+                        if (!fitted) {
+                            fitted = true;
+                            currentNetworkGraph.zoomToFit(700, 60);
+                        }
+                    });
+            }
+
+            const linkForce = currentNetworkGraph.d3Force('link');
+            if (linkForce) {
+                linkForce
+                    .distance((link) => Math.max(34, 125 - Math.log1p(link.weight) * 20))
+                    .strength((link) => Math.min(0.95, 0.18 + Math.log1p(link.weight) * 0.14));
+            }
+            const chargeForce = currentNetworkGraph.d3Force('charge');
+            if (chargeForce && typeof chargeForce.strength === 'function') {
+                chargeForce.strength(networkMode === '3d' ? -110 : -145);
+            }
+            currentNetworkGraph.d3ReheatSimulation();
+
+            const selectedNode = graphData.nodes.find((node) => node.selected) || graphData.nodes[0];
+            updateNodeDetails(selectedNode);
+            if (typeof ResizeObserver !== 'undefined') {
+                networkResizeObserver = new ResizeObserver(() => {
+                    if (currentNetworkGraph && stage.clientWidth > 0 && stage.clientHeight > 0) {
+                        currentNetworkGraph.width(stage.clientWidth).height(stage.clientHeight);
+                    }
+                });
+                networkResizeObserver.observe(stage);
+            }
+        }
+
         function renderActiveView() {
             if (!currentStats) return;
-            if (!chartLibraryAvailable) {
+            if (activeView !== 'network' && !chartLibraryAvailable) {
                 showError('图表组件加载失败，请检查网络连接后刷新页面。');
                 return;
             }
@@ -935,7 +1415,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             else if (activeView === 'frequency_all') renderFrequency('all');
             else if (activeView === 'frequency_local') renderFrequency('local');
             else if (activeView === 'frequency_cloud') renderFrequency('cloud');
-            else renderOverlap();
+            else if (activeView === 'overlap') renderOverlap();
+            else renderNetworkView();
         }
 
         document.querySelectorAll('.nav-button').forEach((button) => {
@@ -959,10 +1440,34 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         });
 
         document.getElementById('resultArea').addEventListener('click', (event) => {
-            const button = event.target.closest('[data-step]');
-            if (!button) return;
-            frequencyStep = Number(button.dataset.step);
-            renderActiveView();
+            const stepButton = event.target.closest('[data-step]');
+            if (stepButton) {
+                frequencyStep = Number(stepButton.dataset.step);
+                renderActiveView();
+                return;
+            }
+
+            const modeButton = event.target.closest('[data-network-mode]');
+            if (modeButton && currentNetworkData) {
+                networkMode = modeButton.dataset.networkMode;
+                document.querySelectorAll('.network-mode-button').forEach((button) => {
+                    button.classList.toggle('active', button === modeButton);
+                });
+                renderNetworkGraph(currentNetworkData);
+            }
+        });
+
+        document.getElementById('resultArea').addEventListener('change', (event) => {
+            if (event.target.id === 'networkNodeLimit') {
+                networkNodeLimit = Number(event.target.value);
+            } else if (event.target.id === 'networkMinWeight') {
+                networkMinWeight = Number(event.target.value);
+            } else {
+                return;
+            }
+            destroyNetworkGraph();
+            currentNetworkData = null;
+            renderNetworkView();
         });
 
         if (initialCategoryId) {
