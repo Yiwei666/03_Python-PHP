@@ -509,10 +509,13 @@ try {
 }
 
 $initialCategoryId = filter_input(INPUT_GET, 'category', FILTER_VALIDATE_INT);
-$allowedViews = ['overview', 'frequency_all', 'frequency_local', 'frequency_cloud', 'overlap', 'network'];
+$allowedViews = ['overview', 'frequency', 'frequency_all', 'frequency_local', 'frequency_cloud', 'overlap', 'network'];
 $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, true)
     ? $_GET['view']
     : 'overview';
+if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud'], true)) {
+    $initialView = 'frequency';
+}
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -692,6 +695,16 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         .chart-box { position: relative; height: 330px; }
         .chart-box.compact { height: 290px; }
 
+        .frequency-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+        .frequency-chart-card { border-top: 3px solid var(--frequency-color); background: linear-gradient(160deg, #fff, #fbfcff); }
+        .frequency-chart-card.frequency-all { grid-column: 1 / -1; }
+        .frequency-chart-card .chart-title { color: var(--frequency-color); }
+        .frequency-chart-stats { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; margin: 12px 0; color: var(--muted); font-size: 12px; }
+        .frequency-chart-stats strong { color: var(--text); font-weight: 750; }
+        .frequency-empty { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); padding: 10px 16px; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); background: rgba(255, 255, 255, 0.94); font-size: 12px; pointer-events: none; }
+        .frequency-toolbar { flex-wrap: wrap; }
+        .frequency-toolbar .toolbar-label small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; font-weight: 400; }
+
         .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 0 18px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 13px; background: #f9fbfe; }
         .toolbar-label { color: #3f4d66; font-size: 13px; font-weight: 750; }
         .step-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -752,6 +765,8 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .chart-grid { grid-template-columns: 1fr; }
             .chart-card.wide { grid-column: auto; }
+            .frequency-layout { grid-template-columns: 1fr; }
+            .frequency-chart-card.frequency-all { grid-column: auto; }
             .network-layout { grid-template-columns: 1fr; }
             .network-stage { height: 540px; }
         }
@@ -781,9 +796,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
         </div>
         <nav class="top-nav" aria-label="统计视图">
             <button class="nav-button<?php echo $initialView === 'overview' ? ' active' : ''; ?>" type="button" data-view="overview">数据概览</button>
-            <button class="nav-button<?php echo $initialView === 'frequency_all' ? ' active' : ''; ?>" type="button" data-view="frequency_all">全部频率</button>
-            <button class="nav-button<?php echo $initialView === 'frequency_local' ? ' active' : ''; ?>" type="button" data-view="frequency_local">本地频率</button>
-            <button class="nav-button<?php echo $initialView === 'frequency_cloud' ? ' active' : ''; ?>" type="button" data-view="frequency_cloud">云端频率</button>
+            <button class="nav-button<?php echo $initialView === 'frequency' ? ' active' : ''; ?>" type="button" data-view="frequency">频率分析</button>
             <button class="nav-button<?php echo $initialView === 'overlap' ? ' active' : ''; ?>" type="button" data-view="overlap">分类关联</button>
             <button class="nav-button<?php echo $initialView === 'network' ? ' active' : ''; ?>" type="button" data-view="network">关系图谱</button>
         </nav>
@@ -869,9 +882,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
 
         const viewNames = {
             overview: '数据概览',
-            frequency_all: '全部频率',
-            frequency_local: '本地频率',
-            frequency_cloud: '云端频率',
+            frequency: '频率分析',
             overlap: '分类关联',
             network: '关系图谱'
         };
@@ -1143,10 +1154,10 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             createDistributionChart('cloudLikesChart', stats.likes.cloud, totals.cloud, colors.orange, colors.orangeSoft);
         }
 
-        function buildHistogram(points, step) {
-            if (!points.length) return [];
-            const minValue = Math.min(0, ...points.map((item) => item.likes));
-            const maxValue = Math.max(...points.map((item) => item.likes));
+        function buildHistogram(points, step, rangePoints = points) {
+            if (!rangePoints.length) return [];
+            const minValue = Math.min(0, ...rangePoints.map((item) => item.likes));
+            const maxValue = Math.max(...rangePoints.map((item) => item.likes));
             const first = Math.floor(minValue / step) * step;
             const bins = [];
 
@@ -1162,16 +1173,16 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
 
         function stepToolbarHtml() {
             return `
-                <div class="toolbar">
-                    <span class="toolbar-label">likes 区间步长</span>
+                <div class="toolbar frequency-toolbar">
+                    <span class="toolbar-label">likes 区间步长<small>三张图同步更新，使用相同横轴区间</small></span>
                     <div class="step-buttons">
                         ${[2, 3, 4, 5, 6, 10].map((step) => `<button type="button" class="step-button${frequencyStep === step ? ' active' : ''}" data-step="${step}">${step}</button>`).join('')}
                     </div>
                 </div>`;
         }
 
-        function createHistogramChart(canvasId, points, total, color, softColor) {
-            const bins = buildHistogram(points, frequencyStep);
+        function createHistogramChart(canvasId, points, total, color, softColor, rangePoints = points) {
+            const bins = buildHistogram(points, frequencyStep, rangePoints);
             const labels = bins.map((bin) => bin.start === bin.end ? String(bin.start) : `${bin.start}–${bin.end}`);
             const counts = bins.map((bin) => bin.count);
             const percentages = counts.map((count) => percent(count, total));
@@ -1190,31 +1201,45 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             charts.push(chart);
         }
 
-        function renderFrequency(type) {
+        function renderFrequency() {
             const stats = currentStats;
-            const config = {
-                all: { title: '全部图片频率分布', subtitle: '不区分图片存储状态', points: stats.likes.all, total: stats.totals.all, color: colors.primary, soft: colors.primarySoft },
-                local: { title: '本地图片频率分布', subtitle: '仅统计 image_exists = 1', points: stats.likes.local, total: stats.totals.local, color: colors.green, soft: 'rgba(55, 185, 121, 0.20)' },
-                cloud: { title: '云端图片频率分布', subtitle: '仅统计 image_exists = 0', points: stats.likes.cloud, total: stats.totals.cloud, color: colors.orange, soft: colors.orangeSoft }
-            }[type];
+            const configs = [
+                { type: 'all', title: '全部图片频率分布', points: stats.likes.all, total: stats.totals.all, color: colors.primary, soft: colors.primarySoft },
+                { type: 'local', title: '本地图片频率分布', points: stats.likes.local, total: stats.totals.local, color: colors.green, soft: 'rgba(55, 185, 121, 0.20)' },
+                { type: 'cloud', title: '云端图片频率分布', points: stats.likes.cloud, total: stats.totals.cloud, color: colors.orange, soft: colors.orangeSoft }
+            ];
+            const chartCards = configs.map((config) => {
+                const minLikes = config.points.length ? formatNumber(Math.min(...config.points.map((item) => item.likes))) : '—';
+                const maxLikes = config.points.length ? formatNumber(Math.max(...config.points.map((item) => item.likes))) : '—';
+                return `
+                    <article class="chart-card frequency-chart-card frequency-${config.type}" style="--frequency-color: ${config.color}">
+                        <h3 class="chart-title">${config.title}</h3>
+                        <div class="frequency-chart-stats">
+                            <span>图片数量 <strong>${formatNumber(config.total)} 张</strong></span>
+                            <span>最小 likes <strong>${minLikes}</strong></span>
+                            <span>最大 likes <strong>${maxLikes}</strong></span>
+                        </div>
+                        <p class="chart-subtitle">柱形表示区间内图片数量，折线表示该区间占${{ all: '全部', local: '本地', cloud: '云端' }[config.type]}图片的比例</p>
+                        <div class="chart-box">
+                            <canvas id="histogram-${config.type}"></canvas>
+                            ${config.total === 0 ? '<div class="frequency-empty">该范围暂无图片</div>' : ''}
+                        </div>
+                    </article>`;
+            }).join('');
 
             document.getElementById('resultArea').innerHTML = `
                 <div class="content-card">
-                    ${headerHtml(stats, config.subtitle)}
+                    ${headerHtml(stats, '同时查看全部、本地与云端图片的 likes 频率分布')}
                     <div class="metric-grid">
-                        ${metricHtml('统计图片数', formatNumber(config.total), config.subtitle)}
-                        ${metricHtml('区间步长', frequencyStep, '可随时切换')}
-                        ${metricHtml('最小 likes', config.points.length ? Math.min(...config.points.map((item) => item.likes)) : 0, '当前统计范围')}
-                        ${metricHtml('最大 likes', config.points.length ? Math.max(...config.points.map((item) => item.likes)) : 0, '横轴动态上限')}
+                        ${metricHtml('全部图片', formatNumber(stats.totals.all), '当前分类全部图片')}
+                        ${metricHtml('本地图片', formatNumber(stats.totals.local), `占全部图片 ${percent(stats.totals.local, stats.totals.all)}%`)}
+                        ${metricHtml('云端图片', formatNumber(stats.totals.cloud), `占全部图片 ${percent(stats.totals.cloud, stats.totals.all)}%`)}
+                        ${metricHtml('区间步长', frequencyStep, '三张图同步切换')}
                     </div>
                     ${stepToolbarHtml()}
-                    <article class="chart-card">
-                        <h3 class="chart-title">${config.title}</h3>
-                        <p class="chart-subtitle">每个柱表示一个 likes 区间内的图片数量，折线表示该区间占当前统计图片的比例</p>
-                        <div class="chart-box"><canvas id="histogramChart"></canvas></div>
-                    </article>
+                    <div class="frequency-layout">${chartCards}</div>
                 </div>`;
-            createHistogramChart('histogramChart', config.points, config.total, config.color, config.soft);
+            configs.forEach((config) => createHistogramChart(`histogram-${config.type}`, config.points, config.total, config.color, config.soft, stats.likes.all));
         }
 
         function overlapChartHtml(id, title, subtitle, rows) {
@@ -2154,9 +2179,7 @@ $initialView = isset($_GET['view']) && in_array($_GET['view'], $allowedViews, tr
             }
             destroyCharts();
             if (activeView === 'overview') renderOverview();
-            else if (activeView === 'frequency_all') renderFrequency('all');
-            else if (activeView === 'frequency_local') renderFrequency('local');
-            else if (activeView === 'frequency_cloud') renderFrequency('cloud');
+            else if (activeView === 'frequency') renderFrequency();
             else if (activeView === 'overlap') renderOverlap();
             else renderNetworkView();
         }
