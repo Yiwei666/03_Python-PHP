@@ -605,6 +605,25 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
         .nav-button:hover { color: var(--primary); background: rgba(255, 255, 255, 0.76); }
         .nav-button.active { color: var(--primary); background: #fff; box-shadow: 0 7px 22px rgba(36, 55, 96, 0.09); }
 
+        .category-picker-control { display: flex; align-items: center; gap: 10px; margin-left: 8px; }
+        .category-picker-trigger { flex: none; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; color: var(--primary); background: #fff; cursor: pointer; font-size: 13px; font-weight: 750; }
+        .category-picker-trigger:hover { border-color: var(--primary); background: var(--primary-soft); }
+        .category-picker-trigger:focus-visible, .category-picker-close:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+        .category-current { max-width: 155px; overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+        body.category-picker-open { overflow: hidden; }
+        .category-picker { width: min(1100px, calc(100% - 32px)); max-height: calc(100vh - 48px); max-height: min(820px, calc(100dvh - 48px)); padding: 0; border: 0; border-radius: 18px; color: var(--text); background: transparent; box-shadow: 0 24px 90px rgba(20, 35, 65, 0.24); }
+        .category-picker[open] { display: flex; flex-direction: column; }
+        .category-picker::backdrop { background: rgba(22, 34, 53, 0.42); backdrop-filter: blur(5px); }
+        .category-picker .category-section { display: flex; flex-direction: column; min-height: 0; max-height: inherit; width: 100%; margin: 0; background: #fff; }
+        .category-picker-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 16px; flex-shrink: 0; }
+        .category-picker-heading h2 { margin: 0; font-size: 18px; }
+        .category-picker-heading p { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+        .category-picker-close { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); background: #f9fbfe; cursor: pointer; font-size: 24px; line-height: 1; }
+        .category-picker-close:hover { color: var(--text); background: var(--primary-soft); }
+        .category-picker-search { flex-shrink: 0; margin-bottom: 14px; }
+        .category-picker-list { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 4px 5px 4px 0; }
+        .category-picker-empty { padding: 30px 12px; color: var(--muted); text-align: center; font-size: 13px; }
+
         .page { width: min(1440px, calc(100% - 48px)); margin: 30px auto 70px; }
 
         .category-section,
@@ -758,8 +777,10 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
             .category-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
         }
         @media (max-width: 860px) {
-            .topbar { position: static; align-items: flex-start; flex-direction: column; padding: 20px; }
-            .top-nav { justify-content: flex-start; }
+            .topbar { align-items: flex-start; flex-direction: column; min-height: auto; gap: 10px; padding: 12px 16px; }
+            .top-nav { justify-content: flex-start; width: 100%; }
+            .brand-title { font-size: 17px; }
+            .brand-subtitle { display: none; }
             .page { width: calc(100% - 24px); margin-top: 16px; }
             .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
             .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -773,6 +794,9 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
         @media (max-width: 560px) {
             .top-nav { gap: 3px; }
             .nav-button { padding: 9px 8px; font-size: 12px; }
+            .category-picker-control { width: 100%; margin: 4px 0 0; }
+            .category-current { flex: 1; max-width: none; }
+            .category-picker { width: calc(100% - 20px); max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); }
             .category-section, .content-card { padding: 15px; border-radius: 14px; }
             .section-heading { align-items: stretch; flex-direction: column; }
             .search-wrap { width: 100%; }
@@ -799,21 +823,27 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
             <button class="nav-button<?php echo $initialView === 'frequency' ? ' active' : ''; ?>" type="button" data-view="frequency">频率分析</button>
             <button class="nav-button<?php echo $initialView === 'overlap' ? ' active' : ''; ?>" type="button" data-view="overlap">分类关联</button>
             <button class="nav-button<?php echo $initialView === 'network' ? ' active' : ''; ?>" type="button" data-view="network">关系图谱</button>
+            <div class="category-picker-control">
+                <button id="categoryPickerTrigger" class="category-picker-trigger" type="button" aria-haspopup="dialog" aria-controls="categoryPicker" aria-expanded="false">选择分类</button>
+                <span id="currentCategoryName" class="category-current" aria-live="polite">未选择分类</span>
+            </div>
         </nav>
     </header>
 
-    <main class="page">
+    <dialog id="categoryPicker" class="category-picker" aria-labelledby="categoryPickerTitle">
         <section class="category-section">
-            <div class="section-heading">
+            <div class="category-picker-heading">
                 <div>
-                    <h2>选择分类</h2>
-                    <p>共 <?php echo count($categories); ?> 个分类，点击后加载当前统计视图</p>
+                    <h2 id="categoryPickerTitle">选择分类</h2>
+                    <p>共 <?php echo count($categories); ?> 个分类，选中后自动返回当前图表</p>
                 </div>
-                <div class="search-wrap">
-                    <input id="categorySearch" class="category-search" type="search" placeholder="搜索分类名或 kindID" autocomplete="off">
-                </div>
+                <button id="categoryPickerClose" class="category-picker-close" type="button" aria-label="关闭分类选择">×</button>
+            </div>
+            <div class="category-picker-search">
+                <input id="categorySearch" class="category-search" type="search" aria-label="搜索分类名或 kindID" placeholder="搜索分类名或 kindID" autocomplete="off">
             </div>
 
+            <div class="category-picker-list">
             <?php if (!empty($pageError)): ?>
                 <div class="notice"><?php echo h($pageError); ?></div>
             <?php elseif (empty($categories)): ?>
@@ -833,14 +863,18 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
+                <div id="categoryPickerEmpty" class="category-picker-empty" hidden>没有找到匹配的分类，请换一个关键词。</div>
+            </div>
         </section>
+    </dialog>
 
+    <main class="page">
         <section id="resultArea" class="result-area" aria-live="polite">
             <div class="content-card empty-state">
                 <div>
                     <div class="empty-icon">⌁</div>
                     <h2>请选择一个分类</h2>
-                    <p>选择上方任意分类后，这里会显示对应的数据概览、点赞频率与分类关联图表。</p>
+                    <p>点击顶部“选择分类”，选中后即可查看数据概览、频率分析、分类关联与关系图谱。</p>
                 </div>
             </div>
         </section>
@@ -975,9 +1009,35 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
         }
 
         function setActiveCategory(categoryId) {
+            let categoryName = '';
             document.querySelectorAll('.category-button').forEach((button) => {
-                button.classList.toggle('active', Number(button.dataset.categoryId) === Number(categoryId));
+                const selected = Number(button.dataset.categoryId) === Number(categoryId);
+                button.classList.toggle('active', selected);
+                if (selected) categoryName = button.querySelector('.category-name').textContent;
             });
+            const currentCategory = document.getElementById('currentCategoryName');
+            currentCategory.textContent = categoryName ? `当前：${categoryName}` : '未选择分类';
+            currentCategory.title = categoryName ? `${categoryName} · 分类 ID：${categoryId}` : '';
+        }
+
+        function openCategoryPicker() {
+            const picker = document.getElementById('categoryPicker');
+            if (picker.open) return;
+            picker.showModal();
+            document.body.classList.add('category-picker-open');
+            document.getElementById('categoryPickerTrigger').setAttribute('aria-expanded', 'true');
+            if (window.matchMedia('(min-width: 861px)').matches) {
+                document.getElementById('categorySearch').focus({ preventScroll: true });
+            }
+        }
+
+        function closeCategoryPicker() {
+            const picker = document.getElementById('categoryPicker');
+            if (!picker.open) return;
+            picker.close();
+            document.body.classList.remove('category-picker-open');
+            document.getElementById('categoryPickerTrigger').setAttribute('aria-expanded', 'false');
+            document.getElementById('categoryPickerTrigger').focus({ preventScroll: true });
         }
 
         function showLoading() {
@@ -2194,7 +2254,36 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
         });
 
         document.querySelectorAll('.category-button').forEach((button) => {
-            button.addEventListener('click', () => selectCategory(button.dataset.categoryId));
+            button.addEventListener('click', () => {
+                closeCategoryPicker();
+                selectCategory(button.dataset.categoryId);
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            });
+        });
+
+        document.getElementById('categoryPickerTrigger').addEventListener('click', openCategoryPicker);
+        document.getElementById('categoryPickerClose').addEventListener('click', closeCategoryPicker);
+        const categoryPicker = document.getElementById('categoryPicker');
+        categoryPicker.addEventListener('close', () => {
+            if (categoryPicker.open) return;
+            document.body.classList.remove('category-picker-open');
+            document.getElementById('categoryPickerTrigger').setAttribute('aria-expanded', 'false');
+            document.getElementById('categoryPickerTrigger').focus({ preventScroll: true });
+        });
+        let categoryBackdropPressed = false;
+        function outsideCategoryPicker(event) {
+            const bounds = categoryPicker.getBoundingClientRect();
+            return event.clientX < bounds.left || event.clientX > bounds.right
+                || event.clientY < bounds.top || event.clientY > bounds.bottom;
+        }
+        categoryPicker.addEventListener('pointerdown', (event) => {
+            categoryBackdropPressed = event.target === categoryPicker && outsideCategoryPicker(event);
+        });
+        categoryPicker.addEventListener('click', (event) => {
+            if (categoryBackdropPressed && event.target === categoryPicker && outsideCategoryPicker(event)) {
+                closeCategoryPicker();
+            }
+            categoryBackdropPressed = false;
         });
 
         document.getElementById('categorySearch')?.addEventListener('input', (event) => {
@@ -2202,6 +2291,8 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
             document.querySelectorAll('.category-button').forEach((button) => {
                 button.hidden = query !== '' && !button.dataset.search.toLocaleLowerCase('zh-CN').includes(query);
             });
+            const buttons = [...document.querySelectorAll('.category-button')];
+            document.getElementById('categoryPickerEmpty').hidden = buttons.length === 0 || buttons.some((button) => !button.hidden);
         });
 
         document.getElementById('resultArea').addEventListener('click', (event) => {
@@ -2276,8 +2367,10 @@ if (in_array($initialView, ['frequency_all', 'frequency_local', 'frequency_cloud
             renderNetworkView();
         });
 
-        if (initialCategoryId) {
+        if (initialCategoryId && [...document.querySelectorAll('.category-button')].some((button) => Number(button.dataset.categoryId) === initialCategoryId)) {
             selectCategory(initialCategoryId);
+        } else {
+            openCategoryPicker();
         }
     </script>
 </body>
