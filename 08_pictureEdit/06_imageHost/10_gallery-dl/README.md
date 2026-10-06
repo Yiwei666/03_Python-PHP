@@ -91,25 +91,46 @@ python -m pip install PySocks
 powershell 执行如下命令
 
 
+
+
 - 指定账号全部下载
 
 ```sh
-gallery-dl   --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt"   --proxy "socks5://127.0.0.1:1080"     https://twitter.com/Japantravelco/media
+gallery-dl   --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt"   --proxy "socks5://127.0.0.1:1080"     https://twitter.com/useraccount/media
 ```
 
 
 
 - 指定时间范围（推荐使用该命令）
+   
+  - 图片和mp4视频均下载
 
 ```sh
 gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2025, 4, 12) and date < datetime(2025, 5, 29)"   https://twitter.com/username/media
+```
+
+  - 关闭 Twitter/X 视频下载，只保留静态图片 (推荐使用)
+
+```sh
+# 不下载视频仅下载图片 -o extractor.twitter.videos=false
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" -o extractor.twitter.videos=false --filter "date >= datetime(2025, 9, 3 + 1) and date <= datetime(2026, 10, 6 + 1)" "https://twitter.com/useraccount/media"
+```
+
+- 基于本地 `socks5h` 和 `HTTP` 代理协议下载：
+
+```
+#  socks5h:// 把域名交给代理解析（推荐）
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5h://127.0.0.1:1080" --filter "date >= datetime(2026, 6, 1  +1) and date <= datetime(2026, 9, 27  +1)"   https://twitter.com/useraccount/media
+
+# 使用配置中已有的 HTTP 入站：
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "http://127.0.0.1:8080" --filter "date >= datetime(2026, 6, 6  +1) and date <= datetime(2026, 7, 9  +1)"   https://twitter.com/useraccount/media
 ```
 
 
 - 指定时间范围 & 输出日志
  
 ```sh
-gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2025, 1, 27) and date < datetime(2025, 5, 28)" -v https://twitter.com/Japantravelco/media > download_log.txt 2>&1
+gallery-dl --cookies "D:\software\27_nodejs\gallery-dl\x.com_cookies.txt" --proxy "socks5://127.0.0.1:1080" --filter "date >= datetime(2025, 1, 27) and date < datetime(2025, 5, 28)" -v https://twitter.com/useraccount/media > download_log.txt 2>&1
 ```
 
 
