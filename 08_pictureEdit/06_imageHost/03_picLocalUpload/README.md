@@ -261,7 +261,7 @@ if __name__ == "__main__":
     password = "your_password"  # SSH密码
 ```
 
-### 6. `06_image_path_transfer.py`
+### 6. `06_image_path_transfer.py` 图片转移
 
 1. 功能
 
