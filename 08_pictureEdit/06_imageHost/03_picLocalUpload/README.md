@@ -14,6 +14,7 @@ move_duplicates.py         # 查找指定文件夹下的所有相同PNG图片，
 02_scp_proxy_threadPool.py        # 创建多个ssh连接进行传输，提高效率，缩短时间，图片传输前进行图片命名格式校验
 03_local_remote_compare.py        # 比较本地目录与远程服务器上对应目录的文件，判断两者是否存在文件缺失或文件大小不一致的情况
 04_scp_proxy_check_Reupload.py    # 将本地目录下的文件并行传输到远程服务器的指定目录，在上传前检查远程文件是否已存在且大小相同，避免重复传输。
+06_image_path_transfer.py         # 检查指定目录下所有一级子文件夹中的 JPG 图片，确认无异常文件和重名冲突后，将所有 JPG 图片移动到根目录，并删除空子文件夹
 ```
 
 # 3. Node.js 环境配置
@@ -260,6 +261,18 @@ if __name__ == "__main__":
     password = "your_password"  # SSH密码
 ```
 
+### 6. `06_image_path_transfer.py`
+
+1. 功能
+
+检查指定目录下所有一级子文件夹中的 JPG 图片，确认无异常文件和重名冲突后，将所有 JPG 图片移动到根目录，并删除空子文件夹，实现图片目录扁平化整理。
+
+2. 环境变量
+
+```py
+ROOT_DIR = Path(r"D:\software\27_nodejs\海外风景")
+```
+扫描 `D:\software\27_nodejs\海外风景` 下的所有子文件夹，检查 JPG 文件完整性与重名情况，将所有 JPG 图片集中移动至根目录，并清理原有空文件夹。
 
 
 # 5. 查找指定文件夹下所有相同PNG图片
