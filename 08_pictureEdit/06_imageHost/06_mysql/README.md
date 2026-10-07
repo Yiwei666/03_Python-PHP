@@ -2623,7 +2623,7 @@ include '08_db_config.php';
 
 ### 3. 环境变量
 
-```
+```php
 // 修改key值，避免session失效后无法访问
 $key = 'signin-key-1';
 
