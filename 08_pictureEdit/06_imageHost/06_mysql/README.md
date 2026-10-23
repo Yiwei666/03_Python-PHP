@@ -380,41 +380,13 @@ $dbname = 'image_db'; // 数据库名称
 
 1. 将图片目录与数据库同步的功能独立成一个可重用的 PHP 脚本模块。
 2. 图片目录与数据库同步：代码首先从指定目录中读取所有 PNG 格式的图片，然后检查这些图片是否已经存储在数据库中。未记录在数据库的图片将被添加到数据库。
+3. 注意新增写入数据库的图片排序是按照文件名排序。查重部分从最坏 O(N×M) 降为平均 O(M+N)，逐条写入的开销仍然保留。
+   - 先处理 `.png`，组内按文件名升序。
+   - 再处理 `jpg`，组内按文件名升序。
+   - 最后处理 `jpeg`，组内按文件名升序。
+   - 遇到数据库已存在的文件名就跳过。
 
-```php
-<?php
-include '08_db_config.php'; // 包含数据库连接信息
-
-function syncImages($directory) {
-    global $mysqli;
-
-    $imagesInDirectory = glob($directory . "/*.png"); // 获取所有 png 图片
-    $existingImages = [];
-
-    // 获取数据库中已存在的图片
-    $result = $mysqli->query("SELECT image_name FROM images");
-    while ($row = $result->fetch_assoc()) {
-        $existingImages[] = $row['image_name'];
-    }
-
-    // 检查目录中的图片是否已在数据库中
-    foreach ($imagesInDirectory as $filePath) {
-        $imageName = basename($filePath);
-        if (!in_array($imageName, $existingImages)) {
-            // 如果图片不在数据库中，则添加
-            $stmt = $mysqli->prepare("INSERT INTO images (image_name, likes, dislikes) VALUES (?, 0, 0)");
-            $stmt->bind_param("s", $imageName);
-            $stmt->execute();
-            $stmt->close();
-        }
-    }
-}
-
-// 可以根据需要在这个脚本中直接调用 syncImages 函数或在其他文件中调用
-?>
-```
-
-- 可以在任何 PHP 脚本中通过以下方式调用此功能：
+4. 可以在任何 PHP 脚本中通过以下方式调用此功能：
 
 ```php
 include '08_db_sync_images.php';
