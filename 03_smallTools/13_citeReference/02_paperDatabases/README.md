@@ -3174,6 +3174,49 @@ PHP Fatal error: Uncaught Error: Call to undefined function curl_init()
 正式编码前，先简要说明你对需求的理解。如有歧义或需要我决定的方案，请先提出；没有疑问则直接编码。
 
 
+注意：批量输出论文信息时，参考格式如下，是一个列表，每个列表元素是json格式：
+
+```json
+[
+  {
+    "title": "载银丝光沸石和载银氧化铝对气态碘的吸附研究",
+    "publication_year": 2019,
+    "journal_name": "核动力工程",
+    "authors": "熊伟, 曹骐, 王海军, 等",
+    "doi": "10.13832/j.jnpe.2019.01.0131",
+    "doi_type": "T",
+    "citation_count": 0,
+    "volume": "40",
+    "issue": "1",
+    "pages": "131-134"
+  },
+  {
+    "title": "放射性碘-131废气净化研究Ⅱ：吸附条件对吸附剂吸附性能影响的研究",
+    "publication_year": 1987,
+    "journal_name": "原子能科学技术",
+    "authors": "卢玉楷, 高家禄, 尹远淑, 等",
+    "doi": "10.7538/yzk.1987.21.02.0173",
+    "doi_type": "T",
+    "citation_count": 0,
+    "volume": "21",
+    "issue": "2",
+    "pages": "173-179"
+  },
+  {
+    "title": "气态放射性碘的制备与控制研究",
+    "publication_year": 2015,
+    "journal_name": "中国辐射卫生",
+    "authors": "赵超, 唐方东, 何林峰, 等",
+    "doi": "10.13491/j.cnki.issn.1004-714x.2015.03.044",
+    "doi_type": "T",
+    "citation_count": 0,
+    "volume": "24",
+    "issue": "3",
+    "pages": "290-292"
+  }
+]
+```
+
 
 
 ### 2. 环境变量
@@ -3188,39 +3231,30 @@ require '08_db_config.php';
 2. 注意如下代码会插入 `categoryID = 1` 的关联，可选插入 `categoryID = 123` 的关联，即，默认分类到 `categoryID = 1`，可选分类到 `categoryID = 123`。
 
 ```php
-// 插入 categoryID = 1 的关联
-$row = $mysqli->query("SELECT category_name FROM categories WHERE categoryID = 1")->fetch_assoc();
-echo "分类 1 对应 name：", $row['category_name'] ?? '不存在', "\n";
-$stmt2 = $mysqli->prepare("INSERT INTO paperCategories (paperID, categoryID) VALUES (?, 1)");
-$stmt2->bind_param('i', $paperID);
-$stmt2->execute();
-echo "已添加关联 (paperID={$paperID}, categoryID=1)\n";
-
-
-
-// 可选插入 categoryID = 123 的关联
-$row123 = $mysqli->query("SELECT category_name FROM categories WHERE categoryID = 123")->fetch_assoc();
-if ($row123) {
-    echo "分类 123 对应 name：", $row123['category_name'], "\n";
-    while (true) {
-        echo "是否添加 (paperID={$paperID}, categoryID=123) 关联？(y/n): ";
-        $c = trim(fgets(STDIN));
-        if ($c === 'y') {
-            $stmt3 = $mysqli->prepare("INSERT INTO paperCategories (paperID, categoryID) VALUES (?, 123)");
-            $stmt3->bind_param('i', $paperID);
-            $stmt3->execute();
-            echo "已添加关联 (paperID={$paperID}, categoryID=123)\n";
-            break;
-        } elseif ($c === 'n') {
-            echo "未添加该关联，程序结束。\n";
-            break;
-        } else {
-            echo "非法输入，请输入 y 或 n。\n";
+        // 插入 categoryID = 1 的关联
+        $stmt2 = $mysqli->prepare("INSERT INTO paperCategories (paperID, categoryID) VALUES (?, 1)");
+        if (!$stmt2) {
+            throw new RuntimeException("准备默认分类关联失败：{$mysqli->error}");
         }
-    }
-} else {
-    echo "分类 123 不存在，程序结束。\n";
-}
+        $stmt2->bind_param('i', $paperID);
+        if (!$stmt2->execute()) {
+            throw new RuntimeException("添加默认分类关联失败：{$stmt2->error}");
+        }
+        $stmt2->close();
+
+
+        // 可选插入 categoryID = 123 的关联
+        if ($addCategory123) {
+            $stmt3 = $mysqli->prepare("INSERT INTO paperCategories (paperID, categoryID) VALUES (?, 123)");
+            if (!$stmt3) {
+                throw new RuntimeException("准备可选分类关联失败：{$mysqli->error}");
+            }
+            $stmt3->bind_param('i', $paperID);
+            if (!$stmt3->execute()) {
+                throw new RuntimeException("添加可选分类关联失败：{$stmt3->error}");
+            }
+            $stmt3->close();
+        }
 ```
 
 
