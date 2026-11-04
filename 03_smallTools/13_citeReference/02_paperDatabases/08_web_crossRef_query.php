@@ -35,7 +35,8 @@ $__ALL_DOIS = getAllDois($mysqli);
         .search-container h2 {
             margin: 0 0 8px 0;
         }
-        .search-container input[type="text"] {
+        .search-container input[type="text"],
+        #batch-doi-input {
             width: 70%;
             padding: 8px;
             font-size: 14px;
@@ -247,6 +248,7 @@ $__ALL_DOIS = getAllDois($mysqli);
 <div class="search-container">
     <h2>输入查询信息</h2>
     <input type="text" id="query-input" placeholder="请输入需要查询的参考文献信息、标题或关键字，或输入DOI..." />
+    <textarea id="batch-doi-input" rows="6" placeholder='["10.1234/example", "10.1234/another"]' hidden></textarea>
     <button id="search-btn">查询</button>
     
     <!-- 新增：单选按钮组，用于选择搜索模式 -->
@@ -258,6 +260,10 @@ $__ALL_DOIS = getAllDois($mysqli);
         <label>
             <input type="radio" name="search-mode" value="doi" checked>
             DOI
+        </label>
+        <label>
+            <input type="radio" name="search-mode" value="batch-doi">
+            BatchDOI
         </label>
     </div>
 </div>
@@ -303,6 +309,7 @@ let currentItemsData = [];
 
 // 用于在「标签」操作时保存当前正在处理的那条 item 的信息
 let activeItemData = null;
+let loadingCategories = false;
 
 // 分类选择弹窗
 const categorySelectionContainer = document.getElementById('category-selection-container');
@@ -314,7 +321,7 @@ const saveCatBtn = document.getElementById('save-categories-top-btn');
 const loadingOverlay = document.getElementById('loading-overlay');
 
 // [NEW] 当前检索模式与原始查询字符串（用于 DOI 存在性判断）
-let CURRENT_SEARCH_MODE = 'title';
+let CURRENT_SEARCH_MODE = 'doi';
 let CURRENT_QUERY = '';
 let CATEGORY_ORDER_MODE = '';
 
@@ -326,22 +333,38 @@ closeCatBtn.addEventListener('click', () => {
 // ======================
 //   页面事件绑定
 // ======================
-document.getElementById('search-btn').addEventListener('click', () => {
-    const query = document.getElementById('query-input').value.trim();
+const queryInput = document.getElementById('query-input');
+const batchDoiInput = document.getElementById('batch-doi-input');
+const searchBtn = document.getElementById('search-btn');
+const batchDoiMode = document.querySelector('input[value="batch-doi"]');
+document.querySelectorAll('input[name="search-mode"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        queryInput.hidden = batchDoiMode.checked;
+        batchDoiInput.hidden = !batchDoiMode.checked;
+    });
+});
+searchBtn.addEventListener('click', () => {
+    const query = (batchDoiMode.checked ? batchDoiInput : queryInput).value.trim();
     if (!query) {
         alert('请先输入查询信息或DOI');
         return;
     }
-    searchCrossRef(query);
+    if (batchDoiMode.checked) {
+        searchBatchDoi(query);
+    } else {
+        searchCrossRef(query);
+    }
 });
 
 // 显示加载指示器
 function showLoading() {
+    searchBtn.disabled = true;
     loadingOverlay.style.display = 'block';
 }
 
 // 隐藏加载指示器
 function hideLoading() {
+    searchBtn.disabled = false;
     loadingOverlay.style.display = 'none';
 }
 
@@ -398,10 +421,113 @@ function searchCrossRef(query) {
         });
 }
 
+async function searchBatchDoi(query) {
+    let dois;
+    try {
+        dois = JSON.parse(query);
+    } catch {
+        dois = null;
+    }
+    if (!Array.isArray(dois) || !dois.length || !dois.every(doi => typeof doi === 'string')) {
+        alert('请输入非空的 JSON DOI 字符串数组，例如 ["10.1234/example"]。');
+        return;
+    }
+
+    const seen = new Set();
+    const jobs = [];
+    const issues = [];
+    dois.forEach((doi, index) => {
+        const key = doi.toLowerCase();
+        if (!/^10\.\d{4,}\/[!-~]+$/.test(doi) || /\s/.test(doi)) {
+            issues[index] = 'DOI 格式错误';
+        } else if (seen.has(key)) {
+            issues[index] = '重复 DOI，已跳过';
+        } else {
+            seen.add(key);
+            jobs.push({ doi, key, index });
+        }
+    });
+
+    showLoading();
+    const results = [];
+    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+    let pending = jobs;
+    let delay = 0;
+    try {
+        for (let round = 0; round < 4 && pending.length; round++) {
+            const retry = [];
+            for (const job of pending) {
+                if (delay) await wait(delay);
+                delay = 1000;
+                const { doi, key, index } = job;
+                try {
+                    const response = await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`, {
+                        signal: AbortSignal.timeout(20000)
+                    });
+                    if (!response.ok) {
+                        issues[index] = `CrossRef 查询失败（HTTP ${response.status}）`;
+                        if (response.status === 429 || response.status === 408 || response.status >= 500) {
+                            retry.push(job);
+                        }
+                        if (response.status === 429 || response.status === 503) {
+                            const retryAfter = response.headers.get('Retry-After');
+                            const retryDelay = /^\d+$/.test(retryAfter)
+                                ? Number(retryAfter) * 1000
+                                : Date.parse(retryAfter) - Date.now();
+                            delay = Math.max(2000 * 2 ** round, retryDelay || 0);
+                        }
+                        continue;
+                    }
+                    const data = await response.json();
+                    if (data?.status !== 'ok' || typeof data.message?.DOI !== 'string' || !data.message.DOI) {
+                        issues[index] = 'CrossRef 响应缺少有效的 DOI 数据';
+                        retry.push(job);
+                        continue;
+                    }
+                    if (data.message.DOI.toLowerCase() !== key) {
+                        issues[index] = 'CrossRef 未返回匹配的 DOI';
+                        continue;
+                    }
+                    results[index] = data.message;
+                    delete issues[index];
+                } catch (error) {
+                    issues[index] = error.name === 'TimeoutError'
+                        ? 'CrossRef 请求超时'
+                        : error.name === 'SyntaxError'
+                            ? 'CrossRef 响应无法解析'
+                            : 'CrossRef 网络请求失败';
+                    retry.push(job);
+                }
+            }
+            pending = retry;
+            delay = Math.max(delay, 2000 * 2 ** round);
+        }
+        currentItemsData = results.filter(Boolean);
+        displayResults(currentItemsData, true);
+        const summary = document.createElement('details');
+        const heading = document.createElement('summary');
+        heading.textContent = `BatchDOI：成功 ${currentItemsData.length} / ${dois.length}，其余条目见下方`;
+        summary.appendChild(heading);
+        summary.open = true;
+        const list = document.createElement('ul');
+        issues.forEach((reason, index) => {
+            const entry = document.createElement('li');
+            entry.textContent = `第 ${index + 1} 项 ${JSON.stringify(dois[index])}：${reason}`;
+            list.appendChild(entry);
+        });
+        if (list.childElementCount) {
+            summary.appendChild(list);
+            document.getElementById('results-container').prepend(summary);
+        }
+    } finally {
+        hideLoading();
+    }
+}
+
 // ======================
 //   显示检索结果
 // ======================
-function displayResults(items) {
+function displayResults(items, exactDoi = false) {
     const container = document.getElementById('results-container');
     container.innerHTML = '';
 
@@ -448,7 +574,7 @@ function displayResults(items) {
         if (doi && doi !== '未找到 DOI') {
             doiBase32 = toBase32(doi);
         }
-        const exist = checkDOIExistence(doi);
+        const exist = checkDOIExistence(doi, exactDoi);
 
         // 构造 item-card
         const card = document.createElement('div');
@@ -527,6 +653,7 @@ function displayResults(items) {
         tagBtn.className = 'tag-btn';
         tagBtn.textContent = '标签';
         tagBtn.addEventListener('click', () => {
+            if (loadingCategories) return;
             if (!doi || doi === '未找到 DOI') {
                 alert('当前 DOI 不可用，无法进行标签操作。');
                 return;
@@ -610,6 +737,7 @@ function displayResults(items) {
 //   标签按钮的逻辑
 // ======================
 function handleTagButtonClick(categoryOrder = '') {
+    loadingCategories = true;
     // 先将论文信息写入数据库
     sendPaperData(activeItemData)
         .then(response => {
@@ -634,6 +762,9 @@ function handleTagButtonClick(categoryOrder = '') {
         .catch(error => {
             console.error(error);
             alert(error.message);
+        })
+        .finally(() => {
+            loadingCategories = false;
         });
 }
 
@@ -872,13 +1003,13 @@ function copyMeta(doi) {
 // ======================
 
 // [NEW] 判断用户输入的 DOI 字符串里是否“包含”数据库中的任一 DOI
-function checkDOIExistence(rawUserInput) {
+function checkDOIExistence(rawUserInput, exactDoi = false) {
     const u = String(rawUserInput || '').toLowerCase();
     if (!u) return false;
     for (const d of (ALL_DOIS || [])) {
         const dd = String(d || '').toLowerCase();
         if (!dd) continue;
-        if (u.includes(dd)) return true; // 数据库 DOI 是用户输入 DOI 的子串或相等
+        if (exactDoi ? u === dd : u.includes(dd)) return true; // 数据库 DOI 是用户输入 DOI 的子串或相等
     }
     return false;
 }
