@@ -239,6 +239,50 @@ $__ALL_DOIS = getAllDois($mysqli);
 
         /* ========== [NEW] 已勾选分类标签字体颜色（#1a0dab），纯 CSS 联动复选框状态 ========== */
         .cat-item input[type="checkbox"]:checked + label { color: #1a0dab; }
+        #batch-actions {
+            position: fixed;
+            top: 16px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        #batch-actions[hidden], .batch-selection { display: none; }
+        .batch-selection-visible .batch-selection { display: inline-flex; }
+        .batch-selection {
+            align-items: center;
+            gap: 12px;
+            margin-left: 24px;
+            font-size: 13px;
+            color: #555;
+        }
+        .select-circle {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            border: 1px solid #999;
+            border-radius: 50%;
+            background: transparent;
+            cursor: pointer;
+        }
+        .select-circle:checked { background: #f90; border-color: #f90; }
+        .select-circle:focus-visible { outline: 2px solid #2196F3; outline-offset: 3px; }
+        #batch-actions button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            background: #2196F3;
+            color: #fff;
+            cursor: pointer;
+        }
+        #batch-actions button:disabled { opacity: 0.5; cursor: default; }
     </style>
 </head>
 <body>
@@ -268,6 +312,11 @@ $__ALL_DOIS = getAllDois($mysqli);
     </div>
 </div>
 
+<div id="batch-actions" hidden>
+    <span id="batch-selected-count" aria-live="polite">已选数：0</span>
+    <button id="batch-select-all-btn" type="button">全选</button>
+    <button id="batch-category-btn" type="button" disabled>批量分类</button>
+</div>
 <div class="results-container" id="results-container"></div>
 
 <!-- 分类选择的弹窗容器 -->
@@ -310,6 +359,13 @@ let currentItemsData = [];
 // 用于在「标签」操作时保存当前正在处理的那条 item 的信息
 let activeItemData = null;
 let loadingCategories = false;
+const selectedBatchItems = new Set();
+const batchPaperData = new Map();
+let hasBatchResults = false;
+let activeBatchCategoryData = null;
+const batchActions = document.getElementById('batch-actions');
+const batchSelectAllBtn = document.getElementById('batch-select-all-btn');
+const batchCategoryBtn = document.getElementById('batch-category-btn');
 
 // 分类选择弹窗
 const categorySelectionContainer = document.getElementById('category-selection-container');
@@ -341,6 +397,7 @@ document.querySelectorAll('input[name="search-mode"]').forEach(radio => {
     radio.addEventListener('change', () => {
         queryInput.hidden = batchDoiMode.checked;
         batchDoiInput.hidden = !batchDoiMode.checked;
+        updateBatchSelection();
     });
 });
 searchBtn.addEventListener('click', () => {
@@ -355,6 +412,37 @@ searchBtn.addEventListener('click', () => {
         searchCrossRef(query);
     }
 });
+
+function updateBatchSelection() {
+    const visible = batchDoiMode.checked && hasBatchResults;
+    batchActions.hidden = !visible;
+    document.getElementById('results-container').classList.toggle('batch-selection-visible', visible);
+    const countText = `已选数：${selectedBatchItems.size}`;
+    document.getElementById('batch-selected-count').textContent = countText;
+    document.querySelectorAll('.batch-selected-count').forEach(el => el.textContent = countText);
+    document.querySelectorAll('.select-circle').forEach(cb => {
+        cb.checked = selectedBatchItems.has(Number(cb.dataset.index));
+    });
+    batchCategoryBtn.disabled = !selectedBatchItems.size || loadingCategories;
+    batchSelectAllBtn.textContent = batchPaperData.size && selectedBatchItems.size === batchPaperData.size ? '取消全选' : '全选';
+}
+
+function resetBatchSelection() {
+    selectedBatchItems.clear();
+    batchPaperData.clear();
+    hasBatchResults = false;
+    updateBatchSelection();
+}
+
+batchSelectAllBtn.addEventListener('click', () => {
+    if (selectedBatchItems.size === batchPaperData.size) {
+        selectedBatchItems.clear();
+    } else {
+        batchPaperData.forEach((data, index) => selectedBatchItems.add(index));
+    }
+    updateBatchSelection();
+});
+batchCategoryBtn.addEventListener('click', handleBatchCategoryClick);
 
 // 显示加载指示器
 function showLoading() {
@@ -378,6 +466,7 @@ function searchCrossRef(query) {
     // 获取当前的搜索模式
     const searchMode = document.querySelector('input[name="search-mode"]:checked').value;
     CURRENT_SEARCH_MODE = searchMode;           // [NEW]
+    resetBatchSelection();
     CURRENT_QUERY = query;                      // [NEW]
     let apiUrl = '';
 
@@ -449,6 +538,7 @@ async function searchBatchDoi(query) {
     });
 
     showLoading();
+    resetBatchSelection();
     const results = [];
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     let pending = jobs;
@@ -530,6 +620,8 @@ async function searchBatchDoi(query) {
 function displayResults(items, exactDoi = false) {
     const container = document.getElementById('results-container');
     container.innerHTML = '';
+    resetBatchSelection();
+    hasBatchResults = exactDoi && items.length > 0;
 
     items.forEach((item, index) => {
         // 解析并收集信息
@@ -585,6 +677,25 @@ function displayResults(items, exactDoi = false) {
         const headerDiv = document.createElement('div');
         headerDiv.className = 'item-header';
         headerDiv.textContent = `检索结果 #${index + 1}`;
+        if (exactDoi) {
+            const selection = document.createElement('span');
+            selection.className = 'batch-selection';
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'select-circle';
+            checkbox.dataset.index = index;
+            checkbox.setAttribute('aria-label', `选择检索结果 #${index + 1}`);
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) selectedBatchItems.add(index);
+                else selectedBatchItems.delete(index);
+                updateBatchSelection();
+            });
+            const count = document.createElement('span');
+            count.className = 'batch-selected-count';
+            selection.appendChild(checkbox);
+            selection.appendChild(count);
+            headerDiv.appendChild(selection);
+        }
         card.appendChild(headerDiv);
 
         // 内容区域
@@ -648,6 +759,12 @@ function displayResults(items, exactDoi = false) {
         });
         copyCol.appendChild(copyBtn);
 
+        const paperData = {
+            doi, title, journal, publicationYear, volume, issue, pages, articleNumber,
+            publisher, issnPrint, issnOnline, fullAuthors, abbreviatedAuthors, citationCount
+        };
+        if (exactDoi) batchPaperData.set(index, paperData);
+
         // 标签 按钮
         const tagBtn = document.createElement('button');
         tagBtn.className = 'tag-btn';
@@ -659,22 +776,7 @@ function displayResults(items, exactDoi = false) {
                 return;
             }
             // 准备该条 item 数据
-            activeItemData = {
-                doi,
-                title,
-                journal,
-                publicationYear,
-                volume,
-                issue,
-                pages,
-                articleNumber,
-                publisher,
-                issnPrint,
-                issnOnline,
-                fullAuthors,
-                abbreviatedAuthors,
-                citationCount
-            };
+            activeItemData = paperData;
             // 调用标签操作
             handleTagButtonClick(CATEGORY_ORDER_MODE);
         });
@@ -731,12 +833,14 @@ function displayResults(items, exactDoi = false) {
         card.appendChild(buttonsDiv);
         container.appendChild(card);
     });
+    updateBatchSelection();
 }
 
 // ======================
 //   标签按钮的逻辑
 // ======================
 function handleTagButtonClick(categoryOrder = '') {
+    activeBatchCategoryData = null;
     loadingCategories = true;
     // 先将论文信息写入数据库
     sendPaperData(activeItemData)
@@ -768,10 +872,79 @@ function handleTagButtonClick(categoryOrder = '') {
         });
 }
 
+async function handleBatchCategoryClick() {
+    if (loadingCategories || !selectedBatchItems.size || batchActions.hidden) return;
+    const papers = [...selectedBatchItems].map(index => batchPaperData.get(index));
+    activeBatchCategoryData = null;
+    categorySelectionContainer.style.display = 'none';
+    loadingCategories = true;
+    showLoading();
+    try {
+        for (const paper of papers) {
+            const response = await sendPaperData(paper);
+            if (!response.success) throw new Error(`${paper.doi}：${response.message || '添加论文失败。'}`);
+        }
+        const categories = await fetchCategories('paperID_desc');
+        const categorySets = [];
+        for (const paper of papers) {
+            categorySets.push((await fetchPaperCategories(paper.doi)).map(Number));
+        }
+        const commonIDs = categorySets[0].filter(id => categorySets.every(ids => ids.includes(id)));
+        activeBatchCategoryData = { dois: papers.map(paper => paper.doi), commonIDs };
+        displayCategorySelection(categories, commonIDs);
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        loadingCategories = false;
+        hideLoading();
+        updateBatchSelection();
+    }
+}
+
+async function saveBatchCategories(selectedIDs) {
+    if (loadingCategories) return;
+    const { dois, commonIDs } = activeBatchCategoryData;
+    const removedIDs = commonIDs.filter(id => id !== 1 && !selectedIDs.includes(id));
+    const addedIDs = selectedIDs.filter(id => !commonIDs.includes(id));
+    let succeeded = 0;
+    const failures = [];
+    loadingCategories = true;
+    saveCatBtn.disabled = true;
+    showLoading();
+    try {
+        for (const doi of dois) {
+            try {
+                const currentIDs = (await fetchPaperCategories(doi)).map(Number);
+                const nextIDs = [...new Set([...currentIDs.filter(id => !removedIDs.includes(id)), ...addedIDs, 1])];
+                const response = await updatePaperCategories(doi, nextIDs);
+                if (!response.success) throw new Error(response.message || '更新分类失败。');
+                succeeded++;
+            } catch (error) {
+                failures.push(`${doi}：${error.message}`);
+            }
+        }
+        if (!failures.length) {
+            categorySelectionContainer.style.display = 'none';
+            activeBatchCategoryData = null;
+        }
+        alert(failures.length
+            ? `已更新 ${succeeded} 篇，失败 ${failures.length} 篇。可再次点击保存重试。\n${failures.join('\n')}`
+            : `已成功更新 ${succeeded} 篇论文的分类。`);
+    } finally {
+        loadingCategories = false;
+        saveCatBtn.disabled = false;
+        hideLoading();
+        updateBatchSelection();
+    }
+}
+
 // 显示分类选择界面
 function displayCategorySelection(categories, paperCategories) {
     categoryListContainer.innerHTML = '';
     categorySelectionContainer.style.display = 'flex';
+    categorySelectionContainer.querySelector('h3').textContent = activeBatchCategoryData
+        ? `为 ${activeBatchCategoryData.dois.length} 篇论文批量分类（已勾选共有分类）`
+        : '为论文添加分类标签';
 
     // paperCategories 可能是字符串，需要转成数字再比较
     const numericPaperCategories = paperCategories.map(x => parseInt(x, 10));
@@ -822,6 +995,11 @@ saveCatBtn.addEventListener('click', () => {
     // 确保 0 All papers (categoryID=1) 一定在里面
     if (!selectedIDs.includes(1)) {
         selectedIDs.push(1);
+    }
+
+    if (activeBatchCategoryData) {
+        saveBatchCategories(selectedIDs);
+        return;
     }
 
     // 调用 updatePaperCategories
