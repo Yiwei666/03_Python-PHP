@@ -47,7 +47,7 @@
 08_server_sups_scheduler.sh                      # 调度脚本，确保 `08_server_update_paper_selection.php` 上次执行结束和下次开始执行时间间隔为 8 秒
 08_server_update_gdrive_fileID.php               # 结合rclone扫描`Google Drive`论文目录，解码pdf文件名中的doi并获取papers表中的paperID，并将云端fileID与论文文件名同步更新至gdfile表
 08_server_update_latestN.php                     # 用于定时维护 `0 latestN` 分类标签，使其始终只包含 paperID 最新的 N 篇论文
-08_server_write_paperDOI_crossRef_api.php        # 通过用户在服务器终端输入 DOI，请求 Crossref API，完成数据库论文信息重写、单篇新增和批量新增
+08_server_write_paperDOI_crossRef_api.php        # 通过用户在服务器终端输入 DOI，请求 Crossref API，完成数据库论文信息重写、单篇新增和批量新增。主要是想对papers表中进行论文信息重写去重。
 
 
 # 5. 客户端脚本
@@ -3593,7 +3593,7 @@ $targetCategoryName = '0 latestN';
 
 ## 9. `08_server_write_paperDOI_crossRef_api.php`
 
-功能：通过用户在服务器终端输入 DOI，请求 Crossref API，完成数据库论文信息重写、单篇新增和批量新增
+功能：通过用户在服务器终端输入 DOI，请求 Crossref API，完成数据库论文信息重写、单篇新增和批量新增。主要是想对papers表中进行论文信息重写去重。
 
 ### 1. 编程思路
 
