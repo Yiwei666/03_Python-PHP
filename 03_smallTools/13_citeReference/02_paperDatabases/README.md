@@ -3870,6 +3870,20 @@ final class Config {
 alias swpca='/usr/bin/php /home/01_html/08_server_write_paperDOI_crossRef_api.php'
 ```
 
+- 整理doi的prompt
+
+```
+使用如下格式整理上述论文的doi
+
+[
+    "xxx",
+    "xxx",
+    "xxx",
+    "......",
+    "xxx"
+]
+```
+
 
 # 7. tampermonkey 脚本
 
