@@ -381,7 +381,45 @@ mysql> describe gdfile;
 ```
 
 
+3. 检查 `gdfile` 是否存在重复 DOI（忽略大小写和首尾空格）：
 
+```sql
+SELECT
+    LOWER(TRIM(doi)) AS doi_key,
+    COUNT(*) AS row_count,
+    GROUP_CONCAT(ID ORDER BY ID) AS gdfile_IDs,
+    GROUP_CONCAT(paperID ORDER BY ID) AS paperIDs
+FROM gdfile
+WHERE doi IS NOT NULL AND TRIM(doi) <> ''
+GROUP BY LOWER(TRIM(doi))
+HAVING COUNT(*) > 1;
+```
+
+返回 `Empty set`，表示没有检测到重复 DOI。
+
+
+4. 检查准备改写的这 10 条论文是否存在文件关联：
+
+10 条论文的 `paperID`：`171, 186, 1118, 1289, 2237, 2697, 3227, 3842, 3855, 4187`。
+
+```sql
+SELECT
+    g.ID,
+    g.paperID,
+    p.doi AS papers_doi,
+    g.doi AS gdfile_doi,
+    g.filename,
+    g.fileID
+FROM gdfile g
+LEFT JOIN papers p ON p.paperID = g.paperID
+WHERE g.paperID IN (
+    171, 186, 1118, 1289, 2237,
+    2697, 3227, 3842, 3855, 4187
+)
+ORDER BY g.paperID, g.ID;
+```
+
+若上述命令返回 `Empty set`：这 10 个 ID 都没有 gdfile 记录，即 `gdfile` 表中不存在这些 `paperID`。 
 
 
 ## 3. 数据库查询
