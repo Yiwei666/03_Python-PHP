@@ -4057,6 +4057,7 @@ alias lspaper='ls -1 /home/01_html/08_paper_db_backup/paper_backup/'
 
 alias spm='php /home/01_html/08_server_paper_management.php'
 alias sipdd='/usr/bin/php /home/01_html/08_server_insert_paper_doi_defined.php'
+alias swpca='/usr/bin/php /home/01_html/08_server_write_paperDOI_crossRef_api.php'
 alias pagss="ps aux | grep '08_server_sups_scheduler.sh'"
 alias kilsss="pkill -f '08_server_sups_scheduler.sh'"
 alias pagsups="ps aux | grep '08_server_update_paper_selection.php'"
