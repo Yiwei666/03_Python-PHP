@@ -3808,8 +3808,67 @@ $targetCategoryName = '0 latestN';
 6. 交付脚本、测试和中文使用说明，并在项目 README 中补充脚本用途。
 
 
+### 2. 环境变量
 
+本脚本只需要调用 `08_db_config.php`。
 
+```php
+// ============================================================
+// 一、部署 / 迁移配置：请优先检查本区，业务代码从后面的第二部分开始。
+// ============================================================
+// 外部依赖只有 DB_CONFIG_FILE：该 PHP 文件应创建 mysqli 连接变量 $mysqli。
+// 不调用其他项目模块/函数，无需网页 API 密钥。字段映射参考：
+// 08_web_crossRef_query.php 的 displayResults / sendPaperData，
+// 08_tm_add_paper.php，以及 08_category_operations.php 的默认分类规则。
+// 上述三个参考文件不需要被本脚本 require，迁移时不必随本脚本一起复制。
+// PHP >= 7.4；mysqli 需含 mysqlnd；写入的表须使用 InnoDB。
+// 表名可在这里调整；列名沿用项目约定，改列名时还须同步字段映射和 SQL。
+final class Config {
+    // 数据库账号、密码、主机和库名请在这个文件中配置，不在本脚本重复保存。
+    public const DB_CONFIG_FILE = __DIR__ . '/08_db_config.php';
+    public const DB_CHARSET = 'utf8mb4';
+    // 保持严格写入，防止静默截断；这是当前连接的设置，不修改全局配置。
+    public const DB_REQUIRED_SQL_MODE = 'STRICT_ALL_TABLES';
+    public const REQUIRED_EXTENSIONS = ['mysqli', 'curl'];
+    public const TABLES = [
+        'papers' => 'papers',
+        'categories' => 'categories',
+        'paperCategories' => 'paperCategories',
+        'select_paper' => 'select_paper',
+        'gdfile' => 'gdfile',
+    ];
+    public const DEFAULT_CATEGORY_ID = 1; // 迁移后核对是否仍为“0 All papers”。
+
+    public const CROSSREF_WORKS_URL = 'https://api.crossref.org/works/'; // 保留末尾斜杠。
+    public const HTTP_USER_AGENT = 'PaperDatabase-DOI-CLI/1.0';
+    public const HTTP_CONNECT_TIMEOUT_SECONDS = 10;
+    public const HTTP_TIMEOUT_SECONDS = 20;
+    public const HTTP_MAX_REDIRECTS = 3;
+    public const REQUEST_INTERVAL_SECONDS = 1;
+    public const REQUEST_MAX_ROUNDS = 4; // 包含首轮请求。
+    public const RETRY_BASE_SECONDS = 2; // 指数退避；仍遵守更长的 Retry-After。
+
+    // 锁前缀必须与其他写入脚本一致，不能只在本脚本单独修改。
+    public const DOI_LOCK_PREFIX = 'paper_doi_';
+    public const DOI_LOCK_TIMEOUT_SECONDS = 10;
+
+    // 与网页版一致的缺失文本。状态、评分、doi_type 等默认值读取真实表结构，
+    // 不在这里硬编码；其完整字段转换逻辑见紧接配置区的 workMetadata()。
+    public const MISSING_TEXT = [
+        'title' => '未找到标题', 'authors' => '未找到作者信息',
+        'journal_name' => '未找到期刊名', 'volume' => '未找到卷号',
+        'issue' => '未找到期号', 'pages' => '未找到页码',
+        'article_number' => '未找到文章号', 'issn' => '未找到印刷版 ISSN',
+        'publisher' => '未找到出版商',
+    ];
+}
+```
+
+- 别名
+
+```sh
+alias swpca='/usr/bin/php /home/01_html/08_server_write_paperDOI_crossRef_api.php'
+```
 
 
 # 7. tampermonkey 脚本
