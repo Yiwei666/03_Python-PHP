@@ -880,16 +880,7 @@ async function handleBatchCategoryClick() {
     loadingCategories = true;
     showLoading();
     try {
-        for (const paper of papers) {
-            const response = await sendPaperData(paper);
-            if (!response.success) throw new Error(`${paper.doi}：${response.message || '添加论文失败。'}`);
-        }
-        const categories = await fetchCategories('paperID_desc');
-        const categorySets = [];
-        for (const paper of papers) {
-            categorySets.push((await fetchPaperCategories(paper.doi)).map(Number));
-        }
-        const commonIDs = categorySets[0].filter(id => categorySets.every(ids => ids.includes(id)));
+        const { categories, commonIDs } = await requestBatchCategories({ action: 'prepare', papers });
         activeBatchCategoryData = { dois: papers.map(paper => paper.doi), commonIDs };
         displayCategorySelection(categories, commonIDs);
     } catch (error) {
@@ -906,36 +897,34 @@ async function saveBatchCategories(selectedIDs) {
     const { dois, commonIDs } = activeBatchCategoryData;
     const removedIDs = commonIDs.filter(id => id !== 1 && !selectedIDs.includes(id));
     const addedIDs = selectedIDs.filter(id => !commonIDs.includes(id));
-    let succeeded = 0;
-    const failures = [];
     loadingCategories = true;
     saveCatBtn.disabled = true;
     showLoading();
     try {
-        for (const doi of dois) {
-            try {
-                const currentIDs = (await fetchPaperCategories(doi)).map(Number);
-                const nextIDs = [...new Set([...currentIDs.filter(id => !removedIDs.includes(id)), ...addedIDs, 1])];
-                const response = await updatePaperCategories(doi, nextIDs);
-                if (!response.success) throw new Error(response.message || '更新分类失败。');
-                succeeded++;
-            } catch (error) {
-                failures.push(`${doi}：${error.message}`);
-            }
-        }
-        if (!failures.length) {
-            categorySelectionContainer.style.display = 'none';
-            activeBatchCategoryData = null;
-        }
-        alert(failures.length
-            ? `已更新 ${succeeded} 篇，失败 ${failures.length} 篇。可再次点击保存重试。\n${failures.join('\n')}`
-            : `已成功更新 ${succeeded} 篇论文的分类。`);
+        const response = await requestBatchCategories({ action: 'save', dois, addedIDs, removedIDs });
+        categorySelectionContainer.style.display = 'none';
+        activeBatchCategoryData = null;
+        alert(`已成功更新 ${response.updatedCount} 篇论文的分类。`);
+    } catch (error) {
+        alert(`${error.message}\n可再次点击保存重试。`);
     } finally {
         loadingCategories = false;
         saveCatBtn.disabled = false;
         hideLoading();
         updateBatchSelection();
     }
+}
+
+async function requestBatchCategories(data) {
+    const response = await fetch(API_BASE_URL + '08_tm_batch_paper_categories.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Api-Key': API_KEY },
+        body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error(`批量分类请求失败（HTTP ${response.status}）。`);
+    const result = await response.json();
+    if (!result.success) throw new Error(result.message || '批量分类操作失败。');
+    return result;
 }
 
 // 显示分类选择界面
