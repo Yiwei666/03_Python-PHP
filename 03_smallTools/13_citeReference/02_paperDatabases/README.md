@@ -2450,8 +2450,6 @@ class Base32
    - 请参考油猴脚本中的相关功能实现，对上述提到的需求进行代码实现，注意展示的网页要美观，尤其是对于多个items查询信息的展示（可参考谷歌检索结果页面）。请输出编写的完整代码。
 
 
-
-
 💡 **2. 新增思路**
 
 上述`08_web_crossRef_query.php`代码非常棒，可以正常工作，但是觉得有一个地方可以优化，如下：
@@ -2461,8 +2459,6 @@ class Base32
 2. 我的需求是，在检索等待的过程中能否添加一些提示或者指示，例如一个进度条或者一个转圈的的圈圈等等，如果有更用户友好的图标或者设计，也请使用，方便用户无法判断是否仍然在检索。
 
 实际解决方案：当用户点击「查询」按钮后，就会显示一个半透明遮罩与转圈图标，提示用户页面正在进行检索。一旦获取到数据或者出错，立刻隐藏转圈动画。
-
-
 
 
 💡 **3. 新增思路**
@@ -3003,6 +2999,29 @@ copyToClipboard(jsonText);
 
 复制字段和格式应与 `08_webAccessPaper.php` 中的“复制元信息”功能保持一致。
 
+
+7. 前端调用批量分类接口的公共函数`08_tm_batch_paper_categories.php`：把数据发送给服务器，检查处理是否成功，再返回结果。
+
+```js
+async function requestBatchCategories(data) {
+    const response = await fetch(API_BASE_URL + '08_tm_batch_paper_categories.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Api-Key': API_KEY },
+        body: JSON.stringify(data)
+    });
+    if (!response.ok) throw new Error(`批量分类请求失败（HTTP ${response.status}）。`);
+    const result = await response.json();
+    if (!result.success) throw new Error(result.message || '批量分类操作失败。');
+    return result;
+}
+```
+
+具体来说：
+- 将 data 转成 JSON，通过 `POST` 请求发送给 `08_tm_batch_paper_categories.php`，并携带 API 密钥。
+- 检查 HTTP 请求和服务器业务处理是否成功，失败时抛出错误，供调用处捕获并提示用户。
+- 成功时返回服务器的数据，例如分类列表、共有分类或更新的论文数量。
+
+总结：打开批量分类弹窗时，发送的是操作类型 prepare 和所选论文的 DOI、标题、作者、期刊等元数据，返回的是完整分类列表及这些论文共有的分类 ID。点击保存时，发送的是操作类型 save、所选论文的 DOI 列表，以及本次新增、移除的分类 ID，返回的是保存是否成功及成功更新的论文数量。该函数会检查 HTTP 请求和服务器业务处理是否成功，失败时抛出错误供页面提示，成功时将上述结果返回给调用它的代码。
 
 
 
