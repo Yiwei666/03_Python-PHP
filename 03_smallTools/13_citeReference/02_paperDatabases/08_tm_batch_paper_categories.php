@@ -36,6 +36,21 @@ function batchCategoryDOI($value) {
     return trim($value);
 }
 
+function batchExistingPaperIDs($mysqli, $values, $lock = false) {
+    if (!is_array($values) || !$values) throw new Exception('论文ID列表不能为空。');
+    foreach ($values as $id) {
+        if (!is_int($id) || $id < 1) throw new Exception('论文ID必须是正整数。');
+    }
+    $paperIDs = array_values(array_unique($values));
+    $stmt = batchCategoryStatement($mysqli, 'SELECT paperID FROM papers WHERE paperID IN (' . implode(',', $paperIDs) . ') ORDER BY paperID' . ($lock ? ' FOR UPDATE' : ''));
+    $result = $stmt->get_result();
+    $existingIDs = [];
+    while ($row = $result->fetch_assoc()) $existingIDs[] = intval($row['paperID']);
+    $stmt->close();
+    if (count($existingIDs) !== count($paperIDs)) throw new Exception('部分论文已不存在，请重新打开批量分类。');
+    return $existingIDs;
+}
+
 $inTransaction = false;
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') throw new Exception('请使用 POST 请求。');
@@ -43,7 +58,9 @@ try {
     if (!is_array($data)) throw new Exception('无效的请求数据。');
     $action = $data['action'] ?? '';
 
-    if ($action === 'prepare') {
+    if ($action === 'prepare_existing') {
+        $paperIDs = batchExistingPaperIDs($mysqli, $data['paperIDs'] ?? null);
+    } elseif ($action === 'prepare') {
         if (empty($data['papers']) || !is_array($data['papers'])) throw new Exception('论文列表不能为空。');
         $papers = [];
         foreach ($data['papers'] as $paper) {
@@ -92,6 +109,8 @@ try {
                 $stmt->close();
             }
         }
+    }
+    if ($action === 'prepare' || $action === 'prepare_existing') {
         $paperIDs = array_values(array_unique($paperIDs));
         $in = implode(',', $paperIDs);
         $result = $mysqli->query('SELECT categoryID FROM paperCategories WHERE paperID IN (' . $in . ') GROUP BY categoryID HAVING COUNT(DISTINCT paperID) = ' . count($paperIDs));
@@ -102,26 +121,32 @@ try {
         $categories = getCategoriesByRecentPaperUsage($mysqli);
         if (!is_array($categories)) throw new Exception('获取分类失败。');
         echo json_encode(['success' => true, 'categories' => $categories, 'commonIDs' => $commonIDs], JSON_UNESCAPED_UNICODE);
-    } elseif ($action === 'save') {
-        if (empty($data['dois']) || !is_array($data['dois'])) throw new Exception('DOI列表不能为空。');
-        $dois = [];
-        foreach ($data['dois'] as $value) {
-            $doi = batchCategoryDOI($value);
-            $dois[strtolower($doi)] = $doi;
+    } elseif ($action === 'save' || $action === 'save_existing') {
+        if ($action === 'save') {
+            if (empty($data['dois']) || !is_array($data['dois'])) throw new Exception('DOI列表不能为空。');
+            $dois = [];
+            foreach ($data['dois'] as $value) {
+                $doi = batchCategoryDOI($value);
+                $dois[strtolower($doi)] = $doi;
+            }
+            $dois = array_values($dois);
         }
-        $dois = array_values($dois);
         $addedIDs = batchCategoryIDs($data['addedIDs'] ?? []);
         $removedIDs = array_values(array_diff(batchCategoryIDs($data['removedIDs'] ?? []), [1], $addedIDs));
-        $addedIDs = array_values(array_unique(array_merge($addedIDs, [1])));
+        $addedIDs = $action === 'save' ? array_values(array_unique(array_merge($addedIDs, [1]))) : array_values(array_diff($addedIDs, [1]));
         if (!$mysqli->begin_transaction()) throw new Exception($mysqli->error);
         $inTransaction = true;
-        $placeholders = implode(',', array_fill(0, count($dois), '?'));
-        $stmt = batchCategoryStatement($mysqli, 'SELECT paperID FROM papers WHERE doi IN (' . $placeholders . ') ORDER BY paperID FOR UPDATE', str_repeat('s', count($dois)), $dois);
-        $result = $stmt->get_result();
-        $paperIDs = [];
-        while ($row = $result->fetch_assoc()) $paperIDs[] = intval($row['paperID']);
-        $stmt->close();
-        if (count($paperIDs) !== count($dois)) throw new Exception('部分论文已不存在，请重新打开批量分类。');
+        if ($action === 'save_existing') {
+            $paperIDs = batchExistingPaperIDs($mysqli, $data['paperIDs'] ?? null, true);
+        } else {
+            $placeholders = implode(',', array_fill(0, count($dois), '?'));
+            $stmt = batchCategoryStatement($mysqli, 'SELECT paperID FROM papers WHERE doi IN (' . $placeholders . ') ORDER BY paperID FOR UPDATE', str_repeat('s', count($dois)), $dois);
+            $result = $stmt->get_result();
+            $paperIDs = [];
+            while ($row = $result->fetch_assoc()) $paperIDs[] = intval($row['paperID']);
+            $stmt->close();
+            if (count($paperIDs) !== count($dois)) throw new Exception('部分论文已不存在，请重新打开批量分类。');
+        }
         $in = implode(',', $paperIDs);
         // 仅删除本次取消的共有分类，保留每篇论文的其他分类。
         if ($removedIDs) {
@@ -129,12 +154,14 @@ try {
                 throw new Exception($mysqli->error);
             }
         }
-        $categoryRows = implode(' UNION ALL ', array_map(function($id) { return 'SELECT ' . $id . ' AS categoryID'; }, $addedIDs));
-        $sql = 'INSERT INTO paperCategories (paperID, categoryID) '
-            . 'SELECT p.paperID, c.categoryID FROM papers p CROSS JOIN (' . $categoryRows . ') c '
-            . 'LEFT JOIN paperCategories pc ON pc.paperID = p.paperID AND pc.categoryID = c.categoryID '
-            . 'WHERE p.paperID IN (' . $in . ') AND pc.paperID IS NULL';
-        if (!$mysqli->query($sql)) throw new Exception($mysqli->error);
+        if ($addedIDs) {
+            $categoryRows = implode(' UNION ALL ', array_map(function($id) { return 'SELECT ' . $id . ' AS categoryID'; }, $addedIDs));
+            $sql = 'INSERT INTO paperCategories (paperID, categoryID) '
+                . 'SELECT p.paperID, c.categoryID FROM papers p CROSS JOIN (' . $categoryRows . ') c '
+                . 'LEFT JOIN paperCategories pc ON pc.paperID = p.paperID AND pc.categoryID = c.categoryID '
+                . 'WHERE p.paperID IN (' . $in . ') AND pc.paperID IS NULL';
+            if (!$mysqli->query($sql)) throw new Exception($mysqli->error);
+        }
         if (!$mysqli->commit()) throw new Exception($mysqli->error);
         $inTransaction = false;
         echo json_encode(['success' => true, 'updatedCount' => count($paperIDs)]);
