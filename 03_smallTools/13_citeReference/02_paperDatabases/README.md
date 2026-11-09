@@ -2151,6 +2151,7 @@ https://sci-hub.ren/+$doi
 08_web_update_rating.php
 08_web_user_select_tmp.php
 08_tm_get_gdfile_id.php
+08_tm_batch_paper_categories.php
 ```
 
 3. PHP函数（包括后端api接口从php模块中调用的函数）
