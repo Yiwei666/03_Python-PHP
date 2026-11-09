@@ -262,7 +262,7 @@ if ($selectedCategoryID) {
             color: #c58af9;
         }
         /* “工具”按钮、以及新增的“全部下载”和“全部删除”按钮样式一致 */
-        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn, #copySelectedBtn {
+        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn, #copySelectedBtn, #selectAllBtn, #batchCategoryBtn {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -614,6 +614,8 @@ if ($selectedCategoryID) {
                 <button id="copyTmpBtn" type="button">复制临表</button>
                 <button id="copyCatBtn" type="button">复制类表</button>
                 <button id="copySelectedBtn" type="button">复制已选</button>
+                <button id="selectAllBtn" type="button">全选</button>
+                <button id="batchCategoryBtn" type="button">批量分类</button>
             <?php endif; ?>
         </h2>
 
@@ -903,8 +905,79 @@ if ($selectedCategoryID) {
             return map;
         })();
 
+        let activeBatchCategoryData = null;
+        let categoryRequestID = 0;
+        let savingBatchCategories = false;
+        let categorySelectionReady = false;
+
+        async function requestBatchCategories(data) {
+            const response = await fetch('08_tm_batch_paper_categories.php', {
+                method: 'POST',
+                cache: 'no-store',
+                headers: { 'Content-Type': 'application/json', 'X-Api-Key': API_KEY },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) throw new Error('批量分类请求失败（HTTP ' + response.status + '）。');
+            const result = await response.json();
+            if (!result.success) throw new Error(result.message || '批量分类操作失败。');
+            return result;
+        }
+
+        async function openBatchCategoryModal() {
+            const paperIDs = Array.from(new Set(user_select_tmp)).map(id => parseInt(id, 10));
+            if (!paperIDs.length) {
+                alert('请先勾选至少一篇论文。');
+                return;
+            }
+            if (savingBatchCategories) return;
+            closeModal();
+            const requestID = categoryRequestID;
+            batchCategoryBtn.disabled = true;
+            try {
+                const { categories, commonIDs } = await requestBatchCategories({ action: 'prepare_existing', paperIDs });
+                if (requestID !== categoryRequestID) return;
+                activeBatchCategoryData = { paperIDs, commonIDs };
+                document.querySelector('#categoryModal h2').textContent = `为 ${paperIDs.length} 篇论文批量分类（已勾选共有分类）`;
+                renderCategoryCheckboxes(categories, commonIDs);
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('categoryModal').style.display = 'block';
+            } catch (err) {
+                if (requestID === categoryRequestID) alert(err.message);
+            } finally {
+                batchCategoryBtn.disabled = false;
+            }
+        }
+
+        async function saveBatchCategories(selected) {
+            if (savingBatchCategories) return;
+            const batch = activeBatchCategoryData;
+            const { paperIDs, commonIDs } = batch;
+            const addedIDs = selected.filter(id => !commonIDs.includes(id));
+            const removedIDs = commonIDs.filter(id => !selected.includes(id));
+            savingBatchCategories = true;
+            const saveButtons = ['saveCategoriesTopBtn', 'saveCategoriesBtn'].map(id => document.getElementById(id));
+            saveButtons.forEach(button => { button.disabled = true; });
+            try {
+                await requestBatchCategories({ action: 'save_existing', paperIDs, addedIDs, removedIDs });
+                if (activeBatchCategoryData === batch) closeModal();
+                alert('分类更新成功。');
+                window.location.reload();
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                savingBatchCategories = false;
+                saveButtons.forEach(button => { button.disabled = !categorySelectionReady; });
+            }
+        }
+
         // 打开分类选择弹窗
         function openCategoryModal(doi, categoryOrder = '') {
+            ++categoryRequestID;
+            categorySelectionReady = false;
+            document.getElementById('categoryCheckboxes').innerHTML = '';
+            ['saveCategoriesTopBtn', 'saveCategoriesBtn'].forEach(id => { document.getElementById(id).disabled = true; });
+            activeBatchCategoryData = null;
+            document.querySelector('#categoryModal h2').textContent = '更改标签';
             currentDOI = doi;
             // 显示遮罩层
             document.getElementById('overlay').style.display = 'block';
@@ -916,6 +989,7 @@ if ($selectedCategoryID) {
 
         // 获取所有分类（通过后端API，如果你有相应的php接口文件）
         function fetchCategories(categoryOrder = '') {
+            const requestID = categoryRequestID;
             const categoriesUrl = categoryOrder
                 ? '08_tm_get_categories.php?order=' + encodeURIComponent(categoryOrder)
                 : '08_tm_get_categories.php';
@@ -928,6 +1002,7 @@ if ($selectedCategoryID) {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
+                    if (requestID !== categoryRequestID) return;
                     allCategories = data.categories;
                     fetchPaperCategories(currentDOI);
                 } else {
@@ -942,6 +1017,7 @@ if ($selectedCategoryID) {
 
         // 获取当前论文已勾选的分类（通过后端API，如果你有相应的php接口文件）
         function fetchPaperCategories(doi) {
+            const requestID = categoryRequestID;
             // [MODIFIED] 在请求头中添加 X-Api-Key
             fetch('08_tm_get_paper_categories.php?doi=' + encodeURIComponent(doi), {
                 headers: {
@@ -952,6 +1028,7 @@ if ($selectedCategoryID) {
             .then(data => {
                 if (data.success) {
                     // 渲染分类复选框，并根据当前论文的分类勾选
+                    if (requestID !== categoryRequestID) return;
                     renderCategoryCheckboxes(allCategories, data.categoryIDs);
                 } else {
                     alert(data.message);
@@ -984,7 +1061,7 @@ if ($selectedCategoryID) {
 
                 // 如果是 "0 All papers" (categoryID=1)，不允许用户取消勾选
                 if (catID === '1') {
-                    checked = true;
+                    if (!activeBatchCategoryData) checked = true;
                     disabledAttr = 'disabled'; 
                 }
 
@@ -1003,6 +1080,8 @@ if ($selectedCategoryID) {
                     </div>
                 `;
             });
+            categorySelectionReady = true;
+            ['saveCategoriesTopBtn', 'saveCategoriesBtn'].forEach(id => { document.getElementById(id).disabled = savingBatchCategories; });
         }
 
         // [NEW CODE] 勾选变化时，动态调整分类名的字体颜色
@@ -1017,6 +1096,7 @@ if ($selectedCategoryID) {
 
         // 点击“保存”按钮，更新分类
         function saveCurrentPaperCategories() {
+            if (!categorySelectionReady || savingBatchCategories) return;
             const checkboxes = document.querySelectorAll('#categoryCheckboxes input[type="checkbox"]');
             const selected = [];
             checkboxes.forEach(checkbox => {
@@ -1025,6 +1105,10 @@ if ($selectedCategoryID) {
                     selected.push(parseInt(checkbox.value));
                 }
             });
+            if (activeBatchCategoryData) {
+                saveBatchCategories(selected);
+                return;
+            }
             updatePaperCategories(currentDOI, selected);
         }
 
@@ -1067,6 +1151,9 @@ if ($selectedCategoryID) {
         document.getElementById('cancelCategoriesBtn').addEventListener('click', closeModal);
 
         function closeModal() {
+            ++categoryRequestID;
+            categorySelectionReady = false;
+            activeBatchCategoryData = null;
             document.getElementById('categoryModal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }
@@ -1374,6 +1461,19 @@ if ($selectedCategoryID) {
         const copyTmpBtn   = document.getElementById('copyTmpBtn');
         const copyCatBtn   = document.getElementById('copyCatBtn');
         const copySelectedBtn = document.getElementById('copySelectedBtn');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const batchCategoryBtn = document.getElementById('batchCategoryBtn');
+
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', () => {
+                const checkboxes = Array.from(document.querySelectorAll('.select-circle'));
+                const checked = !checkboxes.every(checkbox => checkbox.checked);
+                checkboxes.forEach(checkbox => { checkbox.checked = checked; });
+                user_select_tmp = checked ? checkboxes.map(checkbox => String(checkbox.getAttribute('data-paperid'))) : [];
+                updateSelectedCountDisplay();
+            });
+        }
+        if (batchCategoryBtn) batchCategoryBtn.addEventListener('click', openBatchCategoryModal);
 
         if (insertTmpBtn) {
             insertTmpBtn.addEventListener('click', () => {
@@ -1532,6 +1632,10 @@ if ($selectedCategoryID) {
 
         // ====== [NEW CODE] 已选数：根据 user_select_tmp 实时更新 ======
         function updateSelectedCountDisplay() {
+            if (selectAllBtn) {
+                const checkboxes = Array.from(document.querySelectorAll('.select-circle'));
+                selectAllBtn.textContent = checkboxes.length && checkboxes.every(checkbox => checkbox.checked) ? '取消全选' : '全选';
+            }
             const n = user_select_tmp.length;
             document.querySelectorAll('.selected-count').forEach(el => {
                 el.textContent = '已选数：' + n;
