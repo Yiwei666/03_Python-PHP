@@ -262,7 +262,7 @@ if ($selectedCategoryID) {
             color: #c58af9;
         }
         /* “工具”按钮、以及新增的“全部下载”和“全部删除”按钮样式一致 */
-        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn, #copySelectedBtn, #selectAllBtn, #batchCategoryBtn {
+        #toolsBtn, #batchDownloadBtn, #batchDeleteBtn, #insertTmpBtn, #clearTmpBtn, #copyTmpBtn, #copyCatBtn, #copySelectedBtn, #selectAllBtn, #batchCategoryBtn, #moreToolsBtn {
             background-color: transparent;
             border: none;
             cursor: pointer;
@@ -273,7 +273,56 @@ if ($selectedCategoryID) {
             margin-left: 10px; /* 让它和前面的文字或按钮稍微隔开 */
             margin-right: 10px;
         }
+        .more-tools {
+            position: relative;
+            display: inline-block;
+        }
+        #moreToolsMenu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            padding: 5px 10px;
+            z-index: 10000;
+            white-space: nowrap;
+        }
+        #moreToolsMenu:not([hidden]) {
+            display: grid;
+        }
+        #moreToolsMenu button {
+            background: transparent;
+            border: 0;
+            color: #1a0dab;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 4px 0;
+            text-align: left;
+        }
+        #moreToolsMenu button:hover {
+            text-decoration: underline;
+        }
         /* 弹窗 (modal) 样式 */
+        #copyMultiCategoryModal {
+            width: 80%;
+            max-height: 80%;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #copyMultiCategoryModal::backdrop {
+            background: rgba(0,0,0,0.5);
+        }
+        #copyMultiCategoryModal .category-modal-header {
+            flex-wrap: wrap;
+        }
+        #copyMultiCategoryModal button[aria-pressed="true"],
+        #copyCategoryCheckboxes input:checked + span {
+            color: #1a0dab;
+            font-weight: bold;
+        }
         #categoryModal {
             display: none; 
             position: fixed; 
@@ -325,11 +374,21 @@ if ($selectedCategoryID) {
             z-index: 9998;
         }
         /* 以5列形式显示分类复选框 */
-        #categoryCheckboxes {
+        #categoryCheckboxes, #copyCategoryCheckboxes {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 5px;
             margin-bottom: 20px;
+        }
+        #copyCategoryCheckboxes label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        #copyCategoryCheckboxes input {
+            flex: none;
+            margin: 0;
         }
 
         /* 工具菜单的样式 - 简易下拉 */
@@ -617,6 +676,12 @@ if ($selectedCategoryID) {
                 <button id="selectAllBtn" type="button">全选</button>
                 <button id="batchCategoryBtn" type="button">批量分类</button>
             <?php endif; ?>
+            <span class="more-tools">
+                <button id="moreToolsBtn" type="button" aria-expanded="false" aria-controls="moreToolsMenu">更多</button>
+                <span id="moreToolsMenu" hidden>
+                    <button id="copyMultiCategoryBtn" type="button">复制多类</button>
+                </span>
+            </span>
         </h2>
 
         <!-- 工具下拉菜单 -->
@@ -822,6 +887,17 @@ if ($selectedCategoryID) {
         <button id="saveCategoriesBtn">保存</button>
         <button id="cancelCategoriesBtn">取消</button>
     </div>
+
+    <dialog id="copyMultiCategoryModal" aria-label="复制多类">
+        <div class="category-modal-header">
+            <button id="copyMultiConfirmBtn" type="button">复制</button>
+            <button id="copyMultiCancelBtn" type="button">取消</button>
+            <button id="copyMultiTagSortBtn" type="button" aria-pressed="true">标签排序</button>
+            <button id="copyMultiRecentSortBtn" type="button" aria-pressed="false">分类排序</button>
+        </div>
+        <p id="copyMultiStatus" role="status" hidden></p>
+        <div id="copyCategoryCheckboxes"></div>
+    </dialog>
 
     <!-- ========== [NEW CODE] 分类管理弹窗 ========== -->
     <div id="manageCategoryModal">
@@ -1683,5 +1759,6 @@ if ($selectedCategoryID) {
             }
         });
     </script>
+    <script src="08_web_copy_categories.js"></script>
 </body>
 </html>
