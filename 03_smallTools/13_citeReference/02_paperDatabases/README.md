@@ -3270,7 +3270,13 @@ async function requestBatchCategories(data) {
 
 
 
-# 6. 服务器端脚本
+
+# 6. js脚本
+
+
+
+
+# 7. 服务器端脚本
 
 ## 1. `08_server_update_paper_status.php`
 
@@ -4311,7 +4317,7 @@ alias swpca='/usr/bin/php /home/01_html/08_server_write_paperDOI_crossRef_api.ph
 ```
 
 
-# 7. tampermonkey 脚本
+# 8. tampermonkey 脚本
 
 ## 1. `08_tm_paperManagement.js`
 
@@ -4493,7 +4499,7 @@ url: API_BASE_URL + '08_tm_update_paper_categories.php',
 1. `@connect` 指令用于声明脚本可以进行跨域请求的目标域。这是 Tampermonkey 的安全机制，确保脚本只能与指定的域进行通信。
 
 
-# 8. 客户端脚本
+# 9. 客户端脚本
 
 ## 1. `08_client_doi_base32_scidownl.py`
 
@@ -4540,7 +4546,7 @@ $ scidownl download --pmid 31395057 --out ./paper/paper-1.pdf --proxy http=socks
 
 
 
-# 9. alias和cron定时
+# 10. alias和cron定时
 
 ## 1. alias
 
