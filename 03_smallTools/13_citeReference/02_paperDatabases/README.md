@@ -34,6 +34,10 @@
 08_web_crossRef_query.php          # 在web页面上查询显示论文的元数据（展示crossRef API返回的多条结果），能够将元数据写入到数据库并进行分类，功能类似 08_tm_paperManagement.js
 
 
+08_web_copy_categories.js         # 将 08_webAccessPaper.php 中「更多」菜单和「复制多类」弹窗的浏览器交互被放入独立脚本 08_web_copy_categories.js
+
+
+
 # 3. 油猴脚本
 08_tm_paperManagement.js           # 油猴脚本（基于01_GBT_api_items.js扩展），通过在谷歌学术页面提取参考文献，结合crossRef API查询论文的元数据，并将论文元数据写入到mysql数据库中（可选），还能够给论文进行在线新增/取消/更改分类（可选），能够复制doi的base32编码。
 
@@ -3272,6 +3276,28 @@ async function requestBatchCategories(data) {
 
 
 # 6. js脚本
+
+## 1. `08_web_copy_categories.js`
+
+功能：集中处理 `08_webAccessPaper.php` 页面中的「更多」菜单、弹窗、分类排序、请求和剪贴板
+
+### 1. 编程思路
+
+▶️ **1. 初始思路**
+
+请将 `08_webAccessPaper.php` 中「更多」菜单和「复制多类」弹窗的浏览器交互放入独立脚本 `08_web_copy_categories.js`。复用页面现有元素和 `API_KEY`，将脚本内部变量和函数限定在独立作用域。
+
+1. 「更多」按钮控制菜单展开和收起，并同步 `aria-expanded`。点击菜单外或按 Esc 时收起。点击「复制多类」后收起菜单并打开弹窗。
+2. 复用 `08_tm_get_categories.php` 取得「标签排序」对应的分类列表，使用 `?order=paperID_desc` 取得「分类排序」对应的列表。每次打开默认使用标签排序，从未勾选状态开始。切换排序时按分类 ID 保留勾选。用原生方形复选框，通过 `textContent` 填入分类名称，并让页面样式负责对齐、间距和选中颜色。
+3. 未勾选时禁用「复制」。点击后读取已勾选的分类 ID 和页面当前的 `sort`，使用 `URLSearchParams` 将 `categoryIDs` 和 `sort` 以 `POST` 发送到 `08_web_copy_categories.php`，附带 `X-Api-Key`。
+4. 读取接口返回的 `data`，使用 `JSON.stringify(data, null, 2)` 写入剪贴板。支持时在点击事件内发起 `ClipboardItem` 写入，等待接口返回后提供文本。成功后关闭弹窗并提示篇数。空结果、接口错误或剪贴板失败时保留勾选并提示，允许重试。
+5. 复制期间防止重复提交。只管理当前弹窗内的分类勾选，保留论文列表「全选」「插入临表」和「批量分类」各自的操作路径。
+
+
+### 2. 环境变量
+
+
+
 
 
 
