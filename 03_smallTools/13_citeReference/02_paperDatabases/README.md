@@ -28,12 +28,12 @@
 08_web_user_select_tmp.php         # 管理用户在前端勾选或临时保存的论文列表，支持往数据库 `select_paper` 选择表中 插入去重数据（paperID 和 doi）、清空表、以及 导出表中已有数据
 
 
-# 2. web交互
+# 2.1 web交互
 08_webAccessPaper.php              # 在线管理论文分类（创建、删除、修改分类标签），在线更改论文所属分类，在线更改论文所属状态码（下载/删除/查看等）
 08_base32_tool.php                 # base32在线编码和解码，主要用于doi编码
 08_web_crossRef_query.php          # 在web页面上查询显示论文的元数据（展示crossRef API返回的多条结果），能够将元数据写入到数据库并进行分类，功能类似 08_tm_paperManagement.js
 
-
+# 2.2 JS脚本
 08_web_copy_categories.js         # 将 08_webAccessPaper.php 中「更多」菜单和「复制多类」弹窗的浏览器交互被放入独立脚本 08_web_copy_categories.js
 
 
