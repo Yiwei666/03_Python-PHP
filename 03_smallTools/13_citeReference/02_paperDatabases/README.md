@@ -3299,16 +3299,16 @@ async function requestBatchCategories(data) {
 1. 调用 `08_tm_get_categories.php` 和 `08_web_copy_categories.php` 功能接口。
 
 ```js
-            const response = await fetch('08_tm_get_categories.php' + query, {
-                headers: { 'X-Api-Key': API_KEY }
-            });
+const response = await fetch('08_tm_get_categories.php' + query, {
+    headers: { 'X-Api-Key': API_KEY }
+});
 
 
-            const response = await fetch('08_web_copy_categories.php', {
-                method: 'POST',
-                headers: { 'X-Api-Key': API_KEY },
-                body: new URLSearchParams({ categoryIDs: categoryIDs.join(','), sort })
-            });
+const response = await fetch('08_web_copy_categories.php', {
+    method: 'POST',
+    headers: { 'X-Api-Key': API_KEY },
+    body: new URLSearchParams({ categoryIDs: categoryIDs.join(','), sort })
+});
 ```
 
 
