@@ -3275,11 +3275,11 @@ async function requestBatchCategories(data) {
 
 
 
-# 6. js脚本
+# 6. JavaScript脚本
 
 ## 1. `08_web_copy_categories.js`
 
-功能：集中处理 `08_webAccessPaper.php` 页面中的「更多」菜单、弹窗、分类排序、请求和剪贴板
+功能：集中处理 `08_webAccessPaper.php` 页面中的「更多」菜单、弹窗、分类排序、请求和剪贴板。
 
 ### 1. 编程思路
 
