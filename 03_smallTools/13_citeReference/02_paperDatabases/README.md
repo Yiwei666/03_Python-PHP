@@ -773,6 +773,19 @@ getPaperByDOI($mysqli, $doi)
 ```
 
 
+### 3. 编程思路
+
+▶️ **1. 新增思路**
+
+请在现有分类查询模块中新增可复用的 `getPapersByCategories($mysqli, array $categoryIDs, $sort = 'paperID_desc')`，供「复制多类」接口调用。
+
+1. 复用现有 `getPapersByCategory()` 的返回字段、论文排序规则和 Google Drive 文件查找逻辑。保留 `getPapersByCategory()` 的签名和调用方式，让它委托给新函数。传入单个分类时，继续使用原有的 `JOIN paperCategories` 和 `categoryID = ?` 查询条件。
+2. 传入多个分类时，用参数化的 `IN` 条件取得所有选中分类下的论文。查询从 `papers` 返回记录，同一 `paperID` 即使关联多个选中分类，也只返回一次。分类 ID 使用整数参数绑定，排序继续通过现有的固定选项生成。
+3. 该函数只负责读取和合并查询结果。DOI 去重和剪贴板字段组装由 `08_web_copy_categories.php` 负责。空分类列表直接返回 `null`。
+4. 修改范围限于论文查询。验证原有单分类查询的字段、排序和返回方式，以及多个分类存在重叠时的查询结果。
+
+
+
 
 ## 3.1 `08_tm_add_paper.php`
 
