@@ -98,6 +98,19 @@ function updateCategoryName($mysqli, $categoryID, $newCategoryName) {
  * @param string $sort 用于决定 ORDER BY 的字段及顺序，默认 paperID_desc
  */
 function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
+    return getPapersByCategories($mysqli, [$categoryID], $sort);
+}
+
+function getPapersByCategories($mysqli, array $categoryIDs, $sort = 'paperID_desc') {
+    if (!$categoryIDs) {
+        return null;
+    }
+    $placeholders = implode(',', array_fill(0, count($categoryIDs), '?'));
+    $categoryFilter = count($categoryIDs) === 1
+        ? 'JOIN paperCategories pc ON p.paperID = pc.paperID WHERE pc.categoryID = ?'
+        : "WHERE p.paperID IN (
+            SELECT pc.paperID FROM paperCategories pc WHERE pc.categoryID IN ($placeholders)
+        )";
     // 根据 $sort 生成对应的 ORDER BY 子句
     switch ($sort) {
         case 'paperID_asc':
@@ -164,14 +177,13 @@ function getPapersByCategory($mysqli, $categoryID, $sort = 'paperID_desc') {
                 (SELECT g2.fileID FROM gdfile g2 WHERE g2.doi = p.doi LIMIT 1)
             ) AS gdFileID
         FROM papers p
-        JOIN paperCategories pc ON p.paperID = pc.paperID
-        WHERE pc.categoryID = ?
+        $categoryFilter
         $orderBy
     ";
 
     $stmt = $mysqli->prepare($query);
     if ($stmt) {
-        $stmt->bind_param('i', $categoryID);
+        $stmt->bind_param(str_repeat('i', count($categoryIDs)), ...$categoryIDs);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
