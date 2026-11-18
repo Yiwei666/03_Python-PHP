@@ -1357,7 +1357,6 @@ checkApiKey();
 
 功能：作为网页专用的只读接口，接收分类 ID 和论文排序参数，沿用现有 API 密钥校验，调用查询模块并返回去重后的 JSON。
 
-
 ### 1. 编程思路
 
 💡 **1. 初始思路**
@@ -1371,6 +1370,27 @@ checkApiKey();
 5. 成功时返回 `{"data":[...]}`，空结果返回 `{"data":[]}`。每条记录依次包含 `paperID`、`doi`、`title`、`encodedDOI`、`gdURL`。`paperID` 为整数，编码 DOI 和 Google Drive 链接沿用「复制类表」的规则。标题和 DOI 保留数据库查询返回的原值，沿用现有连接字符集。查询或 JSON 序列化失败时返回通用错误，并将具体原因记入服务端日志。
 
 
+### 2. 环境变量
+
+```php
+require_once __DIR__ . '/08_api_auth.php';
+require_once __DIR__ . '/08_category_operations.php';
+require_once __DIR__ . '/08_web_Base32.php';
+
+$categoryIDs = $_POST['categoryIDs'] ?? '';
+$sort = isset($_POST['sort']) && is_string($_POST['sort']) ? $_POST['sort'] : 'paperID_desc';
+$items = [];
+$seenDois = [];
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Allow: POST');
+    http_response_code(405);
+    echo json_encode(['message' => '请使用 POST 请求复制所选分类。']);
+    exit;
+}
+
+checkApiKey();
+```
 
 
 
