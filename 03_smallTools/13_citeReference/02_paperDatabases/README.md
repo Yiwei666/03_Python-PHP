@@ -26,6 +26,7 @@
 08_web_update_paper_status.php     # 接收前端发送的 DOI 和新的论文状态这两个参数，然后根据这两个参数去数据库更新对应论文的状态，并将更新结果以 JSON 格式返回给前端。
 08_web_update_rating.php           # 根据 DOI 查询论文当前的评分（rating），也能在收到合法的 0–10 整数评分时将其写入数据库。
 08_web_user_select_tmp.php         # 管理用户在前端勾选或临时保存的论文列表，支持往数据库 `select_paper` 选择表中 插入去重数据（paperID 和 doi）、清空表、以及 导出表中已有数据
+08_web_copy_categories.php         # 作为网页专用的只读接口，接收分类 ID 和论文排序参数，沿用现有 API 密钥校验，调用查询模块并返回去重后的 JSON
 
 
 # 2.1 web交互
