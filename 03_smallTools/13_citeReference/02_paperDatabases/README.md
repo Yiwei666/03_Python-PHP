@@ -1392,6 +1392,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 checkApiKey();
 ```
 
+该模块被 javascrit 脚本 `08_web_copy_categories.js` 调用。
+
 
 
 
