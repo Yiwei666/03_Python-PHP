@@ -1353,6 +1353,26 @@ require_once '08_web_Base32.php';
 checkApiKey();
 ```
 
+## 7. `08_web_copy_categories.php`
+
+功能：作为网页专用的只读接口，接收分类 ID 和论文排序参数，沿用现有 API 密钥校验，调用查询模块并返回去重后的 JSON。
+
+
+### 1. 编程思路
+
+💡 **1. 初始思路**
+
+请为 `08_webAccessPaper.php` 的「复制多类」功能新增独立的只读接口 `08_web_copy_categories.php`。
+
+1. 接收同源 `POST` 表单请求。`categoryIDs` 为逗号分隔的正整数分类 ID，`sort` 为当前论文列表的排序参数，默认 `paperID_desc`。通过 `X-Api-Key` 复用 `08_api_auth.php` 的 `checkApiKey()`。其他请求方法返回 405，无效分类参数返回 400。
+2. 将模块引用、请求参数和初始变量集中在脚本开头。`08_db_config.php` 加载时会立即连接数据库，因此在请求方法、鉴权和参数校验通过后再加载。
+3. 去除重复的分类 ID，再调用 `08_category_operations.php` 中的 `getPapersByCategories()`，按指定顺序读取所选分类下的论文。数据库操作只执行查询。若服务器上的查询模块缺少该函数，返回明确的部署提示，指出需要同步更新 `08_category_operations.php`。
+4. 按 DOI 去重，保留查询顺序中最先出现的一条。比较 DOI 时可忽略大小写和首尾空白，输出时使用记录中的原始 DOI。跳过没有有效 DOI 的记录。
+5. 成功时返回 `{"data":[...]}`，空结果返回 `{"data":[]}`。每条记录依次包含 `paperID`、`doi`、`title`、`encodedDOI`、`gdURL`。`paperID` 为整数，编码 DOI 和 Google Drive 链接沿用「复制类表」的规则。标题和 DOI 保留数据库查询返回的原值，沿用现有连接字符集。查询或 JSON 序列化失败时返回通用错误，并将具体原因记入服务端日志。
+
+
+
+
 
 
 # 5. web交互脚本
