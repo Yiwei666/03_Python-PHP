@@ -17,6 +17,7 @@ echo "9. 修改表中 title 的 varchar 最大存储长度\n";
 echo "10. 根据指定 doi 更新 title 的值\n";
 echo "11. 根据指定 doi 更新 journal_name 的值\n";
 echo "12. 根据指定 doi 查看并可修改任意列的值\n";
+echo "13. 按 title 字符长度降序打印指定行数及字段，并统计长度分布\n";
 echo "请输入序号并回车：";
 
 $choice = trim(fgets(STDIN));
@@ -463,6 +464,112 @@ switch ($choice) {
                     echo "非法输入，请重新输入。\n";
                 }
             }
+        }
+        break;
+
+    case '13':
+        echo "请输入要打印的前多少行（正整数）：";
+        $input = trim(fgets(STDIN));
+        $limit = filter_var($input, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        if ($limit === false) {
+            echo "行数必须是正整数。\n";
+            break;
+        }
+
+        $resDesc = $mysqli->query("DESCRIBE papers");
+        $fields = [];
+        if ($resDesc && $resDesc->num_rows > 0) {
+            echo "==== papers 表字段列表 ====\n";
+            $i = 1;
+            while ($row = $resDesc->fetch_assoc()) {
+                $fields[$i] = $row['Field'];
+                echo $i . ". " . $row['Field'] . "\n";
+                $i++;
+            }
+        } else {
+            echo "查询 papers 表结构失败。\n";
+            break;
+        }
+
+        $titleLengthField = 'title_length';
+        while (in_array($titleLengthField, $fields, true)) {
+            $titleLengthField .= '_';
+        }
+        $fields[$i] = $titleLengthField;
+        echo $i . ". " . $titleLengthField . "（title 字符长度，NULL 按 0 处理）\n";
+
+        echo "\n请选择字段序号（可输入多个，用空格分隔）：";
+        $input = trim(fgets(STDIN));
+        if ($input === '') {
+            echo "未输入任何序号。\n";
+            break;
+        }
+        $selectedFields = [];
+        foreach (preg_split('/\s+/', $input) as $idx) {
+            if (!ctype_digit($idx) || !isset($fields[(int)$idx])) {
+                echo "无效的字段序号：{$idx}\n";
+                break 2;
+            }
+            $selectedFields[] = $fields[(int)$idx];
+        }
+        $selectedFields = array_values(array_unique($selectedFields));
+        $quotedFields = array_map(function($field) use ($titleLengthField) {
+            if ($field === $titleLengthField) {
+                return 'COALESCE(CHAR_LENGTH(title), 0) AS `' . $titleLengthField . '`';
+            }
+            return '`' . str_replace('`', '``', $field) . '`';
+        }, $selectedFields);
+        $sql = "SELECT " . implode(", ", $quotedFields) . " FROM papers
+                ORDER BY COALESCE(CHAR_LENGTH(title), 0) DESC LIMIT $limit";
+        $result = $mysqli->query($sql);
+        if (!$result) {
+            echo "查询失败，错误信息：{$mysqli->error}\n";
+            break;
+        }
+        if ($result->num_rows > 0) {
+            echo "==== 按 title 字符长度降序排列的前 {$limit} 行 ====\n";
+            echo implode(" | ", $selectedFields) . "\n";
+            echo str_repeat("-", 80) . "\n";
+            while ($row = $result->fetch_assoc()) {
+                $line = [];
+                foreach ($selectedFields as $field) {
+                    $line[] = $row[$field];
+                }
+                echo implode(" | ", $line) . "\n";
+            }
+        } else {
+            echo "papers 表中没有数据。\n";
+        }
+
+        $sql = "SELECT FLOOR(COALESCE(CHAR_LENGTH(title), 0) / 20) AS bucket, COUNT(*) AS cnt
+                FROM papers GROUP BY bucket ORDER BY bucket";
+        $result = $mysqli->query($sql);
+        if (!$result) {
+            echo "查询 title 长度分布失败，错误信息：{$mysqli->error}\n";
+            break;
+        }
+        $distribution = [];
+        $totalCount = 0;
+        $maxBucket = 0;
+        while ($row = $result->fetch_assoc()) {
+            $bucket = (int)$row['bucket'];
+            $distribution[$bucket] = (int)$row['cnt'];
+            $totalCount += (int)$row['cnt'];
+            $maxBucket = max($maxBucket, $bucket);
+        }
+        echo "\n==== 全表 title 字符长度分布（步长 20，NULL 按长度 0 处理） ====\n";
+        echo "长度区间 | 频数 | 频率\n";
+        echo str_repeat("-", 50) . "\n";
+        if ($totalCount > 0) {
+            for ($bucket = 0; $bucket <= $maxBucket; $bucket++) {
+                $start = $bucket * 20;
+                $end = $start + 19;
+                $count = $distribution[$bucket] ?? 0;
+                printf("%d-%d | %d | %.2f%%\n", $start, $end, $count, $count / $totalCount * 100);
+            }
+            echo "合计 | {$totalCount} | 100.00%\n";
+        } else {
+            echo "papers 表中没有数据，无法统计长度分布。\n";
         }
         break;
 
